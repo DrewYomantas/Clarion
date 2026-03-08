@@ -62,6 +62,9 @@ class CompatCursor:
         # General datetime(expr) → CAST(expr AS timestamp)
         rewritten = re.sub(r"\bdatetime\(([^)]+)\)", r"CAST(\1 AS timestamp)", rewritten, flags=re.IGNORECASE)
 
+        # SQLite BLOB type → Postgres BYTEA
+        rewritten = re.sub(r"\bBLOB\b", "BYTEA", rewritten, flags=re.IGNORECASE)
+
         # DB-API placeholder compatibility: ? -> %s
         rewritten = rewritten.replace("?", "%s")
         return rewritten

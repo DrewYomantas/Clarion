@@ -1970,7 +1970,7 @@ def init_db():
 
             user_id INTEGER NOT NULL,
 
-            pdf_blob BLOB NOT NULL,
+            pdf_blob BYTEA NOT NULL,
 
             generated_at TEXT NOT NULL,
 
