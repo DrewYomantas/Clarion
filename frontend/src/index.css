@@ -12,11 +12,7 @@
   z-index: 2;
 }
 
-/* Remove outline for mouse users but keep for keyboard */
-.js-focus-visible :focus:not(.focus-visible) {
-  outline: none;
-  box-shadow: none;
-}
+
 /* Accessible skip link styles */
 .skip-link {
   position: absolute;
@@ -283,45 +279,7 @@
     box-shadow: 0 24px 42px -32px hsl(var(--navy) / 0.52);
   }
 
-  .supporting-section {
-    @apply py-16 lg:py-20;
-  }
 
-  .supporting-lead {
-    @apply rounded-3xl border border-slate-200 bg-white px-6 py-7 shadow-sm lg:px-8 lg:py-8;
-  }
-
-  .supporting-subtle {
-    @apply rounded-2xl border border-slate-200/90 bg-white/85 px-5 py-5 shadow-sm;
-  }
-
-  .supporting-cta-strip {
-    @apply flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm;
-  }
-
-  .supporting-divider-list > * + * {
-    @apply border-t border-slate-200;
-  }
-
-  .trust-stack {
-    @apply max-w-5xl space-y-5;
-  }
-
-  .trust-intro {
-    @apply rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-sm;
-  }
-
-  .trust-section {
-    @apply rounded-2xl border border-slate-200 bg-white px-6 py-6 shadow-sm;
-  }
-
-  .trust-section-body {
-    @apply mt-4 space-y-4 leading-relaxed text-slate-700;
-  }
-
-  .trust-divider-list > * + * {
-    @apply border-t border-slate-200;
-  }
 
   .dark .marketing-panel {
     border: 1px solid hsl(var(--border) / 0.75);
@@ -371,29 +329,7 @@
     border-color: hsl(var(--gold) / 0.35);
   }
 
-  .gov-btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded font-semibold text-sm transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-    border: 1px solid hsl(220 10% 18%);
-    background: hsl(220 10% 18%);
-    color: hsl(0 0% 100%);
-    box-shadow: none;
-  }
-  .gov-btn-primary:hover {
-    background: hsl(220 11% 23%);
-    border-color: hsl(220 11% 23%);
-    filter: none;
-  }
 
-  .gov-btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded font-semibold text-sm border transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-    border-color: hsl(220 10% 73%);
-    color: hsl(220 10% 22%);
-    background: hsl(0 0% 100%);
-  }
-  .gov-btn-secondary:hover {
-    background: hsl(210 18% 97%);
-    border-color: hsl(220 10% 62%);
-  }
 
   .gov-clickable-row {
     @apply relative cursor-pointer transition-all duration-150;
@@ -666,19 +602,7 @@
     border-left-color: hsl(256 92% 72% / 0.72);
   }
 
-  .gov-level-2 {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid hsl(220 10% 78%);
-    background: hsl(0 0% 100%);
-    box-shadow: none;
-  }
 
-  .dark .gov-level-2 {
-    border: 1px solid hsl(220 10% 78%);
-    background: hsl(0 0% 100%);
-    box-shadow: none;
-  }
 
   .workspace-stat-card {
     border: 1px solid hsl(0 0% 100% / 0.1);
@@ -774,26 +698,7 @@
     margin-inline: auto;
   }
 
-  .gov-level-1 {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 32px;
-    border: 1px solid hsl(220 10% 82%);
-    background: hsl(0 0% 100%);
-    box-shadow: 0 1px 2px hsl(220 14% 12% / 0.05);
-  }
 
-  .gov-level-2 {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 24px;
-    border: 1px solid hsl(220 10% 82%);
-    border-left: 3px solid hsl(220 10% 70%);
-    background: hsl(0 0% 100%);
-    box-shadow: 0 1px 2px hsl(220 14% 12% / 0.05);
-  }
 
   .gov-accent-neutral {
     border-left: 5px solid #64748b !important;
@@ -883,19 +788,7 @@
     color: hsl(220 9% 42%);
   }
 
-  .gov-h1 {
-    font-size: 30px;
-    line-height: 1.15;
-    font-weight: 600;
-    color: hsl(220 13% 11%);
-  }
 
-  .gov-h2 {
-    font-size: 18px;
-    line-height: 1.3;
-    font-weight: 500;
-    color: hsl(220 13% 10%);
-  }
 
   .gov-h2-soft {
     font-size: 16px;
@@ -904,21 +797,7 @@
     color: hsl(220 10% 28%);
   }
 
-  .gov-module-title {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: hsl(220 8% 36%);
-  }
 
-  .gov-module-title-soft {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: hsl(220 8% 47%);
-  }
 
   .gov-metric-number {
     font-size: 64px;
@@ -927,13 +806,7 @@
     color: hsl(220 14% 8%);
   }
 
-  .gov-micro-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: hsl(220 8% 42%);
-  }
+
 
   .gov-badge {
     display: inline-flex;
@@ -979,45 +852,7 @@
     color: hsl(220 15% 24%);
   }
 
-  .gov-btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    border: 1px solid hsl(220 10% 18%);
-    background: hsl(220 10% 18%);
-    color: hsl(0 0% 100%);
-    padding: 8px 16px;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.2;
-    transition: background-color 120ms ease, border-color 120ms ease;
-  }
 
-  .gov-btn-primary:hover {
-    background: hsl(220 11% 23%);
-    border-color: hsl(220 11% 23%);
-  }
-
-  .gov-btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    border: 1px solid hsl(220 10% 73%);
-    background: hsl(0 0% 100%);
-    color: hsl(220 10% 22%);
-    padding: 8px 16px;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.2;
-    transition: background-color 120ms ease, border-color 120ms ease;
-  }
-
-  .gov-btn-secondary:hover {
-    background: hsl(210 18% 97%);
-    border-color: hsl(220 10% 61%);
-  }
 
   .gov-btn-quiet {
     display: inline-flex;
@@ -1116,24 +951,7 @@
     background: hsl(4 24% 74%);
   }
 
-  .gov-clickable {
-    cursor: pointer;
-    border-color: hsl(220 10% 80%);
-    background: hsl(210 18% 98%);
-    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
-  }
 
-  .gov-clickable:hover {
-    background: hsl(210 20% 96%);
-    border-color: hsl(220 10% 68%);
-  }
-
-  .gov-clickable:focus-visible {
-    outline: 2px solid hsl(220 12% 36%);
-    outline-offset: 2px;
-    background: hsl(210 20% 96%);
-    border-color: hsl(220 10% 68%);
-  }
 
   .gov-affordance {
     display: inline-flex;
@@ -1151,12 +969,7 @@
     white-space: nowrap;
   }
 
-  .gov-clickable:hover .gov-affordance,
-  .gov-clickable:focus-visible .gov-affordance {
-    opacity: 1;
-    border-color: hsl(220 11% 62%);
-    background: hsl(210 24% 95%);
-  }
+
 
   .gov-text-link {
     font-size: 12px;
@@ -1860,30 +1673,8 @@ body {
   gap: var(--space-content);
 }
 
-@keyframes workspace-route-enter {
-  from {
-    opacity: 0.96;
-    transform: translateY(4px) scale(0.999);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 .animate-workspace-route {
   animation: none;
-}
-
-@keyframes page-enter {
-  from {
-    opacity: 0.97;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .animate-page-enter {
@@ -1903,44 +1694,11 @@ body {
   animation: none;
 }
 
-.fade-enter {
-  opacity: 0;
-  transform: translateY(8px);
-  animation: fadeIn 0.9s ease forwards;
-}
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-@keyframes route-shell-enter {
-  from {
-    opacity: 0.985;
-    transform: translateY(2px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-@keyframes dashboard-section-enter {
-  from {
-    opacity: 0.98;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+
+
 
 .stage-sequence > * {
   animation: none;
