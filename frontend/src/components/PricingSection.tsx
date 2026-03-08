@@ -1,17 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Check } from "lucide-react";
+import { Check, Minus } from "lucide-react";
 import { toast } from "sonner";
 import { startCheckoutSession, type BillingPlan } from "@/api/authService";
 import { useAuth } from "@/contexts/AuthContext";
-import { pricingPlans, type PricingPlan } from "@/data/pricingPlans";
-import InfoTooltip from "@/components/InfoTooltip";
+import { pricingPlans, comparisonRows, pricingFaqs, type PricingPlan } from "@/data/pricingPlans";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import {
-  confidenceDefinition,
-  implementationPlanDefinition,
-  trendStabilityDefinition,
-} from "@/content/marketingCopy";
 
 interface PricingSectionProps {
   sectionId?: string;
@@ -22,67 +16,25 @@ interface PricingSectionProps {
   showFaq?: boolean;
 }
 
-const featureExplanations: Array<{
-  match: string;
-  title: string;
-  body: string;
-}> = [
-  {
-    match: "Preview PDF export",
-    title: "Preview PDF export",
-    body: "Free plan exports are watermarked and intentionally limited to preview-level detail.",
-  },
-  {
-    match: "implementation plan",
-    title: "Implementation plans",
-    body: implementationPlanDefinition,
-  },
-  {
-    match: "Strategic plans",
-    title: "Strategic plans",
-    body: "Structured plans are generated for top themes based on your active plan limits.",
-  },
-  {
-    match: "Dashboard analytics",
-    title: "Dashboard analytics",
-    body: `${trendStabilityDefinition} ${confidenceDefinition}`,
-  },
-  {
-    match: "High review capacity",
-    title: "High review capacity",
-    body: "Paid plans process substantially larger uploads than Free, subject to platform row guards.",
-  },
-];
-
-const faqItems = [
-  {
-    value: "free-vs-team-firm",
-    question: "When should we use Free, Team, or Firm?",
-    answer:
-      "Free is designed for first-cycle validation. Team is for recurring monthly governance work. Firm is for year-round, cross-practice governance coverage.",
-  },
-  {
-    value: "cancel-subscription",
-    question: "What happens if we cancel a paid plan?",
-    answer:
-      "Paid access remains active through the billing period. After that, existing reports stay visible in your dashboard history and new report generation follows your active plan limits.",
-  },
-  {
-    value: "team-to-firm",
-    question: "Can we upgrade from Team to Firm later?",
-    answer:
-      "Yes. You can move from Team to Firm as governance volume grows and continue using the same workspace.",
-  },
-];
-
-const getFeatureExplanation = (feature: string) =>
-  featureExplanations.find((item) => feature.includes(item.match));
-
 const getPlanToneClass = (id: PricingPlan["id"]) => {
   if (id === "free") return "marketing-tone-blue";
   if (id === "team") return "marketing-tone-emerald";
   return "marketing-tone-violet";
 };
+
+// Group comparison rows by category for the table
+const groupedRows = comparisonRows.reduce<Record<string, typeof comparisonRows>>((acc, row) => {
+  if (!acc[row.category]) acc[row.category] = [];
+  acc[row.category].push(row);
+  return acc;
+}, {});
+
+const CellValue = ({ value }: { value: string | boolean }) => {
+  if (value === true) return <Check size={16} className="mx-auto text-emerald-600" aria-label="Included" />;
+  if (value === false) return <Minus size={16} className="mx-auto text-slate-300" aria-label="Not included" />;
+  return <span className="text-xs text-slate-700">{value}</span>;
+};
+
 
 const PricingSection = ({
   sectionId = "pricing",
@@ -95,6 +47,7 @@ const PricingSection = ({
   const navigate = useNavigate();
   const { isLoggedIn, isLoading, currentPlan } = useAuth();
   const [loadingPlan, setLoadingPlan] = useState<BillingPlan | null>(null);
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
 
   const startPaidCheckout = async (tier: PricingPlan) => {
     const checkoutPlan: BillingPlan = tier.id === "firm" ? "firm" : "team";
@@ -111,52 +64,36 @@ const PricingSection = ({
       toast.error(message);
       return;
     }
-
     window.location.assign(result.checkout_url);
   };
 
   const handlePlanClick = async (tier: PricingPlan) => {
     const isCurrentPlan = currentPlan?.planType === tier.planType;
-    if (isCurrentPlan) {
-      navigate("/dashboard");
-      return;
-    }
-
-    if (tier.id === "free") {
-      navigate(isLoggedIn ? "/dashboard" : "/signup");
-      return;
-    }
-
-    if (!isLoggedIn) {
-      navigate("/login?redirectTo=/pricing");
-      return;
-    }
-
+    if (isCurrentPlan) { navigate("/dashboard"); return; }
+    if (tier.id === "free") { navigate(isLoggedIn ? "/dashboard" : "/signup"); return; }
+    if (!isLoggedIn) { navigate("/login?redirectTo=/pricing"); return; }
     await startPaidCheckout(tier);
   };
 
   const getButtonLabel = (tier: PricingPlan) => {
-    const isCurrentPlan = currentPlan?.planType === tier.planType;
-    if (isCurrentPlan) {
-      return tier.cta.current;
-    }
-
+    if (currentPlan?.planType === tier.planType) return tier.cta.current;
     const checkoutPlan: BillingPlan = tier.id === "firm" ? "firm" : "team";
-    if (loadingPlan === checkoutPlan) {
-      return "Starting checkout...";
-    }
-
+    if (loadingPlan === checkoutPlan) return "Starting checkout...";
     return tier.cta.default;
   };
 
+
+  // ── Teaser-only mode (used on homepage) ───────────────────────────────────
   if (showTeaserOnly) {
     return (
       <section id={sectionId} className="section-padding">
         <div className="section-container">
           <div className="mb-8 max-w-3xl reveal">
-            <h2 className="text-4xl font-bold tracking-tight text-slate-900">Choose the plan that fits your review cadence</h2>
+            <h2 className="text-4xl font-bold tracking-tight text-slate-900">
+              Choose the plan that fits your review cadence
+            </h2>
             <p className="mt-3 max-w-2xl text-lg leading-relaxed text-slate-700">
-              Start free for first-cycle validation, then move to Team or Firm when the governance cycle becomes a recurring operating rhythm.
+              Free for your first cycle. Team for recurring monthly governance. Firm for full-platform coverage.
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-3">
@@ -166,68 +103,99 @@ const PricingSection = ({
                 className={`marketing-panel reveal rounded-xl p-6 shadow-sm ${getPlanToneClass(tier.id)}`}
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
+                {tier.badge && (
+                  <span className="mb-3 inline-block rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-600">
+                    {tier.badge}
+                  </span>
+                )}
                 <h3 className="text-base font-semibold text-slate-900">{tier.name}</h3>
-                <p className="mt-1 text-xs uppercase tracking-wide text-slate-700">{tier.audience}</p>
+                <p className="mt-1 text-xs uppercase tracking-wide text-slate-600">{tier.audience}</p>
                 <p className="mt-4 text-3xl font-bold text-slate-900">
                   {tier.price}
-                  {tier.period ? <span className="ml-1 text-sm font-normal text-slate-700">{tier.period}</span> : null}
+                  {tier.period ? <span className="ml-1 text-sm font-normal text-slate-600">{tier.period}</span> : null}
                 </p>
-                <p className="mt-4 text-sm leading-relaxed text-slate-700">
-                  {tier.id === "free"
-                    ? "Best for validating the first review cycle and seeing how Clarion fits your firm."
-                    : tier.id === "team"
-                      ? "Best for firms running a recurring monthly governance rhythm with shared ownership."
-                      : "Best for firms that need broader capacity and ongoing coverage across repeated cycles."}
-                </p>
+                {tier.annualSavings && (
+                  <p className="mt-1 text-xs text-emerald-700 font-medium">{tier.annualSavings} billed annually</p>
+                )}
               </article>
             ))}
           </div>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Link to="/pricing" className="gov-btn-primary">
-              Compare plans
-            </Link>
-            <Link to="/signup" className="gov-btn-secondary">
-              Start free
-            </Link>
+            <Link to="/pricing" className="gov-btn-primary">Compare plans</Link>
+            <Link to="/signup" className="gov-btn-secondary">Start free</Link>
           </div>
         </div>
       </section>
     );
   }
 
+
+  // ── Full pricing section ──────────────────────────────────────────────────
   return (
     <>
       <section id={sectionId} className="section-padding">
         <div className="section-container">
-                  {showIntro && (
-            <div className="mb-12 text-center reveal">
-              <h2 className="section-heading text-slate-900">Choose the plan for your governance cycle</h2>
-              <p className="mx-auto mt-1 max-w-2xl text-sm text-slate-700">Start free, upgrade when you are ready.</p>
-              <p className="mx-auto mt-1 max-w-2xl text-sm text-slate-600">
-                One free governance brief per month to start. Upgrade when your governance cycle demands more depth.
+
+          {showIntro && (
+            <div className="mb-10 text-center reveal">
+              <h2 className="section-heading text-slate-900">Plans for every stage of governance maturity</h2>
+              <p className="mx-auto mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
+                Start with a free trial to validate your first cycle. Upgrade when governance becomes part of your firm's operating rhythm.
               </p>
               {showEntryCtas && (
                 <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
                   <Link to={!isLoading && isLoggedIn ? "/dashboard" : "/signup"} className="gov-btn-primary">
-                    {!isLoading && isLoggedIn ? "Go to Dashboard" : "Start Free"}
+                    {!isLoading && isLoggedIn ? "Go to Dashboard" : "Start Free Trial"}
                   </Link>
                   {!isLoggedIn ? (
-                    <Link to="/login?redirectTo=/pricing" className="gov-btn-secondary">
-                      Log in
-                    </Link>
+                    <Link to="/login?redirectTo=/pricing" className="gov-btn-secondary">Log in</Link>
                   ) : null}
-                  <Link to="/demo" className="gov-btn-secondary">
-                    Explore demo workspace
-                  </Link>
+                  <Link to="/demo" className="gov-btn-secondary">Explore demo workspace</Link>
                 </div>
               )}
             </div>
           )}
 
+          {/* Billing cycle toggle */}
+          <div className="mb-8 flex justify-center">
+            <div className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 p-1 text-sm">
+              <button
+                type="button"
+                onClick={() => setBillingCycle("monthly")}
+                className={`rounded-full px-4 py-1.5 font-medium transition ${
+                  billingCycle === "monthly"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-slate-500 hover:text-slate-700"
+                }`}
+              >
+                Monthly
+              </button>
+              <button
+                type="button"
+                onClick={() => setBillingCycle("annual")}
+                className={`rounded-full px-4 py-1.5 font-medium transition ${
+                  billingCycle === "annual"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-slate-500 hover:text-slate-700"
+                }`}
+              >
+                Annual
+                <span className="ml-1.5 rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
+                  Save up to 17%
+                </span>
+              </button>
+            </div>
+          </div>
+
+
+          {/* Plan cards */}
           <div className="grid gap-6 lg:grid-cols-3">
             {pricingPlans.map((tier, i) => {
               const isCurrentPlan = currentPlan?.planType === tier.planType;
               const isHighlighted = highlightedPlanId === tier.id;
+              const displayPrice = billingCycle === "annual" ? tier.annualPrice : tier.price;
+              const displayPeriod = billingCycle === "annual" ? tier.annualPeriod : tier.period;
+
               return (
                 <div
                   key={tier.name}
@@ -245,29 +213,37 @@ const PricingSection = ({
                   )}
                   {!isCurrentPlan && isHighlighted && (
                     <span className="absolute top-3 right-3 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary">
-                      Selected upgrade
+                      Selected
                     </span>
                   )}
+                  {!isCurrentPlan && !isHighlighted && tier.badge && (
+                    <span className="absolute top-3 right-3 rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-600">
+                      {tier.badge}
+                    </span>
+                  )}
+
                   <h3 className="text-base font-semibold text-slate-900">{tier.name}</h3>
-                  <p className="mt-1 text-xs uppercase tracking-wide text-slate-700">{tier.audience}</p>
-                  <div className="mb-5">
-                    <span className="text-3xl font-bold text-slate-900">{tier.price}</span>
-                    {tier.period && <span className="ml-1 text-sm text-slate-700">{tier.period}</span>}
+                  <p className="mt-1 text-xs text-slate-600 leading-snug">{tier.audience}</p>
+
+                  <div className="mt-4 mb-1">
+                    <span className="text-3xl font-bold text-slate-900">{displayPrice}</span>
+                    {displayPeriod && <span className="ml-1 text-sm text-slate-600">{displayPeriod}</span>}
                   </div>
+                  {billingCycle === "annual" && tier.annualSavings ? (
+                    <p className="mb-4 text-xs font-medium text-emerald-700">{tier.annualSavings}</p>
+                  ) : (
+                    <div className="mb-4" />
+                  )}
+
                   <ul className="mb-8 flex-1 space-y-2.5">
-                    {tier.features.map((f) => {
-                      const explanation = getFeatureExplanation(f);
-                      return (
-                        <li key={f} className="flex items-start gap-2 text-sm text-slate-800">
-                          <Check size={15} className="mt-0.5 shrink-0 text-gold" />
-                          <span className="inline-flex items-center">
-                            {f}
-                            {explanation && <InfoTooltip title={explanation.title} body={explanation.body} />}
-                          </span>
-                        </li>
-                      );
-                    })}
+                    {tier.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-sm text-slate-800">
+                        <Check size={15} className="mt-0.5 shrink-0 text-gold" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
                   </ul>
+
                   {isCurrentPlan ? (
                     <Link to="/dashboard" className="gov-btn-secondary w-full justify-center">
                       Go to Dashboard
@@ -283,7 +259,7 @@ const PricingSection = ({
                         {getButtonLabel(tier)}
                       </button>
                       {tier.id !== "free" ? (
-                        <p className="mt-2 text-center text-xs text-slate-600">Secure checkout powered by Stripe</p>
+                        <p className="mt-2 text-center text-xs text-slate-500">Secure checkout via Stripe</p>
                       ) : null}
                     </>
                   )}
@@ -292,19 +268,70 @@ const PricingSection = ({
             })}
           </div>
 
-          {showFaq ? (
-            <div className="mx-auto mt-10 max-w-3xl border-t border-slate-200 pt-5">
-              <p className="text-sm font-semibold text-slate-900">Pricing FAQ</p>
-              <Accordion type="single" collapsible className="mt-2">
-                {faqItems.map((item) => (
-                  <AccordionItem key={item.value} value={item.value}>
-                    <AccordionTrigger className="text-left text-sm text-slate-900">{item.question}</AccordionTrigger>
-                    <AccordionContent className="text-sm text-slate-800">{item.answer}</AccordionContent>
+
+          {/* Feature comparison table */}
+          <div className="mt-14 reveal">
+            <h3 className="mb-6 text-center text-lg font-semibold text-slate-900">Full feature comparison</h3>
+            <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-slate-200 bg-slate-50">
+                    <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 w-2/5">
+                      Feature
+                    </th>
+                    {pricingPlans.map((tier) => (
+                      <th key={tier.id} className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-700">
+                        {tier.name}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(groupedRows).map(([category, rows]) => (
+                    <>
+                      <tr key={`cat-${category}`} className="bg-slate-50/60 border-y border-slate-100">
+                        <td colSpan={4} className="px-5 py-2 text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+                          {category}
+                        </td>
+                      </tr>
+                      {rows.map((row) => (
+                        <tr key={row.feature} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/40 transition-colors">
+                          <td className="px-5 py-3 text-slate-700">{row.feature}</td>
+                          <td className="px-4 py-3 text-center"><CellValue value={row.free} /></td>
+                          <td className="px-4 py-3 text-center"><CellValue value={row.team} /></td>
+                          <td className="px-4 py-3 text-center"><CellValue value={row.firm} /></td>
+                        </tr>
+                      ))}
+                    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+          {/* FAQ */}
+          {showFaq && (
+            <div className="mx-auto mt-14 max-w-3xl border-t border-slate-200 pt-10 reveal">
+              <h3 className="mb-2 text-lg font-semibold text-slate-900">Frequently asked questions</h3>
+              <p className="mb-6 text-sm text-slate-600">
+                Questions about contracts, billing, or data? Here are the ones managing partners and office administrators ask most often.
+              </p>
+              <Accordion type="single" collapsible className="divide-y divide-slate-200">
+                {pricingFaqs.map((item) => (
+                  <AccordionItem key={item.value} value={item.value} className="border-none">
+                    <AccordionTrigger className="py-4 text-left text-sm font-medium text-slate-900 hover:no-underline">
+                      {item.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-4 text-sm leading-relaxed text-slate-700">
+                      {item.answer}
+                    </AccordionContent>
                   </AccordionItem>
                 ))}
               </Accordion>
             </div>
-          ) : null}
+          )}
+
         </div>
       </section>
     </>

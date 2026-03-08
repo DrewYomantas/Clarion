@@ -563,6 +563,9 @@ export interface AccountBranding {
 
   logoUpdatedAt: string | null;
 
+  /** True only when the API confirms the firm is on the Firm plan. */
+  brandingEditorEnabled: boolean;
+
 }
 
 
@@ -2310,6 +2313,8 @@ function normalizeAccountBranding(payload: Record<string, unknown>): AccountBran
     hasLogo: Boolean(rawBranding.has_logo),
 
     logoUpdatedAt: typeof rawBranding.logo_updated_at === "string" ? rawBranding.logo_updated_at : null,
+
+    brandingEditorEnabled: Boolean(rawBranding.branding_editor_enabled),
 
   };
 
@@ -4509,6 +4514,188 @@ export async function resetPassword(
   } catch (error) {
     warnNetworkOnce("reset-password", "Reset password", error);
     return { success: false, error: "Unable to reset password. Please try again." };
+  }
+}
+
+// ─── Team Invite API ──────────────────────────────────────────────────────────
+
+export type TeamMemberRole = "owner" | "partner" | "member";
+export type TeamMemberStatus = "active" | "invited" | "suspended";
+
+export interface TeamMember {
+  user_id: number;
+  email: string;
+  role: TeamMemberRole;
+  status: TeamMemberStatus;
+  joined_at: string | null;
+  invited_at: string | null;
+}
+
+export interface TeamMembersResponse {
+  success: boolean;
+  firm_id?: number;
+  members?: TeamMember[];
+  error?: string;
+}
+
+export interface TeamInviteResponse {
+  success: boolean;
+  message?: string;
+  /** Only present in dev/test mode — shows token in UI for manual testing */
+  invite_token?: string;
+  invite_url?: string;
+  error?: string;
+  code?: string;
+}
+
+export interface TeamAcceptResponse {
+  success: boolean;
+  message?: string;
+  error?: string;
+}
+
+export async function getTeamMembers(): Promise<TeamMembersResponse> {
+  try {
+    const response = await fetch(`${API_BASE}/team/members`, {
+      method: "GET",
+      credentials: "include",
+    });
+    const payload = await safeParseJson(response);
+    if (!response.ok || payload.success === false) {
+      return {
+        success: false,
+        error:
+          (typeof payload.error === "string" ? payload.error : undefined) ||
+          "Unable to load team members.",
+      };
+    }
+    return {
+      success: true,
+      firm_id: typeof payload.firm_id === "number" ? payload.firm_id : undefined,
+      members: Array.isArray(payload.members) ? (payload.members as TeamMember[]) : [],
+    };
+  } catch (error) {
+    console.error("[authService] Team members fetch failed:", error);
+    return { success: false, error: "Unable to load team members." };
+  }
+}
+
+export async function inviteTeamMember(
+  email: string,
+  role: "partner" | "member",
+): Promise<TeamInviteResponse> {
+  try {
+    const response = await fetch(`${API_BASE}/team/invite`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email, role }),
+    });
+    const payload = await safeParseJson(response);
+    if (!response.ok || payload.success === false) {
+      return {
+        success: false,
+        error:
+          (typeof payload.error === "string" ? payload.error : undefined) ||
+          "Unable to send invitation.",
+        code: typeof payload.code === "string" ? payload.code : undefined,
+      };
+    }
+    return {
+      success: true,
+      message: typeof payload.message === "string" ? payload.message : "Invitation sent.",
+      invite_token:
+        typeof payload.invite_token === "string" ? payload.invite_token : undefined,
+      invite_url:
+        typeof payload.invite_url === "string" ? payload.invite_url : undefined,
+    };
+  } catch (error) {
+    console.error("[authService] Team invite failed:", error);
+    return { success: false, error: "Unable to send invitation." };
+  }
+}
+
+export async function acceptTeamInvite(
+  token: string,
+  password: string,
+): Promise<TeamAcceptResponse> {
+  try {
+    // NOTE: Accept endpoint is public (no session cookie required)
+    const response = await globalThis.fetch(`${API_BASE}/team/accept`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, password }),
+    });
+    const payload = await safeParseJson(response);
+    if (!response.ok || payload.success === false) {
+      return {
+        success: false,
+        error:
+          (typeof payload.error === "string" ? payload.error : undefined) ||
+          "Unable to accept invitation.",
+      };
+    }
+    return {
+      success: true,
+      message: typeof payload.message === "string" ? payload.message : "Invitation accepted.",
+    };
+  } catch (error) {
+    console.error("[authService] Team accept failed:", error);
+    return { success: false, error: "Unable to accept invitation." };
+  }
+}
+
+export async function updateTeamMemberRole(
+  userId: number,
+  role: TeamMemberRole,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const response = await fetch(`${API_BASE}/team/member/${userId}/role`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ role }),
+    });
+    const payload = await safeParseJson(response);
+    if (!response.ok || payload.success === false) {
+      return {
+        success: false,
+        error:
+          (typeof payload.error === "string" ? payload.error : undefined) ||
+          "Unable to update role.",
+      };
+    }
+    return { success: true };
+  } catch (error) {
+    console.error("[authService] Team role update failed:", error);
+    return { success: false, error: "Unable to update role." };
+  }
+}
+
+export async function updateTeamMemberStatus(
+  userId: number,
+  status: "active" | "suspended",
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const response = await fetch(`${API_BASE}/team/member/${userId}/status`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ status }),
+    });
+    const payload = await safeParseJson(response);
+    if (!response.ok || payload.success === false) {
+      return {
+        success: false,
+        error:
+          (typeof payload.error === "string" ? payload.error : undefined) ||
+          "Unable to update member status.",
+      };
+    }
+    return { success: true };
+  } catch (error) {
+    console.error("[authService] Team status update failed:", error);
+    return { success: false, error: "Unable to update member status." };
   }
 }
 

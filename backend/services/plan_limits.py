@@ -9,15 +9,15 @@ PLAN_LIMITS = {
         "pdf_watermark": True,
     },
     "team": {
-        "max_users": 5,
-        "max_reviews_per_upload": 5000,
+        "max_users": None,  # Unlimited seats
+        "max_reviews_per_upload": 250,
         "max_reports_per_month": 10,
         "history_days": 365,
         "pdf_watermark": False,
     },
     "firm": {
-        "max_users": 20,
-        "max_reviews_per_upload": 5000,
+        "max_users": None,  # Unlimited seats
+        "max_reviews_per_upload": 1000,
         "max_reports_per_month": None,
         "history_days": None,
         "pdf_watermark": False,

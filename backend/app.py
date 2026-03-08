@@ -32,6 +32,34 @@ from dotenv import load_dotenv
 
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"), override=False)
 
+# -- Startup interpreter + env diagnostic ------------------------------------
+# Printed to stderr on every process start. Detects wrong-interpreter startup
+# (e.g. C:\Python314\python.exe instead of venv312\Scripts\python.exe) which
+# causes python-dotenv and resend to be missing and email delivery to silently
+# report provider_not_configured.
+import sys as _sys
+_resend_key = (os.getenv("RESEND_API_KEY") or "").strip()
+_from_email = (os.getenv("RESEND_FROM_EMAIL") or os.getenv("FROM_EMAIL") or "").strip()
+_any_env = bool(_resend_key or _from_email or (os.getenv("SECRET_KEY") or "").strip())
+_from_email_display = repr(_from_email) if _from_email else 'MISSING'
+print(
+    f"[clarion:startup] interpreter={_sys.executable!r} "
+    f"python={_sys.version.split()[0]} "
+    f"env_vars_loaded={_any_env} "
+    f"RESEND_API_KEY={'SET' if _resend_key else 'MISSING'} "
+    f"from_email={_from_email_display}",
+    file=_sys.stderr, flush=True,
+)
+if not _any_env:
+    print(
+        "[clarion:startup] WARNING: No expected env vars found after load_dotenv(). "
+        "Wrong interpreter? Expected venv312\\Scripts\\python.exe. "
+        "Run start.bat or invoke: venv312\\Scripts\\python.exe app.py",
+        file=_sys.stderr, flush=True,
+    )
+del _sys, _resend_key, _from_email, _any_env
+# ---------------------------------------------------------------------------
+
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 FROM_EMAIL = os.getenv("FROM_EMAIL")
 PARTNER_EMAILS = os.getenv("PARTNER_EMAILS", "").split(",")
@@ -152,6 +180,18 @@ from werkzeug.utils import secure_filename
 
 import sqlite3
 import stripe
+
+# Unified DB operational error tuple: catches both SQLite and psycopg2 errors
+# so except clauses work correctly regardless of which backend is active.
+try:
+    import psycopg2 as _psycopg2
+    _DB_OPERATIONAL_ERRORS = (sqlite3.OperationalError, _psycopg2.OperationalError)
+    _DB_INTEGRITY_ERRORS = (sqlite3.IntegrityError, _psycopg2.IntegrityError)
+except ImportError:
+    _psycopg2 = None
+    _DB_OPERATIONAL_ERRORS = (sqlite3.OperationalError,)
+    _DB_INTEGRITY_ERRORS = (sqlite3.IntegrityError,)
+
 from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
 try:
 
@@ -1196,7 +1236,7 @@ def _log_security_event(user_id, event_type, metadata=None):
 
         conn.commit()
 
-    except sqlite3.OperationalError as exc:
+    except _DB_OPERATIONAL_ERRORS as exc:
 
         message = str(exc).lower()
 
@@ -1416,9 +1456,9 @@ def init_db():
 
             c.execute(ddl)
 
-        except sqlite3.OperationalError as exc:
+        except _DB_OPERATIONAL_ERRORS as exc:
 
-            if 'duplicate column name' not in str(exc).lower():
+            if 'duplicate column name' not in str(exc).lower() and 'already exists' not in str(exc).lower():
 
                 raise
 
@@ -1879,7 +1919,7 @@ def init_db():
 
             review_text TEXT    NOT NULL,
 
-            submitted_at TEXT   NOT NULL DEFAULT (datetime('now'))
+            submitted_at TEXT   NOT NULL DEFAULT (CURRENT_TIMESTAMP)
 
         )
 
@@ -2249,8 +2289,10 @@ def init_db():
 
     c.execute('PRAGMA table_info(firms)')
     firm_columns = [col[1] for col in c.fetchall()]
-    c.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name='firms'")
-    firms_table_sql_row = c.fetchone()
+    firms_table_sql_row = None
+    if not _db_connector.is_postgres:
+        c.execute("SELECT sql FROM sqlite_master WHERE type='table' AND name='firms'")
+        firms_table_sql_row = c.fetchone()
     firms_table_sql = str(firms_table_sql_row[0] or '').lower() if firms_table_sql_row else ''
     legacy_plan_check = "check(plan in ('trial','professional','leadership'))" in firms_table_sql
     if legacy_plan_check:
@@ -9341,7 +9383,7 @@ def _store_report_pdf_artifact(user_id: int, report_id: int, pdf_bytes: bytes, g
 
         ''',
 
-        (report_id, user_id, sqlite3.Binary(pdf_bytes), timestamp),
+        (report_id, user_id, pdf_bytes, timestamp),
 
     )
 
@@ -10830,7 +10872,7 @@ def api_register():
                 conn.commit()
                 conn.close()
                 break
-            except sqlite3.OperationalError as exc:
+            except _DB_OPERATIONAL_ERRORS as exc:
                 if conn is not None:
                     try:
                         conn.close()
@@ -11232,13 +11274,30 @@ def api_account_profile_put():
 
 def api_account_branding_get():
 
-    """Return account-level branding settings for report PDFs."""
+    """Return account-level branding settings for report PDFs.
+
+    All plans receive their current branding data. The response includes
+    a `branding_editor_enabled` flag so the frontend knows whether to
+    show the upload UI or an upgrade prompt.
+    """
 
     try:
 
+        firm_ctx, err = _require_firm_context()
+
+        if err:
+
+            return err
+
+        firm_plan = get_firm_plan(firm_ctx['firm_id'])
+
         branding = _get_account_branding(current_user.id)
 
-        return jsonify({'success': True, 'branding': _branding_public_payload(branding)}), 200
+        payload = _branding_public_payload(branding)
+
+        payload['branding_editor_enabled'] = (firm_plan == FIRM_PLAN_FIRM)
+
+        return jsonify({'success': True, 'branding': payload}), 200
 
     except Exception:
 
@@ -11291,9 +11350,32 @@ def api_account_branding_logo_get():
 @app.route('/api/account/branding/logo', methods=['POST'])
 @login_required
 def api_account_branding_logo_put():
-    """Upload or replace the account-level logo used in report PDFs."""
+    """Upload or replace the account-level logo used in report PDFs.
+
+    Requires Firm plan. Free and Team plans receive a 403 with an upgrade message.
+    """
 
     try:
+
+        firm_ctx, err = _require_firm_context()
+
+        if err:
+
+            return err
+
+        firm_plan = get_firm_plan(firm_ctx['firm_id'])
+
+        if firm_plan != FIRM_PLAN_FIRM:
+
+            return jsonify({
+
+                'success': False,
+
+                'error': 'Custom branding is available on the Firm plan.',
+
+                'upgrade_required': True,
+
+            }), 403
 
         logo_file = request.files.get('logo')
 
@@ -11358,9 +11440,32 @@ def api_account_branding_logo_put():
 @app.route('/api/account/branding/logo', methods=['DELETE'])
 @login_required
 def api_account_branding_logo_delete():
-    """Remove account logo and fall back to firm name text branding."""
+    """Remove account logo and fall back to firm name text branding.
+
+    Requires Firm plan. Only Firm users can have logos to remove.
+    """
 
     try:
+
+        firm_ctx, err = _require_firm_context()
+
+        if err:
+
+            return err
+
+        firm_plan = get_firm_plan(firm_ctx['firm_id'])
+
+        if firm_plan != FIRM_PLAN_FIRM:
+
+            return jsonify({
+
+                'success': False,
+
+                'error': 'Custom branding is available on the Firm plan.',
+
+                'upgrade_required': True,
+
+            }), 403
 
         branding = _save_account_branding(current_user.id, remove_logo=True)
 
@@ -11383,9 +11488,32 @@ def api_account_branding_logo_delete():
 @app.route('/api/account/branding/theme', methods=['PUT'])
 @login_required
 def api_account_branding_theme_put():
-    """Update the account-level accent theme used by report PDFs."""
+    """Update the account-level accent theme used by report PDFs.
+
+    Requires Firm plan. Free and Team plans receive a 403 with an upgrade message.
+    """
 
     try:
+
+        firm_ctx, err = _require_firm_context()
+
+        if err:
+
+            return err
+
+        firm_plan = get_firm_plan(firm_ctx['firm_id'])
+
+        if firm_plan != FIRM_PLAN_FIRM:
+
+            return jsonify({
+
+                'success': False,
+
+                'error': 'Custom branding is available on the Firm plan.',
+
+                'upgrade_required': True,
+
+            }), 403
 
         payload = request.get_json(silent=True) or {}
 
@@ -11430,11 +11558,183 @@ def api_account_branding_theme_put():
 @app.route('/api/team/invite', methods=['POST'])
 @login_required
 def api_team_invite():
-    """Team invites are not available in this release."""
+    """Invite a new team member to the firm."""
+    try:
+
+        firm_ctx, err = _require_firm_context()
+
+        if err:
+
+            return err
+
+        if not _is_owner(firm_ctx['role']):
+
+            return jsonify({'success': False, 'error': 'Only firm owners can invite members.'}), 403
+
+        seat_limit_result = plan_service.enforce_seat_limit(firm_ctx['firm_id'], db_connect)
+        if seat_limit_result:
+            return _plan_limit_error(seat_limit_result.get('message') or 'Plan seat limit reached.')
+
+
+
+        payload = request.get_json(silent=True) or {}
+
+        email = (payload.get('email') or '').strip().lower()
+
+        role = (payload.get('role') or 'member').strip().lower()
+
+        if role not in {'partner', 'member'}:
+
+            return jsonify({'success': False, 'error': 'Role must be partner or member.'}), 400
+
+        if not is_valid_email(email):
+
+            return jsonify({'success': False, 'error': 'A valid email is required.'}), 400
+
+
+
+        invite_token = secrets.token_urlsafe(32)
+
+        invite_hash = hashlib.sha256(invite_token.encode('utf-8')).hexdigest()
+
+        now_iso = datetime.now(timezone.utc).isoformat()
+
+        conn = db_connect()
+
+        c = conn.cursor()
+
+        c.execute('SELECT id FROM users WHERE email = ? OR username = ? LIMIT 1', (email, email))
+
+        user_row = c.fetchone()
+
+        if user_row:
+
+            invited_user_id = int(user_row[0])
+
+            c.execute(
+
+                '''
+
+                SELECT 1
+
+                FROM firm_users
+
+                WHERE user_id = ? AND status = 'active' AND firm_id != ?
+
+                LIMIT 1
+
+                ''',
+
+                (invited_user_id, firm_ctx['firm_id']),
+
+            )
+
+            if c.fetchone():
+
+                conn.close()
+
+                return jsonify({'success': False, 'error': 'User already belongs to another active firm workspace.'}), 409
+
+        else:
+
+            c.execute(
+
+                '''
+
+                INSERT INTO users (email, username, password_hash, is_verified, created_at, firm_name, is_admin, subscription_type, subscription_status)
+
+                VALUES (?, ?, ?, 0, ?, ?, 0, 'trial', 'trial')
+
+                ''',
+
+                (email, email, generate_password_hash(secrets.token_urlsafe(24)), now_iso, firm_ctx.get('firm_name') or app.config['FIRM_NAME']),
+
+            )
+
+            invited_user_id = int(c.lastrowid)
+
+
+
+        c.execute(
+
+            '''
+
+            INSERT INTO firm_users (
+
+                firm_id, user_id, role, status, invited_by_user_id, invited_at, invite_token_hash
+
+            )
+
+            VALUES (?, ?, ?, 'invited', ?, ?, ?)
+
+            ON CONFLICT(firm_id, user_id) DO UPDATE SET
+
+                role = excluded.role,
+
+                status = 'invited',
+
+                invited_by_user_id = excluded.invited_by_user_id,
+
+                invited_at = excluded.invited_at,
+
+                invite_token_hash = excluded.invite_token_hash
+
+            ''',
+
+            (firm_ctx['firm_id'], invited_user_id, role, current_user.id, now_iso, invite_hash),
+
+        )
+
+        _log_audit_event(
+
+            conn,
+
+            firm_ctx['firm_id'],
+
+            current_user.id,
+
+            'member',
+
+            invited_user_id,
+
+            'MEMBER_INVITED',
+
+            before_dict={},
+
+            after_dict={'email': email, 'role': role, 'status': 'invited'},
+
+        )
+
+        conn.commit()
+
+        conn.close()
+
+
+
+        resp = {'success': True, 'message': 'Invitation created.'}
+
+        if app.config.get('DEBUG') or app.config.get('TESTING'):
+
+            resp['invite_token'] = invite_token
+
+            resp['invite_url'] = f'/invite/accept?token={invite_token}'
+
+        return jsonify(resp), 200
+
+    except Exception:
+
+        return _safe_api_error(
+
+            'Unable to invite team member right now.',
+
+            log_message=f'Failed team invite for user {current_user.id}',
+
+        )
+
+
+def _api_team_invite_disabled_legacy():
+    """Original stub kept for reference — no longer active."""
     return jsonify({'success': False, 'error': 'Team invitations are not available yet. This feature is coming soon.', 'code': 'feature_unavailable'}), 503
-
-
-def _api_team_invite_disabled():
     """Original invite logic kept here but disabled for 1.0."""
     try:
 

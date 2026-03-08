@@ -46,6 +46,8 @@ import Security from "./pages/Security";
 import DemoWorkspace from "./pages/DemoWorkspace";
 import DemoReportDetail from "./pages/DemoReportDetail";
 import DemoPdfPreview from "./pages/DemoPdfPreview";
+import DashboardTeam from "./pages/DashboardTeam";
+import InviteAccept from "./pages/InviteAccept";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +72,7 @@ const AppRoutes = ({ location }: { location: Location }) => (
     <Route path="/login" element={<Login />} />
     <Route path="/forgot-password" element={<ForgotPassword />} />
     <Route path="/reset-password/:token" element={<ResetPassword />} />
+    <Route path="/invite/accept" element={<InviteAccept />} />
     <Route path="/onboarding" element={<Onboarding />} />
     <Route path="/pricing" element={<Pricing />} />
     <Route path="/features" element={<Features />} />
@@ -105,6 +108,7 @@ const AppRoutes = ({ location }: { location: Location }) => (
       <Route path="/dashboard/billing" element={<DashboardBilling />} />
       <Route path="/dashboard/security" element={<DashboardSecurity />} />
       <Route path="/dashboard/account" element={<DashboardAccount />} />
+      <Route path="/dashboard/team" element={<DashboardTeam />} />
       <Route path="/dashboard/brief-customization" element={<DashboardPdfPreview />} />
       <Route
         path="/upload"

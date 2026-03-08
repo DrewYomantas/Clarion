@@ -265,6 +265,7 @@ const DashboardPdfPreview = () => {
     return `${branding.logoUrl}?v=${version}`;
   }, [branding?.logoUpdatedAt, branding?.logoUrl]);
   const pdfWatermarked = resolvePlanLimits(currentPlan).pdfWatermark;
+  const brandingEditorEnabled = branding?.brandingEditorEnabled === true;
 
   const reportDateLabel = useMemo(
     () =>
@@ -429,76 +430,114 @@ const DashboardPdfPreview = () => {
 
                 <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Firm logo</p>
-                  {previewLogoUrl ? (
-                    <div className="mt-3 flex h-20 items-center justify-center rounded-xl border border-slate-200 bg-white px-3">
-                      <img src={previewLogoUrl} alt="Firm logo preview" className="max-h-12 max-w-full object-contain" />
-                    </div>
+                  {brandingEditorEnabled ? (
+                    <>
+                      {previewLogoUrl ? (
+                        <div className="mt-3 flex h-20 items-center justify-center rounded-xl border border-slate-200 bg-white px-3">
+                          <img src={previewLogoUrl} alt="Firm logo preview" className="max-h-12 max-w-full object-contain" />
+                        </div>
+                      ) : (
+                        <div className="mt-3 flex h-20 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white text-xs text-slate-500">
+                          No logo uploaded
+                        </div>
+                      )}
+                      <div className="mt-3 flex flex-wrap items-center gap-2">
+                        <label className="gov-btn-secondary cursor-pointer px-3 py-1.5 text-xs">
+                          {isUploadingPreviewLogo ? "Uploading..." : "Upload logo"}
+                          <input
+                            type="file"
+                            accept=".png,.jpg,.jpeg,image/png,image/jpeg"
+                            className="hidden"
+                            onChange={(event) => void handlePreviewLogoUpload(event)}
+                            disabled={isUploadingPreviewLogo}
+                          />
+                        </label>
+                        {branding?.hasLogo ? (
+                          <button
+                            type="button"
+                            className="gov-btn-secondary px-3 py-1.5 text-xs"
+                            onClick={() => void handleLogoRemove()}
+                            disabled={isRemovingLogo}
+                          >
+                            {isRemovingLogo ? "Removing..." : "Remove logo"}
+                          </button>
+                        ) : null}
+                      </div>
+                    </>
                   ) : (
-                    <div className="mt-3 flex h-20 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white text-xs text-slate-500">
-                      No logo uploaded
+                    <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+                      <p className="text-xs font-medium text-amber-800">
+                        Custom branding available on Firm plan
+                      </p>
+                      <p className="mt-1 text-xs text-amber-700">
+                        Add your logo and colors to governance brief PDFs.
+                      </p>
+                      <a
+                        href="/dashboard/billing"
+                        className="mt-2 inline-block text-xs font-semibold text-amber-800 underline underline-offset-2 hover:text-amber-900"
+                      >
+                        Upgrade to Firm →
+                      </a>
                     </div>
                   )}
-                  <div className="mt-3 flex flex-wrap items-center gap-2">
-                    <label className="gov-btn-secondary cursor-pointer px-3 py-1.5 text-xs">
-                      {isUploadingPreviewLogo ? "Uploading..." : "Upload logo"}
-                      <input
-                        type="file"
-                        accept=".png,.jpg,.jpeg,.svg,image/png,image/jpeg,image/svg+xml"
-                        className="hidden"
-                        onChange={(event) => void handlePreviewLogoUpload(event)}
-                        disabled={isUploadingPreviewLogo}
-                      />
-                    </label>
-                    {branding?.hasLogo ? (
-                      <button
-                        type="button"
-                        className="gov-btn-secondary px-3 py-1.5 text-xs"
-                        onClick={() => void handleLogoRemove()}
-                        disabled={isRemovingLogo}
-                      >
-                        {isRemovingLogo ? "Removing..." : "Remove logo"}
-                      </button>
-                    ) : null}
-                  </div>
                 </div>
 
                 <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Accent treatment</p>
-                  <p className="mt-2 text-xs leading-5 text-slate-600">
-                    Choose the color treatment used across the governance brief cover, highlights, and section accents.
-                  </p>
-                  <div className="mt-3 space-y-2">
-                    {branding?.themeOptions?.map((option) => {
-                      const active = branding.accentTheme === option.id;
-                      return (
-                        <button
-                          key={option.id}
-                          type="button"
-                          disabled={isSavingTheme}
-                          onClick={() => void handleThemeChange(option.id)}
-                          className={`w-full rounded-xl border px-3 py-2 text-left text-xs transition ${
-                            active
-                              ? "border-amber-300 bg-amber-50 text-slate-900"
-                              : "border-slate-200 bg-white text-slate-600 hover:text-slate-900"
-                          }`}
-                        >
-                          <span className="flex items-center justify-between gap-2">
-                            <span>{option.label}</span>
-                            <span className="flex items-center gap-1.5">
-                              <span
-                                className="h-2.5 w-2.5 rounded-full border border-black/20"
-                                style={{ backgroundColor: option.primary_hex }}
-                              />
-                              <span
-                                className="h-2.5 w-2.5 rounded-full border border-black/20"
-                                style={{ backgroundColor: option.accent_hex }}
-                              />
-                            </span>
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
+                  {brandingEditorEnabled ? (
+                    <>
+                      <p className="mt-2 text-xs leading-5 text-slate-600">
+                        Choose the color treatment used across the governance brief cover, highlights, and section accents.
+                      </p>
+                      <div className="mt-3 space-y-2">
+                        {branding?.themeOptions?.map((option) => {
+                          const active = branding.accentTheme === option.id;
+                          return (
+                            <button
+                              key={option.id}
+                              type="button"
+                              disabled={isSavingTheme}
+                              onClick={() => void handleThemeChange(option.id)}
+                              className={`w-full rounded-xl border px-3 py-2 text-left text-xs transition ${
+                                active
+                                  ? "border-amber-300 bg-amber-50 text-slate-900"
+                                  : "border-slate-200 bg-white text-slate-600 hover:text-slate-900"
+                              }`}
+                            >
+                              <span className="flex items-center justify-between gap-2">
+                                <span>{option.label}</span>
+                                <span className="flex items-center gap-1.5">
+                                  <span
+                                    className="h-2.5 w-2.5 rounded-full border border-black/20"
+                                    style={{ backgroundColor: option.primary_hex }}
+                                  />
+                                  <span
+                                    className="h-2.5 w-2.5 rounded-full border border-black/20"
+                                    style={{ backgroundColor: option.accent_hex }}
+                                  />
+                                </span>
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+                      <p className="text-xs font-medium text-amber-800">
+                        Custom branding available on Firm plan
+                      </p>
+                      <p className="mt-1 text-xs text-amber-700">
+                        Upgrade to add your logo and colors to governance brief PDFs.
+                      </p>
+                      <a
+                        href="/dashboard/billing"
+                        className="mt-2 inline-block text-xs font-semibold text-amber-800 underline underline-offset-2 hover:text-amber-900"
+                      >
+                        Upgrade to Firm →
+                      </a>
+                    </div>
+                  )}
                 </div>
 
                 <div className="rounded-2xl border border-[#DBEAFE] bg-[#F8FBFF] p-4">

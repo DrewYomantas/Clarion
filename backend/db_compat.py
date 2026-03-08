@@ -52,6 +52,14 @@ class CompatCursor:
                 rewritten = rewritten.rstrip().rstrip(";") + " ON CONFLICT DO NOTHING"
 
         # SQLite datetime() helper compatibility
+        # Special-case datetime('now') / datetime("now") first → CURRENT_TIMESTAMP
+        rewritten = re.sub(
+            r"\bdatetime\s*\(\s*['\"]now['\"]\s*\)",
+            "CURRENT_TIMESTAMP",
+            rewritten,
+            flags=re.IGNORECASE,
+        )
+        # General datetime(expr) → CAST(expr AS timestamp)
         rewritten = re.sub(r"\bdatetime\(([^)]+)\)", r"CAST(\1 AS timestamp)", rewritten, flags=re.IGNORECASE)
 
         # DB-API placeholder compatibility: ? -> %s

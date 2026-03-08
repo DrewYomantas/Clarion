@@ -14,50 +14,72 @@ A Flask-based SaaS application for collecting and analyzing client feedback for 
 
 ### 1. Set up Python environment
 
-```bash
-# Create virtual environment
-python -m venv venv
+> **Important:** This project requires the `venv312` virtual environment located at
+> `backend/venv312/`. Always use `venv312\Scripts\python.exe` (Windows) or
+> `venv312/bin/python` (Linux/macOS) — never the system `python` or `py` commands.
+> The project dependencies (`python-dotenv`, `resend`, `flask`, etc.) are installed
+> only in `venv312`. Using system Python will silently skip `.env` loading and cause
+> email delivery to report "not configured".
 
-# Activate virtual environment
-# On macOS/Linux:
-source venv/bin/activate
-# On Windows:
-venv\Scripts\activate
+```bash
+# Create virtual environment (only needed if venv312 is missing)
+python -m venv venv312
+
+# Activate — Windows PowerShell:
+venv312\Scripts\Activate.ps1
+# Activate — Windows CMD:
+venv312\Scripts\activate.bat
+# Activate — macOS/Linux:
+source venv312/bin/activate
 ```
 
 ### 2. Install dependencies
 
 ```bash
+# With venv312 activated:
 pip install -r requirements.txt
+
+# Or explicitly without activation:
+venv312\Scripts\pip install -r requirements.txt
 ```
 
 ### 3. Configure environment variables
 
-Create a `.env` file (see `.env.example` for template):
+Create a `.env` file in the `backend/` directory (see `config.example.py` for all variables):
 
 ```bash
-cp .env.example .env
+cp config.example.py .env   # then edit .env
 ```
 
-Edit `.env` with your settings:
+Required at minimum:
 - `SECRET_KEY`: Random string for session security
-- `ADMIN_USERNAME`: Admin login username
-- `ADMIN_PASSWORD`: Admin login password
+- `ADMIN_USERNAME` / `ADMIN_PASSWORD`: Admin login credentials
 - `FIRM_NAME`: Your law firm name
+- `RESEND_API_KEY` + `RESEND_FROM_EMAIL`: For transactional email delivery
 
 ### 4. Run the application
 
-**Development:**
+**Development (Windows — recommended):**
+```bat
+cd backend
+start.bat
+```
+`start.bat` guards against wrong-interpreter startup automatically.
+
+**Development (explicit interpreter):**
 ```bash
-python app.py
+# Windows CMD/PowerShell — always use venv312 explicitly:
+cd backend
+venv312\Scripts\python.exe app.py
 ```
 
-**Production (with Gunicorn):**
+**Production (Gunicorn via venv312):**
 ```bash
-gunicorn app:app
+cd backend
+venv312\Scripts\gunicorn -c gunicorn.conf.py app:app
 ```
 
-The app will be available at `http://localhost:5000`
+The app will be available at `http://localhost:5000` (dev) or the port set by `PORT` env var (prod).
 
 ## CSV Format
 
@@ -78,7 +100,8 @@ date,rating,review_text
 ## Running Tests
 
 ```bash
-pytest tests/
+# Always run pytest through venv312:
+venv312\Scripts\pytest tests/
 ```
 
 ## Deployment
@@ -93,7 +116,8 @@ For production go-live, use the launch checklist at [`docs/launch-day-runbook.md
 1. Connect your Git repository
 2. Set environment variables in the platform dashboard
 3. The app will automatically detect `PORT` from environment
-4. Deploy command: `gunicorn app:app`
+4. Deploy command: `gunicorn -c gunicorn.conf.py app:app`
+   (Platform build step installs requirements.txt into the platform's managed venv — no manual venv path needed in cloud deployments.)
 
 ### Environment Variables for Production
 
@@ -104,6 +128,8 @@ ADMIN_PASSWORD=<secure-password>
 FIRM_NAME=<Your Law Firm Name>
 DATABASE_PATH=feedback.db
 FLASK_ENV=production
+RESEND_API_KEY=<your-resend-key>
+RESEND_FROM_EMAIL=Clarion <noreply@yourdomain.com>
 ```
 
 ## Project Structure
@@ -112,26 +138,22 @@ FLASK_ENV=production
 law-firm-feedback/
 ├── app.py                  # Main Flask application
 ├── config.py               # Configuration settings
+├── gunicorn.conf.py        # Gunicorn worker config
+├── start.bat               # Windows venv312-pinned launcher (dev)
 ├── pdf_generator.py        # PDF report generation
 ├── requirements.txt        # Python dependencies
+├── venv312/                # Project virtual environment (Python 3.12)
 ├── templates/              # HTML templates
-│   ├── base.html
-│   ├── index.html
-│   ├── feedback_form.html
-│   ├── thank_you.html
-│   ├── login.html
-│   ├── upload.html
-│   └── report_results.html
 ├── static/
 │   └── css/
 │       └── main.css       # Styling
 ├── tests/                 # Test files
-└── sample_data/           # Sample CSV data
+└── scripts/               # Admin/ops utilities
 ```
 
 ## Default Admin Credentials
 
-**Username:** `admin`  
+**Username:** `admin`
 **Password:** `changeme123`
 
 ⚠️ **Important:** Change these immediately in production!

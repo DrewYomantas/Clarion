@@ -13,20 +13,41 @@
 4. Send follow-up email with next steps and support contact.
 
 ## Manual account adjustments (admin CLI)
-Use `python scripts/admin_cli.py --help`.
+
+> **Interpreter note:** Always run admin scripts with the venv312 interpreter on Windows.
+> Using system Python (`python` or `py`) will fail with import errors.
+
+**Windows:**
+```bat
+cd backend
+venv312\Scripts\python.exe scripts\admin_cli.py --help
+```
+
+**Linux/cloud (platform venv active):**
+```bash
+python scripts/admin_cli.py --help
+```
+
 Examples:
 - Add one-time credits:
-  `python scripts/admin_cli.py grant-credits --email user@firm.com --count 2`
+  ```bat
+  venv312\Scripts\python.exe scripts\admin_cli.py grant-credits --email user@firm.com --count 2
+  ```
 - Set subscription status:
-  `python scripts/admin_cli.py set-subscription --email user@firm.com --type monthly --status active`
+  ```bat
+  venv312\Scripts\python.exe scripts\admin_cli.py set-subscription --email user@firm.com --type monthly --status active
+  ```
 - Force email verification:
-  `python scripts/admin_cli.py verify-email --email user@firm.com`
+  ```bat
+  venv312\Scripts\python.exe scripts\admin_cli.py verify-email --email user@firm.com
+  ```
 
 ## Bug investigation workflow
 1. Correlate support ticket ID with request timestamp.
-2. Pull Sentry issue + application logs.
-3. Reproduce in staging with anonymized data.
-4. Ship patch + regression test.
+2. Check startup log for `[clarion:startup]` line — confirms interpreter and env var status.
+3. Pull Sentry issue + application logs.
+4. Reproduce in staging with anonymized data.
+5. Ship patch + regression test.
 
 ## Downtime response
 1. Confirm outage via `/health` and host provider status page.
@@ -36,7 +57,7 @@ Examples:
 5. Run postmortem within 24 hours.
 
 ## Scaling procedure
-- Short term: increase Gunicorn workers/threads.
+- Short term: increase Gunicorn workers/threads via `GUNICORN_WORKERS` env var.
 - Mid term: migrate from SQLite to Postgres + Redis cache/queue.
 - Long term: move CSV ingest and PDF generation to background workers (Celery/RQ).
 

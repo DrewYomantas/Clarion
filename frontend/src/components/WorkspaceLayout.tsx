@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Activity, FileText, Home, Upload, Users, Zap } from "lucide-react";
+import { Activity, FileText, Home, Upload, Users, UserPlus, Zap } from "lucide-react";
 import { getLatestExposure } from "@/api/authService";
 import { useAuth } from "@/contexts/AuthContext";
 import { DISPLAY_LABELS } from "@/constants/displayLabels";
@@ -50,10 +50,17 @@ const NAV_ITEMS = [
     iconClass: "text-[#E2E8F0]",
     iconActiveClass: "text-white",
   },
+  {
+    to: "/dashboard/team",
+    label: "Team",
+    Icon: UserPlus,
+    iconClass: "text-[#E2E8F0]",
+    iconActiveClass: "text-white",
+  },
 ] as const;
 
-const PRIMARY_NAV_ITEMS = NAV_ITEMS.filter((item) => item.to !== "/dashboard/account");
-const SETTINGS_NAV_ITEMS = NAV_ITEMS.filter((item) => item.to === "/dashboard/account");
+const PRIMARY_NAV_ITEMS = NAV_ITEMS.filter((item) => item.to !== "/dashboard/account" && item.to !== "/dashboard/team");
+const SETTINGS_NAV_ITEMS = NAV_ITEMS.filter((item) => item.to === "/dashboard/account" || item.to === "/dashboard/team");
 
 function NavItem({
   to,
@@ -164,6 +171,8 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
   const currentPageLabel =
     pathname.startsWith("/dashboard/brief-customization")
       ? "Brief Customization"
+      : pathname.startsWith("/dashboard/team")
+      ? "Team"
       :
     NAV_ITEMS.find((item) => item.to !== "/upload" && (pathname === item.to || pathname.startsWith(`${item.to}/`)))
       ?.label || (pathname === "/upload" ? "Uploads" : "Overview");

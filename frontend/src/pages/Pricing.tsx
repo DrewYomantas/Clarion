@@ -141,10 +141,9 @@ const Pricing = () => {
           <p className="inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-300">
             Pricing
           </p>
-          <h1 className="marketing-hero-title">Choose the plan that fits your review cadence.</h1>
+          <h1 className="marketing-hero-title">Governance tools built for how law firms actually operate.</h1>
           <p className="max-w-3xl marketing-hero-body">
-            Free is for validating the first cycle. Team is for recurring monthly review. Firm is for broader, ongoing
-            coverage when governance becomes part of how the firm operates.
+            Start with a free trial — no credit card required. Move to Team when governance becomes a monthly discipline. Choose Firm for full-platform coverage with scheduled delivery, custom branding, and unlimited capacity.
           </p>
           <div className="flex flex-wrap gap-3 pt-1">
             <a href="#pricing-page-plans" className="gov-btn-primary">
