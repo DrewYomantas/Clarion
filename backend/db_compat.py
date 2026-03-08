@@ -70,21 +70,8 @@ class CompatCursor:
         return rewritten
 
     def _try_set_lastrowid(self, sql: str):
+        """lastrowid is set by appending RETURNING id to INSERTs — see execute()."""
         self.lastrowid = None
-        match = re.match(r"^\s*INSERT\s+INTO\s+([a-zA-Z_][a-zA-Z0-9_]*)", sql, flags=re.IGNORECASE)
-        if not match:
-            return
-        table = match.group(1)
-        try:
-            self._cursor.execute(
-                "SELECT currval(pg_get_serial_sequence(%s, 'id'))",
-                (table,),
-            )
-            row = self._cursor.fetchone()
-            if row:
-                self.lastrowid = int(row[0])
-        except Exception:
-            self.lastrowid = None
 
     def execute(self, sql: str, params=None):
         if params is None:
@@ -155,8 +142,25 @@ class CompatCursor:
             return self
 
         rewritten = self._rewrite_sql(sql)
+
+        # For INSERT statements on Postgres, append RETURNING id so lastrowid works.
+        is_insert = bool(re.match(r"^\s*INSERT\s+", rewritten, flags=re.IGNORECASE))
+        has_returning = bool(re.search(r"\bRETURNING\b", rewritten, flags=re.IGNORECASE))
+        if is_insert and not has_returning:
+            rewritten = rewritten.rstrip().rstrip(";") + " RETURNING id"
+
         self._cursor.execute(rewritten, params)
-        self._try_set_lastrowid(rewritten)
+
+        # Capture the returned id from RETURNING id clause
+        if is_insert and not has_returning:
+            try:
+                row = self._cursor.fetchone()
+                self.lastrowid = int(row[0]) if row else None
+            except Exception:
+                self.lastrowid = None
+        else:
+            self._try_set_lastrowid(rewritten)
+
         return self
 
     def executemany(self, sql: str, seq_of_params):

@@ -10938,7 +10938,13 @@ def api_register():
             'support_email': SUPPORT_EMAIL,
             'email': email,
         }), 201
-    except Exception:
+    except Exception as _reg_exc:
+
+        import traceback as _reg_tb
+
+        app.logger.error('[api_register] EXCEPTION: %s', _reg_exc)
+
+        app.logger.error('[api_register] %s', _reg_tb.format_exc())
 
         return _safe_api_error(
 
