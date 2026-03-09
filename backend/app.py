@@ -11058,6 +11058,7 @@ def api_verify_email(token):
             INSERT INTO user_email_verification (user_id, verified_at)
             VALUES (?, ?)
             ON CONFLICT(user_id) DO UPDATE SET verified_at = excluded.verified_at
+            RETURNING user_id
             ''',
             (token_data['user_id'], now_iso),
         )
