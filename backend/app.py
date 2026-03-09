@@ -8113,16 +8113,6 @@ def register():
 
 
 
-@app.route('/verify-email/<token>')
-@limiter.limit('20 per hour')
-def verify_email(token):
-    app.logger.info(
-        'Legacy verification route hit for token handoff; redirecting to SPA verify flow base_url=%s',
-        _resolve_public_app_base_url(),
-    )
-    return redirect(f'{_resolve_public_app_base_url()}/verify-email/{token}')
-
-
 @app.route('/login', methods=['GET', 'POST'])
 @limiter.limit('5 per minute')
 def login():
