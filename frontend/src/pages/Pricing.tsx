@@ -23,9 +23,6 @@ const Pricing = () => {
   const selectedPlanParam = searchParams.get("intent");
   const parsedPlan = useMemo(() => {
     if (validPlans.includes(plan as BillingPlan)) return plan as BillingPlan;
-    if (legacyPlans.includes(plan as (typeof legacyPlans)[number])) {
-      return plan === "annual" ? "firm" : "team";
-    }
     return null;
   }, [plan]);
   const focusedPlanId = useMemo(() => {
