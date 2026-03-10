@@ -17,6 +17,11 @@ const Pricing = () => {
   const [isFinalizing, setIsFinalizing] = useState(false);
   const [focusedCheckoutPlan, setFocusedCheckoutPlan] = useState<BillingPlan | null>(null);
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
+  // P5 persistent checkout-return states
+  const [checkoutCanceled, setCheckoutCanceled] = useState(false);
+  const [canceledPlan, setCanceledPlan] = useState<BillingPlan | null>(null);
+  const [finalizeError, setFinalizeError] = useState<string | null>(null);
+  const [startCheckoutError, setStartCheckoutError] = useState<string | null>(null);
 
   const checkoutStatus = searchParams.get("checkout");
   const sessionId = searchParams.get("session_id");
@@ -50,13 +55,15 @@ const Pricing = () => {
 
     const finalize = async () => {
       setIsFinalizing(true);
+      setFinalizeError(null);
       const result = await finalizeCheckoutSession(sessionId, parsedPlan);
       if (result.success) {
         await Promise.all([refreshUser(), refreshPlan()]);
         toast.success("Checkout confirmed. Your account has been updated.");
         navigate("/dashboard", { replace: true });
       } else {
-        toast.error(result.error || "We couldn't verify checkout yet. Please refresh in a few seconds.");
+        const msg = result.error || "We couldn't verify your payment. Please refresh or contact support.";
+        setFinalizeError(msg);
         setSearchParams({}, { replace: true });
       }
       setIsFinalizing(false);
@@ -80,9 +87,11 @@ const Pricing = () => {
     if (checkoutStatus !== "canceled") {
       return;
     }
-    toast.message("Checkout canceled. You can choose a plan any time.");
+    // Capture the plan before clearing params so the "try again" CTA can re-open it
+    if (parsedPlan) setCanceledPlan(parsedPlan);
+    setCheckoutCanceled(true);
     setSearchParams({}, { replace: true });
-  }, [checkoutStatus, setSearchParams]);
+  }, [checkoutStatus, parsedPlan, setSearchParams]);
 
   const handleFocusedCheckout = async () => {
     if (!focusedPlan || focusedPlan.id === "free") {
@@ -101,6 +110,7 @@ const Pricing = () => {
 
     const checkoutPlan: BillingPlan = focusedPlan.id === "firm" ? "firm" : "team";
     setFocusedCheckoutPlan(checkoutPlan);
+    setStartCheckoutError(null);
     const result = await startCheckoutSession(checkoutPlan, `/pricing?intent=${focusedPlan.id}`);
     if (!result.success || !result.checkout_url) {
       setFocusedCheckoutPlan(null);
@@ -110,10 +120,26 @@ const Pricing = () => {
         navigate(`/login?redirectTo=${encodeURIComponent(`/pricing?intent=${focusedPlan.id}`)}`);
         return;
       }
-      toast.error(message);
+      setStartCheckoutError(message);
       return;
     }
 
+    window.location.assign(result.checkout_url);
+  };
+
+  // Retry checkout from the canceled banner
+  const handleRetryCheckout = async (plan: BillingPlan) => {
+    setCheckoutCanceled(false);
+    setStartCheckoutError(null);
+    if (!isLoggedIn) {
+      navigate(`/login?redirectTo=${encodeURIComponent(`/pricing?intent=${plan}`)}`);
+      return;
+    }
+    const result = await startCheckoutSession(plan, `/pricing?intent=${plan}`);
+    if (!result.success || !result.checkout_url) {
+      setStartCheckoutError(result.error || "Unable to restart checkout. Please try again.");
+      return;
+    }
     window.location.assign(result.checkout_url);
   };
 
@@ -220,6 +246,116 @@ const Pricing = () => {
               <Link to={`/login?redirectTo=${encodeURIComponent(finalizeAfterLoginPath)}`} className="gov-btn-secondary">
                 Sign in to finish checkout
               </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── P5: Canceled checkout banner ──────────────────────────────────── */}
+      {checkoutCanceled && (
+        <section className="section-container pb-2 pt-4">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 px-5 py-4 text-sm text-slate-800">
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <p className="font-semibold text-slate-900">Checkout was canceled — your plan hasn't changed.</p>
+                <p className="mt-1 text-slate-600">
+                  You can pick up where you left off. Your workspace and data are untouched.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {canceledPlan ? (
+                    <button
+                      type="button"
+                      onClick={() => void handleRetryCheckout(canceledPlan)}
+                      className="gov-btn-primary"
+                    >
+                      Try checkout again →
+                    </button>
+                  ) : (
+                    <a href="#pricing-page-plans" className="gov-btn-primary">
+                      Choose a plan →
+                    </a>
+                  )}
+                  <Link to="/contact" className="gov-btn-secondary">
+                    Contact support
+                  </Link>
+                </div>
+              </div>
+              <button
+                type="button"
+                aria-label="Dismiss"
+                onClick={() => setCheckoutCanceled(false)}
+                className="shrink-0 rounded p-1 text-slate-400 hover:bg-slate-200 hover:text-slate-700 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── P5: Finalize / payment failure banner ─────────────────────────── */}
+      {finalizeError && (
+        <section className="section-container pb-2 pt-4">
+          <div className="rounded-lg border border-red-200 bg-red-50 px-5 py-4 text-sm">
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <p className="font-semibold text-red-900">Payment could not be confirmed.</p>
+                <p className="mt-1 text-red-800">{finalizeError}</p>
+                <p className="mt-2 text-red-700">
+                  If your card was declined, double-check the card details or try a different payment method. If you
+                  used a test card number in a live checkout session, it won't be accepted — use a real card instead.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <a href="#pricing-page-plans" className="gov-btn-primary">
+                    Try a different card →
+                  </a>
+                  <Link to="/contact" className="gov-btn-secondary">
+                    Contact support
+                  </Link>
+                </div>
+              </div>
+              <button
+                type="button"
+                aria-label="Dismiss"
+                onClick={() => setFinalizeError(null)}
+                className="shrink-0 rounded p-1 text-red-400 hover:bg-red-100 hover:text-red-700 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── P5: Checkout-start failure banner (near focused plan CTA) ─────── */}
+      {startCheckoutError && (
+        <section className="section-container pb-2 pt-4">
+          <div className="rounded-lg border border-red-200 bg-red-50 px-5 py-4 text-sm">
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <p className="font-semibold text-red-900">We couldn't start checkout.</p>
+                <p className="mt-1 text-red-800">{startCheckoutError}</p>
+                <p className="mt-2 text-red-700">
+                  This is sometimes caused by a card being declined before reaching Stripe's checkout page. Try a
+                  different card, or contact support if the problem continues.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <a href="#pricing-page-plans" className="gov-btn-primary">
+                    Try a different card →
+                  </a>
+                  <Link to="/contact" className="gov-btn-secondary">
+                    Contact support
+                  </Link>
+                </div>
+              </div>
+              <button
+                type="button"
+                aria-label="Dismiss"
+                onClick={() => setStartCheckoutError(null)}
+                className="shrink-0 rounded p-1 text-red-400 hover:bg-red-100 hover:text-red-700 transition-colors"
+              >
+                ✕
+              </button>
             </div>
           </div>
         </section>
