@@ -1,7 +1,20 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { ChevronDown, ChevronRight, Loader2, Maximize2, PencilLine, Printer, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Loader2,
+  Maximize2,
+  PencilLine,
+  Printer,
+  X,
+  AlertTriangle,
+  CheckCircle2,
+  ClipboardList,
+  Lightbulb,
+  Zap,
+} from "lucide-react";
 import { toast } from "sonner";
 import {
   createReportAction,
@@ -18,11 +31,17 @@ import {
 import ActionForm, { type ActionFormValues, type ActionStatus } from "@/components/actions/ActionForm";
 import ClientQuoteCard from "@/components/ClientQuoteCard";
 import EmailBriefPreviewModal from "@/components/reports/EmailBriefPreviewModal";
+import BriefPresentMode from "@/components/governance/BriefPresentMode";
 import GovStatusChip, {
   resolveChipVariantForActionStatus,
 } from "@/components/governance/GovStatusChip";
+import GovernanceCard from "@/components/governance/GovernanceCard";
 import { formatApiDate, formatApiDateTime } from "@/lib/dateTime";
 import { DISPLAY_LABELS } from "@/constants/displayLabels";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Constants & pure helpers
+// ─────────────────────────────────────────────────────────────────────────────
 
 const STATUS_OPTIONS: Array<{ value: ActionStatus; label: string }> = [
   { value: "open", label: "Planned" },
@@ -52,12 +71,15 @@ const asDayDate = (value: string | null | undefined): Date | null => {
   return parsed;
 };
 
-const isCompleted = (action: ReportActionItem): boolean => normalizeStatus(action.status) === "done";
+const isCompleted = (action: ReportActionItem): boolean =>
+  normalizeStatus(action.status) === "done";
+
 const isOverdue = (action: ReportActionItem): boolean => {
   if (isCompleted(action)) return false;
   const due = asDayDate(action.due_date);
   return !!due && due.getTime() < startOfToday().getTime();
 };
+
 const isDueSoon = (action: ReportActionItem): boolean => {
   if (isCompleted(action)) return false;
   const due = asDayDate(action.due_date);
@@ -67,11 +89,15 @@ const isDueSoon = (action: ReportActionItem): boolean => {
   soon.setDate(soon.getDate() + 7);
   return due.getTime() >= today.getTime() && due.getTime() <= soon.getTime();
 };
+
 const isUnassigned = (action: ReportActionItem): boolean => {
   if (isCompleted(action)) return false;
   const ownerText = (action.owner || "").trim();
   const ownerUserId = action.owner_user_id;
-  return (!ownerText || ownerText.toLowerCase() === "unassigned") && (ownerUserId === null || ownerUserId === undefined);
+  return (
+    (!ownerText || ownerText.toLowerCase() === "unassigned") &&
+    (ownerUserId === null || ownerUserId === undefined)
+  );
 };
 
 const compareActions = (a: ReportActionItem, b: ReportActionItem): number => {
@@ -90,8 +116,14 @@ const compareActions = (a: ReportActionItem, b: ReportActionItem): number => {
 
 const formatDate = (value?: string | null): string =>
   formatApiDate(value, { month: "short", day: "numeric", year: "numeric" }, "-");
+
 const formatDateTime = (value?: string | null): string =>
-  formatApiDateTime(value, { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" }, "-");
+  formatApiDateTime(
+    value,
+    { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" },
+    "-",
+  );
+
 const escapeHtml = (value: string): string =>
   value
     .replace(/&/g, "&amp;")
@@ -99,15 +131,18 @@ const escapeHtml = (value: string): string =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+
 const statusLabel = (status: string | null | undefined): string => {
   const normalized = normalizeStatus(status);
   return STATUS_OPTIONS.find((row) => row.value === normalized)?.label || "Planned";
 };
 
 const formatMonthDay = (value?: string | null): string => {
-  if (!value) return new Date().toLocaleDateString([], { month: "long", day: "numeric" });
+  if (!value)
+    return new Date().toLocaleDateString([], { month: "long", day: "numeric" });
   const parsed = new Date(value);
-  if (!Number.isFinite(parsed.getTime())) return new Date().toLocaleDateString([], { month: "long", day: "numeric" });
+  if (!Number.isFinite(parsed.getTime()))
+    return new Date().toLocaleDateString([], { month: "long", day: "numeric" });
   return parsed.toLocaleDateString([], { month: "long", day: "numeric" });
 };
 
@@ -119,21 +154,95 @@ const appendActivity = (
   const existing = Array.isArray(action.activity_log) ? action.activity_log : [];
   return {
     ...action,
-    activity_log: [...existing, { date: formatMonthDay(timestamp || action.updated_at || action.created_at), description }],
+    activity_log: [
+      ...existing,
+      {
+        date: formatMonthDay(timestamp || action.updated_at || action.created_at),
+        description,
+      },
+    ],
   };
 };
 
 const isRateLimitMessage = (message: string | undefined): boolean => {
   const normalized = (message || "").toLowerCase();
-  return normalized.includes("rate limit") || normalized.includes("too many") || normalized.includes("429");
+  return (
+    normalized.includes("rate limit") ||
+    normalized.includes("too many") ||
+    normalized.includes("429")
+  );
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Section header — shared between normal and present mode
+// ─────────────────────────────────────────────────────────────────────────────
+
+type PacketSectionProps = {
+  eyebrow: string;
+  title: string;
+  presentMode?: boolean;
+  children: React.ReactNode;
+  className?: string;
+};
+
+function PacketSection({ eyebrow, title, presentMode, children, className = "" }: PacketSectionProps) {
+  if (presentMode) {
+    return (
+      <section className={`brief-section ${className}`}>
+        <p className="brief-section-eyebrow">{eyebrow}</p>
+        <h2 className="brief-section-title">{title}</h2>
+        <div className="mt-5">{children}</div>
+      </section>
+    );
+  }
+  return (
+    <section
+      className={[
+        "rounded-[12px] border border-[#E5E7EB] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]",
+        className,
+      ].join(" ")}
+    >
+      <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+        {eyebrow}
+      </p>
+      <h2 className="mt-1 text-[17px] font-semibold text-[#0D1B2A]">{title}</h2>
+      <div className="mt-5">{children}</div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Main page component
+// ─────────────────────────────────────────────────────────────────────────────
 
 const ReportDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const reportId = Number(id);
 
+  // ── Present mode — driven by ?present=1 or internal state ─────────────────
+  const [presentMode, setPresentMode] = useState(() => searchParams.get("present") === "1");
+
+  const enterPresent = useCallback(() => {
+    setPresentMode(true);
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set("present", "1");
+      return next;
+    }, { replace: true });
+  }, [setSearchParams]);
+
+  const exitPresent = useCallback(() => {
+    setPresentMode(false);
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete("present");
+      return next;
+    }, { replace: true });
+  }, [setSearchParams]);
+
+  // ── Data loading state ─────────────────────────────────────────────────────
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [historyNotice, setHistoryNotice] = useState<string | null>(null);
@@ -146,7 +255,9 @@ const ReportDetail = () => {
   const [showRateLimitRetryPrompt, setShowRateLimitRetryPrompt] = useState(false);
   const [reloadNonce, setReloadNonce] = useState(0);
 
-  const [renameMode, setRenameMode] = useState<"idle" | "editing" | "saving" | "saved" | "error">("idle");
+  const [renameMode, setRenameMode] = useState<
+    "idle" | "editing" | "saving" | "saved" | "error"
+  >("idle");
   const [renameDraft, setRenameDraft] = useState("");
   const [renameError, setRenameError] = useState("");
 
@@ -156,11 +267,13 @@ const ReportDetail = () => {
   const [editingActionId, setEditingActionId] = useState<number | null>(null);
   const [isSendingBrief, setIsSendingBrief] = useState(false);
   const [emailPreviewOpen, setEmailPreviewOpen] = useState(false);
-  const [briefDeliveryStatus, setBriefDeliveryStatus] = useState<PartnerBriefDeliveryStatus | null>(null);
+  const [briefDeliveryStatus, setBriefDeliveryStatus] =
+    useState<PartnerBriefDeliveryStatus | null>(null);
   const [briefDeliveryStatusLoading, setBriefDeliveryStatusLoading] = useState(false);
 
-  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [evidenceOpen, setEvidenceOpen] = useState(false);
 
+  // ── Data load ──────────────────────────────────────────────────────────────
   useEffect(() => {
     if (!reportId || Number.isNaN(reportId)) {
       setError("Invalid report identifier.");
@@ -206,8 +319,10 @@ const ReportDetail = () => {
         return;
       }
 
-      const detailRateLimited = !detailResult.success && isRateLimitMessage(detailResult.error);
-      const actionsRateLimited = !actionsResult.success && isRateLimitMessage(actionsResult.error);
+      const detailRateLimited =
+        !detailResult.success && isRateLimitMessage(detailResult.error);
+      const actionsRateLimited =
+        !actionsResult.success && isRateLimitMessage(actionsResult.error);
       const isRateLimited = detailRateLimited || actionsRateLimited;
 
       if (detailResult.success && detailResult.report) {
@@ -255,6 +370,7 @@ const ReportDetail = () => {
     };
   }, [reportId, reloadNonce]);
 
+  // ── Derived data ──────────────────────────────────────────────────────────
   const sortedActions = useMemo(() => [...actions].sort(compareActions), [actions]);
 
   const ownerOptions = useMemo(() => {
@@ -270,16 +386,24 @@ const ReportDetail = () => {
     return Array.from(set).sort((a, b) => a.localeCompare(b));
   }, [actions, report?.implementation_roadmap]);
 
-  const overdueCount = useMemo(() => sortedActions.filter((row) => isOverdue(row)).length, [sortedActions]);
-  const unassignedCount = useMemo(() => sortedActions.filter((row) => isUnassigned(row)).length, [sortedActions]);
+  const overdueCount = useMemo(
+    () => sortedActions.filter((row) => isOverdue(row)).length,
+    [sortedActions],
+  );
+  const unassignedCount = useMemo(
+    () => sortedActions.filter((row) => isUnassigned(row)).length,
+    [sortedActions],
+  );
 
   const escalation = useMemo(() => {
-    if (overdueCount > 0 && unassignedCount > 0) return { on: true, reason: "Overdue actions and unassigned owners." };
+    if (overdueCount > 0 && unassignedCount > 0)
+      return { on: true, reason: "Overdue actions and unassigned owners." };
     if (overdueCount > 0) return { on: true, reason: "Overdue actions." };
     if (unassignedCount > 0) return { on: true, reason: "Unassigned owners." };
     return { on: false, reason: "" };
   }, [overdueCount, unassignedCount]);
 
+  // Key signals — a curated 3-item summary for the "Signals this period" section
   const keySignals = useMemo(() => {
     if (!report) return [] as Array<{ label: string; value: string }>;
     const values: Array<{ label: string; value: string }> = [
@@ -287,7 +411,10 @@ const ReportDetail = () => {
       { label: "Reviews in brief", value: `${report.total_reviews || 0}` },
     ];
     if (report.themes.length > 0) {
-      values.push({ label: "Primary risk theme", value: `${report.themes[0].name} (${report.themes[0].mentions})` });
+      values.push({
+        label: "Primary risk theme",
+        value: `${report.themes[0].name} (${report.themes[0].mentions})`,
+      });
     } else if (report.top_complaints.length > 0) {
       values.push({ label: "Top client concern", value: report.top_complaints[0] });
     }
@@ -307,6 +434,14 @@ const ReportDetail = () => {
       .sort((a, b) => Math.abs(b.change) - Math.abs(a.change))
       .slice(0, 8);
   }, [report?.theme_trends]);
+
+  // "Decisions / Next steps" — derived from recommended changes
+  const nextSteps = useMemo(() => {
+    return (report?.recommended_changes || []).map((item) => ({
+      theme: item.theme,
+      recommendation: item.recommendation,
+    }));
+  }, [report?.recommended_changes]);
 
   const emailSummaryFields = useMemo(() => {
     const averageRating = `${report?.avg_rating?.toFixed(2) || "0.00"} / 5`;
@@ -347,35 +482,22 @@ const ReportDetail = () => {
           <div style="margin-top:6px;font-size:12px;opacity:.9;">${title} &bull; ${escapeHtml(generatedAt)}</div>
         </td>
       </tr>
-      <tr>
-        <td style="padding:18px 20px;">
-          <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;">Average Rating</div>
-          <div style="margin-top:4px;font-size:16px;font-weight:600;color:#0D1B2A;">${avg}</div>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding:0 20px 16px 20px;">
-          <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;">Top Issue</div>
-          <div style="margin-top:4px;font-size:16px;font-weight:600;color:#0D1B2A;">${issue}</div>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding:0 20px 16px 20px;">
-          <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;">Example Client Quote</div>
-          <div style="margin-top:6px;padding:10px;border-left:3px solid #EF4444;background:#F8FAFC;color:#0D1B2A;font-size:14px;line-height:1.45;">"${quote}"</div>
-        </td>
-      </tr>
-      <tr>
-        <td style="padding:0 20px 20px 20px;">
-          <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;">Recommended Partner Discussion</div>
-          <div style="margin-top:6px;padding:10px;border-left:3px solid #0EA5C2;background:#F8FAFC;color:#0D1B2A;font-size:14px;line-height:1.45;">${discussion}</div>
-        </td>
-      </tr>
+      <tr><td style="padding:18px 20px;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;">Average Rating</div><div style="margin-top:4px;font-size:16px;font-weight:600;color:#0D1B2A;">${avg}</div></td></tr>
+      <tr><td style="padding:0 20px 16px 20px;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;">Top Issue</div><div style="margin-top:4px;font-size:16px;font-weight:600;color:#0D1B2A;">${issue}</div></td></tr>
+      <tr><td style="padding:0 20px 16px 20px;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;">Example Client Quote</div><div style="margin-top:6px;padding:10px;border-left:3px solid #EF4444;background:#F8FAFC;color:#0D1B2A;font-size:14px;line-height:1.45;">"${quote}"</div></td></tr>
+      <tr><td style="padding:0 20px 20px 20px;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;">Recommended Partner Discussion</div><div style="margin-top:6px;padding:10px;border-left:3px solid #0EA5C2;background:#F8FAFC;color:#0D1B2A;font-size:14px;line-height:1.45;">${discussion}</div></td></tr>
     </table>
   </body>
 </html>`;
-  }, [emailSummaryFields.averageRating, emailSummaryFields.exampleQuote, emailSummaryFields.recommendedDiscussion, emailSummaryFields.topIssue, report]);
+  }, [
+    emailSummaryFields.averageRating,
+    emailSummaryFields.exampleQuote,
+    emailSummaryFields.recommendedDiscussion,
+    emailSummaryFields.topIssue,
+    report,
+  ]);
 
+  // ── Action handlers ────────────────────────────────────────────────────────
   const openCreateAction = () => {
     setEditingActionId(null);
     setActionFormError("");
@@ -385,7 +507,9 @@ const ReportDetail = () => {
   const handleSendPartnerBrief = async () => {
     if (isSendingBrief) return;
     if (!briefDeliveryStatus?.delivery_available) {
-      toast.error("Partner brief delivery is not configured for this deployment. No email was sent.");
+      toast.error(
+        "Partner brief delivery is not configured for this deployment. No email was sent.",
+      );
       return;
     }
     setIsSendingBrief(true);
@@ -418,9 +542,7 @@ const ReportDetail = () => {
       setBriefDeliveryStatusLoading(false);
     };
     void loadDeliveryStatus();
-    return () => {
-      active = false;
-    };
+    return () => { active = false; };
   }, [emailPreviewOpen]);
 
   const beginEditAction = (action: ReportActionItem) => {
@@ -452,7 +574,6 @@ const ReportDetail = () => {
     const dueDate = due.toISOString().slice(0, 10);
     const timeframe: ActionFormValues["timeframe"] =
       priority === "high" ? "Days 1-30" : priority === "low" ? "Days 61-90" : "Days 31-60";
-
     return {
       title,
       owner,
@@ -508,10 +629,18 @@ const ReportDetail = () => {
       );
       if (result.success && result.action) {
         setActions((prev) => {
-          let created = appendActivity(result.action as ReportActionItem, "Action created", result.action?.created_at);
+          let created = appendActivity(
+            result.action as ReportActionItem,
+            "Action created",
+            result.action?.created_at,
+          );
           const createdOwner = (created.owner || "").trim();
           if (createdOwner && createdOwner.toLowerCase() !== "unassigned") {
-            created = appendActivity(created, `Assigned to Partner ${createdOwner}`, created.updated_at || created.created_at);
+            created = appendActivity(
+              created,
+              `Assigned to Partner ${createdOwner}`,
+              created.updated_at || created.created_at,
+            );
           }
           if (normalizeStatus(created.status) !== "open") {
             created = appendActivity(
@@ -578,7 +707,11 @@ const ReportDetail = () => {
         const previousOwner = (row.owner || "").trim().toLowerCase();
         const nextOwner = (updated.owner || "").trim();
         if ((nextOwner || "").toLowerCase() !== previousOwner && nextOwner) {
-          updated = appendActivity(updated, `Assigned to Partner ${nextOwner}`, updated.updated_at || nextAction.updated_at);
+          updated = appendActivity(
+            updated,
+            `Assigned to Partner ${nextOwner}`,
+            updated.updated_at || nextAction.updated_at,
+          );
         }
         if (normalizeStatus(row.status) !== normalizeStatus(updated.status)) {
           updated = appendActivity(
@@ -629,15 +762,20 @@ const ReportDetail = () => {
       const response = await fetch(url, { credentials: "include" });
       const contentType = response.headers.get("content-type") || "";
       if (contentType.includes("application/json")) {
-        const payload = (await response.json()) as { error?: string; message?: string };
+        const payload = (await response.json()) as {
+          error?: string;
+          message?: string;
+        };
         if (payload.error === "Report outside plan history window") {
           toast.error(
-            "This report is outside your plan’s historical intelligence window. Upgrade your plan to access older governance history.",
+            "This report is outside your plan's historical intelligence window. Upgrade your plan to access older governance history.",
           );
           return;
         }
         if (!response.ok) {
-          toast.error(payload.message || payload.error || "Unable to open governance brief.");
+          toast.error(
+            payload.message || payload.error || "Unable to open governance brief.",
+          );
           return;
         }
       }
@@ -654,57 +792,62 @@ const ReportDetail = () => {
     }
   };
 
+  // ── Loading / error shells ─────────────────────────────────────────────────
   if (loading) {
     return (
       <section className="gov-page">
-          <div className="gov-level-2 p-6">
-            <p className="text-sm text-neutral-700">Loading governance brief...</p>
-            {isBusyRetrying && (
-              <p className="mt-2 text-sm text-neutral-700">
-                Busy right now. Retrying… (attempt {retryAttempt}/{3})
-              </p>
-            )}
-          </div>
-        </section>
+        <div className="gov-level-2 p-6">
+          <p className="text-sm text-neutral-700">Loading governance brief…</p>
+          {isBusyRetrying && (
+            <p className="mt-2 text-sm text-neutral-700">
+              Busy right now. Retrying… (attempt {retryAttempt}/3)
+            </p>
+          )}
+        </div>
+      </section>
     );
   }
 
   if (!report && showRateLimitRetryPrompt) {
     return (
       <section className="gov-page">
-          <div className="gov-level-2 p-6">
-            <h1 className="gov-h1">Governance Brief</h1>
-            <p className="mt-2 text-sm text-neutral-700">
-              Busy right now. Please retry loading this brief.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <button
-                type="button"
-                className="gov-btn-secondary"
-                onClick={() => {
-                  if (loading) return;
-                  setLoading(true);
-                  setReloadNonce((value) => value + 1);
-                }}
-              >
-                Retry
-              </button>
-              <button
-                type="button"
-                className="gov-btn-quiet"
-                onClick={() => {
-                  setShowRateLimitRetryPrompt(false);
-                  setError("Report load was stopped.");
-                }}
-              >
-                Stop
-              </button>
-              <button type="button" className="gov-btn-secondary" onClick={() => navigate("/dashboard/reports")}>
-                Back to Briefs
-              </button>
-            </div>
+        <div className="gov-level-2 p-6">
+          <h1 className="gov-h1">Governance Brief</h1>
+          <p className="mt-2 text-sm text-neutral-700">
+            Busy right now. Please retry loading this brief.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button
+              type="button"
+              className="gov-btn-secondary"
+              onClick={() => {
+                if (loading) return;
+                setLoading(true);
+                setReloadNonce((v) => v + 1);
+              }}
+            >
+              Retry
+            </button>
+            <button
+              type="button"
+              className="gov-btn-quiet"
+              onClick={() => {
+                setShowRateLimitRetryPrompt(false);
+                setError("Report load was stopped.");
+              }}
+            >
+              Stop
+            </button>
+            <button
+              type="button"
+              className="gov-btn-secondary"
+              onClick={() => navigate("/dashboard/reports")}
+            >
+              Back to Briefs
+            </button>
           </div>
-        </section>
+        </div>
+      </section>
     );
   }
 
@@ -712,246 +855,186 @@ const ReportDetail = () => {
     const isHistoryWindowError = error === "Report outside plan history window";
     return (
       <section className="gov-page">
-          <div className="gov-level-2 p-6">
-            <h1 className="gov-h1">Report unavailable</h1>
-            <p className="mt-2 text-sm text-neutral-700">{error || "This report could not be loaded."}</p>
-            {isHistoryWindowError ? (
-              <div className="mt-3 rounded-md border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-2 text-sm text-[#1E3A8A]">
-                {historyNotice ||
-                  "Your current plan limits historical intelligence access. Upgrade to unlock older governance reports."}
-              </div>
-            ) : null}
-            {showRateLimitRetryPrompt && (
-              <div className="mt-3 rounded border border-neutral-300 bg-neutral-50 p-3 text-sm text-neutral-800">
-                Busy right now. Please retry loading this brief.
-              </div>
-            )}
-            {isBusyRetrying && (
-              <div className="mt-3 rounded border border-neutral-300 bg-neutral-50 p-3 text-sm text-neutral-700">
-                Busy, retrying...
-              </div>
-            )}
-            <button type="button" className="gov-btn-secondary mt-4" onClick={() => navigate("/dashboard/reports")}>
-              Back to Briefs
+        <div className="gov-level-2 p-6">
+          <h1 className="gov-h1">Report unavailable</h1>
+          <p className="mt-2 text-sm text-neutral-700">
+            {error || "This report could not be loaded."}
+          </p>
+          {isHistoryWindowError ? (
+            <div className="mt-3 rounded-md border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-2 text-sm text-[#1E3A8A]">
+              {historyNotice ||
+                "Your current plan limits historical intelligence access. Upgrade to unlock older governance reports."}
+            </div>
+          ) : null}
+          {showRateLimitRetryPrompt && (
+            <div className="mt-3 rounded border border-neutral-300 bg-neutral-50 p-3 text-sm text-neutral-800">
+              Busy right now. Please retry.
+            </div>
+          )}
+          <button
+            type="button"
+            className="gov-btn-secondary mt-4"
+            onClick={() => navigate("/dashboard/reports")}
+          >
+            Back to Briefs
+          </button>
+          {showRateLimitRetryPrompt && (
+            <button
+              type="button"
+              className="gov-btn-secondary mt-2"
+              onClick={() => {
+                if (loading) return;
+                setLoading(true);
+                setReloadNonce((v) => v + 1);
+              }}
+            >
+              Retry
             </button>
-            {showRateLimitRetryPrompt && (
-              <button
-                type="button"
-                className="gov-btn-secondary mt-2"
-                onClick={() => {
-                  if (loading) return;
-                  setLoading(true);
-                  setReloadNonce((value) => value + 1);
-                }}
-              >
-                Retry
-              </button>
-            )}
-            {isHistoryWindowError ? (
-              <button
-                type="button"
-                className="gov-btn-secondary mt-2"
-                onClick={() => navigate("/pricing")}
-              >
-                View plan options
-              </button>
-            ) : null}
-          </div>
-        </section>
+          )}
+          {isHistoryWindowError && (
+            <button
+              type="button"
+              className="gov-btn-secondary mt-2"
+              onClick={() => navigate("/pricing")}
+            >
+              View plan options
+            </button>
+          )}
+        </div>
+      </section>
     );
   }
 
-  return (
-    <section className="gov-page space-y-4">
-        <section className="gov-level-2 p-6">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="min-w-[280px] flex-1">
-              <p className="gov-micro-label">Governance Brief</p>
-              <div className="mt-1 flex flex-wrap items-center gap-2">
-                {renameMode === "editing" || renameMode === "saving" || renameMode === "error" ? (
-                  <>
-                    <input
-                      data-testid="report-rename-input"
-                      value={renameDraft}
-                      onChange={(event) => setRenameDraft(event.target.value)}
-                      className="gov-field h-10 min-w-[280px] text-base"
-                      disabled={renameMode === "saving"}
-                    />
-                    <button
-                      data-testid="report-rename-save"
-                      type="button"
-                      className="gov-btn-secondary h-10 px-3"
-                      disabled={renameMode === "saving"}
-                      onClick={() => void handleRenameSave()}
-                    >
-                      {renameMode === "saving" ? (
-                        <span className="inline-flex items-center gap-1"><Loader2 size={14} className="animate-spin" /> Saving</span>
-                      ) : (
-                        "Save"
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      className="gov-btn-ghost h-10 px-3"
-                      disabled={renameMode === "saving"}
-                      onClick={() => {
-                        setRenameMode("idle");
-                        setRenameDraft(report.name || report.title || "");
-                        setRenameError("");
-                      }}
-                      aria-label="Cancel rename"
-                    >
-                      <X size={14} />
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <h1 className="gov-h1" data-testid="report-title">{report.name || report.title}</h1>
-                    <button type="button" className="gov-btn-ghost h-8 px-2" onClick={() => setRenameMode("editing")}>
-                      <PencilLine size={14} />
-                      <span className="ml-1 text-xs">Rename</span>
-                    </button>
-                  </>
-                )}
-              </div>
-              <p className="mt-2 text-sm text-neutral-700">Created {formatDateTime(report.created_at)}</p>
-              <div className="mt-3 rounded-md border border-neutral-200 bg-neutral-50 px-3 py-2">
-                <p className="text-xs font-semibold uppercase tracking-wide text-neutral-700">{DISPLAY_LABELS.clientIssueSingular}</p>
-                <p className="mt-1 text-sm text-neutral-700">
-                  A recurring pattern in client feedback that may require leadership attention.
-                </p>
-                <p className="mt-1 text-xs text-neutral-600">
-                  Examples include communication breakdowns, billing confusion, or responsiveness issues.
-                </p>
-              </div>
-              {renameMode === "saved" && <p className="mt-1 text-xs text-green-700">Saved.</p>}
-              {renameMode === "error" && renameError && <p className="mt-1 text-xs text-red-700">{renameError}</p>}
+  // ─────────────────────────────────────────────────────────────────────────
+  // Packet sections — rendered both in normal mode and present mode
+  // ─────────────────────────────────────────────────────────────────────────
+
+  /** Section 1: Key Signals this period */
+  const signalsSection = (
+    <PacketSection
+      eyebrow="Section 1"
+      title="Key Signals This Period"
+      presentMode={presentMode}
+    >
+      {/* Metric tiles */}
+      {keySignals.length > 0 ? (
+        <div className="grid gap-3 sm:grid-cols-3">
+          {keySignals.map((sig) => (
+            <div
+              key={sig.label}
+              className="rounded-[8px] border border-[#E5E7EB] bg-[#F8FAFC] px-4 py-3"
+            >
+              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                {sig.label}
+              </p>
+              <p className="mt-1 text-[17px] font-semibold text-[#0D1B2A]">{sig.value}</p>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <button data-testid="report-create-action" type="button" className="gov-btn-primary" onClick={openCreateAction}>
-                Create Action
-              </button>
-              <button
-                type="button"
-                className="gov-btn-secondary"
-                onClick={() => setEmailPreviewOpen(true)}
-                disabled={isSendingBrief}
-              >
-                Email Brief to Partners
-              </button>
-              <button data-testid="report-view-brief" type="button" className="gov-btn-secondary" onClick={() => void openBrief()}>
-                {report.plan_type === "free"
-                  ? "Preview Governance Brief (Watermarked)"
-                  : "Download Governance Brief PDF"}
-              </button>
-              <Link to={`/dashboard/brief-customization?reportId=${report.id}`} className="gov-btn-secondary">
-                Prepare Brief & Preview PDF
-              </Link>
-            </div>
-          </div>
-          <p className="mt-3 text-xs text-neutral-600">
-            Apply your firm logo and accent theme before print or download.
+          ))}
+        </div>
+      ) : null}
+
+      {/* Theme breakdown */}
+      {report.themes.length > 0 ? (
+        <div className="mt-5">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+            Issue themes
           </p>
-          {isBusyRetrying && (
-            <div className="mt-3 rounded border border-neutral-300 bg-neutral-50 px-3 py-2 text-sm text-neutral-700">
-              Busy right now. Retrying… (attempt {retryAttempt}/{3})
-            </div>
-          )}
-          {showRateLimitRetryPrompt && (
-            <div className="mt-3 flex flex-wrap items-center gap-2 rounded border border-neutral-300 bg-neutral-50 px-3 py-2 text-sm text-neutral-800">
-              <span>Busy right now. Please retry loading this brief.</span>
-              <button
-                type="button"
-                className="gov-btn-secondary h-8 px-3 py-0 text-xs"
-                onClick={() => {
-                  if (loading) return;
-                  setLoading(true);
-                  setReloadNonce((value) => value + 1);
-                }}
+          <div className="space-y-2">
+            {report.themes.slice(0, 6).map((theme) => (
+              <div
+                key={theme.name}
+                className="flex items-center justify-between rounded-[6px] border border-[#E5E7EB] bg-white px-4 py-2.5"
               >
-                Retry
-              </button>
-            </div>
-          )}
-          {historyTruncated && historyNotice ? (
-            <div className="mt-3 rounded-md border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-2 text-sm text-[#1E3A8A]">
-              {historyNotice}
-            </div>
-          ) : null}
-        </section>
-
-        <section className="grid gap-4 lg:grid-cols-2">
-          <article className="gov-level-2 p-5">
-            <h2 className="gov-h2">Key Client Issues</h2>
-            {keySignals.length === 0 ? (
-              <p className="mt-2 text-sm text-neutral-700">No key client issues yet.</p>
-            ) : (
-              <ul className="mt-3 space-y-2">
-                {keySignals.map((signal) => (
-                  <li key={signal.label} className="gov-level-2-soft px-3 py-2">
-                    <p className="gov-micro-label">{signal.label}</p>
-                    <p className="mt-1 text-sm text-neutral-900">{signal.value}</p>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </article>
-
-          {escalation.on && (
-            <article className="gov-level-2 border-red-200 p-5">
-              <h2 className="gov-h2 text-neutral-900">Escalation required</h2>
-              <p className="mt-2 text-sm text-neutral-800">{escalation.reason}</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {overdueCount > 0 && (
-                  <GovStatusChip label={`${overdueCount} overdue`} variant="risk" size="sm" />
-                )}
-                {unassignedCount > 0 && (
-                  <GovStatusChip label={`${unassignedCount} unassigned`} variant="warn" size="sm" />
-                )}
+                <span className="text-[13px] font-medium text-[#0D1B2A]">{theme.name}</span>
+                <span className="flex items-center gap-1.5 text-[12px] text-slate-500">
+                  <Zap size={11} className="text-slate-400" aria-hidden />
+                  {theme.mentions} mentions
+                </span>
               </div>
-            </article>
-          )}
-        </section>
-
-        <section className="gov-level-2 p-5">
-          <h2 className="gov-h2">Trend Since Last Report</h2>
-          {trendRows.length === 0 ? (
-            <p className="mt-2 text-sm text-neutral-700">No previous report available for trend comparison yet.</p>
-          ) : (
-            <ul className="mt-3 space-y-2">
-              {trendRows.map((row) => {
-                const trendLabel = row.change > 0 ? "Increase" : row.change < 0 ? "Decrease" : "No change";
-                const tone =
-                  row.change > 0 ? "text-red-700" : row.change < 0 ? "text-emerald-700" : "text-neutral-700";
-                return (
-                  <li key={`trend-${row.theme}`} className="gov-level-2-soft px-3 py-2">
-                    <p className="text-sm text-neutral-900">
-                      {row.theme} <span className={tone}>{trendLabel} {Math.abs(row.percent)}%</span> since last report
-                    </p>
-                    <p className="mt-1 text-xs text-neutral-600">
-                      Current: {row.current} · Previous: {row.previous} · Change: {row.change > 0 ? "+" : ""}
-                      {row.change}
-                    </p>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </section>
-
-        <section className="gov-level-2 p-5">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <h2 className="gov-h2">Actions</h2>
-              <p className="mt-1 text-sm text-neutral-700">Assign and track execution with canonical governance fields.</p>
-            </div>
-            <p className="text-xs text-neutral-600">{sortedActions.length} total</p>
+            ))}
           </div>
+        </div>
+      ) : null}
 
+      {/* Trend comparison */}
+      {trendRows.length > 0 ? (
+        <div className="mt-5">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+            Trend vs. prior period
+          </p>
+          <div className="space-y-2">
+            {trendRows.map((row) => {
+              const trendLabel =
+                row.change > 0 ? "↑" : row.change < 0 ? "↓" : "→";
+              const tone =
+                row.change > 0
+                  ? "text-red-600"
+                  : row.change < 0
+                  ? "text-emerald-600"
+                  : "text-slate-500";
+              return (
+                <div
+                  key={`trend-${row.theme}`}
+                  className="flex items-center justify-between rounded-[6px] border border-[#E5E7EB] bg-white px-4 py-2.5"
+                >
+                  <span className="text-[13px] text-[#0D1B2A]">{row.theme}</span>
+                  <span className={`text-[12px] font-semibold ${tone}`}>
+                    {trendLabel} {Math.abs(row.percent)}%
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <p className="mt-4 text-[13px] text-slate-500">
+          No prior period available for trend comparison yet.
+        </p>
+      )}
+    </PacketSection>
+  );
+
+  /** Section 2: Actions & Owners */
+  const actionsSection = (
+    <PacketSection
+      eyebrow="Section 2"
+      title="Actions & Owners"
+      presentMode={presentMode}
+    >
+      {/* Escalation callout */}
+      {escalation.on ? (
+        <div className="mb-4 flex items-start gap-3 rounded-[8px] border border-amber-200 bg-amber-50 px-4 py-3">
+          <AlertTriangle size={15} className="mt-0.5 shrink-0 text-amber-600" aria-hidden />
+          <div>
+            <p className="text-[13px] font-semibold text-amber-800">Escalation required</p>
+            <p className="text-[12px] text-amber-700">{escalation.reason}</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {overdueCount > 0 && (
+                <GovStatusChip label={`${overdueCount} overdue`} variant="risk" size="sm" />
+              )}
+              {unassignedCount > 0 && (
+                <GovStatusChip
+                  label={`${unassignedCount} unassigned`}
+                  variant="warn"
+                  size="sm"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* Create action form trigger (hidden in present mode) */}
+      {!presentMode ? (
+        <>
           <ActionForm
             open={actionFormMode === "create"}
             mode="create"
-            initialValues={searchParams.get("createAction") === "1" ? createActionPrefill : createFormInitialValues}
+            initialValues={
+              searchParams.get("createAction") === "1"
+                ? createActionPrefill
+                : createFormInitialValues
+            }
             ownerOptions={ownerOptions}
             submitting={actionFormSubmitting}
             serverError={actionFormError}
@@ -961,135 +1044,547 @@ const ReportDetail = () => {
             }}
             onSubmit={handleActionFormSubmit}
           />
+          {actionsError ? (
+            <p className="mb-3 text-[12px] text-red-700">{actionsError}</p>
+          ) : null}
+        </>
+      ) : null}
 
-          {actionsError && <p className="mt-3 text-xs text-red-700">{actionsError}</p>}
-          <div className="mt-4" data-testid="report-actions-list">
-            {sortedActions.length === 0 ? (
-              <div className="gov-level-2-soft px-4 py-4"><p className="text-sm text-neutral-800">No actions have been assigned for this brief yet.</p><button type="button" className="gov-btn-secondary mt-3" onClick={openCreateAction}>Create first action</button></div>
-            ) : (
-              <div className="space-y-3">
-                {sortedActions.map((action) => {
-                  return (
-                    <article key={action.id} className="gov-level-2-soft p-4">
-                      <div className="flex flex-wrap items-start justify-between gap-2">
-                        <div className="min-w-[260px] flex-1">
-                          <p className="text-sm font-semibold text-neutral-900">{action.title}</p>
-                          <p className="mt-1 text-xs text-neutral-700">
-                            Owner: {(action.owner || "Unassigned").trim() || "Unassigned"} | Due: {formatDate(action.due_date)} | Timeframe:{" "}
-                            {action.timeframe || "-"}
-                          </p>
-                          <p className="mt-1 text-xs text-neutral-700">Success measure: {action.kpi || "-"}</p>
-                          {action.notes && <p className="mt-1 text-xs text-neutral-700">Notes: {action.notes}</p>}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <GovStatusChip
-                            label={statusLabel(action.status)}
-                            variant={resolveChipVariantForActionStatus(action.status, isOverdue(action))}
-                            size="sm"
-                          />
-                          {isOverdue(action) && (
-                            <GovStatusChip label="Overdue" variant="risk" size="sm" />
-                          )}
-                          {!isOverdue(action) && isDueSoon(action) && (
-                            <GovStatusChip label="Due soon" variant="warn" size="sm" />
-                          )}
-                          {isUnassigned(action) && (
-                            <GovStatusChip label="Unassigned" variant="warn" size="sm" />
-                          )}
-                          <button type="button" className="gov-btn-ghost h-8 px-2" onClick={() => beginEditAction(action)}>
-                            Edit
-                          </button>
-                        </div>
-                      </div>
-                      <ActionForm
-                        open={actionFormMode === "edit" && editingActionId === action.id}
-                        mode="edit"
-                        initialValues={editFormInitialValues}
-                        ownerOptions={ownerOptions}
-                        submitting={actionFormSubmitting}
-                        submitLabel="Save"
-                        serverError={actionFormError}
-                        onCancel={() => {
-                          setActionFormMode(null);
-                          setEditingActionId(null);
-                          setActionFormError("");
-                        }}
-                        onSubmit={handleActionFormSubmit}
-                      />
-                    </article>
-                  );
-                })}
-              </div>
-            )}
+      {/* Actions list */}
+      <div data-testid="report-actions-list" className="space-y-3">
+        {sortedActions.length === 0 ? (
+          <div className="rounded-[8px] border border-[#E5E7EB] bg-[#F8FAFC] px-5 py-5">
+            <p className="text-[13px] text-slate-600">
+              No actions have been assigned for this brief yet.
+            </p>
+            {!presentMode ? (
+              <button
+                type="button"
+                className="gov-btn-secondary mt-3"
+                onClick={openCreateAction}
+              >
+                Create first action
+              </button>
+            ) : null}
           </div>
-        </section>
-
-        <section className="gov-level-2 p-5">
-          <button type="button" className="flex w-full items-center justify-between text-left" onClick={() => setDetailsOpen((prev) => !prev)} aria-expanded={detailsOpen}>
-            <div><p className="gov-h2">Evidence / Details</p><p className="mt-1 text-xs text-neutral-700">Expanded context for briefing and traceability.</p></div>
-            {detailsOpen ? <ChevronDown size={16} className="text-neutral-600" /> : <ChevronRight size={16} className="text-neutral-600" />}
-          </button>
-          {detailsOpen && (
-            <div className="mt-4 space-y-4">
-              {[
-                { title: "Executive Summary", items: report.executive_summary || [], display: "list" as const },
-                { title: "Top Complaints", items: report.top_complaints || [], display: "quotes" as const, sentiment: "complaint" as const },
-                { title: "Top Praise", items: report.top_praise || [], display: "quotes" as const, sentiment: "praise" as const },
-                {
-                  title: "Recommended Changes",
-                  items: (report.recommended_changes || []).map((item) => `${item.theme}: ${item.recommendation}`),
-                  display: "list" as const,
-                },
-              ].map((section) => (
-                <article key={section.title} className="gov-level-2-soft p-4">
-                  <p className="gov-micro-label">{section.title}</p>
-                  {section.items.length === 0 ? (
-                    <p className="mt-2 text-sm text-neutral-700">No records available.</p>
-                  ) : section.display === "quotes" ? (
-                    <div className="mt-3 space-y-3">
-                      {section.items.map((item, index) => (
-                        <ClientQuoteCard
-                          key={`${section.title}-${index}`}
-                          quote={item}
-                          issue={section.title === "Top Complaints" ? "Top Client Concern" : "Client Experience Strength"}
-                          sentiment={section.sentiment}
-                          meta="Anonymized client feedback excerpt"
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <ul className="mt-2 space-y-1">
-                      {section.items.map((item, index) => (
-                        <li key={`${section.title}-${index}`} className="text-sm text-neutral-800">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+        ) : (
+          sortedActions.map((action) => (
+            <article
+              key={action.id}
+              className={
+                presentMode
+                  ? "brief-action-row"
+                  : "rounded-[8px] border border-[#E5E7EB] bg-white px-5 py-4"
+              }
+            >
+              <div className="min-w-0 flex-1">
+                <p
+                  className={
+                    presentMode
+                      ? "text-[15px] font-semibold text-[#0D1B2A]"
+                      : "text-[13px] font-semibold text-[#0D1B2A]"
+                  }
+                >
+                  {action.title}
+                </p>
+                <p className="mt-1 text-[12px] text-slate-500">
+                  Owner: {(action.owner || "Unassigned").trim() || "Unassigned"} ·
+                  Due: {formatDate(action.due_date)} ·
+                  Timeframe: {action.timeframe || "—"}
+                </p>
+                {action.kpi ? (
+                  <p className="mt-1 text-[12px] text-slate-500">
+                    Success measure: {action.kpi}
+                  </p>
+                ) : null}
+                {action.notes && !presentMode ? (
+                  <p className="mt-1 text-[12px] text-slate-500">
+                    Notes: {action.notes}
+                  </p>
+                ) : null}
+              </div>
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                <GovStatusChip
+                  label={statusLabel(action.status)}
+                  variant={resolveChipVariantForActionStatus(
+                    action.status,
+                    isOverdue(action),
                   )}
-                </article>
-              ))}
+                  size="sm"
+                />
+                {isOverdue(action) && (
+                  <GovStatusChip label="Overdue" variant="risk" size="sm" />
+                )}
+                {!isOverdue(action) && isDueSoon(action) && (
+                  <GovStatusChip label="Due soon" variant="warn" size="sm" />
+                )}
+                {isUnassigned(action) && (
+                  <GovStatusChip label="Unassigned" variant="warn" size="sm" />
+                )}
+                {!presentMode ? (
+                  <button
+                    type="button"
+                    className="gov-btn-ghost h-7 px-2 text-[11px]"
+                    onClick={() => beginEditAction(action)}
+                  >
+                    Edit
+                  </button>
+                ) : null}
+              </div>
+              {!presentMode ? (
+                <ActionForm
+                  open={actionFormMode === "edit" && editingActionId === action.id}
+                  mode="edit"
+                  initialValues={editFormInitialValues}
+                  ownerOptions={ownerOptions}
+                  submitting={actionFormSubmitting}
+                  submitLabel="Save"
+                  serverError={actionFormError}
+                  onCancel={() => {
+                    setActionFormMode(null);
+                    setEditingActionId(null);
+                    setActionFormError("");
+                  }}
+                  onSubmit={handleActionFormSubmit}
+                />
+              ) : null}
+            </article>
+          ))
+        )}
+      </div>
+    </PacketSection>
+  );
+
+  /** Section 3: Exposure Notes (top complaints + quotes) */
+  const exposureSection = (
+    <PacketSection
+      eyebrow="Section 3"
+      title="Exposure Notes"
+      presentMode={presentMode}
+    >
+      {report.top_complaints.length === 0 ? (
+        <p className="text-[13px] text-slate-500">No exposure notes for this period.</p>
+      ) : (
+        <div className="space-y-4">
+          {report.top_complaints.slice(0, 4).map((quote, index) => (
+            <ClientQuoteCard
+              key={`complaint-${index}`}
+              quote={quote}
+              issue="Client Concern"
+              sentiment="complaint"
+              meta="Anonymized client feedback excerpt"
+            />
+          ))}
+        </div>
+      )}
+      {report.top_praise.length > 0 && !presentMode ? (
+        <div className="mt-5">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+            Positive feedback
+          </p>
+          <div className="space-y-3">
+            {report.top_praise.slice(0, 2).map((quote, index) => (
+              <ClientQuoteCard
+                key={`praise-${index}`}
+                quote={quote}
+                issue="Client Experience Strength"
+                sentiment="praise"
+                meta="Anonymized client feedback excerpt"
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </PacketSection>
+  );
+
+  /** Section 4: Decisions made / Next steps */
+  const decisionsSection = (
+    <PacketSection
+      eyebrow="Section 4"
+      title="Decisions & Next Steps"
+      presentMode={presentMode}
+    >
+      {nextSteps.length === 0 ? (
+        <p className="text-[13px] text-slate-500">
+          No recommended next steps for this period.
+        </p>
+      ) : (
+        <div className="space-y-3">
+          {nextSteps.map((step, index) => (
+            <div
+              key={`step-${index}`}
+              className={
+                presentMode
+                  ? "border-l-[3px] border-l-[#0EA5C2] pl-4 py-1"
+                  : "rounded-[8px] border border-[#E5E7EB] bg-white px-5 py-4"
+              }
+            >
+              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0EA5C2]">
+                {step.theme}
+              </p>
+              <p
+                className={
+                  presentMode
+                    ? "mt-1 text-[15px] leading-relaxed text-[#0D1B2A]"
+                    : "mt-1 text-[13px] leading-relaxed text-[#0D1B2A]"
+                }
+              >
+                {step.recommendation}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+      {/* Executive summary items (shown in normal mode as expandable addendum) */}
+      {!presentMode && report.executive_summary.length > 0 ? (
+        <div className="mt-4">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+            Executive summary
+          </p>
+          <ul className="space-y-1">
+            {report.executive_summary.map((item, index) => (
+              <li key={`exec-${index}`} className="flex items-start gap-2">
+                <CheckCircle2 size={13} className="mt-0.5 shrink-0 text-slate-400" aria-hidden />
+                <span className="text-[13px] leading-relaxed text-slate-700">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </PacketSection>
+  );
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Render
+  // ─────────────────────────────────────────────────────────────────────────
+
+  return (
+    <>
+      {/* ── Present mode overlay ──────────────────────────────────────────── */}
+      <BriefPresentMode active={presentMode} onExit={exitPresent}>
+        {/* Present mode header */}
+        <header className="brief-section" style={{ borderLeft: "4px solid #0D1B2A" }}>
+          <p className="brief-section-eyebrow">Governance Brief</p>
+          <h1
+            style={{
+              fontSize: "26px",
+              fontWeight: 700,
+              color: "#0D1B2A",
+              lineHeight: 1.2,
+              margin: 0,
+            }}
+          >
+            {report.name || report.title}
+          </h1>
+          <p
+            style={{
+              marginTop: "6px",
+              fontSize: "13px",
+              color: "#64748B",
+            }}
+          >
+            Generated {formatDateTime(report.created_at)}
+          </p>
+          <div
+            style={{
+              marginTop: "16px",
+              display: "flex",
+              gap: "12px",
+              flexWrap: "wrap" as const,
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => window.print()}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "6px 14px",
+                borderRadius: "6px",
+                border: "1px solid #CBD5E1",
+                background: "white",
+                fontSize: "12px",
+                fontWeight: 500,
+                color: "#0D1B2A",
+                cursor: "pointer",
+              }}
+            >
+              <Printer size={13} aria-hidden />
+              Print / Export PDF
+            </button>
+          </div>
+        </header>
+
+        {signalsSection}
+        {actionsSection}
+        {exposureSection}
+        {decisionsSection}
+      </BriefPresentMode>
+
+      {/* ── Normal page view ──────────────────────────────────────────────── */}
+      <section className="px-8 py-8">
+        <div className="mx-auto w-full max-w-[1100px] space-y-6">
+
+          {/* Page header */}
+          <header className="flex flex-wrap items-start justify-between gap-4">
+            <div className="min-w-0 flex-1">
+              <p className="workspace-shell-eyebrow">Leadership Artifact</p>
+              {renameMode === "editing" ||
+              renameMode === "saving" ||
+              renameMode === "error" ? (
+                <div className="mt-1 flex flex-wrap items-center gap-2">
+                  <input
+                    data-testid="report-rename-input"
+                    value={renameDraft}
+                    onChange={(e) => setRenameDraft(e.target.value)}
+                    className="gov-field h-10 min-w-[280px] text-base"
+                    disabled={renameMode === "saving"}
+                  />
+                  <button
+                    data-testid="report-rename-save"
+                    type="button"
+                    className="gov-btn-secondary h-10 px-3"
+                    disabled={renameMode === "saving"}
+                    onClick={() => void handleRenameSave()}
+                  >
+                    {renameMode === "saving" ? (
+                      <span className="inline-flex items-center gap-1">
+                        <Loader2 size={14} className="animate-spin" /> Saving
+                      </span>
+                    ) : (
+                      "Save"
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    className="gov-btn-ghost h-10 px-3"
+                    disabled={renameMode === "saving"}
+                    onClick={() => {
+                      setRenameMode("idle");
+                      setRenameDraft(report.name || report.title || "");
+                      setRenameError("");
+                    }}
+                    aria-label="Cancel rename"
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              ) : (
+                <div className="mt-1 flex flex-wrap items-center gap-2">
+                  <h1
+                    className="text-[24px] font-semibold text-[#0D1B2A]"
+                    data-testid="report-title"
+                  >
+                    {report.name || report.title}
+                  </h1>
+                  <button
+                    type="button"
+                    className="gov-btn-ghost h-8 px-2"
+                    onClick={() => setRenameMode("editing")}
+                  >
+                    <PencilLine size={13} />
+                    <span className="ml-1 text-[11px]">Rename</span>
+                  </button>
+                </div>
+              )}
+              <p className="mt-1.5 text-[13px] text-slate-500">
+                Generated {formatDateTime(report.created_at)}
+              </p>
+              {renameMode === "saved" && (
+                <p className="mt-1 text-[11px] text-emerald-700">Saved.</p>
+              )}
+              {renameMode === "error" && renameError && (
+                <p className="mt-1 text-[11px] text-red-700">{renameError}</p>
+              )}
+            </div>
+
+            {/* Toolbar */}
+            <div className="flex flex-wrap items-center gap-2">
+              {/* ★ Present mode button */}
+              <button
+                type="button"
+                onClick={enterPresent}
+                className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-2 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+                title="Open presentation mode (also via ?present=1)"
+              >
+                <Maximize2 size={13} aria-hidden />
+                Present
+              </button>
+              <button
+                type="button"
+                className="gov-btn-secondary"
+                onClick={() => setEmailPreviewOpen(true)}
+                disabled={isSendingBrief}
+              >
+                Email to Partners
+              </button>
+              <button
+                data-testid="report-view-brief"
+                type="button"
+                className="gov-btn-secondary"
+                onClick={() => void openBrief()}
+              >
+                {report.plan_type === "free"
+                  ? "Preview PDF (Watermarked)"
+                  : "Download PDF"}
+              </button>
+              <button
+                data-testid="report-create-action"
+                type="button"
+                className="inline-flex items-center gap-1.5 rounded-[6px] bg-[#0D1B2A] px-3 py-2 text-[12px] font-medium text-white transition-colors hover:bg-[#16263b]"
+                onClick={openCreateAction}
+              >
+                + Create Action
+              </button>
+            </div>
+          </header>
+
+          {/* Notices */}
+          {isBusyRetrying && (
+            <div className="rounded-[8px] border border-neutral-200 bg-neutral-50 px-4 py-3 text-[13px] text-neutral-700">
+              Busy right now. Retrying… (attempt {retryAttempt}/3)
             </div>
           )}
-        </section>
+          {showRateLimitRetryPrompt && (
+            <div className="flex flex-wrap items-center gap-3 rounded-[8px] border border-neutral-200 bg-neutral-50 px-4 py-3 text-[13px] text-neutral-800">
+              <span>Busy right now. Please retry loading this brief.</span>
+              <button
+                type="button"
+                className="gov-btn-secondary h-8 px-3 py-0 text-[11px]"
+                onClick={() => {
+                  if (loading) return;
+                  setLoading(true);
+                  setReloadNonce((v) => v + 1);
+                }}
+              >
+                Retry
+              </button>
+            </div>
+          )}
+          {historyTruncated && historyNotice ? (
+            <div className="rounded-[8px] border border-[#BFDBFE] bg-[#EFF6FF] px-4 py-3 text-[13px] text-[#1E3A8A]">
+              {historyNotice}
+            </div>
+          ) : null}
 
-        <div className="flex justify-end"><Link to="/dashboard/reports" className="gov-btn-secondary">Back to Briefs</Link></div>
-        <EmailBriefPreviewModal
-          open={emailPreviewOpen}
-          onOpenChange={setEmailPreviewOpen}
-          averageRating={emailSummaryFields.averageRating}
-          topIssue={emailSummaryFields.topIssue}
-          exampleQuote={emailSummaryFields.exampleQuote}
-          recommendedDiscussion={emailSummaryFields.recommendedDiscussion}
-          htmlSummary={emailHtmlSummary}
-          onSend={() => void handleSendPartnerBrief()}
-          isSending={isSendingBrief}
-          deliveryStatus={briefDeliveryStatus}
-          deliveryStatusLoading={briefDeliveryStatusLoading}
-        />
+          {/* ── Four packet sections ─────────────────────────────────────── */}
+          {signalsSection}
+          {actionsSection}
+          {exposureSection}
+          {decisionsSection}
+
+          {/* ── Evidence accordion (additional context, not in present mode) */}
+          <section className="rounded-[12px] border border-[#E5E7EB] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+            <button
+              type="button"
+              className="flex w-full items-center justify-between px-6 py-5 text-left"
+              onClick={() => setEvidenceOpen((prev) => !prev)}
+              aria-expanded={evidenceOpen}
+            >
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                  Supplementary
+                </p>
+                <p className="mt-0.5 text-[15px] font-semibold text-[#0D1B2A]">
+                  Supporting Evidence
+                </p>
+                <p className="mt-1 text-[12px] text-slate-500">
+                  Full traceability context. Not shown in present mode.
+                </p>
+              </div>
+              {evidenceOpen ? (
+                <ChevronDown size={16} className="text-slate-500" />
+              ) : (
+                <ChevronRight size={16} className="text-slate-500" />
+              )}
+            </button>
+            {evidenceOpen && (
+              <div className="border-t border-[#E5E7EB] px-6 pb-6 pt-5">
+                <div className="space-y-4">
+                  {(report.top_praise.length > 0
+                    ? [
+                        {
+                          title: "Top Praise",
+                          items: report.top_praise,
+                          display: "quotes" as const,
+                          sentiment: "praise" as const,
+                        },
+                      ]
+                    : []
+                  ).map((section) => (
+                    <article key={section.title}>
+                      <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                        {section.title}
+                      </p>
+                      <div className="space-y-3">
+                        {section.items.map((item, index) => (
+                          <ClientQuoteCard
+                            key={`${section.title}-${index}`}
+                            quote={item}
+                            issue="Client Experience Strength"
+                            sentiment={section.sentiment}
+                            meta="Anonymized client feedback excerpt"
+                          />
+                        ))}
+                      </div>
+                    </article>
+                  ))}
+                  {report.recommended_changes.length > 0 ? (
+                    <article>
+                      <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                        All recommended changes
+                      </p>
+                      <ul className="space-y-2">
+                        {report.recommended_changes.map((item, index) => (
+                          <li
+                            key={`rec-${index}`}
+                            className="text-[13px] leading-relaxed text-slate-700"
+                          >
+                            <span className="font-medium text-[#0D1B2A]">{item.theme}:</span>{" "}
+                            {item.recommendation}
+                          </li>
+                        ))}
+                      </ul>
+                    </article>
+                  ) : null}
+                </div>
+              </div>
+            )}
+          </section>
+
+          {/* Footer nav */}
+          <div className="flex items-center justify-between pt-1">
+            <Link to="/dashboard/reports" className="gov-btn-secondary">
+              ← Back to Briefs
+            </Link>
+            <Link
+              to={`/dashboard/brief-customization?reportId=${report.id}`}
+              className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-2 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+            >
+              Prepare brief & PDF →
+            </Link>
+          </div>
+        </div>
       </section>
+
+      {/* Email modal */}
+      <EmailBriefPreviewModal
+        open={emailPreviewOpen}
+        onOpenChange={setEmailPreviewOpen}
+        averageRating={emailSummaryFields.averageRating}
+        topIssue={emailSummaryFields.topIssue}
+        exampleQuote={emailSummaryFields.exampleQuote}
+        recommendedDiscussion={emailSummaryFields.recommendedDiscussion}
+        htmlSummary={emailHtmlSummary}
+        onSend={() => void handleSendPartnerBrief()}
+        isSending={isSendingBrief}
+        deliveryStatus={briefDeliveryStatus}
+        deliveryStatusLoading={briefDeliveryStatusLoading}
+      />
+    </>
   );
 };
 
 export default ReportDetail;
-
-
