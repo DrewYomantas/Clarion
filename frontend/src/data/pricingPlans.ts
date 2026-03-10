@@ -45,7 +45,7 @@ export const pricingPlans: PricingPlan[] = [
       "No credit card required",
     ],
     cta: {
-      default: "Start Free Trial",
+      default: "Start free workspace →",
       current: "Go to Dashboard",
     },
   },
@@ -71,7 +71,7 @@ export const pricingPlans: PricingPlan[] = [
       "Restore deleted reports within retention window",
     ],
     cta: {
-      default: "Start Team Plan",
+      default: "Start Team trial →",
       current: "Go to Dashboard",
     },
   },
@@ -98,7 +98,7 @@ export const pricingPlans: PricingPlan[] = [
       "Priority support",
     ],
     cta: {
-      default: "Start Firm Plan",
+      default: "Talk to us about Firm →",
       current: "Go to Dashboard",
     },
   },

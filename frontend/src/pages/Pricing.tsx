@@ -16,6 +16,7 @@ const Pricing = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isFinalizing, setIsFinalizing] = useState(false);
   const [focusedCheckoutPlan, setFocusedCheckoutPlan] = useState<BillingPlan | null>(null);
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
 
   const checkoutStatus = searchParams.get("checkout");
   const sessionId = searchParams.get("session_id");
@@ -141,6 +142,38 @@ const Pricing = () => {
           <p className="max-w-3xl marketing-hero-body">
             Start with a free trial — no credit card required. Move to Team when governance becomes a monthly discipline. Choose Firm for full-platform coverage with scheduled delivery, custom branding, and unlimited capacity.
           </p>
+
+          {/* ── Billing toggle — lives in hero so it's visible before the cards ── */}
+          <div className="pt-1">
+            <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 p-1 text-sm backdrop-blur-sm">
+              <button
+                type="button"
+                onClick={() => setBillingCycle("monthly")}
+                className={`rounded-full px-4 py-1.5 font-medium transition ${
+                  billingCycle === "monthly"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-white/70 hover:text-white"
+                }`}
+              >
+                Monthly
+              </button>
+              <button
+                type="button"
+                onClick={() => setBillingCycle("annual")}
+                className={`rounded-full px-4 py-1.5 font-medium transition ${
+                  billingCycle === "annual"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-white/70 hover:text-white"
+                }`}
+              >
+                Annual
+                <span className="ml-1.5 rounded-full bg-emerald-500/30 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-200">
+                  Save up to 17%
+                </span>
+              </button>
+            </div>
+          </div>
+
           <div className="flex flex-wrap gap-3 pt-1">
             <a href="#pricing-page-plans" className="gov-btn-primary">
               Compare plans
@@ -148,6 +181,21 @@ const Pricing = () => {
             <Link to="/contact" className="gov-btn-secondary">
               Contact support
             </Link>
+          </div>
+
+          {/* ── Trust strip ── */}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/10 pt-4">
+            {[
+              "Built for law firms",
+              "No credit card required",
+              "Secure checkout via Stripe",
+              "Designed for client experience governance",
+            ].map((item) => (
+              <span key={item} className="flex items-center gap-1.5 text-xs text-white/60">
+                <span className="h-1 w-1 rounded-full bg-white/30" />
+                {item}
+              </span>
+            ))}
           </div>
         </div>
       </section>
@@ -179,7 +227,9 @@ const Pricing = () => {
 
       {focusedPlan && (
         <section className="section-container pb-2 pt-6">
-          <div className="marketing-panel marketing-tone-blue rounded-2xl px-6 py-6">
+          <div className={`marketing-panel rounded-2xl px-6 py-6 ${
+            focusedPlan.id === "firm" ? "marketing-tone-violet" : "marketing-tone-blue"
+          }`}>
             <div className="flex flex-wrap items-start justify-between gap-5">
               <div className="max-w-2xl">
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-600">Selected upgrade</p>
@@ -251,6 +301,8 @@ const Pricing = () => {
           showEntryCtas={false}
           highlightedPlanId={focusedPlanId}
           showFaq
+          billingCycle={billingCycle}
+          onBillingCycleChange={setBillingCycle}
         />
       </section>
     </PageLayout>

@@ -14,6 +14,9 @@ interface PricingSectionProps {
   highlightedPlanId?: PricingPlan["id"] | null;
   showTeaserOnly?: boolean;
   showFaq?: boolean;
+  /** Controlled billing cycle — when provided the internal toggle is hidden */
+  billingCycle?: "monthly" | "annual";
+  onBillingCycleChange?: (cycle: "monthly" | "annual") => void;
 }
 
 const getPlanToneClass = (id: PricingPlan["id"]) => {
@@ -43,11 +46,22 @@ const PricingSection = ({
   highlightedPlanId = null,
   showTeaserOnly = false,
   showFaq = true,
+  billingCycle: controlledCycle,
+  onBillingCycleChange,
 }: PricingSectionProps) => {
   const navigate = useNavigate();
   const { isLoggedIn, isLoading, currentPlan } = useAuth();
   const [loadingPlan, setLoadingPlan] = useState<BillingPlan | null>(null);
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly");
+  const [internalCycle, setInternalCycle] = useState<"monthly" | "annual">("monthly");
+
+  // Use controlled cycle when parent provides one; fall back to internal
+  const billingCycle = controlledCycle ?? internalCycle;
+  const setBillingCycle = (cycle: "monthly" | "annual") => {
+    if (onBillingCycleChange) onBillingCycleChange(cycle);
+    else setInternalCycle(cycle);
+  };
+  // Whether to show the internal toggle (hidden when parent controls it)
+  const showInternalToggle = controlledCycle === undefined;
 
   const startPaidCheckout = async (tier: PricingPlan) => {
     const checkoutPlan: BillingPlan = tier.id === "firm" ? "firm" : "team";
@@ -156,7 +170,8 @@ const PricingSection = ({
             </div>
           )}
 
-          {/* Billing cycle toggle */}
+          {/* Billing cycle toggle — hidden when parent controls it */}
+          {showInternalToggle && (
           <div className="mb-8 flex justify-center">
             <div className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 p-1 text-sm">
               <button
@@ -186,6 +201,7 @@ const PricingSection = ({
               </button>
             </div>
           </div>
+          )}
 
 
           {/* Plan cards */}
