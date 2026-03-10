@@ -506,6 +506,7 @@ const ExecutionPage = () => {
                 </Link>
               }
             />
+          </section>
         ) : tabActions.length === 0 && actionsTab !== "firm-wide" ? (
           <section className="rounded-xl border border-[#E3E8EF] bg-white shadow-sm">
             <GovernanceEmptyState
