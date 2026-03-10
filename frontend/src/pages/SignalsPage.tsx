@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Info, X } from "lucide-react";
+import { Info, CheckSquare, Square, X, Layers } from "lucide-react";
 import { toast } from "sonner";
 import { PageTabs } from "@/components/governance/PageTabs";
 
@@ -139,6 +139,13 @@ const SignalsPage = () => {
   const [baselineDismissed, setBaselineDismissed] = useState(false);
   // ── Workflow tab: "triage" | "all" | "in-briefs" ─────────────────────────
   const [signalsTab, setSignalsTab] = useState<"triage" | "all" | "in-briefs">("all");
+
+  // ── Evidence triage / bulk selection (Phase 6) ───────────────────────────
+  const [selectionMode, setSelectionMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkModalOpen, setBulkModalOpen] = useState(false);
+  const [bulkSubmitting, setBulkSubmitting] = useState(false);
+  const [bulkError, setBulkError] = useState("");
 
   const baselineDismissKey = useMemo(
     () => `baseline-analysis-dismissed:${user?.firm_id ?? user?.email ?? "unknown"}`,
@@ -415,6 +422,99 @@ const SignalsPage = () => {
     setBaselineDismissed(true);
   };
 
+  // ── Selection helpers (Phase 6) ───────────────────────────────────────────
+  const toggleSelect = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    const visibleIds = tabFilteredSignals.map((s) => s.id);
+    const allSelected = visibleIds.every((id) => selectedIds.has(id));
+    if (allSelected) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(visibleIds));
+    }
+  };
+
+  const exitSelectionMode = () => {
+    setSelectionMode(false);
+    setSelectedIds(new Set());
+    setBulkError("");
+    setBulkModalOpen(false);
+  };
+
+  const selectedSignals = useMemo(
+    () => tabFilteredSignals.filter((s) => selectedIds.has(s.id)),
+    [tabFilteredSignals, selectedIds],
+  );
+
+  // Build a consolidated bulk action from all selected signals
+  const bulkActionPrefill = useMemo<import("@/components/actions/ActionForm").ActionFormValues>(() => {
+    if (selectedSignals.length === 0) {
+      return { title: "", owner: "", owner_user_id: null, due_date: "", status: "open", timeframe: "Days 1-30", kpi: "", notes: "" };
+    }
+    if (selectedSignals.length === 1) {
+      const s = selectedSignals[0];
+      return {
+        title: `Review ${s.category}`,
+        owner: "",
+        owner_user_id: null,
+        due_date: "",
+        status: "open",
+        timeframe: "Days 1-30",
+        kpi: "Owner assigned and remediation plan approved.",
+        notes: s.description,
+      };
+    }
+    const titles = selectedSignals.map((s) => `• ${s.title}`).join("\n");
+    return {
+      title: `Governance review — ${selectedSignals.length} client issues`,
+      owner: "",
+      owner_user_id: null,
+      due_date: "",
+      status: "open",
+      timeframe: "Days 1-30",
+      kpi: "All selected issues reviewed and assigned.",
+      notes: `Covers the following ${selectedSignals.length} client issues:\n${titles}`,
+    };
+  }, [selectedSignals]);
+
+  const handleBulkCreateSignal = async (values: import("@/components/actions/ActionForm").ActionFormValues) => {
+    if (!latestReport?.id) {
+      setBulkError("No report available for action creation.");
+      return;
+    }
+    setBulkSubmitting(true);
+    setBulkError("");
+    const result = await createReportAction(latestReport.id, {
+      title: values.title,
+      owner: values.owner || undefined,
+      owner_user_id: values.owner_user_id,
+      status: values.status,
+      due_date: values.due_date || null,
+      timeframe: values.timeframe,
+      kpi: values.kpi,
+      notes: values.notes,
+    });
+    setBulkSubmitting(false);
+    if (!result.success) {
+      setBulkError(result.error || "Unable to create governance action.");
+      return;
+    }
+    toast.success(
+      selectedSignals.length === 1
+        ? "Governance action created from signal."
+        : `Governance action created from ${selectedSignals.length} signals.`,
+    );
+    exitSelectionMode();
+  };
+
   return (
       <PageWrapper
         eyebrow="Review Surface"
@@ -422,10 +522,33 @@ const SignalsPage = () => {
         description="Detected recurring themes in client feedback that may require governance action."
         contentClassName="stage-sequence"
         actions={
-          <InfoTooltip
-            title={DISPLAY_LABELS.clientIssueTooltipTitle}
-            body={DISPLAY_LABELS.clientIssueTooltipBody}
-          />
+          <div className="flex items-center gap-2">
+            {!loading && latestReport && tabFilteredSignals.length > 0 ? (
+              selectionMode ? (
+                <button
+                  type="button"
+                  onClick={exitSelectionMode}
+                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[13px] font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                >
+                  <X size={13} />
+                  Exit selection
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setSelectionMode(true)}
+                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[13px] font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                >
+                  <Layers size={13} />
+                  Select issues
+                </button>
+              )
+            ) : null}
+            <InfoTooltip
+              title={DISPLAY_LABELS.clientIssueTooltipTitle}
+              body={DISPLAY_LABELS.clientIssueTooltipBody}
+            />
+          </div>
         }
       >
         {showBaselineNotice ? (
@@ -568,20 +691,94 @@ const SignalsPage = () => {
           </section>
         ) : (
           <section className="space-y-4">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
-                {signalsTab === "triage" ? "High-severity signals" : signalsTab === "in-briefs" ? "Recurring signals in briefs" : "Issue queue"}
-              </p>
-              <p className="mt-1 text-sm text-slate-700">
-                {signalsTab === "triage"
-                  ? "These signals carry the highest severity and should be the first to receive action ownership."
-                  : signalsTab === "in-briefs"
-                    ? "Signals that appeared in the previous cycle and are now captured in governance briefs."
-                    : "Each card is actionable, but the first pass should stay focused on the themes that carry the strongest current signal."}
-              </p>
+            {/* ── Section label row + select-all ─────────────────────── */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                  {signalsTab === "triage" ? "High-severity signals" : signalsTab === "in-briefs" ? "Recurring signals in briefs" : "Issue queue"}
+                </p>
+                <p className="mt-1 text-sm text-slate-700">
+                  {selectionMode
+                    ? "Click cards or checkboxes to select issues, then create a governance action for all of them at once."
+                    : signalsTab === "triage"
+                      ? "These signals carry the highest severity and should be the first to receive action ownership."
+                      : signalsTab === "in-briefs"
+                        ? "Signals that appeared in the previous cycle and are now captured in governance briefs."
+                        : "Each card is actionable, but the first pass should stay focused on the themes that carry the strongest current signal."}
+                </p>
+              </div>
+              {selectionMode ? (
+                <button
+                  type="button"
+                  onClick={toggleSelectAll}
+                  className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#0EA5C2] hover:text-[#0b8ca7] transition-colors"
+                >
+                  {tabFilteredSignals.every((s) => selectedIds.has(s.id))
+                    ? <><CheckSquare size={14} /> Deselect all</>
+                    : <><Square size={14} /> Select all</>
+                  }
+                </button>
+              ) : null}
             </div>
+
+            {/* ── Sticky selection bar ────────────────────────────────── */}
+            {selectionMode ? (
+              <div
+                className={[
+                  "sticky top-[56px] z-20 rounded-[10px] border px-4 py-3 transition-all duration-200",
+                  selectedIds.size > 0
+                    ? "border-[#0EA5C2] bg-[#F0FDFF] shadow-[0_2px_8px_rgba(14,165,194,0.12)]"
+                    : "border-[#E5E7EB] bg-white",
+                ].join(" ")}
+              >
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={[
+                        "inline-flex h-6 min-w-[24px] items-center justify-center rounded-full px-2 text-[12px] font-semibold",
+                        selectedIds.size > 0
+                          ? "bg-[#0EA5C2] text-white"
+                          : "bg-slate-200 text-slate-500",
+                      ].join(" ")}
+                    >
+                      {selectedIds.size}
+                    </span>
+                    <span className="text-[13px] text-slate-700">
+                      {selectedIds.size === 0
+                        ? "No issues selected — click cards to select"
+                        : selectedIds.size === 1
+                          ? "1 issue selected"
+                          : `${selectedIds.size} issues selected`}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {selectedIds.size > 0 ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedIds(new Set())}
+                          className="text-[12px] text-slate-500 hover:text-slate-700 transition-colors"
+                        >
+                          Clear
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => { setBulkError(""); setBulkModalOpen(true); }}
+                          className="inline-flex items-center gap-1.5 rounded-[7px] bg-[#0D1B2A] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#16263b]"
+                        >
+                          <Layers size={13} />
+                          Create Signal from {selectedIds.size > 1 ? `${selectedIds.size} selected` : "selected"}
+                        </button>
+                      </>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            ) : null}
+
+            {/* ── Signal grid ─────────────────────────────────────────── */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {(tabFilteredSignals.length > 0 ? tabFilteredSignals : []).map((signal) => {
+              {tabFilteredSignals.map((signal) => {
                 const trendLabel = typeof signal.previousCount === "number"
                   ? (() => {
                       const change = trendChange(signal.frequencyCount, signal.previousCount || 0);
@@ -601,7 +798,10 @@ const SignalsPage = () => {
                     description={signal.description}
                     previousCount={signal.previousCount}
                     trendLabel={trendLabel}
-                    onCreateAction={() => openActionForm(signal)}
+                    onCreateAction={selectionMode ? undefined : () => openActionForm(signal)}
+                    selectionMode={selectionMode}
+                    selected={selectedIds.has(signal.id)}
+                    onToggleSelect={selectionMode ? toggleSelect : undefined}
                   />
                 );
               })}
@@ -609,13 +809,11 @@ const SignalsPage = () => {
           </section>
         )}
 
+        {/* ── Single-signal action dialog (existing) ───────────────────── */}
         <Dialog
           open={actionModalOpen}
           onOpenChange={(open) => {
-            if (!open) {
-              closeActionForm();
-              return;
-            }
+            if (!open) { closeActionForm(); return; }
             setActionModalOpen(true);
           }}
         >
@@ -637,6 +835,53 @@ const SignalsPage = () => {
               serverError={actionError}
               onCancel={closeActionForm}
               onSubmit={handleCreateAction}
+            />
+          </DialogContent>
+        </Dialog>
+
+        {/* ── Bulk "Create Signal from selected" dialog (Phase 6) ──────── */}
+        <Dialog
+          open={bulkModalOpen}
+          onOpenChange={(open) => {
+            if (!open) { setBulkModalOpen(false); setBulkError(""); return; }
+            setBulkModalOpen(true);
+          }}
+        >
+          <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Create Signal from Selected Issues</DialogTitle>
+              <DialogDescription>
+                {selectedSignals.length === 1
+                  ? `Creating a governance action for: ${selectedSignals[0].title}`
+                  : `Creating one consolidated governance action for ${selectedSignals.length} selected client issues.`}
+              </DialogDescription>
+            </DialogHeader>
+            {selectedSignals.length > 1 ? (
+              <div className="mb-2 rounded-[8px] border border-[#E5E7EB] bg-[#FAFBFC] px-3 py-2.5">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                  Selected issues ({selectedSignals.length})
+                </p>
+                <ul className="mt-1.5 space-y-0.5">
+                  {selectedSignals.map((s) => (
+                    <li key={s.id} className="flex items-center gap-1.5 text-[13px] text-slate-700">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#0EA5C2] shrink-0" />
+                      {s.title}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            <ActionForm
+              open={bulkModalOpen && selectedSignals.length > 0}
+              mode="create"
+              initialValues={bulkActionPrefill}
+              ownerOptions={[]}
+              submitting={bulkSubmitting}
+              submitLabel="Create Governance Action"
+              submittingLabel="Creating..."
+              serverError={bulkError}
+              onCancel={() => { setBulkModalOpen(false); setBulkError(""); }}
+              onSubmit={handleBulkCreateSignal}
             />
           </DialogContent>
         </Dialog>

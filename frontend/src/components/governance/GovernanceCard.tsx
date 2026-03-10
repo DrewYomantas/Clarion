@@ -39,7 +39,7 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-export type GovernanceCardAccent = "risk" | "warn" | "success" | "neutral";
+export type GovernanceCardAccent = "risk" | "warn" | "success" | "neutral" | "none";
 
 type GovernanceCardProps = {
   /** Primary title of the governance object */
@@ -66,6 +66,7 @@ const accentBorder: Record<GovernanceCardAccent, string> = {
   warn:    "border-l-[3px] border-l-[#F59E0B]",
   success: "border-l-[3px] border-l-[#10B981]",
   neutral: "border-l-[3px] border-l-[#CBD5E1]",
+  none:    "border-l-[3px] border-l-[#0EA5C2]",
 };
 
 export default function GovernanceCard({
