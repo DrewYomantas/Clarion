@@ -48,6 +48,7 @@ import DemoReportDetail from "./pages/DemoReportDetail";
 import DemoPdfPreview from "./pages/DemoPdfPreview";
 import DashboardTeam from "./pages/DashboardTeam";
 import InviteAccept from "./pages/InviteAccept";
+import ActionDetail from "./pages/ActionDetail";
 
 const queryClient = new QueryClient();
 
@@ -97,6 +98,7 @@ const AppRoutes = ({ location }: { location: Location }) => (
       <Route path="/dashboard/reports/:id" element={<ReportDetail />} />
       <Route path="/dashboard/signals/:signalId" element={<SignalDetail />} />
       <Route path="/signals/:signalId" element={<SignalDetail />} />
+      <Route path="/dashboard/actions/:actionId" element={<ActionDetail />} />
       <Route
         path="/dashboard/actions"
         element={

@@ -1,3 +1,8 @@
+/**
+ * @deprecated Use GovStatusChip from @/components/governance/GovStatusChip instead.
+ * SeverityBadge is superseded by the unified GovStatusChip system (Phase 2 Task 2.2).
+ * This file is retained for backwards compatibility only — do not use in new code.
+ */
 type SeverityValue = "HIGH" | "MEDIUM" | "LOW";
 
 type SeverityBadgeProps = {

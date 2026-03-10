@@ -28,7 +28,11 @@ import GovernanceGuidance from "@/components/dashboard/GovernanceGuidance";
 import RecentGovernanceBriefs from "@/components/dashboard/RecentGovernanceBriefs";
 import PlanBadge from "@/components/dashboard/PlanBadge";
 import PartnerBriefPanel from "@/components/dashboard/PartnerBriefPanel";
+import DashboardSectionDivider from "@/components/dashboard/DashboardSectionDivider";
+import DashSectionHeader from "@/components/dashboard/DashSectionHeader";
 import GovernanceLoop from "@/components/dashboard/GovernanceLoop";
+import OversightBand from "@/components/dashboard/OversightBand";
+import GovernanceNarrativeRail from "@/components/dashboard/GovernanceNarrativeRail";
 import { DashboardCard } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
@@ -771,58 +775,111 @@ const Dashboard = () => {
           ) : null}
 
           {!partnerMode && !isFirstRunWorkspace ? (
-          <section className="rounded-[10px] border border-dashed border-[#CBD5E1] bg-white/70 p-5">
-            <div className="mb-4">
-              <h2 className="text-[18px] font-semibold text-[#0D1B2A]">From posture to action</h2>
-              <p className="text-[13px] text-[#6B7280]">
-                Start with the current posture, review what moved, then open the deeper workspaces behind the next
-                action.
-              </p>
+          <section className="dash-tier">
+            {/* ════════════════════════════════════
+                TIER 1 — Leadership overview
+                OversightBand + GovernanceNarrativeRail
+                ════════════════════════════════════ */}
+            <OversightBand
+                loading={loading}
+                metrics={[
+                  {
+                    label: "High-risk signals",
+                    value: latestSignals.filter((s) => String(s.severity || "").toLowerCase() === "high").length,
+                    sub: `of ${latestSignals.length} total client issues`,
+                    risk: true,
+                    route: "/dashboard/signals",
+                    routeQuery: "filter=high",
+                  },
+                  {
+                    label: "Unowned actions",
+                    value: openActions.filter((a) => !a.owner || String(a.owner).trim() === "").length,
+                    sub: `${openActions.length} open actions total`,
+                    warn: true,
+                    route: "/dashboard/actions",
+                  },
+                  {
+                    label: "Briefs ready",
+                    value: readyReportCount,
+                    sub: readyReportCount === 1 ? "1 completed review cycle" : `${readyReportCount} completed cycles`,
+                    success: readyReportCount > 0,
+                    route: "/dashboard/reports",
+                  },
+                  {
+                    label: "Overdue actions",
+                    value: overdueActions.length,
+                    sub: overdueActions.length === 0 ? "No overdue items" : "Require immediate attention",
+                    risk: true,
+                    route: "/dashboard/actions",
+                    routeQuery: "filter=overdue",
+                  },
+                ]}
+              />
+
+              {/* ── Governance Narrative Rail ── */}
+              <GovernanceNarrativeRail
+                loading={loading}
+                cards={[
+                  {
+                    stage: "Evidence",
+                    description: "Raw client feedback uploaded and processed into this review cycle.",
+                    statusLines: [
+                      `${reviewsAnalyzed} reviews analyzed`,
+                      latestProcessedReport ? `Last cycle: ${reviewPeriodLabel}` : "No cycle yet",
+                    ],
+                    route: "/upload",
+                  },
+                  {
+                    stage: "Signals",
+                    description: "Recurring patterns and client issues extracted from evidence.",
+                    statusLines: [
+                      `${latestSignals.length} client issue${latestSignals.length === 1 ? "" : "s"} detected`,
+                      newSignalsCount > 0 ? `${newSignalsCount} new since last review` : "No net-new signals",
+                    ],
+                    route: "/dashboard/signals",
+                  },
+                  {
+                    stage: "Actions",
+                    description: "Owner-assigned follow-through tied to active client issues.",
+                    statusLines: [
+                      `${openActions.length} open action${openActions.length === 1 ? "" : "s"}`,
+                      overdueActions.length > 0
+                        ? `${overdueActions.length} overdue`
+                        : "No overdue actions",
+                    ],
+                    route: "/dashboard/actions",
+                  },
+                  {
+                    stage: "Governance Briefs",
+                    description: "Leadership-ready summaries prepared for partner review.",
+                    statusLines: [
+                      `${readyReportCount} brief${readyReportCount === 1 ? "" : "s"} ready`,
+                      latestReadyBrief ? `Latest: ${formatDateOnly(latestReadyBrief.created_at)}` : "Awaiting first cycle",
+                    ],
+                    route: "/dashboard/reports",
+                  },
+                ]}
+              />
+
+            {/* ════════════════════════════════════
+                TIER 2 — Priority working lists
+                Tier gap above; dash-tier-gap spacer + divider
+                ════════════════════════════════════ */}
+            <div>
+              <div className="dash-tier-gap" />
+              <DashboardSectionDivider
+                label="Priority work"
+                description="What needs attention before the next review"
+              />
             </div>
 
-            <div className="space-y-8 opacity-95">
-              <div className="mb-8">
-                <FirmGovernanceStatus
-                  status={exposureRisk}
-                  reviewPeriodLabel={reviewPeriodLabel}
-                  reviewsAnalyzed={reviewsAnalyzed}
-                  metrics={{
-                    signals: latestSignals.length,
-                    newSignals: newSignalsCount,
-                    openActions: openActions.length,
-                    overdueActions: overdueActions.length,
-                  }}
-                  loading={loading}
-                  onOpenSignals={() => navigate("/dashboard/signals")}
-                  onOpenNewSignals={() => navigate("/dashboard/signals?filter=new")}
-                  onOpenOpenActions={() => navigate("/dashboard/actions")}
-                  onOpenOverdueActions={() => navigate("/dashboard/actions?filter=overdue")}
-                />
-              </div>
-
-              <div className="grid gap-8 xl:grid-cols-[1.2fr_0.8fr]">
-                <SinceLastReview
-                  isLoading={loading}
-                  newFeedbackSignals={newSignalsCount}
-                  newExposureCategories={newExposureCategories}
-                  overdueActionsCreated={overdueActions.length}
-                />
-
-                <GovernanceGuidance
-                  directive={guidance.directive}
-                  recommendedAction={guidance.recommendation}
-                  onOpenActions={() => navigate("/dashboard/actions")}
-                />
-              </div>
-
+            <div className="dash-tier">
               {suggestedActions.length > 0 ? (
-                <section className="mb-8">
-                  <div className="mb-3">
-                    <h2 className="text-[18px] font-semibold text-[#0D1B2A]">Priority follow-through to assign now</h2>
-                    <p className="text-[13px] text-[#6B7280]">
-                      Recommended responses where current client issues still do not have clear ownership.
-                    </p>
-                  </div>
+                <div>
+                  <DashSectionHeader
+                    title="Priority follow-through to assign now"
+                    subtitle="Recommended responses where current client issues still do not have clear ownership."
+                  />
                   <div className="space-y-3">
                     {suggestedActions.map((item) => (
                       <article key={`suggested-action-${item.id}`} className="rounded-[10px] border border-[#E5E7EB] border-l-[3px] border-l-[#F59E0B] bg-white px-5 py-[18px]">
@@ -841,156 +898,204 @@ const Dashboard = () => {
                       </article>
                     ))}
                   </div>
-                </section>
+                </div>
               ) : null}
 
-              <div className="mb-8">
-                <DashboardCard
-                  title="Action coverage"
-                  subtitle="Owner-assigned follow-through across the current governance cycle."
-                  actions={
-                    <Button type="button" variant="primary" onClick={() => navigate("/dashboard/actions")}>
-                      Open actions workspace
-                      <ChevronRight size={14} />
-                    </Button>
-                  }
-                >
-                  <div className="workspace-inline-stats">
-                    <div className="workspace-inline-stat">
-                      <p className="text-xs uppercase tracking-wide text-neutral-500">Open</p>
-                      <p className="mt-2 text-3xl font-semibold text-neutral-900">{openActions.length}</p>
-                    </div>
-                    <div className="workspace-inline-stat">
-                      <p className="text-xs uppercase tracking-wide text-neutral-500">In Progress</p>
-                      <p className="mt-2 text-3xl font-semibold text-neutral-900">{inProgressActions.length}</p>
-                    </div>
-                    <div className="workspace-inline-stat">
-                      <p className="text-xs uppercase tracking-wide text-neutral-500">Overdue</p>
-                      <p className="mt-2 text-3xl font-semibold text-neutral-900">{overdueActions.length}</p>
-                    </div>
+              <DashboardCard
+                title="Action coverage"
+                subtitle="Owner-assigned follow-through across the current governance cycle."
+                actions={
+                  <Button type="button" variant="primary" onClick={() => navigate("/dashboard/actions")}>
+                    Open actions workspace
+                    <ChevronRight size={14} />
+                  </Button>
+                }
+              >
+                <div className="workspace-inline-stats">
+                  <div className="workspace-inline-stat">
+                    <p className="text-xs uppercase tracking-wide text-neutral-500">Open</p>
+                    <p className="mt-2 text-3xl font-semibold text-neutral-900">{openActions.length}</p>
                   </div>
-                </DashboardCard>
-              </div>
+                  <div className="workspace-inline-stat">
+                    <p className="text-xs uppercase tracking-wide text-neutral-500">In Progress</p>
+                    <p className="mt-2 text-3xl font-semibold text-neutral-900">{inProgressActions.length}</p>
+                  </div>
+                  <div className="workspace-inline-stat">
+                    <p className="text-xs uppercase tracking-wide text-neutral-500">Overdue</p>
+                    <p className="mt-2 text-3xl font-semibold text-neutral-900">{overdueActions.length}</p>
+                  </div>
+                </div>
+              </DashboardCard>
 
-              <div className="mb-8">
-                <DashboardCard title="Recent Governance Actions" subtitle="Last issue, action taken, and current status">
-                  {recentGovernanceActions.length === 0 ? (
-                    <p className="text-sm text-neutral-700">No recent governance actions yet.</p>
-                  ) : (
-                    <ul className="space-y-3">
-                      {recentGovernanceActions.map((item) => (
-                        <li key={item.id} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-                          <p className="text-sm text-neutral-800"><span className="font-semibold">Issue:</span> {item.issue}</p>
-                          <p className="mt-1 text-sm text-neutral-800"><span className="font-semibold">Action:</span> {item.action}</p>
-                          <p className="mt-1 text-xs text-neutral-600">Owner: {item.owner || "Unassigned"} - Status: {item.status || "open"}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </DashboardCard>
-              </div>
+              <DashboardCard title="Recent Governance Actions" subtitle="Last issue, action taken, and current status">
+                {recentGovernanceActions.length === 0 ? (
+                  <p className="text-sm text-neutral-700">No recent governance actions yet.</p>
+                ) : (
+                  <ul className="space-y-3">
+                    {recentGovernanceActions.map((item) => (
+                      <li key={item.id} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
+                        <p className="text-sm text-neutral-800"><span className="font-semibold">Issue:</span> {item.issue}</p>
+                        <p className="mt-1 text-sm text-neutral-800"><span className="font-semibold">Action:</span> {item.action}</p>
+                        <p className="mt-1 text-xs text-neutral-600">Owner: {item.owner || "Unassigned"} - Status: {item.status || "open"}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </DashboardCard>
+            </div>
 
-              <div className="mb-8">
-                <RecentGovernanceBriefs
-                  briefs={recentReadyBriefs}
-                  escalationReportId={exposure?.report_id}
-                  hasEscalation={exposure?.partner_escalation_required}
-                  onView={(reportId) => navigate(`/dashboard/reports/${reportId}`)}
-                  onDownload={handleExportBrief}
+            {/* ════════════════════════════════════
+                TIER 3 — Supporting context
+                Governance posture, history, brief prep
+                ════════════════════════════════════ */}
+            <div>
+              <div className="dash-tier-gap" />
+              <DashboardSectionDivider
+                label="Governance context"
+                description="Posture, movement, and brief preparation"
+              />
+            </div>
+
+            <div className="dash-tier">
+              <FirmGovernanceStatus
+                status={exposureRisk}
+                reviewPeriodLabel={reviewPeriodLabel}
+                reviewsAnalyzed={reviewsAnalyzed}
+                metrics={{
+                  signals: latestSignals.length,
+                  newSignals: newSignalsCount,
+                  openActions: openActions.length,
+                  overdueActions: overdueActions.length,
+                }}
+                loading={loading}
+                onOpenSignals={() => navigate("/dashboard/signals")}
+                onOpenNewSignals={() => navigate("/dashboard/signals?filter=new")}
+                onOpenOpenActions={() => navigate("/dashboard/actions")}
+                onOpenOverdueActions={() => navigate("/dashboard/actions?filter=overdue")}
+              />
+
+              <div className="grid gap-[var(--dash-section-gap)] xl:grid-cols-[1.2fr_0.8fr]">
+                <SinceLastReview
+                  isLoading={loading}
+                  newFeedbackSignals={newSignalsCount}
+                  newExposureCategories={newExposureCategories}
+                  overdueActionsCreated={overdueActions.length}
+                />
+
+                <GovernanceGuidance
+                  directive={guidance.directive}
+                  recommendedAction={guidance.recommendation}
+                  onOpenActions={() => navigate("/dashboard/actions")}
                 />
               </div>
 
-              <div className="mb-8">
-                <DashboardCard title="Escalations and watchpoints" subtitle="Client issues that intensified or need leadership attention.">
-                  {alerts.length === 0 ? (
-                    <p className="text-sm text-neutral-700">No active escalations or watchpoints in this cycle.</p>
-                  ) : (
-                    <ul className="space-y-3">
-                      {alerts.map((alert) => (
-                        <li key={alert.id} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-                          <p className="text-sm font-medium text-neutral-900">{alert.message}</p>
-                          <p className="mt-1 text-xs text-neutral-600">
-                            Appeared in {alert.occurrences} new review{alert.occurrences === 1 ? "" : "s"} this week
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </DashboardCard>
-              </div>
+              <RecentGovernanceBriefs
+                briefs={recentReadyBriefs}
+                escalationReportId={exposure?.report_id}
+                hasEscalation={exposure?.partner_escalation_required}
+                onView={(reportId) => navigate(`/dashboard/reports/${reportId}`)}
+                onDownload={handleExportBrief}
+              />
 
-              <div className="mb-8">
-                <DashboardCard title="Workspace capacity and plan limits" subtitle="Current month usage and seat coverage for this workspace.">
-                  <div className="workspace-inline-stats">
-                    <div className="workspace-inline-stat">
-                      <p className="text-xs uppercase tracking-wide text-neutral-500">Reports this month</p>
-                      <p className="mt-2 text-3xl font-semibold text-neutral-900">
-                        {planUsage.reportsUsedThisMonth}
-                        <span className="ml-1 text-sm font-medium text-neutral-600">/ {planUsage.reportsLimitPerMonth ?? "Unlimited"}</span>
-                      </p>
-                    </div>
-                    <div className="workspace-inline-stat">
-                      <p className="text-xs uppercase tracking-wide text-neutral-500">Team seats</p>
-                      <p className="mt-2 text-3xl font-semibold text-neutral-900">
-                        {planUsage.seatsUsed ?? "-"}
-                        <span className="ml-1 text-sm font-medium text-neutral-600">/ {planUsage.seatsLimit ?? "Unlimited"}</span>
-                      </p>
-                    </div>
-                    <div className="workspace-inline-stat">
-                      <p className="text-xs uppercase tracking-wide text-neutral-500">Review upload limit</p>
-                      <p className="mt-2 text-3xl font-semibold text-neutral-900">{planUsage.reviewUploadLimit ?? "Unlimited"}</p>
-                    </div>
-                  </div>
-                </DashboardCard>
-              </div>
+              <DashboardCard title="Escalations and watchpoints" subtitle="Client issues that intensified or need leadership attention.">
+                {alerts.length === 0 ? (
+                  <p className="text-sm text-neutral-700">No active escalations or watchpoints in this cycle.</p>
+                ) : (
+                  <ul className="space-y-3">
+                    {alerts.map((alert) => (
+                      <li key={alert.id} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
+                        <p className="text-sm font-medium text-neutral-900">{alert.message}</p>
+                        <p className="mt-1 text-xs text-neutral-600">
+                          Appeared in {alert.occurrences} new review{alert.occurrences === 1 ? "" : "s"} this week
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </DashboardCard>
 
-              <div>
-                <DashboardCard
-                  title="Ready for the next leadership brief"
-                  subtitle={latestReadyBrief ? `Latest ready brief: ${formatDateTime(latestReadyBrief.created_at)}` : "No ready brief yet"}
-                  actions={
-                    <div className="flex flex-wrap items-center gap-2">
-                      {latestReadyBrief ? (
-                        <Button
-                          type="button"
-                          variant="secondary"
-                          onClick={() => navigate(`/dashboard/brief-customization?reportId=${latestReadyBrief.id}`)}
-                        >
-                          Prepare presentation
-                        </Button>
-                      ) : null}
-                      <Button type="button" variant="primary" onClick={() => void handleExportBrief()} disabled={!latestReadyBrief}>
-                        {loading ? (
-                          <>
-                            <Loader2 size={14} className="animate-spin" />
-                            Loading
-                          </>
-                        ) : (
-                          <>
-                            {planUsage.pdfWatermark ? "Preview Governance Brief (Watermarked)" : "Download Governance Brief PDF"}
-                            <ChevronRight size={14} />
-                          </>
-                        )}
+              <DashboardCard
+                title="Ready for the next leadership brief"
+                subtitle={latestReadyBrief ? `Latest ready brief: ${formatDateTime(latestReadyBrief.created_at)}` : "No ready brief yet"}
+                actions={
+                  <div className="flex flex-wrap items-center gap-2">
+                    {latestReadyBrief ? (
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => navigate(`/dashboard/brief-customization?reportId=${latestReadyBrief.id}`)}
+                      >
+                        Prepare presentation
                       </Button>
-                    </div>
-                  }
-                >
-                  {latestReadyBrief ? (
-                    <p className="text-sm text-neutral-700">
-                      Once the current posture, movement, and action ownership look right, open the latest governance
-                      brief for partner review. Presentation-only PDF preparation stays available here when you need to align logo, firm name, or accent treatment before circulation.
+                    ) : null}
+                    <Button type="button" variant="primary" onClick={() => void handleExportBrief()} disabled={!latestReadyBrief}>
+                      {loading ? (
+                        <>
+                          <Loader2 size={14} className="animate-spin" />
+                          Loading
+                        </>
+                      ) : (
+                        <>
+                          {planUsage.pdfWatermark ? "Preview Governance Brief (Watermarked)" : "Download Governance Brief PDF"}
+                          <ChevronRight size={14} />
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                }
+              >
+                {latestReadyBrief ? (
+                  <p className="text-sm text-neutral-700">
+                    Once the current posture, movement, and action ownership look right, open the latest governance
+                    brief for partner review. Presentation-only PDF preparation stays available here when you need to align logo, firm name, or accent treatment before circulation.
+                  </p>
+                ) : (
+                  <div className="flex items-start gap-2 text-sm text-neutral-700">
+                    <AlertTriangle size={16} className="mt-0.5 text-amber-600" />
+                    <p>
+                      No ready brief is available yet. Upload feedback to generate the first governance review.
+                      <Link to="/upload" className="ml-1 font-medium text-neutral-900 underline">Open upload</Link>
                     </p>
-                  ) : (
-                    <div className="flex items-start gap-2 text-sm text-neutral-700">
-                      <AlertTriangle size={16} className="mt-0.5 text-amber-600" />
-                      <p>
-                        No ready brief is available yet. Upload feedback to generate the first governance review.
-                        <Link to="/upload" className="ml-1 font-medium text-neutral-900 underline">Open upload</Link>
-                      </p>
-                    </div>
-                  )}
-                </DashboardCard>
-              </div>
+                  </div>
+                )}
+              </DashboardCard>
+            </div>
+
+            {/* ════════════════════════════════════
+                TIER 4 — Workspace information / admin
+                Capacity, plan limits, usage
+                ════════════════════════════════════ */}
+            <div>
+              <div className="dash-tier-gap" />
+              <DashboardSectionDivider
+                label="Workspace information"
+                description="Capacity, plan limits, and usage"
+              />
+            </div>
+
+            <div>
+              <DashboardCard title="Workspace capacity and plan limits" subtitle="Current month usage and seat coverage for this workspace.">
+                <div className="workspace-inline-stats">
+                  <div className="workspace-inline-stat">
+                    <p className="text-xs uppercase tracking-wide text-neutral-500">Reports this month</p>
+                    <p className="mt-2 text-3xl font-semibold text-neutral-900">
+                      {planUsage.reportsUsedThisMonth}
+                      <span className="ml-1 text-sm font-medium text-neutral-600">/ {planUsage.reportsLimitPerMonth ?? "Unlimited"}</span>
+                    </p>
+                  </div>
+                  <div className="workspace-inline-stat">
+                    <p className="text-xs uppercase tracking-wide text-neutral-500">Team seats</p>
+                    <p className="mt-2 text-3xl font-semibold text-neutral-900">
+                      {planUsage.seatsUsed ?? "-"}
+                      <span className="ml-1 text-sm font-medium text-neutral-600">/ {planUsage.seatsLimit ?? "Unlimited"}</span>
+                    </p>
+                  </div>
+                  <div className="workspace-inline-stat">
+                    <p className="text-xs uppercase tracking-wide text-neutral-500">Review upload limit</p>
+                    <p className="mt-2 text-3xl font-semibold text-neutral-900">{planUsage.reviewUploadLimit ?? "Unlimited"}</p>
+                  </div>
+                </div>
+              </DashboardCard>
             </div>
           </section>
           ) : null}

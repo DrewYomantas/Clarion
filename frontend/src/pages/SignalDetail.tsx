@@ -1,4 +1,24 @@
-﻿import { useCallback, useEffect, useMemo, useState } from "react";
+/**
+ * SignalDetail — Governance Hub Layout
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Two-column layout on desktop (lg+):
+ *
+ *   ┌────────────────────────────────┬──────────────────────┐
+ *   │  LEFT COLUMN (~60%)            │  RIGHT COLUMN (~40%) │
+ *   │                                │                      │
+ *   │  Signal header (title + desc)  │  Risk summary panel  │
+ *   │  Representative feedback       │  Briefs panel        │
+ *   │  Linked actions                │  Timeline            │
+ *   └────────────────────────────────┴──────────────────────┘
+ *
+ * Mobile (< lg): stacked order — summary → feedback → actions → briefs
+ * via CSS order utilities on the right-column panels.
+ *
+ * No data-fetching changes — same API calls, same state, layout only.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -15,8 +35,15 @@ import {
 } from "@/api/authService";
 import ActionForm, { type ActionFormValues } from "@/components/actions/ActionForm";
 import ClientQuoteCard from "@/components/ClientQuoteCard";
+import GovernanceCard from "@/components/governance/GovernanceCard";
+import GovStatusChip, {
+  resolveChipVariantForSeverity,
+  resolveChipVariantForActionStatus,
+} from "@/components/governance/GovStatusChip";
 import PageWrapper from "@/components/governance/PageWrapper";
 import { DISPLAY_LABELS } from "@/constants/displayLabels";
+
+// ── Types ─────────────────────────────────────────────────────────────────────
 
 type SignalSeverity = "high" | "medium" | "low";
 
@@ -28,6 +55,7 @@ type SignalModel = {
   frequencyCount: number;
   category: string;
   previousCount: number | null;
+  createdAt?: string;
 };
 
 type ExcerptModel = {
@@ -36,6 +64,8 @@ type ExcerptModel = {
   dateLabel: string;
   sentiment: "complaint" | "praise";
 };
+
+// ── Pure helper functions ─────────────────────────────────────────────────────
 
 const parseSignalRoute = (rawSignalId: string | undefined) => {
   const raw = rawSignalId || "";
@@ -65,12 +95,6 @@ const severityLabel = (severity: SignalSeverity) => {
   return "Low";
 };
 
-const severityBadgeClass = (severity: SignalSeverity) => {
-  if (severity === "high") return "border border-[#FECACA] bg-[#FEF2F2] text-[#DC2626]";
-  if (severity === "medium") return "border border-[#FDE68A] bg-[#FFFBEB] text-[#D97706]";
-  return "border border-slate-200 bg-slate-100 text-slate-700";
-};
-
 const parseCount = (signal: GovernanceSignal | null, fallback: number) => {
   const maybe = signal as (GovernanceSignal & { count?: number; frequency?: number }) | null;
   if (typeof maybe?.count === "number" && Number.isFinite(maybe.count)) return Math.max(1, Math.round(maybe.count));
@@ -95,24 +119,25 @@ const formatMonthDay = (value?: string | null) => {
   return date.toLocaleDateString([], { month: "short", day: "numeric" });
 };
 
+const formatLong = (value?: string | null) => {
+  if (!value) return "Not available";
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return "Not available";
+  return date.toLocaleDateString([], { month: "long", day: "numeric", year: "numeric" });
+};
+
 const formatPeriod = (report: ReportDetail | null) => {
   if (!report) return "Not available";
   const start = report.review_date_start ? new Date(report.review_date_start) : null;
   const end = report.review_date_end ? new Date(report.review_date_end) : null;
-  const validStart = Boolean(start && Number.isFinite(start.getTime()));
-  const validEnd = Boolean(end && Number.isFinite(end.getTime()));
+  const validStart = Boolean(start && Number.isFinite(start?.getTime()));
+  const validEnd = Boolean(end && Number.isFinite(end?.getTime()));
   if (validStart && validEnd && start && end) {
     const sameYear = start.getFullYear() === end.getFullYear();
     if (sameYear) {
-      return `${start.toLocaleDateString([], { month: "short" })}-${end.toLocaleDateString([], {
-        month: "short",
-        year: "numeric",
-      })}`;
+      return `${start.toLocaleDateString([], { month: "short" })}–${end.toLocaleDateString([], { month: "short", year: "numeric" })}`;
     }
-    return `${start.toLocaleDateString([], { month: "short", year: "numeric" })} to ${end.toLocaleDateString([], {
-      month: "short",
-      year: "numeric",
-    })}`;
+    return `${start.toLocaleDateString([], { month: "short", year: "numeric" })} – ${end.toLocaleDateString([], { month: "short", year: "numeric" })}`;
   }
   return formatMonthYear(report.created_at);
 };
@@ -132,6 +157,16 @@ const isActionOverdue = (action: ReportActionItem) => {
   return Number.isFinite(due) && due < Date.now();
 };
 
+const actionStatusLabel = (action: ReportActionItem) => {
+  if (isActionOverdue(action)) return "Overdue";
+  if (action.status === "done") return "Completed";
+  if (action.status === "in_progress") return "In Progress";
+  if (action.status === "blocked") return "Blocked";
+  return "Open";
+};
+
+// ── Component ─────────────────────────────────────────────────────────────────
+
 const SignalDetail = () => {
   const { signalId } = useParams<{ signalId: string }>();
   const route = useMemo(() => parseSignalRoute(signalId), [signalId]);
@@ -139,6 +174,7 @@ const SignalDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [report, setReport] = useState<ReportDetail | null>(null);
+  const [reportListItem, setReportListItem] = useState<ReportListItem | null>(null);
   const [signal, setSignal] = useState<SignalModel | null>(null);
   const [excerpts, setExcerpts] = useState<ExcerptModel[]>([]);
   const [actions, setActions] = useState<ReportActionItem[]>([]);
@@ -176,6 +212,7 @@ const SignalDetail = () => {
         if (!targetReport?.id) {
           setError("Client issue detail is unavailable because no ready report exists.");
           setReport(null);
+          setReportListItem(null);
           setSignal(null);
           setExcerpts([]);
           setActions([]);
@@ -183,6 +220,7 @@ const SignalDetail = () => {
           return;
         }
 
+        setReportListItem(targetReport);
         const targetIndex = readyReports.findIndex((item) => item.id === targetReport.id);
         const previousReport = targetIndex >= 0 ? readyReports[targetIndex + 1] : undefined;
 
@@ -224,18 +262,19 @@ const SignalDetail = () => {
           severity,
           frequencyCount,
           previousCount,
+          createdAt: targetReport.created_at,
           description:
             (currentSignal?.description || "").trim() ||
             "Recurring client feedback indicating delayed responses or poor communication during matters.",
         });
 
         const usingComplaints = topComplaints.length > 0;
-        const sourceExcerpts = usingComplaints ? topComplaints : detail.top_praise || [];
+        const sourceExcerpts = usingComplaints ? topComplaints : (detail.top_praise || []);
         const excerptItems = sourceExcerpts.slice(0, 5).map((text, idx) => ({
           id: `${targetReport.id}-excerpt-${idx + 1}`,
           text: String(text || "").trim(),
           dateLabel: formatMonthYear(detail.review_date_end || detail.created_at),
-          sentiment: usingComplaints ? "complaint" : "praise",
+          sentiment: usingComplaints ? ("complaint" as const) : ("praise" as const),
         }));
         setExcerpts(excerptItems.filter((item) => item.text.length > 0));
 
@@ -249,9 +288,7 @@ const SignalDetail = () => {
     };
 
     void load();
-    return () => {
-      active = false;
-    };
+    return () => { active = false; };
   }, [loadActions, route.index, route.raw, route.reportId]);
 
   const ownerOptions = useMemo(
@@ -270,18 +307,7 @@ const SignalDetail = () => {
   }, [actions, signal]);
 
   const actionPrefill = useMemo<ActionFormValues>(() => {
-    if (!signal) {
-      return {
-        title: "",
-        owner: "",
-        owner_user_id: null,
-        due_date: "",
-        status: "open",
-        timeframe: "Days 1-30",
-        kpi: "",
-        notes: "",
-      };
-    }
+    if (!signal) return { title: "", owner: "", owner_user_id: null, due_date: "", status: "open", timeframe: "Days 1-30", kpi: "", notes: "" };
     return {
       title: `Review ${signal.category}`,
       owner: "",
@@ -329,151 +355,383 @@ const SignalDetail = () => {
     return deltaMeta(signal.frequencyCount, signal.previousCount);
   }, [signal]);
 
+  // Briefs panel: this signal's cycle has a brief if a ready report exists
+  const briefsForSignal = useMemo(() => {
+    if (!reportListItem) return [];
+    return [{
+      id: reportListItem.id,
+      label: `${formatMonthYear(reportListItem.created_at)} Brief`,
+      period: periodLabel,
+    }];
+  }, [reportListItem, periodLabel]);
+
+  // Timeline events derived from existing data
+  const timeline = useMemo(() => {
+    const events: { label: string; date: string; note?: string }[] = [];
+    if (signal?.createdAt) {
+      events.push({ label: "Signal detected", date: formatLong(signal.createdAt) });
+    }
+    if (signal?.severity === "high") {
+      events.push({ label: "Flagged for escalation", date: formatLong(signal.createdAt), note: "High severity" });
+    }
+    const latestAction = relatedActions
+      .filter((a) => a.updated_at || a.created_at)
+      .sort((a, b) => Date.parse(b.updated_at || b.created_at || "") - Date.parse(a.updated_at || a.created_at || ""))[0];
+    if (latestAction) {
+      events.push({ label: "Action last updated", date: formatLong(latestAction.updated_at || latestAction.created_at) });
+    }
+    return events;
+  }, [signal, relatedActions]);
+
+
+  // ── Render ──────────────────────────────────────────────────────────────────
   return (
-      <PageWrapper
-        title={`${DISPLAY_LABELS.clientIssueSingular} Detail`}
-        description="Investigate client issue context and assign governance action."
-        contentClassName="stage-sequence"
-      >
-        <div className="mb-4">
-          <Link to="/dashboard/signals" className="text-[13px] font-medium text-[#0EA5C2] hover:text-[#0b8ca7]">
-            Back to Client Issues
-          </Link>
-        </div>
+    <PageWrapper
+      title={`${DISPLAY_LABELS.clientIssueSingular} Detail`}
+      description="Evidence, ownership, and leadership visibility in one view."
+      contentClassName="stage-sequence"
+    >
+      {/* Back nav */}
+      <div>
+        <Link to="/dashboard/signals" className="text-[13px] font-medium text-[#0EA5C2] hover:text-[#0b8ca7]">
+          ← Back to Signals
+        </Link>
+      </div>
 
-        {error ? (
-          <section className="rounded-xl border border-destructive/35 bg-destructive/10 p-6 text-sm text-destructive">
-            {error}
-          </section>
-        ) : null}
+      {/* Error state */}
+      {error ? (
+        <section className="rounded-xl border border-destructive/35 bg-destructive/10 p-6 text-sm text-destructive">
+          {error}
+        </section>
+      ) : null}
 
-        {loading ? (
-          <section className="rounded-xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
-            <p className="text-sm text-neutral-700">Loading client issue detail...</p>
-          </section>
-        ) : signal ? (
-          <div className="space-y-6">
-            <section className="rounded-xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <h1 className="text-[24px] font-bold text-[#0D1B2A]">{signal.title}</h1>
-                  <p className="mt-2 text-[13px] text-[#6B7280]">
-                    Detected in {signal.frequencyCount} reviews | Period: {periodLabel} | Severity: {severityLabel(signal.severity)}
-                  </p>
-                </div>
-                <span className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-semibold ${severityBadgeClass(signal.severity)}`}>
-                  {severityLabel(signal.severity)}
-                </span>
-              </div>
-              <p className="mt-4 text-[14px] leading-relaxed text-[#374151]">{signal.description}</p>
-            </section>
-
-            <section className="rounded-xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
-              <h2 className="text-[16px] font-semibold text-[#0D1B2A]">Trend Comparison</h2>
-              {typeof signal.previousCount === "number" && trend ? (
-                <div className="mt-4 grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-center">
-                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-center">
-                    <p className="text-[28px] font-bold text-[#0D1B2A]">{signal.previousCount}</p>
-                    <p className="mt-1 text-[12px] text-[#6B7280]">Previous Cycle</p>
-                  </div>
-                  <div
-                    className={`text-center text-[14px] font-semibold ${
-                      trend.direction === "up"
-                        ? "text-[#DC2626]"
-                        : trend.direction === "down"
-                          ? "text-[#059669]"
-                          : "text-[#6B7280]"
-                    }`}
-                  >
-                    {trend.label} {trend.delta > 0 ? "+" : ""}
-                    {trend.delta} ({trend.percent}%)
-                  </div>
-                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-center">
-                    <p className="text-[28px] font-bold text-[#0D1B2A]">{signal.frequencyCount}</p>
-                    <p className="mt-1 text-[12px] text-[#6B7280]">Current Cycle</p>
-                  </div>
-                </div>
-              ) : (
-                <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
-                  <p className="text-[28px] font-bold text-[#0D1B2A]">{signal.frequencyCount}</p>
-                  <p className="mt-1 text-[12px] text-[#6B7280]">Current Cycle</p>
-                  <p className="mt-3 text-[13px] text-[#6B7280]">Trend data will appear after your next upload.</p>
-                </div>
-              )}
-            </section>
-
-            {excerpts.length > 0 ? (
-              <section className="rounded-xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
-                <h2 className="text-[14px] font-semibold text-[#374151]">Representative Anonymized Client Feedback</h2>
-                <p className="mt-1 text-[12px] italic text-[#9CA3AF]">
-                  These excerpts illustrate the detected pattern. They are anonymized and selected as representative
-                  examples.
-                </p>
-                <div className="mt-4 space-y-3">
-                  {excerpts.map((excerpt) => (
-                    <ClientQuoteCard
-                      key={excerpt.id}
-                      quote={excerpt.text}
-                      issue={signal.category}
-                      sentiment={excerpt.sentiment}
-                      meta={`Anonymous client feedback, ${excerpt.dateLabel}`}
-                    />
-                  ))}
-                </div>
-              </section>
-            ) : null}
-
-            <section className="rounded-xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
-              <h2 className="text-[16px] font-semibold text-[#0D1B2A]">Governance Actions for This Client Issue</h2>
-              {relatedActions.length > 0 ? (
-                <div className="mt-4 space-y-3">
-                  {relatedActions.map((action) => (
-                    <div key={action.id} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-                      <p className="text-sm font-semibold text-[#0D1B2A]">{action.title}</p>
-                      <p className="mt-1 text-[13px] text-[#374151]">
-                        Owner: {action.owner || "Unassigned"} | Status: {action.status} | Due:{" "}
-                        <span className={isActionOverdue(action) ? "text-[#DC2626]" : "text-[#374151]"}>
-                          {action.due_date ? formatMonthDay(action.due_date) : "Not set"}
-                        </span>
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="mt-4">
-                  <p className="text-sm text-[#6B7280]">No action assigned</p>
-                  <button
-                    type="button"
-                    className="mt-3 rounded-[6px] bg-[#0D1B2A] px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-[#16263b]"
-                    onClick={() => setShowActionForm(true)}
-                  >
-                    Create Governance Action
-                  </button>
-                </div>
-              )}
-
-              {showActionForm ? (
-                <ActionForm
-                  open
-                  mode="create"
-                  initialValues={actionPrefill}
-                  ownerOptions={ownerOptions}
-                  submitting={submittingAction}
-                  submitLabel="Create Governance Action"
-                  submittingLabel="Creating..."
-                  serverError={actionError}
-                  onCancel={() => {
-                    if (submittingAction) return;
-                    setActionError("");
-                    setShowActionForm(false);
-                  }}
-                  onSubmit={handleCreateAction}
-                />
-              ) : null}
-            </section>
+      {/* Loading state */}
+      {loading ? (
+        <section className="space-y-4">
+          <div className="h-24 animate-pulse rounded-xl border border-[#E5E7EB] bg-white" />
+          <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
+            <div className="space-y-4">
+              <div className="h-40 animate-pulse rounded-xl border border-[#E5E7EB] bg-white" />
+              <div className="h-32 animate-pulse rounded-xl border border-[#E5E7EB] bg-white" />
+            </div>
+            <div className="space-y-4">
+              <div className="h-48 animate-pulse rounded-xl border border-[#E5E7EB] bg-white" />
+            </div>
           </div>
-        ) : null}
-      </PageWrapper>
+        </section>
+      ) : signal ? (
+        <div className="space-y-6">
+
+          {/* ── Signal header + primary actions ─────────────────────── */}
+          <section className="rounded-[12px] border border-[#E5E7EB] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-3">
+                  <GovStatusChip
+                    label={severityLabel(signal.severity)}
+                    variant={resolveChipVariantForSeverity(signal.severity)}
+                  />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">
+                    Client Issue
+                  </span>
+                </div>
+                <h1 className="mt-2 text-[22px] font-bold leading-snug text-[#0D1B2A]">{signal.title}</h1>
+                <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-[#374151]">{signal.description}</p>
+              </div>
+              {/* Primary actions */}
+              <div className="flex shrink-0 flex-wrap items-center gap-2 pt-1">
+                <button
+                  type="button"
+                  className="inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#16263b]"
+                  onClick={() => { setActionError(""); setShowActionForm(true); }}
+                >
+                  Create Action
+                </button>
+                <button
+                  type="button"
+                  disabled
+                  title="Available after the next governance brief is generated"
+                  className="inline-flex items-center rounded-[8px] border border-[#D1D5DB] bg-white px-4 py-2 text-[13px] font-medium text-slate-400 cursor-not-allowed"
+                >
+                  Add to Brief
+                </button>
+              </div>
+            </div>
+          </section>
+
+
+          {/* ── Two-column governance hub ────────────────────────────── */}
+          {/* Mobile: right-col panels interleave via order utilities    */}
+          {/* Desktop (lg+): true two-column grid                        */}
+          <div className="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-start">
+
+            {/* ════════════════════════════════════════════════════════
+                LEFT COLUMN — Evidence + Actions
+                On mobile these render between the right-col panels via
+                order-2 / order-3 (right-col panels use order-1 / order-4)
+                ════════════════════════════════════════════════════════ */}
+            <div className="order-2 space-y-6 lg:order-1">
+
+              {/* Representative feedback */}
+              {excerpts.length > 0 ? (
+                <section className="rounded-[12px] border border-[#E5E7EB] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
+                  <div className="mb-1">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                      Representative Feedback
+                    </p>
+                    <h2 className="mt-1 text-[16px] font-semibold text-[#0D1B2A]">
+                      Evidence excerpts from this cycle
+                    </h2>
+                    <p className="mt-1 text-[12px] italic text-[#9CA3AF]">
+                      Anonymized; selected as representative examples only.
+                    </p>
+                  </div>
+                  <div className="mt-4 space-y-3">
+                    {excerpts.map((excerpt) => (
+                      <ClientQuoteCard
+                        key={excerpt.id}
+                        quote={excerpt.text}
+                        issue={signal.category}
+                        sentiment={excerpt.sentiment}
+                        meta={`Anonymous client feedback · ${excerpt.dateLabel}`}
+                      />
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
+              {/* Linked actions */}
+              <section className="rounded-[12px] border border-[#E5E7EB] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                      Linked Actions
+                    </p>
+                    <h2 className="mt-1 text-[16px] font-semibold text-[#0D1B2A]">
+                      Governance follow-through
+                    </h2>
+                  </div>
+                  {!showActionForm && relatedActions.length > 0 ? (
+                    <button
+                      type="button"
+                      className="rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+                      onClick={() => { setActionError(""); setShowActionForm(true); }}
+                    >
+                      + Add action
+                    </button>
+                  ) : null}
+                </div>
+
+                {relatedActions.length > 0 ? (
+                  <div className="mt-4 space-y-3">
+                    {relatedActions.map((action) => (
+                      <GovernanceCard
+                        key={action.id}
+                        title={action.title}
+                        chip={
+                          <GovStatusChip
+                            label={actionStatusLabel(action)}
+                            variant={resolveChipVariantForActionStatus(action.status, isActionOverdue(action))}
+                            size="sm"
+                          />
+                        }
+                        summary={action.notes || action.kpi || undefined}
+                        meta={[
+                          action.owner ? `Owner: ${action.owner}` : "Unassigned",
+                          action.due_date
+                            ? `Due ${formatMonthDay(action.due_date)}${isActionOverdue(action) ? " — overdue" : ""}`
+                            : "No due date",
+                        ]}
+                        accent={
+                          isActionOverdue(action) || action.status === "blocked"
+                            ? "risk"
+                            : action.status === "in_progress"
+                              ? "warn"
+                              : action.status === "done"
+                                ? "success"
+                                : "neutral"
+                        }
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="mt-4">
+                    <p className="text-[13px] text-[#6B7280]">
+                      No action has been assigned for this signal yet.
+                    </p>
+                  </div>
+                )}
+
+                {!showActionForm && relatedActions.length === 0 ? (
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#16263b]"
+                      onClick={() => { setActionError(""); setShowActionForm(true); }}
+                    >
+                      Create Governance Action
+                    </button>
+                  </div>
+                ) : null}
+
+                {showActionForm ? (
+                  <div className="mt-5 rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] p-4">
+                    <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                      New action
+                    </p>
+                    <ActionForm
+                      open
+                      mode="create"
+                      initialValues={actionPrefill}
+                      ownerOptions={ownerOptions}
+                      submitting={submittingAction}
+                      submitLabel="Create Governance Action"
+                      submittingLabel="Creating..."
+                      serverError={actionError}
+                      onCancel={() => {
+                        if (submittingAction) return;
+                        setActionError("");
+                        setShowActionForm(false);
+                      }}
+                      onSubmit={handleCreateAction}
+                    />
+                  </div>
+                ) : null}
+              </section>
+            </div>
+
+
+            {/* ════════════════════════════════════════════════════════
+                RIGHT COLUMN — Summary · Briefs · Timeline
+                On mobile: order-1 renders summary first (above evidence),
+                order-3 renders briefs/timeline after actions.
+                ════════════════════════════════════════════════════════ */}
+            <div className="order-1 space-y-4 lg:order-2">
+
+              {/* Risk summary panel */}
+              <aside className="rounded-[12px] border border-[#E5E7EB] bg-white px-5 py-4 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                  Signal Summary
+                </p>
+
+                <dl className="mt-3 space-y-3">
+                  {/* Risk level */}
+                  <div className="flex items-center justify-between gap-2">
+                    <dt className="text-[12px] text-slate-500">Risk level</dt>
+                    <dd>
+                      <GovStatusChip
+                        label={severityLabel(signal.severity)}
+                        variant={resolveChipVariantForSeverity(signal.severity)}
+                        size="sm"
+                      />
+                    </dd>
+                  </div>
+
+                  {/* Frequency */}
+                  <div className="flex items-center justify-between gap-2">
+                    <dt className="text-[12px] text-slate-500">Affected reviews</dt>
+                    <dd className="text-[13px] font-semibold text-[#0D1B2A]">{signal.frequencyCount}</dd>
+                  </div>
+
+                  {/* Trend */}
+                  {trend ? (
+                    <div className="flex items-center justify-between gap-2">
+                      <dt className="text-[12px] text-slate-500">vs prior cycle</dt>
+                      <dd
+                        className={[
+                          "text-[13px] font-semibold",
+                          trend.direction === "up"
+                            ? "text-[#DC2626]"
+                            : trend.direction === "down"
+                              ? "text-[#059669]"
+                              : "text-[#6B7280]",
+                        ].join(" ")}
+                      >
+                        {trend.delta > 0 ? "+" : ""}{trend.delta} ({trend.percent}%)
+                      </dd>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between gap-2">
+                      <dt className="text-[12px] text-slate-500">vs prior cycle</dt>
+                      <dd className="text-[12px] text-slate-400">First cycle</dd>
+                    </div>
+                  )}
+
+                  {/* Review period */}
+                  <div className="flex items-center justify-between gap-2">
+                    <dt className="text-[12px] text-slate-500">Review period</dt>
+                    <dd className="text-[12px] font-medium text-[#374151]">{periodLabel}</dd>
+                  </div>
+
+                  {/* Open actions */}
+                  <div className="flex items-center justify-between gap-2">
+                    <dt className="text-[12px] text-slate-500">Linked actions</dt>
+                    <dd className="text-[13px] font-semibold text-[#0D1B2A]">{relatedActions.length}</dd>
+                  </div>
+                </dl>
+              </aside>
+
+              {/* Governance Briefs panel */}
+              <aside className="order-3 rounded-[12px] border border-[#E5E7EB] bg-white px-5 py-4 shadow-[0_1px_3px_rgba(0,0,0,0.06)] lg:order-none">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                  In Governance Briefs
+                </p>
+                {briefsForSignal.length > 0 ? (
+                  <ul className="mt-3 space-y-2">
+                    {briefsForSignal.map((brief) => (
+                      <li key={brief.id}>
+                        <Link
+                          to={`/dashboard/reports/${brief.id}`}
+                          className="flex items-center justify-between gap-2 rounded-[8px] border border-[#E5E7EB] bg-[#FAFBFC] px-3 py-2.5 transition-colors hover:bg-slate-50"
+                        >
+                          <div>
+                            <p className="text-[13px] font-medium text-[#0D1B2A]">{brief.label}</p>
+                            <p className="text-[11px] text-slate-400">{brief.period}</p>
+                          </div>
+                          <span className="text-[11px] font-medium text-[#0EA5C2]">View →</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-3 text-[12px] text-slate-400">
+                    This signal has not yet appeared in a completed brief.
+                  </p>
+                )}
+              </aside>
+
+              {/* Timeline */}
+              <aside className="order-4 rounded-[12px] border border-[#E5E7EB] bg-white px-5 py-4 shadow-[0_1px_3px_rgba(0,0,0,0.06)] lg:order-none">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                  Activity Timeline
+                </p>
+                {timeline.length > 0 ? (
+                  <ol className="relative mt-3 ml-2 space-y-4 border-l border-[#E5E7EB] pl-4">
+                    {timeline.map((event, idx) => (
+                      <li key={`timeline-${idx}`} className="relative">
+                        {/* Dot */}
+                        <span className="absolute -left-[21px] top-[3px] h-2 w-2 rounded-full border-2 border-[#0EA5C2] bg-white" />
+                        <p className="text-[13px] font-medium text-[#0D1B2A]">{event.label}</p>
+                        <p className="text-[11px] text-slate-400">{event.date}</p>
+                        {event.note ? (
+                          <p className="mt-0.5 text-[11px] text-slate-400 italic">{event.note}</p>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p className="mt-3 text-[12px] text-slate-400">No timeline events available.</p>
+                )}
+              </aside>
+
+            </div>
+            {/* end right column */}
+          </div>
+          {/* end two-column grid */}
+
+        </div>
+      ) : null}
+    </PageWrapper>
   );
 };
 

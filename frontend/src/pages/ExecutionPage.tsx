@@ -13,6 +13,7 @@ import {
 import ActionForm, { type ActionFormValues } from "@/components/actions/ActionForm";
 import ActionCard from "@/components/actions/ActionCard";
 import PageWrapper from "@/components/governance/PageWrapper";
+import { PageTabs } from "@/components/governance/PageTabs";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +22,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { DISPLAY_LABELS } from "@/constants/displayLabels";
+import { useAuth } from "@/contexts/AuthContext";
 
 type StatusFilter = "all" | "open" | "in_progress" | "blocked" | "done" | "overdue";
 
@@ -52,6 +54,7 @@ const ownerLabel = (action: ReportActionItem): string => {
 
 const ExecutionPage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [actions, setActions] = useState<ReportActionItem[]>([]);
   const [reports, setReports] = useState<ReportListItem[]>([]);
@@ -61,6 +64,9 @@ const ExecutionPage = () => {
   const [creatingAction, setCreatingAction] = useState(false);
   const [createActionError, setCreateActionError] = useState("");
   const [targetReportId, setTargetReportId] = useState<number | null>(null);
+
+  // ── Workflow tab: "firm-wide" | "my-actions" | "overdue" ─────────────────
+  const [actionsTab, setActionsTab] = useState<"firm-wide" | "my-actions" | "overdue">("firm-wide");
 
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [ownerFilter, setOwnerFilter] = useState<string>("all");
@@ -175,6 +181,45 @@ const ExecutionPage = () => {
     }),
     [filteredActions, grouped.open.length],
   );
+
+  // ── Tab-aware action list ─────────────────────────────────────────────────
+  // "Firm-wide"  → existing filteredActions (all)
+  // "My Actions" → filtered to the current user's name/email match
+  // "Overdue"    → uses existing isOverdue helper
+  const myActionsSet = useMemo(() => {
+    if (!user) return filteredActions;
+    const myName = (user.name || "").trim().toLowerCase();
+    const myEmail = (user.email || "").trim().toLowerCase();
+    return filteredActions.filter((action) => {
+      const owner = (action.owner || "").trim().toLowerCase();
+      return (myName && owner === myName) || (myEmail && owner === myEmail);
+    });
+  }, [filteredActions, user]);
+
+  const overdueActionsSet = useMemo(
+    () => filteredActions.filter((action) => isOverdue(action)),
+    [filteredActions],
+  );
+
+  const tabActions = useMemo(() => {
+    if (actionsTab === "my-actions") return myActionsSet;
+    if (actionsTab === "overdue")    return overdueActionsSet;
+    return filteredActions;
+  }, [actionsTab, filteredActions, myActionsSet, overdueActionsSet]);
+
+  const tabGrouped = useMemo(() => {
+    const open: ReportActionItem[] = [];
+    const inProgress: ReportActionItem[] = [];
+    const blocked: ReportActionItem[] = [];
+    const completed: ReportActionItem[] = [];
+    tabActions.forEach((action) => {
+      if (action.status === "done") completed.push(action);
+      else if (action.status === "blocked") blocked.push(action);
+      else if (action.status === "in_progress") inProgress.push(action);
+      else open.push(action);
+    });
+    return { open, inProgress, blocked, completed };
+  }, [tabActions]);
 
   const resetFilters = () => {
     setStatusFilter("all");
@@ -405,6 +450,23 @@ const ExecutionPage = () => {
           <div className="rounded-xl border border-destructive/35 bg-destructive/10 p-6 text-sm text-destructive">{error}</div>
         ) : null}
 
+        {/* ── Workflow tabs ─────────────────────────────────────────────── */}
+        {!loading && hasReadyCycle ? (
+          <PageTabs
+            value={actionsTab}
+            onValueChange={(v) => {
+              setActionsTab(v as typeof actionsTab);
+              // Sync: if URL has overdue filter and user switches away, clear it
+              if (v !== "overdue" && isOverdueOnlyFilter) clearUrlFilter();
+            }}
+            tabs={[
+              { value: "firm-wide",  label: "Firm-wide" },
+              { value: "my-actions", label: "My Actions", badgeCount: myActionsSet.length > 0 ? myActionsSet.length : undefined },
+              { value: "overdue",    label: "Overdue", badgeCount: overdueActionsSet.length, badgeUrgent: overdueActionsSet.length > 0 },
+            ]}
+          />
+        ) : null}
+
         {loading ? (
           <section className="grid gap-6 lg:grid-cols-4">
             {Array.from({ length: 4 }).map((_, col) => (
@@ -487,34 +549,58 @@ const ExecutionPage = () => {
               )}
             </div>
           </section>
+        ) : tabActions.length === 0 && actionsTab !== "firm-wide" ? (
+          <section className="rounded-xl border border-[#E3E8EF] bg-white p-6 shadow-sm text-center">
+            <h2 className="text-lg font-medium text-neutral-900">
+              {actionsTab === "my-actions" ? "No actions assigned to you" : "No overdue actions"}
+            </h2>
+            <p className="mt-1 text-sm text-neutral-700">
+              {actionsTab === "my-actions"
+                ? "Actions assigned to your name or email will appear here."
+                : "All actions are within their due dates. Good standing."}
+            </p>
+            <div className="mt-4">
+              <button type="button" className="gov-btn-secondary" onClick={() => setActionsTab("firm-wide")}>
+                View firm-wide actions
+              </button>
+            </div>
+          </section>
         ) : (
           <section className="space-y-4">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">By status</p>
-              <p className="mt-1 text-sm text-slate-700">Open work stays first. Completed items remain visible without competing with the active queue.</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                {actionsTab === "overdue" ? "Overdue actions" : actionsTab === "my-actions" ? "My assigned actions" : "By status"}
+              </p>
+              <p className="mt-1 text-sm text-slate-700">
+                {actionsTab === "overdue"
+                  ? "These actions have passed their due date and require immediate partner review."
+                  : actionsTab === "my-actions"
+                    ? "Actions where you are listed as the owner. Keep these current before the next review."
+                    : "Open work stays first. Completed items remain visible without competing with the active queue."}
+              </p>
             </div>
             <div className="grid gap-6 lg:grid-cols-4">
               <div className="space-y-4">
                 <h2 className="text-lg font-medium text-neutral-900">Open Actions</h2>
-                {grouped.open.map((action) => (
+                {tabGrouped.open.map((action) => (
                   <ActionCard key={`open-${action.id}`} action={action} />
                 ))}
               </div>
               <div className="space-y-4">
                 <h2 className="text-lg font-medium text-neutral-900">In Progress</h2>
-                {grouped.inProgress.map((action) => (
+                {tabGrouped.inProgress.map((action) => (
                   <ActionCard key={`progress-${action.id}`} action={action} />
                 ))}
               </div>
               <div className="space-y-4">
                 <h2 className="text-lg font-medium text-neutral-900">Blocked</h2>
-                {grouped.blocked.map((action) => (
+                {tabGrouped.blocked.map((action) => (
                   <ActionCard key={`blocked-${action.id}`} action={action} />
                 ))}
               </div>
               <div className="space-y-4">
                 <h2 className="text-lg font-medium text-neutral-900">Completed</h2>
-                {grouped.completed.map((action) => (
+                {tabGrouped.completed.map((action) => (
                   <ActionCard key={`done-${action.id}`} action={action} />
                 ))}
               </div>

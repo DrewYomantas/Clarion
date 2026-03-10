@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Info, X } from "lucide-react";
 import { toast } from "sonner";
+import { PageTabs } from "@/components/governance/PageTabs";
 
 import {
   createReportAction,
@@ -14,6 +15,7 @@ import {
 } from "@/api/authService";
 import ActionForm, { type ActionFormValues } from "@/components/actions/ActionForm";
 import PageWrapper from "@/components/governance/PageWrapper";
+import SignalCard from "@/components/governance/SignalCard";
 import {
   Dialog,
   DialogContent,
@@ -135,6 +137,8 @@ const SignalsPage = () => {
   const [actionError, setActionError] = useState("");
   const [readyReportCount, setReadyReportCount] = useState(0);
   const [baselineDismissed, setBaselineDismissed] = useState(false);
+  // ── Workflow tab: "triage" | "all" | "in-briefs" ─────────────────────────
+  const [signalsTab, setSignalsTab] = useState<"triage" | "all" | "in-briefs">("all");
 
   const baselineDismissKey = useMemo(
     () => `baseline-analysis-dismissed:${user?.firm_id ?? user?.email ?? "unknown"}`,
@@ -273,6 +277,34 @@ const SignalsPage = () => {
     return signals.filter((signal) => (signal.previousCount ?? 0) <= 0);
   }, [isNewOnlyFilter, signals]);
 
+  // ── Tab-filtered signals ────────────────────────────────────────────────
+  // "Triage"    → High severity only (needs immediate governance attention)
+  // "All"       → Full issue set (existing default behaviour)
+  // "In Briefs" → Signals that appear in a completed brief cycle
+  //               (all signals on this page derive from a ready report, so
+  //                this tab is only meaningful once there is >1 ready cycle:
+  //                it shows signals that also existed in the previous cycle,
+  //                i.e., persistent/recurring issues already captured in briefs)
+  const tabFilteredSignals = useMemo(() => {
+    if (signalsTab === "triage") {
+      return filteredSignals.filter((s) => s.severity === "High");
+    }
+    if (signalsTab === "in-briefs") {
+      // "In briefs" = signals that appeared in a prior cycle too (previousCount > 0)
+      // If no previous cycle exists, falls back to all (so the tab isn't confusing)
+      const hasPrevious = filteredSignals.some((s) => typeof s.previousCount === "number" && s.previousCount > 0);
+      if (!hasPrevious) return filteredSignals;
+      return filteredSignals.filter((s) => typeof s.previousCount === "number" && s.previousCount > 0);
+    }
+    return filteredSignals; // "all"
+  }, [filteredSignals, signalsTab]);
+
+  const triageCount = useMemo(() => filteredSignals.filter((s) => s.severity === "High").length, [filteredSignals]);
+  const inBriefsCount = useMemo(
+    () => filteredSignals.filter((s) => typeof s.previousCount === "number" && s.previousCount > 0).length,
+    [filteredSignals],
+  );
+
   const clearUrlFilter = () => {
     const next = new URLSearchParams(searchParams);
     next.delete("filter");
@@ -290,18 +322,6 @@ const SignalsPage = () => {
     () => signals.filter((signal) => (signal.previousCount ?? 0) <= 0).length,
     [signals],
   );
-
-  const severityClass = (severity: SignalItem["severity"]) => {
-    if (severity === "High") return "border-l-[3px] border-l-[#EF4444]";
-    if (severity === "Medium") return "border-l-[3px] border-l-[#F59E0B]";
-    return "border-l-[3px] border-l-[#10B981]";
-  };
-
-  const severityBadgeClass = (severity: SignalItem["severity"]) => {
-    if (severity === "High") return "bg-[#FEF2F2] text-[#DC2626]";
-    if (severity === "Medium") return "bg-[#FFFBEB] text-[#D97706]";
-    return "bg-[#ECFDF5] text-[#10B981]";
-  };
 
   const actionFormInitialValues = useMemo<ActionFormValues>(() => {
     if (!selectedSignal) {
@@ -474,6 +494,28 @@ const SignalsPage = () => {
           </section>
         ) : null}
 
+        {/* ── Workflow tabs ────────────────────────────────────────────── */}
+        {!loading && latestReport ? (
+          <PageTabs
+            value={signalsTab}
+            onValueChange={(v) => setSignalsTab(v as typeof signalsTab)}
+            tabs={[
+              {
+                value: "triage",
+                label: "Triage",
+                badgeCount: triageCount,
+                badgeUrgent: triageCount > 0,
+              },
+              { value: "all", label: "All Signals" },
+              {
+                value: "in-briefs",
+                label: "In Briefs",
+                badgeCount: inBriefsCount > 0 ? inBriefsCount : undefined,
+              },
+            ]}
+          />
+        ) : null}
+
         {loading ? (
           <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, index) => (
@@ -496,13 +538,9 @@ const SignalsPage = () => {
             </p>
             <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
               {!isNewOnlyFilter ? (
-                <Link to="/upload" className="gov-btn-primary">
-                  Upload feedback CSV
-                </Link>
+                <Link to="/upload" className="gov-btn-primary">Upload feedback CSV</Link>
               ) : null}
-              <Link to="/dashboard" className="gov-btn-secondary">
-                Return to overview
-              </Link>
+              <Link to="/dashboard" className="gov-btn-secondary">Return to overview</Link>
             </div>
             <div className="mt-3">
               <Link to="/demo" className="text-sm text-slate-500 underline underline-offset-4 transition-colors hover:text-slate-700">
@@ -510,70 +548,63 @@ const SignalsPage = () => {
               </Link>
             </div>
           </section>
+        ) : tabFilteredSignals.length === 0 ? (
+          <section className="rounded-xl border border-[#E3E8EF] bg-white p-6 shadow-sm text-center">
+            <h2 className="text-lg font-medium text-neutral-900">
+              {signalsTab === "triage"
+                ? "No high-severity signals in this cycle"
+                : "No recurring signals from prior cycles"}
+            </h2>
+            <p className="mt-1 text-sm text-neutral-700">
+              {signalsTab === "triage"
+                ? "All current signals are medium or low severity. Review the All Signals tab for the full issue set."
+                : "Signals with prior-cycle history will appear here once more than one governance cycle has been processed."}
+            </p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+              <button type="button" className="gov-btn-secondary" onClick={() => setSignalsTab("all")}>
+                View all signals
+              </button>
+            </div>
+          </section>
         ) : (
           <section className="space-y-4">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">Issue queue</p>
-              <p className="mt-1 text-sm text-slate-700">Each card is actionable, but the first pass should stay focused on the themes that carry the strongest current signal.</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+                {signalsTab === "triage" ? "High-severity signals" : signalsTab === "in-briefs" ? "Recurring signals in briefs" : "Issue queue"}
+              </p>
+              <p className="mt-1 text-sm text-slate-700">
+                {signalsTab === "triage"
+                  ? "These signals carry the highest severity and should be the first to receive action ownership."
+                  : signalsTab === "in-briefs"
+                    ? "Signals that appeared in the previous cycle and are now captured in governance briefs."
+                    : "Each card is actionable, but the first pass should stay focused on the themes that carry the strongest current signal."}
+              </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {filteredSignals.map((signal) => (
-                <article
-                  key={signal.id}
-                  className={[
-                    "animate-slide-up rounded-[10px] border border-[#E5E7EB] bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md",
-                    severityClass(signal.severity),
-                  ].join(" ")}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <h2 className="text-[16px] font-semibold text-[#0D1B2A]">{signal.title}</h2>
-                    <span
-                      className={[
-                        "inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold",
-                        severityBadgeClass(signal.severity),
-                      ].join(" ")}
-                    >
-                      {signal.severity}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-[13px] text-[#6B7280]">Detected in {signal.frequencyCount} reviews</p>
-                  {typeof signal.previousCount === "number" ? (
-                    <p className="mt-1 text-[12px] text-[#6B7280]">
-                      Previous cycle: {signal.previousCount} | Change:{" "}
-                      {(() => {
-                        const change = trendChange(signal.frequencyCount, signal.previousCount || 0);
-                        const deltaPrefix = change.delta > 0 ? "+" : "";
-                        const tone =
-                          change.delta > 0 ? "text-[#DC2626]" : change.delta < 0 ? "text-[#059669]" : "text-[#6B7280]";
-                        return (
-                          <span className={`font-semibold ${tone}`}>
-                            {deltaPrefix}
-                            {change.delta} ({change.direction}
-                            {change.percent})
-                          </span>
-                        );
-                      })()}
-                    </p>
-                  ) : null}
-                  <p className="mt-1 text-[13px] text-[#6B7280]">{signalSharePercent(signal.frequencyCount) || "Share not available"}</p>
-                  <p className="mt-2 text-sm text-neutral-700">{signal.description}</p>
-                  <div className="mt-4">
-                    <Link
-                      to={`/dashboard/signals/${signal.id}`}
-                      className="inline-flex items-center rounded-md bg-[#0D1B2A] px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-[#16263b]"
-                    >
-                      View Client Issue Details
-                    </Link>
-                    <button
-                      type="button"
-                      className="mt-2 block text-[13px] text-[#6B7280] underline underline-offset-4 transition-colors hover:text-[#374151]"
-                      onClick={() => openActionForm(signal)}
-                    >
-                      Create Action Directly
-                    </button>
-                  </div>
-                </article>
-              ))}
+              {(tabFilteredSignals.length > 0 ? tabFilteredSignals : []).map((signal) => {
+                const trendLabel = typeof signal.previousCount === "number"
+                  ? (() => {
+                      const change = trendChange(signal.frequencyCount, signal.previousCount || 0);
+                      const deltaPrefix = change.delta > 0 ? "+" : "";
+                      return `${deltaPrefix}${change.delta} vs prior (${change.direction})`;
+                    })()
+                  : null;
+
+                return (
+                  <SignalCard
+                    key={signal.id}
+                    id={signal.id}
+                    title={signal.title}
+                    severity={signal.severity}
+                    frequencyCount={signal.frequencyCount}
+                    shareLabel={signalSharePercent(signal.frequencyCount)}
+                    description={signal.description}
+                    previousCount={signal.previousCount}
+                    trendLabel={trendLabel}
+                    onCreateAction={() => openActionForm(signal)}
+                  />
+                );
+              })}
             </div>
           </section>
         )}

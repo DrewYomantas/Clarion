@@ -1,7 +1,7 @@
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { ChevronDown, ChevronRight, Loader2, PencilLine, X } from "lucide-react";
+import { ChevronDown, ChevronRight, Loader2, Maximize2, PencilLine, Printer, X } from "lucide-react";
 import { toast } from "sonner";
 import {
   createReportAction,
@@ -18,6 +18,9 @@ import {
 import ActionForm, { type ActionFormValues, type ActionStatus } from "@/components/actions/ActionForm";
 import ClientQuoteCard from "@/components/ClientQuoteCard";
 import EmailBriefPreviewModal from "@/components/reports/EmailBriefPreviewModal";
+import GovStatusChip, {
+  resolveChipVariantForActionStatus,
+} from "@/components/governance/GovStatusChip";
 import { formatApiDate, formatApiDateTime } from "@/lib/dateTime";
 import { DISPLAY_LABELS } from "@/constants/displayLabels";
 
@@ -99,13 +102,6 @@ const escapeHtml = (value: string): string =>
 const statusLabel = (status: string | null | undefined): string => {
   const normalized = normalizeStatus(status);
   return STATUS_OPTIONS.find((row) => row.value === normalized)?.label || "Planned";
-};
-const statusBadgeClass = (status: string | null | undefined): string => {
-  const normalized = normalizeStatus(status);
-  if (normalized === "done") return "gov-badge gov-badge-controlled";
-  if (normalized === "blocked") return "gov-badge gov-badge-critical";
-  if (normalized === "in_progress") return "gov-badge gov-badge-watch";
-  return "gov-badge";
 };
 
 const formatMonthDay = (value?: string | null): string => {
@@ -905,9 +901,13 @@ const ReportDetail = () => {
             <article className="gov-level-2 border-red-200 p-5">
               <h2 className="gov-h2 text-neutral-900">Escalation required</h2>
               <p className="mt-2 text-sm text-neutral-800">{escalation.reason}</p>
-              <div className="mt-3 flex flex-wrap gap-2 text-xs text-neutral-700">
-                {overdueCount > 0 && <span className="gov-badge gov-badge-critical">{overdueCount} overdue</span>}
-                {unassignedCount > 0 && <span className="gov-badge gov-badge-watch">{unassignedCount} unassigned</span>}
+              <div className="mt-3 flex flex-wrap gap-2">
+                {overdueCount > 0 && (
+                  <GovStatusChip label={`${overdueCount} overdue`} variant="risk" size="sm" />
+                )}
+                {unassignedCount > 0 && (
+                  <GovStatusChip label={`${unassignedCount} unassigned`} variant="warn" size="sm" />
+                )}
               </div>
             </article>
           )}
@@ -982,10 +982,20 @@ const ReportDetail = () => {
                           {action.notes && <p className="mt-1 text-xs text-neutral-700">Notes: {action.notes}</p>}
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className={statusBadgeClass(action.status)}>{statusLabel(action.status)}</span>
-                          {isOverdue(action) && <span className="gov-badge gov-badge-critical">Overdue</span>}
-                          {!isOverdue(action) && isDueSoon(action) && <span className="gov-badge gov-badge-watch">Due soon</span>}
-                          {isUnassigned(action) && <span className="gov-badge gov-badge-watch">Unassigned</span>}
+                          <GovStatusChip
+                            label={statusLabel(action.status)}
+                            variant={resolveChipVariantForActionStatus(action.status, isOverdue(action))}
+                            size="sm"
+                          />
+                          {isOverdue(action) && (
+                            <GovStatusChip label="Overdue" variant="risk" size="sm" />
+                          )}
+                          {!isOverdue(action) && isDueSoon(action) && (
+                            <GovStatusChip label="Due soon" variant="warn" size="sm" />
+                          )}
+                          {isUnassigned(action) && (
+                            <GovStatusChip label="Unassigned" variant="warn" size="sm" />
+                          )}
                           <button type="button" className="gov-btn-ghost h-8 px-2" onClick={() => beginEditAction(action)}>
                             Edit
                           </button>
