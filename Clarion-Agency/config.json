@@ -181,5 +181,11 @@
     "max_input_tokens_chief_of_staff": 4000,
     "warn_on_budget_exceed_pct": 20,
     "monthly_budget_usd": 50.00
+  },
+
+  "notifications": {
+    "notify_on_statuses": ["ESCALATE", "WATCH"],
+    "log_all_runs": true,
+    "email_on_escalate_only": true
   }
 }
