@@ -1,32 +1,185 @@
 {
   "agents": {
+
     "chief_of_staff": {
       "model": "anthropic/claude-3-5-sonnet",
       "max_output_tokens": 1000,
       "temperature": 0.2,
-      "cadence": "weekly"
+      "cadence": "weekly",
+      "output_path": "reports/ceo_brief"
     },
+
+    "head_of_growth": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.3,
+      "cadence": "weekly",
+      "output_path": "reports/revenue"
+    },
+
+    "sales_development": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.3,
+      "cadence": "weekly",
+      "output_path": "reports/revenue"
+    },
+
+    "funnel_conversion": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.3,
+      "cadence": "weekly",
+      "output_path": "reports/revenue"
+    },
+
+    "revenue_strategy": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 700,
+      "temperature": 0.2,
+      "cadence": "monthly",
+      "output_path": "reports/revenue"
+    },
+
     "customer_discovery": {
       "model": "anthropic/claude-3-haiku",
       "max_output_tokens": 1800,
       "temperature": 0.3,
       "cadence": "weekly",
-      "token_budget_warning_multiplier": 1.2
+      "output_path": "reports/market"
     },
-    "default": {
+
+    "competitive_intelligence": {
       "model": "anthropic/claude-3-haiku",
       "max_output_tokens": 600,
       "temperature": 0.3,
-      "cadence": "weekly"
+      "cadence": "weekly",
+      "output_path": "reports/market"
+    },
+
+    "market_trends": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 700,
+      "temperature": 0.2,
+      "cadence": "monthly",
+      "output_path": "reports/market"
+    },
+
+    "icp_analyst": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 700,
+      "temperature": 0.2,
+      "cadence": "quarterly",
+      "output_path": "reports/market"
+    },
+
+    "customer_health_onboarding": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.3,
+      "cadence": "weekly",
+      "output_path": "reports/customer"
+    },
+
+    "voc_product_demand": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 700,
+      "temperature": 0.3,
+      "cadence": "weekly",
+      "output_path": "reports/customer"
+    },
+
+    "retention_intelligence": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.2,
+      "cadence": "monthly",
+      "output_path": "reports/customer"
+    },
+
+    "usage_analyst": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.3,
+      "cadence": "weekly",
+      "output_path": "reports/product_insight"
+    },
+
+    "release_impact": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.2,
+      "cadence": "event_driven",
+      "output_path": "reports/product_insight"
+    },
+
+    "dictionary_calibration": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 700,
+      "temperature": 0.0,
+      "cadence": "monthly",
+      "output_path": "reports/product_integrity"
+    },
+
+    "scoring_quality": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.0,
+      "cadence": "weekly",
+      "output_path": "reports/product_integrity"
+    },
+
+    "data_quality": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.0,
+      "cadence": "weekly",
+      "output_path": "reports/product_integrity"
+    },
+
+    "process_analyst": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.3,
+      "cadence": "weekly",
+      "output_path": "reports/operations"
+    },
+
+    "cost_resource": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.1,
+      "cadence": "weekly",
+      "output_path": "reports/operations"
+    },
+
+    "content_seo": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 700,
+      "temperature": 0.3,
+      "cadence": "weekly",
+      "output_path": "reports/comms"
+    },
+
+    "people_ops": {
+      "model": "anthropic/claude-3-haiku",
+      "max_output_tokens": 600,
+      "temperature": 0.2,
+      "cadence": "monthly",
+      "output_path": "reports/people"
     }
+
   },
+
   "reports": {
     "retention_days": 90,
     "output_dir": "reports"
   },
+
   "cost_control": {
     "max_input_tokens_department": 1500,
     "max_input_tokens_chief_of_staff": 4000,
-    "warn_on_budget_exceed_pct": 20
+    "warn_on_budget_exceed_pct": 20,
+    "monthly_budget_usd": 50.00
   }
 }

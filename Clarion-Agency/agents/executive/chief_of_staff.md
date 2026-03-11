@@ -53,7 +53,7 @@ If a report is missing, note it. Do not fabricate its contents.
 
 ## Outputs
 
-One CEO brief written to: `reports/ceo_brief/YYYY-MM-DD.md`
+One CEO brief written to: `reports/ceo_brief/chief_of_staff_YYYY-MM-DD.md`
 
 No other output. No messages. No alerts. No file modifications.
 
