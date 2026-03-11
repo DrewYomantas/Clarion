@@ -1,7 +1,7 @@
 # run_full_calibration.ps1
 # Scans frontend/sample_data for all *.csv files, runs make_calibration_batch.py
-# on each, merges all reviews into one combined batch, and POSTs to the benchmark
-# endpoint. Saves the raw JSON response to a timestamped file.
+# on each, merges all reviews into one combined batch, POSTs in chunks to the
+# benchmark endpoint, and saves the raw JSON response to a timestamped file.
 
 $ErrorActionPreference = "Stop"
 
@@ -9,6 +9,7 @@ $ErrorActionPreference = "Stop"
 $BENCHMARK_URL = "http://localhost:5000/internal/benchmark/batch"
 $AUTH_TOKEN    = "Bearer Themepark12"
 $TIMEOUT_SEC   = 300
+$CHUNK_SIZE    = 200
 $SCRIPT_DIR    = Split-Path -Parent $MyInvocation.MyCommand.Path
 $PYTHON_SCRIPT = Join-Path $SCRIPT_DIR "make_calibration_batch.py"
 
@@ -40,7 +41,6 @@ foreach ($csv in $csvFiles) {
             continue
         }
 
-        # Capture only the last non-empty line (stdout) in case stderr leaked through
         $jsonLine = ($rawOutput -split "`n" | Where-Object { $_.Trim() -ne "" } | Select-Object -Last 1).Trim()
         $parsed   = $jsonLine | ConvertFrom-Json
         $reviews  = $parsed.reviews
@@ -50,7 +50,25 @@ foreach ($csv in $csvFiles) {
             continue
         }
 
-        foreach ($r in $reviews) { $allReviews.Add($r) }
+        # Normalize each review to exactly the required shape
+        foreach ($r in $reviews) {
+            $reviewText = if ($r.review_text) { [string]$r.review_text } else { "" }
+            if ([string]::IsNullOrWhiteSpace($reviewText)) { continue }
+
+            $ratingRaw = if ($null -ne $r.rating) { $r.rating } else { 3 }
+            $ratingInt = try { [int][Math]::Round([double]"$ratingRaw") } catch { 3 }
+            if ($ratingInt -lt 1 -or $ratingInt -gt 5) { $ratingInt = 3 }
+
+            $dateVal = if ($r.date) { [string]$r.date } 
+                       elseif ($r.review_date) { [string]$r.review_date } 
+                       else { "2025-01-01" }
+
+            $allReviews.Add([PSCustomObject]@{
+                review_text = $reviewText
+                rating      = $ratingInt
+                date        = $dateVal
+            })
+        }
         Write-Host " $($reviews.Count) reviews"
     }
     catch {
@@ -66,38 +84,64 @@ if ($allReviews.Count -eq 0) {
     exit 1
 }
 
-# --- Step 4: Build payload ---------------------------------------------------
-$payload = @{
-    reviews       = $allReviews.ToArray()
-    enable_ai     = $true
-    fixtures      = $false
-    export_report = $true
-    export_label  = $exportLabel
-} | ConvertTo-Json -Depth 10 -Compress
+# --- Step 4: Chunk and POST --------------------------------------------------
+$reviewArray  = $allReviews.ToArray()
+$totalReviews = $reviewArray.Count
+$totalChunks  = [int][Math]::Ceiling($totalReviews / $CHUNK_SIZE)
 
-$payloadBytes = [System.Text.Encoding]::UTF8.GetBytes($payload)
-
-# --- Step 5: POST to benchmark endpoint --------------------------------------
-Write-Host "Sending $($allReviews.Count) reviews to $BENCHMARK_URL ..."
+Write-Host "Sending $totalReviews reviews in $totalChunks chunk(s) of up to $CHUNK_SIZE to $BENCHMARK_URL ..."
 Write-Host "Export label: $exportLabel"
 
-try {
-    $response = Invoke-WebRequest `
-        -Uri $BENCHMARK_URL `
-        -Method POST `
-        -Headers @{
-            "Authorization" = $AUTH_TOKEN
-            "Content-Type"  = "application/json"
-        } `
-        -Body $payloadBytes `
-        -TimeoutSec $TIMEOUT_SEC `
-        -UseBasicParsing
+$lastResponse = $null
 
-    # --- Step 6: Save response -----------------------------------------------
-    $response.Content | Out-File -FilePath $outputFile -Encoding utf8 -Force
-    Write-Host "SUCCESS - response saved to: $outputFile"
+for ($i = 0; $i -lt $totalChunks; $i++) {
+    $start      = $i * $CHUNK_SIZE
+    $end        = [Math]::Min($start + $CHUNK_SIZE, $totalReviews) - 1
+    $chunkSlice = $reviewArray[$start..$end]
+    $chunkNum   = $i + 1
+
+    Write-Host "  Chunk $chunkNum/$totalChunks ($($chunkSlice.Count) reviews) ..." -NoNewline
+
+    # Build payload with exactly 5 required fields, booleans as [bool]
+    $payload = [ordered]@{
+        reviews       = $chunkSlice
+        enable_ai     = [bool]$true
+        fixtures      = [bool]$false
+        export_report = [bool]$true
+        export_label  = $exportLabel
+    } | ConvertTo-Json -Depth 10 -Compress
+
+    $payloadBytes = [System.Text.Encoding]::UTF8.GetBytes($payload)
+
+    try {
+        $response = Invoke-WebRequest `
+            -Uri $BENCHMARK_URL `
+            -Method POST `
+            -Headers @{
+                "Authorization" = $AUTH_TOKEN
+                "Content-Type"  = "application/json"
+            } `
+            -Body $payloadBytes `
+            -TimeoutSec $TIMEOUT_SEC `
+            -UseBasicParsing
+
+        $lastResponse = $response.Content
+        Write-Host " OK"
+    }
+    catch {
+        $errBody = ""
+        try { $errBody = $_.Exception.Response.GetResponseStream() | ForEach-Object { (New-Object System.IO.StreamReader($_)).ReadToEnd() } } catch {}
+        Write-Host " FAILED: $($_.Exception.Message) | body: $errBody"
+        Write-Error "Chunk $chunkNum failed - aborting."
+        exit 1
+    }
 }
-catch {
-    Write-Error "HTTP request failed: $($_.Exception.Message)"
+
+# --- Step 5: Save last chunk response ----------------------------------------
+if ($lastResponse) {
+    $lastResponse | Out-File -FilePath $outputFile -Encoding utf8 -Force
+    Write-Host "SUCCESS - result saved to: $outputFile"
+} else {
+    Write-Error "No response captured - output file not written."
     exit 1
 }
