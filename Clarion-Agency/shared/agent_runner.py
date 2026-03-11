@@ -36,18 +36,42 @@ def _load_config() -> dict:
 
 
 def _load_file(path: Path, label: str = "") -> str:
-    if path.exists():
-        return path.read_text(encoding="utf-8")
+    """
+    Load a file and return its text content.
+    Returns a clear placeholder string on any failure so the agent
+    knows data was unavailable rather than receiving empty input silently.
+    """
     tag = f" ({label})" if label else ""
-    print(f"  [WARN] File not found{tag}: {path}")
-    return f"[File not available: {path.name}]"
+    if not path.exists():
+        print(f"  [WARN] File not found{tag}: {path}")
+        return f"[File not available: {path.name}]"
+    try:
+        text = path.read_text(encoding="utf-8")
+    except Exception as e:
+        print(f"  [WARN] Could not read{tag}: {path} — {e}")
+        return f"[File unreadable: {path.name} — {e}]"
+    if not text.strip():
+        print(f"  [WARN] File is empty{tag}: {path}")
+        return f"[File is empty: {path.name}]"
+    return text
 
 
-def _load_memory_summary(memory_file: str) -> str:
+def _load_memory_file(memory_file: str, full: bool = False) -> str:
+    """
+    Load a memory file.
+    full=True  → return entire content (for standing_orders, decision_log)
+    full=False → return first 1200 chars with a summary prefix (for large files)
+    """
     path = BASE_DIR / "memory" / memory_file
     text = _load_file(path, memory_file)
-    # Inject summary prefix so agents know what they're reading
+    if full:
+        return f"### {memory_file}\n{text}\n"
     return f"### {memory_file}\n{text[:1200]}\n"
+
+
+# Keep the old name as an alias so any runner that imported it directly still works.
+def _load_memory_summary(memory_file: str) -> str:
+    return _load_memory_file(memory_file, full=False)
 
 
 def _log_run(
@@ -93,9 +117,14 @@ def run_agent(
 
     Returns the Path of the saved report.
     """
-    config    = _load_config()
-    agent_cfg = config["agents"].get(agent_key, config["agents"]["default"]) \
-        if "default" in config["agents"] else config["agents"][agent_key]
+    config = _load_config()
+
+    if agent_key not in config["agents"]:
+        raise KeyError(
+            f"Agent key '{agent_key}' not found in config.json. "
+            f"Available keys: {list(config['agents'].keys())}"
+        )
+    agent_cfg = config["agents"][agent_key]
 
     model      = agent_cfg["model"]
     max_tokens = agent_cfg["max_output_tokens"]
@@ -113,16 +142,23 @@ def run_agent(
     prompt_path = BASE_DIR / prompt_rel_path
     system_prompt = _load_file(prompt_path, "system prompt")
 
-    # Load product truth memory (always injected)
-    product_truth = _load_memory_summary("product_truth.md")
+    # Grounding context injected into every agent:
+    #   1. product_truth.md — what Clarion is and does
+    #   2. standing_orders.md — founder directives all agents must honor
+    product_truth    = _load_memory_file("product_truth.md",    full=False)
+    standing_orders  = _load_memory_file("standing_orders.md",  full=True)
 
     user_message = (
-        f"## Grounding Context\n\n{product_truth}\n\n"
+        f"## Grounding Context\n\n"
+        f"{product_truth}\n\n"
+        f"{standing_orders}\n\n"
         f"## Input Data\n\n{data_context}\n\n"
         f"## Task\n\n"
         f"Run your report for the period ending {date_str}.\n"
         f"Output the full report in the exact format specified in your prompt.\n"
         f"Do not fabricate data. If a file is unavailable, note it in INPUTS USED.\n"
+        f"If any finding in your report would contradict a directive in standing_orders.md, "
+        f"flag it explicitly rather than suppressing it.\n"
         f"Today's date: {date_str}\n"
     )
 
