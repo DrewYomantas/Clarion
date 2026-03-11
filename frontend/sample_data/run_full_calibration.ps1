@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
 $BENCHMARK_URL = "http://localhost:5000/internal/benchmark/batch"
 $AUTH_TOKEN    = "Bearer Themepark12"
 $TIMEOUT_SEC   = 300
-$CHUNK_SIZE    = 200
+$CHUNK_SIZE    = 100
 $SCRIPT_DIR    = Split-Path -Parent $MyInvocation.MyCommand.Path
 $PYTHON_SCRIPT = Join-Path $SCRIPT_DIR "make_calibration_batch.py"
 
@@ -130,7 +130,10 @@ for ($i = 0; $i -lt $totalChunks; $i++) {
     }
     catch {
         $errBody = ""
-        try { $errBody = $_.Exception.Response.GetResponseStream() | ForEach-Object { (New-Object System.IO.StreamReader($_)).ReadToEnd() } } catch {}
+        try {
+            $errStream = $_.Exception.Response.GetResponseStream()
+            $errBody = (New-Object System.IO.StreamReader($errStream)).ReadToEnd()
+        } catch {}
         Write-Host " FAILED: $($_.Exception.Message) | body: $errBody"
         Write-Error "Chunk $chunkNum failed - aborting."
         exit 1
