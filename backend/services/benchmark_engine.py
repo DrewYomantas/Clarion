@@ -130,6 +130,10 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("stays in touch", 1.0),
             ("timely replies", 1.0),
             ("timely updates", 1.0),
+            # --- calibration: sample2 ---
+            ("corrected quickly", 1.0),
+            ("more frequent check-ins would have been nice", 0.8),
+            ("best way to reach them", 0.8),
         ],
         "negative": [
             # --- original ---
@@ -183,6 +187,8 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("voicemails never returned", 1.5),
             ("weeks of silence", 1.5),
             ("would not return calls", 1.5),
+            # --- calibration: sample2 ---
+            ("emails sometimes came late at night", 1.0),
         ],
         "severe_negative": [
             # --- original ---
@@ -217,7 +223,6 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("plain language", 1.0),
             ("thoroughly explained", 1.5),
             ("very clear", 1.0),
-            ("walked me through", 1.0),
             # --- new: safe_import_now ---
             ("answered all my questions", 1.0),
             ("broke everything down", 1.0),
@@ -247,6 +252,10 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("very informative", 1.0),
             ("walked me through everything", 1.5),
             ("well explained", 1.0),
+            # --- calibration: sample2 ---
+            ("explained each step of the custody process", 1.5),
+            ("direct communication style", 1.0),
+            ("asked for a summary they provided it", 1.0),
         ],
         "negative": [
             # --- original ---
@@ -286,6 +295,12 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("very confusing", 1.0),
             ("withheld information", 1.5),
             ("would not explain", 1.5),
+            # --- calibration: sample2 ---
+            ("clearer written roadmap", 1.0),
+            ("long emails without a clear summary", 1.2),
+            ("didn't always understand why", 1.0),
+            ("repeat background details to different people", 1.2),
+            ("don't leave confused", 0.8),
         ],
         "severe_negative": [
             # --- original ---
@@ -346,6 +361,13 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("very kind", 1.0),
             ("very patient", 1.0),
             ("warm and compassionate", 1.5),
+            # --- calibration: sample2 ---
+            ("treated my case with empathy", 1.5),
+            ("never made me feel judged", 1.5),
+            ("focused on what was best for my kids", 1.5),
+            ("remembered details about my schedule", 1.0),
+            ("gave me scripts for how to talk to my co-parent", 1.0),
+            ("checked on my emotional wellbeing", 1.5),
         ],
         "negative": [
             # --- original ---
@@ -377,6 +399,8 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("treated me coldly", 1.5),
             ("treated me like just another client", 1.0),
             ("unsympathetic", 1.5),
+            # --- calibration: sample2 ---
+            ("concerns weren't fully addressed", 1.0),
         ],
         "severe_negative": [
             # --- original ---
@@ -433,6 +457,9 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("very honest", 1.5),
             ("very professional", 1.5),
             ("very trustworthy", 1.5),
+            # --- calibration: sample2 ---
+            ("very organized with exhibits", 1.5),
+            ("prepared for trial", 1.0),
         ],
         "negative": [
             # --- original ---
@@ -521,6 +548,9 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("upfront about the process", 1.0),
             ("upfront about risks", 1.5),
             ("was realistic with me", 1.5),
+            # --- calibration: sample2 ---
+            ("walked me through every possible scenario", 1.5),
+            ("honest about the risks", 1.0),
         ],
         "negative": [
             # --- original ---
@@ -549,6 +579,9 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("wasn\'t honest about the odds", 1.5),
             ("wasn\'t upfront about costs", 1.5),
             ("wasn\'t upfront about risks", 1.5),
+            # --- calibration: sample2 ---
+            ("more clarity on realistic outcomes", 1.2),
+            ("case was one of many, not a priority", 1.2),
         ],
         "severe_negative": [
             # --- original ---
@@ -600,6 +633,11 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("transparent billing practices", 1.5),
             ("upfront about all costs", 1.5),
             ("very transparent about billing", 1.5),
+            # --- calibration: sample2 ---
+            ("billing was fair", 1.5),
+            ("warned me when a motion would be more expensive", 1.0),
+            ("respected my budget", 1.5),
+            ("suggested options to minimize court time", 1.0),
         ],
         "negative": [
             # --- original ---
@@ -639,6 +677,8 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("unexplained charges", 1.5),
             ("unexplained fees", 1.5),
             ("vague billing", 1.0),
+            # --- calibration: sample2 ---
+            ("billing statements were confusing", 1.2),
         ],
         "severe_negative": [
             # --- original ---
@@ -781,6 +821,10 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("resolved in a timely fashion", 1.5),
             ("stayed on schedule", 1.0),
             ("work was done promptly", 1.0),
+            # --- calibration: sample2 ---
+            ("always knew when the next court date was", 1.5),
+            ("helped me get a protective order quickly", 1.5),
+            ("took a day to get updates after court", 0.8),
         ],
         "negative": [
             # --- original ---
@@ -915,6 +959,8 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("staff were unhelpful", 1.0),
             ("support staff was not helpful", 1.0),
             ("unorganized office", 1.0),
+            # --- calibration: sample2 ---
+            ("spoke to staff and waited for callbacks", 1.2),
         ],
         "severe_negative": [
             # --- original ---
@@ -983,6 +1029,10 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("victory", 1.5),                 # [CG] check for "no victory" / "not a victory"
             ("won a great settlement", 1.5),
             ("won the case", 1.5),
+            # --- calibration: sample2 ---
+            ("mediation preparation was excellent", 1.5),
+            ("helped me focus on long-term outcomes", 1.5),
+            ("not just winning every argument", 1.0),
         ],
         "negative": [
             # --- original ---
@@ -1262,6 +1312,39 @@ def score_review_deterministic(
                     "final_impact": final_impact,
                     "confidence": confidence,
                 }
+
+                # --- calibration: sample2 context guards ---
+                # GUARD 1: "confusing" in billing context → redirect to billing_transparency
+                if (
+                    phrase == "confusing"
+                    and theme_id == "communication_clarity"
+                    and any(kw in text_lower for kw in ("billing", "statement", "invoice"))
+                ):
+                    theme_id = "billing_transparency"
+                    hit["theme"] = "billing_transparency"
+
+                # GUARD 2: "expensive" praised in cost-warning context → suppress fee_value negative hit
+                elif (
+                    phrase == "expensive"
+                    and theme_id == "fee_value"
+                    and actual_polarity == "negative"
+                    and any(kw in text_lower for kw in ("would be more expensive", "when a motion"))
+                    and any(kw in text_lower for kw in ("fair", "warned", "transparent", "budget"))
+                ):
+                    continue
+
+                # GUARD 3: "honest" with contrast + low rating → re-route to expectation_setting
+                elif (
+                    phrase == "honest"
+                    and theme_id == "professionalism_trust"
+                    and actual_polarity == "positive"
+                    and contrast_applied
+                    and rating <= 3
+                    and any(kw in text_lower for kw in ("wasn't", "didn't", "hoped", "not what", "lost"))
+                ):
+                    theme_id = "expectation_setting"
+                    hit["theme"] = "expectation_setting"
+                # --- end calibration guards ---
 
                 existing = matched_themes.get(theme_id)
                 if existing is None or final_impact > existing["final_impact"]:
