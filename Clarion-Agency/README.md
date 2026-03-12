@@ -44,6 +44,10 @@ Clarion-Agency/
 All agents reference these memory files:
 - `memory/product_truth.md` — what Clarion is and does
 - `memory/brand_canon.md` — how Clarion speaks and positions
+- `memory/brand_voice.md` — public voice principles, banned tones, default response posture (required for all external-facing agents)
 - `memory/customer_insights.md` — ICP and customer segments
 - `memory/office_policies.md` — agent operating rules
 - `memory/calibration_log.md` — phrase dictionary change history
+- `memory/external_interaction_policy.md` — governs all external agent behavior; prompt injection handling, moderation rules, approval gates (required for all external-facing agents)
+- `memory/moderation_log.md` — append-only log of moderation actions; written by external-facing agents
+- `memory/security_incident_log.md` — append-only log of prompt injection and extraction attempts; written by external-facing agents; reviewed by Chief of Staff each cycle
