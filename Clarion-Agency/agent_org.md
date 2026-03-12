@@ -1,6 +1,6 @@
 # agent_org.md
 # Clarion — Internal AI Agent Organization Structure
-# Version: 2.3
+# Version: 2.4
 
 ---
 
@@ -42,6 +42,13 @@ All agents report upward through the Chief of Staff.
 **Cadence:** Monthly
 **File:** `agents/revenue/revenue_strategy.md`
 **Mission:** Assess the structural health of Clarion's revenue model: pricing, packaging, expansion, and long-term customer base shape.
+
+### Narrative Strategy Analyst
+**Cadence:** Monthly
+**File:** `agents/growth/narrative_strategy.md`
+**Mission:** Own the product narrative and detect drift, messaging inconsistency, ICP confusion, and proof support gaps across website, outreach, pilot explanation, and content. Recommends corrections — never writes or publishes final copy.
+**Authority:** LEVEL 1 — analysis only
+**Canonical source:** `memory/product_narrative.md`
 
 ---
 
@@ -181,7 +188,7 @@ All agents report upward through the Chief of Staff.
 | Division | Agents | Status |
 |---|---|---|
 | Executive | 1 | Complete |
-| Revenue | 4 | Complete |
+| Revenue / Growth | 5 | Complete (includes Narrative Strategy) |
 | Market Intelligence | 4 | Complete |
 | Customer Intelligence | 3 | Complete |
 | Product Insight | 4 | Complete (includes Product Experience) |
@@ -190,4 +197,4 @@ All agents report upward through the Chief of Staff.
 | Comms & Content | 1 | Stub — to be written |
 | People & Culture | 1 | Stub — to be written |
 | Strategy | 1 | Complete |
-| **Total** | **24** | **17 complete, 7 pending** |
+| **Total** | **25** | **18 complete, 7 pending** |
