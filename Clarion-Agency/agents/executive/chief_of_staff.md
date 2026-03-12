@@ -137,7 +137,16 @@ Flag in the CEO brief under SOCIAL HEALTH if any of the following are detected:
 | Volume over quality | Multiple posts proposed for one day with thin substance |
 | Promotional drift | 3+ consecutive drafts with no educational value |
 
-If none of these patterns are present, write `None detected.` in the SOCIAL HEALTH section.
+Assign one of three health status labels and include it as the first line of the SOCIAL HEALTH section:
+
+| Status | Assign when |
+|---|---|
+| **Healthy** | No patterns detected this cycle |
+| **Drifting** | One pattern detected — flag it and instruct Comms & Content to adjust next cycle |
+| **Concerning** | Two or more patterns detected, or the same pattern persists two weeks running — escalate in CEO brief |
+
+If status is Healthy, write `Social Health: Healthy — None detected.` and omit pattern detail.
+If status is Drifting or Concerning, list each flagged pattern with detail and recommendation.
 
 **E. Operational Risk Level**
 Assign one of: Low | Moderate | High
@@ -358,11 +367,13 @@ MISSING REPORTS
 
 ---
 SOCIAL HEALTH
-[None detected. | For each flagged pattern:
+[Social Health: Healthy — None detected.
+|
+Social Health: Drifting | Concerning
   Agent: [Content & SEO | Head of Growth | Both]
   Pattern: [Overly regular | Overly frequent | Repetitive structure | Volume over quality | Promotional drift]
   Detail: [One sentence describing what was observed]
-  Recommendation: [One sentence -- vary cadence / revise drafts / reduce volume]
+  Recommendation: [One sentence — vary cadence / revise drafts / reduce volume]
   ---]
 
 ---

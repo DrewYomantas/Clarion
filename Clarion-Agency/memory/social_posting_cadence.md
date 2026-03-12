@@ -69,6 +69,29 @@ These rules apply to every post, comment, reply, and caption drafted by any agen
 
 ---
 
+## AI-Pattern Detection — Agent Self-Check
+
+Before submitting any batch of drafts, the producing agent must review them
+against these signals. If any pattern is present, revise before surfacing.
+
+**Suspicious patterns to catch before they ship:**
+
+- Posts proposed at identical times across multiple days
+- Two or more posts with the same opening sentence structure in the same batch
+- Every post in a batch following the same format (e.g., all bullet lists, all
+  rhetorical question openers, all "Most firms..." starters)
+- Three or more consecutive drafts leading with a product mention or CTA
+- Identical sign-off or closing structure repeated across posts
+- A burst of 3+ posts proposed for the same day without a conversation trigger
+- Every post in a batch using identical length (all short, or all long)
+- Language patterns that read like a template was filled in:
+  "[Observation]. [Implication]. [Clarion connection]."
+
+If you detect any of these in your own output: stop, revise, and vary before
+including the drafts in the report. Do not flag it as an escalation — fix it.
+
+---
+
 ## Warning Signs (Chief of Staff monitors for these)
 
 The following patterns signal that posting has drifted into machine-like behavior
@@ -83,6 +106,14 @@ and must be flagged in the CEO brief:
 | Promotional drift | 3+ consecutive posts with no educational value |
 
 When any pattern is detected, flag it under SOCIAL HEALTH in the CEO brief.
+
+**Cadence health status labels (use in SOCIAL HEALTH section):**
+
+| Status | Meaning |
+|---|---|
+| **Healthy** | No patterns detected. Cadence varies. Content is substantive and educational. |
+| **Drifting** | One pattern detected. Flag it. Instruct Comms & Content to adjust next cycle. |
+| **Concerning** | Two or more patterns detected, or the same pattern persists two weeks running. Escalate in CEO brief. |
 
 ---
 
