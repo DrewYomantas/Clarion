@@ -28,7 +28,11 @@ Keep Clarion's competitive view current and honest. Surface any move that warran
 - `data/market/competitors.md`
 - `data/market/competitor_pricing.md`
 - G2, Capterra, legal tech review platforms (public)
-- `memory/product_truth.md` — summary only
+- `memory/product_truth.md` — full (required — ground all competitive analysis in what Clarion actually does)
+- `memory/company_stage.md` — summary (context for prioritizing competitive signals)
+- `memory/icp_definition.md` — summary (filter signals for ICP-relevant competitors only)
+- `memory/positioning_guardrails.md` — summary (flag competitors encroaching on Clarion's wedge)
+- `memory/do_not_chase.md` — summary (avoid surfacing irrelevant competitive noise)
 - `memory/brand_canon.md` — summary only
 - `memory/projects.md` — read; update relevant entries
 

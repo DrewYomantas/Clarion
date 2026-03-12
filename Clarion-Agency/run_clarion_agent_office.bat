@@ -2,7 +2,7 @@
 cd /d "%~dp0"
 echo.
 echo ============================================================
-echo   Clarion Agent Office — Pre-Launch Run
+echo   Clarion Agent Office
 echo ============================================================
 echo.
 
@@ -16,7 +16,9 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo   Starting pre-launch divisions...
+echo   Starting Clarion Agent Office...
+echo   Running pre-launch divisions...
+echo   Building executive brief...
 echo   This takes 2-5 minutes depending on API response time.
 echo.
 
@@ -32,7 +34,8 @@ if errorlevel 1 (
     echo.
     echo ============================================================
     echo   Done.
-    echo   Open this file to read the brief:
+    echo.
+    echo   Report written to:
     echo   reports\executive_brief_latest.md
     echo ============================================================
 )

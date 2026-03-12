@@ -29,7 +29,10 @@ Surface the clearest signal in this week's usage data. Flag adoption gaps and en
 - `data/product/session_log.csv`
 - `data/customer/account_roster.csv`
 - `data/product/adoption_baseline.csv` — rolling 4 weeks
-- `memory/product_truth.md` — summary only
+- `memory/product_truth.md` — full (required — ground all analysis in verified product capabilities and plan limits)
+- `memory/company_stage.md` — summary (pre-launch context; note when data is seed/placeholder)
+- `memory/icp_definition.md` — summary (filter signals for ICP-relevant patterns)
+- `memory/commercial_priority_ladder.md` — summary (prioritize proposals by revenue impact)
 - `memory/projects.md` — read; update relevant entries
 
 ## Outputs

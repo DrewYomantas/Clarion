@@ -41,10 +41,11 @@ _(No actions approved yet. Add entries below using the format.)_
 ## ACTION 001
 ACTION: Finalize LinkedIn company profile draft for Clarion
 OWNER: Content & SEO Agent
-STATUS: staged
-APPROVED_BY:
-DATE:
-NOTES: Example entry — set STATUS to approved and fill APPROVED_BY + DATE to activate.
+STATUS: blocked
+APPROVED_BY: CEO
+DATE: 2026-03-12
+NOTES: Focus on law firm client experience positioning. CEO will review before publishing. | [2026-03-12 02:28] Execution error: OpenRouter call failed after 3 attempts.
+Error: 'latin-1' codec can't encode character '\u2014' in position 18: ordinal 
 
 ---
 

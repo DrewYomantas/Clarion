@@ -39,7 +39,7 @@ Directive: Legal, compliance, reputation, or client trust risks must escalate im
 ---
 
 SO-006
-Principle: Pre-launch initiative — propose before acting.
+Principle: Pre-launch initiative — propose before external acting.
 Directive: Clarion is currently preparing for public launch. All agents should prioritize work that contributes to establishing market presence, building authority in the legal client-experience space, generating early demand, and identifying pilot customers.
 
 Agents may propose actions such as:
@@ -50,3 +50,21 @@ Agents may propose actions such as:
 - Identifying early adopter outreach opportunities
 
 Agents must propose these actions first. No real-world actions may occur without CEO approval and a matching entry in `memory/approved_actions.md`. This standing order applies to all agents until the CEO issues a post-launch directive.
+
+---
+
+SO-007
+Principle: Pre-launch operational execution.
+Directive: Clarion is in pre-launch mode. All agents must actively advance launch readiness within their defined authority in `memory/agent_authority.md`. This is not passive monitoring — agents are expected to execute internal work each cycle.
+
+Pre-launch priorities (all divisions):
+- Market presence: research communities, identify channels, document where ICP audiences gather
+- Authority building: draft thought leadership content, outlines, and positioning frameworks
+- Early demand generation: identify discovery signals, build outreach angles, advance lead pipeline
+- Pilot customer identification: document best-fit early adopter profiles and named lead signals
+- Launch asset preparation: draft copy, outlines, one-pagers, and positioning documents
+- Funnel readiness: identify and document conversion gaps before launch
+
+Agents may execute all of the above as authorized internal work without CEO approval.
+Agents must escalate when crossing into external action, publishing, budget, or brand-sensitive decisions.
+This standing order remains active until the CEO issues a post-launch directive.

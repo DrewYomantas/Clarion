@@ -9139,218 +9139,68 @@ def clear_reviews():
 @limiter.limit('15 per hour')
 
 def upload():
-
     """CSV upload page for bulk review import with tiered limits."""
+    if request.method != 'POST':
+        return redirect(_resolve_public_app_base_url() + '/upload', code=302)
 
-    account_status = current_user.get_account_status()
+    # TODO: Re-enable email verification gate when email confirmation flow exists.
+    access_type = get_report_access_type(current_user.id)
+    can_upload, trial_usage_count = _check_upload_credits(current_user.id, access_type)
+    if not can_upload:
+        flash('You have no remaining report credits. Upgrade or purchase a one-time report to generate new snapshots.', 'warning')
+        return redirect(url_for('pricing'))
 
-    can_upload = current_user.can_generate_report()
+    file = request.files.get('file')
+    file_error = _validate_csv_file(file)
+    if file_error:
+        flash(file_error, 'danger')
+        return redirect(url_for('upload'))
 
-
-
-    if request.method == 'POST':
-
-        # TODO: Re-enable email verification gate when email confirmation flow exists.
-
-        access_type = get_report_access_type(current_user.id)
-
-        trial_usage_count, trial_limit = _get_trial_usage_count(current_user.id, current_user.trial_limit)
-
-        can_upload = (
-
-            current_user.has_active_subscription()
-
-            or current_user.has_unused_one_time_reports()
-
-            or (access_type == 'trial' and trial_usage_count < trial_limit)
-
-        )
-
-
-
-        if not can_upload:
-
-            flash('You have no remaining report credits. Upgrade or purchase a one-time report to generate new snapshots.', 'warning')
-
-            return redirect(url_for('pricing'))
-
-
-
-        if 'file' not in request.files:
-
-            flash('No CSV file was detected in the upload request. Please choose a file and try again.', 'danger')
-
+    try:
+        valid_rows, csv_error, parse_meta = _parse_csv_upload_rows(file, access_type)
+        if csv_error:
+            flash(csv_error, 'danger')
             return redirect(url_for('upload'))
 
-
-
-        file = request.files['file']
-        if file.filename == '':
-            flash('No file selected. Choose a CSV file with review text and rating columns.', 'danger')
-            return redirect(url_for('upload'))
-
-        if (file.mimetype or '').lower() not in ALLOWED_CSV_MIME_TYPES:
-            flash('Invalid file type. Please upload a CSV file.', 'danger')
-            return redirect(url_for('upload'))
-
-        if not file.filename.lower().endswith('.csv'):
-            flash('Unsupported file type. Please upload a .csv file and try again.', 'danger')
-            return redirect(url_for('upload'))
-
-
-        if access_type == 'trial' and trial_usage_count >= trial_limit:
-
+        report_hash = _build_report_hash(valid_rows)
+        if _find_duplicate_report_id(current_user.id, report_hash):
             flash(
-
-                f'Free plan includes {trial_limit} reports per month. Upgrade to continue generating reports.',
-
+                'This upload appears identical to an existing report. '
+                "To keep your trends accurate, we don't allow uploading the same reviews twice for the same account.",
                 'warning',
-
             )
-
-            return redirect(url_for('pricing'))
-
-
-
-        try:
-
-            valid_rows, csv_error, parse_meta = _parse_csv_upload_rows(file, access_type)
-
-            if csv_error:
-
-                flash(csv_error, 'danger')
-
-                return redirect(url_for('upload'))
-
-
-
-            report_hash = _build_report_hash(valid_rows)
-
-            duplicate_report_id = _find_duplicate_report_id(current_user.id, report_hash)
-
-            if duplicate_report_id:
-
-                flash(
-
-                    'This upload appears identical to an existing report. '
-
-                    "To keep your trends accurate, we don't allow uploading the same reviews twice for the same account.",
-
-                    'warning',
-
-                )
-
-                return redirect(url_for('upload'))
-
-
-
-            # PR5 (F8/F10/F11): single connection, single BEGIN IMMEDIATE transaction.
-
-            # reviews + report snapshot + credit update all commit together or not at all.
-
-            conn = db_connect()
-
-            c = conn.cursor()
-
-            snapshot_report_id = None  # guard: defined before tx so rollback paths don't raise UnboundLocalError
-
-            count = 0
-
-            try:
-
-                conn.execute('BEGIN')
-
-
-
-                _insert_user_reviews_tx(c, current_user.id, valid_rows)
-
-                count = len(valid_rows)
-
-
-
-                # F8 test hook: set UPLOAD_FAIL_AFTER_REVIEWS=1 to prove rollback.
-                _maybe_raise_upload_fail_hook()
-
-                snapshot_report_id, _pending_slack_alerts = _save_report_snapshot_tx(
-                    c,
-                    current_user.id,
-                    subscription_type=access_type,
-                    report_hash=report_hash,
-                )
-
-                # Credit update AFTER snapshot exists — same transaction.
-                _update_usage_credit_tx(c, current_user.id, access_type)
-
-                conn.commit()
-
-            except Exception:
-                conn.rollback()
-                raise
-            finally:
-                conn.close()
-
-            _fire_pending_slack_alerts(_pending_slack_alerts)
-
-            if not snapshot_report_id:
-
-                flash('Upload succeeded, but no snapshot was created because no analyzable reviews were found.', 'warning')
-
-                _log_security_event(current_user.id, 'upload_success', metadata={'report_id': None, 'count': count, 'access_type': access_type, 'channel': 'web'},
-
-                )
-
-                return redirect(url_for('dashboard'))
-
-
-
-            if access_type == 'trial' and parse_meta and parse_meta.get('truncated_for_plan'):
-
-                skipped = parse_meta.get('skipped_due_to_plan_limit', 0)
-
-                flash(
-
-                    f'Success! We analyzed the first {FREE_PLAN_MAX_REVIEWS_PER_REPORT} valid reviews for the Free plan '
-
-                    f'and skipped {skipped} additional reviews. Upgrade to analyze all uploaded reviews.',
-
-                    'warning',
-
-                )
-
-            else:
-
-                flash(
-
-                    f'Success! Imported {count} reviews and saved report snapshot #{snapshot_report_id}. '
-
-                    'Next step: open your dashboard to download this report anytime.',
-
-                    'success',
-
-                )
-
-            _log_security_event(current_user.id, 'upload_success', metadata={'report_id': snapshot_report_id, 'count': count, 'access_type': access_type, 'channel': 'web'},
-
-            )
-
-            return redirect(url_for('dashboard'))
-
-
-
-        except Exception as exc:
-
-            _log_security_event(current_user.id, 'upload_failed', metadata={'error_class': type(exc).__name__, 'channel': 'web'},
-
-            )
-
-            flash('We could not process that CSV upload. Please verify the file format and try again.', 'danger')
-
             return redirect(url_for('upload'))
 
+        # Single atomic transaction: reviews + snapshot + credit update.
+        conn = db_connect()
+        c = conn.cursor()
+        try:
+            conn.execute('BEGIN')
+            _insert_user_reviews_tx(c, current_user.id, valid_rows)
+            count = len(valid_rows)
+            _maybe_raise_upload_fail_hook()
+            snapshot_report_id, pending_alerts = _save_report_snapshot_tx(
+                c, current_user.id, subscription_type=access_type, report_hash=report_hash,
+            )
+            _update_usage_credit_tx(c, current_user.id, access_type)
+            conn.commit()
+        except Exception:
+            conn.rollback()
+            raise
+        finally:
+            conn.close()
 
+        _fire_pending_slack_alerts(pending_alerts)
+        msg = _build_upload_summary_message(access_type, count, snapshot_report_id, parse_meta)
+        flash_level = 'warning' if (snapshot_report_id is None or (parse_meta and parse_meta.get('truncated_for_plan'))) else 'success'
+        flash(msg, flash_level)
+        _log_upload_event(current_user.id, access_type, count, snapshot_report_id, 'web')
+        return redirect(url_for('dashboard'))
 
-    # Legacy GET /upload -> SPA handoff
-    return redirect(_resolve_public_app_base_url() + '/upload', code=302)
+    except Exception as exc:
+        _log_security_event(current_user.id, 'upload_failed', metadata={'error_class': type(exc).__name__, 'channel': 'web'})
+        flash('We could not process that CSV upload. Please verify the file format and try again.', 'danger')
+        return redirect(url_for('upload'))
 
 
 
@@ -16789,7 +16639,7 @@ def api_upload():
         report_limit_error = _enforce_report_generation_limit(firm_ctx['firm_id'], firm_plan)
         if report_limit_error:
             return report_limit_error
-        return _ingest_rows_into_report(valid_rows, access_type, parse_meta=parse_meta, channel='api')
+        return _ingest_rows_into_report(valid_rows, access_type, parse_meta=parse_meta, channel='api', firm_ctx=firm_ctx)
     except Exception as exc:
         _log_security_event(current_user.id, 'upload_failed', metadata={'error_class': type(exc).__name__, 'channel': 'api'},
         )
@@ -16799,50 +16649,43 @@ def api_upload():
         )
 
 
-def _ingest_rows_into_report(valid_rows, access_type, parse_meta=None, channel='api'):
+def _ingest_rows_into_report(valid_rows, access_type, parse_meta=None, channel='api', firm_ctx=None):
+    """Run the full ingest pipeline: dedup check -> transaction -> signal scan -> JSON response.
+
+    firm_ctx may be pre-supplied by the caller to avoid a redundant DB round-trip.
+    """
     trial_usage_count, _ = _get_trial_usage_count(current_user.id, current_user.trial_limit)
     report_hash = _build_report_hash(valid_rows)
-    duplicate_report_id = _find_duplicate_report_id(current_user.id, report_hash)
-    if duplicate_report_id:
-        return jsonify(
-            {
-                'success': False,
-                'error': (
-                    "This upload appears identical to an existing report. "
-                    "To keep your trends accurate, we don't allow uploading the same reviews twice for the same account."
-                ),
-            }
-        ), 409
+    if _find_duplicate_report_id(current_user.id, report_hash):
+        return jsonify({
+            'success': False,
+            'error': (
+                "This upload appears identical to an existing report. "
+                "To keep your trends accurate, we don't allow uploading the same reviews twice for the same account."
+            ),
+        }), 409
 
-    firm_ctx, firm_err = _require_firm_context()
-    if firm_err:
-        return firm_err
+    if firm_ctx is None:
+        firm_ctx, firm_err = _require_firm_context()
+        if firm_err:
+            return firm_err
     firm_plan = get_firm_plan(firm_ctx['firm_id'])
     report_limit_error = _enforce_report_generation_limit(firm_ctx['firm_id'], firm_plan)
     if report_limit_error:
         return report_limit_error
 
+    # Atomic transaction: insert reviews, snapshot, credit update.
     conn = db_connect()
     c = conn.cursor()
-    snapshot_report_id = None
-    count = 0
     try:
         conn.execute('BEGIN')
         _insert_user_reviews_tx(c, current_user.id, valid_rows)
         count = len(valid_rows)
-
         _maybe_raise_upload_fail_hook()
-
-        snapshot_report_id, _pending_slack_alerts = _save_report_snapshot_tx(
-            c,
-            current_user.id,
-            subscription_type=access_type,
-            report_hash=report_hash,
+        snapshot_report_id, pending_alerts = _save_report_snapshot_tx(
+            c, current_user.id, subscription_type=access_type, report_hash=report_hash,
         )
-
-        # Credit update AFTER snapshot exists — same transaction.
         _update_usage_credit_tx(c, current_user.id, access_type, trial_usage_count=trial_usage_count)
-
         conn.commit()
     except Exception:
         conn.rollback()
@@ -16850,7 +16693,7 @@ def _ingest_rows_into_report(valid_rows, access_type, parse_meta=None, channel='
     finally:
         conn.close()
 
-    _fire_pending_slack_alerts(_pending_slack_alerts)
+    _fire_pending_slack_alerts(pending_alerts)
 
     if snapshot_report_id:
         try:
@@ -16858,68 +16701,23 @@ def _ingest_rows_into_report(valid_rows, access_type, parse_meta=None, channel='
         except Exception:
             app.logger.exception('Failed signal monitor scan for firm %s after upload', firm_ctx['firm_id'])
 
-    conn = db_connect()
-    c = conn.cursor()
-    c.execute(
-        '''
-        SELECT trial_reviews_used, trial_limit, one_time_reports_purchased, one_time_reports_used, subscription_type
-        FROM users
-        WHERE id = ?
-        ''',
-        (current_user.id,),
-    )
-    usage_row = c.fetchone()
-    conn.close()
+    usage = _fetch_user_usage(current_user.id)
+    summary_message = _build_upload_summary_message(access_type, count, snapshot_report_id, parse_meta)
+    _log_upload_event(current_user.id, access_type, count, snapshot_report_id, channel)
 
-    usage = {
-        'trial_reviews_used': max(
-            int(usage_row[0] or 0) if usage_row else 0,
-            _get_trial_report_snapshot_count(current_user.id),
-        ),
-        'trial_limit': usage_row[1] if usage_row else FREE_PLAN_REPORT_LIMIT,
-        'one_time_reports_used': usage_row[3] if usage_row else 0,
-        'one_time_reports_remaining': max(0, (usage_row[2] if usage_row else 0) - (usage_row[3] if usage_row else 0)),
-        'subscription_type': usage_row[4] if usage_row else 'trial',
-    }
-
-    if not snapshot_report_id:
-        _log_security_event(current_user.id, 'upload_success', metadata={'report_id': None, 'count': count, 'access_type': access_type, 'channel': channel})
-        return jsonify(
-            {
-                'success': True,
-                'summary': {
-                    'imported_count': count,
-                    'report_id': None,
-                    'message': 'Upload succeeded, but no snapshot was created.',
-                    'truncated_for_plan': bool(parse_meta and parse_meta.get('truncated_for_plan')),
-                    'skipped_due_to_plan_limit': int(parse_meta.get('skipped_due_to_plan_limit', 0)) if parse_meta else 0,
-                },
-                'usage': usage,
-            }
-        ), 200
-
-    summary_message = f'Success! Imported {count} reviews and saved report snapshot #{snapshot_report_id}.'
-    if access_type == 'trial' and parse_meta and parse_meta.get('truncated_for_plan'):
-        skipped = int(parse_meta.get('skipped_due_to_plan_limit', 0))
-        summary_message = (
-            f'Success! We analyzed the first {FREE_PLAN_MAX_REVIEWS_PER_REPORT} valid reviews for the Free plan '
-            f'and skipped {skipped} additional reviews. Upgrade to analyze all uploaded reviews.'
-        )
-
-    _log_security_event(current_user.id, 'upload_success', metadata={'report_id': snapshot_report_id, 'count': count, 'access_type': access_type, 'channel': channel})
-    return jsonify(
-        {
-            'success': True,
-            'summary': {
-                'imported_count': count,
-                'report_id': snapshot_report_id,
-                'message': summary_message,
-                'truncated_for_plan': bool(parse_meta and parse_meta.get('truncated_for_plan')),
-                'skipped_due_to_plan_limit': int(parse_meta.get('skipped_due_to_plan_limit', 0)) if parse_meta else 0,
-            },
-            'usage': usage,
-        }
-    ), 200
+    truncated = bool(parse_meta and parse_meta.get('truncated_for_plan'))
+    skipped = int(parse_meta.get('skipped_due_to_plan_limit', 0)) if parse_meta else 0
+    return jsonify({
+        'success': True,
+        'summary': {
+            'imported_count': count,
+            'report_id': snapshot_report_id,
+            'message': summary_message,
+            'truncated_for_plan': truncated,
+            'skipped_due_to_plan_limit': skipped,
+        },
+        'usage': usage,
+    }), 200
 
 
 @app.route('/api/onboarding/load-demo', methods=['POST'])

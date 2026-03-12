@@ -1,0 +1,188 @@
+{
+  "reviews": [
+    {
+      "review_text": "My attorney prepared me for every hearing and explained each step of the custody process.",
+      "rating": 5,
+      "date": "2024-10-03"
+    },
+    {
+      "review_text": "Good outcome overall. Sometimes it took a day to get updates after court.",
+      "rating": 4,
+      "date": "2024-10-05"
+    },
+    {
+      "review_text": "I felt the billing statements were confusing even though the legal advice was solid.",
+      "rating": 3,
+      "date": "2024-10-07"
+    },
+    {
+      "review_text": "They treated my case with empathy and never made me feel judged.",
+      "rating": 5,
+      "date": "2024-10-10"
+    },
+    {
+      "review_text": "We had one miscommunication about a filing deadline, but it was corrected quickly.",
+      "rating": 4,
+      "date": "2024-10-12"
+    },
+    {
+      "review_text": "Hard to reach my lawyer directly. I usually spoke to staff and waited for callbacks.",
+      "rating": 2,
+      "date": "2024-10-15"
+    },
+    {
+      "review_text": "They focused on what was best for my kids and helped de-escalate conflicts.",
+      "rating": 5,
+      "date": "2024-10-18"
+    },
+    {
+      "review_text": "Office staff was kind, but I wish I had a clearer written roadmap early on.",
+      "rating": 4,
+      "date": "2024-10-21"
+    },
+    {
+      "review_text": "They remembered details about my schedule and tried to avoid hearings on days I had my kids.",
+      "rating": 5,
+      "date": "2024-10-23"
+    },
+    {
+      "review_text": "Judge\u2019s decision wasn\u2019t what I hoped, but the firm was honest about the risks.",
+      "rating": 3,
+      "date": "2024-10-26"
+    },
+    {
+      "review_text": "I appreciated the direct communication style even when the news was hard to hear.",
+      "rating": 4,
+      "date": "2024-10-29"
+    },
+    {
+      "review_text": "Very responsive by email. I always knew when the next court date was.",
+      "rating": 5,
+      "date": "2024-11-01"
+    },
+    {
+      "review_text": "Mediation preparation was excellent. I felt confident walking in.",
+      "rating": 4,
+      "date": "2024-11-04"
+    },
+    {
+      "review_text": "Sometimes I got long emails without a clear summary of what I needed to do.",
+      "rating": 3,
+      "date": "2024-11-07"
+    },
+    {
+      "review_text": "They gave me scripts for how to talk to my co-parent, which helped a lot.",
+      "rating": 5,
+      "date": "2024-11-10"
+    },
+    {
+      "review_text": "Case strategy changed a few times and I didn\u2019t always understand why.",
+      "rating": 2,
+      "date": "2024-11-13"
+    },
+    {
+      "review_text": "Billing was fair and they warned me when a motion would be more expensive.",
+      "rating": 4,
+      "date": "2024-11-16"
+    },
+    {
+      "review_text": "The paralegal was a lifesaver helping organize texts and emails for evidence.",
+      "rating": 5,
+      "date": "2024-11-19"
+    },
+    {
+      "review_text": "Sometimes the lobby was crowded, but everyone was professional.",
+      "rating": 4,
+      "date": "2024-11-22"
+    },
+    {
+      "review_text": "They prioritized safety issues and helped me get a protective order quickly.",
+      "rating": 5,
+      "date": "2024-11-25"
+    },
+    {
+      "review_text": "There were a few times when I had to repeat background details to different people.",
+      "rating": 3,
+      "date": "2024-11-28"
+    },
+    {
+      "review_text": "Overall good experience. More frequent check-ins would have been nice during quiet periods.",
+      "rating": 4,
+      "date": "2024-12-01"
+    },
+    {
+      "review_text": "They respected my budget and suggested options to minimize court time.",
+      "rating": 5,
+      "date": "2024-12-04"
+    },
+    {
+      "review_text": "Emails sometimes came late at night, which made it hard to disconnect.",
+      "rating": 3,
+      "date": "2024-12-07"
+    },
+    {
+      "review_text": "They were very organized with exhibits and prepared for trial even though we settled.",
+      "rating": 4,
+      "date": "2024-12-10"
+    },
+    {
+      "review_text": "I felt like my concerns about school drop-offs weren\u2019t fully addressed.",
+      "rating": 2,
+      "date": "2024-12-13"
+    },
+    {
+      "review_text": "They helped me focus on long-term outcomes, not just winning every argument.",
+      "rating": 5,
+      "date": "2024-12-16"
+    },
+    {
+      "review_text": "Court filings were timely and accurate. Office phone queue can be long on Mondays.",
+      "rating": 4,
+      "date": "2024-12-19"
+    },
+    {
+      "review_text": "They checked on my emotional wellbeing, not just legal details. That mattered a lot.",
+      "rating": 5,
+      "date": "2024-12-22"
+    },
+    {
+      "review_text": "We won some issues and lost others. I wish I\u2019d had more clarity on realistic outcomes early.",
+      "rating": 3,
+      "date": "2024-12-27"
+    },
+    {
+      "review_text": "Overall, I\u2019d recommend them. Just be ready with questions so you don\u2019t leave confused.",
+      "rating": 4,
+      "date": "2024-12-30"
+    },
+    {
+      "review_text": "They helped negotiate a parenting plan that actually works with my job schedule.",
+      "rating": 5,
+      "date": "2025-01-03"
+    },
+    {
+      "review_text": "Sometimes emails were dense, but when I asked for a summary they provided it.",
+      "rating": 4,
+      "date": "2025-01-06"
+    },
+    {
+      "review_text": "I occasionally felt like my case was one of many, not a priority.",
+      "rating": 3,
+      "date": "2025-01-09"
+    },
+    {
+      "review_text": "They walked me through every possible scenario before trial so I felt prepared.",
+      "rating": 5,
+      "date": "2025-01-12"
+    },
+    {
+      "review_text": "Good communication once I learned the best way to reach them (email over phone).",
+      "rating": 4,
+      "date": "2025-01-15"
+    }
+  ],
+  "enable_ai": true,
+  "fixtures": false,
+  "export_report": true,
+  "export_label": "calibration_sample2"
+}

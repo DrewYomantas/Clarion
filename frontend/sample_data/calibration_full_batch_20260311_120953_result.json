@@ -1,0 +1,1226 @@
+﻿{
+  "calibration_report": {
+    "candidate_negation_guards": [
+      {
+        "examples": [
+          {
+            "det_polarity": "positive",
+            "rating": 4,
+            "review_snippet": "Working with this firm was the outcome met expectations The team was respectful and efficient.",
+            "theme": "timeliness_progress"
+          },
+          {
+            "det_polarity": "positive",
+            "rating": 5,
+            "review_snippet": "Overall, it was a responses were quick The team was respectful and efficient.",
+            "theme": "timeliness_progress"
+          },
+          {
+            "det_polarity": "positive",
+            "rating": 5,
+            "review_snippet": "I would recommend the outcome met expectations The team was respectful and efficient.",
+            "theme": "timeliness_progress"
+          }
+        ],
+        "occurrence_count": 3,
+        "phrase": "efficient",
+        "themes_affected": [
+          "timeliness_progress"
+        ]
+      }
+    ],
+    "candidate_phrase_additions": [
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "responses were quick",
+            "rating": 4,
+            "review_snippet": "Overall, it was a responses were quick They kept things moving."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "responses were quick",
+            "rating": 5,
+            "review_snippet": "My experience here was responses were quick and billing was explained upfront They kept things moving."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "responses were quick",
+            "rating": 5,
+            "review_snippet": "Overall, it was a responses were quick The team was respectful and efficient."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "responses were quick",
+            "rating": 4,
+            "review_snippet": "Overall, it was a responses were quick and the outcome met expectations I felt listened to."
+          }
+        ],
+        "occurrence_count": 4,
+        "theme": "communication_responsiveness"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "the outcome met expectations",
+            "rating": 4,
+            "review_snippet": "Working with this firm was the outcome met expectations The team was respectful and efficient."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "the outcome met expectations",
+            "rating": 5,
+            "review_snippet": "I would recommend the outcome met expectations The team was respectful and efficient."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "the outcome met expectations",
+            "rating": 4,
+            "review_snippet": "Overall, it was a responses were quick and the outcome met expectations I felt listened to."
+          }
+        ],
+        "occurrence_count": 3,
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "They kept things moving",
+            "rating": 4,
+            "review_snippet": "Overall, it was a responses were quick They kept things moving."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "They kept things moving",
+            "rating": 5,
+            "review_snippet": "My experience here was responses were quick and billing was explained upfront They kept things moving."
+          }
+        ],
+        "occurrence_count": 2,
+        "theme": "timeliness_progress"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "I felt listened to",
+            "rating": 4,
+            "review_snippet": "I was disappointed with communication was clear I felt listened to."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "I felt listened to",
+            "rating": 4,
+            "review_snippet": "Overall, it was a responses were quick and the outcome met expectations I felt listened to."
+          }
+        ],
+        "occurrence_count": 2,
+        "theme": "empathy_support"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "negative",
+            "evidence_span": "Deadlines felt unpredictable",
+            "rating": 1,
+            "review_snippet": "I would recommend the case dragged on longer than expected Deadlines felt unpredictable."
+          }
+        ],
+        "occurrence_count": 1,
+        "theme": "expectation_setting"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "billing was explained upfront",
+            "rating": 5,
+            "review_snippet": "My experience here was responses were quick and billing was explained upfront They kept things moving."
+          }
+        ],
+        "occurrence_count": 1,
+        "theme": "billing_transparency"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "communication was clear",
+            "rating": 4,
+            "review_snippet": "I was disappointed with communication was clear I felt listened to."
+          }
+        ],
+        "occurrence_count": 1,
+        "theme": "communication_clarity"
+      }
+    ],
+    "context_guard_failures": [],
+    "disagreement_by_theme": {
+      "billing_transparency": 1,
+      "communication_clarity": 1,
+      "communication_responsiveness": 4,
+      "empathy_support": 2,
+      "expectation_setting": 1,
+      "outcome_satisfaction": 3,
+      "timeliness_progress": 5
+    },
+    "disagreement_by_type": {
+      "extra_theme": 3,
+      "missing_theme": 14
+    },
+    "false_positive_themes": [
+      {
+        "count": 3,
+        "theme": "timeliness_progress"
+      }
+    ],
+    "manual_review_queue": [
+      {
+        "ai_evidence_span": "Deadlines felt unpredictable",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 1,
+        "review_snippet": "I would recommend the case dragged on longer than expected Deadlines felt unpredictable.",
+        "severity_flag": false,
+        "theme": "expectation_setting"
+      }
+    ],
+    "missed_phrases": [
+      {
+        "count": 4,
+        "sample_evidence": [
+          "responses were quick",
+          "responses were quick",
+          "responses were quick",
+          "responses were quick"
+        ],
+        "theme": "communication_responsiveness"
+      },
+      {
+        "count": 3,
+        "sample_evidence": [
+          "the outcome met expectations",
+          "the outcome met expectations",
+          "the outcome met expectations"
+        ],
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "count": 2,
+        "sample_evidence": [
+          "They kept things moving",
+          "They kept things moving"
+        ],
+        "theme": "timeliness_progress"
+      },
+      {
+        "count": 2,
+        "sample_evidence": [
+          "I felt listened to",
+          "I felt listened to"
+        ],
+        "theme": "empathy_support"
+      },
+      {
+        "count": 1,
+        "sample_evidence": [
+          "Deadlines felt unpredictable"
+        ],
+        "theme": "expectation_setting"
+      },
+      {
+        "count": 1,
+        "sample_evidence": [
+          "billing was explained upfront"
+        ],
+        "theme": "billing_transparency"
+      },
+      {
+        "count": 1,
+        "sample_evidence": [
+          "communication was clear"
+        ],
+        "theme": "communication_clarity"
+      }
+    ],
+    "phrase_mining_candidates": [
+      {
+        "evidence_span": "responses were quick",
+        "normalised_span": "responses were quick",
+        "occurrence_count": 4,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Overall, it was a responses were quick They kept things moving.",
+          "My experience here was responses were quick and billing was explained upfront They kept things moving.",
+          "Overall, it was a responses were quick The team was respectful and efficient."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_responsiveness"
+      },
+      {
+        "evidence_span": "the outcome met expectations",
+        "normalised_span": "the outcome met expectations",
+        "occurrence_count": 3,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Working with this firm was the outcome met expectations The team was respectful and efficient.",
+          "I would recommend the outcome met expectations The team was respectful and efficient.",
+          "Overall, it was a responses were quick and the outcome met expectations I felt listened to."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "evidence_span": "They kept things moving",
+        "normalised_span": "they kept things moving",
+        "occurrence_count": 2,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Overall, it was a responses were quick They kept things moving.",
+          "My experience here was responses were quick and billing was explained upfront They kept things moving."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "timeliness_progress"
+      },
+      {
+        "evidence_span": "I felt listened to",
+        "normalised_span": "i felt listened to",
+        "occurrence_count": 2,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "I was disappointed with communication was clear I felt listened to.",
+          "Overall, it was a responses were quick and the outcome met expectations I felt listened to."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "empathy_support"
+      },
+      {
+        "evidence_span": "Deadlines felt unpredictable",
+        "normalised_span": "deadlines felt unpredictable",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "I would recommend the case dragged on longer than expected Deadlines felt unpredictable."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "expectation_setting"
+      },
+      {
+        "evidence_span": "billing was explained upfront",
+        "normalised_span": "billing was explained upfront",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "My experience here was responses were quick and billing was explained upfront They kept things moving."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "billing_transparency"
+      },
+      {
+        "evidence_span": "communication was clear",
+        "normalised_span": "communication was clear",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "I was disappointed with communication was clear I felt listened to."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_clarity"
+      }
+    ],
+    "reviews_needing_inspection": [],
+    "severe_mismatches": [],
+    "summary": {
+      "agreement_rate": 0.1111,
+      "ai_enabled_count": 9,
+      "ai_invalid_response_count": 0,
+      "ai_item_invalid_total": 0,
+      "ai_run_count": 9,
+      "total_disagreements": 17,
+      "total_reviews": 9,
+      "zero_disagreement_reviews": 1
+    },
+    "theme_disagreement_rates": {
+      "billing_transparency": {
+        "disagreement_count": 1,
+        "rate": 0.1111
+      },
+      "communication_clarity": {
+        "disagreement_count": 1,
+        "rate": 0.1111
+      },
+      "communication_responsiveness": {
+        "disagreement_count": 4,
+        "rate": 0.4444
+      },
+      "empathy_support": {
+        "disagreement_count": 2,
+        "rate": 0.2222
+      },
+      "expectation_setting": {
+        "disagreement_count": 1,
+        "rate": 0.1111
+      },
+      "outcome_satisfaction": {
+        "disagreement_count": 3,
+        "rate": 0.3333
+      },
+      "timeliness_progress": {
+        "disagreement_count": 5,
+        "rate": 0.5556
+      }
+    },
+    "top_disagreements_by_priority": [
+      {
+        "ai_evidence_span": "Deadlines felt unpredictable",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 1,
+        "review_snippet": "I would recommend the case dragged on longer than expected Deadlines felt unpredictable.",
+        "severity_flag": false,
+        "theme": "expectation_setting"
+      },
+      {
+        "ai_evidence_span": null,
+        "ai_polarity": null,
+        "detail": "Deterministic tagged 'timeliness_progress' as 'positive' via phrase 'efficient'. AI did not tag this theme.",
+        "deterministic_phrase": "efficient",
+        "deterministic_polarity": "positive",
+        "disagreement_type": "extra_theme",
+        "priority": 2,
+        "review_idx": 4,
+        "review_snippet": "Working with this firm was the outcome met expectations The team was respectful and efficient.",
+        "severity_flag": false,
+        "theme": "timeliness_progress"
+      },
+      {
+        "ai_evidence_span": null,
+        "ai_polarity": null,
+        "detail": "Deterministic tagged 'timeliness_progress' as 'positive' via phrase 'efficient'. AI did not tag this theme.",
+        "deterministic_phrase": "efficient",
+        "deterministic_polarity": "positive",
+        "disagreement_type": "extra_theme",
+        "priority": 2,
+        "review_idx": 6,
+        "review_snippet": "Overall, it was a responses were quick The team was respectful and efficient.",
+        "severity_flag": false,
+        "theme": "timeliness_progress"
+      },
+      {
+        "ai_evidence_span": null,
+        "ai_polarity": null,
+        "detail": "Deterministic tagged 'timeliness_progress' as 'positive' via phrase 'efficient'. AI did not tag this theme.",
+        "deterministic_phrase": "efficient",
+        "deterministic_polarity": "positive",
+        "disagreement_type": "extra_theme",
+        "priority": 2,
+        "review_idx": 7,
+        "review_snippet": "I would recommend the outcome met expectations The team was respectful and efficient.",
+        "severity_flag": false,
+        "theme": "timeliness_progress"
+      },
+      {
+        "ai_evidence_span": "responses were quick",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 0,
+        "review_snippet": "Overall, it was a responses were quick They kept things moving.",
+        "severity_flag": false,
+        "theme": "communication_responsiveness"
+      },
+      {
+        "ai_evidence_span": "They kept things moving",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'timeliness_progress' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 0,
+        "review_snippet": "Overall, it was a responses were quick They kept things moving.",
+        "severity_flag": false,
+        "theme": "timeliness_progress"
+      },
+      {
+        "ai_evidence_span": "billing was explained upfront",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'billing_transparency' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 3,
+        "review_snippet": "My experience here was responses were quick and billing was explained upfront They kept things moving.",
+        "severity_flag": false,
+        "theme": "billing_transparency"
+      },
+      {
+        "ai_evidence_span": "responses were quick",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 3,
+        "review_snippet": "My experience here was responses were quick and billing was explained upfront They kept things moving.",
+        "severity_flag": false,
+        "theme": "communication_responsiveness"
+      },
+      {
+        "ai_evidence_span": "They kept things moving",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'timeliness_progress' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 3,
+        "review_snippet": "My experience here was responses were quick and billing was explained upfront They kept things moving.",
+        "severity_flag": false,
+        "theme": "timeliness_progress"
+      },
+      {
+        "ai_evidence_span": "the outcome met expectations",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 4,
+        "review_snippet": "Working with this firm was the outcome met expectations The team was respectful and efficient.",
+        "severity_flag": false,
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "ai_evidence_span": "communication was clear",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 5,
+        "review_snippet": "I was disappointed with communication was clear I felt listened to.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "I felt listened to",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 5,
+        "review_snippet": "I was disappointed with communication was clear I felt listened to.",
+        "severity_flag": false,
+        "theme": "empathy_support"
+      },
+      {
+        "ai_evidence_span": "responses were quick",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 6,
+        "review_snippet": "Overall, it was a responses were quick The team was respectful and efficient.",
+        "severity_flag": false,
+        "theme": "communication_responsiveness"
+      },
+      {
+        "ai_evidence_span": "the outcome met expectations",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 7,
+        "review_snippet": "I would recommend the outcome met expectations The team was respectful and efficient.",
+        "severity_flag": false,
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "ai_evidence_span": "responses were quick",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 8,
+        "review_snippet": "Overall, it was a responses were quick and the outcome met expectations I felt listened to.",
+        "severity_flag": false,
+        "theme": "communication_responsiveness"
+      },
+      {
+        "ai_evidence_span": "I felt listened to",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 8,
+        "review_snippet": "Overall, it was a responses were quick and the outcome met expectations I felt listened to.",
+        "severity_flag": false,
+        "theme": "empathy_support"
+      },
+      {
+        "ai_evidence_span": "the outcome met expectations",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 8,
+        "review_snippet": "Overall, it was a responses were quick and the outcome met expectations I felt listened to.",
+        "severity_flag": false,
+        "theme": "outcome_satisfaction"
+      }
+    ]
+  },
+  "export_path": "C:\\Users\\beyon\\OneDrive\\Desktop\\CLARION\\law-firm-insights-main\\backend\\exports\\benchmark\\benchmark_20260311T183304Z_full_batch_20260311_120953.json",
+  "results": [
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 3.032,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "responses were quick",
+              "polarity": "positive",
+              "theme": "communication_responsiveness"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "They kept things moving",
+              "polarity": "positive",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 63,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2025-12-08",
+        "review_text": "Overall, it was a responses were quick They kept things moving."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "responses were quick",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_responsiveness"
+        },
+        {
+          "ai_evidence_span": "They kept things moving",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'timeliness_progress' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "timeliness_progress"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.966,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "the case dragged on longer than expected",
+              "polarity": "negative",
+              "theme": "timeliness_progress"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "Deadlines felt unpredictable",
+              "polarity": "negative",
+              "theme": "expectation_setting"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "negative",
+          "review_text_length": 88,
+          "themes": [
+            {
+              "base_polarity": "negative",
+              "base_weight": 1.5,
+              "confidence": "high",
+              "contrast_applied": false,
+              "final_impact": 1.8,
+              "matched_phrase": "case dragged on",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "negative",
+              "polarity": "negative",
+              "sentence_snippet": "I would recommend the case dragged on longer than expected Deadlines felt unpredic\u2026",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "rating": 1,
+        "review_date": "2025-12-21",
+        "review_text": "I would recommend the case dragged on longer than expected Deadlines felt unpredictable."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "Deadlines felt unpredictable",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "expectation_setting"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 0.776,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": []
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 66,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2025-03-03",
+        "review_text": "My experience here was strategy was thoughtful I\u2019d use them again."
+      },
+      "disagreements": []
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 2.886,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "responses were quick",
+              "polarity": "positive",
+              "theme": "communication_responsiveness"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "billing was explained upfront",
+              "polarity": "positive",
+              "theme": "billing_transparency"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "They kept things moving",
+              "polarity": "positive",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 102,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2025-12-12",
+        "review_text": "My experience here was responses were quick and billing was explained upfront They kept things moving."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "billing was explained upfront",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'billing_transparency' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "billing_transparency"
+        },
+        {
+          "ai_evidence_span": "responses were quick",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_responsiveness"
+        },
+        {
+          "ai_evidence_span": "They kept things moving",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'timeliness_progress' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "timeliness_progress"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.634,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "the outcome met expectations",
+              "polarity": "positive",
+              "theme": "outcome_satisfaction"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "The team was respectful and efficient.",
+              "polarity": "positive",
+              "theme": "professionalism_trust"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 94,
+          "themes": [
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.2,
+              "matched_phrase": "respectful",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "\u2026ith this firm was the outcome met expectations The team was respectful and efficient.",
+              "theme": "professionalism_trust"
+            },
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.2,
+              "matched_phrase": "efficient",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "\u2026as the outcome met expectations The team was respectful and efficient.",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "rating": 4,
+        "review_date": "2025-12-29",
+        "review_text": "Working with this firm was the outcome met expectations The team was respectful and efficient."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "the outcome met expectations",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "outcome_satisfaction"
+        },
+        {
+          "ai_evidence_span": null,
+          "ai_polarity": null,
+          "detail": "Deterministic tagged 'timeliness_progress' as 'positive' via phrase 'efficient'. AI did not tag this theme.",
+          "deterministic_phrase": "efficient",
+          "deterministic_polarity": "positive",
+          "disagreement_priority": 2,
+          "disagreement_type": "extra_theme",
+          "severity_flag": false,
+          "theme": "timeliness_progress"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.651,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "communication was clear",
+              "polarity": "positive",
+              "theme": "communication_clarity"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "I felt listened to",
+              "polarity": "positive",
+              "theme": "empathy_support"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 67,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2025-11-08",
+        "review_text": "I was disappointed with communication was clear I felt listened to."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "communication was clear",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        },
+        {
+          "ai_evidence_span": "I felt listened to",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "empathy_support"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.729,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "responses were quick",
+              "polarity": "positive",
+              "theme": "communication_responsiveness"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "The team was respectful and efficient.",
+              "polarity": "positive",
+              "theme": "professionalism_trust"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 77,
+          "themes": [
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.2,
+              "matched_phrase": "respectful",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "Overall, it was a responses were quick The team was respectful and efficient.",
+              "theme": "professionalism_trust"
+            },
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.2,
+              "matched_phrase": "efficient",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "\u2026, it was a responses were quick The team was respectful and efficient.",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "rating": 5,
+        "review_date": "2026-02-12",
+        "review_text": "Overall, it was a responses were quick The team was respectful and efficient."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "responses were quick",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_responsiveness"
+        },
+        {
+          "ai_evidence_span": null,
+          "ai_polarity": null,
+          "detail": "Deterministic tagged 'timeliness_progress' as 'positive' via phrase 'efficient'. AI did not tag this theme.",
+          "deterministic_phrase": "efficient",
+          "deterministic_polarity": "positive",
+          "disagreement_priority": 2,
+          "disagreement_type": "extra_theme",
+          "severity_flag": false,
+          "theme": "timeliness_progress"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.735,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "the outcome met expectations",
+              "polarity": "positive",
+              "theme": "outcome_satisfaction"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "The team was respectful and efficient",
+              "polarity": "positive",
+              "theme": "professionalism_trust"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 85,
+          "themes": [
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.2,
+              "matched_phrase": "respectful",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "I would recommend the outcome met expectations The team was respectful and efficient.",
+              "theme": "professionalism_trust"
+            },
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.2,
+              "matched_phrase": "efficient",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "\u2026nd the outcome met expectations The team was respectful and efficient.",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "rating": 5,
+        "review_date": "2025-07-07",
+        "review_text": "I would recommend the outcome met expectations The team was respectful and efficient."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "the outcome met expectations",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "outcome_satisfaction"
+        },
+        {
+          "ai_evidence_span": null,
+          "ai_polarity": null,
+          "detail": "Deterministic tagged 'timeliness_progress' as 'positive' via phrase 'efficient'. AI did not tag this theme.",
+          "deterministic_phrase": "efficient",
+          "deterministic_polarity": "positive",
+          "disagreement_priority": 2,
+          "disagreement_type": "extra_theme",
+          "severity_flag": false,
+          "theme": "timeliness_progress"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 2.144,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "responses were quick",
+              "polarity": "positive",
+              "theme": "communication_responsiveness"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "the outcome met expectations",
+              "polarity": "positive",
+              "theme": "outcome_satisfaction"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "I felt listened to",
+              "polarity": "positive",
+              "theme": "empathy_support"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 91,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2025-09-15",
+        "review_text": "Overall, it was a responses were quick and the outcome met expectations I felt listened to."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "responses were quick",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_responsiveness"
+        },
+        {
+          "ai_evidence_span": "I felt listened to",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "empathy_support"
+        },
+        {
+          "ai_evidence_span": "the outcome met expectations",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "outcome_satisfaction"
+        }
+      ]
+    }
+  ],
+  "success": true,
+  "total_reviews": 9
+}
+

@@ -1,0 +1,3067 @@
+﻿{
+  "calibration_report": {
+    "candidate_negation_guards": [
+      {
+        "examples": [
+          {
+            "det_polarity": "negative",
+            "rating": 3,
+            "review_snippet": "I felt the billing statements were confusing even though the legal advice was solid.",
+            "theme": "communication_clarity"
+          }
+        ],
+        "occurrence_count": 1,
+        "phrase": "confusing",
+        "themes_affected": [
+          "communication_clarity"
+        ]
+      },
+      {
+        "examples": [
+          {
+            "det_polarity": "negative",
+            "rating": 4,
+            "review_snippet": "Billing was fair and they warned me when a motion would be more expensive.",
+            "theme": "fee_value"
+          }
+        ],
+        "occurrence_count": 1,
+        "phrase": "expensive",
+        "themes_affected": [
+          "fee_value"
+        ]
+      },
+      {
+        "examples": [
+          {
+            "det_polarity": "positive",
+            "rating": 5,
+            "review_snippet": "They walked me through every possible scenario before trial so I felt prepared.",
+            "theme": "communication_clarity"
+          }
+        ],
+        "occurrence_count": 1,
+        "phrase": "walked me through",
+        "themes_affected": [
+          "communication_clarity"
+        ]
+      }
+    ],
+    "candidate_phrase_additions": [
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "explained each step of the custody process",
+            "rating": 5,
+            "review_snippet": "My attorney prepared me for every hearing and explained each step of the custody process."
+          },
+          {
+            "ai_polarity": "negative",
+            "evidence_span": "I wish I had a clearer written roadmap early on",
+            "rating": 4,
+            "review_snippet": "Office staff was kind, but I wish I had a clearer written roadmap early on."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "I appreciated the direct communication style even when the news was hard to hear.",
+            "rating": 4,
+            "review_snippet": "I appreciated the direct communication style even when the news was hard to hear."
+          },
+          {
+            "ai_polarity": "negative",
+            "evidence_span": "long emails without a clear summary of what I needed to do",
+            "rating": 3,
+            "review_snippet": "Sometimes I got long emails without a clear summary of what I needed to do."
+          },
+          {
+            "ai_polarity": "negative",
+            "evidence_span": "I didn\u2019t always understand why.",
+            "rating": 2,
+            "review_snippet": "Case strategy changed a few times and I didn\u2019t always understand why."
+          }
+        ],
+        "occurrence_count": 8,
+        "theme": "communication_clarity"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "They treated my case with empathy and never made me feel judged.",
+            "rating": 5,
+            "review_snippet": "They treated my case with empathy and never made me feel judged."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "focused on what was best for my kids",
+            "rating": 5,
+            "review_snippet": "They focused on what was best for my kids and helped de-escalate conflicts."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "They remembered details about my schedule",
+            "rating": 5,
+            "review_snippet": "They remembered details about my schedule and tried to avoid hearings on days I had my kids."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "They gave me scripts for how to talk to my co-parent",
+            "rating": 5,
+            "review_snippet": "They gave me scripts for how to talk to my co-parent, which helped a lot."
+          },
+          {
+            "ai_polarity": "negative",
+            "evidence_span": "my concerns about school drop-offs weren\u2019t fully addressed.",
+            "rating": 2,
+            "review_snippet": "I felt like my concerns about school drop-offs weren\u2019t fully addressed."
+          }
+        ],
+        "occurrence_count": 6,
+        "theme": "empathy_support"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "it was corrected quickly",
+            "rating": 4,
+            "review_snippet": "We had one miscommunication about a filing deadline, but it was corrected quickly."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "More frequent check-ins would have been nice during quiet periods.",
+            "rating": 4,
+            "review_snippet": "Overall good experience. More frequent check-ins would have been nice during quiet periods."
+          },
+          {
+            "ai_polarity": "negative",
+            "evidence_span": "Emails sometimes came late at night",
+            "rating": 3,
+            "review_snippet": "Emails sometimes came late at night, which made it hard to disconnect."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "Good communication once I learned the best way to reach them",
+            "rating": 4,
+            "review_snippet": "Good communication once I learned the best way to reach them (email over phone)."
+          }
+        ],
+        "occurrence_count": 4,
+        "theme": "communication_responsiveness"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "the firm was honest about the risks",
+            "rating": 3,
+            "review_snippet": "Judge\u2019s decision wasn\u2019t what I hoped, but the firm was honest about the risks."
+          },
+          {
+            "ai_polarity": "negative",
+            "evidence_span": "I wish I\u2019d had more clarity on realistic outcomes early.",
+            "rating": 3,
+            "review_snippet": "We won some issues and lost others. I wish I\u2019d had more clarity on realistic outcomes early."
+          },
+          {
+            "ai_polarity": "negative",
+            "evidence_span": "I occasionally felt like my case was one of many, not a priority.",
+            "rating": 3,
+            "review_snippet": "I occasionally felt like my case was one of many, not a priority."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "They walked me through every possible scenario before trial",
+            "rating": 5,
+            "review_snippet": "They walked me through every possible scenario before trial so I felt prepared."
+          }
+        ],
+        "occurrence_count": 4,
+        "theme": "expectation_setting"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "Good outcome overall. Sometimes it took a day to get updates after court.",
+            "rating": 4,
+            "review_snippet": "Good outcome overall. Sometimes it took a day to get updates after court."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "I always knew when the next court date was.",
+            "rating": 5,
+            "review_snippet": "Very responsive by email. I always knew when the next court date was."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "helped me get a protective order quickly",
+            "rating": 5,
+            "review_snippet": "They prioritized safety issues and helped me get a protective order quickly."
+          }
+        ],
+        "occurrence_count": 3,
+        "theme": "timeliness_progress"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "negative",
+            "evidence_span": "the billing statements were confusing",
+            "rating": 3,
+            "review_snippet": "I felt the billing statements were confusing even though the legal advice was solid."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "Billing was fair and they warned me when a motion would be more expensive.",
+            "rating": 4,
+            "review_snippet": "Billing was fair and they warned me when a motion would be more expensive."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "They respected my budget and suggested options to minimize court time.",
+            "rating": 5,
+            "review_snippet": "They respected my budget and suggested options to minimize court time."
+          }
+        ],
+        "occurrence_count": 3,
+        "theme": "billing_transparency"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "Mediation preparation was excellent.",
+            "rating": 4,
+            "review_snippet": "Mediation preparation was excellent. I felt confident walking in."
+          },
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "They helped me focus on long-term outcomes, not just winning every argument.",
+            "rating": 5,
+            "review_snippet": "They helped me focus on long-term outcomes, not just winning every argument."
+          }
+        ],
+        "occurrence_count": 2,
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "negative",
+            "evidence_span": "I usually spoke to staff and waited for callbacks.",
+            "rating": 2,
+            "review_snippet": "Hard to reach my lawyer directly. I usually spoke to staff and waited for callbacks."
+          }
+        ],
+        "occurrence_count": 1,
+        "theme": "office_staff_experience"
+      },
+      {
+        "examples": [
+          {
+            "ai_polarity": "positive",
+            "evidence_span": "They were very organized with exhibits and prepared for trial",
+            "rating": 4,
+            "review_snippet": "They were very organized with exhibits and prepared for trial even though we settled."
+          }
+        ],
+        "occurrence_count": 1,
+        "theme": "professionalism_trust"
+      }
+    ],
+    "context_guard_failures": [
+      {
+        "ai_polarity": null,
+        "detail": "Deterministic tagged 'professionalism_trust' as 'positive' via phrase 'honest' with negation=False, contrast=True. AI did not tag this theme \u2014 possible guard over-triggering.",
+        "deterministic_phrase": "honest",
+        "deterministic_polarity": "positive",
+        "rating": 3,
+        "review_idx": 9,
+        "review_snippet": "Judge\u2019s decision wasn\u2019t what I hoped, but the firm was honest about the risks.",
+        "theme": "professionalism_trust"
+      }
+    ],
+    "disagreement_by_theme": {
+      "billing_transparency": 3,
+      "communication_clarity": 10,
+      "communication_responsiveness": 4,
+      "empathy_support": 6,
+      "expectation_setting": 4,
+      "fee_value": 1,
+      "office_staff_experience": 1,
+      "outcome_satisfaction": 2,
+      "professionalism_trust": 2,
+      "timeliness_progress": 3
+    },
+    "disagreement_by_type": {
+      "extra_theme": 2,
+      "likely_context_guard_failure": 1,
+      "likely_false_positive": 1,
+      "missing_theme": 32
+    },
+    "false_positive_themes": [
+      {
+        "count": 2,
+        "theme": "communication_clarity"
+      },
+      {
+        "count": 1,
+        "theme": "fee_value"
+      }
+    ],
+    "manual_review_queue": [
+      {
+        "ai_evidence_span": "the billing statements were confusing",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'billing_transparency' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 2,
+        "review_snippet": "I felt the billing statements were confusing even though the legal advice was solid.",
+        "severity_flag": false,
+        "theme": "billing_transparency"
+      },
+      {
+        "ai_evidence_span": "I usually spoke to staff and waited for callbacks.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'office_staff_experience' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 5,
+        "review_snippet": "Hard to reach my lawyer directly. I usually spoke to staff and waited for callbacks.",
+        "severity_flag": false,
+        "theme": "office_staff_experience"
+      },
+      {
+        "ai_evidence_span": "I wish I had a clearer written roadmap early on",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 7,
+        "review_snippet": "Office staff was kind, but I wish I had a clearer written roadmap early on.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": null,
+        "ai_polarity": null,
+        "detail": "Deterministic tagged 'professionalism_trust' as 'positive' via phrase 'honest' with negation=False, contrast=True. AI did not tag this theme \u2014 possible guard over-triggering.",
+        "deterministic_phrase": "honest",
+        "deterministic_polarity": "positive",
+        "disagreement_type": "likely_context_guard_failure",
+        "priority": 3,
+        "review_idx": 9,
+        "review_snippet": "Judge\u2019s decision wasn\u2019t what I hoped, but the firm was honest about the risks.",
+        "severity_flag": false,
+        "theme": "professionalism_trust"
+      },
+      {
+        "ai_evidence_span": "long emails without a clear summary of what I needed to do",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 13,
+        "review_snippet": "Sometimes I got long emails without a clear summary of what I needed to do.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "I didn\u2019t always understand why.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 15,
+        "review_snippet": "Case strategy changed a few times and I didn\u2019t always understand why.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "I had to repeat background details to different people.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 20,
+        "review_snippet": "There were a few times when I had to repeat background details to different people.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "Emails sometimes came late at night",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'communication_responsiveness' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 23,
+        "review_snippet": "Emails sometimes came late at night, which made it hard to disconnect.",
+        "severity_flag": false,
+        "theme": "communication_responsiveness"
+      },
+      {
+        "ai_evidence_span": "my concerns about school drop-offs weren\u2019t fully addressed.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'empathy_support' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 25,
+        "review_snippet": "I felt like my concerns about school drop-offs weren\u2019t fully addressed.",
+        "severity_flag": false,
+        "theme": "empathy_support"
+      },
+      {
+        "ai_evidence_span": "I wish I\u2019d had more clarity on realistic outcomes early.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 29,
+        "review_snippet": "We won some issues and lost others. I wish I\u2019d had more clarity on realistic outcomes early.",
+        "severity_flag": false,
+        "theme": "expectation_setting"
+      },
+      {
+        "ai_evidence_span": "I occasionally felt like my case was one of many, not a priority.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 33,
+        "review_snippet": "I occasionally felt like my case was one of many, not a priority.",
+        "severity_flag": false,
+        "theme": "expectation_setting"
+      }
+    ],
+    "missed_phrases": [
+      {
+        "count": 8,
+        "sample_evidence": [
+          "explained each step of the custody process",
+          "I wish I had a clearer written roadmap early on",
+          "I appreciated the direct communication style even when the news was hard to hear.",
+          "long emails without a clear summary of what I needed to do",
+          "I didn\u2019t always understand why."
+        ],
+        "theme": "communication_clarity"
+      },
+      {
+        "count": 6,
+        "sample_evidence": [
+          "They treated my case with empathy and never made me feel judged.",
+          "focused on what was best for my kids",
+          "They remembered details about my schedule",
+          "They gave me scripts for how to talk to my co-parent",
+          "my concerns about school drop-offs weren\u2019t fully addressed."
+        ],
+        "theme": "empathy_support"
+      },
+      {
+        "count": 4,
+        "sample_evidence": [
+          "it was corrected quickly",
+          "More frequent check-ins would have been nice during quiet periods.",
+          "Emails sometimes came late at night",
+          "Good communication once I learned the best way to reach them"
+        ],
+        "theme": "communication_responsiveness"
+      },
+      {
+        "count": 4,
+        "sample_evidence": [
+          "the firm was honest about the risks",
+          "I wish I\u2019d had more clarity on realistic outcomes early.",
+          "I occasionally felt like my case was one of many, not a priority.",
+          "They walked me through every possible scenario before trial"
+        ],
+        "theme": "expectation_setting"
+      },
+      {
+        "count": 3,
+        "sample_evidence": [
+          "Good outcome overall. Sometimes it took a day to get updates after court.",
+          "I always knew when the next court date was.",
+          "helped me get a protective order quickly"
+        ],
+        "theme": "timeliness_progress"
+      },
+      {
+        "count": 3,
+        "sample_evidence": [
+          "the billing statements were confusing",
+          "Billing was fair and they warned me when a motion would be more expensive.",
+          "They respected my budget and suggested options to minimize court time."
+        ],
+        "theme": "billing_transparency"
+      },
+      {
+        "count": 2,
+        "sample_evidence": [
+          "Mediation preparation was excellent.",
+          "They helped me focus on long-term outcomes, not just winning every argument."
+        ],
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "count": 1,
+        "sample_evidence": [
+          "I usually spoke to staff and waited for callbacks."
+        ],
+        "theme": "office_staff_experience"
+      },
+      {
+        "count": 1,
+        "sample_evidence": [
+          "They were very organized with exhibits and prepared for trial"
+        ],
+        "theme": "professionalism_trust"
+      }
+    ],
+    "phrase_mining_candidates": [
+      {
+        "evidence_span": "explained each step of the custody process",
+        "normalised_span": "explained each step of the custody process",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "My attorney prepared me for every hearing and explained each step of the custody process."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_clarity"
+      },
+      {
+        "evidence_span": "Good outcome overall. Sometimes it took a day to get updates after court.",
+        "normalised_span": "good outcome overall. sometimes it took a day to get updates after court.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Good outcome overall. Sometimes it took a day to get updates after court."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "timeliness_progress"
+      },
+      {
+        "evidence_span": "the billing statements were confusing",
+        "normalised_span": "the billing statements were confusing",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "I felt the billing statements were confusing even though the legal advice was solid."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "billing_transparency"
+      },
+      {
+        "evidence_span": "They treated my case with empathy and never made me feel judged.",
+        "normalised_span": "they treated my case with empathy and never made me feel judged.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "They treated my case with empathy and never made me feel judged."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "empathy_support"
+      },
+      {
+        "evidence_span": "it was corrected quickly",
+        "normalised_span": "it was corrected quickly",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "We had one miscommunication about a filing deadline, but it was corrected quickly."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_responsiveness"
+      },
+      {
+        "evidence_span": "I usually spoke to staff and waited for callbacks.",
+        "normalised_span": "i usually spoke to staff and waited for callbacks.",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "Hard to reach my lawyer directly. I usually spoke to staff and waited for callbacks."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "office_staff_experience"
+      },
+      {
+        "evidence_span": "focused on what was best for my kids",
+        "normalised_span": "focused on what was best for my kids",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "They focused on what was best for my kids and helped de-escalate conflicts."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "empathy_support"
+      },
+      {
+        "evidence_span": "I wish I had a clearer written roadmap early on",
+        "normalised_span": "i wish i had a clearer written roadmap early on",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "Office staff was kind, but I wish I had a clearer written roadmap early on."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_clarity"
+      },
+      {
+        "evidence_span": "They remembered details about my schedule",
+        "normalised_span": "they remembered details about my schedule",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "They remembered details about my schedule and tried to avoid hearings on days I had my kids."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "empathy_support"
+      },
+      {
+        "evidence_span": "the firm was honest about the risks",
+        "normalised_span": "the firm was honest about the risks",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Judge\u2019s decision wasn\u2019t what I hoped, but the firm was honest about the risks."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "expectation_setting"
+      },
+      {
+        "evidence_span": "I appreciated the direct communication style even when the news was hard to hear",
+        "normalised_span": "i appreciated the direct communication style even when the news was hard to hear",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "I appreciated the direct communication style even when the news was hard to hear."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_clarity"
+      },
+      {
+        "evidence_span": "I always knew when the next court date was.",
+        "normalised_span": "i always knew when the next court date was.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Very responsive by email. I always knew when the next court date was."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "timeliness_progress"
+      },
+      {
+        "evidence_span": "Mediation preparation was excellent.",
+        "normalised_span": "mediation preparation was excellent.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Mediation preparation was excellent. I felt confident walking in."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "evidence_span": "long emails without a clear summary of what I needed to do",
+        "normalised_span": "long emails without a clear summary of what i needed to do",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "Sometimes I got long emails without a clear summary of what I needed to do."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_clarity"
+      },
+      {
+        "evidence_span": "They gave me scripts for how to talk to my co-parent",
+        "normalised_span": "they gave me scripts for how to talk to my co-parent",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "They gave me scripts for how to talk to my co-parent, which helped a lot."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "empathy_support"
+      },
+      {
+        "evidence_span": "I didn\u2019t always understand why.",
+        "normalised_span": "i didn\u2019t always understand why.",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "Case strategy changed a few times and I didn\u2019t always understand why."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_clarity"
+      },
+      {
+        "evidence_span": "Billing was fair and they warned me when a motion would be more expensive.",
+        "normalised_span": "billing was fair and they warned me when a motion would be more expensive.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Billing was fair and they warned me when a motion would be more expensive."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "billing_transparency"
+      },
+      {
+        "evidence_span": "helped me get a protective order quickly",
+        "normalised_span": "helped me get a protective order quickly",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "They prioritized safety issues and helped me get a protective order quickly."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "timeliness_progress"
+      },
+      {
+        "evidence_span": "I had to repeat background details to different people.",
+        "normalised_span": "i had to repeat background details to different people.",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "There were a few times when I had to repeat background details to different people."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_clarity"
+      },
+      {
+        "evidence_span": "More frequent check-ins would have been nice during quiet periods.",
+        "normalised_span": "more frequent check-ins would have been nice during quiet periods.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Overall good experience. More frequent check-ins would have been nice during quiet periods."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_responsiveness"
+      },
+      {
+        "evidence_span": "They respected my budget and suggested options to minimize court time.",
+        "normalised_span": "they respected my budget and suggested options to minimize court time.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "They respected my budget and suggested options to minimize court time."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "billing_transparency"
+      },
+      {
+        "evidence_span": "Emails sometimes came late at night",
+        "normalised_span": "emails sometimes came late at night",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "Emails sometimes came late at night, which made it hard to disconnect."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_responsiveness"
+      },
+      {
+        "evidence_span": "They were very organized with exhibits and prepared for trial",
+        "normalised_span": "they were very organized with exhibits and prepared for trial",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "They were very organized with exhibits and prepared for trial even though we settled."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "professionalism_trust"
+      },
+      {
+        "evidence_span": "my concerns about school drop-offs weren\u2019t fully addressed.",
+        "normalised_span": "my concerns about school drop-offs weren\u2019t fully addressed.",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "I felt like my concerns about school drop-offs weren\u2019t fully addressed."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "empathy_support"
+      },
+      {
+        "evidence_span": "They helped me focus on long-term outcomes, not just winning every argument.",
+        "normalised_span": "they helped me focus on long-term outcomes, not just winning every argument.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "They helped me focus on long-term outcomes, not just winning every argument."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "evidence_span": "They checked on my emotional wellbeing, not just legal details.",
+        "normalised_span": "they checked on my emotional wellbeing, not just legal details.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "They checked on my emotional wellbeing, not just legal details. That mattered a lot."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "empathy_support"
+      },
+      {
+        "evidence_span": "I wish I\u2019d had more clarity on realistic outcomes early.",
+        "normalised_span": "i wish i\u2019d had more clarity on realistic outcomes early.",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "We won some issues and lost others. I wish I\u2019d had more clarity on realistic outcomes early."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "expectation_setting"
+      },
+      {
+        "evidence_span": "Just be ready with questions so you don\u2019t leave confused.",
+        "normalised_span": "just be ready with questions so you don\u2019t leave confused.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Overall, I\u2019d recommend them. Just be ready with questions so you don\u2019t leave confused."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_clarity"
+      },
+      {
+        "evidence_span": "Sometimes emails were dense, but when I asked for a summary they provided it.",
+        "normalised_span": "sometimes emails were dense, but when i asked for a summary they provided it.",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Sometimes emails were dense, but when I asked for a summary they provided it."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_clarity"
+      },
+      {
+        "evidence_span": "I occasionally felt like my case was one of many, not a priority.",
+        "normalised_span": "i occasionally felt like my case was one of many, not a priority.",
+        "occurrence_count": 1,
+        "polarity": "negative",
+        "sample_review_snippets": [
+          "I occasionally felt like my case was one of many, not a priority."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "expectation_setting"
+      },
+      {
+        "evidence_span": "They walked me through every possible scenario before trial",
+        "normalised_span": "they walked me through every possible scenario before trial",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "They walked me through every possible scenario before trial so I felt prepared."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "expectation_setting"
+      },
+      {
+        "evidence_span": "Good communication once I learned the best way to reach them",
+        "normalised_span": "good communication once i learned the best way to reach them",
+        "occurrence_count": 1,
+        "polarity": "positive",
+        "sample_review_snippets": [
+          "Good communication once I learned the best way to reach them (email over phone)."
+        ],
+        "source_types": [
+          "missing_theme"
+        ],
+        "theme": "communication_responsiveness"
+      }
+    ],
+    "reviews_needing_inspection": [],
+    "severe_mismatches": [],
+    "summary": {
+      "agreement_rate": 0.1111,
+      "ai_enabled_count": 36,
+      "ai_invalid_response_count": 0,
+      "ai_item_invalid_total": 0,
+      "ai_run_count": 36,
+      "total_disagreements": 36,
+      "total_reviews": 36,
+      "zero_disagreement_reviews": 4
+    },
+    "theme_disagreement_rates": {
+      "billing_transparency": {
+        "disagreement_count": 3,
+        "rate": 0.0833
+      },
+      "communication_clarity": {
+        "disagreement_count": 10,
+        "rate": 0.2778
+      },
+      "communication_responsiveness": {
+        "disagreement_count": 4,
+        "rate": 0.1111
+      },
+      "empathy_support": {
+        "disagreement_count": 6,
+        "rate": 0.1667
+      },
+      "expectation_setting": {
+        "disagreement_count": 4,
+        "rate": 0.1111
+      },
+      "fee_value": {
+        "disagreement_count": 1,
+        "rate": 0.0278
+      },
+      "office_staff_experience": {
+        "disagreement_count": 1,
+        "rate": 0.0278
+      },
+      "outcome_satisfaction": {
+        "disagreement_count": 2,
+        "rate": 0.0556
+      },
+      "professionalism_trust": {
+        "disagreement_count": 2,
+        "rate": 0.0556
+      },
+      "timeliness_progress": {
+        "disagreement_count": 3,
+        "rate": 0.0833
+      }
+    },
+    "top_disagreements_by_priority": [
+      {
+        "ai_evidence_span": "the billing statements were confusing",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'billing_transparency' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 2,
+        "review_snippet": "I felt the billing statements were confusing even though the legal advice was solid.",
+        "severity_flag": false,
+        "theme": "billing_transparency"
+      },
+      {
+        "ai_evidence_span": "I usually spoke to staff and waited for callbacks.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'office_staff_experience' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 5,
+        "review_snippet": "Hard to reach my lawyer directly. I usually spoke to staff and waited for callbacks.",
+        "severity_flag": false,
+        "theme": "office_staff_experience"
+      },
+      {
+        "ai_evidence_span": "I wish I had a clearer written roadmap early on",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 7,
+        "review_snippet": "Office staff was kind, but I wish I had a clearer written roadmap early on.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": null,
+        "ai_polarity": null,
+        "detail": "Deterministic tagged 'professionalism_trust' as 'positive' via phrase 'honest' with negation=False, contrast=True. AI did not tag this theme \u2014 possible guard over-triggering.",
+        "deterministic_phrase": "honest",
+        "deterministic_polarity": "positive",
+        "disagreement_type": "likely_context_guard_failure",
+        "priority": 3,
+        "review_idx": 9,
+        "review_snippet": "Judge\u2019s decision wasn\u2019t what I hoped, but the firm was honest about the risks.",
+        "severity_flag": false,
+        "theme": "professionalism_trust"
+      },
+      {
+        "ai_evidence_span": "long emails without a clear summary of what I needed to do",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 13,
+        "review_snippet": "Sometimes I got long emails without a clear summary of what I needed to do.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "I didn\u2019t always understand why.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 15,
+        "review_snippet": "Case strategy changed a few times and I didn\u2019t always understand why.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "I had to repeat background details to different people.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 20,
+        "review_snippet": "There were a few times when I had to repeat background details to different people.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "Emails sometimes came late at night",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'communication_responsiveness' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 23,
+        "review_snippet": "Emails sometimes came late at night, which made it hard to disconnect.",
+        "severity_flag": false,
+        "theme": "communication_responsiveness"
+      },
+      {
+        "ai_evidence_span": "my concerns about school drop-offs weren\u2019t fully addressed.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'empathy_support' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 25,
+        "review_snippet": "I felt like my concerns about school drop-offs weren\u2019t fully addressed.",
+        "severity_flag": false,
+        "theme": "empathy_support"
+      },
+      {
+        "ai_evidence_span": "I wish I\u2019d had more clarity on realistic outcomes early.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 29,
+        "review_snippet": "We won some issues and lost others. I wish I\u2019d had more clarity on realistic outcomes early.",
+        "severity_flag": false,
+        "theme": "expectation_setting"
+      },
+      {
+        "ai_evidence_span": "I occasionally felt like my case was one of many, not a priority.",
+        "ai_polarity": "negative",
+        "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 3,
+        "review_idx": 33,
+        "review_snippet": "I occasionally felt like my case was one of many, not a priority.",
+        "severity_flag": false,
+        "theme": "expectation_setting"
+      },
+      {
+        "ai_evidence_span": null,
+        "ai_polarity": null,
+        "detail": "Deterministic tagged 'communication_clarity' as 'negative' via phrase 'confusing'. AI did not tag this theme.",
+        "deterministic_phrase": "confusing",
+        "deterministic_polarity": "negative",
+        "disagreement_type": "extra_theme",
+        "priority": 2,
+        "review_idx": 2,
+        "review_snippet": "I felt the billing statements were confusing even though the legal advice was solid.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": null,
+        "ai_polarity": null,
+        "detail": "Deterministic tagged 'fee_value' as 'negative' via phrase 'expensive' but star rating prior is 'positive'. AI did not tag this theme \u2014 possible false positive.",
+        "deterministic_phrase": "expensive",
+        "deterministic_polarity": "negative",
+        "disagreement_type": "likely_false_positive",
+        "priority": 2,
+        "review_idx": 16,
+        "review_snippet": "Billing was fair and they warned me when a motion would be more expensive.",
+        "severity_flag": false,
+        "theme": "fee_value"
+      },
+      {
+        "ai_evidence_span": null,
+        "ai_polarity": null,
+        "detail": "Deterministic tagged 'communication_clarity' as 'positive' via phrase 'walked me through'. AI did not tag this theme.",
+        "deterministic_phrase": "walked me through",
+        "deterministic_polarity": "positive",
+        "disagreement_type": "extra_theme",
+        "priority": 2,
+        "review_idx": 34,
+        "review_snippet": "They walked me through every possible scenario before trial so I felt prepared.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "explained each step of the custody process",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 0,
+        "review_snippet": "My attorney prepared me for every hearing and explained each step of the custody process.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "Good outcome overall. Sometimes it took a day to get updates after court.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'timeliness_progress' with polarity 'positive' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 1,
+        "review_snippet": "Good outcome overall. Sometimes it took a day to get updates after court.",
+        "severity_flag": false,
+        "theme": "timeliness_progress"
+      },
+      {
+        "ai_evidence_span": "They treated my case with empathy and never made me feel judged.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 3,
+        "review_snippet": "They treated my case with empathy and never made me feel judged.",
+        "severity_flag": false,
+        "theme": "empathy_support"
+      },
+      {
+        "ai_evidence_span": "it was corrected quickly",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 4,
+        "review_snippet": "We had one miscommunication about a filing deadline, but it was corrected quickly.",
+        "severity_flag": false,
+        "theme": "communication_responsiveness"
+      },
+      {
+        "ai_evidence_span": "focused on what was best for my kids",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 6,
+        "review_snippet": "They focused on what was best for my kids and helped de-escalate conflicts.",
+        "severity_flag": false,
+        "theme": "empathy_support"
+      },
+      {
+        "ai_evidence_span": "They remembered details about my schedule",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 8,
+        "review_snippet": "They remembered details about my schedule and tried to avoid hearings on days I had my kids.",
+        "severity_flag": false,
+        "theme": "empathy_support"
+      },
+      {
+        "ai_evidence_span": "the firm was honest about the risks",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'expectation_setting' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 9,
+        "review_snippet": "Judge\u2019s decision wasn\u2019t what I hoped, but the firm was honest about the risks.",
+        "severity_flag": false,
+        "theme": "expectation_setting"
+      },
+      {
+        "ai_evidence_span": "I appreciated the direct communication style even when the news was hard to hear.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 10,
+        "review_snippet": "I appreciated the direct communication style even when the news was hard to hear.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "I always knew when the next court date was.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'timeliness_progress' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 11,
+        "review_snippet": "Very responsive by email. I always knew when the next court date was.",
+        "severity_flag": false,
+        "theme": "timeliness_progress"
+      },
+      {
+        "ai_evidence_span": "Mediation preparation was excellent.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 12,
+        "review_snippet": "Mediation preparation was excellent. I felt confident walking in.",
+        "severity_flag": false,
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "ai_evidence_span": "They gave me scripts for how to talk to my co-parent",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 14,
+        "review_snippet": "They gave me scripts for how to talk to my co-parent, which helped a lot.",
+        "severity_flag": false,
+        "theme": "empathy_support"
+      },
+      {
+        "ai_evidence_span": "Billing was fair and they warned me when a motion would be more expensive.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'billing_transparency' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 16,
+        "review_snippet": "Billing was fair and they warned me when a motion would be more expensive.",
+        "severity_flag": false,
+        "theme": "billing_transparency"
+      },
+      {
+        "ai_evidence_span": "helped me get a protective order quickly",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'timeliness_progress' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 19,
+        "review_snippet": "They prioritized safety issues and helped me get a protective order quickly.",
+        "severity_flag": false,
+        "theme": "timeliness_progress"
+      },
+      {
+        "ai_evidence_span": "More frequent check-ins would have been nice during quiet periods.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 21,
+        "review_snippet": "Overall good experience. More frequent check-ins would have been nice during quiet periods.",
+        "severity_flag": false,
+        "theme": "communication_responsiveness"
+      },
+      {
+        "ai_evidence_span": "They respected my budget and suggested options to minimize court time.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'billing_transparency' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 22,
+        "review_snippet": "They respected my budget and suggested options to minimize court time.",
+        "severity_flag": false,
+        "theme": "billing_transparency"
+      },
+      {
+        "ai_evidence_span": "They were very organized with exhibits and prepared for trial",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'professionalism_trust' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 24,
+        "review_snippet": "They were very organized with exhibits and prepared for trial even though we settled.",
+        "severity_flag": false,
+        "theme": "professionalism_trust"
+      },
+      {
+        "ai_evidence_span": "They helped me focus on long-term outcomes, not just winning every argument.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 26,
+        "review_snippet": "They helped me focus on long-term outcomes, not just winning every argument.",
+        "severity_flag": false,
+        "theme": "outcome_satisfaction"
+      },
+      {
+        "ai_evidence_span": "They checked on my emotional wellbeing, not just legal details.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 28,
+        "review_snippet": "They checked on my emotional wellbeing, not just legal details. That mattered a lot.",
+        "severity_flag": false,
+        "theme": "empathy_support"
+      },
+      {
+        "ai_evidence_span": "Just be ready with questions so you don\u2019t leave confused.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 30,
+        "review_snippet": "Overall, I\u2019d recommend them. Just be ready with questions so you don\u2019t leave confused.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "Sometimes emails were dense, but when I asked for a summary they provided it.",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 32,
+        "review_snippet": "Sometimes emails were dense, but when I asked for a summary they provided it.",
+        "severity_flag": false,
+        "theme": "communication_clarity"
+      },
+      {
+        "ai_evidence_span": "They walked me through every possible scenario before trial",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'expectation_setting' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 34,
+        "review_snippet": "They walked me through every possible scenario before trial so I felt prepared.",
+        "severity_flag": false,
+        "theme": "expectation_setting"
+      },
+      {
+        "ai_evidence_span": "Good communication once I learned the best way to reach them",
+        "ai_polarity": "positive",
+        "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=medium); no deterministic phrase matched.",
+        "deterministic_phrase": null,
+        "deterministic_polarity": null,
+        "disagreement_type": "missing_theme",
+        "priority": 1,
+        "review_idx": 35,
+        "review_snippet": "Good communication once I learned the best way to reach them (email over phone).",
+        "severity_flag": false,
+        "theme": "communication_responsiveness"
+      }
+    ]
+  },
+  "export_path": "C:\\Users\\beyon\\OneDrive\\Desktop\\CLARION\\law-firm-insights-main\\backend\\exports\\benchmark\\benchmark_20260311T133411Z_calibration_sample2.json",
+  "results": [
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.456,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "explained each step of the custody process",
+              "polarity": "positive",
+              "theme": "communication_clarity"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 89,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2024-10-03",
+        "review_text": "My attorney prepared me for every hearing and explained each step of the custody process."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "explained each step of the custody process",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.345,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "Good outcome overall. Sometimes it took a day to get updates after court.",
+              "polarity": "positive",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 73,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2024-10-05",
+        "review_text": "Good outcome overall. Sometimes it took a day to get updates after court."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "Good outcome overall. Sometimes it took a day to get updates after court.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'timeliness_progress' with polarity 'positive' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "timeliness_progress"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.604,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "the billing statements were confusing",
+              "polarity": "negative",
+              "theme": "billing_transparency"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "neutral",
+          "review_text_length": 84,
+          "themes": [
+            {
+              "base_polarity": "negative",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.0,
+              "matched_phrase": "confusing",
+              "multiplier": 1.0,
+              "negation_applied": false,
+              "phrase_family": "negative",
+              "polarity": "negative",
+              "sentence_snippet": "I felt the billing statements were confusing even though the legal advice was solid.",
+              "theme": "communication_clarity"
+            }
+          ]
+        },
+        "rating": 3,
+        "review_date": "2024-10-07",
+        "review_text": "I felt the billing statements were confusing even though the legal advice was solid."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "the billing statements were confusing",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'billing_transparency' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "billing_transparency"
+        },
+        {
+          "ai_evidence_span": null,
+          "ai_polarity": null,
+          "detail": "Deterministic tagged 'communication_clarity' as 'negative' via phrase 'confusing'. AI did not tag this theme.",
+          "deterministic_phrase": "confusing",
+          "deterministic_polarity": "negative",
+          "disagreement_priority": 2,
+          "disagreement_type": "extra_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.186,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "They treated my case with empathy and never made me feel judged.",
+              "polarity": "positive",
+              "theme": "empathy_support"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 64,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2024-10-10",
+        "review_text": "They treated my case with empathy and never made me feel judged."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "They treated my case with empathy and never made me feel judged.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "empathy_support"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.037,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "it was corrected quickly",
+              "polarity": "positive",
+              "theme": "communication_responsiveness"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 82,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2024-10-12",
+        "review_text": "We had one miscommunication about a filing deadline, but it was corrected quickly."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "it was corrected quickly",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_responsiveness"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.524,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "Hard to reach my lawyer directly.",
+              "polarity": "negative",
+              "theme": "communication_responsiveness"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "I usually spoke to staff and waited for callbacks.",
+              "polarity": "negative",
+              "theme": "office_staff_experience"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "negative",
+          "review_text_length": 84,
+          "themes": [
+            {
+              "base_polarity": "negative",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.2,
+              "matched_phrase": "hard to reach",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "negative",
+              "polarity": "negative",
+              "sentence_snippet": "Hard to reach my lawyer directly. I usually spoke to staff a\u2026",
+              "theme": "communication_responsiveness"
+            }
+          ]
+        },
+        "rating": 2,
+        "review_date": "2024-10-15",
+        "review_text": "Hard to reach my lawyer directly. I usually spoke to staff and waited for callbacks."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "I usually spoke to staff and waited for callbacks.",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'office_staff_experience' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "office_staff_experience"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.54,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "focused on what was best for my kids",
+              "polarity": "positive",
+              "theme": "empathy_support"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 75,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2024-10-18",
+        "review_text": "They focused on what was best for my kids and helped de-escalate conflicts."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "focused on what was best for my kids",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "empathy_support"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.329,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "Office staff was kind",
+              "polarity": "positive",
+              "theme": "office_staff_experience"
+            },
+            {
+              "confidence": "medium",
+              "evidence_span": "I wish I had a clearer written roadmap early on",
+              "polarity": "negative",
+              "theme": "communication_clarity"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 75,
+          "themes": [
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.2,
+              "matched_phrase": "office staff was kind",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "Office staff was kind, but I wish I had a clearer written ro\u2026",
+              "theme": "office_staff_experience"
+            }
+          ]
+        },
+        "rating": 4,
+        "review_date": "2024-10-21",
+        "review_text": "Office staff was kind, but I wish I had a clearer written roadmap early on."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "I wish I had a clearer written roadmap early on",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.052,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "They remembered details about my schedule",
+              "polarity": "positive",
+              "theme": "empathy_support"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 92,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2024-10-23",
+        "review_text": "They remembered details about my schedule and tried to avoid hearings on days I had my kids."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "They remembered details about my schedule",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "empathy_support"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.161,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "the firm was honest about the risks",
+              "polarity": "positive",
+              "theme": "expectation_setting"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "neutral",
+          "review_text_length": 78,
+          "themes": [
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "low",
+              "contrast_applied": true,
+              "final_impact": 0.6,
+              "matched_phrase": "honest",
+              "multiplier": 0.6,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "Judge\u2019s decision wasn\u2019t what I hoped, but the firm was honest about the risks.",
+              "theme": "professionalism_trust"
+            }
+          ]
+        },
+        "rating": 3,
+        "review_date": "2024-10-26",
+        "review_text": "Judge\u2019s decision wasn\u2019t what I hoped, but the firm was honest about the risks."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "the firm was honest about the risks",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'expectation_setting' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "expectation_setting"
+        },
+        {
+          "ai_evidence_span": null,
+          "ai_polarity": null,
+          "detail": "Deterministic tagged 'professionalism_trust' as 'positive' via phrase 'honest' with negation=False, contrast=True. AI did not tag this theme \u2014 possible guard over-triggering.",
+          "deterministic_phrase": "honest",
+          "deterministic_polarity": "positive",
+          "disagreement_priority": 3,
+          "disagreement_type": "likely_context_guard_failure",
+          "severity_flag": false,
+          "theme": "professionalism_trust"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.106,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "I appreciated the direct communication style even when the news was hard to hear.",
+              "polarity": "positive",
+              "theme": "communication_clarity"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 81,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2024-10-29",
+        "review_text": "I appreciated the direct communication style even when the news was hard to hear."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "I appreciated the direct communication style even when the news was hard to hear.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.482,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "Very responsive by email.",
+              "polarity": "positive",
+              "theme": "communication_responsiveness"
+            },
+            {
+              "confidence": "high",
+              "evidence_span": "I always knew when the next court date was.",
+              "polarity": "positive",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 69,
+          "themes": [
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.5,
+              "confidence": "high",
+              "contrast_applied": false,
+              "final_impact": 1.8,
+              "matched_phrase": "very responsive",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "Very responsive by email. I always knew when the next court\u2026",
+              "theme": "communication_responsiveness"
+            }
+          ]
+        },
+        "rating": 5,
+        "review_date": "2024-11-01",
+        "review_text": "Very responsive by email. I always knew when the next court date was."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "I always knew when the next court date was.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'timeliness_progress' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "timeliness_progress"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.01,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "Mediation preparation was excellent.",
+              "polarity": "positive",
+              "theme": "outcome_satisfaction"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 65,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2024-11-04",
+        "review_text": "Mediation preparation was excellent. I felt confident walking in."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "Mediation preparation was excellent.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "outcome_satisfaction"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.17,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "long emails without a clear summary of what I needed to do",
+              "polarity": "negative",
+              "theme": "communication_clarity"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "neutral",
+          "review_text_length": 75,
+          "themes": []
+        },
+        "rating": 3,
+        "review_date": "2024-11-07",
+        "review_text": "Sometimes I got long emails without a clear summary of what I needed to do."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "long emails without a clear summary of what I needed to do",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.371,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "They gave me scripts for how to talk to my co-parent",
+              "polarity": "positive",
+              "theme": "empathy_support"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 73,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2024-11-10",
+        "review_text": "They gave me scripts for how to talk to my co-parent, which helped a lot."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "They gave me scripts for how to talk to my co-parent",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "empathy_support"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.308,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "I didn\u2019t always understand why.",
+              "polarity": "negative",
+              "theme": "communication_clarity"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "negative",
+          "review_text_length": 69,
+          "themes": []
+        },
+        "rating": 2,
+        "review_date": "2024-11-13",
+        "review_text": "Case strategy changed a few times and I didn\u2019t always understand why."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "I didn\u2019t always understand why.",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.145,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "Billing was fair and they warned me when a motion would be more expensive.",
+              "polarity": "positive",
+              "theme": "billing_transparency"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 74,
+          "themes": [
+            {
+              "base_polarity": "negative",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.0,
+              "matched_phrase": "expensive",
+              "multiplier": 1.0,
+              "negation_applied": false,
+              "phrase_family": "negative",
+              "polarity": "negative",
+              "sentence_snippet": "\u2026ing was fair and they warned me when a motion would be more expensive.",
+              "theme": "fee_value"
+            }
+          ]
+        },
+        "rating": 4,
+        "review_date": "2024-11-16",
+        "review_text": "Billing was fair and they warned me when a motion would be more expensive."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "Billing was fair and they warned me when a motion would be more expensive.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'billing_transparency' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "billing_transparency"
+        },
+        {
+          "ai_evidence_span": null,
+          "ai_polarity": null,
+          "detail": "Deterministic tagged 'fee_value' as 'negative' via phrase 'expensive' but star rating prior is 'positive'. AI did not tag this theme \u2014 possible false positive.",
+          "deterministic_phrase": "expensive",
+          "deterministic_polarity": "negative",
+          "disagreement_priority": 2,
+          "disagreement_type": "likely_false_positive",
+          "severity_flag": false,
+          "theme": "fee_value"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 0.929,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": []
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 77,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2024-11-19",
+        "review_text": "The paralegal was a lifesaver helping organize texts and emails for evidence."
+      },
+      "disagreements": []
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.201,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "everyone was professional",
+              "polarity": "positive",
+              "theme": "professionalism_trust"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 63,
+          "themes": [
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": true,
+              "final_impact": 0.72,
+              "matched_phrase": "professional",
+              "multiplier": 0.72,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "Sometimes the lobby was crowded, but everyone was professional.",
+              "theme": "professionalism_trust"
+            }
+          ]
+        },
+        "rating": 4,
+        "review_date": "2024-11-22",
+        "review_text": "Sometimes the lobby was crowded, but everyone was professional."
+      },
+      "disagreements": []
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.191,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "helped me get a protective order quickly",
+              "polarity": "positive",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 76,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2024-11-25",
+        "review_text": "They prioritized safety issues and helped me get a protective order quickly."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "helped me get a protective order quickly",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'timeliness_progress' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "timeliness_progress"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.242,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "I had to repeat background details to different people.",
+              "polarity": "negative",
+              "theme": "communication_clarity"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "neutral",
+          "review_text_length": 83,
+          "themes": []
+        },
+        "rating": 3,
+        "review_date": "2024-11-28",
+        "review_text": "There were a few times when I had to repeat background details to different people."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "I had to repeat background details to different people.",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'communication_clarity' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.142,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "More frequent check-ins would have been nice during quiet periods.",
+              "polarity": "positive",
+              "theme": "communication_responsiveness"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 91,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2024-12-01",
+        "review_text": "Overall good experience. More frequent check-ins would have been nice during quiet periods."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "More frequent check-ins would have been nice during quiet periods.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_responsiveness"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.262,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "They respected my budget and suggested options to minimize court time.",
+              "polarity": "positive",
+              "theme": "billing_transparency"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 70,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2024-12-04",
+        "review_text": "They respected my budget and suggested options to minimize court time."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "They respected my budget and suggested options to minimize court time.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'billing_transparency' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "billing_transparency"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.425,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "Emails sometimes came late at night",
+              "polarity": "negative",
+              "theme": "communication_responsiveness"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "neutral",
+          "review_text_length": 70,
+          "themes": []
+        },
+        "rating": 3,
+        "review_date": "2024-12-07",
+        "review_text": "Emails sometimes came late at night, which made it hard to disconnect."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "Emails sometimes came late at night",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_responsiveness"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.584,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "They were very organized with exhibits and prepared for trial",
+              "polarity": "positive",
+              "theme": "professionalism_trust"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 85,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2024-12-10",
+        "review_text": "They were very organized with exhibits and prepared for trial even though we settled."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "They were very organized with exhibits and prepared for trial",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'professionalism_trust' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "professionalism_trust"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.83,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "my concerns about school drop-offs weren\u2019t fully addressed.",
+              "polarity": "negative",
+              "theme": "empathy_support"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "negative",
+          "review_text_length": 71,
+          "themes": []
+        },
+        "rating": 2,
+        "review_date": "2024-12-13",
+        "review_text": "I felt like my concerns about school drop-offs weren\u2019t fully addressed."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "my concerns about school drop-offs weren\u2019t fully addressed.",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'empathy_support' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "empathy_support"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.391,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "They helped me focus on long-term outcomes, not just winning every argument.",
+              "polarity": "positive",
+              "theme": "outcome_satisfaction"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 76,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2024-12-16",
+        "review_text": "They helped me focus on long-term outcomes, not just winning every argument."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "They helped me focus on long-term outcomes, not just winning every argument.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "outcome_satisfaction"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.303,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "Court filings were timely and accurate.",
+              "polarity": "positive",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 82,
+          "themes": [
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.2,
+              "matched_phrase": "timely",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "Court filings were timely and accurate. Office phone queue can be long on Monda\u2026",
+              "theme": "timeliness_progress"
+            }
+          ]
+        },
+        "rating": 4,
+        "review_date": "2024-12-19",
+        "review_text": "Court filings were timely and accurate. Office phone queue can be long on Mondays."
+      },
+      "disagreements": []
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.092,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "They checked on my emotional wellbeing, not just legal details.",
+              "polarity": "positive",
+              "theme": "empathy_support"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 84,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2024-12-22",
+        "review_text": "They checked on my emotional wellbeing, not just legal details. That mattered a lot."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "They checked on my emotional wellbeing, not just legal details.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'empathy_support' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "empathy_support"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.177,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "I wish I\u2019d had more clarity on realistic outcomes early.",
+              "polarity": "negative",
+              "theme": "expectation_setting"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "neutral",
+          "review_text_length": 92,
+          "themes": []
+        },
+        "rating": 3,
+        "review_date": "2024-12-27",
+        "review_text": "We won some issues and lost others. I wish I\u2019d had more clarity on realistic outcomes early."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "I wish I\u2019d had more clarity on realistic outcomes early.",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "expectation_setting"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.237,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "Just be ready with questions so you don\u2019t leave confused.",
+              "polarity": "positive",
+              "theme": "communication_clarity"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 86,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2024-12-30",
+        "review_text": "Overall, I\u2019d recommend them. Just be ready with questions so you don\u2019t leave confused."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "Just be ready with questions so you don\u2019t leave confused.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 0.837,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": []
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 80,
+          "themes": []
+        },
+        "rating": 5,
+        "review_date": "2025-01-03",
+        "review_text": "They helped negotiate a parenting plan that actually works with my job schedule."
+      },
+      "disagreements": []
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.145,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "Sometimes emails were dense, but when I asked for a summary they provided it.",
+              "polarity": "positive",
+              "theme": "communication_clarity"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 77,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2025-01-06",
+        "review_text": "Sometimes emails were dense, but when I asked for a summary they provided it."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "Sometimes emails were dense, but when I asked for a summary they provided it.",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.188,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "I occasionally felt like my case was one of many, not a priority.",
+              "polarity": "negative",
+              "theme": "expectation_setting"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "neutral",
+          "review_text_length": 65,
+          "themes": []
+        },
+        "rating": 3,
+        "review_date": "2025-01-09",
+        "review_text": "I occasionally felt like my case was one of many, not a priority."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "I occasionally felt like my case was one of many, not a priority.",
+          "ai_polarity": "negative",
+          "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 3,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "expectation_setting"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.026,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "high",
+              "evidence_span": "They walked me through every possible scenario before trial",
+              "polarity": "positive",
+              "theme": "expectation_setting"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 79,
+          "themes": [
+            {
+              "base_polarity": "positive",
+              "base_weight": 1.0,
+              "confidence": "medium",
+              "contrast_applied": false,
+              "final_impact": 1.2,
+              "matched_phrase": "walked me through",
+              "multiplier": 1.2,
+              "negation_applied": false,
+              "phrase_family": "positive",
+              "polarity": "positive",
+              "sentence_snippet": "They walked me through every possible scenario before trial so I\u2026",
+              "theme": "communication_clarity"
+            }
+          ]
+        },
+        "rating": 5,
+        "review_date": "2025-01-12",
+        "review_text": "They walked me through every possible scenario before trial so I felt prepared."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": null,
+          "ai_polarity": null,
+          "detail": "Deterministic tagged 'communication_clarity' as 'positive' via phrase 'walked me through'. AI did not tag this theme.",
+          "deterministic_phrase": "walked me through",
+          "deterministic_polarity": "positive",
+          "disagreement_priority": 2,
+          "disagreement_type": "extra_theme",
+          "severity_flag": false,
+          "theme": "communication_clarity"
+        },
+        {
+          "ai_evidence_span": "They walked me through every possible scenario before trial",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'expectation_setting' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "expectation_setting"
+        }
+      ]
+    },
+    {
+      "benchmark_result": {
+        "ai_benchmark": {
+          "elapsed_s": 1.449,
+          "error": null,
+          "model": "openai/gpt-4o-mini",
+          "skipped": false,
+          "themes": [
+            {
+              "confidence": "medium",
+              "evidence_span": "Good communication once I learned the best way to reach them",
+              "polarity": "positive",
+              "theme": "communication_responsiveness"
+            }
+          ]
+        },
+        "ai_enabled": true,
+        "deterministic": {
+          "rating_prior": "positive",
+          "review_text_length": 80,
+          "themes": []
+        },
+        "rating": 4,
+        "review_date": "2025-01-15",
+        "review_text": "Good communication once I learned the best way to reach them (email over phone)."
+      },
+      "disagreements": [
+        {
+          "ai_evidence_span": "Good communication once I learned the best way to reach them",
+          "ai_polarity": "positive",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=medium); no deterministic phrase matched.",
+          "deterministic_phrase": null,
+          "deterministic_polarity": null,
+          "disagreement_priority": 1,
+          "disagreement_type": "missing_theme",
+          "severity_flag": false,
+          "theme": "communication_responsiveness"
+        }
+      ]
+    }
+  ],
+  "success": true,
+  "total_reviews": 36
+}
+

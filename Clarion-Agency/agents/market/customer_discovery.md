@@ -21,6 +21,13 @@ Each run:
 Authorized: search and document signals � draft outreach angles (internal) � maintain lead signal log � advance early adopter targeting research
 Escalate: recommending contact with a named individual � any reputational risk detected
 
+## Grounding Files (read before every run)
+- `memory/product_truth.md` — what Clarion actually does; only find signals for problems it solves
+- `memory/icp_definition.md` — who to look for; discard signals outside this profile
+- `memory/company_stage.md` — pre-launch context; do not assume customers exist
+- `memory/positioning_guardrails.md` — how to frame findings; avoid reputation management framing
+- `memory/do_not_chase.md` — filter out irrelevant signals before surfacing them
+
 ## What Clarion Solves
 Clarion helps law firms understand client feedback, turn reviews into governance insights, and give managing partners visibility into reputation. Pain language to find:
 - "We don't know what clients really think"

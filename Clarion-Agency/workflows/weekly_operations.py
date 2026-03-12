@@ -80,28 +80,42 @@ def run_weekly():
     print("\n" + "=" * 60)
     print("Running Chief of Staff synthesis...")
     print("=" * 60)
-    try:
-        run_agent(
-            agent_key       = "chief_of_staff",
-            prompt_rel_path = "agents/executive/chief_of_staff.md",
-            report_subdir   = "ceo_brief",
-            data_context    = cos_ctx(),
-            agent_title     = "Clarion Chief of Staff",
-        )
-        results["success"].append("chief_of_staff")
-    except Exception as e:
-        print(f"\n  [ERROR] chief_of_staff failed: {e}")
-        traceback.print_exc()
-        results["failed"].append("chief_of_staff")
-
-    # Summary
-    print("\n" + "=" * 60)
-    print(f"WEEKLY RUN COMPLETE")
-    print(f"  Succeeded : {len(results['success'])} agents")
-    print(f"  Failed    : {len(results['failed'])} agents")
+    cos_succeeded = False
     if results["failed"]:
-        print(f"  Failed list: {', '.join(results['failed'])}")
-    print("  CEO brief ready for Sunday review.")
+        print(f"\n  [SKIP] Chief of Staff not run — {len(results['failed'])} upstream agent(s) failed.")
+        results["failed"].append("chief_of_staff")
+    else:
+        try:
+            run_agent(
+                agent_key       = "chief_of_staff",
+                prompt_rel_path = "agents/executive/chief_of_staff.md",
+                report_subdir   = "ceo_brief",
+                data_context    = cos_ctx(),
+                agent_title     = "Clarion Chief of Staff",
+            )
+            results["success"].append("chief_of_staff")
+            cos_succeeded = True
+        except Exception as e:
+            print(f"\n  [ERROR] chief_of_staff failed: {e}")
+            traceback.print_exc()
+            results["failed"].append("chief_of_staff")
+
+    # Final summary — always shows succeeded/failed counts and CEO brief status
+    dept_succeeded = [a for a in results["success"] if a != "chief_of_staff"]
+    dept_failed    = [a for a in results["failed"]  if a != "chief_of_staff"]
+
+    print("\n" + "=" * 60)
+    print("WEEKLY RUN COMPLETE")
+    print("")
+    print(f"Succeeded agents : {len(dept_succeeded)}")
+    print(f"Failed agents    : {len(dept_failed)}")
+    if dept_failed:
+        print(f"  Failed: {', '.join(dept_failed)}")
+    print("")
+    if cos_succeeded:
+        print("CEO brief generated successfully")
+    else:
+        print("CEO brief not generated due to upstream failures")
     print("=" * 60)
 
 

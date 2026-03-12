@@ -31,7 +31,14 @@ Surface the best content opportunity each week, grounded in customer pain langua
 - `data/comms/content_log.csv`
 - `data/comms/discovered_conversations.md` — latest discovery signals (read-only; do not post)
 - `memory/brand_canon.md` — full (required)
-- `memory/product_truth.md` — summary only
+- `memory/product_truth.md` — full (required — do not claim features or behaviors not listed here)
+- `memory/company_stage.md` — full (required — do not propose work inappropriate for pre-launch)
+- `memory/icp_definition.md` — full (required — all content must target this audience)
+- `memory/positioning_guardrails.md` — full (required — follow category framing and drift traps)
+- `memory/commercial_priority_ladder.md` — summary (use to prioritize between proposals)
+- `memory/do_not_chase.md` — full (required — check proposals against this before surfacing)
+- `memory/brand_voice.md` — full (required)
+- `memory/channel_strategy.md` — full (required — only propose activity on listed channels)
 - `memory/projects.md` — read; update relevant entries
 
 ## Outputs
