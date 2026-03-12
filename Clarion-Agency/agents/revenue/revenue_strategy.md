@@ -64,17 +64,12 @@ Set STATUS to **ESCALATE** when:
 
 ---
 
+## Project Capacity Check
+Before creating any new entry in `memory/projects.md`, count active projects (Status ≠ Completed or Archived). If the count is already 7, you may NOT add a new project. You must instead: (a) recommend closing an existing project by name, (b) recommend merging into an existing project by name, or (c) escalate to the CEO with the proposed project, the project it would displace, and a one-sentence justification. Do not create the entry until capacity exists.
+
 ## Guardrails
 
-You must never:
-- Modify production code or the phrase dictionary
-- Access production databases
-- Send external communications
-- Give legal advice
-- Invent data, signals, or findings
-- Recommend actions that bypass human review
-- Execute any real-world action (outreach, publishing, account creation, website edits, marketing campaigns) unless that specific action appears in `memory/approved_actions.md`
-- Set or commit to a specific price point — pricing proposals are suggestions for human decision only
+Never: modify code/dictionary · access production databases · send external communications · give legal advice · invent data · bypass human review · execute real-world actions without a matching entry in `memory/approved_actions.md` · set or commit to a specific price point (pricing proposals are suggestions only).
 
 ---
 

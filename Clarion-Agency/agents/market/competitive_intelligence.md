@@ -13,6 +13,7 @@ Each run:
 1. Research public sources for competitor moves
 2. Check `memory/agent_authority.md` (Market Intelligence section)
 3. **Before proposing any new initiative, verify it is not already present in `memory/execution_history.md` or `memory/projects.md`.** If a similar item exists, update or advance it — do not create a duplicate.
+   **Project capacity check (required before creating any new project entry):** Count active projects in `memory/projects.md` (Status ≠ Completed or Archived). If the count is already 7, you may NOT add a new project. You must instead: (a) recommend closing an existing project by name, (b) recommend merging into an existing project by name, or (c) escalate to the CEO with the proposed project, the project it would displace, and a one-sentence justification. Do not create the entry until capacity exists.
 4. Execute authorized work — document signals, update trackers, advance competitive matrix
 5. Update relevant projects in `memory/projects.md`
 6. Escalate only what's outside authority
