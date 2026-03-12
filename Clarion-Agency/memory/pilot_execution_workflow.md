@@ -1,6 +1,6 @@
 # pilot_execution_workflow.md
 # Clarion — Pilot Execution Workflow
-# Version: 1.0 | 2026-03-12
+# Version: 1.1 | Updated: 2026-03-12 — Added Step 8: Extract Proof Asset
 
 ---
 
@@ -147,3 +147,60 @@ A completed pilot is an active sales opportunity. Immediately:
 
 Do not send the brief to the prospect without Level 2 approval (outreach) or
 Level 3 approval (if pricing discussion follows immediately).
+
+---
+
+### Step 8 — Extract Proof Asset
+
+After the pilot brief is written and the pipeline is updated (Steps 5–6),
+extract an anonymized proof asset and append it to `memory/proof_assets.md`.
+
+This step is mandatory for every pilot_complete event. It is LEVEL 1 —
+no approval required. The extraction itself is autonomous; sales use of the
+asset requires approval (see SALES_USE_APPROVED below).
+
+**Extraction rules:**
+
+1. Read the completed pilot brief at
+   `data/pilots/reports/<firm_slug>_pilot_brief.md`
+
+2. Identify the single strongest finding — the signal most likely to resonate
+   with a future prospect in the same practice area or firm size.
+   Priority order: governance signal > operational signal > reputation signal.
+
+3. Strip all identifying information:
+   - No firm name, attorney name, city, or any detail that could identify
+     the source firm
+   - Replace geographic references with GEOGRAPHY_TIER
+   - Replace firm-specific context with practice area generalizations
+
+4. Write the QUOTE field as a paraphrased first-person statement from the
+   perspective of a managing partner seeing this finding. It must sound
+   natural and credible — not invented, not exaggerated. Base it directly
+   on a real finding from the brief. Never quote verbatim from client reviews.
+
+5. Assign CASE_ID as the next sequential number in proof_assets.md
+   (CASE-001, CASE-002, etc.)
+
+6. Set SALES_USE_APPROVED: Pending — all new assets default to Pending.
+   The CEO or Sales division lead reviews and sets to Yes or No.
+
+7. Append the completed entry to `memory/proof_assets.md` using the exact
+   entry format defined in that file.
+
+8. Note the extraction in WORK COMPLETED THIS RUN:
+   "Proof asset extracted — CASE-[ID] appended to memory/proof_assets.md"
+
+**What makes a strong proof asset:**
+- Specific enough to be credible (names the signal type, not just "we found issues")
+- General enough to resonate across firms in the same category
+- The QUOTE captures the "aha moment" — what a partner would say when
+  they realize Clarion found something their star ratings didn't show
+- The ACTION_RECOMMENDED is something a firm could actually do
+
+**What to avoid:**
+- Do not extract findings that are too firm-specific to generalize
+- Do not extract findings where the brief itself was thin or the signal was weak
+- Do not write a QUOTE that sounds like marketing copy — it must sound like
+  a real person reacting to a real finding
+- Do not set SALES_USE_APPROVED: Yes without explicit CEO or division lead review
