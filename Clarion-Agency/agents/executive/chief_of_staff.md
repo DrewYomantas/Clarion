@@ -20,6 +20,7 @@ From `memory/` (provided in grounding context):
 - `office_learning_log.md` — summary only.
 - `experiments.md` — full.
 - `market_refresh_log.md` — last entry per agent. Check date against current run date.
+- `history_summaries.md` — read before ingesting any full log. If a summary entry exists for a log file, use the summary as the primary reference. Only read the full log if exact historical detail is required for a specific decision or escalation.
 
 All department agent reports filed in the past 7 days (see REPORT INVENTORY in input data).
 
@@ -99,6 +100,26 @@ Read `memory/market_refresh_log.md`. For each of the four market-facing agents (
 - In the CEO brief under OFFICE HEALTH REPORT, list each agent's last refresh date.
 - For any stale agent, include a standing instruction in STANDING ORDER CONFLICTS: `[Agent name] — market_refresh_log.md entry is older than 30 days. Division must refresh market intelligence this cycle.`
 - If `market_refresh_log.md` has no entry at all for an agent, treat it as stale immediately.
+
+**G. Historical Summarization Check**
+On each run, assess whether any of the following logs have grown large enough to warrant a new summary entry in `memory/history_summaries.md`:
+
+| Log file | Summarize when... |
+|---|---|
+| `memory/office_health_log.md` | 20+ dated entries exist since the last summary |
+| `memory/decision_log.md` | 15+ entries exist since the last summary |
+| `memory/approved_actions.md` | 20+ completed/closed entries exist since the last summary |
+| `memory/email_log.md` | 30+ entries exist since the last summary |
+| `memory/moderation_log.md` | 10+ entries exist since the last summary |
+| `memory/security_incident_log.md` | Any resolved incidents not yet captured in a summary |
+
+**When the threshold is met:**
+1. Write a new dated summary entry in `memory/history_summaries.md` (append-only — never overwrite)
+2. The summary must preserve: key decisions, trends, risks, outcomes, and unresolved items
+3. Remove repetitive operational detail — keep signal, discard noise
+4. After summarizing, agents should reference `history_summaries.md` for historical context instead of the full log, unless exact detail is required
+
+If no log meets the threshold this run, write `None this cycle.` in the HISTORICAL SUMMARIZATION section of the CEO brief.
 
 **E. Operational Risk Level**
 Assign one of: Low | Moderate | High
@@ -316,6 +337,15 @@ Also list open questions from agent findings requiring a CEO-level call, attribu
 ---
 MISSING REPORTS
 [None. | Each expected report not filed this cycle, one per line.]
+
+---
+HISTORICAL SUMMARIZATION
+[None this cycle. | For each log summarized this run:
+  Log: [filename]
+  Entries summarized: [N entries covering YYYY-MM-DD to YYYY-MM-DD]
+  Summary written to: memory/history_summaries.md
+  Key signal preserved: [One sentence — the most important pattern or decision captured]
+  ---]
 
 ---
 OFFICE LEARNING
