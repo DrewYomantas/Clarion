@@ -125,17 +125,17 @@ All agents report upward through the Chief of Staff.
 
 ### Phrase Dictionary Calibration Analyst
 **Cadence:** Monthly
-**File:** `agents/product_integrity/dictionary_calibration.md` *(to be written)*
+**File:** `agents/product_integrity/dictionary_calibration.md`
 **Mission:** Stress-test the phrase dictionary against real review language and propose calibration improvements for human review. Never modifies the dictionary directly.
 
 ### Scoring Quality Analyst
 **Cadence:** Weekly
-**File:** `agents/product_integrity/scoring_quality.md` *(to be written)*
+**File:** `agents/product_integrity/scoring_quality.md`
 **Mission:** Monitor the consistency and accuracy of Clarion's deterministic scoring output. Flag edge cases and drift.
 
 ### Data Quality Analyst
 **Cadence:** Weekly
-**File:** `agents/product_integrity/data_quality.md` *(to be written)*
+**File:** `agents/product_integrity/data_quality.md`
 **Mission:** Monitor the integrity of data inputs to Clarion — review ingestion quality, format consistency, and submission anomalies.
 
 ---
@@ -144,12 +144,12 @@ All agents report upward through the Chief of Staff.
 
 ### Internal Process Analyst
 **Cadence:** Weekly
-**File:** `agents/operations/process_analyst.md` *(to be written)*
+**File:** `agents/operations/process_analyst.md`
 **Mission:** Monitor internal operational health: SLAs, team workflows, tooling friction, and process bottlenecks.
 
 ### Cost & Resource Analyst
 **Cadence:** Weekly
-**File:** `agents/operations/cost_resource.md` *(to be written)*
+**File:** `agents/operations/cost_resource.md`
 **Mission:** Track AI agent token costs, infrastructure spend, and resource utilization against budgets.
 
 ---
@@ -158,7 +158,7 @@ All agents report upward through the Chief of Staff.
 
 ### Content & SEO Agent
 **Cadence:** Weekly
-**File:** `agents/comms/content_seo.md` *(to be written)*
+**File:** `agents/comms/content_seo.md`
 **Mission:** Identify content opportunities, monitor SEO signals, and propose content and distribution ideas grounded in customer discovery and market intelligence. Never publishes directly.
 
 ---
@@ -167,7 +167,7 @@ All agents report upward through the Chief of Staff.
 
 ### People & Ops Intelligence Agent
 **Cadence:** Monthly
-**File:** `agents/people/people_ops_intelligence.md` *(to be written)*
+**File:** `agents/people/people_ops_intelligence.md`
 **Mission:** Monitor team health signals and hiring demand patterns. Surface resourcing risks before they become blockers.
 
 ---
@@ -192,9 +192,9 @@ All agents report upward through the Chief of Staff.
 | Market Intelligence | 4 | Complete |
 | Customer Intelligence | 3 | Complete |
 | Product Insight | 4 | Complete (includes Product Experience) |
-| Product Integrity | 3 | Stubs — to be written |
-| Operations | 2 | Stubs — to be written |
-| Comms & Content | 1 | Stub — to be written |
-| People & Culture | 1 | Stub — to be written |
+| Product Integrity | 3 | Complete |
+| Operations | 2 | Complete |
+| Comms & Content | 1 | Complete |
+| People & Culture | 1 | Complete |
 | Strategy | 1 | Complete |
-| **Total** | **25** | **18 complete, 7 pending** |
+| **Total** | **25** | **25 complete** |

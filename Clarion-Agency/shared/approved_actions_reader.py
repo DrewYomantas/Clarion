@@ -44,12 +44,21 @@ OWNER_ROUTE = {
     "content & seo agent":        ("content_seo",             "agents/comms/content_seo.md",               "execution"),
     "comms":                       ("content_seo",             "agents/comms/content_seo.md",               "execution"),
     "competitive intelligence":    ("competitive_intelligence","agents/market/competitive_intelligence.md",  "execution"),
-    "market intelligence":         ("competitive_intelligence","agents/market/competitive_intelligence.md",  "execution"),
+    "market intelligence agent":   ("competitive_intelligence","agents/market/competitive_intelligence.md",  "execution"),
     "usage analyst":               ("usage_analyst",           "agents/product_insight/usage_analyst.md",   "execution"),
     "product insight":             ("usage_analyst",           "agents/product_insight/usage_analyst.md",   "execution"),
     "chief of staff":              ("chief_of_staff",          "agents/executive/chief_of_staff.md",        "execution"),
     "executive":                   ("chief_of_staff",          "agents/executive/chief_of_staff.md",        "execution"),
     "customer discovery":          ("customer_discovery",      "agents/market/customer_discovery.md",       "execution"),
+    "sales development":           ("sales_development",       "agents/sales/outbound_sales.md",             "execution"),
+    "sales development analyst":   ("sales_development",       "agents/sales/outbound_sales.md",             "execution"),
+    "head of growth":              ("head_of_growth",          "agents/revenue/head_of_growth.md",           "execution"),
+    "revenue":                     ("head_of_growth",          "agents/revenue/head_of_growth.md",           "execution"),
+    "funnel conversion":           ("funnel_conversion",       "agents/revenue/funnel_conversion.md",        "execution"),
+    "funnel conversion analyst":   ("funnel_conversion",       "agents/revenue/funnel_conversion.md",        "execution"),
+    "narrative strategy":          ("narrative_strategy",      "agents/growth/narrative_strategy.md",        "execution"),
+    "launch readiness":            ("launch_readiness",        "agents/strategy/launch_readiness.md",        "execution"),
+    "market intelligence":         ("market_intelligence",     "agents/strategy/market_intelligence.md",     "execution"),
 }
 
 # Safe bounded verbs for pre-launch execution

@@ -35,10 +35,14 @@ EXPECTED_REPORTS = [
     ("product_integrity","dictionary_calibration",      "monthly — include if filed"),
     ("product_integrity","scoring_quality",             "weekly"),
     ("product_integrity","data_quality",                "weekly"),
+    ("operations",       "site_health",                 "weekly"),
     ("operations",       "process_analyst",             "weekly"),
     ("operations",       "cost_resource",               "weekly"),
     ("comms",            "content_seo",                 "weekly"),
     ("people",           "people_ops",                  "monthly — include if filed"),
+    ("revenue",          "narrative_strategy",          "monthly — include if filed"),
+    ("strategy",         "market_intelligence",         "weekly"),
+    ("strategy",         "launch_readiness",            "monthly — include if filed"),
 ]
 
 LOOKBACK_DAYS = 7

@@ -18,12 +18,24 @@ Agents may NEVER execute external actions unless the entry exists here with STAT
 ## Valid Owner values (must match exactly)
 - Content & SEO Agent
 - Competitive Intelligence
+- Market Intelligence
 - Usage Analyst
 - Chief of Staff
 - Customer Discovery
+- Sales Development
+- Head of Growth
+- Funnel Conversion
+- Narrative Strategy
+- Launch Readiness
 
 ## Blocked execution types (runner will not auto-execute these — manual only)
-post, publish, send, create account, sign up, register, email, tweet, submit
+launch announcement, press release, media statement, partnership announcement,
+pricing change, legal terms, terms of service, security policy, enterprise commitment,
+crisis communication, paid advertising, sponsored content.
+
+Normal Level 2 actions (post, publish, send, outreach, create account) may be executed
+autonomously if approved in division_lead_approvals.md. They require CEO approval only
+when they constitute a company-level or irreversible action (see delegated_authority_matrix.md).
 
 ## Status values
 - staged      — prepared by agent, awaiting CEO review
@@ -39,6 +51,7 @@ post, publish, send, create account, sign up, register, email, tweet, submit
 _(No actions approved yet. Add entries below using the format.)_
 
 ## ACTION 001
+Action ID:   ACT-001
 ACTION: Finalize LinkedIn company profile draft for Clarion
 OWNER: Content & SEO Agent
 STATUS: blocked

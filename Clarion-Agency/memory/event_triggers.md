@@ -151,7 +151,7 @@ Runner uses the same `_has_real_input()` gate as the scheduled runner.
 ---
 
 ### TRIGGER-011
-**Event:** `data/market/conversion_friction.md` has been modified since last run
+**Event:** `memory/conversion_friction.md` has been modified since last run
 **Meaning:** Funnel friction data has been updated (new friction signals identified)
 **Wake:** Funnel Conversion Analyst + Head of Growth
 **Mode:** Event-driven wakeup (MODE 2)

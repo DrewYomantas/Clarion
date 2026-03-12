@@ -122,8 +122,8 @@ when_NOT_to_hand_off:
 
 ## HANDOFF 7: Site Health -> Chief of Staff
 
-trigger: Internal process monitoring detects a customer-facing process failure or SLA compliance below 70%
-sender: Internal Process Analyst
+trigger: Site Health Monitor detects a customer-facing process failure or SLA compliance below 70%
+sender: Site Health Monitor (agents/operations/site_health.md)
 receiver: Chief of Staff
 payload_required:
   - Issue description

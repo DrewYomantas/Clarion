@@ -160,6 +160,17 @@ and where its authority ends. When this file conflicts with another file, this f
 
 ## DIVISION: OPERATIONS
 
+### Site Health Monitor
+- purpose: Evaluate functional health of the live product across critical areas (landing, signup, pricing, onboarding, API). Detect failures, degradations, and anomalies. Log incidents. Escalate anything that blocks a user.
+- wake_conditions: Weekly run
+- core_inputs: Live site https://law-firm-feedback-saas.onrender.com/ (public pages only), data/incidents/incidents_log.md, memory/ux_review_access.md
+- writes_to: reports/operations/, data/incidents/incidents_log.md (append)
+- authority_level: Internal monitoring and escalation only. No production access. Cold-start tolerance required per ux_review_access.md Section 1.
+- escalates_to: Chief of Staff (any DEGRADED or FAILING area), CEO (if customer-facing failure confirmed)
+- output_artifacts: reports/operations/site_health_[date].md
+- success_condition: All six areas classified, cold-start handled correctly, incidents logged or confirmed resolved
+- do_not_do: Submit any form. Create accounts. Access admin routes. Log cold-start boot as a failure.
+
 ### Internal Process Analyst
 - purpose: Monitor SLA compliance, process efficiency, identify workflow bottlenecks
 - wake_conditions: Weekly run

@@ -184,6 +184,12 @@ _AGENT_SUBDIR = {
     "usage_analyst":           "product_insight",
     "chief_of_staff":          "ceo_brief",
     "customer_discovery":      "market",
+    "sales_development":       "revenue",
+    "head_of_growth":          "revenue",
+    "funnel_conversion":       "revenue",
+    "narrative_strategy":      "revenue",
+    "market_intelligence":     "strategy",
+    "launch_readiness":        "strategy",
 }
 
 def _subdir_for_agent(agent_key: str) -> str:
@@ -556,6 +562,33 @@ def main():
     if not cos_path:
         print("\n  [WARN] Chief of Staff did not complete.")
         print( "  The executive_brief_latest.md contains a fallback summary.")
+
+    # ── STAGE 8: Update office_health_log.md orchestration state ─────────────
+    banner("STAGE 8 — Updating office_health_log.md")
+    try:
+        health_log = MEMORY / "office_health_log.md"
+        now_iso = datetime.datetime.now().isoformat(timespec="seconds")
+        llm_count = len(llm_ran) + 1  # +1 for chief_of_staff
+        log_text = health_log.read_text(encoding="utf-8")
+        log_text = log_text.replace(
+            "last_trigger_check:  null",
+            f"last_trigger_check:  {now_iso}",
+        )
+        log_text = log_text.replace(
+            f"last_trigger_check:  {now_iso}",
+            f"last_trigger_check:  {now_iso}",
+        )
+        # Update daily_llm_count (simple overwrite of field line)
+        import re as _re
+        log_text = _re.sub(
+            r"daily_llm_count:\s+\d+",
+            f"daily_llm_count:     {llm_count}",
+            log_text,
+        )
+        health_log.write_text(log_text, encoding="utf-8")
+        print(f"  ✓ office_health_log.md updated — last_trigger_check: {now_iso}")
+    except Exception as e:
+        print(f"  [WARN] Could not update office_health_log.md: {e}")
 
 
 if __name__ == "__main__":
