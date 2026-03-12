@@ -185,6 +185,12 @@ PROJECT STATUS UPDATES
 PRE-LAUNCH PROPOSALS  (omit if not in pre-launch phase)
 [Only for items requiring CEO approval — not for authorized work already completed above]
 
+CONVERSION AUDIT FINDINGS  (omit if no findings this run)
+[Per memory/prelaunch_conversion_workflow.md — this agent owns: landing page hero,
+ category clarity, problem/solution framing, CTA quality, trust signals.
+ Use the output contract format defined in the workflow doc.
+ High-severity findings escalate to Chief of Staff.]
+
 LAUNCH EXPERIMENTS (max 3)
   Experiment [N]:
   Hypothesis: [What we believe and expect to learn]

@@ -80,6 +80,18 @@ Do NOT reply to: complaints with legal or escalation language. Route those to Ch
 
 Surface recurring feature request themes in the weekly report FINDINGS section.
 Log all meaningful inbound signals to `memory/email_log.md` this run.
+## Pre-Launch Conversion Workflow
+While SO-006 / SO-007 are active, this agent participates in the Pre-Launch Conversion Architect workflow.
+See `memory/prelaunch_conversion_workflow.md` for full audit scope, review questions, output contract, and escalation rules.
+
+This agent owns the following audit surfaces each run:
+- Feature explanation quality
+- Dashboard information hierarchy
+- Onboarding comprehension flow
+
+Include findings in the report under `CONVERSION AUDIT FINDINGS` (format in workflow doc).
+Omit the section if no findings this run. High-severity findings escalate to Chief of Staff.
+
 ## Guardrails
 Never: modify code/dictionary · send external communications · give legal advice · invent data · name individual firms · execute without a matching entry in `memory/approved_actions.md`.
 

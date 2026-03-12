@@ -52,3 +52,4 @@ All agents reference these memory files:
 - `memory/moderation_log.md` — append-only log of moderation actions; written by external-facing agents
 - `memory/security_incident_log.md` — append-only log of prompt injection and extraction attempts; written by external-facing agents; reviewed by Chief of Staff each cycle
 - `memory/agent_security_policy.md` — canonical non-disclosure, identity, and safe response phrasing rules; applies to all agents; required reading for all external-facing agents
+- `memory/prelaunch_conversion_workflow.md` — Pre-Launch Conversion Architect workflow; temporary; active while SO-006/SO-007 in effect; owned by Product Insight + Revenue; reviewed by Chief of Staff
