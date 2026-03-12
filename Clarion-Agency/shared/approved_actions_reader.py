@@ -68,17 +68,64 @@ BLOCKED_EXECUTION_TYPES = (
 # ── Parser ────────────────────────────────────────────────────────────────────
 
 def _parse_block(block: str) -> dict | None:
-    """Parse one ---...--- action block into a dict. Returns None if malformed."""
+    """
+    Parse one action block into a dict.
+    Supports two formats:
+
+    New (Section 8 style):
+        ## ACTION 001
+        ACTION: ...
+        OWNER: ...
+        STATUS: approved
+        APPROVED_BY: CEO
+        DATE: 2026-03-12
+        NOTES: ...
+
+    Legacy (--- delimited):
+        Action ID:   ACT-001
+        Action:      ...
+        Owner:       ...
+        Status:      approved
+    """
     fields = {}
+    action_id = None
+
     for line in block.splitlines():
-        line = line.strip()
-        if not line or line == "---":
+        stripped = line.strip()
+        if not stripped:
             continue
-        if ":" in line:
-            key, _, val = line.partition(":")
-            fields[key.strip().lower().replace(" ", "_")] = val.strip()
-    required = {"action_id", "action", "owner", "status"}
+        # Section 8 header: ## ACTION 001
+        m = re.match(r"^##\s+ACTION\s+(\S+)", stripped, re.IGNORECASE)
+        if m:
+            action_id = f"ACT-{m.group(1)}"
+            continue
+        # Key: Value line
+        if ":" in stripped:
+            key, _, val = stripped.partition(":")
+            key_norm = key.strip().lower().replace(" ", "_")
+            val = val.strip()
+            # Normalise Section 8 keys to internal names
+            key_norm = {
+                "action":      "action",
+                "owner":       "owner",
+                "status":      "status",
+                "approved_by": "approved_by",
+                "date":        "date",
+                "notes":       "notes",
+                # legacy keys
+                "action_id":   "action_id",
+            }.get(key_norm, key_norm)
+            fields[key_norm] = val
+
+    # Inject action_id from header if not already present
+    if action_id and "action_id" not in fields:
+        fields["action_id"] = action_id
+
+    required = {"action", "owner", "status"}
     if not required.issubset(fields.keys()):
+        return None
+    # Ensure action_id exists
+    if "action_id" not in fields:
         return None
     return fields
 
@@ -86,6 +133,7 @@ def _parse_block(block: str) -> dict | None:
 def load_approved_actions() -> list[dict]:
     """
     Read approved_actions.md and return parsed action dicts with status == 'approved'.
+    Supports both ## ACTION NNN header format and legacy --- block format.
     Creates a template file if none exists.
     """
     if not ACTIONS_PATH.exists():
@@ -93,7 +141,13 @@ def load_approved_actions() -> list[dict]:
         return []
 
     text = ACTIONS_PATH.read_text(encoding="utf-8", errors="replace")
-    raw_blocks = re.split(r"\n---\n", text)
+
+    # Split on ## ACTION headers (new format) or --- delimiters (legacy)
+    if re.search(r"^## ACTION", text, re.MULTILINE):
+        raw_blocks = re.split(r"(?=^## ACTION)", text, flags=re.MULTILINE)
+    else:
+        raw_blocks = re.split(r"\n---\n", text)
+
     actions = []
     for block in raw_blocks:
         parsed = _parse_block(block)
@@ -134,8 +188,9 @@ def is_safe_execution(action: dict) -> bool:
 def update_action_status(action_id: str, new_status: str,
                           note: str | None = None) -> bool:
     """
-    Update the Status line for a specific Action ID in approved_actions.md.
-    Optionally appends context to the Notes field.
+    Update the STATUS/Status line for an action in approved_actions.md.
+    Handles both ## ACTION header format and legacy --- format.
+    Optionally appends context to the NOTES/Notes field.
     Returns True on success.
     """
     if not ACTIONS_PATH.exists():
@@ -143,6 +198,9 @@ def update_action_status(action_id: str, new_status: str,
 
     text   = ACTIONS_PATH.read_text(encoding="utf-8", errors="replace")
     lines  = text.splitlines(keepends=True)
+
+    # Determine which action_id pattern to match (ACT-001 or ACT-NNN from header)
+    # action_id passed in is already in ACT-NNN form
     in_target = False
     updated   = False
     result    = []
@@ -150,20 +208,32 @@ def update_action_status(action_id: str, new_status: str,
     for line in lines:
         stripped = line.strip()
 
+        # New format: ## ACTION 001  →  ACT-001
+        m = re.match(r"^##\s+ACTION\s+(\S+)", stripped, re.IGNORECASE)
+        if m:
+            candidate = f"ACT-{m.group(1)}"
+            in_target = (candidate == action_id)
+
+        # Legacy format: Action ID:   ACT-001
         if re.match(r"Action ID:\s*" + re.escape(action_id), stripped, re.IGNORECASE):
             in_target = True
 
-        if in_target and re.match(r"Status:\s*", stripped, re.IGNORECASE):
-            line    = re.sub(r"(Status:\s*).*", rf"\g<1>{new_status}", line)
+        # Update status line (handles both STATUS: and Status:)
+        if in_target and re.match(r"(STATUS|Status):\s*", stripped):
+            indent = len(line) - len(line.lstrip())
+            line   = " " * indent + re.sub(r"(STATUS|Status):\s*.*", f"STATUS: {new_status}", stripped) + "\n"
             updated = True
 
-        if in_target and note and re.match(r"Notes:\s*", stripped, re.IGNORECASE):
+        # Append to notes line
+        if in_target and note and re.match(r"(NOTES|Notes):\s*", stripped):
             ts       = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-            existing = line.rstrip("\n").split(":", 1)[1].strip() if ":" in line else ""
+            existing = stripped.split(":", 1)[1].strip() if ":" in stripped else ""
             combined = f"{existing} | [{ts}] {note}" if existing else f"[{ts}] {note}"
-            line     = f"Notes:       {combined}\n"
+            indent   = len(line) - len(line.lstrip())
+            line     = " " * indent + f"NOTES: {combined}\n"
             in_target = False
 
+        # End of legacy block
         if in_target and stripped == "---" and updated:
             in_target = False
 

@@ -22,6 +22,8 @@ From `memory/` (provided in grounding context):
 - `market_refresh_log.md` — last entry per agent. Check date against current run date.
 - `history_summaries.md` — read before ingesting any full log. If a summary entry exists for a log file, use the summary as the primary reference. Only read the full log if exact historical detail is required for a specific decision or escalation.
 - `email_log.md` — scan for new entries since last run. Surface recurring themes, escalation-flagged emails, and unrouted GENERAL/UNCLEAR entries under EMAIL SIGNALS in the CEO brief.
+- `execution_log.md` — full. Use to report real execution activity this cycle under EXECUTION PROGRESS. Do not fabricate. If the file is empty or has no new entries, report "No execution activity this cycle."
+- `approved_actions.md` — full. Cross-reference with execution_log.md to confirm completed/blocked/in-progress state per action. Use only what is actually written — do not infer or estimate.
 
 All department agent reports filed in the past 7 days (see REPORT INVENTORY in input data).
 
@@ -58,6 +60,7 @@ Read every report before writing a single word.
 - **Decision proposals:** Reproduce verbatim. List open questions requiring a CEO-level call.
 - **Active experiments:** From `memory/experiments.md`. New PROPOSED EXPERIMENT blocks → sub-heading "NEW PROPOSALS THIS CYCLE."
 - **Output completeness:** Every section must appear. Write "None." for empty sections. Write tight — no padding.
+- **Execution reporting:** Populate EXECUTION PROGRESS from `memory/execution_log.md` and `memory/approved_actions.md` only. Report what actually happened — completed actions with their output path, in-progress actions with their current state, blocked actions with the reason stated in the log. If execution_log.md has no new entries this cycle, write "No execution activity this cycle." Do not fabricate completion, progress, or output artifacts.
 
 ## Office Health Evaluation (required every run)
 
@@ -378,6 +381,23 @@ Social Health: Drifting | Concerning
   Detail: [One sentence describing what was observed]
   Recommendation: [One sentence — vary cadence / revise drafts / reduce volume]
   ---]
+
+---
+EXECUTION PROGRESS
+[Source: memory/execution_log.md + memory/approved_actions.md — real entries only. No fabrication.]
+
+Completed this cycle:
+  [None. | ACT-NNN — [action text] — Output: [file path or artifact description]]
+
+In progress:
+  [None. | ACT-NNN — [action text] — Status: in_progress]
+
+Blocked:
+  [None. | ACT-NNN — [action text] — Reason: [reason from log]]
+
+CEO decisions required:
+  [None. | For each completed action flagged CEO Review Needed: Yes —
+    ACT-NNN — [one sentence on what the CEO needs to review or approve next]]
 
 ---
 EMAIL SIGNALS

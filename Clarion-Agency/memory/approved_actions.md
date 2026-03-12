@@ -1,79 +1,53 @@
 # approved_actions.md
 # Clarion — CEO Approved Actions Register
-# Version: 1.0
-
----
 
 ## Purpose
 
-This file is the single source of truth for actions agents are authorized to execute.
+Single source of truth for actions the runner is authorized to execute.
+Agents propose in their reports. CEO approves here. Runner executes automatically on next weekly run.
 
-Agents may propose actions in their reports. Agents may NEVER execute any real-world
-action — including outreach, publishing, website edits, marketing campaigns, account
-creation, or any external communication — unless that specific action appears in this
-file with Status: Approved.
+Agents may NEVER execute external actions unless the entry exists here with STATUS: approved.
 
-The CEO approves all entries. No agent, workflow, or automated process may add,
-modify, or remove entries from this file.
+## How to Approve
 
----
+1. Read PROPOSED ACTIONS in the weekly CEO brief.
+2. Copy the action here using the format below.
+3. Set STATUS: approved.
+4. Run the office. The runner picks it up automatically.
 
-## How to Add an Approved Action
+## Valid Owner values (must match exactly)
+- Content & SEO Agent
+- Competitive Intelligence
+- Usage Analyst
+- Chief of Staff
+- Customer Discovery
 
-1. CEO reviews the PROPOSED ACTIONS section of the CEO brief.
-2. CEO decides which actions to approve.
-3. CEO (or authorized operator) adds the entry to this file using the format below.
-4. Agents check this file at the start of each run. If their proposed action is listed
-   here as Approved, they may execute it. Otherwise, they propose only.
+## Blocked execution types (runner will not auto-execute these — manual only)
+post, publish, send, create account, sign up, register, email, tweet, submit
+
+## Status values
+- staged      — prepared by agent, awaiting CEO review
+- approved    — CEO approved; runner executes next cycle
+- in_progress — execution underway
+- completed   — done; see execution_log.md for output
+- blocked     — could not execute; see Notes for reason
 
 ---
 
 ## Approved Actions
 
-_No actions approved yet. This register is empty at system initialization._
+_(No actions approved yet. Add entries below using the format.)_
 
-_When the CEO approves an action from the weekly brief, add it here using the format below._
-
----
-
-## Format
-
-Each action block is delimited by `---` on its own line.
-The runner reads Status: approved and executes automatically on next run.
-
-```
----
-Action ID:   ACT-[NNN]
-Action:      [What is approved — one sentence, specific and unambiguous]
-Approved By: [CEO | Chief of Staff]
-Date:        [YYYY-MM-DD]
-Owner:       [Content & SEO Agent | Competitive Intelligence | Usage Analyst | Chief of Staff | Customer Discovery]
-Status:      [staged | approved | in_progress | completed | blocked]
-Notes:       [Optional — constraints, context, or execution output path]
----
-```
-
-Status definitions:
-- `staged`      — package prepared by agent; awaiting CEO review
-- `approved`    — approved; runner will execute next cycle
-- `in_progress` — execution underway this run
-- `completed`   — executed; execution_log.md entry appended
-- `blocked`     — execution failed or action type not permitted autonomously
-
-Owner must match exactly one of the routed values above.
-Blocked execution types (never auto-executed): post, publish, send, create account, sign up, register, email, tweet, submit.
-
-Approval authority:
-- Chief of Staff may approve: sensitive public responses, large product discussion
-  engagement, controversial industry commentary
-- CEO must approve: product launch messaging, marketing campaigns, partnerships,
-  press/media statements, advertising campaigns, new platform profiles
-- See `memory/external_execution_approval.md` for the full approval tier definition
+## ACTION 001
+ACTION: Finalize LinkedIn company profile draft for Clarion
+OWNER: Content & SEO Agent
+STATUS: staged
+APPROVED_BY:
+DATE:
+NOTES: Example entry — set STATUS to approved and fill APPROVED_BY + DATE to activate.
 
 ---
 
 ## Completed and Archived Actions
-
-_Actions moved here once Status = Completed or Cancelled._
 
 _(none)_
