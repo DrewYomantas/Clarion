@@ -44,4 +44,29 @@ no signal value.
 
 ## Entries
 
-[No entries yet. First entry will be appended here.]
+---
+DATE:               2026-03-05
+EMAIL TYPE:         SALES/INTEREST
+SUMMARY:            Solo practitioner asked about pricing and whether Clarion works for firms under 10 attorneys.
+DIVISION ROUTED TO: Revenue
+ACTION TAKEN:       Auto-replied with product overview and link to demo route
+NOTES:              Potential ICP edge case — small firm size; flagged for Head of Growth review.
+---
+
+---
+DATE:               2026-03-07
+EMAIL TYPE:         PRESS/MEDIA
+SUMMARY:            Legal tech newsletter editor requested a comment on AI adoption trends in law firm operations.
+DIVISION ROUTED TO: Executive/CoS
+ACTION TAKEN:       Escalated immediately; no reply sent
+NOTES:              CEO approval required before any response. Outlet name logged internally.
+---
+
+---
+DATE:               2026-03-09
+EMAIL TYPE:         SUPPORT
+SUMMARY:            Existing user could not locate the theme breakdown section in their latest governance brief.
+DIVISION ROUTED TO: Customer
+ACTION TAKEN:       Auto-replied with navigation instructions and documentation link
+NOTES:              Second support contact this week about report navigation — possible UX signal; flagged for Product Insight.
+---

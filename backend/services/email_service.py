@@ -1,4 +1,23 @@
-"""Centralized transactional email delivery with retry logic."""
+"""Centralized transactional email delivery with retry logic.
+
+NOTE — Inbound email classification (agent office integration)
+--------------------------------------------------------------
+This module currently handles outbound transactional email only.
+Inbound classification and routing for the Clarion Agent Office
+is documented in the policy layer and not yet wired to runtime code.
+
+When an inbound email integration is built (e.g. Zoho webhook, polling
+script, or forwarding rule into admin@clarionhq.co), the classification
+logic should be added here as a dedicated function:
+
+    # TODO: inbound_classify(raw_email: dict) -> str
+    # Returns one of: SALES/INTEREST | CUSTOMER FEEDBACK | SUPPORT |
+    #   PARTNERSHIPS | PRESS/MEDIA | INVESTOR | SECURITY | GENERAL/UNCLEAR
+    # See: Clarion-Agency/memory/email_routing_policy.md for rules.
+    # Classifies by: sender domain, mailbox alias, keywords, intent,
+    #   security sensitivity, business importance (in that priority order).
+    # Output feeds agent routing and email_log.md append logic.
+"""
 
 from __future__ import annotations
 
