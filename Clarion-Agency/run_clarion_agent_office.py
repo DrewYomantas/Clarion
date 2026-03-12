@@ -187,9 +187,11 @@ _AGENT_SUBDIR = {
     "sales_development":       "revenue",
     "head_of_growth":          "revenue",
     "funnel_conversion":       "revenue",
-    "narrative_strategy":      "revenue",
+    "narrative_strategy":      "growth",
     "market_intelligence":     "strategy",
     "launch_readiness":        "strategy",
+    "outbound_sales":          "sales",
+    "prelaunch_content":       "growth",
 }
 
 def _subdir_for_agent(agent_key: str) -> str:
@@ -255,6 +257,41 @@ def data_content_seo():
             ("Published Content Log",                    DATA   / "comms/content_log.csv"),
             ("Discovered Conversations (latest)",        DATA   / "comms/discovered_conversations.md"),
             ("Brand Canon",                              MEMORY / "brand_canon.md"),
+        ]
+    ])
+
+
+def data_outbound_sales():
+    return "\n".join([
+        f"### {label}\n{_load_file(path, label)}\n"
+        for label, path in [
+            ("Leads Pipeline",           DATA   / "revenue/leads_pipeline.csv"),
+            ("Lead Research Queue",      DATA   / "revenue/lead_research_queue.csv"),
+            ("Lead Sources",             MEMORY / "lead_sources.md"),
+            ("ICP Definition",           MEMORY / "icp_definition.md"),
+            ("Product Truth",            MEMORY / "product_truth.md"),
+            ("Sales Outreach Templates", MEMORY / "sales_outreach_templates.md"),
+            ("Pilot Offer",              MEMORY / "pilot_offer.md"),
+            ("Conversion Friction",      MEMORY / "conversion_friction.md"),
+            ("Prelaunch Activation Mode",MEMORY / "prelaunch_activation_mode.md"),
+            ("Do Not Chase",             MEMORY / "do_not_chase.md"),
+        ]
+    ])
+
+
+def data_prelaunch_content():
+    return "\n".join([
+        f"### {label}\n{_load_file(path, label)}\n"
+        for label, path in [
+            ("Product Narrative",        MEMORY / "product_narrative.md"),
+            ("Product Truth",            MEMORY / "product_truth.md"),
+            ("Proof Assets",             MEMORY / "proof_assets.md"),
+            ("Conversion Friction",      MEMORY / "conversion_friction.md"),
+            ("Positioning Guardrails",   MEMORY / "positioning_guardrails.md"),
+            ("Brand Voice",              MEMORY / "brand_voice.md"),
+            ("Competitor Tracking",      MEMORY / "competitor_tracking.md"),
+            ("Content Queue (current)",  DATA   / "growth/content_queue.md"),
+            ("Prelaunch Activation Mode",MEMORY / "prelaunch_activation_mode.md"),
         ]
     ])
 
@@ -394,6 +431,27 @@ def main():
         "revenue", "head_of_growth", "Head of Growth",
         ["Revenue division disabled for pre-launch cycle"],
         ["Enable when real MRR/ARR reporting from paying customers begins"],
+    )
+
+    # ── STAGE 4b: Outbound Sales (Pre-Launch Activation — always runs) ────────
+    banner("STAGE 4b — Outbound Sales (Pre-Launch Activation)")
+    (REPORTS / "sales").mkdir(parents=True, exist_ok=True)
+    results["outbound_sales"] = run_division(
+        "Outbound Sales", "outbound_sales",
+        "agents/sales/outbound_sales.md",
+        "sales", data_outbound_sales,
+        "Clarion Outbound Sales Agent",
+    )
+
+    # ── STAGE 4c: Pre-Launch Content (Pre-Launch Activation — always runs) ────
+    banner("STAGE 4c — Pre-Launch Content")
+    (REPORTS / "growth").mkdir(parents=True, exist_ok=True)
+    (DATA / "growth").mkdir(parents=True, exist_ok=True)
+    results["prelaunch_content"] = run_division(
+        "Pre-Launch Content", "prelaunch_content",
+        "agents/growth/prelaunch_content.md",
+        "growth", data_prelaunch_content,
+        "Clarion Pre-Launch Content Agent",
     )
 
     # ── STAGE 5.5: Execute Approved Actions ───────────────────────────────────

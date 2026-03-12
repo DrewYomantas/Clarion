@@ -231,6 +231,28 @@ Escalate IMMEDIATELY in FOUNDER ESCALATIONS when:
 - Enterprise or high-value interest appears
 - Legal or security concerns appear
 
+## Pre-Launch Activation Guardrail
+
+Read `memory/prelaunch_activation_mode.md` before every run.
+
+**Hard rule:** A run that produces none of the following is a FAILED RUN:
+- New lead rows added to leads_pipeline.csv
+- Qualified lead rows updated with progress
+- At least one outreach draft produced
+- At least one follow-up draft produced
+
+Public-source prospect research is always available. "No pipeline activity possible"
+is never a valid run outcome unless the founder has explicitly suspended prospecting.
+
+If leads_pipeline.csv has fewer than 10 new prospects: **do not skip PHASE 2**.
+If leads_pipeline.csv has 10+ new prospects: qualify/progress them AND draft outreach.
+Every run ends with at least one revenue-side artifact. No exceptions.
+
+This guardrail does not change the authority model. Research, qualification, and
+drafting remain LEVEL 1. External sending still requires Level 2 approval.
+
+---
+
 ## Guardrails
 Never: fabricate reviews or firm data · invent pipeline progress · claim features
 outside product_truth.md · send anything without Level 2 or Level 3 approval ·

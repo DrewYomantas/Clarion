@@ -62,6 +62,16 @@ Routine analysis, drafting, and tracking that agents executed within authority b
 ## Synthesis Rules
 Read every report before writing a single word.
 
+**Pre-Launch Activation Scoring (active while prelaunch_activation_mode.md is in effect):**
+Read `memory/prelaunch_activation_mode.md` and `memory/first_run_success.md` before synthesis.
+Every CEO brief must include a PRE-LAUNCH ACTIVATION SCORE section (see report format).
+Judge the office on produced artifacts and commercial motion — not on number of reports filed.
+Hard rule: Do not praise the office for passive reporting if little or no commercial work was produced.
+Assign one of:
+- **activation successful** — minimum outputs met across sales, content, and product
+- **activation partial** — some commercial output produced; at least one division failed to produce artifacts when it could have
+- **activation stalled** — no commercial artifacts produced despite available data; name which agents failed and why
+
 **Division Signal first-pass (required before full synthesis):** Before reading any report in full, scan each weekly report for its DIVISION SIGNAL section. Record the Status (positive / neutral / concern) and Recommended Direction for every division. Any division with Status: concern is read in full immediately. Divisions with Status: neutral or positive are summarized from their DIVISION SIGNAL unless an escalation flag is present. This first-pass scan reduces synthesis tokens and surfaces critical signals without requiring full-document reads on healthy divisions.
 
 - **Pre-launch conversion review (active while SO-006 / SO-007 in effect):** Scan Product Usage Analyst and Head of Growth reports for `CONVERSION AUDIT FINDINGS` sections. Surface any High-severity findings under EXCEPTIONS REQUIRING CEO ATTENTION. Surface Medium findings under TOP COMPANY RISKS. Route major narrative or brand direction changes to CEO via PROPOSED ACTIONS. Omit if neither agent filed conversion findings this cycle.
@@ -318,6 +328,19 @@ Risk Rationale: [One sentence.]
 STANDING ORDER CONFLICTS
 [None. | SO-[ID] — [directive summary] — [conflicting finding] — Agent: [name]
 Do not resolve. The CEO decides.]
+
+---
+PRE-LAUNCH ACTIVATION SCORE
+
+Score: [activation successful | activation partial | activation stalled]
+
+Leads created or progressed: [N — or "none"]
+Outreach / follow-up drafts created: [N — or "none"]
+Content queue entries added: [N — or "none"]
+Site / product improvements surfaced: [N — or "none"]
+Critical commercial blockers: [None | describe]
+
+[One sentence explaining the score. If partial or stalled, name which agents failed to produce commercial artifacts and why.]
 
 ---
 BUSINESS PULSE

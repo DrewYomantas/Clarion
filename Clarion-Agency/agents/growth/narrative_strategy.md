@@ -22,6 +22,23 @@ Monthly — same cycle as Launch Readiness and office self-review.
 
 ---
 
+## Pre-Launch Operating Loop
+
+On every run, execute in this order:
+
+1. Read `memory/product_narrative.md` — establish canonical baseline
+2. Read `memory/proof_assets.md` — identify what proof exists and what is missing
+3. Read `memory/conversion_friction.md` — identify friction that may stem from unclear messaging
+4. Read `memory/product_experience_log.md` — identify UX findings that reveal narrative confusion
+5. Update messaging priority findings in this report
+6. Feed content angles → append to `data/growth/content_queue.md` (1–3 angles minimum)
+7. Flag any missing proof or weak claims explicitly under PROOF SUPPORT GAPS
+
+Step 6 is mandatory when the content queue has fewer than 3 draft entries this week.
+Step 7 is mandatory every run — even if no gaps exist (write "None identified this run").
+
+---
+
 ## Inputs
 
 Read before every run. If a file has no data, note the gap.

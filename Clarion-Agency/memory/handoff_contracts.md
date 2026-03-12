@@ -174,6 +174,75 @@ when_NOT_to_hand_off:
 
 ---
 
+## HANDOFF 10: Proof Assets → Narrative Strategy
+
+trigger: proof_assets.md gains a new entry (pilot outcome, testimonial, or usable result signal)
+sender: Voice of Customer & Product Demand (or CEO direct entry)
+receiver: Narrative Strategy
+payload_required:
+  - Proof asset type (pilot outcome | testimonial | outcome stat | use case)
+  - Asset ID or reference in proof_assets.md
+  - Named or anonymized status
+  - Suggested narrative use (one sentence)
+escalation_threshold: Named use of a firm requires CEO approval before any external activation
+when_NOT_to_hand_off:
+  - Asset is already referenced in narrative_strategy.md recommendations
+  - Asset has no usable claim (negative outcome, incomplete pilot)
+
+---
+
+## HANDOFF 11: Narrative Strategy → Pre-Launch Content
+
+trigger: Narrative Strategy identifies a content angle or proof activation opportunity
+sender: Narrative Strategy
+receiver: Pre-Launch Content
+payload_required:
+  - Angle description (1-2 sentences)
+  - Source signal (which file or finding generated this angle)
+  - Suggested channel (LinkedIn | founder post | website snippet | X)
+  - Proof asset reference if applicable
+escalation_threshold: No escalation threshold — LEVEL 1 handoff, append to content_queue.md
+when_NOT_to_hand_off:
+  - Angle is already in content_queue.md with status draft, approved, or posted
+  - Angle requires fabricated proof or claims beyond product_truth.md
+
+---
+
+## HANDOFF 12: Pre-Launch Conversion → Founder Review → Claude Prompt
+
+trigger: Product Experience Agent files a HIGH-severity finding with a completed handoff block
+sender: Pre-Launch Conversion (Product Experience)
+receiver: Chief of Staff → CEO review → Claude implementation prompt
+payload_required:
+  - Full claude_handoff_format.md block (all fields complete)
+  - Severity: HIGH
+  - Commercial consequence stated (one sentence)
+  - Files likely affected listed
+escalation_threshold: Any finding rated HIGH severity escalates to CEO brief same cycle
+when_NOT_to_hand_off:
+  - Finding is MEDIUM or LOW (log in product_experience_log.md only)
+  - Handoff block is incomplete — hold until next cycle, do not advance with missing fields
+  - Finding is already in approved_actions.md or active_projects.md
+
+---
+
+## HANDOFF 13: Outbound Sales Friction/Product Signal → Product Insights / Narrative Strategy
+
+trigger: Outbound Sales appends a High-priority entry to conversion_friction.md or product_feedback.md
+sender: Outbound Sales
+receiver: Product Insights (product_feedback signals) | Narrative Strategy (friction from messaging confusion)
+payload_required:
+  - Entry ID (FR-XXX or FB-XXX)
+  - Signal type (friction | product gap | capability question | messaging confusion)
+  - Priority: High
+  - One sentence on commercial impact
+escalation_threshold: High-priority product gaps heard from 2+ prospects escalate to Chief of Staff same cycle
+when_NOT_to_hand_off:
+  - Priority is Medium or Low (agents read the logs directly on their own cadence)
+  - Signal is already documented with no new evidence
+
+---
+
 ## HANDOFF FAILURE PROTOCOL
 If a handoff payload is incomplete:
 1. Receiving agent documents the gap in its report under HANDOFF FAILURES
