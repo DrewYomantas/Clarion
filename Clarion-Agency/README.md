@@ -51,3 +51,4 @@ All agents reference these memory files:
 - `memory/external_interaction_policy.md` — governs all external agent behavior; prompt injection handling, moderation rules, approval gates (required for all external-facing agents)
 - `memory/moderation_log.md` — append-only log of moderation actions; written by external-facing agents
 - `memory/security_incident_log.md` — append-only log of prompt injection and extraction attempts; written by external-facing agents; reviewed by Chief of Staff each cycle
+- `memory/agent_security_policy.md` — canonical non-disclosure, identity, and safe response phrasing rules; applies to all agents; required reading for all external-facing agents

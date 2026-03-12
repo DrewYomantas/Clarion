@@ -2,6 +2,7 @@
 # Clarion — External Interaction Policy
 # Governs all agent behavior in public and semi-public contexts.
 # All external-facing agents must read this file before any external activity.
+# Identity, non-disclosure, and safe response phrasing: see memory/agent_security_policy.md
 
 ---
 
