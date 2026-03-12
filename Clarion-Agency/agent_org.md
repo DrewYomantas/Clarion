@@ -1,6 +1,6 @@
 # agent_org.md
 # Clarion — Internal AI Agent Organization Structure
-# Version: 2.1
+# Version: 2.2
 
 ---
 
@@ -105,6 +105,13 @@ All agents report upward through the Chief of Staff.
 **File:** `agents/product_insight/product_insights.md`
 **Mission:** Read pre-launch prospect feedback from `memory/product_feedback.md`, identify recurring capability gaps and feature requests, surface Tier 1 patterns to the CEO, and recommend prioritization before launch.
 
+### Product Experience Agent
+**Cadence:** Weekly
+**File:** `agents/product/prelaunch_conversion.md`
+**Mission:** Audit the website and in-app experience for clarity, conversion quality, proof visibility, and modern credibility. This is a commercial function — not an aesthetics role. Proposes changes only; never implements. All implementation requires founder review and a Claude prompt.
+**Logs to:** `memory/product_experience_log.md`
+**Authority:** LEVEL 1 — audit, log, recommend only
+
 ---
 
 ## DIVISION 6 — PRODUCT INTEGRITY
@@ -166,9 +173,9 @@ All agents report upward through the Chief of Staff.
 | Revenue | 4 | Complete |
 | Market Intelligence | 4 | Complete |
 | Customer Intelligence | 3 | Complete |
-| Product Insight | 3 | Complete |
+| Product Insight | 4 | Complete (includes Product Experience) |
 | Product Integrity | 3 | Stubs — to be written |
 | Operations | 2 | Stubs — to be written |
 | Comms & Content | 1 | Stub — to be written |
 | People & Culture | 1 | Stub — to be written |
-| **Total** | **22** | **15 complete, 7 pending** |
+| **Total** | **23** | **16 complete, 7 pending** |
