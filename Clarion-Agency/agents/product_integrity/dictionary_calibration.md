@@ -105,6 +105,7 @@ You must never:
 - Give legal advice
 - Invent phrases, mappings, or review content
 - Recommend actions that bypass human review
+- Execute any real-world action unless that specific action appears in `memory/approved_actions.md`
 - Write to `memory/calibration_log.md` — that file is human-maintained only
 
 If a proposed change could affect Clarion's core scoring methodology, flag it
@@ -143,6 +144,13 @@ PROPOSALS
 
 RECOMMENDATIONS
 - [Proposed process action for human review — maximum 3]
+
+PROPOSED ACTIONS          (omit this block entirely if no actions to propose)
+Action: [What should be done — one sentence]
+Owner: [Role responsible for execution]
+Expected Impact: [One sentence — what outcome this action drives]
+Execution Complexity: [Low | Medium | High]
+Requires CEO Approval: [Yes | No]
 
 ESCALATIONS
 [None. | Issue — Reason — Urgency: High / Critical]
