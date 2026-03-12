@@ -33,8 +33,9 @@ import datetime
 from pathlib import Path
 
 BASE_DIR     = Path(__file__).resolve().parent.parent
-ACTIONS_PATH = BASE_DIR / "memory" / "approved_actions.md"
-LOG_PATH     = BASE_DIR / "memory" / "execution_log.md"
+ACTIONS_PATH    = BASE_DIR / "memory" / "approved_actions.md"
+DLA_PATH        = BASE_DIR / "memory" / "division_lead_approvals.md"
+LOG_PATH        = BASE_DIR / "memory" / "execution_log.md"
 
 # ── Owner routing ─────────────────────────────────────────────────────────────
 # Maps owner strings (lowercase) -> (agent_key, prompt_rel_path, report_subdir)
@@ -56,12 +57,28 @@ SAFE_EXECUTION_TYPES = (
     "finalize", "draft", "prepare", "produce", "expand",
     "deepen", "refine", "summarize", "convert", "compile",
     "research", "document", "outline", "analyze", "review", "audit",
+    "publish", "post", "reply", "send", "create account",
 )
 
-# Actions that must never execute autonomously
+# Actions that must NEVER execute autonomously regardless of approval level.
+# These are Level 3 hard-blocked: launch/PR/pricing/partnerships/security/legal.
+# Normal publishing, posting, outreach, and account creation are now Level 2
+# and may appear in division_lead_approvals.md — they are no longer blocked here.
 BLOCKED_EXECUTION_TYPES = (
-    "post ", "publish", "send ", "create account", "sign up",
-    "register", "message", "email ", "tweet", "submit",
+    "launch announcement",
+    "press release",
+    "media statement",
+    "partnership announcement",
+    "pricing change",
+    "change price",
+    "modify pricing",
+    "legal terms",
+    "terms of service",
+    "security policy",
+    "enterprise commitment",
+    "crisis communication",
+    "paid advertising",
+    "sponsored content",
 )
 
 
@@ -128,6 +145,52 @@ def _parse_block(block: str) -> dict | None:
     if "action_id" not in fields:
         return None
     return fields
+
+
+def load_level2_actions() -> list[dict]:
+    """
+    Read division_lead_approvals.md and return parsed action dicts
+    with status == 'approved'.  These are Level 2 actions that do not
+    require CEO sign-off.  Format expected:
+
+        ## DLA-NNN
+        ACTION: ...
+        DIVISION: ...
+        APPROVED_BY: ...
+        DATE: 2026-03-12
+        STATUS: approved
+        NOTES: ...
+    """
+    if not DLA_PATH.exists():
+        return []
+
+    text = DLA_PATH.read_text(encoding="utf-8", errors="replace")
+    raw_blocks = re.split(r"(?=^## DLA-)", text, flags=re.MULTILINE)
+    actions = []
+    for block in raw_blocks:
+        fields: dict = {}
+        action_id = None
+        for line in block.splitlines():
+            stripped = line.strip()
+            if not stripped:
+                continue
+            m = re.match(r"^##\s+(DLA-\S+)", stripped, re.IGNORECASE)
+            if m:
+                action_id = m.group(1)
+                continue
+            if ":" in stripped:
+                key, _, val = stripped.partition(":")
+                key_norm = key.strip().lower().replace(" ", "_")
+                fields[key_norm] = val.strip()
+        if action_id:
+            fields["action_id"] = action_id
+        required = {"action", "status"}
+        if not required.issubset(fields.keys()):
+            continue
+        if fields.get("status", "").lower().strip() == "approved":
+            fields.setdefault("owner", fields.get("division", "unknown"))
+            actions.append(fields)
+    return actions
 
 
 def load_approved_actions() -> list[dict]:
