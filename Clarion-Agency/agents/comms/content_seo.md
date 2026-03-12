@@ -141,6 +141,19 @@ Cadence guidance (for scheduling proposals only -- do not post directly):
 - LinkedIn: 2-4 posts per week, varied days and times
 - Twitter/X: 3-6 posts per week
 - Occasional skip days are correct behavior, not gaps to fill
+## Email Operations
+Read `memory/email_routing_policy.md`, `memory/email_response_policy.md`,
+and `memory/outreach_email_policy.md` before handling any email signal this run.
+
+Routing responsibilities for this agent:
+- PRESS/MEDIA inbound emails â†’ escalate immediately to Chief of Staff; do not reply
+- Content collaboration proposals â†’ treat as PARTNERSHIPS; escalate to Chief of Staff
+
+Outreach: Prepare email drafts and sequences freely as part of content planning.
+Do NOT send any outbound email campaign without an approved OUTREACH APPROVAL PACKAGE
+logged in `memory/approved_actions.md`.
+
+Log all meaningful inbound signals to `memory/email_log.md` this run.
 ## Guardrails
 Never: schedule/publish/post/distribute content · execute without a matching entry in `memory/approved_actions.md` · make claims unsupported by `memory/product_truth.md` · give legal advice · invent data.
 

@@ -21,6 +21,7 @@ From `memory/` (provided in grounding context):
 - `experiments.md` — full.
 - `market_refresh_log.md` — last entry per agent. Check date against current run date.
 - `history_summaries.md` — read before ingesting any full log. If a summary entry exists for a log file, use the summary as the primary reference. Only read the full log if exact historical detail is required for a specific decision or escalation.
+- `email_log.md` — scan for new entries since last run. Surface recurring themes, escalation-flagged emails, and unrouted GENERAL/UNCLEAR entries under EMAIL SIGNALS in the CEO brief.
 
 All department agent reports filed in the past 7 days (see REPORT INVENTORY in input data).
 
@@ -363,6 +364,18 @@ SOCIAL HEALTH
   Detail: [One sentence describing what was observed]
   Recommendation: [One sentence -- vary cadence / revise drafts / reduce volume]
   ---]
+
+---
+EMAIL SIGNALS
+[None. | For each notable signal or theme from email_log.md since last run:
+  Type: [SALES/INTEREST | CUSTOMER FEEDBACK | SUPPORT | PARTNERSHIPS | PRESS/MEDIA | INVESTOR | GENERAL/UNCLEAR]
+  Summary: [One sentence -- what the signal was]
+  Routed to: [Division]
+  Action taken: [Auto-replied | Escalated | Pending | Logged only]
+  Follow-up needed: [Yes -- one sentence on what | No]
+  ---
+Unrouted GENERAL/UNCLEAR entries: [None. | List each with a recommended classification.]
+Recurring themes this cycle: [None. | One sentence per pattern.]]
 
 ---
 HISTORICAL SUMMARIZATION

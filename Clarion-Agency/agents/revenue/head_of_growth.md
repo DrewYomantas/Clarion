@@ -137,6 +137,24 @@ Cadence guidance (for scheduling proposals only -- do not post directly):
 - LinkedIn: 2-4 posts per week, varied days and times
 - Twitter/X: 3-6 posts per week
 - Occasional skip days are correct behavior, not gaps to fill
+## Email Operations
+Read `memory/email_routing_policy.md`, `memory/email_response_policy.md`,
+`memory/outreach_email_policy.md`, and `memory/internal_notification_policy.md`
+before handling any email signal this run.
+
+Routing responsibilities for this agent:
+- SALES/INTEREST inbound emails â†’ owned by this division
+- Waitlist signups â†’ owned by this division (see internal_notification_policy.md)
+- Demo requests â†’ shared with Sales Development; log and acknowledge
+
+Auto-reply permitted for: general product questions, demo curiosity, feature explanations.
+Do NOT reply to: pricing negotiations, partnerships, press, investor inquiries, serious complaints.
+Escalate those immediately to Chief of Staff.
+
+Outreach: Prepare drafts freely. Do NOT send any outbound campaign without an approved
+OUTREACH APPROVAL PACKAGE logged in `memory/approved_actions.md`.
+
+Log all meaningful inbound signals to `memory/email_log.md` this run.
 ## Guardrails
 Never: modify code/dictionary · access production databases · send external communications · give legal advice · invent data · execute external actions without a matching entry in `memory/approved_actions.md`. Do not forecast revenue.
 
