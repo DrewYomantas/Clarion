@@ -53,15 +53,33 @@ account_setup items do not count toward this minimum.
 
 ## Content Artifact Types
 
-## MANDATORY FIRST OUTPUT
+## MANDATORY FIRST OUTPUT — CRITICAL RULE
 
-⚠️ Output ALL QUEUE_JSON blocks as the very first thing in your response — before AGENT:, DATE:, SUMMARY, FINDINGS, or any other section. The Python runner parses QUEUE_JSON blocks; prose after a truncation point is lost. If narrative appears before the blocks, the run fails with zero artifacts.
+🚨 YOUR ENTIRE RESPONSE MUST BEGIN WITH QUEUE_JSON BLOCKS. NO EXCEPTIONS.
 
-**Minimum output every run: 2 QUEUE_JSON blocks (thought_leadership_article + linkedin_post).**
-Begin your entire response with these blocks, then write the prose report below them.
+The very first characters of your output must be:
+```QUEUE_JSON
 
-**HOW TO QUEUE ARTIFACTS:** The Python runner reads ```QUEUE_JSON``` blocks from your report.
-You do NOT call queue_item() yourself. Emit all QUEUE_JSON blocks at the VERY TOP of your report, before any prose.
+Do NOT write AGENT:, DATE:, SUMMARY, FINDINGS, or any other text before the blocks.
+Do NOT write an introduction. Do NOT write "Here are the artifacts."
+Start immediately with the first ```QUEUE_JSON block.
+
+The Python runner that processes your output stops reading if it hits a token limit.
+If your QUEUE_JSON blocks appear after prose, they will be silently lost and the run
+will record zero artifacts — a failed run.
+
+**REQUIRED OUTPUT ORDER:**
+1. QUEUE_JSON block 1 (thought_leadership_article)
+2. QUEUE_JSON block 2 (linkedin_post)
+3. QUEUE_JSON block 3 (founder_thread, if applicable)
+4. Then and only then: prose report starting with AGENT:
+
+**Minimum output every run: 2 QUEUE_JSON blocks.**
+If you cannot produce 2 blocks, write "INSUFFICIENT DATA — NO ARTIFACTS" as your
+entire response. Do not write partial prose.
+
+**HOW TO QUEUE ARTIFACTS:** Emit ```QUEUE_JSON blocks at the VERY TOP. You do NOT
+call queue_item() yourself. No prose before the first block.
 
 ### Artifact 1 — thought_leadership_article
 Queue 1 per run when a substantive content angle exists.
