@@ -73,8 +73,11 @@ BENCHMARK_THEMES = [
 # Weight is the base impact score per phrase hit (1.0 = normal, 2.0 = strong).
 #
 # Annotation key used in inline comments:
-#   [CG] = needs_context_guard -- phrase is ambiguous without sentence-level
-#          context; a future pass should add negation/contrast/sentence logic.
+#   [CG]      = needs_context_guard -- phrase is ambiguous without sentence-level
+#               context; a future pass should add negation/contrast/sentence logic.
+#   [W1]      = Wave 1 phrase import (safe_import_now batch, 2026-03)
+#   [W1-GUARD] = Wave 1 phrase flagged as needing context guard logic;
+#               marked with CONTEXT-GUARD PLACEHOLDER comment below the entry.
 # ---------------------------------------------------------------------------
 THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
 
@@ -99,7 +102,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("returned my call", 1.0),
             ("returned my calls", 1.0),
             ("very responsive", 1.5),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("always picked up", 1.5),
             ("answered every question", 1.0),
             ("answered my calls", 1.0),
@@ -130,6 +133,13 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("stays in touch", 1.0),
             ("timely replies", 1.0),
             ("timely updates", 1.0),
+            # --- phrase expansion: missed responsiveness phrases ---
+            ("prompt replies", 1.0),
+            ("answered my questions", 1.0),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("patiently answering all of our questions", 1.0),
+            ("answered all of my questions patiently", 1.0),
+            ("there to help and answer all of our questions", 1.0),
             # --- calibration: sample2 ---
             ("corrected quickly", 1.0),
             ("more frequent check-ins would have been nice", 0.8),
@@ -159,7 +169,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("unresponsive", 1.5),
             ("weeks without hearing", 1.5),
             ("went silent", 1.5),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("calls went unanswered", 1.5),
             ("couldn't get a reply", 1.0),
             ("days without a response", 1.5),
@@ -177,7 +187,10 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("no follow-up", 1.0),
             ("no return call", 1.5),
             ("no updates for weeks", 1.5),
-            ("not communicating", 1.0),
+            ("not communicating", 1.0),  # [W1-GUARD]
+            # CONTEXT-GUARD PLACEHOLDER: "not communicating" -- short negation phrase
+            # that can appear in ambiguous contexts ("not communicating well" vs
+            # "not communicating with the other party"). Needs sentence scope check.
             ("phone calls ignored", 1.5),
             ("poor communication", 1.0),
             ("rarely responded", 1.5),
@@ -191,6 +204,30 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("would not return calls", 1.5),
             # --- calibration: sample2 ---
             ("emails sometimes came late at night", 1.0),
+            # --- calibration: phrase expansion ---
+            ("never got back to me", 1.5),
+            ("took forever to respond", 1.5),
+            ("weeks without response", 1.5),
+            ("ignored emails", 1.5),
+            ("could not get a response", 1.5),
+            # --- calibration: gap-report wave (real-review evidence) ---
+            ("don't expect fast responses", 1.5),
+            ("had to chase them down", 1.5),
+            ("barely gave me any opportunity to speak", 2.0),
+            ("communication dropped off significantly", 2.0),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("i had to repeat myself multiple times", 1.5),
+            ("felt like i wasn't a priority", 1.5),
+            ("answered quickly without much depth", 1.0),
+            ("miscommunications along the way", 1.0),
+            # --- bug fix: polarity corrections (were in positive bucket) ---
+            ("do not return calls", 1.5),
+            ("late on getting back", 1.0),
+            ("don't return calls", 1.5),
+            ("told to do it yourself", 1.5),
+            ("cut off mid-sentence", 2.0),
+            ("went silent for", 2.0),
+            ("firm went silent", 2.0),
         ],
         "severe_negative": [
             # --- original ---
@@ -198,7 +235,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("impossible to contact", 2.0),
             ("months without any contact", 2.0),
             ("never returned my calls", 2.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("abandoned me completely", 2.0),
             ("completely stopped communicating", 2.0),
             ("ghosted me", 2.0),
@@ -208,6 +245,9 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("no communication for months", 2.0),
             ("refused to return calls", 2.0),
             ("totally disappeared", 2.0),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("stopped returning my calls", 2.0),
+            ("never heard from them for over a year", 2.0),
         ],
     },
 
@@ -225,7 +265,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("plain language", 1.0),
             ("thoroughly explained", 1.5),
             ("very clear", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("answered all my questions", 1.0),
             ("broke everything down", 1.0),
             ("clear and concise", 1.0),
@@ -250,16 +290,33 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("spoke in plain terms", 1.0),
             ("straight to the point", 1.0),
             ("took time to explain", 1.0),
-            ("transparent throughout", 1.0),
+            ("transparent throughout", 1.0),  # [W1-GUARD]
+            # CONTEXT-GUARD PLACEHOLDER: "transparent throughout" -- needs sentence
+            # context to confirm referent is attorney behavior, not process/outcome.
             ("very informative", 1.0),
             ("walked me through everything", 1.5),
             ("well explained", 1.0),
+            # --- phrase expansion: real-review evidence ---
+            ("broke it down", 1.5),
+            ("step by step", 1.0),
+            ("no confusion", 1.0),
+            ("no stress", 1.0),
+            # --- phrase expansion: missed clarity phrases ---
+            ("explained everything clearly", 1.5),
+            ("broke things down simply", 1.5),
+            ("kept things transparent", 1.0),
             # --- calibration: sample2 ---
             ("explained each step of the custody process", 1.5),
             ("direct communication style", 1.0),
             ("asked for a summary they provided it", 1.0),
             # --- calibration: full_batch_20260311 ---
             ("communication was clear", 1.5),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("in a way that was easily understood", 1.5),
+            ("guided us through our different options", 1.5),
+            ("helped him understand his options", 1.0),
+            ("provided the necessary information with clarity", 1.5),
+            ("clear communicator", 1.5),
         ],
         "negative": [
             # --- original ---
@@ -273,7 +330,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("never explained", 1.5),
             ("no explanation", 1.0),
             ("unclear", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("confusing communication", 1.0),
             ("confused about the process", 1.0),
             ("didn't communicate clearly", 1.5),
@@ -305,13 +362,16 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("didn't always understand why", 1.0),
             ("repeat background details to different people", 1.2),
             ("don't leave confused", 0.8),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("cut me off and start rambling", 2.0),
+            ("would want more clarity", 1.0),
         ],
         "severe_negative": [
             # --- original ---
             ("completely in the dark", 2.0),
             ("had no idea what was happening", 2.0),
             ("no communication whatsoever", 2.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("deliberately withheld information", 2.0),
             ("hid important information", 2.0),
             ("kept completely in the dark", 2.0),
@@ -338,7 +398,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("supportive", 1.0),
             ("truly understood", 1.0),
             ("understanding", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("acknowledged my feelings", 1.0),
             ("always there for me", 1.5),
             ("attentive to my needs", 1.0),
@@ -365,6 +425,20 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("very kind", 1.0),
             ("very patient", 1.0),
             ("warm and compassionate", 1.5),
+            # --- phrase expansion: real-review evidence ---
+            ("reassured me", 1.5),
+            ("in my corner", 1.5),
+            ("like family", 1.5),
+            ("worst year of my life", 2.0),
+            ("helped me through the worst", 2.0),
+            # --- phrase expansion: missed empathy phrases ---
+            ("made me feel heard", 1.5),
+            ("took the time to listen", 1.5),
+            ("showed compassion", 1.5),
+            ("treated me with respect", 1.5),
+            ("very supportive", 1.5),
+            ("helped me through", 1.0),
+            ("understood my situation", 1.5),
             # --- calibration: sample2 ---
             ("treated my case with empathy", 1.5),
             ("never made me feel judged", 1.5),
@@ -374,6 +448,18 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("checked on my emotional wellbeing", 1.5),
             # --- calibration: full_batch_20260311 ---
             ("i felt listened to", 1.5),
+            # --- calibration: gap-report wave (real-review evidence) ---
+            ("went above and beyond", 2.0),
+            ("made me feel like my case actually mattered", 2.0),
+            ("felt fully supported and informed", 1.5),
+            ("with ease and genuine concern", 1.5),
+            ("handled my case with genuine care", 2.0),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("always had my son's best interests in mind", 2.0),
+            ("best interests in mind", 1.5),
+            ("i truly felt that he cared and wanted to help", 1.5),
+            ("reassured me when it came to anxiety", 1.5),
+            ("very friendly and also very helpful", 1.0),
         ],
         "negative": [
             # --- original ---
@@ -386,7 +472,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("no empathy", 1.5),
             ("not compassionate", 1.0),
             ("uncaring", 1.5),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("acted like it was just a job", 1.0),
             ("cold and detached", 1.5),
             ("cold and impersonal", 1.5),
@@ -407,18 +493,31 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("unsympathetic", 1.5),
             # --- calibration: sample2 ---
             ("concerns weren't fully addressed", 1.0),
+            # --- calibration: phrase expansion ---
+            ("no compassion", 1.5),
+            ("did not care about my situation", 1.5),
+            ("made me feel ignored", 1.5),
+            ("treated me like a number", 1.5),
+            ("emotionally dismissive", 1.5),
+            ("cold attitude", 1.2),
         ],
         "severe_negative": [
             # --- original ---
             ("completely dismissive", 2.0),
             ("felt abandoned", 2.0),
             ("treated me like i didn't matter", 2.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("callous disregard", 2.0),
             ("cruel and dismissive", 2.0),
             ("emotionally abusive", 2.0),
             ("had zero compassion", 2.0),
             ("showed no empathy whatsoever", 2.0),
+            # --- calibration: gap-report wave (real-review evidence) ---
+            ("she hung up on me", 2.0),
+            ("threw in my face", 2.0),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("won't help unless it's been figured out already", 2.0),
+            ("left a lot to be desired in terms of personal attention", 1.5),
         ],
     },
 
@@ -430,15 +529,15 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             # --- original ---
             ("courteous", 1.0),
             ("ethical", 1.0),
-            ("honest", 1.0),
+            ("honest", 0.5),           # [FP-GUARD] single-word -- weight reduced to cut false positives
             ("integrity", 1.0),
             ("polite", 1.0),
-            ("professional", 1.0),
+            ("professional", 0.5),     # [FP-GUARD] single-word -- fires in unrelated contexts
             ("respectful", 1.0),
-            ("straightforward", 1.0),
-            ("transparent", 1.0),
+            ("straightforward", 0.5),  # [FP-GUARD] single-word -- "straightforward matter" etc.
+            ("transparent", 0.5),      # [FP-GUARD] single-word -- "transparent billing" redirects elsewhere
             ("trustworthy", 1.5),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("acted with integrity", 1.5),
             ("always honest", 1.5),
             ("candid advice", 1.0),
@@ -466,6 +565,13 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             # --- calibration: sample2 ---
             ("very organized with exhibits", 1.5),
             ("prepared for trial", 1.0),
+            # --- calibration: gap-report wave (real-review evidence) ---
+            ("dedicated and very thorough", 2.0),
+            ("competent attorney", 2.0),
+            ("skilled negotiator", 2.0),
+            ("commitment to their clientele", 1.5),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("smart, strategic", 1.0),
         ],
         "negative": [
             # --- original ---
@@ -478,7 +584,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("rude", 1.5),
             ("unprofessional", 1.5),
             ("untrustworthy", 1.5),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("acted inappropriately", 1.5),
             ("arrogant", 1.5),
             ("condescending", 1.5),
@@ -497,6 +603,14 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("very unprofessional", 1.5),
             ("was condescending", 1.5),
             ("wasn't honest with me", 1.5),
+            # --- calibration: phrase expansion ---
+            ("acted unprofessionally", 1.5),
+            ("lack of professionalism", 1.5),
+            ("lost confidence in", 1.2),
+            ("misrepresented", 1.5),
+            ("unethical behavior", 2.0),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("never felt confident in the representation", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -506,7 +620,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("filed a complaint", 2.0),
             ("fraudulent", 2.0),
             ("reported to the bar", 2.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("bar complaint filed", 2.0),
             ("blatantly lied", 2.0),
             ("criminal conduct", 2.0),
@@ -520,6 +634,20 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("professional misconduct", 2.0),
             ("stole my money", 2.0),
             ("submitted false documents", 2.0),
+            # --- calibration: gap-report wave (real-review evidence) ---
+            ("lost his temper", 2.0),
+            ("screamed at", 2.0),
+            ("thrown out of their office", 2.0),
+            ("my case was handed off to a junior associate", 2.0),
+            ("an absolute nightmare", 2.0),
+            ("crooked law office", 2.0),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("let me down and sent his inexperienced son", 2.0),
+            ("did almost no work", 2.0),
+            ("sent me to another courtroom", 1.5),
+            ("made my situation significantly worse", 2.0),
+            ("left without legal counsel", 2.0),
+            ("charged me the full amount and left me without legal counsel", 2.0),
         ],
     },
 
@@ -536,7 +664,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("set clear expectations", 1.5),
             ("upfront about", 1.0),
             ("walked me through the process", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("always kept me grounded", 1.0),
             ("being realistic about outcomes", 1.5),
             ("clear about possible outcomes", 1.5),
@@ -554,9 +682,17 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("upfront about the process", 1.0),
             ("upfront about risks", 1.5),
             ("was realistic with me", 1.5),
+            # --- phrase expansion: real-review evidence ---
+            ("best case scenario", 1.5),
+            ("worst case scenario", 1.5),
             # --- calibration: sample2 ---
             ("walked me through every possible scenario", 1.5),
             ("honest about the risks", 1.0),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("took the time to explain all of our choices", 1.5),
+            ("came up with a plan", 1.0),
+            ("end result exceeded my expectations", 1.5),
+            ("exceeded our expectations", 1.5),
         ],
         "negative": [
             # --- original ---
@@ -568,7 +704,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("overpromised", 1.5),
             ("surprised by", 1.0),
             ("unexpected", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("gave false hope", 1.5),
             ("gave me unrealistic expectations", 1.5),
             ("misled my expectations", 1.5),
@@ -590,13 +726,18 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("case was one of many, not a priority", 1.2),
             # --- calibration: full_batch_20260311 ---
             ("deadlines felt unpredictable", 1.5),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("the timeline was unacceptable", 1.5),
+            ("never gave a timeframe", 1.5),
+            ("disconnect between early expectations and reality", 2.0),
+            ("expected more strategic guidance", 1.0),
         ],
         "severe_negative": [
             # --- original ---
             ("blatant false promises", 2.0),
             ("guaranteed a win", 2.0),
             ("promised outcomes", 2.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("flat out lied about outcomes", 2.0),
             ("guaranteed results they couldn't deliver", 2.0),
             ("made promises they couldn't keep", 2.0),
@@ -620,7 +761,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("no surprise charges", 1.5),
             ("transparent about costs", 1.5),
             ("upfront about fees", 1.5),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("accurate billing", 1.0),
             ("billing was accurate", 1.5),
             ("billing was straightforward", 1.5),
@@ -664,7 +805,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("unexpected bill", 1.5),
             ("unexpected charges", 1.5),
             ("unexpected fees", 1.5),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("billing errors", 1.0),
             ("billing irregularities", 1.5),
             ("billed for unnecessary work", 1.5),
@@ -689,13 +830,33 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("vague billing", 1.0),
             # --- calibration: sample2 ---
             ("billing statements were confusing", 1.2),
+            # --- phrase expansion: real-review evidence ---
+            ("free initial consultation", 1.5),
+            ("non-refundable", 1.5),
+            ("administration fees", 1.0),
+            ("per hour rate", 1.0),
+            ("did not disclose", 1.5),
+            ("inflated charges", 1.5),
+            ("charged the full amount", 1.5),
+            # --- calibration: phrase expansion ---
+            ("consultation was not free", 1.5),
+            ("free consultation not free", 1.5),
+            ("charged for consultation", 1.5),
+            ("unexpected consultation fee", 1.5),
+            ("billing was misleading", 1.5),
+            # --- calibration: gap-report wave (real-review evidence) ---
+            ("billing felt a bit opaque", 1.5),
+            ("billing statements were hard to read", 1.5),
+            ("slight billing surprise", 1.0),
+            ("billing was on the higher end", 1.0),
+            ("dealing with the billing department is a nightmare", 2.0),
         ],
         "severe_negative": [
             # --- original ---
             ("billing fraud", 2.0),
             ("double billed", 2.0),
             ("grossly overcharged", 2.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("billed for services never rendered", 2.0),
             ("blatant billing fraud", 2.0),
             ("charged far more than agreed", 2.0),
@@ -723,7 +884,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("worth the fee", 1.0),
             ("worth the money", 1.0),
             ("worth the price", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("competitively priced", 1.0),
             ("excellent value for money", 1.5),
             ("excellent value for the price", 1.5),
@@ -756,7 +917,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("overpriced", 1.5),
             ("too expensive", 1.5),
             ("too much money", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("charged too much", 1.5),
             ("cost too much", 1.0),
             ("extremely expensive", 1.5),
@@ -776,13 +937,21 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("ridiculous fees", 1.5),
             ("too costly", 1.0),
             ("way too expensive", 1.5),
+            # --- calibration: phrase expansion ---
+            ("expensive for what you get", 1.5),
+            ("cost far more than expected", 1.5),
+            ("fees kept increasing", 1.5),
+            # --- calibration: gap-report wave (real-review evidence) ---
+            ("failed to provide value", 1.5),
+            ("for the money i paid i expected more", 1.5),
+            ("i felt like i could have gotten the same result for less money", 1.5),
         ],
         "severe_negative": [
             # --- original ---
             ("absolutely outrageous fees", 2.0),
             ("predatory billing", 2.0),
             ("price gouging", 2.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("extortionate fees", 2.0),
             ("extortion", 2.0),
             ("flagrant price gouging", 2.0),
@@ -810,7 +979,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("quick resolution", 1.5),
             ("resolved quickly", 1.5),
             ("timely", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("acted fast", 1.0),
             ("case moved forward quickly", 1.5),
             ("case moved quickly", 1.5),
@@ -818,7 +987,9 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("case resolved quickly", 1.5),
             ("dealt with promptly", 1.0),
             ("diligent and timely", 1.5),
-            ("efficient process", 1.0),
+            ("efficient process", 1.0),  # [W1-GUARD]
+            # CONTEXT-GUARD PLACEHOLDER: "efficient process" -- ambiguous; scoring
+            # should verify subject is the attorney/firm, not the legal system.
             ("everything was done in a timely manner", 1.5),
             ("fast and efficient", 1.5),
             ("handled efficiently", 1.0),
@@ -851,7 +1022,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("took forever", 1.5),
             ("took too long", 1.5),
             ("unnecessary delays", 1.5),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("always an excuse for the delay", 1.5),
             ("behind schedule", 1.5),
             ("case stalled", 1.5),
@@ -874,13 +1045,37 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("seemed to drag their feet", 1.5),
             ("slow process", 1.0),
             ("very slow", 1.5),
+            # --- phrase expansion: real-review evidence ---
+            ("over a year", 1.5),
+            ("never heard from them", 1.5),
+            ("forgotten about", 1.5),
+            ("nothing was completed", 1.5),
+            ("nothing had been worked on", 1.5),
+            # --- phrase expansion: missed timeliness phrases ---
+            ("took longer than expected", 1.5),
+            ("delayed process", 1.5),
+            ("timeline extended", 1.0),
+            ("slow progress", 1.5),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("took much longer than expected", 1.5),
+            ("timeline ran longer than estimated", 1.5),
+            ("dropped the ball", 1.5),
+            ("administrative mix-up", 1.0),
+            ("missed a few demands", 1.5),
+            # --- calibration: phrase expansion ---
+            ("case taking years", 1.5),
+            ("still waiting after", 1.2),
+            ("taking far too long", 1.5),
+            ("still waiting for resolution", 1.5),
+            ("taking forever", 1.2),
+            ("process dragged out", 1.5),
         ],
         "severe_negative": [
             # --- original ---
             ("filed too late", 2.0),
             ("missed critical deadline", 2.0),
             ("statute of limitations", 2.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("case dismissed due to delay", 2.0),
             ("critical filing missed", 2.0),
             ("deadline missed entirely", 2.0),
@@ -888,6 +1083,12 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("irreparable harm from delay", 2.0),
             ("lost case due to missed deadline", 2.0),
             ("missed statute of limitations", 2.0),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("without achieving any meaningful progress", 2.0),
+            ("showed up late", 2.0),
+            ("didn't even know he had to come", 2.0),
+            ("taken more than 2 years", 2.0),
+            ("tanked my case", 2.0),
         ],
     },
 
@@ -907,7 +1108,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("staff was helpful", 1.0),
             ("support staff", 1.0),
             ("the whole team", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("admin staff was excellent", 1.5),
             ("assistant was knowledgeable", 1.0),
             ("entire office was professional", 1.5),
@@ -947,7 +1148,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("staff was unhelpful", 1.0),
             ("unfriendly staff", 1.0),
             ("unhelpful staff", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("administrative errors", 1.0),
             ("assistant was unhelpful", 1.0),
             ("disorganized office", 1.0),
@@ -975,13 +1176,21 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("unorganized office", 1.0),
             # --- calibration: sample2 ---
             ("spoke to staff and waited for callbacks", 1.2),
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("not pleasant or helpful", 1.5),
+            ("not friendly at all", 1.5),
+            ("waiting room felt outdated and unprofessional", 1.0),
+        ],
+        "positive": [
+            # --- calibration: gap-report wave 2 (final_summary.json) ---
+            ("will work hard for you", 1.5),
         ],
         "severe_negative": [
             # --- original ---
             ("abusive staff", 2.0),
             ("harassment by staff", 2.0),
             ("hostile front desk", 2.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("aggressive staff", 2.0),
             ("berated by staff", 2.0),
             ("discriminatory treatment by staff", 2.0),
@@ -1010,7 +1219,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("successful outcome", 1.5),
             ("very happy with the result", 1.5),
             ("won my case", 1.5),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("best possible outcome", 2.0),
             ("better than expected outcome", 1.5),
             ("case resolved favorably", 1.5),
@@ -1043,12 +1252,36 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("victory", 1.5),
             ("won a great settlement", 1.5),
             ("won the case", 1.5),
+            # --- phrase expansion: real-review evidence ---
+            ("not guilty", 2.0),
+            ("found not guilty", 2.0),
+            ("not guilty verdict", 2.0),
+            ("acquitted", 2.0),
+            ("got the job done", 1.5),
+            ("won so to speak", 1.5),
+            # --- phrase expansion: missed outcome phrases ---
+            ("great outcome", 1.5),
+            ("excellent result", 1.5),
+            ("favorable result", 1.5),
+            ("case dismissed", 1.5),
+            ("settlement exceeded expectations", 2.0),
+            ("better than expected", 1.0),
             # --- calibration: sample2 ---
             ("mediation preparation was excellent", 1.5),
             ("helped me focus on long-term outcomes", 1.5),
             ("not just winning every argument", 1.0),
             # --- calibration: full_batch_20260311 ---
             ("the outcome met expectations", 1.5),
+            # --- calibration: gap-report wave (real-review evidence) ---
+            ("resulted in a significant settlement", 2.0),
+            ("everything was resolved just like they said it would be", 1.5),
+            ("he's home", 2.0),
+            ("the outcome exceeded my expectations", 2.0),
+            ("outcome was fine", 1.0),
+            ("results were acceptable", 1.0),
+            ("the final result was satisfactory", 1.0),
+            ("turned a terrifying situation into a manageable one", 2.0),
+            ("would highly recommend", 1.5),
         ],
         "negative": [
             # --- original ---
@@ -1064,7 +1297,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("terrible result", 1.5),
             ("unhappy with the outcome", 1.0),
             ("unhappy with the result", 1.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("awful result", 1.5),
             ("bad outcome", 1.0),
             ("bad result", 1.0),
@@ -1094,6 +1327,11 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("very disappointed with the result", 1.5),
             ("very poor result", 1.5),
             ("we lost", 1.5),
+            # --- calibration: gap-report wave (real-review evidence) ---
+            ("complete waste of money", 2.0),
+            ("nothing but wasting my time and money", 2.0),
+            ("never got proper legal help", 1.5),
+            ("had to hire another attorney", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -1101,7 +1339,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("lost everything", 2.0),
             ("malpractice", 2.0),
             ("negligence", 2.0),
-            # --- new: safe_import_now ---
+            # --- new: safe_import_now [W1] ---
             ("attorney malpractice", 2.0),
             ("case destroyed by incompetence", 2.0),
             ("completely ruined my case", 2.0),
@@ -1330,14 +1568,55 @@ def score_review_deterministic(
                 }
 
                 # --- calibration: sample2 context guards ---
-                # GUARD 1: "confusing" in billing context -> redirect to billing_transparency
+                # GUARD 0a: "not guilty" negation-exempt -- phrase is a compound positive
+                # (legal verdict language); negation guard must NOT flip it to negative.
                 if (
+                    phrase == "not guilty"
+                    and theme_id == "outcome_satisfaction"
+                    and negation_applied
+                ):
+                    actual_polarity = "positive"
+                    hit["polarity"] = "positive"
+                    hit["negation_applied"] = False
+
+                # GUARD 0b: "misconduct" subject guard -- only fire severe_negative when
+                # the attorney/firm is the subject. Suppress when review describes
+                # accusations OF misconduct *against the client* (false accusations,
+                # accused of misconduct, charged with misconduct, etc.)
+                elif (
+                    phrase == "misconduct"
+                    and theme_id == "professionalism_trust"
+                    and actual_polarity == "severe_negative"
+                    and any(kw in text_lower for kw in (
+                        "false accusation", "accused of misconduct",
+                        "charged with misconduct", "allegations of misconduct",
+                        "allegations against", "false charges", "wrongfully accused",
+                    ))
+                ):
+                    continue  # suppress: misconduct subject is the client, not the attorney
+
+                # GUARD 1: "confusing" in billing context -> redirect to billing_transparency
+                elif (
                     phrase == "confusing"
                     and theme_id == "communication_clarity"
                     and any(kw in text_lower for kw in ("billing", "statement", "invoice"))
                 ):
                     theme_id = "billing_transparency"
                     hit["theme"] = "billing_transparency"
+
+                # GUARD 1b: "slow" timeliness false positive guard
+                # "response times were slow" -> responsiveness, not timeliness
+                # "intake process was slow" -> not a timeliness signal
+                elif (
+                    phrase == "slow"
+                    and theme_id == "timeliness_progress"
+                    and actual_polarity == "negative"
+                    and any(kw in text_lower for kw in (
+                        "response time", "response times", "getting back",
+                        "intake", "intake process", "confusing",
+                    ))
+                ):
+                    continue  # suppress: "slow" here signals responsiveness or clarity, not timeliness
 
                 # GUARD 2: "expensive" praised in cost-warning context -> suppress fee_value negative hit
                 elif (
