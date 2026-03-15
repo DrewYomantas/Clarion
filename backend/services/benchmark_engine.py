@@ -246,6 +246,8 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("refused to return calls", 2.0),
             ("totally disappeared", 2.0),
             # --- calibration: gap-report wave 2 (final_summary.json) ---
+            # --- real-reviews wave A ---
+            ("hung up on me", 2.0),
             ("stopped returning my calls", 2.0),
             ("never heard from them for over a year", 2.0),
         ],
@@ -459,6 +461,13 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("best interests in mind", 1.5),
             ("i truly felt that he cared and wanted to help", 1.5),
             ("reassured me when it came to anxiety", 1.5),
+            # --- real-reviews wave A ---
+            ("saved my life", 2.0),
+            ("never gave up on me", 2.0),
+            ("toughest times in my life", 2.0),
+            ("in my corner all the way", 1.5),
+            ("at my very bottom", 1.5),
+            ("world had turned upside down", 1.5),
             ("very friendly and also very helpful", 1.0),
         ],
         "negative": [
@@ -517,6 +526,13 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("threw in my face", 2.0),
             # --- calibration: gap-report wave 2 (final_summary.json) ---
             ("won't help unless it's been figured out already", 2.0),
+            # --- real-reviews wave A ---
+            ("zero compassion", 2.0),
+            ("no compassion either", 2.0),
+            ("sensitivity training", 2.0),
+            ("no idea how to deal with a client", 2.0),
+            ("complete attitude every call", 2.0),
+            ("rude and has zero compassion", 2.0),
             ("left a lot to be desired in terms of personal attention", 1.5),
         ],
     },
@@ -571,6 +587,15 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("skilled negotiator", 2.0),
             ("commitment to their clientele", 1.5),
             # --- calibration: gap-report wave 2 (final_summary.json) ---
+            # --- real-reviews wave A ---
+            ("second to none", 2.0),
+            ("dedicated advocate", 1.5),
+            ("fearless", 1.5),
+            ("deep understanding of the legal complexities", 1.5),
+            ("deep understanding", 1.0),
+            ("passion, professionalism, determination", 2.0),
+            ("never gave up on", 1.5),
+            ("definition of what a defense attorney should be", 2.0),
             ("smart, strategic", 1.0),
         ],
         "negative": [
@@ -651,6 +676,14 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("sent me to another courtroom", 1.5),
             ("made my situation significantly worse", 2.0),
             ("left without legal counsel", 2.0),
+            # --- real-reviews wave A ---
+            ("inexperienced son", 2.0),
+            ("sent his inexperienced son", 2.0),
+            ("threw my folder", 2.0),
+            ("thrown out of their office", 2.0),
+            ("rude and condescending", 2.0),
+            ("deal with your kind all the time", 2.0),
+            ("absolute nightmare to deal with", 2.0),
             ("charged me the full amount and left me without legal counsel", 2.0),
         ],
     },
@@ -1190,6 +1223,13 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("spoke to staff and waited for callbacks", 1.2),
             # --- calibration: gap-report wave 2 (final_summary.json) ---
             ("not pleasant or helpful", 1.5),
+            # --- real-reviews wave A ---
+            ("complete attitude", 1.5),
+            ("complete attitude every call", 2.0),
+            ("absolutely no compassion", 1.5),
+            ("paralegal is assigned to your case", 1.0),
+            ("you can't ever talk to an actual lawyer", 1.5),
+            ("completely inept at their job", 1.5),
             ("not friendly at all", 1.5),
             ("waiting room felt outdated and unprofessional", 1.0),
         ],
@@ -1340,6 +1380,9 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("nothing but wasting my time and money", 2.0),
             ("never got proper legal help", 1.5),
             ("had to hire another attorney", 1.5),
+            ("stuck without legal counsel", 2.0),
+            ("never got proper legal help from him", 2.0),
+            ("nothing was completed at all", 1.5),
         ],
         "severe_negative": [
             # --- original ---
