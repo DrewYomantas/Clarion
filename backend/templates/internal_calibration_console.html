@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Calibration Console - Internal{% endblock %}
+
+{% block content %}
+<div class="info-page">
+  <section class="info-hero">
+    <div class="container">
+      <p class="info-kicker">Calibration</p>
+      <h1>Calibration Console</h1>
+      <p class="info-subtitle">
+        Internal page for running and validating pre-launch deterministic calibration workflows.
+      </p>
+      <div class="hero-cta">
+        <a href="{{ command_center_url }}" class="btn btn-outline">Back to Command Center</a>
+        <a href="{{ benchmark_themes_url }}" class="btn btn-primary">Open Benchmark Tools</a>
+        <a href="{{ internal_tools_url }}" class="btn btn-outline">Open Internal Tools</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="product-views-section">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-kicker">Run Path</p>
+        <h2 class="section-title">Calibration workflow entrypoint</h2>
+      </div>
+      <div class="product-view-grid">
+        <article class="product-view-card">
+          <h3>Workflow script</h3>
+          <p>Run from repo root using the launcher or script path below.</p>
+          <code>{{ run_script_path }}</code>
+        </article>
+        <article class="product-view-card">
+          <h3>Benchmark themes</h3>
+          <p>Inspect canonical theme IDs before analyzing disagreement buckets.</p>
+          <a href="{{ benchmark_themes_url }}" class="btn btn-secondary mt-2">Open /internal/benchmark/themes</a>
+        </article>
+        <article class="product-view-card">
+          <h3>Batch endpoint</h3>
+          <p>Used by chunked calibration runs for deterministic vs AI benchmark comparison.</p>
+          <code>{{ benchmark_batch_url }}</code>
+        </article>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

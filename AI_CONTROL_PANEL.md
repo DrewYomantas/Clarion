@@ -2,12 +2,12 @@
 
 ## Active Pass
 - **Pass:** Operator Startup Launcher Pass
-- **Focus:** Add one-click repo-root startup and command-center launchers for operators.
+- **Focus:** Add one-click repo-root startup to a real internal operator command center page.
 
 ## Build Focus (Now)
 1. Keep core product execution stable (upload → analysis → governance outputs).
 2. Keep deterministic benchmark alignment improvements intact.
-3. Reduce operator friction with obvious root-level launch files.
+3. Reduce operator friction with one primary launcher and clear optional helpers.
 
 ## Last Completed Pass (from git history)
 - `b9a8a97` — calibration wave 2 phrase additions + bug fixes.

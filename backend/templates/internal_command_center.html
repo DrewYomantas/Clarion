@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Clarion Command Center - Internal{% endblock %}
+
+{% block content %}
+<div class="info-page">
+  <section class="info-hero">
+    <div class="container">
+      <p class="info-kicker">Operator Startup</p>
+      <h1>Clarion Command Center</h1>
+      <p class="info-subtitle">
+        Internal landing page for day-to-day operator startup and calibration/hardening navigation.
+      </p>
+      <div class="hero-cta">
+        <a href="{{ dashboard_url }}" class="btn btn-primary">Open Workspace Dashboard</a>
+        <a href="{{ calibration_console_url }}" class="btn btn-outline">Open Calibration Console</a>
+        <a href="{{ benchmark_themes_url }}" class="btn btn-outline">Open Benchmark Tools</a>
+        <a href="{{ internal_tools_url }}" class="btn btn-outline">Open Internal Tools</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="product-views-section">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-kicker">Operator Notes</p>
+        <h2 class="section-title">What each area is for</h2>
+      </div>
+      <div class="product-view-grid">
+        <article class="product-view-card">
+          <h3>Workspace Dashboard</h3>
+          <p>Main product workspace for report review, governance actions, and partner-facing operations.</p>
+        </article>
+        <article class="product-view-card">
+          <h3>Calibration Console</h3>
+          <p>Internal launch point for deterministic calibration workflow and benchmark run references.</p>
+        </article>
+        <article class="product-view-card">
+          <h3>Benchmark/Internal Tools</h3>
+          <p>Internal benchmark endpoints and supporting launcher utilities for engine hardening passes.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

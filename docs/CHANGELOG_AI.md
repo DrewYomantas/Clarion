@@ -1,5 +1,12 @@
 # AI Pass Changelog
 
+## 2026-03-15 — Operator Command Center Correction Pass
+- Added a real internal operator landing route at `/internal/command-center/` and a minimal template command center.
+- Added a dedicated internal calibration console page at `/internal/calibration/` so command-center links resolve to real pages.
+- Updated `START_CLARION.bat` and `OPEN_COMMAND_CENTER.bat` to open `/internal/command-center/` instead of direct dashboard URL.
+- Reframed helper launchers as optional in `README.md`, keeping `START_CLARION.bat` as the single obvious primary entry point.
+- **Commit:** recorded in git for this pass (see repository log).
+
 ## 2026-03-15 — Operator Startup Launcher Pass
 - Added root-level Windows launcher files: `START_CLARION.bat`, `OPEN_COMMAND_CENTER.bat`, `RUN_CALIBRATION.bat`, and `OPEN_ENGINE_TOOLS.bat`.
 - Reused existing backend startup convention via `backend/start.bat` and wired command center URL to `http://localhost:5000/dashboard`.
