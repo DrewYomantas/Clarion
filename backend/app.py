@@ -17007,62 +17007,75 @@ def internal_api_agent_brief():
     )
     agency_dir = os.path.abspath(agency_dir)
 
-    def _read(path):
+    def _read(rel):
         try:
-            with open(path, encoding='utf-8') as f:
+            with open(os.path.join(agency_dir, rel), encoding='utf-8') as f:
                 return f.read()
         except Exception:
             return ''
 
-    brief_raw  = _read(os.path.join(agency_dir, 'reports', 'executive_brief_latest.md'))
-    run_raw    = _read(os.path.join(agency_dir, 'reports', 'run_summary_latest.md'))
+    brief_raw = _read(os.path.join('reports', 'executive_brief_latest.md'))
+    run_raw   = _read(os.path.join('reports', 'run_summary_latest.md'))
 
-    # ── Parse run summary ──────────────────────────────────────────────────
-    def _extract(pattern, text, default='—'):
+    # ── Run summary ────────────────────────────────────────────────────────
+    def _extract(pattern, text, default='--'):
         m = _re.search(pattern, text, _re.IGNORECASE)
         return m.group(1).strip() if m else default
 
     run_summary = {
-        'date':              _extract(r'**Date:**s*(.+)',      run_raw),
-        'mode':              _extract(r'**Mode:**s*(.+)',      run_raw),
-        'prospects_found':   _extract(r'Prospects found:s*(d+)',  run_raw, '0'),
-        'outreach_sent':     _extract(r'Outreach actually sent:s*(d+)', run_raw, '0'),
-        'outreach_drafted':  _extract(r'Outreach drafted this run:s*(d+)', run_raw, '0'),
-        'queued_for_founder':_extract(r'Queued for founder (Level 3):s*(d+)', run_raw, '0'),
-        'autonomous':        _extract(r'Autonomous (Level 1):s*(d+)', run_raw, '0'),
+        'date':               _extract(r'\*\*Date:\*\*\s*(.+)',               run_raw),
+        'mode':               _extract(r'\*\*Mode:\*\*\s*(.+)',               run_raw),
+        'prospects_found':    _extract(r'Prospects found:\s*(\d+)',           run_raw, '0'),
+        'outreach_sent':      _extract(r'Outreach actually sent:\s*(\d+)',    run_raw, '0'),
+        'outreach_drafted':   _extract(r'Outreach drafted this run:\s*(\d+)', run_raw, '0'),
+        'queued_for_founder': _extract(r'Queued for founder.*?:\s*(\d+)',     run_raw, '0'),
+        'autonomous':         _extract(r'Autonomous.*?:\s*(\d+)',             run_raw, '0'),
     }
 
-    # ── Parse exceptions ───────────────────────────────────────────────────
+    # ── Exceptions ─────────────────────────────────────────────────────────
     exceptions = []
-    exc_block = _re.search(r'EXCEPTIONS REQUIRING CEO ATTENTIONs*
-(.*?)(?=
----|Z)', brief_raw, _re.DOTALL)
+    exc_block = _re.search(
+        r'EXCEPTIONS REQUIRING CEO ATTENTION\s*\n+(.*?)(?=\n+---|$)',
+        brief_raw, _re.DOTALL
+    )
     if exc_block:
-        for m in _re.finditer(r'd+.s+(.+?)s*
-s+Why it needs you:s*(.+?)
-s+Recommended owner:s*(.+?)(?=
-d+.|Z)', exc_block.group(1), _re.DOTALL):
-            exceptions.append({'title': m.group(1).strip(), 'detail': m.group(2).strip(), 'owner': m.group(3).strip()})
+        for m in _re.finditer(
+            r'\d+\.\s+(.+?)\s*\n\s+Why it needs you:\s*(.+?)\n\s+Recommended owner:\s*(.+?)(?=\n\d+\.|$)',
+            exc_block.group(1), _re.DOTALL
+        ):
+            exceptions.append({
+                'title':  m.group(1).strip(),
+                'detail': m.group(2).strip(),
+                'owner':  m.group(3).strip(),
+            })
 
-    # ── Parse risks ────────────────────────────────────────────────────────
+    # ── Risks ──────────────────────────────────────────────────────────────
     risks = []
-    risk_block = _re.search(r'TOP COMPANY RISKSs*
-(.*?)(?=
----|Z)', brief_raw, _re.DOTALL)
+    risk_block = _re.search(
+        r'TOP COMPANY RISKS\s*\n+(.*?)(?=\n+---|$)',
+        brief_raw, _re.DOTALL
+    )
     if risk_block:
-        for m in _re.finditer(r'd+.s+(.+?)s*[—-]s*(.+?)(?=
-d+.|Z)', risk_block.group(1)):
+        for m in _re.finditer(
+            r'\d+\.\s+(.+?)\s+[—\-]+\s*(.+?)(?=\n\d+\.|$)',
+            risk_block.group(1)
+        ):
             risks.append({'title': m.group(1).strip(), 'source': m.group(2).strip()})
+        # fallback: plain numbered list
+        if not risks:
+            for m in _re.finditer(r'\d+\.\s+(.+)', risk_block.group(1)):
+                risks.append({'title': m.group(1).strip(), 'source': ''})
 
-    # ── Parse agent health ─────────────────────────────────────────────────
+    # ── Agent health ───────────────────────────────────────────────────────
     agents = []
-    agent_block = _re.search(r'Agent Health:s*
-(.*?)(?=
-Department Activity:|Z)', brief_raw, _re.DOTALL)
+    agent_block = _re.search(
+        r'Agent Health:\s*\n(.*?)(?=\nDepartment Activity:|$)',
+        brief_raw, _re.DOTALL
+    )
     if agent_block:
-        for m in _re.finditer(r's{2,}(.+?):s*(Active|Low Activity|Missing)', agent_block.group(1)):
-            status_raw = m.group(2).strip()
-            status = 'active' if status_raw == 'Active' else ('low' if 'Low' in status_raw else 'missing')
+        for m in _re.finditer(r'[ \t]+(.+?):\s*(Active|Low Activity|Missing)', agent_block.group(1)):
+            raw_status = m.group(2).strip()
+            status = 'active' if raw_status == 'Active' else ('low' if 'Low' in raw_status else 'missing')
             agents.append({'name': m.group(1).strip(), 'status': status})
 
     return jsonify({
