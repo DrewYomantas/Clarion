@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Internal Tools Console - Clarion{% endblock %}
+
+{% block content %}
+<div class="info-page">
+  <section class="info-hero">
+    <div class="container">
+      <p class="info-kicker">Internal Tools</p>
+      <h1>Calibration & Benchmark Tools Hub</h1>
+      <p class="info-subtitle">
+        Internal launcher for pre-launch deterministic calibration and engine hardening workflows.
+      </p>
+      <div class="hero-cta">
+        <a href="{{ calibration_console_url }}" class="btn btn-primary">Open Calibration Console</a>
+        <a href="{{ benchmark_themes_url }}" class="btn btn-outline">Open Benchmark Console</a>
+        <a href="/dashboard/account?tab=profile" class="btn btn-outline">Back to Account</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="product-views-section">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-kicker">Available Endpoints</p>
+        <h2 class="section-title">Internal launch targets</h2>
+      </div>
+      <div class="product-view-grid">
+        <article class="product-view-card">
+          <h3>Calibration console</h3>
+          <p>Primary calibration UI/workflow surface.</p>
+          <a href="{{ calibration_console_url }}" class="btn btn-secondary mt-2">Open /internal/calibration/</a>
+        </article>
+        <article class="product-view-card">
+          <h3>Benchmark themes</h3>
+          <p>Current benchmark theme registry and IDs used for calibration comparisons.</p>
+          <a href="{{ benchmark_themes_url }}" class="btn btn-secondary mt-2">Open /internal/benchmark/themes</a>
+        </article>
+        <article class="product-view-card">
+          <h3>Benchmark API endpoints</h3>
+          <p>POST endpoints used for single-review checks and chunked batch benchmark runs.</p>
+          <code>{{ benchmark_single_url }}</code><br />
+          <code>{{ benchmark_batch_url }}</code>
+        </article>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}
