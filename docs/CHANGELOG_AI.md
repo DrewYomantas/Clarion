@@ -1,5 +1,31 @@
 # AI Pass Changelog
 
+## 2026-03-21 - Landing Modern-Motion Polish Pass
+
+### Files Changed
+- `frontend/src/pages/Index.tsx`
+- `frontend/src/components/SiteNav.tsx`
+- `frontend/src/components/landing/LandingHeroSection.tsx`
+- `frontend/src/components/landing/LandingTrustSection.tsx`
+- `frontend/src/components/landing/LandingWorkflowSection.tsx`
+- `frontend/src/components/landing/LandingOutputsSection.tsx`
+- `frontend/src/components/landing/LandingAccountabilitySection.tsx`
+- `frontend/src/components/landing/LandingMeetingSection.tsx`
+- `frontend/src/components/landing/LandingFinalSection.tsx`
+- `frontend/src/index.css`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Added a lightweight landing-only IntersectionObserver reveal pass so hero and section content enter with restrained fade-and-rise motion.
+- Tuned hero entrance pacing so the eyebrow, headline, supporting copy, CTA row, and governance brief preview settle with a cleaner premium rhythm.
+- Added restrained hover and press polish to public nav links, public CTA surfaces, and landing cards without changing the underlying narrative or route structure.
+- Added reduced-motion fallbacks so all landing reveals and hover transforms collapse to static presentation when motion reduction is preferred.
+
+### Verification
+- `npm run build` in `frontend/`
+
 ## 2026-03-21 - Landing Hero Refinement Pass
 
 ### Files Changed

@@ -1,41 +1,66 @@
+import { useEffect } from "react";
 import SiteNav from "@/components/SiteNav";
-import HeroSection from "@/components/HeroSection";
-import ProblemSection from "@/components/ProblemSection";
-import WorkflowSection from "@/components/WorkflowSection";
-import FeaturesSection from "@/components/FeaturesSection";
-import CredibilityStrip from "@/components/CredibilityStrip";
-import PricingSection from "@/components/PricingSection";
-import FinalCTA from "@/components/FinalCTA";
 import SiteFooter from "@/components/SiteFooter";
+import LandingHeroSection from "@/components/landing/LandingHeroSection";
+import LandingTrustSection from "@/components/landing/LandingTrustSection";
+import LandingWorkflowSection from "@/components/landing/LandingWorkflowSection";
+import LandingOutputsSection from "@/components/landing/LandingOutputsSection";
+import LandingAccountabilitySection from "@/components/landing/LandingAccountabilitySection";
+import LandingMeetingSection from "@/components/landing/LandingMeetingSection";
+import LandingFinalSection from "@/components/landing/LandingFinalSection";
 
 const Index = () => {
+  useEffect(() => {
+    document.title = "Clarion - Partner-Ready Client Feedback Governance for Law Firms";
+  }, []);
+
+  useEffect(() => {
+    const revealNodes = Array.from(document.querySelectorAll<HTMLElement>(".landing-reveal"));
+    if (!revealNodes.length) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion || typeof IntersectionObserver === "undefined") {
+      revealNodes.forEach((node) => node.classList.add("reveal--visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+          entry.target.classList.add("reveal--visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.16,
+        rootMargin: "0px 0px -8% 0px",
+      },
+    );
+
+    revealNodes.forEach((node) => {
+      node.classList.remove("reveal--visible");
+      observer.observe(node);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div id="top" className="marketing-shell min-h-screen bg-background">
+    <div id="top" className="marketing-shell landing-v3-shell min-h-screen bg-[#F6F0E4] text-[#111827]">
       <SiteNav />
-      <main>
-        <HeroSection />
-
-        <section className="bg-slate-50">
-          <ProblemSection />
-        </section>
-
-        <section className="bg-gradient-to-br from-[#0F172A] via-[#153458] to-[#0F172A]">
-          <WorkflowSection />
-        </section>
-
-        <section className="bg-slate-50">
-          <FeaturesSection />
-        </section>
-
-        <section className="bg-slate-50">
-          <CredibilityStrip />
-          <PricingSection showIntro={false} showEntryCtas={false} showTeaserOnly />
-        </section>
-
-        <section className="bg-[#0F172A] relative overflow-hidden">
-          <div className="absolute -top-24 right-20 h-80 w-80 rounded-full bg-blue-500/20 blur-3xl pointer-events-none" />
-          <FinalCTA />
-        </section>
+      <main id="main-content" className="pt-16">
+        <LandingHeroSection />
+        <LandingTrustSection />
+        <LandingWorkflowSection />
+        <LandingOutputsSection />
+        <LandingAccountabilitySection />
+        <LandingMeetingSection />
+        <LandingFinalSection />
       </main>
       <SiteFooter />
     </div>

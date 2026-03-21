@@ -1,12 +1,14 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
+import { defaultSampleBriefPath } from "@/data/sampleFirmData";
 
 const sharedMoreLinks = [
+  { label: "Sample Brief", to: defaultSampleBriefPath },
+  { label: "Sample Workspace", to: "/demo" },
   { label: "Docs", to: "/docs" },
-  { label: "Read-Only Demo", to: "/demo" },
   { label: "Contact", to: "/contact" },
   { label: "Terms", to: "/terms" },
   { label: "Privacy", to: "/privacy" },
@@ -30,18 +32,20 @@ const SiteNav = () => {
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const normalizedPathname = location.pathname.toLowerCase().replace(/\s+/g, "-");
-  const isHomeHero = normalizedPathname === "/";
   const isWorkspaceRoute =
     normalizedPathname.startsWith("/dashboard") ||
     normalizedPathname.startsWith("/upload") ||
     normalizedPathname.startsWith("/onboarding");
-  const isMarketingOrAuth = !isWorkspaceRoute;
+  const isPublicRoute = !isWorkspaceRoute;
 
   const getNavLinkClass = ({ isActive }: { isActive: boolean }) => {
-    if (isMarketingOrAuth) {
-      return `text-sm font-medium transition-colors ${isActive ? "text-white" : "text-white/80 hover:text-white"}`;
+    if (isWorkspaceRoute) {
+      return `text-sm font-medium transition-colors ${isActive ? "text-slate-900" : "text-slate-700 hover:text-slate-900"}`;
     }
-    return `text-sm font-medium transition-colors ${isActive ? "text-slate-900" : "text-slate-700 hover:text-slate-900"}`;
+    return [
+      "text-sm font-medium transition-colors md:rounded-full md:px-3 md:py-2 landing-nav-link",
+      isActive ? "text-slate-900 md:bg-white/70" : "text-slate-700 hover:text-slate-900",
+    ].join(" ");
   };
 
   const clearCloseTimer = () => {
@@ -68,7 +72,7 @@ const SiteNav = () => {
   }, []);
 
   useEffect(() => {
-    if (!isMarketingOrAuth) {
+    if (!isPublicRoute) {
       setScrolled(false);
       return;
     }
@@ -76,7 +80,7 @@ const SiteNav = () => {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [isMarketingOrAuth]);
+  }, [isPublicRoute]);
 
   const handleLogout = async () => {
     await logOut();
@@ -85,29 +89,21 @@ const SiteNav = () => {
     navigate("/");
   };
 
-  const headerClass = isMarketingOrAuth
+  const headerClass = isPublicRoute
     ? [
-        "fixed top-0 left-0 right-0 z-50 border-b transition-all duration-200",
-        scrolled
-          ? "border-white/20 bg-[#0F172A]/96 backdrop-blur-md"
-          : "border-white/15 bg-gradient-to-r from-[#0F172A] via-[#17345a] to-[#0F172A]",
+        "fixed top-0 left-0 right-0 z-50 border-b border-[#D7D0C3] transition-all duration-200",
+        scrolled ? "bg-[#FAF6EE]/96 backdrop-blur-md shadow-sm" : "bg-[#F6F0E4]/94 backdrop-blur-md",
       ].join(" ")
     : "fixed top-0 left-0 right-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-md";
 
-  const brandTitleClass = isMarketingOrAuth
-    ? "text-lg font-bold tracking-tight leading-tight text-white"
-    : "text-lg font-bold tracking-tight leading-tight text-slate-900";
-  const menuButtonClass = isMarketingOrAuth
-    ? "p-2 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-    : "p-2 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  const brandTitleClass = "text-lg font-bold tracking-tight leading-tight text-slate-900";
+  const menuButtonClass =
+    "p-2 text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
-  const moreButtonClass = isMarketingOrAuth
-    ? "text-sm font-medium text-white/90 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-    : "text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+  const moreButtonClass =
+    "landing-nav-link text-sm font-medium text-slate-700 transition-colors md:rounded-full md:px-3 md:py-2 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
 
-  const dropdownClass = isMarketingOrAuth
-    ? "rounded-xl border border-white/25 bg-[#0B1730] shadow-2xl shadow-black/50 ring-1 ring-white/15 p-2"
-    : "rounded-lg border border-border bg-card shadow-lg p-2";
+  const dropdownClass = "landing-nav-dropdown rounded-xl border border-[#D7D0C3] bg-[#FFFDF9] shadow-lg p-2";
   const showWorkspaceNav = !isLoading && isLoggedIn;
 
   return (
@@ -121,16 +117,16 @@ const SiteNav = () => {
           {showWorkspaceNav ? (
             <>
               <NavLink to="/dashboard" end className={getNavLinkClass}>
-                Dashboard
+                Workspace Home
               </NavLink>
               <NavLink to="/dashboard/reports" className={getNavLinkClass} data-tour-id="nav-reports-link">
-                Reports
+                Briefs
               </NavLink>
               <NavLink to="/dashboard/billing" className={getNavLinkClass}>
                 Billing
               </NavLink>
               <NavLink to="/upload" className={getNavLinkClass}>
-                Upload
+                Upload Cycle
               </NavLink>
               <NavLink to="/pricing" className={getNavLinkClass}>
                 Pricing
@@ -138,9 +134,7 @@ const SiteNav = () => {
               <button
                 type="button"
                 onClick={handleLogout}
-                className={isMarketingOrAuth
-                  ? "text-sm font-medium text-white/80 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  : "text-sm font-medium text-slate-700 transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"}
+                className="text-sm font-medium text-slate-700 transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Log out
               </button>
@@ -162,8 +156,11 @@ const SiteNav = () => {
               <NavLink to="/login" className={getNavLinkClass}>
                 Log in
               </NavLink>
-              <Link to="/signup" className="inline-flex items-center rounded-xl bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-500">
-                Start Free
+              <Link
+                to={defaultSampleBriefPath}
+                className="landing-nav-cta inline-flex items-center rounded-xl border border-[#111827] bg-[#111827] px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#1F2937]"
+              >
+                Review sample brief
               </Link>
             </>
           )}
@@ -194,14 +191,8 @@ const SiteNav = () => {
                     onClick={() => setIsMoreOpen(false)}
                     className={({ isActive }) =>
                       [
-                        "block rounded-md px-3 py-2 text-sm",
-                        isMarketingOrAuth
-                          ? isActive
-                            ? "text-white bg-white/15"
-                            : "text-white hover:text-white hover:bg-white/14"
-                          : isActive
-                            ? "text-slate-900"
-                            : "text-slate-700 hover:text-slate-900 hover:bg-slate-100",
+                        "landing-nav-dropdown-link block rounded-md px-3 py-2 text-sm",
+                        isActive ? "text-slate-900 bg-[#F3ECDD]" : "text-slate-700 hover:text-slate-900 hover:bg-slate-100",
                       ].join(" ")
                     }
                   >
@@ -221,23 +212,25 @@ const SiteNav = () => {
       </div>
 
       {mobileOpen && (
-        <nav className={[
-          "md:hidden px-6 py-4 space-y-3 border-t",
-          isMarketingOrAuth ? "border-white/10 bg-slate-900/95 text-white" : "border-slate-200 bg-white",
-        ].join(" ")}>
+        <nav
+          className={[
+            "md:hidden px-6 py-4 space-y-3 border-t",
+            isPublicRoute ? "border-[#D7D0C3] bg-[#FAF6EE] text-slate-900" : "border-slate-200 bg-white",
+          ].join(" ")}
+        >
           {showWorkspaceNav ? (
             <>
               <NavLink to="/dashboard" end onClick={() => setMobileOpen(false)} className={getNavLinkClass}>
-                Dashboard
+                Workspace Home
               </NavLink>
               <NavLink to="/dashboard/reports" onClick={() => setMobileOpen(false)} className={getNavLinkClass} data-tour-id="nav-reports-link">
-                Reports
+                Briefs
               </NavLink>
               <NavLink to="/dashboard/billing" onClick={() => setMobileOpen(false)} className={getNavLinkClass}>
                 Billing
               </NavLink>
               <NavLink to="/upload" onClick={() => setMobileOpen(false)} className={getNavLinkClass}>
-                Upload
+                Upload Cycle
               </NavLink>
               <NavLink to="/pricing" onClick={() => setMobileOpen(false)} className={getNavLinkClass}>
                 Pricing
@@ -245,9 +238,7 @@ const SiteNav = () => {
               <button
                 type="button"
                 onClick={handleLogout}
-                className={isMarketingOrAuth
-                  ? "block text-left text-sm font-medium text-white/80 hover:text-white"
-                  : "block text-left text-sm font-medium text-slate-700 hover:text-slate-900"}
+                className="block text-left text-sm font-medium text-slate-700 hover:text-slate-900"
               >
                 Log out
               </button>
@@ -269,16 +260,22 @@ const SiteNav = () => {
               <NavLink to="/login" onClick={() => setMobileOpen(false)} className={getNavLinkClass}>
                 Log in
               </NavLink>
-              <Link to="/signup" onClick={() => setMobileOpen(false)} className="inline-flex w-full items-center justify-center rounded-xl bg-blue-600 px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-500">
-                Start Free
+              <Link
+                to={defaultSampleBriefPath}
+                onClick={() => setMobileOpen(false)}
+                className="landing-nav-cta inline-flex w-full items-center justify-center rounded-xl border border-[#111827] bg-[#111827] px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#1F2937]"
+              >
+                Review sample brief
               </Link>
             </>
           )}
 
-          <div className={[
-            "pt-3 space-y-2 border-t",
-            isMarketingOrAuth ? "border-white/10" : "border-slate-200",
-          ].join(" ")}>
+          <div
+            className={[
+              "pt-3 space-y-2 border-t",
+              isPublicRoute ? "border-[#D7D0C3]" : "border-slate-200",
+            ].join(" ")}
+          >
             {(isLoggedIn ? dashboardMoreLinks : sharedMoreLinks).map((link) => (
               <NavLink key={link.to} to={link.to} onClick={() => setMobileOpen(false)} className={getNavLinkClass}>
                 {link.label}
@@ -291,6 +288,4 @@ const SiteNav = () => {
   );
 };
 
-export default SiteNav;
-
-
+export default SiteNav;

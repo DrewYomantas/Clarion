@@ -36,7 +36,7 @@ Release-candidate ready. Operator smoke passed. V3 landing active. Authenticated
 
 **Active focus:** narrative continuity tightening (signals page, reports list next). Domain cutover to `clarion.co` pending.
 
-Last completed UX pass: `2026-03-21 - Landing Hero Refinement Pass`.
+Last completed UX pass: `2026-03-21 - Landing Modern-Motion Polish Pass`.
 
 ---
 
@@ -93,7 +93,7 @@ law-firm-insights-main/
 
 ## Active Pass
 
-_None in progress. Last completed: 2026-03-19 — Authenticated Continuity Audit + Standards/Docs Evolution._
+_None in progress. Last completed: 2026-03-21 - Landing Modern-Motion Polish Pass._
 
 ---
 
@@ -160,11 +160,11 @@ When ready to move to `clarion.co`:
 ---
 
 ## Last Completed Pass
-2026-03-19 — Authenticated Continuity Audit + Standards/Doc Evolution
+2026-03-21 - Landing Modern-Motion Polish Pass
 
-- ReportDetail.tsx: Present brief button promoted to primary dark
-- DemoWorkspace.tsx: Step 5 brief render replaced with document-forward artifact card
-- NORTH_STAR.md created; AI_WORKING_RULES.md consolidated from 3 files; PROJECT_STATE trimmed to live-state format
+- Added lightweight IntersectionObserver-based section reveals for the landing only
+- Polished hero entrance pacing so copy and the governance brief preview settle with a calmer stagger
+- Added restrained hover and press polish to public nav, CTA, and landing card surfaces
 
 ## Active / Next Passes
 1. **Signals page** (`/dashboard/signals`) — audit whether it reads as governance-cycle evidence or detached data list
