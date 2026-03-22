@@ -5226,6 +5226,8 @@ def _compute_exposure_snapshot(avg_rating, themes, trend_points, implementation_
         is_completed = status in {'done', 'completed'}
 
         due_dt = _parse_iso_dt(row.get('due_date'))
+        if due_dt and due_dt.tzinfo is None:
+            due_dt = due_dt.replace(tzinfo=timezone.utc)
 
         if not is_completed:
 
@@ -7694,12 +7696,17 @@ def _verify_two_factor_challenge_code(challenge_id, code, expected_user_id=None)
 
 
 
-@app.route("/")
-def marketing_home():
-    """Serve React SPA if built, otherwise fall back to Flask marketing template."""
+def _serve_public_react_route_or_template(template_name, **context):
+    """Prefer the React public surface when built; otherwise use the legacy template."""
     if _react_dist_exists:
         return send_from_directory(_REACT_DIST, 'index.html')
-    return render_template("marketing_home.html")
+    return render_template(template_name, **context)
+
+
+@app.route("/")
+def marketing_home():
+    """Serve the canonical public landing surface."""
+    return _serve_public_react_route_or_template("marketing_home.html")
 
 
 
@@ -7712,7 +7719,7 @@ def marketing_home():
 
 def how_it_works():
 
-    return render_template("how_it_works.html")
+    return _serve_public_react_route_or_template("how_it_works.html")
 
 
 
@@ -7720,7 +7727,7 @@ def how_it_works():
 
 def features():
 
-    return render_template("features.html")
+    return _serve_public_react_route_or_template("features.html")
 
 
 
@@ -7735,6 +7742,9 @@ def case_studies():
 @app.route("/pricing")
 
 def pricing():
+
+    if _react_dist_exists:
+        return send_from_directory(_REACT_DIST, 'index.html')
 
     return render_template(
 
@@ -7758,7 +7768,7 @@ def privacy():
 
     """Privacy policy page"""
 
-    return render_template("privacy.html")
+    return _serve_public_react_route_or_template("privacy.html")
 
 
 
@@ -7768,7 +7778,7 @@ def terms():
 
     """Terms of service page"""
 
-    return render_template("terms.html")
+    return _serve_public_react_route_or_template("terms.html")
 
 
 
@@ -7778,7 +7788,7 @@ def security():
 
     """Security page"""
 
-    return render_template("security.html")
+    return _serve_public_react_route_or_template("security.html")
 
 
 
@@ -9130,6 +9140,56 @@ def clear_reviews():
         )
 
     return redirect(url_for('dashboard'))
+
+
+def _fetch_user_usage(user_id):
+    """Return the usage payload expected by the SPA after upload succeeds."""
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute(
+        'SELECT trial_reviews_used, trial_limit, one_time_reports_purchased, one_time_reports_used, subscription_type '
+        'FROM users WHERE id = ?',
+        (user_id,),
+    )
+    row = c.fetchone()
+    conn.close()
+    purchased = row[2] if row else 0
+    used_ot = row[3] if row else 0
+    return {
+        'trial_reviews_used': max(
+            int(row[0] or 0) if row else 0,
+            _get_trial_report_snapshot_count(user_id),
+        ),
+        'trial_limit': row[1] if row else FREE_PLAN_REPORT_LIMIT,
+        'one_time_reports_used': used_ot,
+        'one_time_reports_remaining': max(0, purchased - used_ot),
+        'subscription_type': row[4] if row else 'trial',
+    }
+
+
+def _build_upload_summary_message(access_type, count, report_id, parse_meta):
+    """Return the human-readable upload summary used by web and API paths."""
+    if parse_meta and parse_meta.get('truncated_for_plan') and access_type == 'trial':
+        skipped = int(parse_meta.get('skipped_due_to_plan_limit', 0))
+        return (
+            f'Success! We analyzed the first {FREE_PLAN_MAX_REVIEWS_PER_REPORT} valid reviews for the Free plan '
+            f'and skipped {skipped} additional reviews. Upgrade to analyze all uploaded reviews.'
+        )
+    if report_id is None:
+        return 'Upload succeeded, but no snapshot was created because no analyzable reviews were found.'
+    return (
+        f'Success! Imported {count} reviews and saved report snapshot #{report_id}. '
+        'Next step: open your dashboard to download this report anytime.'
+    )
+
+
+def _log_upload_event(user_id, access_type, count, report_id, channel):
+    """Emit a security event after a successful upload commit."""
+    _log_security_event(
+        user_id,
+        'upload_success',
+        metadata={'report_id': report_id, 'count': count, 'access_type': access_type, 'channel': channel},
+    )
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -10846,7 +10906,6 @@ def api_verify_email(token):
             INSERT INTO user_email_verification (user_id, verified_at)
             VALUES (?, ?)
             ON CONFLICT(user_id) DO UPDATE SET verified_at = excluded.verified_at
-            RETURNING user_id
             ''',
             (token_data['user_id'], now_iso),
         )

@@ -26,7 +26,7 @@ const DashboardCard = ({
   subtitleClassName = "gov-type-meta",
 }: DashboardCardProps) => {
   return (
-    <section className={`gov-card-surface rounded-xl border border-neutral-200 bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06)] ${className}`.trim()}>
+    <section className={`gov-card-surface rounded-2xl border border-[#DDD8D0] bg-white px-6 py-5 shadow-[0_2px_8px_rgba(13,27,42,0.07),0_0_0_1px_rgba(13,27,42,0.03)] ${className}`.trim()}>
       <div className="mb-3">
         <h3 className={titleClassName}>{title}</h3>
         {subtitle ? <p className={subtitleClassName}>{subtitle}</p> : null}

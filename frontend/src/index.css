@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --gov-ink: #0F172A;
-  --gov-ink-muted: #334155;
-  --gov-border: #E2E8F0;
+  --gov-ink: #0D1B2A;
+  --gov-ink-muted: #2C3E50;
+  --gov-border: #DDD8D0;
   --gov-surface: #FFFFFF;
-  --gov-page: #F6F8FB;
+  --gov-page: #F2F0EC;
 
   --gov-primary: #2563EB;
   --gov-primary-hover: #1D4ED8;
@@ -25,8 +25,8 @@
   --gov-success-hover: #15803D;
   --gov-success-tint: #F0FDF4;
 
-  --gov-accent: #D4AF37;
-  --gov-accent-tint: #FFF8DB;
+  --gov-accent: #8B6F3D;
+  --gov-accent-tint: #FAF4E8;
 
   --gov-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --gov-fast: 90ms;
@@ -45,19 +45,19 @@
   --gov-ring-color: #0EA5C2;
   --gov-ring-shadow: 0 0 0 3px rgba(14, 165, 194, 0.18);
 
-  /* Card hover -- subtle lift + shadow deepening */
-  --gov-card-shadow-rest:  0 1px 3px rgba(0, 0, 0, 0.06);
-  --gov-card-shadow-hover: 0 6px 18px -8px rgba(13, 27, 42, 0.14);
-  --gov-card-border-rest:  #E5E7EB;
-  --gov-card-border-hover: #C8D0DA;
+  /* Card hover -- lift with warm-tinted shadow */
+  --gov-card-shadow-rest:  0 1px 4px rgba(13, 27, 42, 0.07), 0 0 0 1px rgba(13, 27, 42, 0.03);
+  --gov-card-shadow-hover: 0 8px 24px -6px rgba(13, 27, 42, 0.16), 0 2px 6px -2px rgba(13, 27, 42, 0.08);
+  --gov-card-border-rest:  #DDD8D0;
+  --gov-card-border-hover: #B8AFA3;
 
   /* -- Skeleton / loading --------------------------------------------
      Two-stop gradient used by all gov-skel blocks.
      Matches the page's cool-white background so skeletons feel
      part of the layout rather than floating grey boxes.
   ----------------------------------------------------------------- */
-  --gov-skeleton-base:      #E8ECF1;
-  --gov-skeleton-highlight: #F1F5F9;
+  --gov-skeleton-base:      #E4DED7;
+  --gov-skeleton-highlight: #EDE8E1;
 
   /* Button transitions */
   --gov-btn-duration: 150ms;
@@ -126,21 +126,21 @@
 
   /* Color roles */
   --type-ink:   #0D1B2A;
-  --type-body:  #334155;
-  --type-muted: #6B7280;
-  --type-faint: #9CA3AF;
-  --type-label: #64748B;
+  --type-body:  #2C3E50;
+  --type-muted: #5C6470;
+  --type-faint: #9499A3;
+  --type-label: #7A6E63;
 
   /* Size / weight / line-height pairs */
-  --type-page-size:    1.5rem;    /* 24px */
+  --type-page-size:    1.625rem;  /* 26px — up from 24px, more presence */
   --type-page-weight:  700;
-  --type-page-lh:      1.2;
+  --type-page-lh:      1.15;
 
-  --type-intro-size:   1.25rem;   /* 20px */
+  --type-intro-size:   1.3125rem; /* 21px — up from 20px */
   --type-intro-weight: 600;
   --type-intro-lh:     1.3;
 
-  --type-card-size:    0.9375rem; /* 15px */
+  --type-card-size:    0.9375rem; /* 15px — unchanged */
   --type-card-weight:  600;
   --type-card-lh:      1.35;
 
@@ -148,24 +148,24 @@
   --type-sub-weight:   600;
   --type-sub-lh:       1.3;
 
-  --type-body-size:    0.875rem;  /* 14px */
+  --type-body-size:    0.9rem;    /* 14.4px — fractionally up for readability */
   --type-body-weight:  400;
-  --type-body-lh:      1.6;
+  --type-body-lh:      1.65;
 
   --type-body-sm-size: 0.8125rem; /* 13px */
-  --type-body-sm-lh:   1.55;
+  --type-body-sm-lh:   1.6;
 
   --type-meta-size:    0.75rem;   /* 12px */
   --type-meta-weight:  400;
-  --type-meta-lh:      1.4;
+  --type-meta-lh:      1.45;
 
   --type-label-size:   0.6875rem; /* 11px */
   --type-label-weight: 700;
-  --type-label-ls:     0.08em;
+  --type-label-ls:     0.1em;     /* slightly wider — more editorial */
 
-  --gov-canvas: 214 22% 88%;
-  --background: 214 32% 95%;
-  --foreground: 223 34% 14%;
+  --gov-canvas: 36 18% 91%;     /* warm parchment canvas — was cool blue-gray */
+  --background: 36 20% 93%;     /* slightly lighter warm tone for page bg */
+  --foreground: 218 48% 12%;
 
   --card: 216 36% 98%;
   --card-foreground: 223 34% 14%;
@@ -1723,19 +1723,19 @@ body {
 }
 
 .workspace-shell-brand {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 .workspace-shell-nav-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(226, 232, 240, 0.58);
+  color: rgba(196, 169, 106, 0.5);
 }
 
 .workspace-shell-topbar {
-  min-height: 64px;
+  min-height: 56px;
 }
 
 .gov-level-1,

@@ -79,7 +79,7 @@ export default function GovernanceCard({
   return (
     <article
       className={[
-        "gov-card-surface rounded-[10px] border border-[#E5E7EB] bg-white px-5 py-[18px] shadow-[0_1px_3px_rgba(0,0,0,0.05)]",
+        "gov-card-surface rounded-2xl border border-[#DDD8D0] bg-white px-5 py-[18px] shadow-[0_2px_8px_rgba(13,27,42,0.07),0_0_0_1px_rgba(13,27,42,0.03)]",
         accentBorder[accent],
         className,
       ].join(" ")}
@@ -89,7 +89,7 @@ export default function GovernanceCard({
         {titleHref ? (
           <Link
             to={titleHref}
-            className="gov-type-h3 min-w-0 flex-1 underline-offset-2 transition-colors duration-[150ms] hover:text-[#0D1B2A] hover:underline focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0EA5C2] focus-visible:outline-offset-1"
+            className="gov-type-h3 min-w-0 flex-1 underline-offset-2 transition-colors duration-150 hover:text-[#0D1B2A] hover:underline focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0EA5C2] focus-visible:outline-offset-1"
           >
             {title}
           </Link>
