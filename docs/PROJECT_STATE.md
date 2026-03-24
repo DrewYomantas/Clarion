@@ -143,8 +143,8 @@ The Approval Queue (dark card layout) and the 4-card governance rail are the two
 ## Active / Next Passes (Priority Order)
 
 ### IMMEDIATE (must fix before showing to anyone)
-1. **Meeting Mode broken** — Dashboard.tsx `partnerMode` content block not rendering. Read the conditional, fix it.
-2. **Approval Queue access control** — Gate behind founder/admin flag. Law firm users must not see this.
+1. **Meeting Mode broken** — ✅ FIXED (d95877d). partnerMode block now renders brief-first view with Open/PDF buttons, 3-stat row, cycle attention strip.
+2. **Approval Queue access control** — ✅ FIXED (d95877d). Gated at nav (WorkspaceLayout), route (App.tsx AdminRoute), and page level (ApprovalQueuePage). NOTE: In DEV_MODE, backend returns is_admin=true for all sessions — gate is correct, backend dev behavior expected.
 
 ### NEXT DESIGN PASS
 3. **Dashboard hierarchy collapse** — Brief as dominant first-viewport element, everything else secondary/tertiary. Reference: Approval Queue dark card language + governance cycle rail as design inspiration within the product.
@@ -170,6 +170,8 @@ The Approval Queue (dark card layout) and the 4-card governance rail are the two
 The `Clarion-Agency/` folder contains a 21-agent autonomous operations system for running Clarion's own business. Divisions: Prospect Intelligence, Outbound Sales, Content Engine, Product Experience, Executive (Chief of Staff). The Approval Queue in the dashboard is the founder review interface for staged agent output.
 
 **Current state:** Agents are structured and configured. SMTP credentials not set, LinkedIn/social API tokens missing. Several data files are placeholder-only. The system produces output (35 items pending in queue as of 2026-03-21) but cannot send/publish without credentials.
+
+**Agent count: 25 agents across 10 divisions.** This is the verified count from `agent_org.md`. Do not use any other number.
 
 **Audit needed:** System was built early in the project. A full file-by-file read is needed to assess what's actually functional vs skeleton. Schedule as a dedicated session.
 
@@ -221,6 +223,13 @@ Last fresh live run: `data/calibration/runs/20260317_223428`. Agreement rate 43.
 - [ ] CORS allowed origins update in `backend/app.py`
 
 ---
+
+## Last Completed Passes (This Session — 2026-03-24)
+1. Pass 1 — Meeting View fixed (partnerMode block added to Dashboard.tsx)
+2. Pass 1 — Approval Queue gated behind is_admin (WorkspaceLayout nav, App.tsx route, ApprovalQueuePage defense-in-depth)
+3. Pass 1 — Date/time display confirmed correct (toLocaleString already uses browser local TZ — no bug)
+4. Pass 2 — Dashboard hierarchy: suppressed "anchored to" metadata strip, renamed brief card title to "Current governance brief", removed PartnerBriefPanel (80/100 score — contradicts posture label, needs engine audit), cleaned "Brief handoff" label copy
+5. Commit: d95877d
 
 ## Last Completed Passes (This Session — 2026-03-21)
 1. Design system token reset — warm canvas, card elevation, sidebar identity, topbar
