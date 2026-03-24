@@ -1488,7 +1488,7 @@ const ReportDetail = () => {
                 Generated {formatDateTime(report.created_at)}
               </p>
               <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-slate-600">
-                Use this packet for partner review, action decisions, and follow-through updates for the current cycle.
+                The governance brief for this cycle — the partner-ready record of what clients said, what the firm is doing about it, and what still needs a decision.
               </p>
               {renameMode === "saved" && (
                 <p className="mt-1 text-[11px] text-emerald-700">Saved.</p>
@@ -1512,7 +1512,7 @@ const ReportDetail = () => {
               </button>
               <button
                 type="button"
-                className="gov-btn-secondary"
+                className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#0D1B2A] bg-white px-3 py-2 text-[12px] font-semibold text-[#0D1B2A] transition-colors hover:bg-slate-50"
                 onClick={() => setEmailPreviewOpen(true)}
                 disabled={isSendingBrief}
               >
