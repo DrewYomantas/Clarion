@@ -232,6 +232,9 @@ Last fresh live run: `data/calibration/runs/20260317_223428`. Agreement rate 43.
 5. Commit: d95877d
 6. Pass 3 — Brief card promoted to full-width first-viewport anchor; FirmGovernanceStatus demoted to secondary row below it (removed xl:grid-cols side-by-side layout from Tier 1). Dashboard.tsx only. Build clean.
 7. Commit: 5a83f3d
+8. Pass 4 — FirmGovernanceStatus visual weight reduced: titleClassName text-base→text-sm/font-semibold→font-medium/neutral-900→neutral-500; status badge px-4 py-2 text-base font-semibold→px-3 py-1 text-sm font-medium; all 4 metric counters text-[36px] font-bold→text-[24px] font-semibold; subtitle reworded to "Supporting posture context for the current brief." FirmGovernanceStatus.tsx only. Build clean.
+9. Commit: 8ccd5d2
+10. This session (beyonddrewtv) is now at limit. Next account picks up at: Reports/brief library elevation pass.
 
 ## Last Completed Passes (This Session — 2026-03-21)
 1. Design system token reset — warm canvas, card elevation, sidebar identity, topbar
