@@ -119,6 +119,7 @@ export default function GovernanceBriefCard({
       chip={<GovStatusChip label={chipLabel} variant={chipVariant} />}
       summary={summaryLine}
       meta={metaItems}
+      className={isPast ? "" : "border-t-2 border-t-[#0EA5C2]"}
       detail={
         /* Compact stats row inside the card body — signals + actions at a glance */
         (typeof signalsCount === "number" || typeof actionsCount === "number") ? (
@@ -150,7 +151,7 @@ export default function GovernanceBriefCard({
             <button
               type="button"
               onClick={onView}
-              className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+              className="inline-flex items-center rounded-[6px] bg-[#0D1B2A] px-3 py-1.5 text-[12px] font-medium text-white transition-colors hover:bg-[#16263b]"
             >
               View brief
             </button>
@@ -168,7 +169,7 @@ export default function GovernanceBriefCard({
             <button
               type="button"
               onClick={onDownload}
-              className="inline-flex items-center rounded-[6px] bg-[#0D1B2A] px-3 py-1.5 text-[12px] font-medium text-white transition-colors hover:bg-[#16263b]"
+              className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
             >
               {downloadLabel}
             </button>

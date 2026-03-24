@@ -185,20 +185,20 @@ const ReportsPage = () => {
 
   return (
       <PageWrapper
-        eyebrow="Leadership Artifact"
+        eyebrow="Governance Brief Library"
         title="Governance Briefs"
-        description="Meeting-ready reports summarizing client issues, actions, and exposure status."
+        description="The firm's complete governance brief record. Each cycle produces a partner-ready artifact covering client signals reviewed, actions assigned, and decisions required."
         contentClassName="stage-sequence"
       >
         <section className="rounded-[12px] border border-[#E5E7EB] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
           <div className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
             <div>
-              <p className="gov-label">Current brief library</p>
+              <p className="gov-label">About this library</p>
               <h2 className="gov-section-intro mt-2">
-                Review the latest governance brief first, then keep older cycles in reserve.
+                The governance brief is the primary artifact of each review cycle.
               </h2>
               <p className="gov-body mt-3 max-w-2xl">
-                This workspace is for final leadership-facing output. Open the current brief, make any presentation-only PDF adjustments, and use older cycles as reference rather than as equal next steps.
+                Open the current brief before every partner meeting. Prior cycles are reference — they document what the firm reviewed, decided, and assigned. The current cycle takes precedence.
               </p>
             </div>
             <div className="space-y-4">
@@ -212,11 +212,8 @@ const ReportsPage = () => {
                   <p className="mt-1 text-[20px] font-semibold text-slate-900">{loading ? "..." : summary.escalationCount}</p>
                 </div>
                 <div className="workspace-inline-stat">
-                  <p className="gov-label">This month</p>
-                  <p className="mt-1 text-[20px] font-semibold text-slate-900">
-                    {loading ? "..." : summary.reportsThisMonth}
-                    <span className="ml-1 text-sm font-medium text-slate-500">/ {maxReportsPerMonth ?? "Unlimited"}</span>
-                  </p>
+                  <p className="gov-label">Latest</p>
+                  <p className="mt-1 text-[17px] font-semibold text-slate-900 leading-snug">{loading ? "..." : summary.latestDate}</p>
                 </div>
               </div>
               {latestRow ? (
@@ -286,7 +283,7 @@ const ReportsPage = () => {
               tabs={[
                 {
                   value: "upcoming",
-                  label: "Upcoming Meetings",
+                  label: "Current Brief",
                   badgeCount: latestRow?.escalationRequired ? 1 : undefined,
                   badgeUrgent: latestRow?.escalationRequired,
                 },
@@ -302,7 +299,7 @@ const ReportsPage = () => {
               latestRow ? (
                 <div>
                   <p className="mb-3 gov-type-eyebrow">
-                    {latestRow.escalationRequired ? "Next meeting · escalation required" : "Prepared for next meeting"}
+                    {latestRow.escalationRequired ? "Next meeting · escalation required" : "Active governance brief"}
                   </p>
                   <GovernanceBriefCard
                     title={latestRow.title}
