@@ -900,81 +900,83 @@ const Dashboard = () => {
 
         {!partnerMode && !isFirstRunWorkspace ? (
         <section className="dash-tier">
-          <div className="grid gap-[var(--dash-section-gap)] xl:grid-cols-[1.1fr_0.9fr]">
-            <DashboardCard
-              title="Current governance brief"
-              subtitle={latestProcessedReport ? `${reviewPeriodLabel} · ${reviewsAnalyzed} reviews analyzed` : "Awaiting the first completed cycle"}
-              actions={
-                <div className="flex flex-wrap items-center gap-2">
-                  {latestProcessedReport ? (
-                    <Button
-                      type="button"
-                      variant="primary"
-                      onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
-                    >
-                      Open current brief
-                      <ChevronRight size={14} />
-                    </Button>
-                  ) : null}
-                  {latestReadyBrief ? (
-                    <Button type="button" variant="secondary" onClick={() => void handleExportBrief()}>
-                      {loading ? (
-                        <>
-                          <Loader2 size={14} className="animate-spin" />
-                          Loading
-                        </>
-                      ) : (
-                        <>
-                          {planUsage.pdfWatermark ? "Preview latest brief PDF" : "Download latest brief PDF"}
-                          <ChevronRight size={14} />
-                        </>
-                      )}
-                    </Button>
-                  ) : (
-                    <Button type="button" variant="primary" onClick={() => navigate("/upload")}>
-                      Upload to generate brief
-                      <ChevronRight size={14} />
-                    </Button>
-                  )}
-                </div>
-              }
-            >
-              <div className="gov-card-content">
-                <p className="gov-body">{cycleAttentionSummary}</p>
-
-                <div className="workspace-inline-stats">
-                  <div className="workspace-inline-stat">
-                    <p className="gov-type-eyebrow">Cycle period</p>
-                    <p className="mt-2 gov-type-h3">{reviewPeriodLabel}</p>
-                  </div>
-                  <div className="workspace-inline-stat">
-                    <p className="gov-type-eyebrow">Client issues</p>
-                    <p className="mt-2 gov-type-h3">
-                      {latestSignals.length} active
-                      <span className="ml-1 font-normal text-[#6B7280]">({highSeveritySignalsCount} high)</span>
-                    </p>
-                  </div>
-                  <div className="workspace-inline-stat">
-                    <p className="gov-type-eyebrow">Follow-through</p>
-                    <p className="mt-2 gov-type-h3">
-                      {openActions.length} open
-                      <span className="ml-1 font-normal text-[#6B7280]">({overdueActions.length} overdue)</span>
-                    </p>
-                  </div>
-                </div>
-
+          {/* ── Tier 1a: Brief — full-width, first-viewport anchor ── */}
+          <DashboardCard
+            title="Current governance brief"
+            subtitle={latestProcessedReport ? `${reviewPeriodLabel} · ${reviewsAnalyzed} reviews analyzed` : "Awaiting the first completed cycle"}
+            actions={
+              <div className="flex flex-wrap items-center gap-2">
                 {latestProcessedReport ? (
-                  <div className="rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] px-4 py-3">
-                    <p className="gov-type-eyebrow mb-1">Brief status</p>
-                    <p className="gov-body">
-                      Ready for partner review. Open the full brief packet for the five-section governance summary,
-                      assigned follow-through, and decisions record.
-                    </p>
-                  </div>
+                  <Button
+                    type="button"
+                    variant="primary"
+                    onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
+                  >
+                    Open current brief
+                    <ChevronRight size={14} />
+                  </Button>
                 ) : null}
+                {latestReadyBrief ? (
+                  <Button type="button" variant="secondary" onClick={() => void handleExportBrief()}>
+                    {loading ? (
+                      <>
+                        <Loader2 size={14} className="animate-spin" />
+                        Loading
+                      </>
+                    ) : (
+                      <>
+                        {planUsage.pdfWatermark ? "Preview latest brief PDF" : "Download latest brief PDF"}
+                        <ChevronRight size={14} />
+                      </>
+                    )}
+                  </Button>
+                ) : (
+                  <Button type="button" variant="primary" onClick={() => navigate("/upload")}>
+                    Upload to generate brief
+                    <ChevronRight size={14} />
+                  </Button>
+                )}
               </div>
-            </DashboardCard>
+            }
+          >
+            <div className="gov-card-content">
+              <p className="gov-body">{cycleAttentionSummary}</p>
 
+              <div className="workspace-inline-stats">
+                <div className="workspace-inline-stat">
+                  <p className="gov-type-eyebrow">Cycle period</p>
+                  <p className="mt-2 gov-type-h3">{reviewPeriodLabel}</p>
+                </div>
+                <div className="workspace-inline-stat">
+                  <p className="gov-type-eyebrow">Client issues</p>
+                  <p className="mt-2 gov-type-h3">
+                    {latestSignals.length} active
+                    <span className="ml-1 font-normal text-[#6B7280]">({highSeveritySignalsCount} high)</span>
+                  </p>
+                </div>
+                <div className="workspace-inline-stat">
+                  <p className="gov-type-eyebrow">Follow-through</p>
+                  <p className="mt-2 gov-type-h3">
+                    {openActions.length} open
+                    <span className="ml-1 font-normal text-[#6B7280]">({overdueActions.length} overdue)</span>
+                  </p>
+                </div>
+              </div>
+
+              {latestProcessedReport ? (
+                <div className="rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] px-4 py-3">
+                  <p className="gov-type-eyebrow mb-1">Brief status</p>
+                  <p className="gov-body">
+                    Ready for partner review. Open the full brief packet for the five-section governance summary,
+                    assigned follow-through, and decisions record.
+                  </p>
+                </div>
+              ) : null}
+            </div>
+          </DashboardCard>
+
+          {/* ── Tier 1b: Firm posture — secondary, below the brief ── */}
+          <div style={{ marginTop: "var(--dash-section-gap)" }}>
             <FirmGovernanceStatus
               status={exposureRisk}
               reviewPeriodLabel={reviewPeriodLabel}
