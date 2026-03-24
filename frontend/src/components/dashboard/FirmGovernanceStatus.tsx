@@ -54,13 +54,13 @@ export default function FirmGovernanceStatus({
   return (
     <DashboardCard
       title="Current governance posture"
-      subtitle="Where the current review cycle stands right now."
-      titleClassName="text-base font-semibold text-neutral-900"
+      subtitle="Supporting posture context for the current brief."
+      titleClassName="text-sm font-medium text-neutral-500"
       className="animate-slide-up"
     >
       <div className="gov-card-content">
         <div>
-          <span className={`inline-flex rounded-full border px-4 py-2 text-base font-semibold ${statusBadgeClass}`}>
+          <span className={`inline-flex rounded-full border px-3 py-1 text-sm font-medium ${statusBadgeClass}`}>
             {statusLabel}
           </span>
         </div>
@@ -92,7 +92,7 @@ export default function FirmGovernanceStatus({
                   className="rounded-[10px] border border-[#E5E7EB] border-l-[3px] border-l-transparent bg-white px-6 py-5 text-left shadow-[0_1px_3px_rgba(0,0,0,0.06)] transition hover:border-neutral-300"
                 >
                   <p className="gov-type-eyebrow">{DISPLAY_LABELS.clientIssuePlural}</p>
-                  <p className="mt-1 text-[36px] font-bold leading-none text-[#0D1B2A]">{loading ? "..." : signalsCount}</p>
+                  <p className="mt-1 text-[24px] font-semibold leading-none text-[#0D1B2A]">{loading ? "..." : signalsCount}</p>
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -112,7 +112,7 @@ export default function FirmGovernanceStatus({
                   ].join(" ")}
                 >
                   <p className="gov-type-eyebrow">New</p>
-                  <p className="mt-1 text-[36px] font-bold leading-none text-[#0D1B2A]">{loading ? "..." : newCount}</p>
+                  <p className="mt-1 text-[24px] font-semibold leading-none text-[#0D1B2A]">{loading ? "..." : newCount}</p>
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -128,7 +128,7 @@ export default function FirmGovernanceStatus({
                   className="rounded-[10px] border border-[#E5E7EB] border-l-[3px] border-l-transparent bg-white px-6 py-5 text-left shadow-[0_1px_3px_rgba(0,0,0,0.06)] transition hover:border-neutral-300"
                 >
                   <p className="gov-type-eyebrow">Open</p>
-                  <p className="mt-1 text-[36px] font-bold leading-none text-[#0D1B2A]">{loading ? "..." : openCount}</p>
+                  <p className="mt-1 text-[24px] font-semibold leading-none text-[#0D1B2A]">{loading ? "..." : openCount}</p>
                 </button>
               </TooltipTrigger>
               <TooltipContent>
@@ -147,7 +147,7 @@ export default function FirmGovernanceStatus({
                   ].join(" ")}
                 >
                   <p className="gov-type-eyebrow">Overdue</p>
-                  <p className="mt-1 text-[36px] font-bold leading-none text-[#0D1B2A]">{loading ? "..." : overdueCount}</p>
+                  <p className="mt-1 text-[24px] font-semibold leading-none text-[#0D1B2A]">{loading ? "..." : overdueCount}</p>
                 </button>
               </TooltipTrigger>
               <TooltipContent>
