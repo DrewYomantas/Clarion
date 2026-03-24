@@ -407,3 +407,64 @@
 - `3f6aba0` - outbound email quality and content SEO improvements
 - `d2647c5` - calibration + agent office pipeline fix
 - `30cb290` - approval queue dashboard/backend integration pass
+
+## 2026-03-24 - Dashboard Hierarchy + Reports Brief Library Elevation
+
+### Commits
+- `d95877d` — fix: meeting mode render + approval queue admin gate
+- `49f7cba` — design: align Dashboard to canonical governance token language
+- `5a83f3d` — layout: brief card full-width first-viewport anchor, FirmGovernanceStatus demoted
+- `8ccd5d2` — design: reduce FirmGovernanceStatus visual weight to secondary supporting context
+- `8a5974b` — docs: record Pass 4 state
+- `733fe87` — design: reports page brief library elevation — framing, tab labels, CTA hierarchy
+
+### Files Changed
+- `frontend/src/pages/Dashboard.tsx`
+- `frontend/src/components/workspace/FirmGovernanceStatus.tsx`
+- `frontend/src/pages/ReportsPage.tsx`
+- `frontend/src/components/governance/GovernanceBriefCard.tsx`
+- `frontend/src/layouts/WorkspaceLayout.tsx`
+- `frontend/src/App.tsx`
+- `docs/PROJECT_STATE.md`
+
+### What Changed
+
+**Pass 1 — Meeting Mode + Approval Queue gate (d95877d)**
+- `partnerMode` conditional in Dashboard.tsx was rendering null — added the brief-first meeting view block (brief card, PDF button, 3-stat row, cycle attention strip).
+- Approval Queue gated at three layers: WorkspaceLayout nav (sidebar item hidden for non-admin), App.tsx route (AdminRoute wrapper), ApprovalQueuePage defense-in-depth check. Law firm users cannot reach `/dashboard/approval-queue`.
+- Date/time display confirmed correct — `toLocaleString` already uses browser local timezone, no bug.
+
+**Pass 2 — Dashboard token language (49f7cba)**
+- Suppressed anchored-to metadata strip (cluttered, low value).
+- Renamed brief card title to "Current governance brief".
+- Removed PartnerBriefPanel (80/100 score contradicts posture label — needs engine audit before showing again).
+- Cleaned "Brief handoff" label copy.
+
+**Pass 3 — Brief card first-viewport anchor (5a83f3d)**
+- Brief card promoted to full-width first-viewport element.
+- Removed `xl:grid-cols` side-by-side layout from Tier 1 — FirmGovernanceStatus now renders below the brief, not beside it.
+- Dashboard.tsx only.
+
+**Pass 4 — FirmGovernanceStatus visual weight reduction (8ccd5d2)**
+- Title: `text-base font-semibold text-neutral-900` → `text-sm font-medium text-neutral-500`
+- Status badge: `px-4 py-2 text-base font-semibold` → `px-3 py-1 text-sm font-medium`
+- All 4 metric counters: `text-[36px] font-bold` → `text-[24px] font-semibold`
+- Subtitle reworded: "Supporting posture context for the current brief."
+- FirmGovernanceStatus.tsx only.
+
+**Pass 5 — Reports/brief library elevation (733fe87)**
+- ReportsPage eyebrow: "Leadership Artifact" → "Governance Brief Library"
+- Description: generic feature copy → artifact-authoritative copy
+- Section label: "Current brief library" → "About this library"
+- Section h2: generic → "The governance brief is the primary artifact of each review cycle."
+- Body copy: rewritten to position current brief as canonical, archive as reference
+- Stat block: removed usage-meter "This month / plan limit" → replaced with "Latest" date stat
+- Tab label: "Upcoming Meetings" → "Current Brief"
+- Active brief eyebrow: "Prepared for next meeting" → "Active governance brief"
+- GovernanceBriefCard: "View brief" promoted to primary dark CTA; "Download PDF" demoted to secondary; `isPast=false` card gets `border-t-2 border-t-[#0EA5C2]` top accent stripe.
+
+### Verification
+- All passes: `npm run build` clean. 1823 modules. Pre-existing 906kB bundle warning.
+- No backend changes in any pass.
+- No TypeScript type changes.
+

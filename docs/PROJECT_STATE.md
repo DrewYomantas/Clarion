@@ -152,7 +152,7 @@ The Approval Queue (dark card layout) and the 4-card governance rail are the two
 
 ### SUBSEQUENT PASSES
 5. **Signals page** — Does it read as governance-cycle evidence or detached data list?
-6. **ReportsPage** — Brief list presentation quality
+6. **ReportsPage** — Brief list presentation quality — ✅ DONE (733fe87)
 7. **Meeting Mode elevation** — Once unbroken, make it genuinely premium (full-screen, artifact-forward, one-click)
 8. **Logo iteration** — Current logo (GPT-generated C with gold pivot needle) is good DNA but needs flat variant and needs to work without the "CLIENT INTELLIGENCE" descriptor
 
@@ -223,6 +223,11 @@ Last fresh live run: `data/calibration/runs/20260317_223428`. Agreement rate 43.
 - [ ] CORS allowed origins update in `backend/app.py`
 
 ---
+
+## Last Completed Passes (This Session — 2026-03-24, continued)
+1. Pass 5 — Reports/brief library elevation. ReportsPage.tsx: eyebrow updated to "Governance Brief Library", description rewritten as artifact-authoritative copy, section label and h2 reframed around artifact primacy, body copy positions brief as the primary artifact and archive as reference, usage-meter "This month" stat replaced with "Latest" date stat (summary.latestDate), tab label "Upcoming Meetings" -> "Current Brief", active brief eyebrow "Prepared for next meeting" -> "Active governance brief". GovernanceBriefCard.tsx: "View brief" promoted to primary dark CTA; "Download PDF" demoted to secondary border button; isPast=false card gets border-t-2 border-t-[#0EA5C2] top accent stripe to distinguish active artifact from archive cards.
+2. Commit: 733fe87
+3. Build: clean (906kB bundle — pre-existing known debt)
 
 ## Last Completed Passes (This Session — 2026-03-24)
 1. Pass 1 — Meeting View fixed (partnerMode block added to Dashboard.tsx)
