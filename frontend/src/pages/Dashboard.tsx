@@ -476,6 +476,37 @@ const Dashboard = () => {
     return "This cycle is active, but the latest brief is still being prepared.";
   }, [highSeveritySignalsCount, latestReadyBrief, overdueActions.length, unownedActionsCount]);
 
+  const meetingReadinessBadge = useMemo(() => {
+    if (overdueActions.length > 0) {
+      return {
+        label: "Needs immediate cleanup",
+        toneClassName: "border-rose-200 bg-rose-50 text-rose-700",
+      };
+    }
+    if (unownedActionsCount > 0) {
+      return {
+        label: "Ownership assignment needed",
+        toneClassName: "border-amber-200 bg-amber-50 text-amber-700",
+      };
+    }
+    if (highSeveritySignalsCount > 0) {
+      return {
+        label: "High-severity issues active",
+        toneClassName: "border-[#BFDBFE] bg-[#EFF6FF] text-[#1E3A8A]",
+      };
+    }
+    if (latestReadyBrief) {
+      return {
+        label: "Meeting-ready",
+        toneClassName: "border-emerald-200 bg-emerald-50 text-emerald-700",
+      };
+    }
+    return {
+      label: "Brief in preparation",
+      toneClassName: "border-slate-200 bg-slate-100 text-slate-700",
+    };
+  }, [highSeveritySignalsCount, latestReadyBrief, overdueActions.length, unownedActionsCount]);
+
   const handleExportBrief = useCallback(async (targetBrief?: ReportListItem | null) => {
     const brief = targetBrief || latestReadyBrief;
     if (!brief?.download_pdf_url) {
@@ -681,27 +712,41 @@ const Dashboard = () => {
             Brief-first, no workspace chrome
             ════════════════════════════════════ */}
         {partnerMode ? (
-          <section className="space-y-6">
-            {/* Primary: the current governance brief */}
-            <div className="rounded-[12px] border border-[#D9E2EC] bg-white px-6 py-6 shadow-[0_1px_4px_rgba(0,0,0,0.07)]">
-              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <section className="space-y-5">
+            <div className="rounded-[14px] border border-[#CDD9E7] bg-gradient-to-b from-white via-[#F8FBFE] to-[#F2F7FB] px-6 py-6 shadow-[0_12px_30px_rgba(13,27,42,0.1)] sm:px-7">
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-[#E2E8F0] pb-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center rounded-full border border-[#CBD5E1] bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.07em] text-slate-600">
+                    Meeting mode
+                  </span>
+                  <span
+                    className={[
+                      "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.07em]",
+                      meetingReadinessBadge.toneClassName,
+                    ].join(" ")}
+                  >
+                    {meetingReadinessBadge.label}
+                  </span>
+                </div>
+                <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-slate-500">
+                  Artifact-first partner record
+                </p>
+              </div>
+
+              <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <p className="gov-type-eyebrow mb-1">
-                    Partner briefing · current governance brief
-                  </p>
-                  <h2 className="gov-type-h2">
-                    {latestProcessedReport
-                      ? `${reviewPeriodLabel}`
-                      : "No brief ready yet"}
+                  <p className="gov-type-eyebrow mb-1">Partner briefing · current governance brief</p>
+                  <h2 className="mt-1 font-serif text-[34px] leading-[1.1] text-[#0D1B2A]">
+                    {latestProcessedReport ? `${reviewPeriodLabel}` : "No brief ready yet"}
                   </h2>
-                  {latestProcessedReport && (
-                    <p className="gov-type-body mt-1">
+                  {latestProcessedReport ? (
+                    <p className="gov-type-body mt-2">
                       {reviewsAnalyzed} reviews analyzed · last processed {lastProcessedDateTime}
                     </p>
-                  )}
+                  ) : null}
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  {latestProcessedReport && (
+                  {latestProcessedReport ? (
                     <Button
                       type="button"
                       variant="primary"
@@ -710,37 +755,47 @@ const Dashboard = () => {
                       Open governance brief
                       <ChevronRight size={14} />
                     </Button>
-                  )}
-                  {latestReadyBrief && (
+                  ) : null}
+                  {latestReadyBrief ? (
                     <Button type="button" variant="secondary" onClick={() => void handleExportBrief()}>
                       {planUsage.pdfWatermark ? "Preview brief PDF" : "Download brief PDF"}
                       <ChevronRight size={14} />
                     </Button>
-                  )}
+                  ) : null}
                 </div>
               </div>
 
               {latestProcessedReport ? (
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <div className="col-span-full">
-                    <p className="gov-type-body text-slate-600">
-                      The partner-ready record for this cycle. Review the brief, confirm follow-through state, and carry this into the room.
+                <div className="space-y-4">
+                  <p className="gov-type-body text-slate-700">
+                    The partner-ready record for this cycle. Review the brief, confirm follow-through state, and carry this
+                    artifact directly into the room.
+                  </p>
+
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    <div className="rounded-[11px] border border-[#D9E2EC] bg-white/90 px-4 py-3">
+                      <p className="gov-type-eyebrow mb-2">Cycle period</p>
+                      <p className="gov-type-h3">{reviewPeriodLabel}</p>
+                    </div>
+                    <div className="rounded-[11px] border border-[#D9E2EC] bg-white/90 px-4 py-3">
+                      <p className="gov-type-eyebrow mb-2">Client issues</p>
+                      <p className="gov-type-h3">
+                        {latestSignals.length} active
+                        <span className="ml-1 font-normal text-[#6B7280]">({highSeveritySignalsCount} high severity)</span>
+                      </p>
+                    </div>
+                    <div className="rounded-[11px] border border-[#D9E2EC] bg-white/90 px-4 py-3">
+                      <p className="gov-type-eyebrow mb-2">Posture</p>
+                      <p className="gov-type-h3">{exposureRisk} exposure</p>
+                    </div>
+                  </div>
+
+                  <div className="rounded-[11px] border border-[#D8E4EF] bg-white/90 px-4 py-3">
+                    <p className="gov-type-eyebrow mb-1">Meeting packet includes</p>
+                    <p className="gov-type-body text-slate-700">
+                      Leadership Briefing, Signals That Matter Most, Assigned Follow-Through, Decisions &amp; Next Steps, and
+                      Supporting Client Evidence.
                     </p>
-                  </div>
-                  <div className="rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] px-4 py-3">
-                    <p className="gov-type-eyebrow mb-2">Cycle period</p>
-                    <p className="gov-type-h3">{reviewPeriodLabel}</p>
-                  </div>
-                  <div className="rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] px-4 py-3">
-                    <p className="gov-type-eyebrow mb-2">Client issues</p>
-                    <p className="gov-type-h3">
-                      {latestSignals.length} active
-                      <span className="ml-1 font-normal text-[#6B7280]">({highSeveritySignalsCount} high severity)</span>
-                    </p>
-                  </div>
-                  <div className="rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] px-4 py-3">
-                    <p className="gov-type-eyebrow mb-2">Posture</p>
-                    <p className="gov-type-h3">{exposureRisk} exposure</p>
                   </div>
                 </div>
               ) : (
@@ -750,11 +805,22 @@ const Dashboard = () => {
               )}
             </div>
 
-            {/* Secondary: cycle attention summary */}
-            {latestProcessedReport && (
-              <div className="rounded-[12px] border border-[#D9E2EC] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
-                <p className="gov-type-eyebrow mb-2">Pre-meeting readiness</p>
-                <p className="gov-type-body">{cycleAttentionSummary}</p>
+            {latestProcessedReport ? (
+              <div className="rounded-[12px] border border-[#D5DFEA] bg-white px-6 py-5 shadow-[0_8px_20px_rgba(13,27,42,0.06)]">
+                <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="gov-type-eyebrow mb-1">Pre-meeting readiness</p>
+                    <p className="gov-type-body text-slate-700">{cycleAttentionSummary}</p>
+                  </div>
+                  <span
+                    className={[
+                      "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.07em]",
+                      meetingReadinessBadge.toneClassName,
+                    ].join(" ")}
+                  >
+                    {meetingReadinessBadge.label}
+                  </span>
+                </div>
                 <div className="workspace-inline-stats mt-4">
                   <div className="workspace-inline-stat">
                     <p className="gov-type-eyebrow">Open follow-through</p>
@@ -777,16 +843,12 @@ const Dashboard = () => {
                   Resolve overdue and unowned items before opening the brief in the meeting.
                 </p>
               </div>
-            )}
+            ) : null}
 
             <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={togglePartnerMode}
-                className="gov-type-meta underline underline-offset-4 hover:text-[#0D1B2A] transition-colors"
-              >
+              <Button type="button" variant="secondary" size="sm" onClick={togglePartnerMode}>
                 Exit meeting view
-              </button>
+              </Button>
             </div>
           </section>
         ) : null}

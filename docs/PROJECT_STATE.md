@@ -155,7 +155,7 @@ The Approval Queue (dark card layout) and the 4-card governance rail are the two
 6. **ReportDetail page header framing polish** — ✅ DONE (5a1591a). Sub-copy rewritten to artifact-first language. "Send partner brief" button promoted to dark-border tier, visually distinct from "Download PDF".
 
 ### NEXT DESIGN PASS
-9. **Meeting Mode elevation** — ✅ DONE (76536c9). Primary card eyebrow reframed. Positioning line added above stat tiles. Secondary card reframed as "Pre-meeting readiness". Stat labels governance-framed. Readiness gate line added.
+9. **Meeting Mode elevation** - DONE (refined 2026-03-24). PartnerMode now carries premium briefing hierarchy: meeting/readiness badges, artifact-first framing strip, stronger primary brief surface, serif cycle heading, "Meeting packet includes" artifact spine line, polished readiness panel, and button-based exit control. No logic or routing changes.
 
 ### NEXT DESIGN PASS (current)
 10. **Dashboard Tier 2 / Tier 3 tightening** — The lower dashboard tiers (GovernanceGuidance, suggestedActions, OversightBand, GovernanceNarrativeRail) are structurally sound but the section is still long. Candidate for a focused collapse or label-polish pass. Low urgency — the brief is already dominant first-viewport. Review carefully before committing to scope.
@@ -163,7 +163,7 @@ The Approval Queue (dark card layout) and the 4-card governance rail are the two
 ### SUBSEQUENT PASSES
 5. **Signals page** — Does it read as governance-cycle evidence or detached data list? — ✅ DONE (7929bbe)
 6. **ReportsPage** — Brief list presentation quality — ✅ DONE (733fe87)
-7. **Meeting Mode elevation** — Once unbroken, make it genuinely premium (full-screen, artifact-forward, one-click)
+7. **Meeting Mode elevation** — DONE (d95877d + 76536c9 + this refinement). PartnerMode now reads as a partner-ready artifact surface.
 8. **Logo iteration** — Current logo (GPT-generated C with gold pivot needle) is good DNA but needs flat variant and needs to work without the "CLIENT INTELLIGENCE" descriptor
 
 ### LATER
@@ -233,6 +233,10 @@ Last fresh live run: `data/calibration/runs/20260317_223428`. Agreement rate 43.
 - [ ] CORS allowed origins update in `backend/app.py`
 
 ---
+
+## Last Completed Passes (This Session - 2026-03-24, continued x6)
+1. Pass 9 - Meeting Mode elevation refinement. Dashboard.tsx partnerMode block only. Added readiness badge model (display-only) and introduced a presentation-quality artifact shell: top meeting/readiness chips, artifact-first framing line, serif cycle title, stronger stat tiles, explicit "Meeting packet includes" spine reminder, polished pre-meeting readiness card with mirrored badge, and promoted "Exit meeting view" to secondary button treatment. No backend/API/data-flow changes.
+2. Build: clean (npm run build in frontend/, 1823 modules, pre-existing large chunk warning remains).
 
 ## Last Completed Passes (This Session — 2026-03-24, continued ×5)
 1. Pass 9 — Meeting Mode elevation (76536c9). Dashboard.tsx partnerMode block only. Primary card eyebrow: "Meeting view · current governance brief" → "Partner briefing · current governance brief". Positioning line added above stat tiles: "The partner-ready record for this cycle…". Secondary card eyebrow: "Cycle attention" → "Pre-meeting readiness". Stat labels: "Open actions" → "Open follow-through", "Overdue" → "Overdue items", "High-severity signals" → "High-severity issues". Readiness gate line added after stats: "Resolve overdue and unowned items before opening the brief in the meeting." Build clean (1823 modules, 907kB pre-existing warning).
