@@ -33,12 +33,12 @@ export default function OversightBand({ metrics, loading = false }: OversightBan
   const navigate = useNavigate();
 
   return (
-    <div className="mb-8">
-      <div className="mb-3 flex items-baseline gap-2">
-        <p className="gov-eyebrow">Today's oversight</p>
+    <div className="mb-0">
+      <div className="mb-2 flex items-baseline gap-2">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#94A3B8]">Oversight snapshot</p>
       </div>
       <div
-        className="grid gap-3"
+        className="grid gap-2"
         style={{ gridTemplateColumns: `repeat(${metrics.length}, minmax(0, 1fr))` }}
       >
         {metrics.map((metric) => {
@@ -58,12 +58,12 @@ export default function OversightBand({ metrics, loading = false }: OversightBan
 
           const inner = (
             <div
-              className="rounded-[10px] border border-[#E5E7EB] bg-white px-5 py-4 shadow-[0_1px_3px_rgba(0,0,0,0.05)]"
-              style={{ borderLeft: `3px solid ${accentColor}` }}
+              className="rounded-[10px] border border-[#E5E7EB] bg-white px-4 py-3 shadow-[0_1px_3px_rgba(0,0,0,0.05)]"
+              style={{ borderLeft: `2px solid ${accentColor}` }}
             >
-              <p className="gov-eyebrow mb-2">{metric.label}</p>
+              <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#94A3B8]">{metric.label}</p>
               <p
-                className="text-[32px] font-bold leading-none text-[#0F172A]"
+                className="text-[26px] font-semibold leading-none text-[#0F172A]"
                 style={{ fontVariantNumeric: "tabular-nums" }}
               >
                 {loading ? (
@@ -73,7 +73,7 @@ export default function OversightBand({ metrics, loading = false }: OversightBan
                 )}
               </p>
               {metric.sub ? (
-                <p className="mt-1.5 text-[12px] text-[#64748B]">{metric.sub}</p>
+                <p className="mt-1 text-[11px] text-[#64748B]">{metric.sub}</p>
               ) : null}
             </div>
           );

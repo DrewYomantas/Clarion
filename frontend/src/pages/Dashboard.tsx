@@ -30,7 +30,6 @@ import RecentGovernanceBriefs from "@/components/dashboard/RecentGovernanceBrief
 import PlanBadge from "@/components/dashboard/PlanBadge";
 import PartnerBriefPanel from "@/components/dashboard/PartnerBriefPanel";
 import DashboardSectionDivider from "@/components/dashboard/DashboardSectionDivider";
-import DashSectionHeader from "@/components/dashboard/DashSectionHeader";
 import GovernanceLoop from "@/components/dashboard/GovernanceLoop";
 import OversightBand from "@/components/dashboard/OversightBand";
 import GovernanceNarrativeRail from "@/components/dashboard/GovernanceNarrativeRail";
@@ -1069,7 +1068,7 @@ const Dashboard = () => {
             <div className="dash-tier-gap" />
             <DashboardSectionDivider
               label="Attention now"
-              description="What still needs follow-through before the next partner review"
+              description="Immediate follow-through before partner review"
             />
           </div>
 
@@ -1082,23 +1081,19 @@ const Dashboard = () => {
 
             {suggestedActions.length > 0 ? (
               <div>
-                <DashSectionHeader
-                  title="Follow-through to assign now"
-                  subtitle="Recommended responses where current client issues still do not have clear ownership."
-                />
                 <div className="space-y-3">
-                  {suggestedActions.map((item) => (
+                  {suggestedActions.slice(0, 2).map((item) => (
                     <GovSectionCard key={`suggested-action-${item.id}`} accent="attention" padding="md">
-                      <p className="gov-type-eyebrow mb-1">Suggested governance action</p>
+                      <p className="gov-type-eyebrow mb-1">Assign follow-through</p>
                       <p className="gov-body mb-2">{item.context}</p>
                       <p className="gov-type-h3">{item.recommendation}</p>
                       <div className="mt-4 flex justify-end">
                         <button
                           type="button"
                           onClick={() => navigate(`/dashboard/signals/${item.id}`)}
-                          className="gov-btn-primary inline-flex items-center px-4 py-2 text-[13px] font-medium"
+                          className="gov-btn-secondary inline-flex items-center px-4 py-2 text-[13px] font-medium"
                         >
-                          Create governance action
+                          Assign in signals
                         </button>
                       </div>
                     </GovSectionCard>
@@ -1107,7 +1102,8 @@ const Dashboard = () => {
               </div>
             ) : null}
 
-            <DashboardCard
+            <div className="grid gap-[var(--dash-section-gap)] xl:grid-cols-2">
+              <DashboardCard
               title="Follow-through to review"
               subtitle="Ownership gaps and due-state tied to the current governance brief."
               actions={
@@ -1155,39 +1151,41 @@ const Dashboard = () => {
                   </div>
                 ) : null}
               </div>
-            </DashboardCard>
+              </DashboardCard>
 
-            <DashboardCard title="Recent follow-through" subtitle="Latest issue response, owner, and current status">
-              {loading ? (
-                <ul aria-label="Loading recent actions" className="space-y-3">
-                  {(["w-44", "w-56", "w-36"] as const).map((wCls, i) => (
-                    <li key={`recent-action-skel-${i}`} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-                      <div className={`gov-skel-shimmer h-3 rounded ${wCls}`} />
-                      <div className="mt-2 gov-skel-shimmer h-3 w-52 rounded" />
-                      <div className="mt-1.5 gov-skel-shimmer h-2.5 w-36 rounded" />
-                    </li>
-                  ))}
-                </ul>
-              ) : recentGovernanceActions.length === 0 ? (
-                <GovernanceEmptyState
-                  size="sm"
-                  icon={<ClipboardList size={18} />}
-                  title="No governance actions assigned yet"
-                  description="Actions are created after reviewing client issues. Assign ownership and due dates — they will appear here."
-                  primaryAction={{ label: "Review client issues", href: "/dashboard/signals" }}
-                />
-              ) : (
-                <ul className="gov-list-stack">
-                  {recentGovernanceActions.map((item) => (
-                    <li key={item.id} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-                      <p className="gov-body"><span className="font-semibold text-[#0D1B2A]">Issue:</span> {item.issue}</p>
-                      <p className="gov-body mt-1"><span className="font-semibold text-[#0D1B2A]">Action:</span> {item.action}</p>
-                      <p className="gov-type-meta mt-1">Owner: {item.owner || "Unassigned"} · Status: {item.status || "open"}</p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </DashboardCard>
+              <DashboardCard title="Recent follow-through" subtitle="Latest issue response, owner, and current status">
+                {loading ? (
+                  <ul aria-label="Loading recent actions" className="space-y-3">
+                    {(["w-44", "w-56", "w-36"] as const).map((wCls, i) => (
+                      <li key={`recent-action-skel-${i}`} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
+                        <div className={`gov-skel-shimmer h-3 rounded ${wCls}`} />
+                        <div className="mt-2 gov-skel-shimmer h-3 w-52 rounded" />
+                        <div className="mt-1.5 gov-skel-shimmer h-2.5 w-36 rounded" />
+                      </li>
+                    ))}
+                  </ul>
+                ) : recentGovernanceActions.length === 0 ? (
+                  <GovernanceEmptyState
+                    size="sm"
+                    icon={<ClipboardList size={18} />}
+                    title="No governance actions assigned yet"
+                    description="Actions are created after reviewing client issues. Assign ownership and due dates — they will appear here."
+                    primaryAction={{ label: "Review client issues", href: "/dashboard/signals" }}
+                  />
+                ) : (
+                  <ul className="gov-list-stack">
+                    {recentGovernanceActions.map((item) => (
+                      <li key={item.id} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
+                        <p className="gov-body"><span className="font-semibold text-[#0D1B2A]">Issue:</span> {item.issue}</p>
+                        <p className="gov-body mt-1"><span className="font-semibold text-[#0D1B2A]">Action:</span> {item.action}</p>
+                        <p className="gov-type-meta mt-1">Owner: {item.owner || "Unassigned"} · Status: {item.status || "open"}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </DashboardCard>
+            </div>
+
 
           </div>
 
@@ -1199,12 +1197,12 @@ const Dashboard = () => {
             <div className="dash-tier-gap" />
             <DashboardSectionDivider
               label="Supporting cycle context"
-              description="Change, history, and broader brief context after the immediate review work"
+              description="Reference context after immediate follow-through"
             />
           </div>
 
           <div className="dash-tier">
-            <div className="grid gap-[var(--dash-section-gap)] xl:grid-cols-[1.2fr_0.8fr]">
+            <div>
               <SinceLastReview
                 isLoading={loading}
                 newFeedbackSignals={newSignalsCount}
@@ -1221,83 +1219,85 @@ const Dashboard = () => {
               onDownload={handleExportBrief}
             />
 
-            <OversightBand
-              loading={loading}
-              metrics={[
-                {
-                  label: "High-risk signals",
-                  value: highSeveritySignalsCount,
-                  sub: `of ${latestSignals.length} total client issues`,
-                  risk: true,
-                  route: "/dashboard/signals",
-                  routeQuery: "filter=high",
-                },
-                {
-                  label: "Unowned actions",
-                  value: unownedActionsCount,
-                  sub: `${openActions.length} open actions total`,
-                  warn: true,
-                  route: "/dashboard/actions",
-                },
-                {
-                  label: "Briefs ready",
-                  value: readyReportCount,
-                  sub: readyReportCount === 1 ? "1 completed review cycle" : `${readyReportCount} completed cycles`,
-                  success: readyReportCount > 0,
-                  route: "/dashboard/reports",
-                },
-                {
-                  label: "Overdue actions",
-                  value: overdueActions.length,
-                  sub: overdueActions.length === 0 ? "No overdue items" : "Require immediate attention",
-                  risk: true,
-                  route: "/dashboard/actions",
-                  routeQuery: "filter=overdue",
-                },
-              ]}
-            />
+            <div className="grid gap-[var(--dash-section-gap)] xl:grid-cols-2">
+              <OversightBand
+                loading={loading}
+                metrics={[
+                  {
+                    label: "High-risk signals",
+                    value: highSeveritySignalsCount,
+                    sub: `of ${latestSignals.length} total client issues`,
+                    risk: true,
+                    route: "/dashboard/signals",
+                    routeQuery: "filter=high",
+                  },
+                  {
+                    label: "Unowned actions",
+                    value: unownedActionsCount,
+                    sub: `${openActions.length} open actions total`,
+                    warn: true,
+                    route: "/dashboard/actions",
+                  },
+                  {
+                    label: "Briefs ready",
+                    value: readyReportCount,
+                    sub: readyReportCount === 1 ? "1 completed review cycle" : `${readyReportCount} completed cycles`,
+                    success: readyReportCount > 0,
+                    route: "/dashboard/reports",
+                  },
+                  {
+                    label: "Overdue actions",
+                    value: overdueActions.length,
+                    sub: overdueActions.length === 0 ? "No overdue items" : "Require immediate attention",
+                    risk: true,
+                    route: "/dashboard/actions",
+                    routeQuery: "filter=overdue",
+                  },
+                ]}
+              />
 
-            <GovernanceNarrativeRail
-              loading={loading}
-              cards={[
-                {
-                  stage: "Evidence",
-                  description: "Raw client feedback uploaded and processed into this review cycle.",
-                  statusLines: [
-                    `${reviewsAnalyzed} reviews analyzed`,
-                    latestProcessedReport ? `Last cycle: ${reviewPeriodLabel}` : "No cycle yet",
-                  ],
-                  route: "/upload",
-                },
-                {
-                  stage: "Signals",
-                  description: "Recurring patterns and client issues extracted from evidence.",
-                  statusLines: [
-                    `${latestSignals.length} client issue${latestSignals.length === 1 ? "" : "s"} detected`,
-                    newSignalsCount > 0 ? `${newSignalsCount} new since last review` : "No net-new signals",
-                  ],
-                  route: "/dashboard/signals",
-                },
-                {
-                  stage: "Follow-Through" as never,
-                  description: "Owner-assigned follow-through tied to active client issues.",
-                  statusLines: [
-                    `${openActions.length} open action${openActions.length === 1 ? "" : "s"}`,
-                    overdueActions.length > 0 ? `${overdueActions.length} overdue` : "No overdue actions",
-                  ],
-                  route: "/dashboard/actions",
-                },
-                {
-                  stage: "Briefs" as never,
-                  description: "Leadership-ready summaries prepared for partner review.",
-                  statusLines: [
-                    `${readyReportCount} brief${readyReportCount === 1 ? "" : "s"} ready`,
-                    latestReadyBrief ? `Latest: ${formatDateOnly(latestReadyBrief.created_at)}` : "Awaiting first cycle",
-                  ],
-                  route: "/dashboard/reports",
-                },
-              ]}
-            />
+              <GovernanceNarrativeRail
+                loading={loading}
+                cards={[
+                  {
+                    stage: "Evidence",
+                    description: "Raw client feedback uploaded and processed into this review cycle.",
+                    statusLines: [
+                      `${reviewsAnalyzed} reviews analyzed`,
+                      latestProcessedReport ? `Last cycle: ${reviewPeriodLabel}` : "No cycle yet",
+                    ],
+                    route: "/upload",
+                  },
+                  {
+                    stage: "Signals",
+                    description: "Recurring patterns and client issues extracted from evidence.",
+                    statusLines: [
+                      `${latestSignals.length} client issue${latestSignals.length === 1 ? "" : "s"} detected`,
+                      newSignalsCount > 0 ? `${newSignalsCount} new since last review` : "No net-new signals",
+                    ],
+                    route: "/dashboard/signals",
+                  },
+                  {
+                    stage: "Follow-Through" as never,
+                    description: "Owner-assigned follow-through tied to active client issues.",
+                    statusLines: [
+                      `${openActions.length} open action${openActions.length === 1 ? "" : "s"}`,
+                      overdueActions.length > 0 ? `${overdueActions.length} overdue` : "No overdue actions",
+                    ],
+                    route: "/dashboard/actions",
+                  },
+                  {
+                    stage: "Briefs" as never,
+                    description: "Leadership-ready summaries prepared for partner review.",
+                    statusLines: [
+                      `${readyReportCount} brief${readyReportCount === 1 ? "" : "s"} ready`,
+                      latestReadyBrief ? `Latest: ${formatDateOnly(latestReadyBrief.created_at)}` : "Awaiting first cycle",
+                    ],
+                    route: "/dashboard/reports",
+                  },
+                ]}
+              />
+            </div>
 
             {/* PartnerBriefPanel (80/100 reputation score) deferred:
                 score framing conflicts with exposure posture label — needs engine/label audit before showing publicly */}
@@ -1333,7 +1333,7 @@ const Dashboard = () => {
             <div className="dash-tier-gap" />
             <DashboardSectionDivider
               label="Workspace reference"
-              description="Secondary plan, seat, and capacity details"
+              description="Plan, seat, and capacity details"
             />
           </div>
 
