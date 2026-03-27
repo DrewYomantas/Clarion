@@ -1,5 +1,55 @@
 # AI Pass Changelog
 
+## 2026-03-26 - Pass 12 - Landing / Marketing Proof + Onboarding Clarity + Launch-Readiness Truth Test
+
+### Commit
+- `9b6202e` - design: tighten launch-facing landing and first-run clarity
+
+### Files Changed
+- `frontend/src/content/landingV3.ts`
+- `frontend/src/components/landing/LandingHeroSection.tsx`
+- `frontend/src/components/landing/LandingOperatingPreview.tsx`
+- `frontend/src/components/landing/LandingWorkflowSection.tsx`
+- `frontend/src/pages/Onboarding.tsx`
+- `frontend/src/pages/Upload.tsx`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Tightened the public buyer narrative so Clarion reads as a law-firm governance brief workflow rather than a generic analytics product:
+  - Landing hero now leads with partner-meeting clarity, decision visibility, and named follow-through.
+  - Landing preview framing now shows the artifact as the current governance brief for partner review, sourced from one review-period export.
+  - Public workflow language now says `client issues` instead of `governance signals`.
+  - Public output framing now stresses what leadership gets back: the brief, the shared workspace record, and shareable meeting outputs.
+- Clarified first-run onboarding so the user understands what Clarion creates before being asked to upload anything:
+  - Onboarding Step 2 now explains the cycle output (governance brief, client-issues record, follow-through) and keeps security assurances secondary.
+  - Onboarding upload step now correctly names the required CSV fields: `review date`, `rating`, and `review text`.
+  - Confirmation and completion states now frame the result as the first cycle, not just generic setup completion.
+- Clarified the upload-to-brief path in the authenticated upload flow:
+  - Upload page now explains the output as the current review packet containing the governance brief, client issues, and follow-through.
+  - Sample-proof CTA on upload now points to the sample brief first, not the sample workspace.
+  - Success state and next-step language now explain where to review the cycle first and why.
+
+### Explicitly Not Touched
+- No backend logic changes.
+- No governance engine, calibration, or PDF changes.
+- No reopening of completed dashboard redesign work.
+- No pricing, checkout, or route-contract changes.
+
+### Verification
+- `npm run build` in `frontend/` - passed (1822 modules).
+- Playwright runtime checks completed on:
+  - landing page (`/`)
+  - sample brief (`/demo/reports/26`)
+  - upload page (`/upload`)
+  - first-run onboarding render (`/onboarding`) using the local smoke user
+- Pre-existing warning remains: Vite chunk-size warning (~910.23 kB JS bundle), unchanged in nature.
+
+### Launch Verdict
+- Near-ready with limited blockers.
+- Public product understanding is strong enough for launch evaluation, but public launch should wait for deployed-environment truth: Render reconnect / stale deploy resolution, deployed smoke confirmation, and verification that setup-dependent delivery paths match production reality.
+
 ## 2026-03-26 - Pass 11 — Dashboard Tier 3 Rhythm Finalization + Authenticated Continuity Copy Lock
 
 ### Commit

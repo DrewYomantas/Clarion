@@ -56,13 +56,11 @@ Latest commit to deploy: `fa276e5` (chore: update GitHub link to DrewYomantas/Cl
 
 ## Current Phase
 
-**Design system reset complete (2026-03-21).** Workspace canvas warmed, card elevation increased, sidebar identity upgraded with SVG mark + Newsreader wordmark + gold accent, topbar refined. Build passes clean.
+**Authenticated workspace completion + continuity lock is complete (2026-03-26).** Dashboard redesign is no longer the main active track. The brief-first authenticated system is coherent enough that public proof and launch readiness now matter more than more dashboard compression.
 
-**Repo hygiene pass complete (2026-03-21).** Junk untracked, .gitignore overhauled, README rewritten, ENGINEERING_PRACTICES.md created.
+**Public buyer-readiness pass complete (2026-03-26).** Landing copy, onboarding framing, and upload-to-brief language now explain Clarion as a law-firm governance brief workflow rather than a generic analytics product.
 
-**Bug fixed (2026-03-21).** Email verification 500 crash fixed — removed spurious `RETURNING user_id` from verify-email upsert.
-
-**Active design direction:** Dashboard workspace overhaul — premium, modern, "Mercury Bank meets a Cravath partner meeting." See NORTH_STAR.md for full design direction. See screenshot audit below for specific issues.
+**Launch-readiness truth test:** Near-ready with limited blockers. Product clarity is materially stronger, but live launch still depends on deployed-environment truth: Render reconnect / stale deploy resolution, final deployed smoke on public + authenticated flows, and confirmation that setup-dependent delivery paths (email / checkout / support contact paths) match production reality.
 
 ---
 
@@ -164,7 +162,10 @@ The Approval Queue (dark card layout) and the 4-card governance rail are the two
 11. **Dashboard Tier 3 final rhythm trim** — ✅ DONE (`ebc3c41`). `SinceLastReview` now pairs with `Escalations and watchpoints` in a shared `xl` row; no logic/API/state changes. Also shipped a tight authenticated continuity copy lock across Dashboard/Signals/Execution/Reports surfaces to remove residual dashboard-language drift.
 
 ### NEXT LOGICAL PASS
-12. **Cycle-over-cycle continuity proofing** — tighten cross-page `what changed / what remains unresolved` language and empty-state continuity from Workspace Home into ReportDetail without reopening dashboard layout structure.
+12. **Go-live blocker pass** - resolve deployed-environment truth before public launch: reconnect Render to the current repo state, run a deployed smoke across landing/signup/upload/report flows, and confirm setup-dependent delivery paths behave as the public site claims.
+
+### FOLLOWING PASS
+13. **Cycle-over-cycle continuity proofing** - tighten cross-page `what changed / what remains unresolved` language and empty-state continuity from Workspace Home into ReportDetail without reopening dashboard layout structure.
 
 ### SUBSEQUENT PASSES
 5. **Signals page** — Does it read as governance-cycle evidence or detached data list? — ✅ DONE (7929bbe)
@@ -239,12 +240,11 @@ Last fresh live run: `data/calibration/runs/20260317_223428`. Agreement rate 43.
 - [ ] CORS allowed origins update in `backend/app.py`
 ---
 
-## Last Completed Passes (This Session — 2026-03-26)
-1. Pass 11 — Dashboard Tier 3 final rhythm trim + authenticated continuity copy lock (`ebc3c41`). Files: `Dashboard.tsx`, `SignalsPage.tsx`, `ExecutionPage.tsx`, `ReportsPage.tsx`, `GovernanceBriefCard.tsx`, `WorkspaceLayout.tsx`. Changes: paired `SinceLastReview` + `Escalations and watchpoints` into a shared `xl` row, tightened escalations framing language, aligned Signals triage language to `Needs Partner Attention`, aligned Execution ownership tab language to `My follow-through`, and standardized brief-prep CTA language across Reports surfaces.
-2. Explicitly not touched: backend logic, meeting-mode logic, API/routes/state contracts, ReportDetail.
-3. Verification: `npm run build` clean (`frontend/`, 1822 modules, 909.87kB JS bundle warning unchanged) + authenticated Playwright runtime sweep across Workspace Home, Signals, Follow-Through, Briefs, and Brief Detail.
-4. Milestone status: authenticated workspace continuity lock is complete; dashboard redesign is no longer the primary active track.
-
+## Last Completed Passes (This Session - 2026-03-26)
+1. Pass 12 - Landing / marketing proof + onboarding clarity + launch-readiness truth test (`9b6202e`). Files: `LandingHeroSection.tsx`, `LandingOperatingPreview.tsx`, `LandingWorkflowSection.tsx`, `landingV3.ts`, `Onboarding.tsx`, `Upload.tsx`. Changes: landing hero and workflow copy now lead with partner-meeting clarity, governance brief, and follow-through; landing preview framing now presents the artifact as the current governance brief for partner review; jargon like `governance signals` was demoted on public surfaces; onboarding Step 2 now explains what Clarion creates before asking the user to upload; onboarding upload instructions now correctly name required fields (`review date`, `rating`, `review text`); upload page now explains the output as a review packet containing the governance brief, client issues, and follow-through.
+2. Explicitly not touched: backend logic, governance engine, PDF internals, completed dashboard layout work, pricing mechanics, or route/API contracts.
+3. Verification: `npm run build` clean (`frontend/`, 1822 modules, 910.23kB JS bundle warning unchanged) + Playwright runtime checks on landing, sample brief, upload page, and a true first-run onboarding render using the local smoke user.
+4. Launch-readiness verdict: near-ready with limited blockers. Product clarity is strong enough for public evaluation, but public launch should wait for deployed-environment truth (Render reconnect / latest commit live, deployed smoke, and verification of setup-dependent delivery paths).
 
 ## Last Completed Passes (This Session - 2026-03-24, continued x6)
 1. Pass 9 - Meeting Mode elevation refinement. Dashboard.tsx partnerMode block only. Added readiness badge model (display-only) and introduced a presentation-quality artifact shell: top meeting/readiness chips, artifact-first framing line, serif cycle title, stronger stat tiles, explicit "Meeting packet includes" spine reminder, polished pre-meeting readiness card with mirrored badge, and promoted "Exit meeting view" to secondary button treatment. No backend/API/data-flow changes.
