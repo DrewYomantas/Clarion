@@ -2,12 +2,12 @@
 
 Active pass scope, next options, and recent pass history are now in `PROJECT_STATE.md` under "Active / Next Passes" and "Last Completed Passes".
 
-Latest completed pass: `2026-03-26 - Pass 12 - Landing / marketing proof + onboarding clarity + launch-readiness truth test (9b6202e)`.
+Latest completed pass: `2026-03-27 - Auth retest prep + login handoff hotfix (adc22c8)`.
 
-Build verification: `npm run build` in `frontend/` passed (1822 modules, pre-existing chunk warning unchanged).
+Build verification: `python -m py_compile backend/app.py` passed.
 
-Runtime verification: shell-based Playwright checks passed on `/`, `/demo/reports/26`, and authenticated `/upload`. Direct runtime verification of onboarding preview mode remains incomplete because `/onboarding?preview=true` redirected the smoke user to `/dashboard` in local state.
+Runtime verification: local Flask test-client checks passed on `GET /login`, `GET /forgot-password`, and `GET /reset-password/test-token` with direct `200 text/html` SPA handoff. Live truth check still shows `/login` looping until the latest backend commit is deployed on Render.
 
-Launch-readiness status: near-ready with limited blockers. The remaining blockers are deployed-environment truth checks, not another dashboard redesign pass.
+Launch-readiness status: near-ready with limited blockers. The remaining blockers are deployed-environment truth checks, including the live auth retest path.
 
 Read `PROJECT_STATE.md`.

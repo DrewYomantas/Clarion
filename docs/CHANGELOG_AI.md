@@ -1,5 +1,48 @@
 # AI Pass Changelog
 
+## 2026-03-27 - Auth Retest Prep + Login Handoff Hotfix
+
+### Commit
+- adc22c8 - fix: serve spa shell for login route handoff
+
+### Files Changed
+- backend/app.py
+- docs/PROJECT_STATE.md
+- docs/CURRENT_BUILD.md
+- docs/CHANGELOG_AI.md
+
+### What Changed
+- Closed the missed legacy auth handoff bug in repo truth:
+  - GET /login now serves the React SPA shell directly when frontend/dist exists, matching /forgot-password and /reset-password/:token.
+  - This removes the self-redirect loop that was burning the live rate-limit window before the real login screen could load.
+- Documented the honest auth retest state:
+  - local smoke/reset helpers target local SQLite and do not reset Render Postgres
+  - the clean live retest path should use a brand-new inbox alias after the latest backend deploy
+  - /check-email can show No email address on file from missing browser sessionStorage even when server-side account state exists
+
+### Explicitly Not Touched
+- No dashboard or landing work.
+- No broader auth redesign or API contract changes.
+- No production DB row deletion from this machine.
+
+### Verification
+- python -m py_compile backend/app.py - passed.
+- Local Flask test-client checks:
+  - GET /login -> 200 text/html
+  - GET /forgot-password -> 200 text/html
+  - GET /reset-password/test-token -> 200 text/html
+- Live route inspection confirmed the remaining blocker is deploy truth, not repo truth:
+  - live /forgot-password and /reset-password/:token already serve the SPA shell
+  - live /login still self-redirects and then 429s until this commit is deployed
+
+### Current Retest Recommendation
+- Deploy latest main to Render first.
+- Use a brand-new inbox alias for the next live auth retest instead of reusing stale test credentials.
+- Clear browser cookies plus:
+  - sessionStorage["pending_verification_email"]
+  - sessionStorage["pending_verification_status"]
+  - localStorage["clarion_verification_completed_at"]
+
 ## 2026-03-26 - Pass 12 - Landing / Marketing Proof + Onboarding Clarity + Launch-Readiness Truth Test
 
 ### Commit
@@ -717,6 +760,9 @@ No structural, logic, or API changes. SignalsPage.tsx only.
 
 ### Verification
 - npm run build in frontend/ - passed (1823 modules; pre-existing chunk-size warning unchanged)
+
+
+
 
 
 
