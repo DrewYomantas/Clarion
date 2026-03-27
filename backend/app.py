@@ -8404,8 +8404,7 @@ def api_auth_forgot_password():
                       (row[0], token, expires_at))
             conn.commit()
             reset_link = f'{_resolve_public_app_base_url()}/reset-password/{token}'
-            if app.config.get('MAIL_ENABLED'):
-                send_password_reset_email(email, reset_link, app.config.get('FIRM_NAME', 'Clarion'))
+            send_password_reset_email(email, reset_link, app.config.get('FIRM_NAME', 'Clarion'))
         conn.close()
         return jsonify({'success': True, 'message': 'If that address is registered, a reset link has been sent.'}), 200
     except Exception as exc:
