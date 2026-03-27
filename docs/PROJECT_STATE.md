@@ -158,7 +158,10 @@ The Approval Queue (dark card layout) and the 4-card governance rail are the two
 9. **Meeting Mode elevation** - DONE (refined 2026-03-24). PartnerMode now carries premium briefing hierarchy: meeting/readiness badges, artifact-first framing strip, stronger primary brief surface, serif cycle heading, "Meeting packet includes" artifact spine line, polished readiness panel, and button-based exit control. No logic or routing changes.
 
 ### NEXT DESIGN PASS (current)
-10. **Dashboard Tier 2 / Tier 3 tightening** — The lower dashboard tiers (GovernanceGuidance, suggestedActions, OversightBand, GovernanceNarrativeRail) are structurally sound but the section is still long. Candidate for a focused collapse or label-polish pass. Low urgency — the brief is already dominant first-viewport. Review carefully before committing to scope.
+10. **Dashboard Tier 2 / Tier 3 tightening** — ✅ DONE (`9f47a04`). Dashboard compression pass landed: redundant Tier 2 framing removed, suggested actions capped to top 2, follow-through + recent follow-through now share an `xl` row, Tier 3 divider copy tightened, and secondary surfaces (`GovernanceGuidance`, `OversightBand`, `GovernanceNarrativeRail`) visually softened. Brief-first hierarchy preserved; meeting mode, backend logic, and non-dashboard pages untouched.
+
+### NEXT DESIGN PASS (current)
+11. **Dashboard Tier 3 final rhythm trim** — Validate live viewport rhythm and decide whether `SinceLastReview` should pair with `Escalations and watchpoints` in a shared `xl` row, or stay single-column. Keep pass copy/layout-only; no logic changes.
 
 ### SUBSEQUENT PASSES
 5. **Signals page** — Does it read as governance-cycle evidence or detached data list? — ✅ DONE (7929bbe)
@@ -233,6 +236,10 @@ Last fresh live run: `data/calibration/runs/20260317_223428`. Agreement rate 43.
 - [ ] CORS allowed origins update in `backend/app.py`
 
 ---
+
+## Last Completed Passes (This Session — 2026-03-26)
+1. Pass 10 — Dashboard Tier 2 / Tier 3 tightening (`9f47a04`). Files: `Dashboard.tsx`, `GovernanceGuidance.tsx`, `OversightBand.tsx`, `GovernanceNarrativeRail.tsx`. Changes: removed redundant Tier 2 suggested-action framing, capped dashboard suggestions to 2, demoted suggested-action button treatment, moved follow-through/recent follow-through into one `xl` row, tightened tier divider language, and softened Tier 3 support-surface density (smaller metadata/value treatment, tighter padding/gaps). Preserved all meeting-mode logic, fetch/state logic, routing/API contracts, and brief-first Tier 1 hierarchy.
+2. Build: clean (`npm run build` in `frontend/`, 1822 modules, 909.73kB JS bundle; pre-existing chunk warning remains).
 
 ## Last Completed Passes (This Session - 2026-03-24, continued x6)
 1. Pass 9 - Meeting Mode elevation refinement. Dashboard.tsx partnerMode block only. Added readiness badge model (display-only) and introduced a presentation-quality artifact shell: top meeting/readiness chips, artifact-first framing line, serif cycle title, stronger stat tiles, explicit "Meeting packet includes" spine reminder, polished pre-meeting readiness card with mirrored badge, and promoted "Exit meeting view" to secondary button treatment. No backend/API/data-flow changes.

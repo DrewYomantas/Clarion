@@ -1,5 +1,44 @@
 # AI Pass Changelog
 
+## 2026-03-26 - Pass 10 — Dashboard Tier 2 / Tier 3 Tightening
+
+### Commit
+- `9f47a04` — design: tighten dashboard tier 2 and tier 3 surfaces
+
+### Files Changed
+- `frontend/src/pages/Dashboard.tsx`
+- `frontend/src/components/dashboard/GovernanceGuidance.tsx`
+- `frontend/src/components/dashboard/OversightBand.tsx`
+- `frontend/src/components/dashboard/GovernanceNarrativeRail.tsx`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Compressed Tier 2 framing and reduced equal-weight panel noise while preserving workflow and data:
+  - Removed redundant suggested-actions section header wrapper.
+  - Capped dashboard suggested-actions display to top 2 items.
+  - Retreated suggested-action button treatment from primary to secondary and tightened button copy.
+  - Placed `Follow-through to review` and `Recent follow-through` into a shared `xl` two-column row.
+- Tightened supporting-tier rhythm and framing:
+  - Shortened divider copy (`Attention now`, `Supporting cycle context`, `Workspace reference`).
+  - Grouped `OversightBand` + `GovernanceNarrativeRail` into a shared `xl` row to reduce vertical drag.
+  - Kept `RecentGovernanceBriefs`, `SinceLastReview`, and `Escalations and watchpoints` intact as supporting context.
+- Softened secondary surfaces without changing behavior:
+  - `GovernanceGuidance`: tighter subtitle/label copy, CTA moved to secondary style.
+  - `OversightBand`: reduced heading emphasis, value size, tile padding, and gap density.
+  - `GovernanceNarrativeRail`: reduced metadata/card density and typography emphasis.
+
+### Explicitly Not Touched
+- No backend changes.
+- No meeting mode / `partnerMode` logic changes.
+- No changes to Reports, Execution, Signals, or ReportDetail pages.
+- No API contract, fetch logic, or route logic changes.
+
+### Verification
+- `npm run build` in `frontend/` — passed (1822 modules).
+- Pre-existing chunk-size warning remains (909.73 kB JS bundle), unchanged in nature.
+
 ## 2026-03-24 (continued) - Pass 9 — Meeting Mode Elevation
 
 ### Commit
