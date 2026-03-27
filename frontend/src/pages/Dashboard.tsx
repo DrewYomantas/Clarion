@@ -1202,13 +1202,35 @@ const Dashboard = () => {
           </div>
 
           <div className="dash-tier">
-            <div>
+            <div className="grid gap-[var(--dash-section-gap)] xl:grid-cols-2">
               <SinceLastReview
                 isLoading={loading}
                 newFeedbackSignals={newSignalsCount}
                 newExposureCategories={newExposureCategories}
                 overdueActionsCreated={overdueActions.length}
               />
+
+              <DashboardCard title="Escalations and watchpoints" subtitle="Issues that intensified or now require partner attention.">
+                {alerts.length === 0 ? (
+                  <GovernanceEmptyState
+                    size="sm"
+                    icon={<ShieldAlert size={18} />}
+                    title="No active escalations this cycle"
+                    description="Issues that intensify across review periods or require partner escalation will be flagged here."
+                  />
+                ) : (
+                  <ul className="gov-list-stack">
+                    {alerts.map((alert) => (
+                      <li key={alert.id} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
+                        <p className="gov-type-h3">{alert.message}</p>
+                        <p className="gov-type-meta mt-1">
+                          Appeared in {alert.occurrences} new review{alert.occurrences === 1 ? "" : "s"} this week
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </DashboardCard>
             </div>
 
             <RecentGovernanceBriefs
@@ -1298,31 +1320,6 @@ const Dashboard = () => {
                 ]}
               />
             </div>
-
-            {/* PartnerBriefPanel (80/100 reputation score) deferred:
-                score framing conflicts with exposure posture label — needs engine/label audit before showing publicly */}
-
-            <DashboardCard title="Escalations and watchpoints" subtitle="Client issues that intensified or need leadership attention.">
-              {alerts.length === 0 ? (
-                <GovernanceEmptyState
-                  size="sm"
-                  icon={<ShieldAlert size={18} />}
-                  title="No active escalations this cycle"
-                  description="Issues that intensify across review periods or require partner escalation will be flagged here."
-                />
-              ) : (
-                <ul className="gov-list-stack">
-                  {alerts.map((alert) => (
-                    <li key={alert.id} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-                      <p className="gov-type-h3">{alert.message}</p>
-                      <p className="gov-type-meta mt-1">
-                        Appeared in {alert.occurrences} new review{alert.occurrences === 1 ? "" : "s"} this week
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </DashboardCard>
           </div>
 
           {/* ════════════════════════════════════

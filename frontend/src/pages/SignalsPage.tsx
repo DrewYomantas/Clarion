@@ -601,7 +601,7 @@ const SignalsPage = () => {
             tabs={[
               {
                 value: "triage",
-                label: "Needs Action",
+                label: "Needs Partner Attention",
                 badgeCount: triageCount,
                 badgeUrgent: triageCount > 0,
               },
@@ -648,14 +648,14 @@ const SignalsPage = () => {
               icon={<RadioTower size={20} />}
               title={
                 signalsTab === "triage"
-                  ? "No high-risk signals to triage"
+                  ? "No signals need partner attention right now"
                   : signalsTab === "in-briefs"
                     ? "No signals included in a governance brief yet"
                     : "No signals match the current filter"
               }
               description={
                 signalsTab === "triage"
-                  ? "All current signals are medium or low severity. Review 'All Signals' for the full issue set and emerging patterns."
+                  ? "All current signals are medium or low severity. Review 'Current Cycle' for the full issue set and emerging patterns."
                   : signalsTab === "in-briefs"
                     ? "Signals are added to a brief when you prepare a governance packet. Return after completing your first brief cycle."
                     : "Adjust the active filter or return to all signals to see the full issue queue."
@@ -669,7 +669,7 @@ const SignalsPage = () => {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="gov-type-eyebrow">
-                  {signalsTab === "triage" ? "High-severity signals" : signalsTab === "in-briefs" ? "Recurring signals in briefs" : "Current cycle evidence"}
+                  {signalsTab === "triage" ? "Needs partner attention now" : signalsTab === "in-briefs" ? "Recurring signals in briefs" : "Current cycle evidence"}
                 </p>
                 <p className="mt-1 text-sm text-slate-700">
                   {selectionMode

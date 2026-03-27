@@ -27,7 +27,7 @@
  *   isPast           → true for archived cards — suppresses "Prepare" action
  *   onView           → primary "View brief" action
  *   onDownload       → "Download PDF" action
- *   onPrepare        → "Prepare presentation" action (upcoming tab only)
+ *   onPrepare        → "Prepare meeting brief" action (upcoming tab only)
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -50,7 +50,7 @@ export type GovernanceBriefCardProps = {
   actionsCount?: number;
   generatedBy?: string;
   planType?: string;
-  /** When true, hides the "Prepare presentation" action (past briefs) */
+  /** When true, hides the "Prepare meeting brief" action (past briefs) */
   isPast?: boolean;
   onView?: () => void;
   onDownload?: () => void;
@@ -162,7 +162,7 @@ export default function GovernanceBriefCard({
               onClick={onPrepare}
               className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
             >
-              Prepare presentation
+              Prepare meeting brief
             </button>
           ) : null}
           {onDownload ? (

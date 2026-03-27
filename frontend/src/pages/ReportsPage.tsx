@@ -222,7 +222,7 @@ const ReportsPage = () => {
                   variant="secondary"
                   onClick={() => navigate(`/dashboard/brief-customization?reportId=${latestRow.id}`)}
                 >
-                  Prepare brief presentation
+                  Prepare partner meeting brief
                 </Button>
               ) : null}
             </div>

@@ -205,19 +205,19 @@ const resolvePageLabel = (pathname: string): string => {
 
 const resolvePageNote = (pathname: string): string => {
   if (pathname === "/dashboard") {
-    return "Current cycle, latest brief, and follow-through that still need review.";
+    return "Open the current governance brief, confirm what changed, and review follow-through before the next partner meeting.";
   }
   if (pathname === "/upload") {
     return "Start or continue a review cycle from one law-firm review export.";
   }
   if (pathname === "/dashboard/signals" || pathname.startsWith("/dashboard/signals/") || pathname.startsWith("/signals/")) {
-    return "Review recurring client issues before assigning follow-through.";
+    return "Review the client-feedback evidence that feeds the current governance brief.";
   }
   if (pathname === "/dashboard/actions" || pathname.startsWith("/dashboard/actions/")) {
     return "Review overdue, unowned, and blocked follow-through before the next partner discussion.";
   }
   if (pathname === "/dashboard/reports" || pathname.startsWith("/dashboard/reports/")) {
-    return "Review the current governance brief, assigned follow-through, and partner-ready next steps.";
+    return "Open the partner-ready governance brief and confirm follow-through and next decisions.";
   }
   if (pathname === "/dashboard/approval-queue") {
     return "Review items waiting for firm approval before circulation.";

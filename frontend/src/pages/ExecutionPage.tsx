@@ -582,7 +582,7 @@ const ExecutionPage = () => {
             { value: "firm-wide", label: "Brief record" },
             {
               value: "my-actions",
-              label: "Assigned to me",
+              label: "My follow-through",
               badgeCount: myActionsSet.length > 0 ? myActionsSet.length : undefined,
             },
             {
@@ -648,7 +648,7 @@ const ExecutionPage = () => {
             }
             description={
               actionsTab === "my-actions"
-                ? "Review firm-wide follow-through to see where ownership is missing and assign yourself to the items that need a named lead."
+                ? "Review the brief record to see where ownership is missing and assign yourself to the items that need a named lead."
                 : "All current follow-through is within due dates. Review the firm-wide view to stay ahead of the next discussion."
             }
             primaryAction={{ label: "View all follow-through", onClick: () => setActionsTab("firm-wide") }}
@@ -661,7 +661,7 @@ const ExecutionPage = () => {
               {actionsTab === "overdue"
                 ? "Overdue follow-through"
                 : actionsTab === "my-actions"
-                  ? "Assigned follow-through"
+                  ? "My follow-through"
                   : "Firm-wide follow-through"}
             </p>
             <p className="mt-1 text-sm text-slate-700">
