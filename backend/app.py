@@ -8380,6 +8380,8 @@ def login_two_factor():
 @limiter.limit('20 per hour')
 def forgot_password():
     """Legacy GET: redirect to SPA /forgot-password."""
+    if _react_dist_exists:
+        return send_from_directory(_REACT_DIST, 'index.html')
     return redirect(f'{_resolve_public_app_base_url()}/forgot-password', code=302)
 
 
@@ -8547,6 +8549,8 @@ def forgot_password_form():
 @limiter.limit('20 per hour')
 def reset_password_legacy_get(token):
     """Hand off legacy reset link to SPA /reset-password/:token."""
+    if _react_dist_exists:
+        return send_from_directory(_REACT_DIST, 'index.html')
     return redirect(f'{_resolve_public_app_base_url()}/reset-password/{token}', code=302)
 
 
