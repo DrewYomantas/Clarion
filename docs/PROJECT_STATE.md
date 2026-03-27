@@ -30,7 +30,7 @@ _This file reflects current live state. Historical detail lives in `CHANGELOG_AI
 ### Render Deploy Status (ACTION NEEDED)
 Render is likely deploying an old commit. The repo was renamed on GitHub and Render may have lost its webhook.
 To fix: Render dashboard â†’ service Settings â†’ Build & Deploy â†’ reconnect to `DrewYomantas/Clarion` â†’ Manual Deploy â†’ Deploy latest commit.
-Latest commit to deploy after reconnect: latest `main` head. Current auth retest blocker: live `GET /login` is looping into itself and 429ing instead of handing off to the SPA. Repo fix is in `adc22c8`.
+Latest commit to deploy after reconnect: latest `main` head. Current auth blocker stack: live auth/session failed for fresh verified users because Postgres-backed session loads were returning tuple rows into `load_user`, and the service is still unsafe when Redis is unavailable with multiple workers. Repo fixes are in `0f8c954` plus the earlier `/login` handoff fix `adc22c8`.
 
 ---
 
@@ -62,7 +62,7 @@ Latest commit to deploy after reconnect: latest `main` head. Current auth retest
 
 **Launch-readiness truth test:** Near-ready with limited blockers. Product understanding is materially stronger, but public launch should wait for deployed-environment truth: Render reconnect / latest main deploy, deployed smoke across public and authenticated flows, and confirmation that setup-dependent delivery paths match live claims.
 
-**Current auth retest truth (2026-03-27):** `/forgot-password` and `/reset-password/:token` now map cleanly to the SPA in repo truth, but the live site still has a blocking `/login` self-redirect loop until `adc22c8` is deployed. Local repo auth reset helpers target local SQLite only; they do not prove or modify Render Postgres state. For a truthful from-zero live auth retest, use a brand-new inbox alias after the latest deploy rather than reusing stale test credentials.
+**Current auth retest truth (2026-03-27):** `/forgot-password` and `/reset-password/:token` now map cleanly to the SPA in repo truth, and the Postgres auth/session root cause is now fixed in code: Postgres cursor rows are normalized to sqlite-style named rows before `load_user` consumes them. The live service still needs the latest deploy. Until Redis is reachable again, keep Render at a single worker (`WEB_CONCURRENCY=1` or `GUNICORN_WORKERS=1`) so auth backoff and rate-limit state stay coherent.
 
 ---
 
@@ -268,4 +268,5 @@ Last fresh live run: `data/calibration/runs/20260317_223428`. Agreement rate 43.
 3. Repo hygiene â€” .gitignore overhaul, README rewrite, ENGINEERING_PRACTICES.md created
 4. Git remote updated to DrewYomantas/Clarion
 5. Dashboard screenshot audit documented (this file)
+
 

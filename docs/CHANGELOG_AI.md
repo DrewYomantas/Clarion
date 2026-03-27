@@ -1,5 +1,45 @@
 # AI Pass Changelog
 
+## 2026-03-27 - Auth Session Postgres Row Fix + Single-Worker Runtime Guard
+
+### Commit
+- 0f8c954 - fix: restore auth session loading on postgres
+
+### Files Changed
+- backend/db_compat.py
+- backend/gunicorn.conf.py
+- docs/PROJECT_STATE.md
+- docs/CURRENT_BUILD.md
+- docs/CHANGELOG_AI.md
+
+### What Changed
+- Fixed the real live auth/session bug at the DB compatibility layer:
+  - Postgres-backed cursor rows are now wrapped in a sqlite-style compatible row object that supports both numeric and named access.
+  - This restores Flask-Login session rehydration through load_user, which was crashing on tuple rows with TypeError: tuple indices must be integers or slices, not str.
+- Tightened the Gunicorn runtime default for the current Redis-unavailable state:
+  - gunicorn now honors WEB_CONCURRENCY first, then GUNICORN_WORKERS, and falls back to 1 worker by default.
+  - This keeps auth backoff and rate-limit state coherent until Redis is reachable again.
+
+### Explicitly Not Touched
+- No frontend changes.
+- No auth route contract changes.
+- No dashboard, landing, or product-surface work.
+
+### Verification
+- python -m py_compile backend/db_compat.py backend/gunicorn.conf.py backend/app.py - passed.
+- Compatibility verification passed: a Postgres-style tuple row now supports both row[0] and row["id"] and load_user hydrates successfully through the wrapped Postgres connection path.
+- Local auth smoke passed: POST /api/auth/login -> GET /api/auth/me returned 200/200 for a temporary verified user.
+- Gunicorn config verification passed:
+  - default workers -> 1
+  - WEB_CONCURRENCY override takes precedence over GUNICORN_WORKERS
+- Local Flask test-client checks still passed on GET /login, GET /forgot-password, and GET /reset-password/test-token.
+
+### Required Render Follow-Up
+- Deploy latest main to Render.
+- Set WEB_CONCURRENCY=1 on the web service immediately.
+- If GUNICORN_WORKERS is currently set, change it to 1 or remove it so WEB_CONCURRENCY wins.
+- Do not raise worker count again until REDIS_URL points to a reachable Redis instance.
+
 ## 2026-03-27 - Auth Retest Prep + Login Handoff Hotfix
 
 ### Commit
@@ -760,6 +800,7 @@ No structural, logic, or API changes. SignalsPage.tsx only.
 
 ### Verification
 - npm run build in frontend/ - passed (1823 modules; pre-existing chunk-size warning unchanged)
+
 
 
 
