@@ -161,7 +161,10 @@ The Approval Queue (dark card layout) and the 4-card governance rail are the two
 10. **Dashboard Tier 2 / Tier 3 tightening** — ✅ DONE (`9f47a04`). Dashboard compression pass landed: redundant Tier 2 framing removed, suggested actions capped to top 2, follow-through + recent follow-through now share an `xl` row, Tier 3 divider copy tightened, and secondary surfaces (`GovernanceGuidance`, `OversightBand`, `GovernanceNarrativeRail`) visually softened. Brief-first hierarchy preserved; meeting mode, backend logic, and non-dashboard pages untouched.
 
 ### NEXT DESIGN PASS (current)
-11. **Dashboard Tier 3 final rhythm trim** — Validate live viewport rhythm and decide whether `SinceLastReview` should pair with `Escalations and watchpoints` in a shared `xl` row, or stay single-column. Keep pass copy/layout-only; no logic changes.
+11. **Dashboard Tier 3 final rhythm trim** — ✅ DONE (`ebc3c41`). `SinceLastReview` now pairs with `Escalations and watchpoints` in a shared `xl` row; no logic/API/state changes. Also shipped a tight authenticated continuity copy lock across Dashboard/Signals/Execution/Reports surfaces to remove residual dashboard-language drift.
+
+### NEXT LOGICAL PASS
+12. **Cycle-over-cycle continuity proofing** — tighten cross-page `what changed / what remains unresolved` language and empty-state continuity from Workspace Home into ReportDetail without reopening dashboard layout structure.
 
 ### SUBSEQUENT PASSES
 5. **Signals page** — Does it read as governance-cycle evidence or detached data list? — ✅ DONE (7929bbe)
@@ -234,12 +237,14 @@ Last fresh live run: `data/calibration/runs/20260317_223428`. Agreement rate 43.
 - [ ] Resend domain verification
 - [ ] Frontend `VITE_API_BASE_URL` update
 - [ ] CORS allowed origins update in `backend/app.py`
-
 ---
 
 ## Last Completed Passes (This Session — 2026-03-26)
-1. Pass 10 — Dashboard Tier 2 / Tier 3 tightening (`9f47a04`). Files: `Dashboard.tsx`, `GovernanceGuidance.tsx`, `OversightBand.tsx`, `GovernanceNarrativeRail.tsx`. Changes: removed redundant Tier 2 suggested-action framing, capped dashboard suggestions to 2, demoted suggested-action button treatment, moved follow-through/recent follow-through into one `xl` row, tightened tier divider language, and softened Tier 3 support-surface density (smaller metadata/value treatment, tighter padding/gaps). Preserved all meeting-mode logic, fetch/state logic, routing/API contracts, and brief-first Tier 1 hierarchy.
-2. Build: clean (`npm run build` in `frontend/`, 1822 modules, 909.73kB JS bundle; pre-existing chunk warning remains).
+1. Pass 11 — Dashboard Tier 3 final rhythm trim + authenticated continuity copy lock (`ebc3c41`). Files: `Dashboard.tsx`, `SignalsPage.tsx`, `ExecutionPage.tsx`, `ReportsPage.tsx`, `GovernanceBriefCard.tsx`, `WorkspaceLayout.tsx`. Changes: paired `SinceLastReview` + `Escalations and watchpoints` into a shared `xl` row, tightened escalations framing language, aligned Signals triage language to `Needs Partner Attention`, aligned Execution ownership tab language to `My follow-through`, and standardized brief-prep CTA language across Reports surfaces.
+2. Explicitly not touched: backend logic, meeting-mode logic, API/routes/state contracts, ReportDetail.
+3. Verification: `npm run build` clean (`frontend/`, 1822 modules, 909.87kB JS bundle warning unchanged) + authenticated Playwright runtime sweep across Workspace Home, Signals, Follow-Through, Briefs, and Brief Detail.
+4. Milestone status: authenticated workspace continuity lock is complete; dashboard redesign is no longer the primary active track.
+
 
 ## Last Completed Passes (This Session - 2026-03-24, continued x6)
 1. Pass 9 - Meeting Mode elevation refinement. Dashboard.tsx partnerMode block only. Added readiness badge model (display-only) and introduced a presentation-quality artifact shell: top meeting/readiness chips, artifact-first framing line, serif cycle title, stronger stat tiles, explicit "Meeting packet includes" spine reminder, polished pre-meeting readiness card with mirrored badge, and promoted "Exit meeting view" to secondary button treatment. No backend/API/data-flow changes.
