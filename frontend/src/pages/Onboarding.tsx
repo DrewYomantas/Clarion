@@ -85,6 +85,9 @@ const Onboarding = () => {
     if (step === "done") return 4;
     return step;
   }, [step]);
+  const doneSteps = uploadedReportId
+    ? ["Review the first governance brief", `Confirm ${DISPLAY_LABELS.clientIssuePlural}`, "Assign Follow-Through", "Bring Brief Into Meetings"]
+    : ["Upload Feedback", `Review ${DISPLAY_LABELS.clientIssuePlural}`, "Assign Follow-Through", "Bring Brief Into Meetings"];
 
   const transitionTo = (next: Step) => {
     setVisible(false);
@@ -178,9 +181,9 @@ const Onboarding = () => {
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
             Step {stepIndex} of 4
           </p>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Start the first governance cycle</h1>
+          <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Set up the first review cycle</h1>
           <p className="max-w-xl text-[14px] font-normal text-[#6B7280]">
-            Set up the workspace, confirm how feedback is handled, and bring in the first review export when you are ready.
+            Clarion will turn one review export into a governance brief, a follow-through record, and a clearer partner review.
           </p>
           {isPreview ? (
             <p className="text-[13px] text-slate-600">
@@ -234,12 +237,11 @@ const Onboarding = () => {
           {step === 2 && (
             <div className="space-y-5">
               <div className="space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Confirm feedback handling</h2>
-                <p className="text-sm font-medium text-slate-700">Your client feedback stays firm-specific.</p>
+                <h2 className="text-2xl font-semibold tracking-tight text-slate-900">See what Clarion creates</h2>
+                <p className="text-sm font-medium text-slate-700">Each cycle produces a governance brief, a client-issues record, and assigned follow-through.</p>
                 <p className="text-sm leading-relaxed text-slate-600">
-                  Uploaded review data is stored securely and used only to generate client issues for your firm.
-                  Clarion does not share client feedback across firms and does not use uploaded data to train
-                  external models.
+                  Upload one review-period export and Clarion turns it into the partner-ready record for that cycle.
+                  Your client feedback stays firm-specific, is not shared across firms, and is not used to train external models.
                 </p>
               </div>
 
@@ -259,7 +261,7 @@ const Onboarding = () => {
               </div>
 
               <button type="button" className="gov-btn-primary w-full justify-center" onClick={() => transitionTo(3)}>
-                Continue to first upload
+                Continue to upload setup
               </button>
             </div>
           )}
@@ -269,12 +271,12 @@ const Onboarding = () => {
               <div className="space-y-2">
                 <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Start the first review cycle</h2>
                 <p className="text-sm leading-relaxed text-slate-600">
-                  Upload one CSV from the current review period now, or continue into the workspace and upload later.
+                  Upload one CSV from the current review period now, and Clarion will create the first review packet for partner review.
                 </p>
               </div>
               <div className="rounded-[10px] border border-[#D1D5DB] bg-white p-5">
                 <p className="text-sm font-semibold text-slate-900">Upload one review export</p>
-                <p className="mt-1 text-xs text-slate-600">Include columns for rating and review text. CSV format.</p>
+                <p className="mt-1 text-xs text-slate-600">Include review date, rating, and review text. CSV format.</p>
 
                 <button
                   type="button"
@@ -282,7 +284,7 @@ const Onboarding = () => {
                   className="mt-4 flex h-28 w-full flex-col items-center justify-center gap-2 rounded-[10px] border-2 border-dashed border-slate-300 bg-white text-sm text-slate-700 transition-colors hover:border-[#0EA5C2]"
                 >
                   <Upload className="h-5 w-5" />
-                  {selectedFile ? selectedFile.name : "Choose CSV file"}
+                  {selectedFile ? selectedFile.name : "Choose review export"}
                 </button>
 
                 <input
@@ -316,9 +318,9 @@ const Onboarding = () => {
           {step === 4 && (
             <div className="space-y-5">
               <div className="space-y-2">
-                <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Review before opening the workspace</h2>
+                <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Review what happens next</h2>
                 <p className="text-sm leading-relaxed text-slate-600">
-                  Confirm the workspace name and whether you want Clarion to start the first cycle now.
+                  Confirm the workspace name and how Clarion should open the first cycle.
                 </p>
               </div>
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
@@ -331,7 +333,7 @@ const Onboarding = () => {
                 </p>
                 <p className="mt-2 text-xs leading-5 text-slate-600">
                   {selectedFile
-                    ? "If you continue with this file, Clarion will create the first report packet during setup and you can open it directly after onboarding."
+                    ? "If you continue with this file, Clarion will create the first review packet during setup and open it directly after onboarding."
                     : "If you continue without a file, Clarion will open workspace home and you can start the first upload from there."}
                 </p>
               </div>
@@ -362,11 +364,11 @@ const Onboarding = () => {
               <div className="flex justify-center">
                 <CheckCircle2 className="h-10 w-10 text-[#0EA5C2]" />
               </div>
-              <h2 className="text-2xl font-bold text-[#0D1B2A]">Your workspace is ready.</h2>
+              <h2 className="text-2xl font-bold text-[#0D1B2A]">{uploadedReportId ? "Your first cycle is ready." : "Your workspace is ready."}</h2>
               <p className="text-[14px] text-[#6B7280]">
                 {uploadedReportId
-                  ? `Clarion created the first report packet for ${firmName.trim() || "your firm"}. Open it first to review signals, decisions, and follow-through for the current cycle.`
-                  : `Clarion is ready for ${firmName.trim() || "your firm"} to review the current cycle, latest brief, and follow-through.`}
+                  ? `Clarion created the first governance brief and review packet for ${firmName.trim() || "your firm"}. Open it first to review the client issues, decisions, and follow-through for the current cycle.`
+                  : `Clarion is ready for ${firmName.trim() || "your firm"} to start the first upload and review the current cycle once it is created.`}
               </p>
 
               <div className="space-y-3">
@@ -374,7 +376,7 @@ const Onboarding = () => {
                   What Clarion does next
                 </p>
                 <div className="flex items-start justify-center gap-2">
-                  {["Upload Feedback", `Review ${DISPLAY_LABELS.clientIssuePlural}`, "Assign Follow-Through", "Bring Brief Into Meetings"].map((label, index) => (
+                  {doneSteps.map((label, index) => (
                     <div key={label} className="flex items-start">
                       <div className="w-[86px] text-center">
                         <span className="mx-auto inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#0EA5C2] text-[11px] font-semibold text-white">
@@ -389,7 +391,7 @@ const Onboarding = () => {
               </div>
 
               <button type="button" className="gov-btn-primary h-12 w-full justify-center text-base" onClick={openNextWorkspaceStep}>
-                {isPreview ? "Return to workspace" : uploadedReportId ? "Open first report" : "Open workspace home"}
+                {isPreview ? "Return to workspace" : uploadedReportId ? "Open first governance brief" : "Open workspace home"}
               </button>
               {isPreview ? (
                 <button

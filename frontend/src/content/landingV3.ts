@@ -2,12 +2,12 @@ export const landingWorkflowSteps = [
   {
     step: "01",
     title: "Upload recent feedback",
-    body: "Bring in one CSV export from reviews, surveys, or post-matter feedback. Clarion starts with material the firm already has.",
+    body: "Bring in one CSV export for a defined review period. Clarion starts with feedback the firm already has rather than asking for a new reporting process.",
   },
   {
     step: "02",
-    title: "Structure the governance signals",
-    body: "Clarion organizes recurring service issues into a readable operating record so partners do not have to piece the story together comment by comment.",
+    title: "Turn it into a governance brief",
+    body: "Clarion structures recurring service issues, what changed, and what needs partner attention into one readable review packet.",
   },
   {
     step: "03",
@@ -30,7 +30,7 @@ export const landingTrustPoints = [
   {
     eyebrow: "Law-firm specific",
     title: "Built for partner review",
-    body: "Clarion is for managing partners, operations leads, and reputation owners who need a disciplined client-feedback review loop.",
+    body: "Clarion is for managing partners, practice leaders, and operations leads who need a disciplined client-feedback review loop.",
   },
   {
     eyebrow: "Low friction",
@@ -53,11 +53,11 @@ export const landingTrustCallouts = [
 export const landingOutputs = [
   {
     title: "Governance brief",
-    body: "A partner-ready summary of recurring issues, shifts since the last cycle, and the next decisions leadership should make.",
+    body: "A partner-ready brief showing what clients are telling the firm, what changed, and what leadership needs to decide next.",
   },
   {
     title: "Workspace record",
-    body: "The report, issues, and action rows stay together so the firm can move from review into accountability without switching context.",
+    body: "The report, client issues, and follow-through stay together so the firm can move from review into accountability without switching context.",
   },
   {
     title: "Shareable output",
@@ -105,15 +105,15 @@ export const landingMeetingPoints = [
 ];
 
 export const landingProofNotes = [
-  "Sample brief review comes first",
-  "Sample workspace remains available for flow review",
-  "Built around upload, action ownership, and follow-through",
+  "Sample brief comes first",
+  "One CSV starts the cycle",
+  "Follow-through stays tied to the same record",
 ];
 
 export const landingHeroAside = [
   "Upload one recent feedback export.",
-  "See recurring service issues without reading every comment.",
-  "Leave the meeting with assigned follow-through.",
+  "Open a governance brief leadership can use immediately.",
+  "Leave the meeting with named follow-through.",
 ];
 
 export const landingPreviewIssueRows = [

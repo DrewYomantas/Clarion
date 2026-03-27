@@ -7,11 +7,11 @@ const LandingWorkflowSection = () => (
         <div className="landing-reveal reveal--visible max-w-md">
           <p className="landing-kicker">Operating loop</p>
           <h2 className="landing-section-title mt-4 text-[#111827]">
-            Upload feedback, structure the issues, assign action, and bring the record into the meeting.
+            Upload one review-period export, then carry the same governance record into the meeting.
           </h2>
           <p className="mt-5 text-base leading-7 text-[#4B5563]">
-            Clarion should be legible in one pass. The workflow is intentionally narrow so the firm can run it
-            repeatedly without building a separate reporting process around the product.
+            Clarion is intentionally narrow: one upload, one clear record, one repeatable review cycle the firm can run
+            again next month without rebuilding the story from scratch.
           </p>
         </div>
 

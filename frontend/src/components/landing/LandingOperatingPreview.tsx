@@ -23,7 +23,7 @@ const LandingOperatingPreview = ({
   mode = "hero",
 }: LandingOperatingPreviewProps) => {
   const report = sampleReportDetails[defaultSampleReportId];
-  const previewTitle = "Monthly client feedback governance review";
+  const previewTitle = "Current governance brief for partner review";
   const actions = compact ? landingAccountabilityRows.slice(0, 2) : landingAccountabilityRows;
   const issues = compact ? landingPreviewIssueRows.slice(0, 2) : landingPreviewIssueRows;
 
@@ -34,7 +34,7 @@ const LandingOperatingPreview = ({
           <p className="landing-preview-label">Partner review brief</p>
           <h3 className="landing-preview-title">{previewTitle}</h3>
           <p className="landing-preview-subtitle">
-            {report.totalReviews} reviews analyzed. Prepared for monthly partner review.
+            {report.totalReviews} reviews analyzed from one review-period export. Prepared for partner review.
           </p>
         </div>
         <div className="landing-preview-header-badges">

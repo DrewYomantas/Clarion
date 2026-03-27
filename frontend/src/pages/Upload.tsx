@@ -268,12 +268,12 @@ const Upload = () => {
   const uploadedCycleLabel = useMemo(() => formatCycleLabel(latestUploadedReport), [latestUploadedReport]);
   const uploadedReviewCountLabel = latestUploadedReport
     ? `${latestUploadedReport.total_reviews} review${latestUploadedReport.total_reviews === 1 ? "" : "s"} analyzed`
-    : "Report packet ready";
+    : "Review packet ready";
   const uploadedBriefAccessLabel = latestUploadedReport
     ? latestUploadedReport.plan_type === "free"
-      ? "Preview the PDF from the report packet."
-      : "Download the PDF from the report packet."
-    : "Brief controls are available from the report packet.";
+      ? "Preview the PDF from the review packet."
+      : "Download the PDF from the review packet."
+    : "Brief controls are available from the review packet.";
 
   useEffect(() => {
     if (!shouldAutoStart || isUploading || files.length > 0 || successMessage) {
@@ -626,7 +626,7 @@ const Upload = () => {
                 <div>
                   <h1 className="gov-h1 text-balance">Start or continue a review cycle</h1>
                   <p className="mt-1 text-sm text-neutral-600">
-                    Bring in one review-period export, let Clarion confirm the structure, and turn it into the current report packet, follow-through list, and brief.
+                    Bring in one review-period export, let Clarion confirm the structure, and turn it into the current review packet: governance brief, client issues, and follow-through.
                   </p>
                 </div>
                 <p data-testid="upload-asof" className="text-xs text-neutral-700">
@@ -638,8 +638,8 @@ const Upload = () => {
             <div className="rounded-md border border-neutral-200 bg-neutral-50 px-4 py-4">
               <div className="flex flex-wrap items-center gap-2 text-xs text-neutral-700">
                 <span className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 font-medium">One CSV for one review period</span>
-                <span className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 font-medium">Header check before analysis</span>
-                <span className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 font-medium">Report, actions, and brief created after upload</span>
+                <span className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 font-medium">Header check before processing</span>
+                <span className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 font-medium">Brief, client issues, and follow-through created after upload</span>
               </div>
               <div className="mt-4 grid gap-3 rounded-md border border-neutral-200 bg-white px-4 py-4 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
                 <div>
@@ -654,16 +654,16 @@ const Upload = () => {
                 </div>
                 <div>
                   <p className="gov-type-eyebrow">Step 3</p>
-                  <p className="mt-1 text-sm font-medium text-neutral-900">Open the current report packet.</p>
-                  <p className="mt-1 text-xs leading-5 text-neutral-700">Start review in the report packet first, then move into follow-through and the partner-ready brief.</p>
+                  <p className="mt-1 text-sm font-medium text-neutral-900">Open the current review packet.</p>
+                  <p className="mt-1 text-xs leading-5 text-neutral-700">Start review there first. It is the fastest path into the governance brief, follow-through, and next decisions for this cycle.</p>
                 </div>
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
-                <Link to="/demo" className="gov-text-link">
-                  Review the sample workspace first
+                <Link to="/demo/reports/26" className="gov-text-link">
+                  Review the sample brief first
                 </Link>
                 <span className="text-neutral-600">
-                  Use the sample workspace if you want to see the workflow before preparing your own export.
+                  Use the sample brief if you want to see the finished artifact before preparing your own export.
                 </span>
               </div>
             </div>
@@ -673,7 +673,6 @@ const Upload = () => {
               id="csv-file"
               type="file"
               accept=".csv,text/csv"
-              multiple
               onChange={handleFileChange}
               disabled={isUploading}
               className="sr-only"
@@ -696,7 +695,7 @@ const Upload = () => {
                     <p className="gov-type-eyebrow">Start this cycle</p>
                     <p className="mt-1 text-sm font-semibold text-neutral-900">Choose the review export for this cycle</p>
                     <p className="mt-1 text-xs leading-5 text-neutral-700">
-                      Clarion detects common header names, checks the required fields before full analysis, and points you into the current report packet after processing. There is no manual column-mapping step in this version.
+                      Clarion detects common header names, checks for review date, rating, and client comment before full analysis, and opens the current review packet after processing.
                     </p>
                     {shouldAutoStart ? (
                       <p className="mt-2 text-xs text-neutral-600">
@@ -710,7 +709,7 @@ const Upload = () => {
                     disabled={isUploading}
                     onClick={() => fileInputRef.current?.click()}
                   >
-                    {files.length > 0 ? "Change file" : "Choose file"}
+                    {files.length > 0 ? "Change file" : "Choose review export"}
                   </button>
                 </div>
                 <div className="mt-4 rounded-md border border-dashed border-neutral-300 bg-neutral-50 px-4 py-4">
@@ -721,7 +720,7 @@ const Upload = () => {
                         Selected file: <span className="font-medium text-neutral-900">{firstFile.name}</span>
                       </p>
                       <p className="text-xs text-neutral-600">
-                        Clarion will inspect the header row immediately, then run full validation during upload.
+                        Clarion will inspect the header row immediately, then run full validation while creating the cycle.
                       </p>
                     </div>
                   ) : (
@@ -730,14 +729,11 @@ const Upload = () => {
                         Recommended: one clean CSV export for a single review period.
                       </p>
                       <p className="text-xs text-neutral-600">
-                        If the file matches the required structure, Clarion will turn it into the current report packet and the first brief-ready cycle.
+                        If the file matches the required structure, Clarion will turn it into the current review packet and the first brief-ready cycle.
                       </p>
                     </div>
                   )}
                 </div>
-                {!isPaidPlan && files.length > 1 && (
-                  <p className="mt-2 text-xs text-neutral-700">Free plans: each file consumes one report slot.</p>
-                )}
                 {!successMessage ? (
                   <div className="mt-4 flex flex-wrap items-center gap-3">
                     <button
@@ -746,21 +742,19 @@ const Upload = () => {
                       className="gov-cta-primary disabled:opacity-50"
                     >
                       {isUploading
-                        ? "Uploading..."
+                        ? "Creating current cycle..."
                         : noReportCredits
                           ? "Upgrade required"
-                          : files.length > 1
-                            ? `Upload and analyze ${files.length} files`
-                            : "Upload and analyze"}
+                          : "Create current cycle"}
                     </button>
                     {files.length === 0 ? (
-                      <span className="text-xs text-neutral-600">Choose a file to enable analysis.</span>
+                      <span className="text-xs text-neutral-600">Choose one review export to continue.</span>
                     ) : headerPreview?.isCompatible ? (
-                      <span className="text-xs text-emerald-700">Header check passed. Ready to analyze.</span>
+                      <span className="text-xs text-emerald-700">Header check passed. Ready to create the cycle.</span>
                     ) : headerPreview ? (
-                      <span className="text-xs text-amber-700">Review the detected columns before starting analysis.</span>
+                      <span className="text-xs text-amber-700">Review the detected columns before creating the cycle.</span>
                     ) : (
-                      <span className="text-xs text-neutral-600">Header check will appear here before analysis starts.</span>
+                      <span className="text-xs text-neutral-600">Header check will appear here before processing starts.</span>
                     )}
                   </div>
                 ) : null}
@@ -772,13 +766,13 @@ const Upload = () => {
                     <div>
                       <p className="gov-type-eyebrow">Pre-upload check</p>
                       <p className="mt-1 text-sm font-semibold text-neutral-900">
-                        {headerPreview.isCompatible ? "File structure looks ready" : "Review the file structure before analysis"}
+                        {headerPreview.isCompatible ? "File structure looks ready" : "Review the file structure before processing"}
                       </p>
                       <p className="mt-1 text-sm text-neutral-700">
-                        {headerPreview.isCompatible ? "Required columns found. Ready to analyze." : headerPreview.message}
+                        {headerPreview.isCompatible ? "Required columns found. Ready to create the cycle." : headerPreview.message}
                       </p>
                       <p className="mt-1 text-xs text-neutral-600">
-                        Clarion checks the header row locally first, then runs full validation again during upload.
+                        Clarion checks the header row locally first, then runs full validation again while creating the cycle.
                       </p>
                     </div>
                     <span className={headerPreview.isCompatible ? "gov-chip-muted" : "gov-chip-warn"}>
@@ -829,16 +823,16 @@ const Upload = () => {
               {successMessage ? (
                 <div className="rounded-md border border-neutral-200 bg-neutral-50 px-4 py-4 text-sm text-neutral-800">
                   <p className="gov-type-eyebrow">Upload complete</p>
-                  <p className="mt-1 font-semibold text-neutral-900">The current report packet is ready.</p>
+                  <p className="mt-1 font-semibold text-neutral-900">The current review packet is ready.</p>
                   <p className="mt-1">{successMessage}</p>
                   <p className="mt-1 text-xs text-neutral-700">
-                    Clarion finished the upload and created the report packet, action list, and brief path from this dataset. Start with the report packet first, then move into follow-through and the partner brief.
+                    Clarion finished the upload and created the review packet, client-issues record, follow-through path, and governance brief path from this dataset. Start with the review packet first, then move into follow-through and partner-brief delivery.
                   </p>
                   <div className="mt-4 grid gap-3 lg:grid-cols-[1.15fr_0.85fr]">
                     <div className="rounded-md border border-neutral-200 bg-white px-4 py-4">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-neutral-700">Current cycle created</p>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-neutral-700">Current cycle ready</p>
                       <p className="mt-1 text-sm font-semibold text-neutral-900">
-                        {latestUploadedReport?.name || (reportId ? `Report #${reportId}` : "Current report packet")}
+                        {latestUploadedReport?.name || (reportId ? `Report #${reportId}` : "Current review packet")}
                       </p>
                       <div className="mt-3 grid gap-3 sm:grid-cols-3">
                         <div className="rounded-md border border-neutral-200 bg-neutral-50 px-3 py-3">
@@ -854,7 +848,6 @@ const Upload = () => {
                           <p className="mt-1 text-sm font-medium text-neutral-900">{uploadedBriefAccessLabel}</p>
                         </div>
                       </div>
-                      {reportId ? <p className="mt-3 text-xs text-neutral-700">Report snapshot ID: #{reportId}</p> : null}
                     </div>
 
                     <div className="rounded-md border border-neutral-200 bg-white px-4 py-4">
@@ -863,8 +856,8 @@ const Upload = () => {
                         {[
                           {
                             step: "01",
-                            title: "Open the current report packet",
-                            detail: "Review the leadership briefing, the signals that matter most, and the next decisions for this cycle.",
+                            title: "Open the current review packet",
+                            detail: "Review the leadership briefing, the client issues that matter most, and the next decisions for this cycle.",
                           },
                           {
                             step: "02",
@@ -874,7 +867,7 @@ const Upload = () => {
                           {
                             step: "03",
                             title: "Use the brief controls",
-                            detail: "Send the partner brief or open the PDF from the report packet once the cycle reads clearly.",
+                            detail: "Send the partner brief or open the PDF from the review packet once the cycle reads clearly.",
                           },
                         ].map((item) => (
                           <li key={item.step} className="flex gap-3">
@@ -929,11 +922,11 @@ const Upload = () => {
                   <div className="mt-4 rounded-md border border-neutral-200 bg-white px-4 py-4">
                     <p className="text-xs font-semibold uppercase tracking-wide text-neutral-700">What to do next</p>
                     <p className="mt-1 text-xs text-neutral-700">
-                      Open the report packet first. It is the fastest way into signals, assigned follow-through, partner-ready decisions, and the brief controls for this cycle.
+                      Open the review packet first. It is the fastest way into client issues, assigned follow-through, partner-ready decisions, and the brief controls for this cycle.
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2">
                       <Link to={reportId ? `/dashboard/reports/${reportId}` : "/dashboard/reports"} className="gov-cta-primary">
-                        Open current report
+                        Open current review packet
                       </Link>
                       <Link to="/dashboard" className="gov-cta-secondary">
                         Open workspace home
@@ -942,7 +935,7 @@ const Upload = () => {
                         Open follow-through
                       </Link>
                       <button type="button" className="gov-btn-quiet px-2.5 py-1.5 text-xs" onClick={startAnotherUpload}>
-                        Upload another file
+                        Start another cycle
                       </button>
                     </div>
                   </div>
@@ -985,7 +978,7 @@ const Upload = () => {
                 </ul>
               </CollapsibleCard>
 
-              <CollapsibleCard title="Recent cycles" summary="Open the latest report packets if you need to continue an earlier cycle first.">
+              <CollapsibleCard title="Recent cycles" summary="Open the latest review packets if you need to continue an earlier cycle first.">
                 <div className="space-y-2">
                   {recentReports.length === 0 ? (
                     <p className="rounded border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-700">
@@ -1006,13 +999,13 @@ const Upload = () => {
                 </div>
               </CollapsibleCard>
 
-              <CollapsibleCard title="Accepted structure" summary="Required fields, current limits, and version boundaries.">
+              <CollapsibleCard title="File requirements" summary="Required fields, current limits, and version boundaries.">
                 <ul className="list-disc space-y-1 pl-5 text-sm text-neutral-800">
                   <li>Required: Review date, Rating (1-5), Client comment.</li>
                   <li>Maximum file size: 10 MB.</li>
                   <li>Current plan upload limit: {maxReviewsPerUpload ?? "Unlimited"} valid reviews per upload.</li>
                   <li>Current plan monthly report limit: {maxReportsPerMonth ?? "Unlimited"} reports.</li>
-                  <li>Clarion matches common header names automatically, but there is no manual column-mapping flow in this version.</li>
+                  <li>Clarion matches common header names automatically before processing.</li>
                   {!isPaidPlan && <li>PDF export: preview mode with watermark on Free plan.</li>}
                 </ul>
               </CollapsibleCard>
