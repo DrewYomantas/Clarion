@@ -5,6 +5,35 @@ from typing import Any, Optional
 from sqlalchemy import create_engine
 
 
+class CompatRow:
+    def __init__(self, columns: list[str], values: tuple[Any, ...] | list[Any]):
+        self._columns = tuple(columns)
+        self._values = tuple(values)
+        self._by_name = {column: self._values[idx] for idx, column in enumerate(self._columns)}
+
+    def __getitem__(self, key):
+        if isinstance(key, (int, slice)):
+            return self._values[key]
+        if isinstance(key, str):
+            return self._by_name[key]
+        raise TypeError(f"Unsupported row key type: {type(key)!r}")
+
+    def __iter__(self):
+        return iter(self._values)
+
+    def __len__(self):
+        return len(self._values)
+
+    def keys(self):
+        return self._columns
+
+    def get(self, key: str, default: Any = None):
+        return self._by_name.get(key, default)
+
+    def __repr__(self):
+        return repr(self._values)
+
+
 def _is_postgres_url(database_url: str) -> bool:
     value = (database_url or "").strip().lower()
     return value.startswith("postgres://") or value.startswith("postgresql://")
@@ -21,6 +50,18 @@ class CompatCursor:
     def _set_synthetic(self, rows: list[tuple[Any, ...]]):
         self._synthetic_rows = rows
         self._synthetic_index = 0
+
+    def _wrap_row(self, row):
+        if row is None or self._synthetic_rows is not None or not self._conn.is_postgres:
+            return row
+        if isinstance(row, CompatRow):
+            return row
+        if hasattr(row, "keys"):
+            return row
+        columns = [desc[0] for desc in (self._cursor.description or [])]
+        if not columns or not isinstance(row, (tuple, list)):
+            return row
+        return CompatRow(columns, row)
 
     def _rewrite_sql(self, sql: str) -> str:
         rewritten = sql
@@ -214,14 +255,14 @@ class CompatCursor:
             row = self._synthetic_rows[self._synthetic_index]
             self._synthetic_index += 1
             return row
-        return self._cursor.fetchone()
+        return self._wrap_row(self._cursor.fetchone())
 
     def fetchall(self):
         if self._synthetic_rows is not None:
             rows = self._synthetic_rows[self._synthetic_index :]
             self._synthetic_index = len(self._synthetic_rows)
             return rows
-        return self._cursor.fetchall()
+        return [self._wrap_row(row) for row in self._cursor.fetchall()]
 
     def __iter__(self):
         if self._synthetic_rows is not None:

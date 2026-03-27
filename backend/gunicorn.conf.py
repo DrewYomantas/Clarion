@@ -1,7 +1,7 @@
 import os
 
 bind = f"0.0.0.0:{os.getenv('PORT', '10000')}"
-workers = int(os.getenv('GUNICORN_WORKERS', '3'))
+workers = int(os.getenv('WEB_CONCURRENCY') or os.getenv('GUNICORN_WORKERS') or '1')
 threads = int(os.getenv('GUNICORN_THREADS', '2'))
 worker_class = os.getenv('GUNICORN_WORKER_CLASS', 'gthread')
 timeout = int(os.getenv('GUNICORN_TIMEOUT', '120'))
