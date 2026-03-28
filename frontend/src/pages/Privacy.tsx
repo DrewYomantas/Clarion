@@ -11,6 +11,7 @@ const Privacy = () => (
           This page explains what Clarion collects, how that data is used, and how retention, deletion, and privacy
           requests work in the current product.
         </p>
+        <p className="text-sm font-medium text-slate-600">Last updated: March 27, 2026</p>
         <MarketingProofBar
           items={[
             "No sale of customer data",
@@ -49,7 +50,7 @@ const Privacy = () => (
           <h2 className="text-lg font-semibold text-slate-900">What Clarion Collects</h2>
           <div className="trust-section-body">
             <p>
-              Effective date: March 6, 2026. Clarion collects account details, authentication and security metadata,
+              Effective date: March 6, 2026. Last updated: March 27, 2026. Clarion collects account details, authentication and security metadata,
               billing metadata, uploaded CSV contents, generated report records, action items, and related operational
               logs needed to run the service.
             </p>

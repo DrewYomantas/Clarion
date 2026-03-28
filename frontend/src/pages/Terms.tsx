@@ -11,6 +11,7 @@ const Terms = () => (
           This page explains the service scope, customer responsibilities, and the current billing, retention, and
           availability boundaries for Clarion.
         </p>
+        <p className="text-sm font-medium text-slate-600">Last updated: March 27, 2026</p>
         <MarketingProofBar
           items={[
             "Written for current Clarion workflows",
@@ -49,7 +50,7 @@ const Terms = () => (
           <h2 className="text-lg font-semibold text-slate-900">Service Scope</h2>
           <div className="trust-section-body">
             <p>
-              Effective date: March 6, 2026. Clarion is a software product for uploading CSV-based client feedback,
+              Effective date: March 6, 2026. Last updated: March 27, 2026. Clarion is a software product for uploading CSV-based client feedback,
               generating governance reports, reviewing the resulting governance record in the workspace, assigning
               follow-up actions, and exporting report PDFs based on the features available on your plan.
             </p>

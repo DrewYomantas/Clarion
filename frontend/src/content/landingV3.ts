@@ -45,9 +45,9 @@ export const landingTrustPoints = [
 ];
 
 export const landingTrustCallouts = [
-  "Law-firm specific positioning",
+  "Built for managing partners and operations leads",
   "Sample brief available before signup",
-  "Workspace, PDF, and email outputs in the same cycle",
+  "Workspace, PDF, and email outputs stay tied to the same cycle",
 ];
 
 export const landingOutputs = [

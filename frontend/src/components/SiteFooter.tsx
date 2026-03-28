@@ -10,6 +10,12 @@ const SiteFooter = () => (
             Turn law-firm client feedback into partner-ready governance briefs, assigned actions, and visible
             follow-through.
           </p>
+          <p className="mt-4 text-xs leading-6 text-slate-600">
+            Questions about setup, billing, or data handling?{" "}
+            <a href="mailto:support@clarionhq.co" className="font-semibold text-slate-900 hover:underline">
+              support@clarionhq.co
+            </a>
+          </p>
         </div>
         <div className="grid gap-6 text-xs text-slate-600 sm:grid-cols-2">
           <div>
@@ -32,7 +38,10 @@ const SiteFooter = () => (
           </div>
         </div>
       </div>
-      <p className="mt-6 text-center text-xs text-slate-500">&copy; {new Date().getFullYear()} Clarion. All rights reserved.</p>
+      <div className="mt-6 flex flex-col gap-2 border-t border-[#D7D0C3] pt-4 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
+        <p>Built for law-firm client-feedback governance and partner review.</p>
+        <p>&copy; {new Date().getFullYear()} Clarion. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 );

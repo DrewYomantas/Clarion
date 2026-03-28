@@ -158,9 +158,15 @@ const SiteNav = () => {
               </NavLink>
               <Link
                 to={defaultSampleBriefPath}
+                className="inline-flex items-center rounded-xl border border-[#B9AE99] bg-white/70 px-4 py-2 text-sm font-semibold text-[#111827] transition-all duration-200 hover:bg-white"
+              >
+                Sample brief
+              </Link>
+              <Link
+                to="/signup"
                 className="landing-nav-cta inline-flex items-center rounded-xl border border-[#111827] bg-[#111827] px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#1F2937]"
               >
-                Review sample brief
+                Start free
               </Link>
             </>
           )}
@@ -263,9 +269,16 @@ const SiteNav = () => {
               <Link
                 to={defaultSampleBriefPath}
                 onClick={() => setMobileOpen(false)}
+                className="inline-flex w-full items-center justify-center rounded-xl border border-[#B9AE99] bg-white px-5 py-2 text-sm font-semibold text-[#111827] transition-all duration-200 hover:bg-[#FFFDF9]"
+              >
+                Sample brief
+              </Link>
+              <Link
+                to="/signup"
+                onClick={() => setMobileOpen(false)}
                 className="landing-nav-cta inline-flex w-full items-center justify-center rounded-xl border border-[#111827] bg-[#111827] px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#1F2937]"
               >
-                Review sample brief
+                Start free
               </Link>
             </>
           )}

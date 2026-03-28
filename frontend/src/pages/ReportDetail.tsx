@@ -100,6 +100,19 @@ const isUnassigned = (action: ReportActionItem): boolean => {
   );
 };
 
+const isUndated = (action: ReportActionItem): boolean => {
+  if (isCompleted(action)) return false;
+  return !asDayDate(action.due_date);
+};
+
+const describeSatisfaction = (rating: number): string => {
+  if (rating >= 4.5) return "Strong client confidence this cycle.";
+  if (rating >= 4.0) return "Positive overall, but recurring friction still deserves review.";
+  if (rating >= 3.5) return "Mixed client experience; partner attention is still warranted.";
+  if (rating >= 3.0) return "Client confidence is uneven and should be addressed in the meeting.";
+  return "Client confidence is at risk and needs immediate leadership attention.";
+};
+
 const compareActions = (a: ReportActionItem, b: ReportActionItem): number => {
   const bucket = (item: ReportActionItem): number => {
     if (isOverdue(item)) return 0;
@@ -394,6 +407,10 @@ const ReportDetail = () => {
     () => sortedActions.filter((row) => isUnassigned(row)).length,
     [sortedActions],
   );
+  const undatedCount = useMemo(
+    () => sortedActions.filter((row) => isUndated(row)).length,
+    [sortedActions],
+  );
   const completedCount = useMemo(
     () => sortedActions.filter((row) => isCompleted(row)).length,
     [sortedActions],
@@ -413,9 +430,13 @@ const ReportDetail = () => {
 
   // Key signals — a curated 3-item summary for the "Signals this period" section
   const keySignals = useMemo(() => {
-    if (!report) return [] as Array<{ label: string; value: string }>;
-    const values: Array<{ label: string; value: string }> = [
-      { label: "Satisfaction", value: `${report.avg_rating.toFixed(2)} / 5` },
+    if (!report) return [] as Array<{ label: string; value: string; note?: string }>;
+    const values: Array<{ label: string; value: string; note?: string }> = [
+      {
+        label: "Satisfaction",
+        value: `${report.avg_rating.toFixed(2)} / 5`,
+        note: describeSatisfaction(report.avg_rating),
+      },
       { label: "Reviews in brief", value: `${report.total_reviews || 0}` },
     ];
     if (report.themes.length > 0) {
@@ -450,7 +471,39 @@ const ReportDetail = () => {
       recommendation: item.recommendation,
     }));
   }, [report?.recommended_changes]);
-  const firstDecision = nextSteps[0] || null;
+  const decisionItems = useMemo(() => {
+    if (!report) return [] as Array<{ theme: string; recommendation: string }>;
+    if (nextSteps.length > 0) return nextSteps;
+
+    const fallback: Array<{ theme: string; recommendation: string }> = [];
+
+    if (report.themes[0]) {
+      fallback.push({
+        theme: report.themes[0].name,
+        recommendation: `Confirm the response to ${report.themes[0].name.toLowerCase()} before the next partner review and decide whether leadership intervention is needed.`,
+      });
+    }
+
+    if (unassignedCount > 0 || undatedCount > 0) {
+      fallback.push({
+        theme: "Follow-through readiness",
+        recommendation: `Assign owners${undatedCount > 0 ? ", set due dates," : ""} and close any loose follow-through before this brief is shared again.`,
+      });
+    } else if (sortedActions.length > 0) {
+      fallback.push({
+        theme: "Current follow-through",
+        recommendation: "Review open follow-through items, clear anything completed, and escalate any work that is still blocked.",
+      });
+    } else {
+      fallback.push({
+        theme: "Action record",
+        recommendation: "Turn the top issue from this cycle into one named follow-through item before closing the brief.",
+      });
+    }
+
+    return fallback.slice(0, 3);
+  }, [nextSteps, report, sortedActions.length, unassignedCount, undatedCount]);
+  const firstDecision = decisionItems[0] || null;
 
   const briefingBullets = useMemo(() => {
     if (!report) return [] as string[];
@@ -478,10 +531,10 @@ const ReportDetail = () => {
       report?.top_praise?.[0] ||
       "No client quote available yet.";
     const recommendedDiscussion =
-      report?.recommended_changes?.[0]?.recommendation ||
+      firstDecision?.recommendation ||
       "Review current client issues and confirm assigned action ownership.";
     return { averageRating, topIssue, exampleQuote, recommendedDiscussion };
-  }, [report]);
+  }, [firstDecision?.recommendation, report]);
 
   const emailHtmlSummary = useMemo(() => {
     if (!report) return "";
@@ -523,11 +576,50 @@ const ReportDetail = () => {
   ]);
 
   // ── Action handlers ────────────────────────────────────────────────────────
+  const clearActionPrefill = useCallback(() => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.delete("createAction");
+      next.delete("actionTitle");
+      next.delete("actionOwner");
+      next.delete("actionPriority");
+      return next;
+    });
+  }, [setSearchParams]);
+
   const openCreateAction = () => {
+    clearActionPrefill();
     setEditingActionId(null);
     setActionFormError("");
     setActionFormMode("create");
   };
+
+  const scrollToActionRecord = useCallback(() => {
+    document
+      .querySelector('[data-testid="report-actions-list"]')
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  const openSuggestedAction = useCallback(
+    (theme?: string | null) => {
+      setEditingActionId(null);
+      setActionFormError("");
+      setActionFormMode("create");
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev);
+        next.set("createAction", "1");
+        if (theme) {
+          next.set("actionTitle", `Follow up on ${theme}`);
+        } else {
+          next.delete("actionTitle");
+        }
+        next.delete("actionOwner");
+        next.set("actionPriority", escalation.on ? "high" : "medium");
+        return next;
+      });
+    },
+    [escalation.on, setSearchParams],
+  );
 
   const handleSendPartnerBrief = async () => {
     if (isSendingBrief) return;
@@ -1009,6 +1101,23 @@ const ReportDetail = () => {
           </ul>
         </div>
       ) : null}
+
+      {!presentMode && (unassignedCount > 0 || undatedCount > 0) ? (
+        <div className="mt-5 rounded-[10px] border border-amber-200 bg-amber-50 px-5 py-4">
+          <p className="gov-type-eyebrow text-amber-800">Before you close this brief</p>
+          <p className="mt-2 text-[13px] leading-relaxed text-amber-900">
+            This cycle still has follow-through gaps that will weaken the next partner review if they stay unresolved.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {unassignedCount > 0 ? (
+              <GovStatusChip label={`${unassignedCount} unassigned`} variant="warn" size="sm" />
+            ) : null}
+            {undatedCount > 0 ? (
+              <GovStatusChip label={`${undatedCount} missing due date`} variant="warn" size="sm" />
+            ) : null}
+          </div>
+        </div>
+      ) : null}
     </PacketSection>
   );
 
@@ -1031,6 +1140,9 @@ const ReportDetail = () => {
                 {sig.label}
               </p>
               <p className="mt-1 text-[17px] font-semibold text-[#0D1B2A]">{sig.value}</p>
+              {sig.note ? (
+                <p className="mt-1 text-[12px] leading-relaxed text-slate-600">{sig.note}</p>
+              ) : null}
             </div>
           ))}
         </div>
@@ -1109,6 +1221,18 @@ const ReportDetail = () => {
         <p className="mt-1 text-[13px] text-slate-700">
           Confirm ownership, due dates, and any blocked items before this brief goes into the next partner discussion.
         </p>
+        {!presentMode ? (
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <button type="button" className="gov-btn-secondary" onClick={openCreateAction}>
+              Add follow-through
+            </button>
+            {(unassignedCount > 0 || undatedCount > 0) && (
+              <span className="text-[12px] text-slate-600">
+                Assign owners and due dates before sharing this brief.
+              </span>
+            )}
+          </div>
+        ) : null}
       </div>
 
       {/* Escalation callout */}
@@ -1128,6 +1252,9 @@ const ReportDetail = () => {
                   variant="warn"
                   size="sm"
                 />
+              )}
+              {undatedCount > 0 && (
+                <GovStatusChip label={`${undatedCount} missing due date`} variant="warn" size="sm" />
               )}
             </div>
           </div>
@@ -1231,6 +1358,9 @@ const ReportDetail = () => {
                 {isUnassigned(action) && (
                   <GovStatusChip label="Unassigned" variant="warn" size="sm" />
                 )}
+                {isUndated(action) && (
+                  <GovStatusChip label="No due date" variant="warn" size="sm" />
+                )}
                 {!presentMode ? (
                   <button
                     type="button"
@@ -1272,6 +1402,14 @@ const ReportDetail = () => {
       title="Supporting Client Evidence"
       presentMode={presentMode}
     >
+      {report.top_complaints.length > 0 ? (
+        <div className="mb-4 rounded-[10px] border border-[#E5E7EB] bg-[#F8FAFC] px-4 py-3">
+          <p className="gov-type-eyebrow">Representative client excerpts</p>
+          <p className="mt-1 text-[13px] text-slate-700">
+            Use these anonymized excerpts to ground the brief in source language before assigning response owners.
+          </p>
+        </div>
+      ) : null}
       {report.top_complaints.length === 0 ? (
         <p className="text-[13px] text-slate-500">No supporting client evidence for this period.</p>
       ) : (
@@ -1282,7 +1420,7 @@ const ReportDetail = () => {
               quote={quote}
               issue="Client Concern"
               sentiment="complaint"
-              meta="Anonymized client feedback excerpt"
+              meta="Anonymized excerpt from this review period"
             />
           ))}
         </div>
@@ -1299,7 +1437,7 @@ const ReportDetail = () => {
                 quote={quote}
                 issue="Client Experience Strength"
                 sentiment="praise"
-                meta="Anonymized client feedback excerpt"
+                meta="Anonymized excerpt from this review period"
               />
             ))}
           </div>
@@ -1315,15 +1453,55 @@ const ReportDetail = () => {
       title="Decisions & Next Steps"
       presentMode={presentMode}
     >
-      {nextSteps.length === 0 ? (
-        <p className="text-[13px] text-slate-500">
-          No recommended next steps for this period.
-        </p>
+      {decisionItems.length === 0 ? (
+        <p className="text-[13px] text-slate-500">No decisions are ready for this period yet.</p>
       ) : (
         <div className="space-y-3">
-          {nextSteps.map((step, index) => (
+          <div
+            className={
+              presentMode
+                ? "border-l-[4px] border-l-[#0D1B2A] pl-4 py-1"
+                : "rounded-[10px] border border-[#D9E7F5] bg-[#F5F9FC] px-5 py-4"
+            }
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0D1B2A]">
+              Primary next step
+            </p>
+            <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#0EA5C2]">
+              {firstDecision?.theme}
+            </p>
+            <p
+              className={
+                presentMode
+                  ? "mt-1 text-[15px] leading-relaxed text-[#0D1B2A]"
+                  : "mt-1 text-[14px] leading-relaxed text-[#0D1B2A]"
+              }
+            >
+              {firstDecision?.recommendation}
+            </p>
+            {!presentMode ? (
+              <div className="mt-3 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  className="gov-btn-secondary"
+                  onClick={() => openSuggestedAction(firstDecision?.theme)}
+                >
+                  Create linked follow-through
+                </button>
+                <button
+                  type="button"
+                  className="gov-btn-ghost h-9 px-3 text-[12px]"
+                  onClick={scrollToActionRecord}
+                >
+                  Review action record
+                </button>
+              </div>
+            ) : null}
+          </div>
+
+          {decisionItems.slice(1).map((step, index) => (
             <div
-              key={`step-${index}`}
+              key={`step-${index + 1}`}
               className={
                 presentMode
                   ? "border-l-[3px] border-l-[#0EA5C2] pl-4 py-1"
@@ -1331,6 +1509,9 @@ const ReportDetail = () => {
               }
             >
               <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0EA5C2]">
+                Supporting step
+              </p>
+              <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-slate-500">
                 {step.theme}
               </p>
               <p

@@ -7,7 +7,7 @@ const LandingTrustSection = () => (
         <div className="max-w-2xl">
           <p className="landing-kicker">Built for law-firm review</p>
           <h2 className="landing-section-title mt-4 text-[#111827]">
-            Clarion is for firms that want a disciplined review cycle, not a new analytics hobby.
+            Clarion is for managing partners, practice leaders, and operations leads who want a disciplined review cycle, not a new analytics hobby.
           </h2>
         </div>
         <div className="grid gap-3 sm:grid-cols-3">

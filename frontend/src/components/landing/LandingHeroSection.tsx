@@ -15,12 +15,11 @@ const LandingHeroSection = () => {
         <div className="landing-hero-layout grid gap-12 lg:grid-cols-[minmax(0,0.84fr)_minmax(0,1.16fr)] lg:items-start lg:gap-14 xl:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] xl:gap-16">
           <div className="landing-hero-copy max-w-[38rem]">
             <p className="landing-kicker landing-reveal reveal--visible">Partner-ready client feedback governance</p>
-            <h1 className="landing-display landing-reveal landing-reveal-delay-1 reveal--visible mt-6 max-w-[13ch] text-[3.1rem] leading-[1.03] tracking-[-0.035em] text-[#111827] sm:text-[3.55rem] md:text-[4.15rem] xl:text-[4.45rem]">
-              Walk into partner meetings with a clear record of what clients are saying, what needs a decision, and who owns follow-through.
+            <h1 className="landing-display landing-reveal landing-reveal-delay-1 reveal--visible mt-6 max-w-[11ch] text-[3.1rem] leading-[1.03] tracking-[-0.035em] text-[#111827] sm:text-[3.55rem] md:text-[4.15rem] xl:text-[4.45rem]">
+              Partner-ready client feedback briefs for law firms.
             </h1>
             <p className="landing-reveal landing-reveal-delay-2 reveal--visible mt-7 max-w-[33rem] text-[1.05rem] leading-[1.9] text-[#374151]">
-              Clarion turns one law-firm feedback export into a partner-ready governance brief, assigned follow-through,
-              and a repeatable review cycle leadership can actually use.
+              Clarion turns one law-firm feedback export into a governance brief, assigned follow-through, and a repeatable review cycle leadership can use in partner meetings.
             </p>
 
             <div className="landing-reveal landing-reveal-delay-3 reveal--visible mt-9 flex flex-wrap gap-3">
@@ -30,12 +29,12 @@ const LandingHeroSection = () => {
               >
                 Review sample brief <ArrowRight size={15} className="ml-2" />
               </Link>
-              <a
-                href="#workflow"
+              <Link
+                to={workspaceLink}
                 className="gov-btn-secondary landing-cta-button border-[#B9AE99] bg-transparent px-6 py-3 text-sm font-semibold text-[#111827] hover:bg-white"
               >
-                See the workflow
-              </a>
+                {isLoggedIn ? "Upload recent feedback" : "Start free"}
+              </Link>
             </div>
 
             <div className="landing-hero-aside landing-reveal landing-reveal-delay-4 reveal--visible mt-11">
@@ -60,6 +59,9 @@ const LandingHeroSection = () => {
 
             <div className="landing-reveal landing-reveal-delay-5 reveal--visible mt-9 border-t border-[#D9D1C3] pt-5 text-sm text-[#4B5563]">
               <p>
+                <a href="#workflow" className="landing-inline-link font-semibold text-[#111827] underline underline-offset-4">
+                  See how the review cycle works.
+                </a>{" "}
                 {isLoggedIn ? "Already inside Clarion?" : "Want to test your own first cycle?"}{" "}
                 <Link to={workspaceLink} className="landing-inline-link font-semibold text-[#111827] underline underline-offset-4">
                   {isLoggedIn ? "Upload recent feedback." : "Start a pilot workspace."}
