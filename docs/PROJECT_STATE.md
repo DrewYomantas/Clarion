@@ -60,6 +60,8 @@ Latest commit to deploy after reconnect: latest `main` head. Current auth blocke
 
 **Landing / marketing proof + onboarding clarity pass complete (2026-03-26).** Public-facing copy now explains Clarion as a law-firm governance brief workflow centered on partner meetings, follow-through, and one review-period export.
 
+**Trust / credibility cleanup + dashboard hierarchy cleanup complete (2026-03-27).** Customer-facing account surfaces no longer expose internal preview/testing tooling, dashboard above-the-fold hierarchy now leads with the current governance brief plus a compact oversight snapshot, and the most repetitive upgrade framing was reduced by consolidating the main plan CTA onto workspace home.
+
 **Launch-readiness truth test:** Near-ready with limited blockers. Product understanding is materially stronger, but public launch should wait for deployed-environment truth: Render reconnect / latest main deploy, deployed smoke across public and authenticated flows, and confirmation that setup-dependent delivery paths match live claims.
 
 **Current auth retest truth (2026-03-27):** `/forgot-password` and `/reset-password/:token` now map cleanly to the SPA in repo truth, and the Postgres auth/session root cause is now fixed in code: Postgres cursor rows are normalized to sqlite-style named rows before `load_user` consumes them. The live service still needs the latest deploy. Until Redis is reachable again, keep Render at a single worker (`WEB_CONCURRENCY=1` or `GUNICORN_WORKERS=1`) so auth backoff and rate-limit state stay coherent.
@@ -145,16 +147,18 @@ The Approval Queue (dark card layout) and the 4-card governance rail are the two
 ### Closed Milestones
 1. **Authenticated workspace completion + continuity lock** - DONE (`ebc3c41`). Dashboard compression and authenticated continuity lock are complete.
 2. **Landing / marketing proof + onboarding clarity** - DONE (`9b6202e`). Public messaging and first-run upload framing now match the actual product more closely.
+3. **Trust / credibility cleanup + dashboard hierarchy cleanup** - DONE (`44712b0`). Customer-facing surfaces are cleaner, and workspace home now makes the brief and immediate oversight more decisive.
 
 ### Next Logical Pass
-3. **Public-launch truth pass** - reconnect Render to the current repo, deploy latest `main`, and run a deployed smoke across `/`, auth entry, upload, sample brief, and current review packet flow.
-4. **Setup-dependent delivery proof** - confirm live truth for support/contact, billing entry points, and partner-brief delivery paths before public traffic.
+4. **Brief closure loop** - tighten the handoff from workspace home into the current governance brief so the artifact closes the loop more decisively once opened.
+5. **Public-launch truth pass** - reconnect Render to the current repo, deploy latest `main`, and run a deployed smoke across `/`, auth entry, upload, sample brief, and current review packet flow.
+6. **Setup-dependent delivery proof** - confirm live truth for support/contact, billing entry points, and partner-brief delivery paths before public traffic.
 
 ### Later
-5. **Domain cutover** to `clarion.co` (checklist below).
-6. **Agent Office audit** - 21-agent system is real and in play, but was built early and still needs a dedicated truth pass.
-7. **Code splitting** - pre-existing ~910kB frontend bundle warning, not the current blocker.
-8. **app.py -> Flask blueprints** - planned only after launch-facing truth is stable.
+7. **Domain cutover** to `clarion.co` (checklist below).
+8. **Agent Office audit** - 21-agent system is real and in play, but was built early and still needs a dedicated truth pass.
+9. **Code splitting** - pre-existing ~910kB frontend bundle warning, not the current blocker.
+10. **app.py -> Flask blueprints** - planned only after launch-facing truth is stable.
 
 ---
 
@@ -218,6 +222,12 @@ Last fresh live run: `data/calibration/runs/20260317_223428`. Agreement rate 43.
 - [ ] Frontend `VITE_API_BASE_URL` update
 - [ ] CORS allowed origins update in `backend/app.py`
 ---
+
+## Last Completed Passes (This Session - 2026-03-27)
+1. Pass 13 - Trust / credibility cleanup + dashboard hierarchy cleanup. Files: `frontend/src/pages/Dashboard.tsx`, `frontend/src/pages/DashboardAccount.tsx`, `frontend/src/pages/DashboardBilling.tsx`, `frontend/src/pages/ApprovalQueuePage.tsx`, `frontend/src/pages/Onboarding.tsx`, `frontend/src/components/ClientQuoteCard.tsx`.
+2. What changed: removed the customer-visible admin/testing block from Account; softened internal-only wording in Approval Queue and onboarding preview mode; normalized client evidence quote formatting for spacing and duplicated quote marks; moved the compact Oversight snapshot directly under the current governance brief; pushed cycle baseline/history notices below immediate follow-through; moved the heavier posture card into supporting context; added the main plan CTA to workspace home and removed the extra upgrade card from Billing.
+3. Explicitly not touched: backend logic, route gating, approval logic, charts, Signals/Execution/Reports/ReportDetail workflows, and broad visual redesign.
+4. Verification: `npm run build` passed in `frontend/` (1821 modules, pre-existing chunk warning unchanged). Attempted local authenticated Playwright smoke, but the backend did not become reachable on `127.0.0.1:5000` inside that session, so rendered authenticated verification still needs a live or local bootable backend.
 
 ## Last Completed Passes (This Session - 2026-03-26)
 1. Pass 12 - Landing / marketing proof + onboarding clarity + launch-readiness truth test (`9b6202e`). Files: `LandingHeroSection.tsx`, `LandingOperatingPreview.tsx`, `LandingWorkflowSection.tsx`, `landingV3.ts`, `Onboarding.tsx`, `Upload.tsx`. Changes: landing promise now leads with partner-meeting clarity, governance brief, and follow-through; workflow/output copy now stresses one review-period export into one readable governance record; onboarding explains what Clarion creates before asking for upload action; upload flow language now stays aligned to a single-export, review-packet path.

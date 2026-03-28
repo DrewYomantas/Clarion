@@ -1,5 +1,54 @@
 # AI Pass Changelog
 
+## 2026-03-27 - Pass 13 - Trust / Credibility Cleanup + Dashboard Hierarchy Cleanup
+
+### Commit
+- 44712b0 - tighten trust cleanup and dashboard hierarchy
+
+### Files Changed
+- frontend/src/components/ClientQuoteCard.tsx
+- frontend/src/pages/ApprovalQueuePage.tsx
+- frontend/src/pages/Dashboard.tsx
+- frontend/src/pages/DashboardAccount.tsx
+- frontend/src/pages/DashboardBilling.tsx
+- frontend/src/pages/Onboarding.tsx
+- docs/PROJECT_STATE.md
+- docs/CURRENT_BUILD.md
+- docs/CHANGELOG_AI.md
+
+### What Changed
+- Removed customer-facing exposure of internal tooling from the Account surface:
+  - deleted the admin/testing block that exposed support queue handling, onboarding preview links, example-cycle loading, and calibration / benchmark console links
+  - retitled the section from workspace administration to workspace settings and removed internal-ops phrasing
+- Softened internal-only wording where it still leaked into product-adjacent surfaces:
+  - Approval Queue description no longer says `Founder command center` or `office run`
+  - item metadata now reads as `Submitted by ...`
+  - payload toggle now reads `Submission details`
+  - onboarding preview mode now uses `Preview Mode` / `Restart preview`
+- Tightened dashboard above-the-fold hierarchy without redesign:
+  - removed the governance-loop explainer from the header
+  - placed the compact `OversightBand` directly under the current governance brief
+  - moved baseline/history notices below the immediate follow-through tier
+  - moved the larger `FirmGovernanceStatus` posture card into supporting context
+- Reduced repetitive upgrade framing:
+  - added the primary plan-review CTA to the Dashboard `Plan and capacity` card
+  - removed the extra standalone `Upgrade Plan` card from Billing
+- Improved client evidence readability in the shared quote renderer:
+  - trims duplicate outer quotes
+  - normalizes whitespace
+  - restores missing spaces after sentence punctuation when they were obviously concatenated
+
+### Explicitly Not Touched
+- No backend, auth, or route-gating changes.
+- No charts or broad visual redesign.
+- No workflow changes to Signals, Execution, Reports, or ReportDetail.
+- Approval Queue remains admin-only; this pass changed copy only.
+
+### Verification
+- `npm run build` in `frontend/` - passed (1821 modules).
+- Pre-existing chunk-size warning remains unchanged.
+- Attempted local authenticated Playwright smoke via the repo e2e path, but the backend did not become reachable on `127.0.0.1:5000` inside that session, so authenticated rendered verification still needs a live or bootable local backend.
+
 ## 2026-03-27 - Auth Session Postgres Row Fix + Single-Worker Runtime Guard
 
 ### Commit
