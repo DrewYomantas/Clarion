@@ -62,6 +62,8 @@ Latest commit to deploy after reconnect: latest `main` head. Current auth blocke
 
 **Trust / credibility cleanup + dashboard hierarchy cleanup complete (2026-03-27).** Customer-facing account surfaces no longer expose internal preview/testing tooling, dashboard above-the-fold hierarchy now leads with the current governance brief plus a compact oversight snapshot, and the most repetitive upgrade framing was reduced by consolidating the main plan CTA onto workspace home.
 
+**Brief closure + marketing trust foundation complete (2026-03-27).** The governance brief now closes the loop more credibly once opened: satisfaction carries interpretive context, Decisions & Next Steps has a real primary action and fallback guidance, missing owners / due dates are surfaced as visible follow-through risk, and supporting evidence is framed as source-grounded meeting material. Public trust scaffolding also tightened without a redesign: persistent `Start free` plus visible sample-brief proof in nav, branded 404, footer support/trust language, and visible last-updated dates on Terms and Privacy.
+
 **Launch-readiness truth test:** Near-ready with limited blockers. Product understanding is materially stronger, but public launch should wait for deployed-environment truth: Render reconnect / latest main deploy, deployed smoke across public and authenticated flows, and confirmation that setup-dependent delivery paths match live claims.
 
 **Current auth retest truth (2026-03-27):** `/forgot-password` and `/reset-password/:token` now map cleanly to the SPA in repo truth, and the Postgres auth/session root cause is now fixed in code: Postgres cursor rows are normalized to sqlite-style named rows before `load_user` consumes them. The live service still needs the latest deploy. Until Redis is reachable again, keep Render at a single worker (`WEB_CONCURRENCY=1` or `GUNICORN_WORKERS=1`) so auth backoff and rate-limit state stay coherent.
@@ -150,7 +152,7 @@ The Approval Queue (dark card layout) and the 4-card governance rail are the two
 3. **Trust / credibility cleanup + dashboard hierarchy cleanup** - DONE (`44712b0`). Customer-facing surfaces are cleaner, and workspace home now makes the brief and immediate oversight more decisive.
 
 ### Next Logical Pass
-4. **Brief closure loop** - tighten the handoff from workspace home into the current governance brief so the artifact closes the loop more decisively once opened.
+4. **Brief closure + marketing trust foundation** - DONE (`7ebb700`). Brief-detail closure and public trust scaffolding are now materially stronger without reopening broader redesign work.
 5. **Public-launch truth pass** - reconnect Render to the current repo, deploy latest `main`, and run a deployed smoke across `/`, auth entry, upload, sample brief, and current review packet flow.
 6. **Setup-dependent delivery proof** - confirm live truth for support/contact, billing entry points, and partner-brief delivery paths before public traffic.
 
@@ -222,6 +224,13 @@ Last fresh live run: `data/calibration/runs/20260317_223428`. Agreement rate 43.
 - [ ] Frontend `VITE_API_BASE_URL` update
 - [ ] CORS allowed origins update in `backend/app.py`
 ---
+
+## Last Completed Passes (This Session - 2026-03-27)
+1. Pass 14 - Brief closure + marketing trust foundation (`7ebb700`). Files: `frontend/src/pages/ReportDetail.tsx`, `frontend/src/components/SiteNav.tsx`, `frontend/src/components/SiteFooter.tsx`, `frontend/src/components/landing/LandingHeroSection.tsx`, `frontend/src/components/landing/LandingTrustSection.tsx`, `frontend/src/content/landingV3.ts`, `frontend/src/pages/NotFound.tsx`, `frontend/src/pages/Privacy.tsx`, `frontend/src/pages/Terms.tsx`.
+2. What changed: `ReportDetail.tsx` now gives the brief a stronger closure loop with interpretive satisfaction framing, a primary next-step block, fallback decision guidance when recommended changes are absent, visible missing-owner / missing-due-date warnings, a linked follow-through creation prompt, and clearer evidence framing. Public-site trust scaffolding tightened with a persistent `Start free` nav CTA while keeping the sample brief visible, a branded 404, support/trust footer language, tighter hero copy, slightly stronger persona wording, and visible `Last updated` timestamps on Terms and Privacy.
+3. Explicitly not touched: backend logic, auth/runtime, charts, broad landing redesign, custom-domain implementation, and rendered authenticated route logic outside the current brief-detail page.
+4. Verification: `npm run build` passed in `frontend/` (1821 modules, pre-existing chunk warning unchanged). Playwright local preview verification passed for `/`, `/terms`, `/privacy`, and a branded 404 route (`/does-not-exist`). Lane A is build-verified and file-reviewed; a full authenticated rendered smoke for `ReportDetail` still needs a bootable local or deployed auth environment.
+5. Next logical pass: public-launch truth pass on deployed Render, including authenticated smoke and setup-dependent delivery confirmation.
 
 ## Last Completed Passes (This Session - 2026-03-27)
 1. Pass 13 - Trust / credibility cleanup + dashboard hierarchy cleanup. Files: `frontend/src/pages/Dashboard.tsx`, `frontend/src/pages/DashboardAccount.tsx`, `frontend/src/pages/DashboardBilling.tsx`, `frontend/src/pages/ApprovalQueuePage.tsx`, `frontend/src/pages/Onboarding.tsx`, `frontend/src/components/ClientQuoteCard.tsx`.

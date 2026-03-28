@@ -1,5 +1,56 @@
 # AI Pass Changelog
 
+## 2026-03-27 - Pass 14 - Brief Closure + Marketing Trust Foundation
+
+### Commit
+- 7ebb700 - tighten brief closure and marketing trust
+
+### Files Changed
+- frontend/src/pages/ReportDetail.tsx
+- frontend/src/components/SiteNav.tsx
+- frontend/src/components/SiteFooter.tsx
+- frontend/src/components/landing/LandingHeroSection.tsx
+- frontend/src/components/landing/LandingTrustSection.tsx
+- frontend/src/content/landingV3.ts
+- frontend/src/pages/NotFound.tsx
+- frontend/src/pages/Privacy.tsx
+- frontend/src/pages/Terms.tsx
+- docs/PROJECT_STATE.md
+- docs/CURRENT_BUILD.md
+- docs/CHANGELOG_AI.md
+
+### What Changed
+- Strengthened the governance brief closure loop in `ReportDetail.tsx` without redesigning the full artifact:
+  - satisfaction score now includes interpretive context rather than a raw number alone
+  - `Decisions & Next Steps` now has a primary next-step block, supporting steps, and fallback guidance when recommended changes are absent
+  - missing owners and missing due dates are surfaced as visible follow-through risk
+  - the primary decision can now open a linked follow-through draft instead of feeling disconnected from action
+  - supporting evidence is framed more clearly as representative anonymized source material for the current review period
+- Strengthened public trust/conversion scaffolding with minimal surface changes:
+  - public nav now keeps the sample brief visible while adding a persistent `Start free` CTA
+  - homepage hero copy is shorter and clearer about the upload-to-brief outcome
+  - trust/persona wording is slightly more buyer-specific without adding fake proof
+  - footer now includes support contact language and a trust line
+  - 404 page now uses Clarion branding and routes the user back to the sample brief or homepage
+  - Terms and Privacy now show visible `Last updated` timestamps
+
+### Explicitly Not Touched
+- No backend or auth/runtime changes
+- No charts
+- No broad landing redesign
+- No custom-domain implementation or DNS work
+- No authenticated workflow changes outside the current brief-detail surface
+
+### Verification
+- `npm run build` in `frontend/` - passed (1821 modules)
+- Playwright local-preview checks passed on:
+  - `/`
+  - `/terms`
+  - `/privacy`
+  - `/does-not-exist`
+- Pre-existing chunk-size warning remains unchanged
+- Full authenticated rendered verification for `ReportDetail` still requires a bootable local or deployed auth environment
+
 ## 2026-03-27 - Pass 13 - Trust / Credibility Cleanup + Dashboard Hierarchy Cleanup
 
 ### Commit
