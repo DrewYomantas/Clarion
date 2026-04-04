@@ -6,7 +6,7 @@
 - Holdout file: `data/calibration/expansion/queues/20260328_wave80_holdout_queue.csv`
 
 ## Source mix
-- Google Maps: 28
+- Google Maps: 36
 - Trustpilot: 0
 - Avvo / Lawyers.com: 12
 - Other: 0
@@ -31,10 +31,10 @@
 
 ## Batch caveats
 - Any rows with thin metadata: none in the current batch; every row has rating, source URL, state, practice area, collection date, and provenance note.
-- Any rows marked audit-only immediately: none; all forty rows remain `corpus_only`.
-- Any rows that should never drive benchmark truth: the Virginia estate / probate lane rows and the controlled Avvo mixed `4-star` fallback rows should stay out of benchmark pressure until a later Wave80 triage pass.
+- Any rows marked audit-only immediately: none; all forty-eight rows remain `corpus_only`.
+- Any rows that should never drive benchmark truth: the controlled Avvo mixed `4-star` fallback rows, plus the new 2026-04-04 intake rows captured during the honest `2-star` shortfall pass, should stay out of benchmark pressure until a later Wave80 triage pass.
 
 ## Operator notes
-- What went smoothly: this pass added twelve real rows, kept Google Maps first with ten Google Maps captures, widened into `AZ`, `NV`, `OH`, `VA`, `FL`, and `PA`, and materially deepened immigration, disability, estate-planning, and criminal-defense evidence without touching protected truth.
-- What slowed capture down: Google Maps mixed `4-star` work hit three dead lanes in the same pass at Eric Palacios (`NV`), Philip J. Fulton (`OH`), and Swartz Law Firm (`FL`), where review filters either failed to switch cleanly or surfaced no usable full-text `4-star` body.
-- What should change in the next batch: keep Google Maps-first capture for low-star and positive rows, keep pursuing honest `2-star` growth, and use controlled Avvo / Lawyers.com only after three dead Google Maps mixed `4-star` lanes appear in the same pass.
+- What went smoothly: this pass added eight real Google Maps rows, widened live Wave80 capture into `MD`, `NM`, `UT`, and `OK`, and materially deepened immigration and criminal-defense coverage without touching protected truth.
+- What slowed capture down: repeated Google Maps `2-star` lanes in `NV`, `MO`, `TN`, and other underused-state scouting slices either showed zero live `2-star` reviews, kept the page in limited-view mode, or showed `2-star` counts without surfacing any full-text body after Lowest sort and quote-chip attempts.
+- What should change in the next batch: keep Google Maps-first capture, keep pushing honest `2-star` growth, prioritize lanes where low-star quote chips or visible `2-star` bodies are already surfaced, and document histogram-plus-Lowest dead ends quickly instead of forcing synthetic balance.

@@ -1,5 +1,57 @@
 # AI Pass Changelog
 
+## 2026-04-04 - Pass 35 - Wave80 Honest 2-Star Growth Pass
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Added `8` real Wave80 rows and expanded the live Wave80 batch from `40` to `48`.
+- Kept the pass fully Google Maps-first with all `8` new rows captured from live Google Maps pages.
+- Widened live capture into four new states: `MD`, `NM`, `UT`, and `OK`.
+- Deepened immigration and criminal-defense coverage while keeping every new row `corpus_only`.
+- Documented an honest `2-star` shortfall after repeated Google Maps lanes failed to surface new full-text `2-star` bodies in usable live review views.
+- Regenerated normalization, dedupe, acquisition status, and the source-priority queue after the new capture block landed.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No benchmark-candidate or holdout promotion
+- No Phase 1 protected-subset edits
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `python automation/calibration/build_review_source_priority_queue.py --coverage data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv --scouting data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv --stage wave80 --batches-dir data/calibration/expansion/batches --output data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- Wave80 batch result:
+  - `48` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+  - `google_maps 36`, `avvo 12`
+  - `1-star 18`
+  - `2-star 5`
+  - `4-star 9`
+  - `5-star 16`
+
+### Current Truth
+- The honest `2-star` target was missed in this pass because repeated Google Maps lanes in new or underused states showed zero live `2-star` rows, stayed in limited-view mode, or failed to surface any full-text `2-star` body after Lowest sort and quote-chip attempts.
+- Mixed `4-star` was not pursued in this pass and the dead-lane recovery rule stayed untouched.
+- The next honest move is to stay Google Maps-first, keep hunting visible `2-star` lanes, and move on quickly when a page's live view refuses to surface body text.
+
 ## 2026-04-03 - Pass 34 - Wave80 Google Maps-First Growth Pass
 
 ### Files Changed

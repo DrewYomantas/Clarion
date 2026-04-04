@@ -148,6 +148,16 @@ Wave80 Google Maps-First Growth Pass is now complete:
 - all `40` rows remain `corpus_only`
 - normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
 
+Pass 35 - Wave80 Honest 2-Star Growth Pass is now complete:
+- `8` additional real Google Maps rows captured
+- Wave80 grew from `40` to `48` rows and stayed Google Maps-first at `36/48`
+- new-state capture widened into `MD`, `NM`, `UT`, and `OK`
+- immigration and criminal-defense coverage deepened materially in the live batch
+- the honest `2-star` target was missed because repeated Google Maps lanes in new or underused states showed zero visible `2-star` rows, limited-view review panes, or dead Lowest-sort flows that never surfaced a new full-text `2-star` body
+- mixed `4-star` was not pursued in this pass
+- all `48` rows remain `corpus_only`
+- normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
+
 Mixed `4-star` recovery rule:
 1. start on Google Maps
 2. target firms roughly `3.5` to `4.5` overall and sort reviews by `Lowest`
@@ -159,10 +169,11 @@ Mixed `4-star` recovery rule:
 Current next pass priorities:
 1. stay Google Maps-first
 2. keep mixed `4-star` capture on the controlled gap-fill rule when Google Maps turns into body-less dead ends
-3. keep pushing honest `2-star` growth from new-state practice lanes
+3. keep pushing honest `2-star` growth from new-state practice lanes where low-star quote chips or visible `2-star` bodies are already surfaced
 4. widen practice-area coverage in immigration, disability, estate planning, and criminal defense without forcing synthetic balance
 5. keep pushing new-state capture instead of deepening only WI and GA
-6. keep Wave80 at intake discipline only; no benchmark pressure yet
+6. document histogram-plus-Lowest dead ends quickly when Google Maps shows `2-star` counts but no visible body
+7. keep Wave80 at intake discipline only; no benchmark pressure yet
 
 ---
 
