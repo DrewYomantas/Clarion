@@ -1,5 +1,59 @@
 # AI Pass Changelog
 
+## 2026-04-04 - Pass 36 - Wave80 2-Star Surfacing Proof + Controlled Fallback
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Added `4` real full-text `2-star` Wave80 rows and expanded the live batch from `48` to `52`.
+- Documented six distinct Google Maps `2-star` surfacing failures across priority-practice lanes, proving that the current bottleneck is surfacing rather than missing histogram counts.
+- Triggered a narrow controlled fallback rule only after those six Google Maps failures were documented in the same pass.
+- Added fallback `2-star` rows from `Avvo` and `Lawyers.com` across immigration, social security disability, estate planning, and criminal defense.
+- Kept every new row `corpus_only` and preserved the pass as evidence collection only, with no benchmark or engine work.
+- Regenerated normalization, dedupe, acquisition status, and the Wave80 source-priority queue after the new capture block landed.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No benchmark-candidate or holdout promotion
+- No Phase 1 protected-subset edits
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `python automation/calibration/build_review_source_priority_queue.py --coverage data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv --scouting data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv --stage wave80 --batches-dir data/calibration/expansion/batches --output data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- Wave80 batch result:
+  - `52` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+  - `google_maps 36`
+  - `avvo 13`
+  - `lawyers_com 3`
+  - `1-star 18`
+  - `2-star 9`
+  - `4-star 9`
+  - `5-star 16`
+
+### Current Truth
+- Six documented Google Maps `2-star` lanes in `OR`, `MI`, `NM`, `NC`, and `MO` showed visible `2-star` counts but still did not surface usable full-text `2-star` bodies after Lowest-sort attempts.
+- The controlled fallback threshold is now an explicit Wave80 operating rule: after six documented Google Maps `2-star` surfacing failures in one pass, narrow `Avvo` / `Lawyers.com` `2-star` capture is allowed for that pass.
+- Mixed `4-star` rules stayed unchanged in this pass.
+
 ## 2026-04-04 - Pass 35 - Wave80 Honest 2-Star Growth Pass
 
 ### Files Changed

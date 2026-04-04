@@ -1,35 +1,36 @@
 {
   "metrics": {
-    "total_reviews": 72,
+    "total_reviews": 76,
     "star_counts": {
       "5": 24,
-      "2": 10,
+      "2": 14,
       "1": 25,
       "4": 13
     },
     "source_counts": {
       "trustpilot": 11,
       "google_maps": 46,
-      "avvo": 15
+      "avvo": 16,
+      "lawyers_com": 3
     },
     "state_count": 21,
     "practice_area_count": 10,
-    "long_form_count": 24,
+    "long_form_count": 28,
     "weak_tag_counts": {
-      "long_form": 39,
       "explicit_positive_outcome": 19,
+      "long_form": 41,
       "explicit_positive_trust": 30,
-      "trust_vs_outcome_ambiguity": 22,
-      "low_star_expectation_break": 33,
-      "low_star_contact_failure": 22,
+      "trust_vs_outcome_ambiguity": 24,
+      "low_star_expectation_break": 37,
+      "low_star_contact_failure": 23,
       "mixed_4_star": 13,
-      "low_star_clarity_break": 3
+      "low_star_clarity_break": 4
     },
     "queue_role_counts": {
       "holdout": 4,
       "audit_only": 5,
       "benchmark_candidate": 8,
-      "corpus_only": 55
+      "corpus_only": 59
     },
     "benchmark_candidate_count": 8,
     "holdout_count": 4
@@ -41,7 +42,7 @@
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 72,
+          "current": 76,
           "target": 24,
           "met": true
         },
@@ -51,7 +52,7 @@
           "met": true
         },
         "two_star": {
-          "current": 10,
+          "current": 14,
           "target": 5,
           "met": true
         },
@@ -71,7 +72,7 @@
           "met": true
         },
         "long_form": {
-          "current": 24,
+          "current": 28,
           "target": 8,
           "met": true
         },
@@ -96,7 +97,7 @@
           "met": true
         }
       },
-      "low_star_total": 35
+      "low_star_total": 39
     },
     {
       "stage": "wave80",
@@ -104,7 +105,7 @@
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 72,
+          "current": 76,
           "target": 80,
           "met": false
         },
@@ -114,7 +115,7 @@
           "met": true
         },
         "two_star": {
-          "current": 10,
+          "current": 14,
           "target": 20,
           "met": false
         },
@@ -134,7 +135,7 @@
           "met": true
         },
         "long_form": {
-          "current": 24,
+          "current": 28,
           "target": 20,
           "met": true
         },
@@ -159,7 +160,7 @@
           "met": false
         }
       },
-      "low_star_total": 35
+      "low_star_total": 39
     },
     {
       "stage": "wave160",
@@ -167,7 +168,7 @@
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 72,
+          "current": 76,
           "target": 160,
           "met": false
         },
@@ -177,7 +178,7 @@
           "met": false
         },
         "two_star": {
-          "current": 10,
+          "current": 14,
           "target": 35,
           "met": false
         },
@@ -197,7 +198,7 @@
           "met": true
         },
         "long_form": {
-          "current": 24,
+          "current": 28,
           "target": 40,
           "met": false
         },
@@ -222,7 +223,7 @@
           "met": false
         }
       },
-      "low_star_total": 35
+      "low_star_total": 39
     },
     {
       "stage": "wave320",
@@ -230,7 +231,7 @@
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 72,
+          "current": 76,
           "target": 320,
           "met": false
         },
@@ -240,7 +241,7 @@
           "met": false
         },
         "two_star": {
-          "current": 10,
+          "current": 14,
           "target": 70,
           "met": false
         },
@@ -260,7 +261,7 @@
           "met": false
         },
         "long_form": {
-          "current": 24,
+          "current": 28,
           "target": 80,
           "met": false
         },
@@ -285,7 +286,7 @@
           "met": false
         }
       },
-      "low_star_total": 35
+      "low_star_total": 39
     }
   ]
 }

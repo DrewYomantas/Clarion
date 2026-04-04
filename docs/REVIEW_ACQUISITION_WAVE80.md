@@ -158,6 +158,15 @@ Pass 35 - Wave80 Honest 2-Star Growth Pass is now complete:
 - all `48` rows remain `corpus_only`
 - normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
 
+Pass 36 - Wave80 2-Star Surfacing Proof + Controlled Fallback is now complete:
+- `4` additional real full-text `2-star` rows captured
+- Wave80 grew from `48` to `52` rows while keeping every row `corpus_only`
+- six distinct Google Maps `2-star` lanes in priority practices and new or underused states showed visible `2-star` counts but still failed to surface a usable full-text `2-star` body after Lowest-sort attempts
+- the six threshold-triggering dead lanes were `Bailey Immigration (OR)`, `Fakhoury Global Immigration (MI)`, `Mary Ann Romero & Associates (NM)`, `Randall Law PLLC (NC)`, `Jungle Law (MO)`, and `Mark C. Cogan, P.C. (OR)`
+- that proof activated a narrow controlled fallback rule and added four full-text `2-star` rows from `Avvo` and `Lawyers.com` across immigration, social security disability, estate planning, and criminal defense
+- the pass proved that the current `2-star` bottleneck is Google Maps surfacing, not an absence of visible `2-star` histogram counts in target lanes
+- normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
+
 Mixed `4-star` recovery rule:
 1. start on Google Maps
 2. target firms roughly `3.5` to `4.5` overall and sort reviews by `Lowest`
@@ -166,10 +175,18 @@ Mixed `4-star` recovery rule:
 5. after three dead Google Maps lanes in one pass, switch mixed `4-star` work to controlled Avvo / Lawyers.com gap-fill for the rest of that pass
 6. keep Google Maps as the premium default for low-star and positive rows even when mixed `4-star` uses gap-fill
 
+Controlled `2-star` fallback rule:
+1. scout broadly on Google Maps first
+2. prefer firms with a visible `2-star` count and use `Lowest` sort plus quote-chip or expansion controls where available
+3. treat histogram-without-body, limited-view panes, no-review-tab states, and Lowest-sort dead ends as explicit surfacing failures
+4. after six distinct Google Maps `2-star` surfacing failures in one pass, controlled `Avvo` / `Lawyers.com` fallback is allowed for that pass
+5. fallback may capture only full-text `2-star` rows and should stay inside the priority practices
+6. keep fallback narrow, source-faithful, and `corpus_only`
+
 Current next pass priorities:
 1. stay Google Maps-first
 2. keep mixed `4-star` capture on the controlled gap-fill rule when Google Maps turns into body-less dead ends
-3. keep pushing honest `2-star` growth from new-state practice lanes where low-star quote chips or visible `2-star` bodies are already surfaced
+3. keep pushing honest `2-star` growth from new-state practice lanes, but activate controlled `Avvo` / `Lawyers.com` fallback once six Google Maps surfacing failures are documented in the same pass
 4. widen practice-area coverage in immigration, disability, estate planning, and criminal defense without forcing synthetic balance
 5. keep pushing new-state capture instead of deepening only WI and GA
 6. document histogram-plus-Lowest dead ends quickly when Google Maps shows `2-star` counts but no visible body
