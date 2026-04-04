@@ -1,5 +1,928 @@
 # AI Pass Changelog
 
+## 2026-04-03 - Pass 34 - Wave80 Google Maps-First Growth Pass
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Added `12` real Wave80 rows and expanded the live Wave80 batch from `28` to `40`.
+- Kept the pass Google Maps-first with `10` new Google Maps rows and used controlled Avvo only for the remaining mixed `4-star` slice.
+- Widened live capture into six new states: `AZ`, `NV`, `OH`, `VA`, `FL`, and `PA`.
+- Deepened immigration, social-security-disability, estate-planning, and criminal-defense coverage while keeping every new row `corpus_only`.
+- Regenerated normalization, dedupe, acquisition status, and the source-priority queue after the new capture block landed.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No benchmark-candidate or holdout promotion
+- No Phase 1 protected-subset edits
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `python automation/calibration/build_review_source_priority_queue.py --coverage data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv --scouting data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv --stage wave80 --batches-dir data/calibration/expansion/batches --output data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- Wave80 batch result:
+  - `40` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+  - `google_maps 28`, `avvo 12`
+  - `1-star 14`
+  - `2-star 5`
+  - `4-star 9`
+  - `5-star 12`
+
+### Current Truth
+- Mixed `4-star` Google Maps work hit three dead lanes in the same pass at Eric Palacios (`NV`), Philip J. Fulton (`OH`), and Swartz Law Firm (`FL`).
+- Controlled Avvo gap-fill was used only after that dead-lane threshold was met, and only for the remaining two `4-star` rows.
+- The next honest move is to keep Google Maps-first growth going while targeting more honest `2-star` rows from new-state practice lanes.
+
+## 2026-03-29 - Pass 33 - Wave80 Growth + Controlled Gap-Fill
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Added `6` real Google Maps rows and expanded Wave80 from `22` to `28`.
+- Kept Google Maps as the dominant lane in this pass and widened into two new states: `MN` and `CO`.
+- Deepened underrepresented practice areas by adding criminal-defense and estate-planning rows from live Google Maps pages.
+- Added both positive and low-star evidence while keeping every new row `corpus_only`.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No benchmark-candidate or holdout promotion
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- Wave80 batch result:
+  - `28` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+  - `google_maps 18`, `avvo 10`
+  - `1-star 10`
+  - `2-star 4`
+  - `4-star 7`
+  - `5-star 7`
+
+### Current Truth
+- Wave80 growth resumed with a real Google Maps-heavy capture block after the stalled mixed `4-star` hunt.
+- Mixed `4-star` was not forced in this pass; the dead-lane rule remains active and should be applied only when that slice is explicitly pursued and three Google Maps lanes fail in the same pass.
+- The next honest move is another Google Maps-first growth pass focused on immigration, disability, estate planning, and criminal defense from new states.
+
+## 2026-03-29 - Pass 32 - Wave80 Momentum Recovery
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Added `4` real full-text mixed `4-star` Wave80 rows and expanded the live Wave80 batch from `18` to `22`.
+- Recovered the stalled mixed `4-star` lane with controlled Avvo gap-fill after repeated Google Maps hunts in Dallas immigration, Omaha probate, Tulsa immigration, and Denver probate kept surfacing body-less or unusable `4-star` rows.
+- Added mixed `4-star` rows in family law, estate planning, criminal defense, and immigration.
+- Adopted a stricter operating rule for mixed `4-star` collection: start on Google Maps, abandon star-only `4-star` rows immediately, and switch to controlled Avvo / Lawyers.com gap-fill after three dead Google Maps lanes in the same pass.
+- Kept every new row `corpus_only`.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No benchmark-candidate or holdout promotion
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- Wave80 batch result:
+  - `22` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+  - `google_maps 12`, `avvo 10`
+  - `1-star 9`
+  - `2-star 4`
+  - `4-star 7`
+  - `5-star 2`
+
+### Current Truth
+- Wave80 moved forward with real new evidence instead of stalling on another failed Google Maps-only `4-star` hunt.
+- The mixed `4-star` gap materially improved, but the recovery came from controlled gap-fill rather than newly surfaced Google Maps `4-star` text.
+- The next honest move is to keep Google Maps as the premium lane for low-star and positive capture while treating mixed `4-star` as a controlled gap-fill lane once Google Maps hits repeated star-only dead ends.
+
+## 2026-03-29 - Pass 31 - Wave80 Collection Pass 3
+
+### Files Changed
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Added `6` real Wave80 rows, all from Google Maps, and expanded the Wave80 batch from `12` to `18`.
+- Improved Wave80 source realism from `google_maps 6/12` to `google_maps 12/18`.
+- Added two more real Google Maps `2-star` rows and widened Wave80 into Illinois disability capture.
+- Deepened Google Maps low-star coverage while keeping every new row `corpus_only`.
+- Added live scouting coverage for Illinois disability and Colorado estate-planning Google Maps pages.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No Phase 1 truth edits
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/build_review_source_priority_queue.py --coverage data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv --scouting data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv --stage wave80 --batches-dir data/calibration/expansion/batches --output data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- Wave80 batch result:
+  - `18` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+  - `1-star 9`
+  - `2-star 4`
+  - `4-star 3`
+  - `5-star 2`
+  - `google_maps 12`, `avvo 6`
+
+### Current Truth
+- Wave80 is now more Google Maps-grounded than Pass 2 while preserving the broader coverage added there.
+- The remaining weak intake gap is still clean Google Maps mixed `4-star` capture from new states and underrepresented practice areas.
+- The next honest move is Wave80 Collection Pass 4: stay Google Maps-first and target mixed `4-star` reviews in estate planning, immigration, disability, and criminal defense.
+
+## 2026-03-29 - Pass 30 - Wave80 Collection Pass 2
+
+### Files Changed
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Added `6` real Wave80 rows and expanded the live Wave80 batch from `6` to `12`.
+- Used targeted Avvo gap-fill because the Google Maps-first lane still did not surface enough clean `2-star` and mixed `4-star` rows quickly enough.
+- Added the first Wave80 `2-star` rows and the first three Wave80 mixed `4-star` rows.
+- Expanded Wave80 beyond `WI` and `GA` into `WA`, `TX`, `CA`, and `NY`.
+- Expanded practice coverage beyond family law and personal injury into real estate, social security disability, speeding / traffic ticket, and criminal defense.
+- Regenerated the Wave80 priority queue and kept every Wave80 row `corpus_only`.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No Phase 1 truth edits
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/build_review_source_priority_queue.py --coverage data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv --scouting data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv --stage wave80 --batches-dir data/calibration/expansion/batches --output data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- Wave80 batch result:
+  - `12` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+  - `1-star 5`
+  - `2-star 2`
+  - `4-star 3`
+  - `5-star 2`
+  - `google_maps 6`, `avvo 6`
+
+### Current Truth
+- Wave80 is no longer a narrow Google Maps-only pilot.
+- Pass 2 fixed the main missing slices from Pass 1: real `2-star` rows, real mixed `4-star` rows, more states, and more practice diversity.
+- The next honest move is Wave80 Collection Pass 3: return to Google Maps-first capture and keep widening the live corpus without starting benchmark pressure yet.
+
+## 2026-03-28 - Pass 29 - Wave80 Collection Pass 1
+
+### Files Changed
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Filled the Wave80 scout queue with `4` real Google Maps source pages across `WI`, `GA`, and `MN`.
+- Generated the first live Wave80 priority queue with `4` ranked source rows.
+- Captured the first `6` real Wave80 reviews into the Wave80 batch:
+  - `3` from `Kowalski, Wilson & Vang, LLC`
+  - `3` from `Morgan & Morgan`
+- Kept every new Wave80 row `corpus_only` and added matching label-queue rows without starting benchmark promotion.
+- Normalized and deduped the Wave80 batch cleanly after correcting the first CSV-shape issue.
+- Updated the Wave80 manifest, notes, and current-state docs so repo truth now says Wave80 is live, not just prepared.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No synthetic evidence
+
+### Verification
+- `python automation/calibration/build_review_source_priority_queue.py --coverage data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv --scouting data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv --batches-dir data/calibration/expansion/batches --existing-csv data/calibration/expansion/real_review_expansion_20260327.csv --stage wave80 --output data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- Wave80 batch result:
+  - `6` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+  - `4` `1-star`
+  - `2` `5-star`
+  - `6/6` `google_maps`
+
+### Current Truth
+- Wave80 is now live, not just scaffolded.
+- The first block is intentionally Google Maps-heavy and low-star biased.
+- The next honest pass is Wave80 Collection Pass 2, focused on more `1-star`, `2-star`, mixed `4-star`, and new-state / new-practice coverage.
+
+## 2026-03-28 - Pass 28 - Wave80 Preparation Milestone
+
+### Files Changed
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_PLAN.md`
+- `docs/REVIEW_ACQUISITION_PHASE1.md`
+- `docs/REVIEW_ACQUISITION_SYSTEM.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `data/calibration/expansion/manifests/20260328_batch_manifest.csv`
+- `data/calibration/expansion/batches/20260328_phase1_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_holdout_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+
+### What Changed
+- Audited the acquisition lane for stale "Phase 1 still active" language and corrected it.
+- Marked Phase 1 as closed and preserved the reviewed Phase 1 subset counts as protected repo truth.
+- Added a dedicated Wave80 execution doc so the next collection pass starts from a clean live-stage artifact.
+- Seeded fresh Wave80 starter files for scouting, queueing, batch capture, label prep, holdouts, notes, coverage, and batch manifest tracking.
+- Corrected the stale Phase 1 manifest and collection notes so they no longer claim triage has not happened.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No synthetic evidence
+
+### Verification
+- `8` reviewed `benchmark_candidate`, `4` `holdout`, `5` `audit_only`, `7` `corpus_only` confirmed from `data/calibration/expansion/queues/20260328_phase1_label_queue.csv`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json` still matches the completed Phase 1 state and unmet Wave80 targets
+- starter Wave80 files created with the correct schema headers and no fake rows
+
+### Current Truth
+- Phase 1 is complete and closed.
+- Wave80 is now the next live acquisition stage.
+- The next honest pass is the first Wave80 discovery-and-capture pass, starting from the new Wave80 files rather than continuing to mutate the closed Phase 1 batch.
+
+## 2026-03-28 - Pass 27 - Review Acquisition Candidate Human-Truth Review
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_phase1_label_queue.csv`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reviewed only the `9` Phase 1 benchmark candidates.
+- Kept `8` rows as reviewed benchmark candidates and downgraded `1` thin row to `corpus_only`.
+- Added expected labels, polarity / severity, evidence spans, and short truth notes for the kept set.
+- Left holdouts and audit-only rows untouched.
+- Refreshed the acquisition status snapshot so repo truth reflects the narrower reviewed candidate set.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No calibration reruns
+- No promotion into canonical truth
+
+### Verification
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- Reviewed subset result:
+  - `9` reviewed
+  - `8` kept as benchmark candidates
+  - `1` downgraded to `corpus_only`
+  - `0` downgraded to `audit_only`
+- Queue-role counts now sit at:
+  - `benchmark_candidate` `8`
+  - `holdout` `4`
+  - `audit_only` `5`
+  - `corpus_only` `7`
+
+### Current Truth
+- The Phase 1 candidate subset is now narrower and more trustworthy than the first triage split.
+- The next benchmark-facing work should start from these `8` reviewed candidates, not the raw `9`-row candidate pool.
+
+## 2026-03-28 - Pass 26 - Review Acquisition Phase 1 Triage Prep
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_phase1_label_queue.csv`
+- `data/calibration/expansion/queues/20260328_phase1_holdout_queue.csv`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reviewed the completed `24`-row Phase 1 corpus and assigned every row to one of:
+  - `benchmark_candidate`
+  - `holdout`
+  - `audit_only`
+  - `corpus_only`
+- Prepared the first narrow benchmark-prep subsets:
+  - `9` `benchmark_candidate`
+  - `4` `holdout`
+  - `5` `audit_only`
+  - `6` `corpus_only`
+- Updated the live batch row roles, the Phase 1 label queue, and the Phase 1 holdout queue.
+- Kept ambiguous rows out of benchmark pressure by moving them to `audit_only` instead of candidate promotion.
+- Refreshed the acquisition status snapshot so repo truth reflects the queue split.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No calibration reruns
+- No benchmark-candidate promotion into canonical truth
+
+### Verification
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- Updated queue counts:
+  - `benchmark_candidate`: `9`
+  - `holdout`: `4`
+  - `audit_only`: `5`
+  - `corpus_only`: `6`
+- Phase 1 now meets both the intake target and the first narrow prep target for holdouts and benchmark candidates.
+
+### Current Truth
+- Phase 1 intake is complete and now triaged.
+- No row has been promoted into benchmark truth.
+- The next benchmark-facing work should be human-truth review on the `9` prepared candidates, with the `4` holdouts kept reserved.
+
+## 2026-03-28 - Pass 25 - Review Acquisition Phase 1 Completion
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv`
+- `data/calibration/expansion/manifests/20260328_batch_manifest.csv`
+- `data/calibration/expansion/batches/20260328_phase1_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_phase1_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_phase1_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Added the final `8` captured rows needed to complete the Phase 1 intake target.
+- Kept the pass biased toward the missing slices:
+  - `2` new `1-star`
+  - `3` new `2-star`
+  - `3` new mixed `4-star` rows
+- Used Google Maps first for the low-star closeout and Avvo only as narrow gap-fill for the last mixed `4-star` quota.
+- Preserved raw review text, star rating, provenance, source URL, collection date, and weak-slice tags for every new row.
+- Re-ran normalization, dedupe, and acquisition status after the capture.
+- Left every row `corpus_only`.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No calibration reruns
+- No holdout promotion
+- No benchmark-candidate promotion
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv --output data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- Dedupe result:
+  - `24` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+- Acquisition progress:
+  - `24/24` Phase 1 rows captured
+  - `7` one-star rows
+  - `5` two-star rows
+  - `4` mixed four-star rows
+  - `11` long-form rows
+  - `6` states
+  - source mix `11` Trustpilot / `10` Google Maps / `3` Avvo
+
+### Current Truth
+- Phase 1 intake is complete for corpus volume and slice mix.
+- All rows still remain `corpus_only`, so benchmark-candidate and holdout triage is still intentionally deferred.
+- Benchmark engine and benchmark truth remain unchanged at `100.00%` canonical and `55.94%` broad.
+
+## 2026-03-28 - Pass 24 - Review Acquisition Low-Star Google Maps Capture
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_phase1_label_queue.csv`
+- `data/calibration/expansion/scouting/20260328_source_scout_queue.csv`
+- `data/calibration/expansion/manifests/20260328_batch_manifest.csv`
+- `data/calibration/expansion/batches/20260328_phase1_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_phase1_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_phase1_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Added `5` new Google Maps low-star family-law reviews into the live Phase 1 batch.
+- Corrected the malformed CSV rows from the first Google Maps append so the batch is machine-valid again.
+- Preserved raw review text, star ratings, source URLs, provenance, and weak-slice tags for every new row.
+- Re-ran normalization, dedupe, and acquisition status after fixing the batch.
+- Moved the live Phase 1 batch from `11` to `16` rows while keeping every row `corpus_only`.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No calibration reruns
+- No route, UI, or deployment changes
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv --output data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- Dedupe result:
+  - `16` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+- Acquisition progress:
+  - `16/24` Phase 1 rows captured
+  - `5` one-star rows
+  - `2` two-star rows
+  - `1` mixed four-star row
+  - `8` long-form rows
+  - `4` states
+  - source mix `11` Trustpilot / `5` Google Maps
+
+### Current Truth
+- Phase 1 source concentration is now below the `70%` single-source cap.
+- Low-star coverage improved materially, but the batch still needs more `1-star`, `2-star`, and mixed `4-star` rows before Phase 1 is done.
+- Benchmark engine and benchmark truth remain unchanged at `100.00%` canonical and `55.94%` broad.
+
+## 2026-03-28 - Pass 23 - Review Acquisition Capture Start
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_phase1_label_queue.csv`
+- `data/calibration/expansion/scouting/20260328_source_scout_queue.csv`
+- `data/calibration/expansion/queues/20260328_source_priority_queue.csv`
+- `data/calibration/expansion/manifests/20260328_batch_manifest.csv`
+- `data/calibration/expansion/batches/20260328_phase1_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_phase1_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_phase1_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Started live row capture from the ranked source queue into the Phase 1 batch instead of stopping at queue/scaffold setup.
+- Added `11` real Trustpilot reviews into the Phase 1 batch with preserved raw text, star rating, provenance, source URLs, and weak-slice tags.
+- Synced the label queue, scout queue, source-priority queue, batch manifest, and batch notes to reflect the captured rows.
+- Ran normalization and dedupe on the live batch.
+- Wrote an acquisition status snapshot so the next collection pass can see live progress against `phase1`, `wave80`, `wave160`, and `wave320`.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No calibration reruns
+- No route, UI, or deployment changes
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv --output data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- Dedupe result:
+  - `11` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+- Acquisition progress:
+  - `11/24` Phase 1 rows captured
+  - `1` one-star row
+  - `1` two-star row
+  - `1` mixed four-star row
+  - `6` long-form rows
+  - `2` states
+  - `4` practice-area buckets
+
+### Current Truth
+- Real acquisition is now live, not just planned.
+- The current batch is still too Trustpilot-heavy, so the next capture block should bias Google Maps and Avvo.
+- Positive outcome and positive trust quotas are already ahead of the Phase 1 target, but low-star and state-diversity targets are still behind.
+
+## 2026-03-28 - Pass 22 - Review Acquisition Execution
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_PHASE1.md`
+- `docs/REVIEW_ACQUISITION_PLAN.md`
+- `docs/REVIEW_ACQUISITION_SYSTEM.md`
+- `automation/calibration/build_review_source_priority_queue.py`
+- `automation/calibration/normalize_and_dedupe_review_batch.py`
+- `automation/calibration/review_acquisition_status.py`
+- `data/calibration/expansion/templates/review_intake_template.csv`
+- `data/calibration/expansion/templates/coverage_matrix_template.csv`
+- `data/calibration/expansion/templates/source_scout_template.csv`
+- `data/calibration/expansion/templates/source_priority_queue_template.csv`
+- `data/calibration/expansion/templates/label_queue_template.csv`
+- `data/calibration/expansion/templates/holdout_queue_template.csv`
+- `data/calibration/expansion/templates/batch_manifest_template.csv`
+- `data/calibration/expansion/templates/acquisition_stage_targets_template.csv`
+- `data/calibration/expansion/templates/collection_notes_template.md`
+- `data/calibration/expansion/batches/.gitkeep`
+- `data/calibration/expansion/queues/.gitkeep`
+- `data/calibration/expansion/manifests/.gitkeep`
+- `data/calibration/expansion/scouting/.gitkeep`
+- `data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv`
+- `data/calibration/expansion/batches/20260328_phase1_collection_notes.md`
+- `data/calibration/expansion/queues/20260328_phase1_label_queue.csv`
+- `data/calibration/expansion/queues/20260328_phase1_holdout_queue.csv`
+- `data/calibration/expansion/queues/20260328_source_priority_queue.csv`
+- `data/calibration/expansion/scouting/20260328_source_scout_queue.csv`
+- `data/calibration/expansion/manifests/acquisition_stage_targets.csv`
+- `data/calibration/expansion/manifests/20260328_coverage_matrix.csv`
+- `data/calibration/expansion/manifests/20260328_batch_manifest.csv`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Turned the acquisition plan into execution-ready repo scaffolding.
+- Added an immediate Phase 1 operator workflow with a concrete `24`-review target.
+- Added practical intake, triage, holdout, and notes templates so Drew and agents can start collecting rows consistently right away.
+- Added batch and queue directories so the next collection artifacts have a stable home.
+- Created dated Phase 1 starter files so the first collection session can begin immediately.
+- Corrected the workflow so agents, not Drew, own discovery, source-page scouting, queue building, and first-pass capture.
+- Expanded the lane beyond Phase 1 with:
+  - coverage-matrix and source-scouting templates
+  - source-priority queue generation
+  - batch normalization and stronger dedupe support
+  - stage-target tracking for `24 -> 80 -> 160+`
+  - a scalable system doc for larger corpus expansion
+- Left benchmark truth and the engine untouched.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No calibration reruns
+- No route, UI, or deployment changes
+
+### Verification
+- Reviewed the current acquisition plan and existing expansion artifacts
+- Verified the new scaffolding files exist on disk
+- `python -m py_compile automation/calibration/build_review_source_priority_queue.py automation/calibration/normalize_and_dedupe_review_batch.py automation/calibration/review_acquisition_status.py`
+- Current accepted benchmark truth remains:
+  - canonical: `100.00%`, `22/22` clean, `0` disagreements
+  - broad frozen `143-real`: `55.94%`, `80/143` clean, `92` disagreements
+
+### Current Truth
+- Clarion now has execution-ready collection scaffolding, not just acquisition planning.
+- The acquisition lane is agent-driven, with human review kept narrow to guardrails and promotion decisions.
+- Clarion now also has the first scalable acquisition-system layer for discovery queues, manifests, dedupe, and stage tracking.
+- The next benchmark move is still more real evidence, not more engine tweaking.
+- Future collection should start from `docs/REVIEW_ACQUISITION_PHASE1.md` and the templates under `data/calibration/expansion/templates/`.
+
+## 2026-03-28 - Pass 21 - Real-World Review Acquisition Planning
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_PLAN.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Designed the next evidence-building lane so future benchmark work is driven by more real-world law-firm reviews instead of squeezing more rules out of sparse ambiguity rows.
+- Added a durable acquisition plan covering:
+  - source priorities
+  - acquisition model
+  - dataset schema
+  - dedupe and labeling workflow
+  - checkpoint targets before the next benchmark wave
+- Moved the honest next-step direction from benchmark-design stopping-point language to real-review corpus expansion.
+- Kept benchmark truth and the engine unchanged.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No route changes
+- No UI or deployment changes
+
+### Verification
+- Reviewed current repo-truth docs
+- Reviewed the accepted broad comparator: `data/calibration/runs/20260328_lowstar_boundary_cleanup_broad_rerun/`
+- Reviewed the current expansion artifacts:
+  - `data/calibration/expansion/real_review_expansion_20260327.csv`
+  - `data/calibration/expansion/benchmark_candidates_20260327.csv`
+  - `data/calibration/expansion/collection_notes_20260327.md`
+- Current accepted benchmark truth remains:
+  - canonical: `100.00%`, `22/22` clean, `0` disagreements
+  - broad frozen `143-real`: `55.94%`, `80/143` clean, `92` disagreements
+
+### Current Truth
+- The current calibration wave is complete until Clarion has more real review evidence.
+- The next honest lane is real-world review acquisition, not another benchmark-engine pass.
+- Benchmark work should reopen only after the new corpus checkpoint in `docs/REVIEW_ACQUISITION_PLAN.md` is met.
+
+## 2026-03-28 - Pass 20 - Human-Truth / Benchmark-Design Review
+
+### Files Changed
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Audited the remaining sparse disagreement clusters after Pass 18 without attempting another engine edit.
+- Reviewed the unresolved low-star ambiguity rows directly, plus the flat `professionalism_trust` and `outcome_satisfaction` buckets.
+- Classified the remaining blocker as benchmark-design / human-truth ambiguity rather than another clean deterministic rule gap.
+- Declared the current calibration wave complete unless new benchmark evidence is added.
+- Synced the repo docs to reflect that stopping-point judgment and the correct next move.
+
+### Explicitly Not Touched
+- No engine edits
+- No canonical truth edits
+- No benchmark route changes
+- No UI or deployment changes
+
+### Verification
+- Reviewed the accepted broad comparator: `data/calibration/runs/20260328_lowstar_boundary_cleanup_broad_rerun/`
+- Reviewed the remaining sparse low-star rows directly from raw results
+- Reviewed the flat `professionalism_trust` and `outcome_satisfaction` disagreement buckets directly from raw results
+- Current accepted benchmark truth remains:
+  - canonical: `100.00%`, `22/22` clean, `0` disagreements
+  - broad frozen `143-real`: `55.94%`, `80/143` clean, `92` disagreements
+
+### Current Truth
+- There is no additional broad-safe repeated pattern left for this calibration wave.
+- The remaining misses now split mainly into:
+  - sparse low-star ambiguity rows that should stay unresolved or become audit-only if benchmark work continues
+  - praise / recommendation inference in positive `professionalism_trust` and `outcome_satisfaction`
+  - low-star severity ambiguity that needs benchmark-design decisions more than phrase rules
+- The next benchmark move should be a deliberate benchmark-design review, not another deterministic calibration pass.
+
+## 2026-03-28 - Pass 19 - Remaining-Cluster Audit
+
+### Files Changed
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Audited the unresolved low-star ambiguity rows and the flat `professionalism_trust` / `outcome_satisfaction` buckets before attempting another engine pass.
+- Confirmed the remaining misses are mostly sparse, inference-heavy, or one-off boundary cases rather than a clean repeated cluster.
+- Chose the honest stopping point for this calibration wave instead of forcing another speculative phrase pass.
+- Synced repo docs to reflect that current understanding and the likely next move.
+
+### Explicitly Not Touched
+- No engine edits
+- No canonical truth edits
+- No benchmark route changes
+- No UI or deployment changes
+
+### Verification
+- Reviewed the accepted broad comparator: `data/calibration/runs/20260328_lowstar_boundary_cleanup_broad_rerun/`
+- Reviewed the remaining low-star ambiguity rows directly from raw results
+- Reviewed the flat `professionalism_trust` and `outcome_satisfaction` disagreement rows directly from raw results
+- Current accepted benchmark truth remains:
+  - canonical: `100.00%`, `22/22` clean, `0` disagreements
+  - broad frozen `143-real`: `55.94%`, `80/143` clean, `92` disagreements
+
+### Current Truth
+- There is no clear remaining broad-safe repeated pattern strong enough to justify one more engine rule in this wave.
+- The remaining misses are now a mix of:
+  - single-row low-star ambiguity
+  - praise / recommendation inference in positive reviews
+  - sparse trust/outcome severity ambiguity
+- The likely next move is a fresh human-truth or benchmark-design review, not another phrase-rescue pass.
+
+## 2026-03-28 - Pass 18 - Broad-Safe Low-Star Boundary Cleanup
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `backend/tests/test_benchmark_engine.py`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Closed a second narrow low-star boundary pass instead of reopening phrase expansion.
+- Kept only three boundary cleanups that survived both benchmark gates:
+  - `always got told that our message was left for our lawyer` now counts as responsiveness behavior, not office-staff behavior
+  - `paralegal is assigned to your case` no longer creates a negative office-staff hit by itself
+  - legwork-based `expectation_setting` hits are suppressed only when stronger nonresponse or nonperformance cues are already present
+- Left the harder single-row misses alone, including the 45-minute intake screening row and the `rudely accused ... over the phone` row, because they still looked too bespoke for a broad-safe rule.
+- Synced repo docs to the new accepted benchmark truth and the narrower next-pass direction.
+
+### Explicitly Not Touched
+- No canonical truth edits
+- No disputed-row reinstatement
+- No broad phrase growth spree
+- No new trust/outcome rules
+- No route or deployment changes
+
+### Verification
+- `python -m pytest backend/tests/test_benchmark_engine.py backend/tests/test_bench_routes.py -q` - passed (`33 passed`)
+- Canonical rerun: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
+- Broad frozen `143-real` rerun: `55.94%` agreement, `80/143` clean reviews, `92` disagreements
+- Broad disagreement counts:
+  - `communication_responsiveness` stayed `9`
+  - `communication_clarity` stayed `8`
+  - `expectation_setting` `11 -> 9`
+  - `office_staff_experience` `6 -> 4`
+  - `professionalism_trust` stayed `15`
+  - `outcome_satisfaction` stayed `15`
+- Broad `1-star` slice:
+  - disagreement rate held at `0.514`
+  - total disagreements `34 -> 32`
+
+### Current Truth
+- The broad set improved again without breaking the clean canonical gate.
+- The remaining low-star misses are now more obviously high-ambiguity and lower-repeat than the ones already fixed.
+- The benchmark blocker is still broad low-star generalization, but the safest remaining work is getting narrower, not broader.
+
+## 2026-03-28 - Pass 17 - Broad-Safe Low-Star Phone/Intake Responsiveness
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `backend/tests/test_benchmark_engine.py`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Closed a narrow broad-safe pass on the low-star phone/intake responsiveness cluster instead of reopening broader phrase growth.
+- Added one exact negative responsiveness hit for prolonged intake hold time:
+  - `had me on hold 20 minutes`
+- Tightened boundary routing for two phrases that were being over-credited to responsiveness when the text clearly described intake staff behavior:
+  - `whoever answered the phone was not pleasant or helpful` -> `office_staff_experience`
+  - `tell you to do it yourself` -> `office_staff_experience` when the review clearly references a phone assistant / intake context
+- Rejected and reverted a severity escalation for `only heard from them 2 or 3 times` because it improved one broad row but broke the clean canonical gate.
+- Synced repo docs to the new accepted benchmark truth and pass history.
+
+### Explicitly Not Touched
+- No canonical truth edits
+- No disputed-row reinstatement
+- No broad phrase growth spree
+- No trust/outcome rule changes
+- No route or deployment changes
+
+### Verification
+- `python -m pytest backend/tests/test_benchmark_engine.py backend/tests/test_bench_routes.py -q` - passed (`29 passed`)
+- Canonical rerun: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
+- Broad frozen `143-real` rerun: `55.24%` agreement, `79/143` clean reviews, `96` disagreements
+- Broad `1-star` disagreement rate: `0.600 -> 0.514`
+- Broad disagreement counts:
+  - `communication_responsiveness` `12 -> 9`
+  - `office_staff_experience` `8 -> 6`
+  - `professionalism_trust` stayed `15`
+  - `outcome_satisfaction` stayed `15`
+
+### Current Truth
+- The latest pass produced a real broad-safe win without reopening canonical ambiguity.
+- The benchmark blocker is still broader low-star generalization, not the canonical gate.
+- Remaining low-star phone/intake misses are now narrower and more boundary-ambiguous than the ones fixed here.
+
+## 2026-03-28 - Pass 16 - Canonical Benchmark Truth-Correction
+
+### Files Changed
+- `data/calibration/canonical/benchmark_canonical_v1.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Corrected canonical benchmark truth where the current active gate was clearly the problem:
+  - `legacy_057` responsiveness severity corrected from `negative` to `severe_negative`
+  - `legacy_115` now includes the explicit `communication_clarity` and `professionalism_trust` labels already supported by the review text
+- Marked disputed rows as audit-only instead of forcing the engine to satisfy contradictory or overfit-prone labels:
+  - `legacy_130` -> `disputed_excluded`
+  - `exp_turnbull_2` -> `disputed_excluded`
+- Left the engine unchanged. This was a benchmark-truth correction pass, not a phrase pass.
+
+### Explicitly Not Touched
+- No engine rule edits
+- No phrase additions
+- No route changes
+- No UI or deployment work
+
+### Verification
+- Canonical rerun: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
+- Broad comparator remains the latest frozen-truth run: `52.45%` agreement, `75/143` clean reviews, `96` disagreements
+
+### Current Truth
+- The active canonical benchmark gate is now clean.
+- Remaining blocker is broader deterministic generalization, not unresolved ambiguity inside the main canonical gate.
+
+## 2026-03-28 - Pass 15 - Engine Boundary Cleanup + Docs Truth Sync
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `backend/tests/test_benchmark_engine.py`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Closed a narrow benchmark-engine cleanup pass around the remaining hard boundary cases instead of reopening broad calibration work.
+- Kept only the rule changes that survived both benchmark gates:
+  - positive responsiveness support for pre-hearing contact language
+  - negative responsiveness support for `messages were not returned`
+  - a precision guard so bare `answered all my questions` does not create a false `communication_clarity` hit without explanation context
+  - low-spread phrase additions for the remaining promoted holdouts that did not create a broad headline regression
+- Rejected and reverted overfit changes that helped the canonical target slice but hurt the broad `143-real` sanity set, including:
+  - `outcome was great`
+  - Turnbull-style phrase drops like `same stupid answers`
+  - broader reroute/downgrade changes around `legacy_057`
+- Synced the benchmark-story docs to current repo truth:
+  - canonical benchmark is the real-only v1 set
+  - `/internal/benchmark` is authoritative
+  - `/internal/bench` is frozen compatibility behavior, not a second live benchmark story
+  - readiness remains `improved but not demo-safe`
+
+### Explicitly Not Touched
+- No UI or landing work
+- No launch-smoke pass
+- No synthetic expansion
+- No broad all-theme calibration
+- No auth or deployment changes
+
+### Verification
+- `pytest backend/tests/test_benchmark_engine.py backend/tests/test_bench_routes.py -q` - passed (`21 passed`)
+- Canonical rerun: `79.17%` agreement, `19/24` clean reviews, `9` disagreements
+- Broad `143-real` rerun: `51.05%` agreement, `73/143` clean reviews, `100` disagreements, `0` AI errors
+
+### Current Truth
+- Canonical holdouts are narrower, but not gone.
+- Broad behavior improved overall without a headline regression.
+- The biggest remaining risk is still low-star boundary discipline, especially the broad `1-star` slice.
+- Readiness remains `improved but not demo-safe`.
+
 ## 2026-03-27 - Pass 14 - Brief Closure + Marketing Trust Foundation
 
 ### Commit

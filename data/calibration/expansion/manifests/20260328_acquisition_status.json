@@ -1,0 +1,291 @@
+{
+  "metrics": {
+    "total_reviews": 64,
+    "star_counts": {
+      "5": 20,
+      "2": 10,
+      "1": 21,
+      "4": 13
+    },
+    "source_counts": {
+      "trustpilot": 11,
+      "google_maps": 38,
+      "avvo": 15
+    },
+    "state_count": 17,
+    "practice_area_count": 10,
+    "long_form_count": 20,
+    "weak_tag_counts": {
+      "explicit_positive_outcome": 18,
+      "long_form": 34,
+      "explicit_positive_trust": 26,
+      "trust_vs_outcome_ambiguity": 20,
+      "low_star_expectation_break": 29,
+      "low_star_contact_failure": 18,
+      "mixed_4_star": 13,
+      "low_star_clarity_break": 3
+    },
+    "queue_role_counts": {
+      "holdout": 4,
+      "audit_only": 5,
+      "benchmark_candidate": 8,
+      "corpus_only": 47
+    },
+    "benchmark_candidate_count": 8,
+    "holdout_count": 4
+  },
+  "stage_progress": [
+    {
+      "stage": "phase1",
+      "checks_completed": 11,
+      "checks_total": 11,
+      "checks": {
+        "total_reviews": {
+          "current": 64,
+          "target": 24,
+          "met": true
+        },
+        "one_star": {
+          "current": 21,
+          "target": 7,
+          "met": true
+        },
+        "two_star": {
+          "current": 10,
+          "target": 5,
+          "met": true
+        },
+        "mixed_4_star": {
+          "current": 13,
+          "target": 4,
+          "met": true
+        },
+        "explicit_positive_outcome": {
+          "current": 18,
+          "target": 4,
+          "met": true
+        },
+        "explicit_positive_trust": {
+          "current": 26,
+          "target": 4,
+          "met": true
+        },
+        "long_form": {
+          "current": 20,
+          "target": 8,
+          "met": true
+        },
+        "states": {
+          "current": 17,
+          "target": 3,
+          "met": true
+        },
+        "practice_areas": {
+          "current": 10,
+          "target": 3,
+          "met": true
+        },
+        "holdout": {
+          "current": 4,
+          "target": 4,
+          "met": true
+        },
+        "benchmark_candidate": {
+          "current": 8,
+          "target": 8,
+          "met": true
+        }
+      },
+      "low_star_total": 31
+    },
+    {
+      "stage": "wave80",
+      "checks_completed": 5,
+      "checks_total": 11,
+      "checks": {
+        "total_reviews": {
+          "current": 64,
+          "target": 80,
+          "met": false
+        },
+        "one_star": {
+          "current": 21,
+          "target": 25,
+          "met": false
+        },
+        "two_star": {
+          "current": 10,
+          "target": 20,
+          "met": false
+        },
+        "mixed_4_star": {
+          "current": 13,
+          "target": 15,
+          "met": false
+        },
+        "explicit_positive_outcome": {
+          "current": 18,
+          "target": 15,
+          "met": true
+        },
+        "explicit_positive_trust": {
+          "current": 26,
+          "target": 15,
+          "met": true
+        },
+        "long_form": {
+          "current": 20,
+          "target": 20,
+          "met": true
+        },
+        "states": {
+          "current": 17,
+          "target": 6,
+          "met": true
+        },
+        "practice_areas": {
+          "current": 10,
+          "target": 5,
+          "met": true
+        },
+        "holdout": {
+          "current": 4,
+          "target": 20,
+          "met": false
+        },
+        "benchmark_candidate": {
+          "current": 8,
+          "target": 30,
+          "met": false
+        }
+      },
+      "low_star_total": 31
+    },
+    {
+      "stage": "wave160",
+      "checks_completed": 2,
+      "checks_total": 11,
+      "checks": {
+        "total_reviews": {
+          "current": 64,
+          "target": 160,
+          "met": false
+        },
+        "one_star": {
+          "current": 21,
+          "target": 45,
+          "met": false
+        },
+        "two_star": {
+          "current": 10,
+          "target": 35,
+          "met": false
+        },
+        "mixed_4_star": {
+          "current": 13,
+          "target": 30,
+          "met": false
+        },
+        "explicit_positive_outcome": {
+          "current": 18,
+          "target": 30,
+          "met": false
+        },
+        "explicit_positive_trust": {
+          "current": 26,
+          "target": 30,
+          "met": false
+        },
+        "long_form": {
+          "current": 20,
+          "target": 40,
+          "met": false
+        },
+        "states": {
+          "current": 17,
+          "target": 10,
+          "met": true
+        },
+        "practice_areas": {
+          "current": 10,
+          "target": 7,
+          "met": true
+        },
+        "holdout": {
+          "current": 4,
+          "target": 40,
+          "met": false
+        },
+        "benchmark_candidate": {
+          "current": 8,
+          "target": 60,
+          "met": false
+        }
+      },
+      "low_star_total": 31
+    },
+    {
+      "stage": "wave320",
+      "checks_completed": 2,
+      "checks_total": 11,
+      "checks": {
+        "total_reviews": {
+          "current": 64,
+          "target": 320,
+          "met": false
+        },
+        "one_star": {
+          "current": 21,
+          "target": 90,
+          "met": false
+        },
+        "two_star": {
+          "current": 10,
+          "target": 70,
+          "met": false
+        },
+        "mixed_4_star": {
+          "current": 13,
+          "target": 60,
+          "met": false
+        },
+        "explicit_positive_outcome": {
+          "current": 18,
+          "target": 60,
+          "met": false
+        },
+        "explicit_positive_trust": {
+          "current": 26,
+          "target": 60,
+          "met": false
+        },
+        "long_form": {
+          "current": 20,
+          "target": 80,
+          "met": false
+        },
+        "states": {
+          "current": 17,
+          "target": 15,
+          "met": true
+        },
+        "practice_areas": {
+          "current": 10,
+          "target": 9,
+          "met": true
+        },
+        "holdout": {
+          "current": 4,
+          "target": 80,
+          "met": false
+        },
+        "benchmark_candidate": {
+          "current": 8,
+          "target": 120,
+          "met": false
+        }
+      },
+      "low_star_total": 31
+    }
+  ]
+}
