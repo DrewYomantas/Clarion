@@ -6,21 +6,21 @@
 - Holdout file: `data/calibration/expansion/queues/20260328_wave80_holdout_queue.csv`
 
 ## Source mix
-- Google Maps: 48
+- Google Maps: 50
 - Trustpilot: 0
-- Avvo: 15
+- Avvo: 16
 - Lawyers.com: 6
 - Other: 0
 
 ## Wave80 targets
-- total reviews: 80 (corpus has 93 across wave80 + phase1)
+- total reviews: 80 ✓ (corpus has 96 across wave80 + phase1)
 - 1-star: 25 ✓ (32 total)
-- 2-star: 20 (17 total — 3 short)
+- 2-star: 20 ✓ (20 total — closed in Pass 41)
 - mixed 4-star: 15 ✓ (15 total — closed in Pass 40)
 - explicit positive outcome: 15 ✓ (21 total)
 - explicit positive trust: 15 ✓ (35 total)
 - long-form: 20 ✓ (29 total)
-- states covered: 6 ✓ (23 states)
+- states covered: 6 ✓ (24 states)
 - practice-area buckets covered: 5 ✓ (10 areas)
 - holdouts: 20 (4 total — Wave80 holdout block not yet started)
 - reviewed benchmark candidates: 30 (8 total — triage pass pending)
@@ -32,7 +32,7 @@
 
 ## Batch caveats
 - Any rows with thin metadata: none in the current batch; every row has rating, source URL, state, practice area, collection date, and provenance note.
-- Any rows marked audit-only immediately: none; all sixty-seven rows remain `corpus_only`.
+- Any rows marked audit-only immediately: none; all seventy-two rows remain `corpus_only`.
 - Any rows that should never drive benchmark truth: the controlled Avvo mixed `4-star` fallback rows, the new 2026-04-04 Google Maps intake rows from Passes 35 and 39, the controlled Avvo / Lawyers.com `2-star` fallback rows captured in Pass 36, and the controlled Lawyers.com `2-star` fallback rows captured in Pass 37 should stay out of benchmark pressure until a later Wave80 triage pass.
 
 ## Operator notes
@@ -44,4 +44,9 @@
 - What went smoothly: controlled Avvo fallback rule correctly triggered after three confirmed dead Google Maps mixed-4-star lanes and produced two qualifying rows (Turner TN criminal defense, Benson WA estate planning); mixed_4_star target closed at 15/15.
 - What slowed capture down: all three harvest-ready Google Maps lanes checked (Anchor VA, New Frontier AZ, Fulton OH) were too highly rated (4.5–4.8) and either surfaced no 4-star bodies at all or returned only star-only body-less rows; a fourth qualification lane (Lowe OK, 4.5/283) showed visible 4-star bodies but all were purely positive thin one-liners with no concrete governance complaint.
 - What should change in the next batch: mixed_4_star is now closed; next pass should focus narrowly on the remaining 2-star gap (17/20) before any general low-star or positive sweep.
+
+### Pass 41 — Wave80 2-Star Closure Under Harvest Mode (2026-04-05)
+- What went smoothly: two full-text 2-star Google Maps rows captured from Denver CO SSD firms (Apex Disability Law, ASH | LAW); controlled Avvo fallback correctly triggered after six documented same-pass Google Maps surfacing failures and produced one qualifying row (Leon Versfeld / Versfeld & Hugo, MO immigration); 2-star target closed at 20/20.
+- What slowed capture down: six distinct Google Maps 2-star lanes failed before fallback was earned — Krieger CO (0 2-star count), De la Rosa FL (placeholder body), Perigon GA (0 2-star count), Martinez TX (body-less owner-response-only 2-star), McGinn Law NE (two body-less star-only 2-stars), Jeffrey Y. Bennett MO (0 2-star count); Louisville KY and New Orleans LA searches returned only 4.7–5.0 firms with no visible low-star bands.
+- What should change in the next batch: 2-star is now closed at 20/20; Wave80 collection targets are now met for all primary count categories; next pass should open Wave80 triage — promote rows to benchmark_candidate and holdout status rather than continuing raw intake.
 

@@ -1,5 +1,41 @@
 # AI Pass Changelog
 
+## 2026-04-05 - Pass 41 - Wave80 2-Star Closure Under Harvest Mode
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Scouted six Google Maps 2-star lanes across CO, FL, GA, TX, NE, and MO; all six failed to surface a usable full-text 2-star body: Krieger Disability Law CO (0 2-star count), De la Rosa Law Firm FL (placeholder body), Perigon Legal Services GA (0 2-star count), The Martinez Law Firm TX (body-less owner-response-only 2-star), McGinn Law Firm NE (two body-less star-only 2-stars), Jeffrey Y. Bennett Law MO (0 2-star count).
+- Two Google Maps 2-star rows captured successfully before the fallback threshold was reached: `apexdisability_20260405_ambercruse_2` (Apex Disability Law, Centennial CO, SSD, communication_gap + expectation_break) and `ashlaw_20260405_mshugge_2` (ASH | LAW, Denver CO, SSD, contact_failure + communication_gap).
+- Six same-pass dead Google Maps lanes triggered the controlled 2-star fallback rule (threshold = 6). Captured one full-text Avvo 2-star row: `leonversfeld_20260405_paul_2` (Versfeld & Hugo, Kansas City MO, immigration, communication_gap + expectation_break — Paul, June 10, 2022).
+- Closed the `2-star` Wave80 target at `20/20`. All primary Wave80 count targets now met.
+- Pushed Wave80 from `69` to `72` rows; all rows remain `corpus_only`. MO added as new state (24 total); CO deepened from 3 to 5 Wave80 rows.
+- Added 6 new `dead_google_maps` entries and 1 new `fallback_eligible` entry (Versfeld & Hugo MO) to the lane registry.
+- Added 6 new entries to the source scout queue.
+- Updated collection notes, batch manifest (status → `wave80_2star_closure_complete`, 72 rows), and acquisition status (total 96, 2-star 20/20 ✓).
+- Normalization and dedupe completed: 0 exact duplicate groups, 0 likely duplicate pairs.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No synthetic rows
+- No paraphrased review text
+
+---
+
 ## 2026-04-05 - Pass 40 - Wave80 Mixed 4-Star Recovery Under Harvest Mode
 
 ### Files Changed

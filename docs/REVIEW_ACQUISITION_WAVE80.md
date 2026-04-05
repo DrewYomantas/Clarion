@@ -265,13 +265,23 @@ Controlled `2-star` fallback rule:
 6. fallback may capture only full-text `2-star` rows and should stay inside the priority practices
 7. keep fallback narrow, source-faithful, and `corpus_only`
 
+Pass 41 - Wave80 2-Star Closure Under Harvest Mode is now complete:
+- `3` additional real full-text `2-star` rows captured
+- Wave80 grew from `69` to `72` rows while keeping every row `corpus_only`
+- two Google Maps 2-star rows captured: `Apex Disability Law (CO, SSD)` with communication_gap and expectation_break complaint (Amber cruse) and `ASH | LAW (CO, SSD)` with contact_failure and communication_gap complaint (MSHUGGE)
+- six Google Maps 2-star surfacing failures documented in this pass: `Krieger Disability Law (CO)` — 0 2-star count; `De la Rosa Law Firm (FL)` — placeholder body; `Perigon Legal Services (GA)` — 0 2-star count; `The Martinez Law Firm TX` — body-less owner-response-only 2-star; `McGinn Law Firm (NE)` — two body-less star-only 2-stars; `Jeffrey Y. Bennett Law (MO)` — 0 2-star count
+- six failures triggered the controlled fallback rule; one Avvo 2-star row captured: `Versfeld & Hugo (MO, immigration)` — attorney Leon Versfeld, 2-star from Paul (June 10, 2022) with minimal updates and billing error complaint
+- `2-star` target closed at `20/20` — this gap is now resolved
+- normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
+- **all primary Wave80 count targets are now met**
+
 Current next pass priorities:
-1. mixed `4-star` is closed at `15/15` — do not reopen this target
-2. run the next harvest pass from `20260328_wave80_harvest_ready_queue.csv` focused narrowly on the `2-star` gap (`17/20`, 3 short)
-3. take registry-backed `viable_google_maps` lanes first; use `Lowest` sort and expand quote chips to surface full-text 2-star bodies
-4. use registry-backed `fallback_eligible` lanes only after six fresh Google Maps `2-star` surfacing failures are documented in that live pass
-5. do not pursue mixed `4-star` or general positive rows until the `2-star` gap is closed
-6. keep Wave80 at intake discipline only; no benchmark pressure yet
+1. `2-star` is closed at `20/20` — do not reopen this target
+2. `mixed_4_star` is closed at `15/15` — do not reopen this target
+3. all primary Wave80 count targets are now met; next pass should open Wave80 triage
+4. triage pass: promote rows from `corpus_only` to `benchmark_candidate` and `holdout` status
+5. do not run benchmark reruns or engine edits during the triage pass
+6. keep all triage promotions narrow and human-reviewed
 
 ---
 
