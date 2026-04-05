@@ -238,6 +238,16 @@ Pass 39 - Wave80 Harvest Mode Throughput Test is now complete:
 - the pass improved low-star throughput honestly, but it did not solve the remaining mixed `4-star` gap; mixed `4-star` stayed at `10` Wave80 rows and still needs a narrower recovery pass
 - normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
 
+Pass 40 - Wave80 Mixed 4-Star Recovery Under Harvest Mode is now complete:
+- `2` additional real full-text mixed `4-star` rows captured via controlled Avvo fallback
+- Wave80 grew from `67` to `69` rows while keeping every row `corpus_only`
+- three Google Maps mixed-4-star lanes were dead in this pass: `Anchor Legal Group (VA)`, `New Frontier Immigration Law (AZ)`, `Philip J. Fulton Law Office (OH)` — all rated `4.5`–`4.8` with no full-text 4-star body surfacing after Lowest-sort attempts
+- a fourth qualification lane `Lowe Law Offices (OK)` showed eight visible 4-star bodies but all were purely positive one-liners with no concrete governance complaint
+- three same-pass dead Google Maps lanes triggered the controlled fallback rule; two Avvo mixed-4-star rows captured: `Jonathan William Turner (TN, criminal defense)` with explicit communication_responsiveness caveat and `Law Offices of Christopher A. Benson, PLLC (WA, estate planning)` with communication_style_friction complaint
+- `mixed_4_star` target closed at `15/15` — this gap is now resolved
+- normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
+- remaining open Wave80 gap: `2-star` at `17/20`
+
 Mixed `4-star` recovery rule:
 1. start on Google Maps
 2. target firms roughly `3.5` to `4.5` overall and sort reviews by `Lowest`
@@ -256,13 +266,12 @@ Controlled `2-star` fallback rule:
 7. keep fallback narrow, source-faithful, and `corpus_only`
 
 Current next pass priorities:
-1. run a short qualification pass only when new lanes need classification or a parked lane deserves an explicit recheck
-2. run the next harvest pass from `20260328_wave80_harvest_ready_queue.csv`
-3. take registry-backed `viable_google_maps` lanes first to grow the batch without rediscovering dead `2-star` behavior
+1. mixed `4-star` is closed at `15/15` — do not reopen this target
+2. run the next harvest pass from `20260328_wave80_harvest_ready_queue.csv` focused narrowly on the `2-star` gap (`17/20`, 3 short)
+3. take registry-backed `viable_google_maps` lanes first; use `Lowest` sort and expand quote chips to surface full-text 2-star bodies
 4. use registry-backed `fallback_eligible` lanes only after six fresh Google Maps `2-star` surfacing failures are documented in that live pass
-5. keep mixed `4-star` fallback separate and still require three same-pass dead Google Maps lanes before non-Google gap-fill
-6. bias the next pass toward unresolved mixed `4-star` and `2-star` gaps instead of another general one-star / five-star Google Maps sweep
-7. keep Wave80 at intake discipline only; no benchmark pressure yet
+5. do not pursue mixed `4-star` or general positive rows until the `2-star` gap is closed
+6. keep Wave80 at intake discipline only; no benchmark pressure yet
 
 ---
 

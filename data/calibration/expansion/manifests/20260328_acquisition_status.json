@@ -1,36 +1,38 @@
 {
   "metrics": {
-    "total_reviews": 91,
+    "total_reviews": 93,
     "star_counts": {
       "5": 28,
       "2": 17,
       "1": 32,
-      "4": 14
+      "4": 16
     },
     "source_counts": {
       "trustpilot": 11,
       "google_maps": 58,
-      "avvo": 16,
+      "avvo": 18,
       "lawyers_com": 6
     },
     "state_count": 23,
     "practice_area_count": 10,
     "long_form_count": 29,
     "weak_tag_counts": {
-      "explicit_positive_trust": 35,
       "long_form": 49,
+      "explicit_positive_trust": 35,
       "explicit_positive_outcome": 21,
-      "trust_vs_outcome_ambiguity": 26,
       "low_star_expectation_break": 47,
+      "trust_vs_outcome_ambiguity": 26,
       "low_star_contact_failure": 27,
-      "mixed_4_star": 13,
-      "low_star_clarity_break": 7
+      "mixed_4_star": 15,
+      "low_star_clarity_break": 7,
+      "low_star_communication_gap": 1,
+      "communication_style_friction": 1
     },
     "queue_role_counts": {
       "holdout": 4,
       "audit_only": 5,
       "benchmark_candidate": 8,
-      "corpus_only": 74
+      "corpus_only": 76
     },
     "benchmark_candidate_count": 8,
     "holdout_count": 4
@@ -42,7 +44,7 @@
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 91,
+          "current": 93,
           "target": 24,
           "met": true
         },
@@ -57,7 +59,7 @@
           "met": true
         },
         "mixed_4_star": {
-          "current": 13,
+          "current": 15,
           "target": 4,
           "met": true
         },
@@ -101,11 +103,11 @@
     },
     {
       "stage": "wave80",
-      "checks_completed": 7,
+      "checks_completed": 8,
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 91,
+          "current": 93,
           "target": 80,
           "met": true
         },
@@ -120,9 +122,9 @@
           "met": false
         },
         "mixed_4_star": {
-          "current": 13,
+          "current": 15,
           "target": 15,
-          "met": false
+          "met": true
         },
         "explicit_positive_outcome": {
           "current": 21,
@@ -168,7 +170,7 @@
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 91,
+          "current": 93,
           "target": 160,
           "met": false
         },
@@ -183,7 +185,7 @@
           "met": false
         },
         "mixed_4_star": {
-          "current": 13,
+          "current": 15,
           "target": 30,
           "met": false
         },
@@ -231,7 +233,7 @@
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 91,
+          "current": 93,
           "target": 320,
           "met": false
         },
@@ -246,7 +248,7 @@
           "met": false
         },
         "mixed_4_star": {
-          "current": 13,
+          "current": 15,
           "target": 60,
           "met": false
         },

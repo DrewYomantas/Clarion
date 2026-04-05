@@ -1,5 +1,40 @@
 # AI Pass Changelog
 
+## 2026-04-05 - Pass 40 - Wave80 Mixed 4-Star Recovery Under Harvest Mode
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Checked three harvest-ready Google Maps lanes for mixed 4-star bodies: Anchor Legal Group (VA, 4.7/183 reviews), New Frontier Immigration Law (AZ, 4.8/148 reviews), and Philip J. Fulton Law Office (OH, 4.5/82 reviews). All three returned dead: either no 4-star bodies at all or only star-only body-less rows.
+- Ran a qualification check on a fourth lane: Lowe Law Offices (OK, 4.5/283 reviews, surfaced via People-also-search-for from Fulton OH). Eight 4-star bodies were visible but all were purely positive one-liners with no concrete governance complaint. Fourth dead lane confirmed.
+- Three same-pass dead Google Maps lanes triggered the controlled mixed-4-star fallback rule (threshold = 3). Captured two full-text Avvo mixed-4-star rows: `jonathanturner_20260405_anonymous_4` (TN, criminal defense, communication_responsiveness caveat) and `christopherbenson_20260405_mdr_4` (WA, estate planning, communication_style_friction).
+- Closed the `mixed_4_star` Wave80 target at `15/15`.
+- Pushed Wave80 from `67` to `69` rows; all rows remain `corpus_only`.
+- Added 4 new `dead_google_maps` entries and 2 new `fallback_eligible` entries to the lane registry; added Lowe Law Offices OK to the scout queue.
+- Regenerated normalization, dedupe, acquisition status, and source priority queue artifacts.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No Phase 1 protected-subset edits
+- No holdout or audit_only row changes
+
+---
+
 ## 2026-04-04 - Pass 38 - Wave80 Efficiency Reset
 
 ### Files Changed
