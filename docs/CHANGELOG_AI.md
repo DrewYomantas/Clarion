@@ -1,5 +1,47 @@
 # AI Pass Changelog
 
+## 2026-04-04 - Pass 38 - Wave80 Efficiency Reset
+
+### Files Changed
+- `automation/calibration/build_review_source_priority_queue.py`
+- `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Added a persistent Wave80 lane registry so recent lane truth survives across passes instead of being rediscovered manually.
+- Backfilled known `viable_google_maps`, `dead_google_maps`, and `fallback_eligible` lanes from Passes `35` to `37`, with the dead Google Maps `2-star` lanes explicitly parked.
+- Split the operating model into `qualification` mode and `harvest` mode so tiny scout passes no longer force the full batch truth-sync overhead.
+- Updated the source-priority builder to read the lane registry, emit lane-level priority metadata, and push viable Google Maps lanes ahead of fallback lanes while excluding known dead Google Maps `2-star` lanes from harvest.
+- Added a harvest-ready queue artifact so future passes can start from a larger prequalified capture block instead of rebuilding the plan lane by lane.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No Phase 1 protected-subset edits
+- No Wave80 row-content edits
+
+### Verification
+- `python automation/calibration/build_review_source_priority_queue.py --coverage data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv --scouting data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv --lane-registry data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv --stage wave80 --mode harvest --batches-dir data/calibration/expansion/batches --output data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv` exists and is populated with recent lane truth from Passes `35` to `37`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv` now ranks `viable_google_maps` first, `fallback_eligible` second, and emits `dead_google_maps` as `excluded_dead_lane`
+- `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv` exists as the queued-only harvest block
+- Benchmark and engine files remained untouched in this pass
+
+### Current Truth
+- Wave80 still sits at `55` rows with `google_maps 36`, `avvo 13`, and `lawyers_com 6`.
+- Wave80 star mix remains `1-star 18`, `2-star 12`, `4-star 9`, `5-star 16`.
+- All Wave80 rows remain `corpus_only`.
+- The new operational truth is that dead Google Maps `2-star` lanes are persistent registry truth, not something that must be re-earned every collection pass.
+
 ## 2026-04-04 - Pass 37 - Wave80 2-Star Expansion Under Earned Fallback Rule
 
 ### Files Changed

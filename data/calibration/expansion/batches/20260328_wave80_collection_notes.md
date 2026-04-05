@@ -8,7 +8,8 @@
 ## Source mix
 - Google Maps: 36
 - Trustpilot: 0
-- Avvo / Lawyers.com: 19
+- Avvo: 13
+- Lawyers.com: 6
 - Other: 0
 
 ## Wave80 targets
@@ -35,7 +36,7 @@
 - Any rows that should never drive benchmark truth: the controlled Avvo mixed `4-star` fallback rows, the new 2026-04-04 Google Maps intake rows from Pass 35, the controlled Avvo / Lawyers.com `2-star` fallback rows captured in Pass 36, and the controlled Lawyers.com `2-star` fallback rows captured in Pass 37 should stay out of benchmark pressure until a later Wave80 triage pass.
 
 ## Operator notes
-- What went smoothly: Pass 37 re-earned the Google Maps `2-star` fallback threshold inside the pass, stayed disciplined about the narrow fallback cap, and still landed three clean full-text `2-star` rows in social security disability (`TN`), estate planning (`SC`), and criminal defense (`PA`) without touching protected truth.
-- What slowed capture down: Google Maps `2-star` surfacing remained the blocker. The same-pass dead lanes documented here were Immigration Lawyer Robert West (`NV`), Philip J. Fulton Law Office (`OH`), Manring & Farrell (`OH`), Disability Helpers LLC (`IL`), New Frontier Immigration Law (`AZ`), Access Disability, LLC (`MO`), Eric Palacios & Associates Ltd (`NV`), and Velasquez Immigration Law Group (`NV`). After those failures, fallback was earned again, but the max-three-fallback guard meant the pass honestly stopped at three new rows because no new Google Maps `2-star` body surfaced before the fallback budget was exhausted.
-- What should change in the next batch: keep Google Maps first, especially in underused disability and estate lanes, but keep treating histogram-without-body, limited-view panes, no-review-tab states, and quote-chip mismatches as immediate dead lanes. If a fresh pass re-documents six distinct Google Maps `2-star` surfacing failures, use the narrow fallback rule again, but do not fake a fourth row if Google Maps still refuses to surface a usable `2-star` body.
+- What went smoothly: Pass 38 converted the recent Google Maps surfacing truth into a persistent lane registry and a harvest-ready queue. The repo now separates qualification from harvesting instead of forcing every small scout pass to redo full Wave80 truth-sync work.
+- What slowed capture down: recent passes kept rediscovering the same Google Maps `2-star` failures. Those dead lanes are now parked in `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv` instead of being re-proved from scratch.
+- What should change in the next batch: run small qualification passes only to classify new lanes or deliberate rechecks, update the lane registry, and stop there. Run full harvest passes only after there is a `10` to `15` row plan ready in `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`, with viable Google Maps lanes first and fallback lanes only after the live pass honestly earns them.
 

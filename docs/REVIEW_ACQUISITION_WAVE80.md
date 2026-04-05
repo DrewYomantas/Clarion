@@ -41,7 +41,9 @@ These rows can inform later benchmark-design work, but none of them should be pr
 Start from these files:
 - `data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv`
 - `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv`
 - `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`
 - `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
 - `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
 - `data/calibration/expansion/queues/20260328_wave80_holdout_queue.csv`
@@ -89,6 +91,50 @@ Human review stays narrow:
 - resolve duplicate conflicts
 - approve benchmark-candidate promotions
 - resolve ambiguity before truth review
+
+---
+
+## Wave80 Operating Modes
+
+### Qualification mode
+
+Use qualification mode when the job is to scout or classify lanes, not to grow the live row count immediately.
+
+Qualification mode rules:
+1. scout new Google Maps, Avvo, or Lawyers.com lanes
+2. classify each lane into the lane registry as:
+   - `viable_google_maps`
+   - `dead_google_maps`
+   - `fallback_eligible`
+3. record the lane's target slice (`general`, `2_star`, or `mixed_4_star`) and why the status was earned
+4. stop after the registry and scout truth is updated
+5. do not pay full batch-manifest and broad doc-sync overhead for a tiny scouting-only result
+
+### Harvest mode
+
+Use harvest mode only when the queue can support a real capture block.
+
+Harvest mode rules:
+1. build from `20260328_wave80_harvest_ready_queue.csv`
+2. take `viable_google_maps` lanes first
+3. take `fallback_eligible` lanes second, and only after the live pass honestly earns fallback
+4. keep `dead_google_maps` lanes excluded unless the pass has an explicit recheck reason
+5. target larger `10` to `15` row blocks before running normalization, manifest refresh, and the full doc sync
+
+---
+
+## Lane Registry Rules
+
+The lane registry is now the persistent truth for repeated lane behavior.
+
+Registry rules:
+1. a known dead Google Maps `2-star` lane does not need to be re-proven in every future pass
+2. a source can stay `viable_google_maps` for general low-star or positive harvesting even if its dedicated Google Maps `2-star` lane is dead
+3. fallback eligibility can persist in the registry once a lane has already produced a source-faithful full-text row after an honestly earned fallback trigger
+4. fallback stays narrow:
+   - Google Maps remains the premium default lane
+   - fallback is still limited to the specific slice that needed it
+   - fallback does not turn Avvo or Lawyers.com into the new default
 
 ---
 
@@ -188,17 +234,17 @@ Controlled `2-star` fallback rule:
 2. prefer firms with a visible `2-star` count and use `Lowest` sort plus quote-chip or expansion controls where available
 3. treat histogram-without-body, limited-view panes, no-review-tab states, and Lowest-sort dead ends as explicit surfacing failures
 4. after six distinct Google Maps `2-star` surfacing failures in one pass, controlled `Avvo` / `Lawyers.com` fallback is allowed for that pass
-5. fallback may capture only full-text `2-star` rows and should stay inside the priority practices
-6. keep fallback narrow, source-faithful, and `corpus_only`
+5. if the same dead lane was already documented in the lane registry from a recent pass, do not spend time re-proving it unless there is a specific recheck reason
+6. fallback may capture only full-text `2-star` rows and should stay inside the priority practices
+7. keep fallback narrow, source-faithful, and `corpus_only`
 
 Current next pass priorities:
-1. stay Google Maps-first
-2. keep mixed `4-star` capture on the controlled gap-fill rule when Google Maps turns into body-less dead ends
-3. keep pushing honest `2-star` growth from new-state practice lanes, but activate controlled `Avvo` / `Lawyers.com` fallback once six Google Maps surfacing failures are documented in the same pass
-4. widen practice-area coverage in immigration, disability, estate planning, and criminal defense without forcing synthetic balance
-5. keep pushing new-state capture instead of deepening only WI and GA
-6. document histogram-plus-Lowest dead ends quickly when Google Maps shows `2-star` counts but no visible body, and stop honestly if the Google Maps lane stays dead after the fallback cap is exhausted
-7. keep Wave80 at intake discipline only; no benchmark pressure yet
+1. run a short qualification pass only when new lanes need classification or a parked lane deserves an explicit recheck
+2. run the next harvest pass from `20260328_wave80_harvest_ready_queue.csv`
+3. take registry-backed `viable_google_maps` lanes first to grow the batch without rediscovering dead `2-star` behavior
+4. use registry-backed `fallback_eligible` lanes only after six fresh Google Maps `2-star` surfacing failures are documented in that live pass
+5. keep mixed `4-star` fallback separate and still require three same-pass dead Google Maps lanes before non-Google gap-fill
+6. keep Wave80 at intake discipline only; no benchmark pressure yet
 
 ---
 
