@@ -8,7 +8,7 @@
 ## Source mix
 - Google Maps: 36
 - Trustpilot: 0
-- Avvo / Lawyers.com: 16
+- Avvo / Lawyers.com: 19
 - Other: 0
 
 ## Wave80 targets
@@ -31,11 +31,11 @@
 
 ## Batch caveats
 - Any rows with thin metadata: none in the current batch; every row has rating, source URL, state, practice area, collection date, and provenance note.
-- Any rows marked audit-only immediately: none; all fifty-two rows remain `corpus_only`.
-- Any rows that should never drive benchmark truth: the controlled Avvo mixed `4-star` fallback rows, the new 2026-04-04 Google Maps intake rows from Pass 35, and the controlled Avvo / Lawyers.com `2-star` fallback rows captured in Pass 36 should stay out of benchmark pressure until a later Wave80 triage pass.
+- Any rows marked audit-only immediately: none; all fifty-five rows remain `corpus_only`.
+- Any rows that should never drive benchmark truth: the controlled Avvo mixed `4-star` fallback rows, the new 2026-04-04 Google Maps intake rows from Pass 35, the controlled Avvo / Lawyers.com `2-star` fallback rows captured in Pass 36, and the controlled Lawyers.com `2-star` fallback rows captured in Pass 37 should stay out of benchmark pressure until a later Wave80 triage pass.
 
 ## Operator notes
-- What went smoothly: Pass 36 resolved the repeated `2-star` bottleneck honestly. Six distinct Google Maps lanes were documented as surfacing failures, the controlled fallback threshold triggered cleanly, and four full-text `2-star` rows landed across immigration, disability, estate planning, and criminal defense without touching protected truth.
-- What slowed capture down: even in priority lanes with visible `2-star` counts, Google Maps repeatedly dead-ended at the surfacing layer. The six threshold-triggering failures were Bailey Immigration (`OR`), Fakhoury Global Immigration (`MI`), Mary Ann Romero & Associates (`NM`), Randall Law PLLC (`NC`), Jungle Law (`MO`), and Mark C. Cogan, P.C. (`OR`). Additional fallback candidates were also rejected when their filtered `2-star` rows resolved to the wrong practice slice, including William Niffen (`criminal_defense` on an immigration profile), John Eccher (`discrimination`), Shunte Goss (`family`), and Andrew Burrell (`car_accidents`).
-- What should change in the next batch: keep Google Maps first for low-star and positive capture, but when a pass logs six distinct Google Maps `2-star` surfacing failures in priority practice lanes, allow controlled Avvo / Lawyers.com `2-star` fallback immediately for the rest of that pass. Keep documenting histogram-only, limited-view, and Lowest-sort dead ends explicitly instead of padding the batch with unrelated sentiment.
+- What went smoothly: Pass 37 re-earned the Google Maps `2-star` fallback threshold inside the pass, stayed disciplined about the narrow fallback cap, and still landed three clean full-text `2-star` rows in social security disability (`TN`), estate planning (`SC`), and criminal defense (`PA`) without touching protected truth.
+- What slowed capture down: Google Maps `2-star` surfacing remained the blocker. The same-pass dead lanes documented here were Immigration Lawyer Robert West (`NV`), Philip J. Fulton Law Office (`OH`), Manring & Farrell (`OH`), Disability Helpers LLC (`IL`), New Frontier Immigration Law (`AZ`), Access Disability, LLC (`MO`), Eric Palacios & Associates Ltd (`NV`), and Velasquez Immigration Law Group (`NV`). After those failures, fallback was earned again, but the max-three-fallback guard meant the pass honestly stopped at three new rows because no new Google Maps `2-star` body surfaced before the fallback budget was exhausted.
+- What should change in the next batch: keep Google Maps first, especially in underused disability and estate lanes, but keep treating histogram-without-body, limited-view panes, no-review-tab states, and quote-chip mismatches as immediate dead lanes. If a fresh pass re-documents six distinct Google Maps `2-star` surfacing failures, use the narrow fallback rule again, but do not fake a fourth row if Google Maps still refuses to surface a usable `2-star` body.
 

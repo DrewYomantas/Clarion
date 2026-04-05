@@ -1,5 +1,57 @@
 # AI Pass Changelog
 
+## 2026-04-04 - Pass 37 - Wave80 2-Star Expansion Under Earned Fallback Rule
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Added `3` real full-text `2-star` Wave80 rows and expanded the live batch from `52` to `55`.
+- Re-documented eight same-pass Google Maps `2-star` surfacing failures across immigration and disability lanes in `NV`, `OH`, `IL`, `AZ`, and `MO`.
+- Re-earned the controlled fallback rule honestly inside the pass and used it only for three narrow Lawyers.com `2-star` rows in social security disability, estate planning, and criminal defense.
+- Kept every new row `corpus_only` and preserved the pass as evidence collection only, with no benchmark or engine work.
+- Documented the honest target miss: the pass stopped at `3` rows because the max-three-fallback cap was reached before any new Google Maps `2-star` body surfaced.
+- Regenerated normalization, dedupe, acquisition status, and the Wave80 source-priority queue after the new capture block landed.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No benchmark-candidate or holdout promotion
+- No Phase 1 protected-subset edits
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `python automation/calibration/build_review_source_priority_queue.py --coverage data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv --scouting data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv --stage wave80 --batches-dir data/calibration/expansion/batches --output data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- Wave80 batch result:
+  - `55` total rows
+  - `0` exact duplicate groups
+  - `0` likely duplicate pairs
+  - `google_maps 36`, `avvo 13`, `lawyers_com 6`
+  - `1-star 18`
+  - `2-star 12`
+  - `4-star 9`
+  - `5-star 16`
+
+### Current Truth
+- Pass 37 re-earned the Google Maps `2-star` fallback rule inside the pass, but no new Google Maps `2-star` body surfaced before the fallback cap was exhausted.
+- The eight documented same-pass Google Maps dead lanes were Immigration Lawyer Robert West (`NV`), Philip J. Fulton Law Office (`OH`), Manring & Farrell (`OH`), Disability Helpers LLC (`IL`), New Frontier Immigration Law (`AZ`), Access Disability, LLC (`MO`), Eric Palacios & Associates Ltd (`NV`), and Velasquez Immigration Law Group (`NV`).
+- The next honest move is to stay Google Maps-first, keep documenting surfacing failures quickly, and only use the narrow fallback block again after six fresh same-pass Google Maps failures.
+
 ## 2026-04-04 - Pass 36 - Wave80 2-Star Surfacing Proof + Controlled Fallback
 
 ### Files Changed

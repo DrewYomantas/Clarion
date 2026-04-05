@@ -167,6 +167,14 @@ Pass 36 - Wave80 2-Star Surfacing Proof + Controlled Fallback is now complete:
 - the pass proved that the current `2-star` bottleneck is Google Maps surfacing, not an absence of visible `2-star` histogram counts in target lanes
 - normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
 
+Pass 37 - Wave80 2-Star Expansion Under Earned Fallback Rule is now complete:
+- `3` additional real full-text `2-star` rows captured
+- Wave80 grew from `52` to `55` rows while keeping every row `corpus_only`
+- Google Maps stayed first in the pass logic, but eight same-pass Google Maps `2-star` lanes still failed to surface a usable full-text body: `Immigration Lawyer Robert West (NV)`, `Philip J. Fulton Law Office (OH)`, `Manring & Farrell (OH)`, `Disability Helpers LLC (IL)`, `New Frontier Immigration Law (AZ)`, `Access Disability, LLC (MO)`, `Eric Palacios & Associates Ltd (NV)`, and `Velasquez Immigration Law Group (NV)`
+- that same-pass proof re-earned the controlled fallback rule and added three full-text `2-star` rows from `Lawyers.com` across social security disability, estate planning, and criminal defense
+- the pass honestly missed the `4` to `6` row target band because the max-three-fallback guard was reached before any new Google Maps `2-star` body surfaced
+- normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
+
 Mixed `4-star` recovery rule:
 1. start on Google Maps
 2. target firms roughly `3.5` to `4.5` overall and sort reviews by `Lowest`
@@ -189,7 +197,7 @@ Current next pass priorities:
 3. keep pushing honest `2-star` growth from new-state practice lanes, but activate controlled `Avvo` / `Lawyers.com` fallback once six Google Maps surfacing failures are documented in the same pass
 4. widen practice-area coverage in immigration, disability, estate planning, and criminal defense without forcing synthetic balance
 5. keep pushing new-state capture instead of deepening only WI and GA
-6. document histogram-plus-Lowest dead ends quickly when Google Maps shows `2-star` counts but no visible body
+6. document histogram-plus-Lowest dead ends quickly when Google Maps shows `2-star` counts but no visible body, and stop honestly if the Google Maps lane stays dead after the fallback cap is exhausted
 7. keep Wave80 at intake discipline only; no benchmark pressure yet
 
 ---
