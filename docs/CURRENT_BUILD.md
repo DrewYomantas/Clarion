@@ -1,6 +1,6 @@
 ﻿# Current Build
 
-Latest completed milestone: `2026-04-05 - Pass 41 - Wave80 2-Star Closure Under Harvest Mode`.
+Latest completed milestone: `2026-04-05 - Pass 42 - Wave80 Triage Prep for Benchmark-Candidate and Holdout Promotion`.
 
 Current product truth:
 - canonical benchmark: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
@@ -8,33 +8,27 @@ Current product truth:
 - readiness: `improved but not demo-safe`
 
 What changed in the latest pass:
-- closed the `2-star` target at `20/20` using 2 Google Maps rows (Apex Disability Law CO, ASH | LAW CO) and 1 controlled Avvo fallback row (Versfeld & Hugo MO immigration) after six documented same-pass Google Maps surfacing failures
-- pushed Wave80 from `69` to `72` rows while keeping every row `corpus_only`
-- all primary Wave80 count targets are now met: `1-star 25/25 ✓`, `2-star 20/20 ✓`, `mixed_4_star 15/15 ✓`
-- updated lane registry with `6` new dead_google_maps entries and `1` new fallback_eligible entry (Versfeld & Hugo MO)
-- updated source scout queue, collection notes, batch manifest, and acquisition status
-- MO added as new state (24 total); CO deepened from 3 to 5 Wave80 rows
+- opened Wave80 triage on the full `72`-row Wave80 corpus; no rows added, no text changed
+- role assignments: `15` `benchmark_candidate`, `10` `holdout`, `6` `audit_only`, `41` `corpus_only`
+- combined dataset (phase1 + wave80): `23` `benchmark_candidate`, `14` `holdout`, `11` `audit_only`, `48` `corpus_only` — all `96` rows accounted for
+- Wave80 holdout queue populated with `10` rows for the first time
+- benchmark_candidate selection is selective: diverse across `7` practices, `14` states, all `4` star slices; strongest long-form rows per slice; no thin, off-core, or near-duplicate rows
+- audit_only flagged: `3` extremely thin rows (6–71 chars), `1` off-core practice (traffic ticket), `1` near-dupe, `1` low-specificity anger language
+- batch CSV, label queue, holdout queue, collection notes, batch manifest, acquisition status all updated and in sync
 
 Verification:
-- canonical rerun: `data/calibration/runs/20260328_lowstar_boundary_cleanup_canonical_rerun/`
-- broad comparator: `data/calibration/runs/20260328_lowstar_boundary_cleanup_broad_rerun/`
-- acquisition status: `data/calibration/expansion/manifests/20260328_acquisition_status.json`
-- source priority queue: `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
-- harvest-ready queue: `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`
-- lane registry: `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv`
-- Wave80 live truth: `72` captured rows, `50` `google_maps`, `16` `avvo`, `6` `lawyers_com`, all `corpus_only`
-- Wave80 star mix: `1-star 25`, `2-star 15`, `4-star 12`, `5-star 20`
-- Wave80 state coverage: `24` states
+- batch/label queue sync: `0` role mismatches
+- row count integrity: `72` batch rows, `72` label rows, `10` holdout queue rows
+- role distribution confirmed: `benchmark_candidate 15`, `holdout 10`, `audit_only 6`, `corpus_only 41`
+- acquisition status updated: combined totals sum to `96` ✓
+- no canonical files touched, no benchmark engine touched, no rows added or removed
 
 Current next pass:
-- keep working from `docs/REVIEW_ACQUISITION_WAVE80.md`
-- `2-star` is closed at `20/20` — do not reopen
-- `mixed_4_star` is closed at `15/15` — do not reopen
-- all primary count targets met — next pass opens Wave80 triage
-- triage pass: promote rows from `corpus_only` to `benchmark_candidate` and `holdout`
-- do not run benchmark reruns or engine edits during triage
-
-Read `PROJECT_STATE.md`.
+- triage is open — `15` Wave80 rows are `benchmark_candidate`
+- next useful step: human truth review of the `15` benchmark_candidate rows
+- after human truth review, promote clean rows toward the canonical benchmark
+- do not run benchmark reruns or engine edits until human truth review passes rows through the promotion gate
+- see `docs/REVIEW_ACQUISITION_WAVE80.md` for priorities
 
 Read `PROJECT_STATE.md`.
 

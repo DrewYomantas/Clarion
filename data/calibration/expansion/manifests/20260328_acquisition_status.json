@@ -29,13 +29,13 @@
       "communication_style_friction": 1
     },
     "queue_role_counts": {
-      "holdout": 4,
-      "audit_only": 5,
-      "benchmark_candidate": 8,
-      "corpus_only": 79
+      "benchmark_candidate": 23,
+      "holdout": 14,
+      "audit_only": 11,
+      "corpus_only": 48
     },
-    "benchmark_candidate_count": 8,
-    "holdout_count": 4
+    "benchmark_candidate_count": 23,
+    "holdout_count": 14
   },
   "stage_progress": [
     {

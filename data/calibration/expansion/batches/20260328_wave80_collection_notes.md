@@ -22,8 +22,15 @@
 - long-form: 20 ✓ (29 total)
 - states covered: 6 ✓ (24 states)
 - practice-area buckets covered: 5 ✓ (10 areas)
-- holdouts: 20 (4 total — Wave80 holdout block not yet started)
-- reviewed benchmark candidates: 30 (8 total — triage pass pending)
+- holdouts: 20 (14 total — Wave80 triage block opened in Pass 42: 10 wave80 + 4 phase1)
+- reviewed benchmark candidates: 30 (23 total — Wave80 triage block opened in Pass 42: 15 wave80 + 8 phase1)
+
+## Pass 42 triage state (as of 2026-04-05)
+- Wave80 batch triage complete: 15 `benchmark_candidate`, 10 `holdout`, 6 `audit_only`, 41 `corpus_only`
+- Combined dataset (phase1 + wave80): 23 `benchmark_candidate`, 14 `holdout`, 11 `audit_only`, 48 `corpus_only`
+- 14 distinct states represented across benchmark_candidate rows
+- benchmark_candidate slice distribution: 1-star 6, 2-star 3, 4-star 4, 5-star 2
+- benchmark_candidate practice distribution: criminal_defense 4, immigration 3, family_law 2, estate_planning 2, SSD 2, personal_injury 1, real_estate 1
 
 ## Dedupe notes
 - Exact duplicates found: 0
@@ -32,7 +39,7 @@
 
 ## Batch caveats
 - Any rows with thin metadata: none in the current batch; every row has rating, source URL, state, practice area, collection date, and provenance note.
-- Any rows marked audit-only immediately: none; all seventy-two rows remain `corpus_only`.
+- Any rows marked audit-only in Pass 42 triage: 6 rows — 3 too thin (71, 17, 6 chars), 1 off-core practice (speeding_traffic_ticket), 1 near-duplicate of stronger row from same firm, 1 low-specificity ("complete trash") narrative.
 - Any rows that should never drive benchmark truth: the controlled Avvo mixed `4-star` fallback rows, the new 2026-04-04 Google Maps intake rows from Passes 35 and 39, the controlled Avvo / Lawyers.com `2-star` fallback rows captured in Pass 36, and the controlled Lawyers.com `2-star` fallback rows captured in Pass 37 should stay out of benchmark pressure until a later Wave80 triage pass.
 
 ## Operator notes
@@ -49,4 +56,12 @@
 - What went smoothly: two full-text 2-star Google Maps rows captured from Denver CO SSD firms (Apex Disability Law, ASH | LAW); controlled Avvo fallback correctly triggered after six documented same-pass Google Maps surfacing failures and produced one qualifying row (Leon Versfeld / Versfeld & Hugo, MO immigration); 2-star target closed at 20/20.
 - What slowed capture down: six distinct Google Maps 2-star lanes failed before fallback was earned — Krieger CO (0 2-star count), De la Rosa FL (placeholder body), Perigon GA (0 2-star count), Martinez TX (body-less owner-response-only 2-star), McGinn Law NE (two body-less star-only 2-stars), Jeffrey Y. Bennett MO (0 2-star count); Louisville KY and New Orleans LA searches returned only 4.7–5.0 firms with no visible low-star bands.
 - What should change in the next batch: 2-star is now closed at 20/20; Wave80 collection targets are now met for all primary count categories; next pass should open Wave80 triage — promote rows to benchmark_candidate and holdout status rather than continuing raw intake.
+
+### Pass 42 — Wave80 Triage Prep for Benchmark-Candidate and Holdout Promotion (2026-04-05)
+- What went smoothly: all 72 Wave80 rows were reviewed; 31 rows were assigned non-corpus_only roles; no new rows were added; no text/provenance was modified; batch/label queue stayed in exact sync.
+- Triage posture: selective, not generous — preferred rows that were source-faithful, text-rich, good slice representatives, and not near-duplicates of stronger rows; excluded thin (<100 chars) rows, off-core practices, and near-duplicates from benchmark pressure.
+- Benchmark_candidate decisions: favored diverse practices (7 areas), diverse states (14 distinct), and diverse star slices (1★ 6, 2★ 3, 4★ 4, 5★ 2). Strongest long-form rows selected in each slice.
+- Holdout decisions: 10 rows reserved across 5 star slices, 7 practices, and 10 states; skewed toward rows that contrast with or complement benchmark_candidate rows from the same firms.
+- Audit_only decisions: 6 rows flagged — 3 extremely thin (6, 17, 71 chars), 1 off-core practice (speeding_traffic_ticket), 1 near-dupe from same WI family_law firm, 1 low-specificity anger language with weak governance signal density.
+- What should change in the next pass: triage is now open; next useful move is human truth review of the 15 benchmark_candidate rows, then promote to canonical after human review cycle.
 

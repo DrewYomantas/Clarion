@@ -1,5 +1,42 @@
 # AI Pass Changelog
 
+## 2026-04-05 - Pass 42 - Wave80 Triage Prep for Benchmark-Candidate and Holdout Promotion
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_holdout_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reviewed all 72 Wave80 rows and assigned triage roles. No rows added, no row text, ratings, or provenance changed.
+- Assigned `benchmark_candidate` (15): kowalski_bradcanard WI family_law 1★, morgan_elishaurgent GA personal_injury 1★, matthewlind_wayne WA real_estate 2★, edgardgarcia_anonymous CA family_law 4★, michaeltroiano_stephanie NY SSD 4★, donstewart_amy TX criminal_defense 1★, jenniferjamison_derek TX criminal_defense 4★, ericmark_marie NJ immigration 4★, ryangarry_noellevitzthum MN criminal_defense 5★, chayet_caw8taw CO estate_planning 1★, newfrontier_vlopez AZ immigration 1★, ericpalacios_gabrielrodriguez NV immigration 1★, fulton_kellieprenslow OH SSD 5★, anchor_ag VA estate_planning 2★, stamm_anonymous MD criminal_defense 2★.
+- Selection criteria: diverse practices (7), states (14 distinct), star slices (1★ 6, 2★ 3, 4★ 4, 5★ 2); source-faithful, text-rich, clearly representative; no near-duplicates, no thin rows, no off-core rows.
+- Assigned `holdout` (10): morgan_daniel GA personal_injury 5★, kowalski_mikec WI family_law 2★, nancyburt_jamie CA family_law 4★, ryangarry_joshhoekstra MN criminal_defense 5★, newfrontier_neilmarkbeltran AZ immigration 5★, canto_alfredoguaman MD immigration 1★, gavlin_anonymous NY immigration 2★, jonathanturner_anonymous TN criminal_defense 4★, christopherbenson_mdr WA estate_planning 4★, ashlaw_mshugge CO SSD 2★.
+- Assigned `audit_only` (6): kowalski_nicholasbuettner (near-dupe, same firm), kowalski_cynthiapeterson (71 chars, thin), martinkron_nick (speeding_traffic_ticket, off-core), ssdattorneys_ambertopps (17 chars, too thin), ssdattorneys_ashleydelao (low specificity, anger language), nmilc_ronnyk (6 chars, too thin).
+- Remaining 41 rows: `corpus_only`.
+- Updated Wave80 holdout queue with 10 rows (was empty before this pass).
+- Updated label queue flags: `benchmark_candidate_flag=true` for all 15 candidates, `holdout_flag=true` for all 10 holdout rows, `audit_only_flag=true` for 6 audit rows.
+- Updated acquisition status: combined totals benchmark_candidate=23, holdout=14, audit_only=11, corpus_only=48 (sum=96).
+- Verified batch/label sync: 0 role mismatches. Row count integrity: 72/72/10.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No new rows added
+- No row text, ratings, or provenance changed
+- No Phase 1 protected subset edits
+
+---
+
 ## 2026-04-05 - Pass 41 - Wave80 2-Star Closure Under Harvest Mode
 
 ### Files Changed

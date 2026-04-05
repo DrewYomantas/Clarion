@@ -275,13 +275,23 @@ Pass 41 - Wave80 2-Star Closure Under Harvest Mode is now complete:
 - normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
 - **all primary Wave80 count targets are now met**
 
+Pass 42 - Wave80 Triage Prep for Benchmark-Candidate and Holdout Promotion is now complete:
+- reviewed all `72` Wave80 rows; no new rows added; no text, ratings, or provenance changed
+- assigned subset roles: `15` `benchmark_candidate`, `10` `holdout`, `6` `audit_only`, `41` `corpus_only`
+- combined dataset (phase1 + wave80): `23` `benchmark_candidate`, `14` `holdout`, `11` `audit_only`, `48` `corpus_only`
+- `benchmark_candidate` selection: diverse practices (7 areas), diverse states (14 distinct), diverse star slices (1★ 6, 2★ 3, 4★ 4, 5★ 2); only source-faithful, text-rich, clearly representative rows promoted; no near-duplicates, no thin rows, no off-core rows
+- `holdout` selection: `10` rows across `5` star slices, `7` practice areas, `10` states; reserved for future evaluation
+- `audit_only` selection: `6` rows — `3` too thin, `1` off-core practice, `1` near-duplicate of stronger row, `1` low-specificity anger language
+- Wave80 holdout queue populated with `10` rows for the first time
+- acquisition status updated to reflect combined role counts (`96` total rows accounted for)
+
 Current next pass priorities:
-1. `2-star` is closed at `20/20` — do not reopen this target
-2. `mixed_4_star` is closed at `15/15` — do not reopen this target
-3. all primary Wave80 count targets are now met; next pass should open Wave80 triage
-4. triage pass: promote rows from `corpus_only` to `benchmark_candidate` and `holdout` status
-5. do not run benchmark reruns or engine edits during the triage pass
-6. keep all triage promotions narrow and human-reviewed
+1. `2-star` is closed at `20/20` — do not reopen
+2. `mixed_4_star` is closed at `15/15` — do not reopen
+3. `benchmark_candidate` block exists (`15` Wave80 rows) — next useful step is human truth review of these rows
+4. after human truth review, promote clean reviewed rows toward the canonical benchmark
+5. do not run benchmark reruns or engine edits until human truth review is complete
+6. `benchmark_candidate` rows are still intake-only — they do not drive benchmark truth until promoted through the human review gate
 
 ---
 
