@@ -1,36 +1,36 @@
 {
   "metrics": {
-    "total_reviews": 79,
+    "total_reviews": 91,
     "star_counts": {
-      "5": 24,
+      "5": 28,
       "2": 17,
-      "1": 25,
-      "4": 13
+      "1": 32,
+      "4": 14
     },
     "source_counts": {
       "trustpilot": 11,
-      "google_maps": 46,
+      "google_maps": 58,
       "avvo": 16,
       "lawyers_com": 6
     },
     "state_count": 23,
     "practice_area_count": 10,
-    "long_form_count": 28,
+    "long_form_count": 29,
     "weak_tag_counts": {
-      "explicit_positive_outcome": 19,
-      "long_form": 41,
-      "explicit_positive_trust": 30,
-      "low_star_expectation_break": 40,
+      "explicit_positive_trust": 35,
+      "long_form": 49,
+      "explicit_positive_outcome": 21,
       "trust_vs_outcome_ambiguity": 26,
-      "low_star_contact_failure": 23,
+      "low_star_expectation_break": 47,
+      "low_star_contact_failure": 27,
       "mixed_4_star": 13,
-      "low_star_clarity_break": 4
+      "low_star_clarity_break": 7
     },
     "queue_role_counts": {
       "holdout": 4,
       "audit_only": 5,
       "benchmark_candidate": 8,
-      "corpus_only": 62
+      "corpus_only": 74
     },
     "benchmark_candidate_count": 8,
     "holdout_count": 4
@@ -42,12 +42,12 @@
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 79,
+          "current": 91,
           "target": 24,
           "met": true
         },
         "one_star": {
-          "current": 25,
+          "current": 32,
           "target": 7,
           "met": true
         },
@@ -62,17 +62,17 @@
           "met": true
         },
         "explicit_positive_outcome": {
-          "current": 19,
+          "current": 21,
           "target": 4,
           "met": true
         },
         "explicit_positive_trust": {
-          "current": 30,
+          "current": 35,
           "target": 4,
           "met": true
         },
         "long_form": {
-          "current": 28,
+          "current": 29,
           "target": 8,
           "met": true
         },
@@ -97,20 +97,20 @@
           "met": true
         }
       },
-      "low_star_total": 42
+      "low_star_total": 49
     },
     {
       "stage": "wave80",
-      "checks_completed": 6,
+      "checks_completed": 7,
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 79,
+          "current": 91,
           "target": 80,
-          "met": false
+          "met": true
         },
         "one_star": {
-          "current": 25,
+          "current": 32,
           "target": 25,
           "met": true
         },
@@ -125,17 +125,17 @@
           "met": false
         },
         "explicit_positive_outcome": {
-          "current": 19,
+          "current": 21,
           "target": 15,
           "met": true
         },
         "explicit_positive_trust": {
-          "current": 30,
+          "current": 35,
           "target": 15,
           "met": true
         },
         "long_form": {
-          "current": 28,
+          "current": 29,
           "target": 20,
           "met": true
         },
@@ -160,7 +160,7 @@
           "met": false
         }
       },
-      "low_star_total": 42
+      "low_star_total": 49
     },
     {
       "stage": "wave160",
@@ -168,12 +168,12 @@
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 79,
+          "current": 91,
           "target": 160,
           "met": false
         },
         "one_star": {
-          "current": 25,
+          "current": 32,
           "target": 45,
           "met": false
         },
@@ -188,17 +188,17 @@
           "met": false
         },
         "explicit_positive_outcome": {
-          "current": 19,
+          "current": 21,
           "target": 30,
           "met": false
         },
         "explicit_positive_trust": {
-          "current": 30,
+          "current": 35,
           "target": 30,
           "met": true
         },
         "long_form": {
-          "current": 28,
+          "current": 29,
           "target": 40,
           "met": false
         },
@@ -223,7 +223,7 @@
           "met": false
         }
       },
-      "low_star_total": 42
+      "low_star_total": 49
     },
     {
       "stage": "wave320",
@@ -231,12 +231,12 @@
       "checks_total": 11,
       "checks": {
         "total_reviews": {
-          "current": 79,
+          "current": 91,
           "target": 320,
           "met": false
         },
         "one_star": {
-          "current": 25,
+          "current": 32,
           "target": 90,
           "met": false
         },
@@ -251,17 +251,17 @@
           "met": false
         },
         "explicit_positive_outcome": {
-          "current": 19,
+          "current": 21,
           "target": 60,
           "met": false
         },
         "explicit_positive_trust": {
-          "current": 30,
+          "current": 35,
           "target": 60,
           "met": false
         },
         "long_form": {
-          "current": 28,
+          "current": 29,
           "target": 80,
           "met": false
         },
@@ -286,7 +286,7 @@
           "met": false
         }
       },
-      "low_star_total": 42
+      "low_star_total": 49
     }
   ]
 }

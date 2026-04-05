@@ -221,6 +221,23 @@ Pass 37 - Wave80 2-Star Expansion Under Earned Fallback Rule is now complete:
 - the pass honestly missed the `4` to `6` row target band because the max-three-fallback guard was reached before any new Google Maps `2-star` body surfaced
 - normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
 
+Pass 38 - Wave80 Efficiency Reset is now complete:
+- `0` new rows were added by design
+- Wave80 stayed at `55` rows while keeping every row `corpus_only`
+- the pass converted Passes `35` to `37` into a persistent lane registry and a harvest-ready queue
+- known dead Google Maps `2-star` lanes became parked registry truth instead of something every future pass has to re-prove
+- qualification mode and harvest mode are now split so tiny scouting checks no longer force full Wave80 manifest and doc sync overhead
+- normalization and dedupe stayed clean with `0` exact duplicate groups and `0` likely duplicate pairs
+
+Pass 39 - Wave80 Harvest Mode Throughput Test is now complete:
+- `12` additional real Google Maps rows captured
+- Wave80 grew from `55` to `67` rows and stayed Google Maps-first at `48/67`
+- the pass landed a materially larger harvest block than the recent micro-passes and proved the registry-backed harvest model can move faster without lowering evidence quality
+- new Google Maps rows deepened `AZ`, `OH`, `VA`, `MD`, `NM`, and `UT` while keeping the pass inside the priority practices
+- all `12` new rows remained `corpus_only`
+- the pass improved low-star throughput honestly, but it did not solve the remaining mixed `4-star` gap; mixed `4-star` stayed at `10` Wave80 rows and still needs a narrower recovery pass
+- normalization and dedupe completed with `0` exact duplicate groups and `0` likely duplicate pairs
+
 Mixed `4-star` recovery rule:
 1. start on Google Maps
 2. target firms roughly `3.5` to `4.5` overall and sort reviews by `Lowest`
@@ -244,7 +261,8 @@ Current next pass priorities:
 3. take registry-backed `viable_google_maps` lanes first to grow the batch without rediscovering dead `2-star` behavior
 4. use registry-backed `fallback_eligible` lanes only after six fresh Google Maps `2-star` surfacing failures are documented in that live pass
 5. keep mixed `4-star` fallback separate and still require three same-pass dead Google Maps lanes before non-Google gap-fill
-6. keep Wave80 at intake discipline only; no benchmark pressure yet
+6. bias the next pass toward unresolved mixed `4-star` and `2-star` gaps instead of another general one-star / five-star Google Maps sweep
+7. keep Wave80 at intake discipline only; no benchmark pressure yet
 
 ---
 

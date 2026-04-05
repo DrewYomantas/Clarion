@@ -40,7 +40,7 @@ _This file tracks current repo truth. Historical pass detail lives in `CHANGELOG
 
 **Wave80 real-review acquisition is the active repo priority.**
 
-Recent passes established a real-only canonical benchmark, improved recall on the five target governance themes, cleaned up the stale benchmark route story, ran a disciplined generalization pass, completed a benchmark truth-correction pass to remove disputed gate pressure from the main canonical set, shipped two narrow broad-safe low-star boundary passes, completed a short remaining-cluster audit, finished a benchmark-design review of the remaining sparse disagreement clusters, laid out a concrete real-world review acquisition plan, completed the full Phase 1 acquisition batch, triaged the Phase 1 corpus into protected subsets, ran a narrow human-truth review on the candidate subset to shrink it to a more trustworthy benchmark-prep core, started Wave80 live with the first captured Google Maps block, completed Wave80 Collection Pass 2 with a targeted Avvo gap-fill to cover missing `2-star` and mixed `4-star` slices, completed Wave80 Collection Pass 3 with a Google Maps-first rebalance that doubled Google Maps share in the live Wave80 batch, recovered momentum after the stalled Google Maps mixed `4-star` hunt by adding controlled full-text Avvo mixed `4-star` gap-fill rows, completed a broader Wave80 growth pass that added six new Google Maps rows while widening into Minnesota and Colorado, completed a milestone-scale Google Maps-first growth pass that took the live Wave80 batch to `40` rows while widening into `AZ`, `NV`, `OH`, `VA`, `FL`, and `PA`, completed Pass 35 on `2026-04-04` with an honest Google Maps-first fallback block that pushed Wave80 to `48` rows while documenting that live `2-star` capture still did not honestly surface, completed Pass 36 on `2026-04-04` by proving the Google Maps `2-star` surfacing bottleneck with six documented dead lanes and adding four controlled fallback `2-star` rows across immigration, disability, estate planning, and criminal defense, completed Pass 37 on `2026-04-04` by re-earning that fallback rule inside the pass, adding three more controlled `2-star` rows, and honestly stopping short of the target band when no new Google Maps `2-star` body surfaced before the fallback cap was exhausted, and completed Pass 38 on `2026-04-04` by converting those repeated lane results into a persistent registry-backed qualification and harvest model.
+Recent passes established a real-only canonical benchmark, improved recall on the five target governance themes, cleaned up the stale benchmark route story, ran a disciplined generalization pass, completed a benchmark truth-correction pass to remove disputed gate pressure from the main canonical set, shipped two narrow broad-safe low-star boundary passes, completed a short remaining-cluster audit, finished a benchmark-design review of the remaining sparse disagreement clusters, laid out a concrete real-world review acquisition plan, completed the full Phase 1 acquisition batch, triaged the Phase 1 corpus into protected subsets, ran a narrow human-truth review on the candidate subset to shrink it to a more trustworthy benchmark-prep core, started Wave80 live with the first captured Google Maps block, completed Wave80 Collection Pass 2 with a targeted Avvo gap-fill to cover missing `2-star` and mixed `4-star` slices, completed Wave80 Collection Pass 3 with a Google Maps-first rebalance that doubled Google Maps share in the live Wave80 batch, recovered momentum after the stalled Google Maps mixed `4-star` hunt by adding controlled full-text Avvo mixed `4-star` gap-fill rows, completed a broader Wave80 growth pass that added six new Google Maps rows while widening into Minnesota and Colorado, completed a milestone-scale Google Maps-first growth pass that took the live Wave80 batch to `40` rows while widening into `AZ`, `NV`, `OH`, `VA`, `FL`, and `PA`, completed Pass 35 on `2026-04-04` with an honest Google Maps-first fallback block that pushed Wave80 to `48` rows while documenting that live `2-star` capture still did not honestly surface, completed Pass 36 on `2026-04-04` by proving the Google Maps `2-star` surfacing bottleneck with six documented dead lanes and adding four controlled fallback `2-star` rows across immigration, disability, estate planning, and criminal defense, completed Pass 37 on `2026-04-04` by re-earning that fallback rule inside the pass, adding three more controlled `2-star` rows, and honestly stopping short of the target band when no new Google Maps `2-star` body surfaced before the fallback cap was exhausted, completed Pass 38 on `2026-04-04` by converting those repeated lane results into a persistent registry-backed qualification and harvest model, and completed Pass 39 on `2026-04-04` by using that harvest model to land the first materially larger `12`-row Google Maps-heavy block.
 
 **Current benchmark truth as of 2026-03-28**
 - Canonical benchmark: `100.00%` agreement, `22/22` clean reviews, `0` total disagreements after human-truth correction. `legacy_130` and `exp_turnbull_2` are preserved in the file as `disputed_excluded`, not active gate rows.
@@ -137,27 +137,28 @@ Recent passes established a real-only canonical benchmark, improved recall on th
    - do not let disputed audit rows like `legacy_130` or `exp_turnbull_2` drive phrase work without more evidence
    - current live acquisition status:
      - Phase 1 is complete at `24/24`
-     - Wave80 is live with `55` captured rows in `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
-     - Wave80 source mix is now `google_maps 36`, `avvo 13`, `lawyers_com 6`
-     - Wave80 lane registry now records the recent operating truth in `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv`
-     - Wave80 harvest-ready queue now lives in `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`
-     - all Wave80 rows remain `corpus_only`
-     - no Phase 1 row has been promoted into benchmark truth or canonical truth
+    - Wave80 is live with `67` captured rows in `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+    - Wave80 source mix is now `google_maps 48`, `avvo 13`, `lawyers_com 6`
+    - Wave80 lane registry now records the recent operating truth in `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv`
+    - Wave80 harvest-ready queue now lives in `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`
+    - all Wave80 rows remain `corpus_only`
+    - no Phase 1 row has been promoted into benchmark truth or canonical truth
    - Wave80 Momentum Recovery established the new mixed `4-star` operating rule:
      - start mixed `4-star` hunts on Google Maps
      - abandon body-less star-only `4-star` rows immediately
      - after three dead Google Maps lanes in one pass, switch mixed `4-star` work to controlled Avvo / Lawyers.com gap-fill
      - keep Google Maps as the premium default lane for low-star and positive capture
-   - next live Wave80 pass should use a two-mode operating model:
-     - qualification mode:
-       - scout new lanes or deliberate rechecks only
-       - update the lane registry with `viable_google_maps`, `dead_google_maps`, or `fallback_eligible` truth
-       - do not pay full batch-manifest or broad doc-sync overhead for tiny scouting-only results
-     - harvest mode:
-       - pull first from registry-backed `viable_google_maps` lanes
-       - pull second from registry-backed `fallback_eligible` lanes only after the live pass earns fallback honestly
-       - treat registry-backed `dead_google_maps` `2-star` lanes as excluded unless there is an explicit reason to recheck them
-       - target larger `10` to `15` row capture blocks before running the full normalization / manifest / doc sync
+  - next live Wave80 pass should use a two-mode operating model:
+    - qualification mode:
+      - scout new lanes or deliberate mixed `4-star` / `2-star` rechecks only
+      - update the lane registry with `viable_google_maps`, `dead_google_maps`, or `fallback_eligible` truth
+      - do not pay full batch-manifest or broad doc-sync overhead for tiny scouting-only results
+    - harvest mode:
+      - pull first from registry-backed `viable_google_maps` lanes
+      - pull second from registry-backed `fallback_eligible` lanes only after the live pass earns fallback honestly
+      - treat registry-backed `dead_google_maps` `2-star` lanes as excluded unless there is an explicit reason to recheck them
+      - target larger `10` to `15` row capture blocks before running the full normalization / manifest / doc sync
+      - after Pass 39, do not spend another general harvest pass on already-proven one-star and five-star Google Maps lanes until mixed `4-star` and `2-star` gaps are addressed more directly
 
 ### Later
 6. Deployed launch-truth pass on Render after benchmark credibility improves further.

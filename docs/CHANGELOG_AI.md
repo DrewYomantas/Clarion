@@ -2024,6 +2024,36 @@ No structural, logic, or API changes. SignalsPage.tsx only.
 ### Verification
 - npm run build in frontend/ - passed (1823 modules; pre-existing chunk-size warning unchanged)
 
+## 2026-04-04 - Pass 39 - Wave80 Harvest Mode Throughput Test
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+- `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`
+- `data/calibration/expansion/batches/20260328_wave80_collection_notes.md`
+- `data/calibration/expansion/manifests/20260328_wave80_batch_manifest.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_report.csv`
+- `data/calibration/expansion/manifests/20260328_wave80_real_review_batch_dedupe_summary.json`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Used the Pass 38 harvest-ready queue to land a real `12`-row Wave80 block instead of another micro-pass.
+- Added `12` new Google Maps rows across social security disability, estate planning, immigration, and criminal defense.
+- Pushed Wave80 from `55` to `67` rows while keeping all rows `corpus_only`.
+- Regenerated normalization, dedupe, acquisition status, source priority, and harvest-ready queue truth after the block landed.
+- Kept fallback honest by not using it in this pass.
+- Improved throughput materially, but did not close the remaining mixed `4-star` gap.
+
+### Verification
+- `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
+- `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `python automation/calibration/build_review_source_priority_queue.py --coverage data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv --scouting data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv --lane-registry data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv --stage wave80 --mode harvest --batches-dir data/calibration/expansion/batches --output data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
+
 
 
 

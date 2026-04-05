@@ -6,7 +6,7 @@
 - Holdout file: `data/calibration/expansion/queues/20260328_wave80_holdout_queue.csv`
 
 ## Source mix
-- Google Maps: 36
+- Google Maps: 48
 - Trustpilot: 0
 - Avvo: 13
 - Lawyers.com: 6
@@ -32,11 +32,11 @@
 
 ## Batch caveats
 - Any rows with thin metadata: none in the current batch; every row has rating, source URL, state, practice area, collection date, and provenance note.
-- Any rows marked audit-only immediately: none; all fifty-five rows remain `corpus_only`.
-- Any rows that should never drive benchmark truth: the controlled Avvo mixed `4-star` fallback rows, the new 2026-04-04 Google Maps intake rows from Pass 35, the controlled Avvo / Lawyers.com `2-star` fallback rows captured in Pass 36, and the controlled Lawyers.com `2-star` fallback rows captured in Pass 37 should stay out of benchmark pressure until a later Wave80 triage pass.
+- Any rows marked audit-only immediately: none; all sixty-seven rows remain `corpus_only`.
+- Any rows that should never drive benchmark truth: the controlled Avvo mixed `4-star` fallback rows, the new 2026-04-04 Google Maps intake rows from Passes 35 and 39, the controlled Avvo / Lawyers.com `2-star` fallback rows captured in Pass 36, and the controlled Lawyers.com `2-star` fallback rows captured in Pass 37 should stay out of benchmark pressure until a later Wave80 triage pass.
 
 ## Operator notes
-- What went smoothly: Pass 38 converted the recent Google Maps surfacing truth into a persistent lane registry and a harvest-ready queue. The repo now separates qualification from harvesting instead of forcing every small scout pass to redo full Wave80 truth-sync work.
-- What slowed capture down: recent passes kept rediscovering the same Google Maps `2-star` failures. Those dead lanes are now parked in `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv` instead of being re-proved from scratch.
-- What should change in the next batch: run small qualification passes only to classify new lanes or deliberate rechecks, update the lane registry, and stop there. Run full harvest passes only after there is a `10` to `15` row plan ready in `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`, with viable Google Maps lanes first and fallback lanes only after the live pass honestly earns them.
+- What went smoothly: Pass 39 proved the registry-backed harvest model can land a `12`-row Google Maps block quickly once the parent pass starts from the harvest-ready queue instead of rebuilding lane truth from scratch.
+- What slowed capture down: qualifying mixed `4-star` rows still did not surface honestly from the harvested Google Maps lanes, so the pass widened low-star and positive throughput without closing the remaining mixed `4-star` gap.
+- What should change in the next batch: keep harvest mode for larger Google Maps blocks, but use the next qualification work narrowly on unresolved mixed `4-star` and `2-star` gaps so the next harvest does not spend another pass mostly deepening already-proven one-star and five-star lanes.
 
