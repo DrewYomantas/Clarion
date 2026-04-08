@@ -1,6 +1,6 @@
 # Current Build
 
-Latest completed milestone: `2026-04-08 - Pass 46 - Wave80 Staged Calibration Design Audit`.
+Latest completed milestone: `2026-04-08 - Pass 47 - Wave80 Positive-Cluster Recovery`.
 
 Current product truth:
 - canonical benchmark: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
@@ -8,26 +8,27 @@ Current product truth:
 - readiness: `improved but not demo-safe`
 
 What changed in the latest pass:
-- audited the `7` staged Wave80 pressure rows in `data/calibration/canonical/wave80_staged_pressure_20260408.json` against the failed promotion rerun evidence and the live phrase library
-- confirmed the safest next engine lane is a narrow positive-phrase recovery pass, not a broad negative expectation-setting pass
-- identified the high-confidence candidate cluster as positive `communication_clarity`, positive `communication_responsiveness`, positive `outcome_satisfaction`, plus two narrow positive `professionalism_trust` guards for the existing bare `reliable` and bare `professional` phrases
-- classified the heavier negative `expectation_setting` misses as mixed and not ready for one blunt phrase wave; several should stay staged until a later calibration-design review
-- left the active canonical gate, staged artifact, rerun artifacts, queues, and collection data unchanged
+- added one narrow positive-cluster recovery pass in the live benchmark engine:
+  - positive `communication_clarity` coverage for explicit explain / understand phrasing
+  - positive `communication_responsiveness` coverage for explicit responsive / supportive and kept-in-communication phrasing
+  - narrow positive `outcome_satisfaction` coverage for `my case was approved`
+  - guards so bare positive `reliable` and bare positive `professional` stop creating the staged trust false positives they triggered in the Wave80 audit
+- added tight benchmark-engine tests for the intended hits and both new trust guards
+- wrote a new canonical-only verification artifact to `data/calibration/runs/20260408_wave80_positive_cluster_canonical_rerun/`
+- left the active canonical gate file, staged Wave80 pressure artifact, and broad benchmark truth unchanged
 
 Verification:
-- restored canonical rerun still stands at `100.00%` agreement, `22/22` clean reviews, `0` disagreements
+- canonical rerun after the engine pass: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
 - broad 143-real truth remains `55.94%` agreement, `80/143` clean reviews, `92` disagreements
 - staged-pressure artifact remains intact and unchanged
-- no engine files were edited in this pass
-- no new rerun or promotion attempt was performed in this pass
+- benchmark-engine tests passed
+- no broad rerun and no promotion attempt were performed in this pass
 
 Current next pass:
 - the failed Wave80 promotion experiment remains staged calibration pressure, not active benchmark truth
-- next useful step: run one narrow engine pass against the safest staged cluster only:
-  - recover positive `communication_clarity` / `communication_responsiveness` / `outcome_satisfaction` phrases from the `5-star` staged rows
-  - add narrow guards so bare positive `reliable` and bare positive `professional` stop creating trust extras in negative or generic praise contexts
+- next useful step: rerun the staged `7`-row Wave80 pressure set against the updated live engine and inspect whether the positive-cluster recovery materially reduced staged disagreement pressure before any renewed promotion discussion
 - keep the broader negative `expectation_setting` and mixed outcome/trust rows staged for now
-- do not reopen collection, rerun broad, or attempt another fresh promotion before that narrow engine pass lands
+- do not reopen collection, rerun broad, or attempt another fresh promotion before that staged-only check
 - see `docs/REVIEW_ACQUISITION_WAVE80.md` for priorities
 
 Read `PROJECT_STATE.md`.

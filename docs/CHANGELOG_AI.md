@@ -1,5 +1,43 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 47 - Wave80 Positive-Cluster Recovery
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `backend/tests/test_benchmark_engine.py`
+- `data/calibration/runs/20260408_wave80_positive_cluster_canonical_rerun/raw_results.json`
+- `data/calibration/runs/20260408_wave80_positive_cluster_canonical_rerun/summary.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Added the smallest scoped live-engine recovery for the vetted staged positive cluster only:
+  - positive `communication_clarity` phrases for explicit explain / understand language
+  - positive `communication_responsiveness` phrases for explicit responsive / supportive and kept-in-communication language
+  - one narrow positive `outcome_satisfaction` approval phrase
+  - two narrow `professionalism_trust` guards on bare positive `reliable` and bare positive `professional`
+- Added tight benchmark-engine tests covering the new positive hits plus both trust guards.
+- Ran only the canonical gate verification rerun and wrote new artifacts to `data/calibration/runs/20260408_wave80_positive_cluster_canonical_rerun/`.
+- Kept `benchmark_canonical_v1.json` unchanged.
+- Kept the staged Wave80 pressure artifact unchanged.
+- Did not run the broad `143-real` rerun.
+
+### Explicitly Not Touched
+- No benchmark-truth edits
+- No collection reopening
+- No broad rerun
+- No negative `expectation_setting` pass
+- No new promotion attempt
+
+### Verification
+- Benchmark-engine tests passed
+- Canonical rerun stayed clean at `100.00%`, `22/22` clean reviews, `0` disagreements
+- `data/calibration/canonical/benchmark_canonical_v1.json` remained untouched
+- `data/calibration/canonical/wave80_staged_pressure_20260408.json` remained intact
+- No broad rerun was performed
+
 ## 2026-04-08 - Pass 46 - Wave80 Staged Calibration Design Audit
 
 ### Files Changed

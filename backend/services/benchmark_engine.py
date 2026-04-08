@@ -150,11 +150,13 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("kept us informed of the legal process", 1.5),
             ("kept him informed", 1.0),
             ("kept her informed", 1.0),
+            ("kept in communication with me", 1.5),
             ("he kept us informed", 1.5),
             ("kept in close contact", 1.5),
             ("stayed in contact", 1.0),
             ("stayed in contact with me", 1.0),
             ("quick to contact me", 1.0),
+            ("responsive and supportive", 1.5),
             ("stayed informed", 1.0),
             ("gave us his time", 1.5),
             ("give you his time for free", 1.5),
@@ -366,6 +368,8 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             # generic and produced clarity extras without explicit explanatory context.
             # --- phrase expansion: missed clarity phrases ---
             ("explained everything clearly", 1.5),
+            ("explain everything clearly", 1.5),
+            ("explained everything so i could understand", 1.5),
             ("broke things down simply", 1.5),
             ("kept things transparent", 1.0),
             # --- calibration: sample2 ---
@@ -1533,6 +1537,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("made the process so easy", 1.0),
             ("helped me get approved", 1.5),
             ("got approved", 1.5),
+            ("my case was approved", 1.8),
             ("approved for", 1.0),
             ("dismissed the battery charge", 1.8),
             ("finally got justice", 1.8),
@@ -2157,6 +2162,18 @@ def score_review_deterministic(
                 ):
                     continue
                 elif (
+                    phrase == "professional"
+                    and theme_id == "professionalism_trust"
+                    and actual_polarity == "positive"
+                    and _text_has_any(text_lower, (
+                        "pleasant and professional",
+                        "everyone i encountered",
+                        "everyone i spoke to there",
+                    ))
+                    and not _text_has_any(clause_text, ("attorney", "lawyer"))
+                ):
+                    continue
+                elif (
                     phrase == "rude"
                     and theme_id == "professionalism_trust"
                     and any(kw in text_lower for kw in (
@@ -2208,6 +2225,20 @@ def score_review_deterministic(
                         "more clearly explained",
                         "could have been more clearly explained",
                         "should have been more clearly explained",
+                    ))
+                ):
+                    continue
+                elif (
+                    phrase == "reliable"
+                    and theme_id == "professionalism_trust"
+                    and actual_polarity == "positive"
+                    and rating <= 2
+                    and _text_has_any(text_lower, (
+                        "look elsewhere",
+                        "resubmission fee",
+                        "their own error",
+                        "wrong application",
+                        "submitted the wrong application",
                     ))
                 ):
                     continue
