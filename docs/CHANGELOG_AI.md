@@ -1,5 +1,41 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 43 - Wave80 Benchmark-Candidate Human Truth Review
+
+### Files Changed
+- `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reviewed the `15` Wave80 `benchmark_candidate` rows only. No rows added. No row text, ratings, or provenance changed.
+- Kept `12` rows as reviewed `benchmark_candidate`.
+- Downgraded `2` rows to `audit_only`: `michaeltroiano_stephanie`, `stamm_anonymous`.
+- Downgraded `1` row to `corpus_only`: `jenniferjamison_derek`.
+- Added reviewed expected labels, polarity / severity, evidence snippets, and short truth notes for all `15` reviewed rows.
+- Updated Wave80 role counts to `12 benchmark_candidate`, `10 holdout`, `8 audit_only`, `42 corpus_only`.
+- Updated combined totals to `20 benchmark_candidate`, `14 holdout`, `13 audit_only`, `49 corpus_only`.
+- Updated acquisition status and live-state docs to reflect the reviewed-candidate truth.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No calibration reruns
+- No new rows added
+- No row text, ratings, or provenance changed
+- No holdout queue edits
+
+### Verification
+- Batch/label queue sync: `0` role mismatches
+- Row count integrity: `72` batch rows, `72` label rows, `10` holdout queue rows
+- Reviewed subset integrity: `15` rows reviewed = `12` kept + `2` downgraded to `audit_only` + `1` downgraded to `corpus_only`
+- Acquisition status updated: combined totals sum to `96`
+
 ## 2026-04-05 - Pass 42 - Wave80 Triage Prep for Benchmark-Candidate and Holdout Promotion
 
 ### Files Changed
@@ -2161,7 +2197,6 @@ No structural, logic, or API changes. SignalsPage.tsx only.
 - `python automation/calibration/normalize_and_dedupe_review_batch.py --batch data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --output data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv --report-dir data/calibration/expansion/manifests`
 - `python automation/calibration/review_acquisition_status.py --batches-dir data/calibration/expansion/batches --queues-dir data/calibration/expansion/queues --targets data/calibration/expansion/manifests/acquisition_stage_targets.csv --output data/calibration/expansion/manifests/20260328_acquisition_status.json`
 - `python automation/calibration/build_review_source_priority_queue.py --coverage data/calibration/expansion/manifests/20260328_wave80_coverage_matrix.csv --scouting data/calibration/expansion/scouting/20260328_wave80_source_scout_queue.csv --lane-registry data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv --stage wave80 --mode harvest --batches-dir data/calibration/expansion/batches --output data/calibration/expansion/queues/20260328_wave80_source_priority_queue.csv`
-
 
 
 

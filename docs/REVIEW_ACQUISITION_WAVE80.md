@@ -285,13 +285,23 @@ Pass 42 - Wave80 Triage Prep for Benchmark-Candidate and Holdout Promotion is no
 - Wave80 holdout queue populated with `10` rows for the first time
 - acquisition status updated to reflect combined role counts (`96` total rows accounted for)
 
+Pass 43 - Wave80 Benchmark-Candidate Human Truth Review is now complete:
+- reviewed the `15` Wave80 `benchmark_candidate` rows only; no new rows added; no text, ratings, or provenance changed
+- kept `12` rows as reviewed `benchmark_candidate`
+- downgraded `2` rows to `audit_only`: `michaeltroiano_stephanie`, `stamm_anonymous`
+- downgraded `1` row to `corpus_only`: `jenniferjamison_derek`
+- added reviewed expected labels, polarity / severity, evidence snippets, and short truth notes for all `15` reviewed rows
+- Wave80 live role split is now `12` `benchmark_candidate`, `10` `holdout`, `8` `audit_only`, `42` `corpus_only`
+- combined dataset (phase1 + wave80) is now `20` `benchmark_candidate`, `14` `holdout`, `13` `audit_only`, `49` `corpus_only`
+- holdout queue stayed untouched; acquisition status was updated and kept in sync
+
 Current next pass priorities:
 1. `2-star` is closed at `20/20` — do not reopen
 2. `mixed_4_star` is closed at `15/15` — do not reopen
-3. `benchmark_candidate` block exists (`15` Wave80 rows) — next useful step is human truth review of these rows
-4. after human truth review, promote clean reviewed rows toward the canonical benchmark
-5. do not run benchmark reruns or engine edits until human truth review is complete
-6. `benchmark_candidate` rows are still intake-only — they do not drive benchmark truth until promoted through the human review gate
+3. the Wave80 human truth review is complete — `12` reviewed `benchmark_candidate` rows remain
+4. next useful step is promotion review of the `12` kept reviewed rows
+5. do not run benchmark reruns or engine edits until promotion decisions are made
+6. reviewed `benchmark_candidate` rows are still intake-only — they do not drive benchmark truth until promoted through the human review gate
 
 ---
 

@@ -1,6 +1,6 @@
-﻿# Current Build
+# Current Build
 
-Latest completed milestone: `2026-04-05 - Pass 42 - Wave80 Triage Prep for Benchmark-Candidate and Holdout Promotion`.
+Latest completed milestone: `2026-04-08 - Pass 43 - Wave80 Benchmark-Candidate Human Truth Review`.
 
 Current product truth:
 - canonical benchmark: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
@@ -8,27 +8,26 @@ Current product truth:
 - readiness: `improved but not demo-safe`
 
 What changed in the latest pass:
-- opened Wave80 triage on the full `72`-row Wave80 corpus; no rows added, no text changed
-- role assignments: `15` `benchmark_candidate`, `10` `holdout`, `6` `audit_only`, `41` `corpus_only`
-- combined dataset (phase1 + wave80): `23` `benchmark_candidate`, `14` `holdout`, `11` `audit_only`, `48` `corpus_only` — all `96` rows accounted for
-- Wave80 holdout queue populated with `10` rows for the first time
-- benchmark_candidate selection is selective: diverse across `7` practices, `14` states, all `4` star slices; strongest long-form rows per slice; no thin, off-core, or near-duplicate rows
-- audit_only flagged: `3` extremely thin rows (6–71 chars), `1` off-core practice (traffic ticket), `1` near-dupe, `1` low-specificity anger language
-- batch CSV, label queue, holdout queue, collection notes, batch manifest, acquisition status all updated and in sync
+- reviewed the `15` Wave80 `benchmark_candidate` rows only; no rows added; no row text, ratings, or provenance changed
+- kept `12` Wave80 rows as reviewed `benchmark_candidate`
+- downgraded `2` rows to `audit_only`: `michaeltroiano_stephanie`, `stamm_anonymous`
+- downgraded `1` row to `corpus_only`: `jenniferjamison_derek`
+- added reviewed expected labels, polarity / severity, evidence snippets, and short truth notes for all `15` reviewed rows
+- Wave80 live role split is now `12` `benchmark_candidate`, `10` `holdout`, `8` `audit_only`, `42` `corpus_only`
+- combined dataset (phase1 + wave80) is now `20` `benchmark_candidate`, `14` `holdout`, `13` `audit_only`, `49` `corpus_only`
+- batch CSV, label queue, and acquisition status were updated and kept in sync; holdout queue stayed untouched
 
 Verification:
 - batch/label queue sync: `0` role mismatches
 - row count integrity: `72` batch rows, `72` label rows, `10` holdout queue rows
-- role distribution confirmed: `benchmark_candidate 15`, `holdout 10`, `audit_only 6`, `corpus_only 41`
-- acquisition status updated: combined totals sum to `96` ✓
-- no canonical files touched, no benchmark engine touched, no rows added or removed
+- reviewed subset integrity: `15` rows reviewed = `12` kept + `2` downgraded to `audit_only` + `1` downgraded to `corpus_only`
+- acquisition status updated: combined totals sum to `96` and reviewed benchmark_candidate count is now `20`
+- no canonical files touched, no benchmark engine touched, no benchmark reruns run
 
 Current next pass:
-- triage is open — `15` Wave80 rows are `benchmark_candidate`
-- next useful step: human truth review of the `15` benchmark_candidate rows
-- after human truth review, promote clean rows toward the canonical benchmark
-- do not run benchmark reruns or engine edits until human truth review passes rows through the promotion gate
+- human truth review is complete for the Wave80 candidate subset
+- next useful step: decide which of the `12` reviewed Wave80 `benchmark_candidate` rows are clean enough for benchmark-promotion prep
+- do not run benchmark reruns or engine edits until promotion decisions are made
 - see `docs/REVIEW_ACQUISITION_WAVE80.md` for priorities
 
 Read `PROJECT_STATE.md`.
-
