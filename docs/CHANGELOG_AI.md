@@ -1,5 +1,40 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 46 - Wave80 Staged Calibration Design Audit
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Audited the `7` staged Wave80 pressure rows row by row using `data/calibration/canonical/wave80_staged_pressure_20260408.json`, the failed promotion rerun artifacts, the live benchmark engine phrase library, and the benchmark-engine test file.
+- Classified the staged misses into four buckets: real deterministic rule gaps, boundary-routing problems, severity/polarity problems, and benchmark-design ambiguity.
+- Narrowed the next engine recommendation to the safest cluster only:
+  - positive `communication_clarity` phrase recovery
+  - positive `communication_responsiveness` phrase recovery
+  - positive `outcome_satisfaction` phrase recovery
+  - narrow guards on bare positive `reliable` and bare positive `professional`
+- Explicitly did not recommend a broad negative `expectation_setting` pass yet because the staged rows mix broken-plan language, filing-delay language, and broader dissatisfaction in ways that are not one clean repeated rule family.
+- Synced the live-state docs so they now point to the next narrow engine move instead of saying the calibration-design audit is still pending.
+
+### Explicitly Not Touched
+- No engine edits
+- No `benchmark_engine.py` changes
+- No benchmark-truth edits
+- No canonical benchmark changes
+- No collection reopening
+- No reruns
+- No new promotion attempt
+
+### Verification
+- Active canonical gate remains restored at `100.00%`, `22/22` clean reviews, `0` disagreements
+- `data/calibration/canonical/benchmark_canonical_v1.json` remained untouched
+- `data/calibration/canonical/wave80_staged_pressure_20260408.json` remained intact and unchanged
+- No engine files were edited in this pass
+- Docs now state that the promotion experiment stayed staged and that the next move is a narrow engine pass, not another promotion or rerun
+
 ## 2026-04-08 - Pass 45 - Wave80 Canonical Gate Restoration + Miss Audit
 
 ### Files Changed

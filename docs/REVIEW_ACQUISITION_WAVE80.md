@@ -315,8 +315,9 @@ Current next pass priorities:
 2. `mixed_4_star` is closed at `15/15` - do not reopen
 3. the failed `7`-row Wave80 promotion experiment is now preserved as staged calibration pressure, not accepted canonical truth
 4. `5` reviewed Wave80 rows remain unpromoted and should stay outside active benchmark truth unless a later promotion gate is explicitly reopened
-5. next useful step is a focused miss-cluster audit / calibration-design pass on `data/calibration/canonical/wave80_staged_pressure_20260408.json`
-6. do not reopen collection or attempt another fresh promotion before that diagnosis
+5. the staged calibration-design audit is now complete; the safest next engine move is a narrow positive phrase recovery pass on `data/calibration/canonical/wave80_staged_pressure_20260408.json`
+6. keep the broader negative `expectation_setting` and mixed trust/outcome rows staged until a later pass proves a cleaner repeated pattern
+7. do not reopen collection or attempt another fresh promotion before that narrow engine pass lands
 
 ---
 
