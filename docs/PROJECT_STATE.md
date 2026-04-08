@@ -117,18 +117,12 @@ Recent passes established a real-only canonical benchmark, improved recall on th
 
 ### Current Next Pass
 5. Honest next move:
+   - latest completed milestone is Pass 42 (`2026-04-05`)
    - keep the current calibration wave closed unless new benchmark evidence is added
-   - keep Wave80 collection moving
-   - use Google Maps as the default capture lane
-   - use Avvo / Lawyers.com only as targeted gap-fill when Google Maps does not surface enough clean `2-star` or mixed `4-star` evidence
-   - keep all Wave80 intake rows `corpus_only` until a later triage pass
    - treat Phase 1 as complete and protected, not as the live active batch
    - start Wave80 from [REVIEW_ACQUISITION_WAVE80.md](C:/Users/beyon/OneDrive/Desktop/CLARION/law-firm-insights-main/docs/REVIEW_ACQUISITION_WAVE80.md)
    - use [REVIEW_ACQUISITION_SYSTEM.md](C:/Users/beyon/OneDrive/Desktop/CLARION/law-firm-insights-main/docs/REVIEW_ACQUISITION_SYSTEM.md) for the scalable queueing, batch, and status model
-   - use an agent-driven model:
-     - agents own firm discovery, source-page scouting, queue building, first-pass capture, normalization, and first-pass triage
-     - Google Maps remains the premium realism lane, with Trustpilot and Avvo / Lawyers.com used as controlled gap-fill lanes
-     - human review stays narrow: spot-checking, duplicate resolution, and benchmark-candidate approval
+   - use an agent-driven model where agents own capture + triage prep and human review stays narrow
    - protect the completed Phase 1 subsets:
      - `8` reviewed `benchmark_candidate`
      - `4` `holdout`
@@ -137,28 +131,15 @@ Recent passes established a real-only canonical benchmark, improved recall on th
    - do not let disputed audit rows like `legacy_130` or `exp_turnbull_2` drive phrase work without more evidence
    - current live acquisition status:
      - Phase 1 is complete at `24/24`
-    - Wave80 is live with `67` captured rows in `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
-    - Wave80 source mix is now `google_maps 48`, `avvo 13`, `lawyers_com 6`
-    - Wave80 lane registry now records the recent operating truth in `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv`
-    - Wave80 harvest-ready queue now lives in `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`
-    - all Wave80 rows remain `corpus_only`
-    - no Phase 1 row has been promoted into benchmark truth or canonical truth
-   - Wave80 Momentum Recovery established the new mixed `4-star` operating rule:
-     - start mixed `4-star` hunts on Google Maps
-     - abandon body-less star-only `4-star` rows immediately
-     - after three dead Google Maps lanes in one pass, switch mixed `4-star` work to controlled Avvo / Lawyers.com gap-fill
-     - keep Google Maps as the premium default lane for low-star and positive capture
-  - next live Wave80 pass should use a two-mode operating model:
-    - qualification mode:
-      - scout new lanes or deliberate mixed `4-star` / `2-star` rechecks only
-      - update the lane registry with `viable_google_maps`, `dead_google_maps`, or `fallback_eligible` truth
-      - do not pay full batch-manifest or broad doc-sync overhead for tiny scouting-only results
-    - harvest mode:
-      - pull first from registry-backed `viable_google_maps` lanes
-      - pull second from registry-backed `fallback_eligible` lanes only after the live pass earns fallback honestly
-      - treat registry-backed `dead_google_maps` `2-star` lanes as excluded unless there is an explicit reason to recheck them
-      - target larger `10` to `15` row capture blocks before running the full normalization / manifest / doc sync
-      - after Pass 39, do not spend another general harvest pass on already-proven one-star and five-star Google Maps lanes until mixed `4-star` and `2-star` gaps are addressed more directly
+     - Wave80 is live with `72` captured rows in `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
+     - Wave80 source mix is now `google_maps 48`, `avvo 13`, `lawyers_com 6`
+     - Wave80 lane registry now records the recent operating truth in `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv`
+     - Wave80 harvest-ready queue now lives in `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`
+     - Wave80 triage split is `15 benchmark_candidate`, `10 holdout`, `6 audit_only`, `41 corpus_only`
+     - combined totals are `23 benchmark_candidate`, `14 holdout`, `11 audit_only`, `48 corpus_only`
+     - no Phase 1 row has been promoted into benchmark truth or canonical truth
+   - next useful step is human truth review of the `15` Wave80 `benchmark_candidate` rows
+   - do not run benchmark reruns or engine edits before that human truth review
 
 ### Later
 6. Deployed launch-truth pass on Render after benchmark credibility improves further.
@@ -359,4 +340,3 @@ Recent passes established a real-only canonical benchmark, improved recall on th
 - Improved canonical benchmark to `54.17%`.
 - Hard-froze `/internal/bench` as a legacy compatibility path.
 - Clarified `/internal/benchmark` as the live authoritative route.
-
