@@ -1,5 +1,44 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 44 - Wave80 Benchmark Promotion + Authoritative Rerun
+
+### Files Changed
+- `data/calibration/canonical/benchmark_canonical_v1.json`
+- `data/calibration/runs/20260408_wave80_promotion_canonical_rerun/raw_results.json`
+- `data/calibration/runs/20260408_wave80_promotion_canonical_rerun/summary.json`
+- `data/calibration/runs/20260408_wave80_promotion_broad_rerun/raw_results.json`
+- `data/calibration/runs/20260408_wave80_promotion_broad_rerun/summary.json`
+- `data/calibration/expansion/manifests/20260328_acquisition_status.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Evaluated the `12` reviewed Wave80 `benchmark_candidate` rows for benchmark-driving promotion.
+- Promoted `7` rows into active canonical truth: `kowalski_bradcanard`, `morgan_elishaurgent`, `matthewlind_wayne`, `edgardgarcia_anonymous`, `newfrontier_vlopez`, `ryangarry_noellevitzthum`, `fulton_kellieprenslow`.
+- Left `5` reviewed rows unpromoted because they still looked too boundary-fragile or inference-heavy for benchmark pressure: `donstewart_amy`, `ericmark_marie`, `chayet_caw8taw`, `ericpalacios_gabrielrodriguez`, `anchor_ag`.
+- Expanded the active canonical set from `22` to `29` rows.
+- Ran the canonical five-theme rerun against `data/calibration/canonical/benchmark_canonical_v1.json` and wrote new artifacts to `data/calibration/runs/20260408_wave80_promotion_canonical_rerun/`.
+- Ran the broad frozen `143-real` rerun against the accepted frozen AI truth and wrote new artifacts to `data/calibration/runs/20260408_wave80_promotion_broad_rerun/`.
+- Rebuilt acquisition status for integrity; queue-role counts stayed unchanged.
+
+### Explicitly Not Touched
+- No engine edits
+- No `benchmark_engine.py` changes
+- No deterministic rule tweaks
+- No collection reopening
+- No new rows added
+- No holdout edits
+- No UI, auth, deployment, or unrelated cleanup
+
+### Verification
+- Canonical rerun: `75.86%` agreement, `22/29` clean reviews, `16` disagreements
+- Broad frozen `143-real` rerun: `55.94%` agreement, `80/143` clean reviews, `92` disagreements, `0` AI errors
+- Batch/label queue sync: `0` role mismatches
+- Row count integrity: `72` batch rows, `72` label rows, `10` holdout queue rows
+- Acquisition status rebuild preserved queue-role counts: `20 benchmark_candidate`, `14 holdout`, `13 audit_only`, `49 corpus_only`
+
 ## 2026-04-08 - Pass 43 - Wave80 Benchmark-Candidate Human Truth Review
 
 ### Files Changed

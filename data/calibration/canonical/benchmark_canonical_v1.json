@@ -1,0 +1,1220 @@
+{
+  "version": "v1",
+  "created_at": "2026-03-27",
+  "benchmark_scope": "priority_governance_recall_v1",
+  "notes": "Real-only canonical benchmark focused on the five governance recall themes for deterministic evaluation. Legacy calibration rows are explicitly audited but retain null metadata where the repo does not preserve provenance. Expansion rows remain separate unless explicitly promoted here. Rows marked canonical_status='disputed_excluded' are preserved for audit but excluded from the main benchmark gate.",
+  "focus_themes": [
+    "communication_responsiveness",
+    "expectation_setting",
+    "professionalism_trust",
+    "communication_clarity",
+    "outcome_satisfaction"
+  ],
+  "stratification_summary": {
+    "record_count": 29,
+    "star_rating": {
+      "1": 13,
+      "2": 3,
+      "3": 2,
+      "4": 7,
+      "5": 4
+    },
+    "sentiment_mix": {
+      "single_negative": 18,
+      "mixed": 4,
+      "single_positive": 7
+    },
+    "length_bucket": {
+      "short": 0,
+      "medium": 19,
+      "long": 10
+    },
+    "practice_area_known_records": 14,
+    "geography_known_records": 14
+  },
+  "records": [
+    {
+      "benchmark_id": "legacy_057",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_57",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "I truly wonder if other Black people had great experiences here. They accepted thousands of dollars but never really did anything towards my son's appeal, never really fought. The case was transferred multiple times. They never even really had meetings with me or my son. Truly horrible.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "professionalism_trust",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "They accepted thousands of dollars but never really did anything",
+          "audit_note": "Takes money while failing to materially advocate; strong trust failure."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "never really did anything towards my son's appeal, never really fought.",
+          "audit_note": "Promise of representation breaks down into non-performance."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "They never even really had meetings with me or my son.",
+          "audit_note": "Client contact is materially absent in a 1-star narrative and is severe enough to count as a severe responsiveness failure."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_075",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_75",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "My experience was really good with the law firm. I not only got my case handled but got more than expected out of it. The only reason I did not give 5 stars was because there were points where we didn't have contact for a while and I was unsure what was going on during that time.",
+      "star_rating": 4,
+      "sentiment_mix_tag": "mixed",
+      "expected_labels": [
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "I not only got my case handled but got more than expected out of it.",
+          "audit_note": "Overall result is positive."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "there were points where we didn't have contact for a while",
+          "audit_note": "Positive-overall review with a real governance complaint."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_080",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_80",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "Paralegal Allison was very unhelpful. I had to call three times over two weeks to get an answer that took them less than 5 minutes.",
+      "star_rating": 2,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I had to call three times over two weeks to get an answer",
+          "audit_note": "Classic delay / no-response complaint in a 2-star review."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_088",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_88",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "Responses to questions are EXTREMELY slow. The paralegals are not efficient. Lack of communication on their end. The lawyer was way better than the paralegals. Paralegals would receive zero stars.",
+      "star_rating": 3,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "Responses to questions are EXTREMELY slow.",
+          "audit_note": "Direct response-speed complaint."
+        },
+        {
+          "theme": "communication_clarity",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "Lack of communication on their end.",
+          "audit_note": "Separate clarity / information-flow complaint, not just speed."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_097",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_97",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "Andrew called me a few days prior to my hearing to discuss how things would go and what to expect, and then again about 20 minutes before the hearing. I was glad to have an attorney to speak for me. He was able to relay to the judge exactly what I intended.",
+      "star_rating": 4,
+      "sentiment_mix_tag": "single_positive",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "Andrew called me a few days prior to my hearing",
+          "audit_note": "Proactive outreach before hearing."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "to discuss how things would go and what to expect",
+          "audit_note": "Sets process expectations clearly."
+        },
+        {
+          "theme": "communication_clarity",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "He was able to relay to the judge exactly what I intended.",
+          "audit_note": "Strong role / articulation clarity."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_106",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_106",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "I wasn't planning to leave a review, but after today I'm done. I hired Hoglund for a criminal matter. I was given guidance that ultimately cost me over $1,000 and wasn't fully explained. My case was delayed nearly five months, only to end in a plea deal that likely could have happened much earlier. I was contacted six months after my case was settled and told I still owed money.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I was given guidance that ultimately cost me over $1,000 and wasn't fully explained.",
+          "audit_note": "Expectation failure tied to guidance and undisclosed downstream consequence."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_112",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_112",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "Lawyers and associate are not caring at all. Waited 2 years and only heard from them 2 or 3 times. Only heard from the actual attorney a day before the hearing. They didn't even get all my health information that they were supposed to.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "Waited 2 years and only heard from them 2 or 3 times.",
+          "audit_note": "Long low-rating narrative with explicit low-contact complaint."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_114",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_114",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "Horrible appointment setup, phone tag, and no one seemed to know I had an appointment set up. Had to repeat the same information many times to many different people only to find out they're not even licensed in my state.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "Horrible appointment setup, phone tag, and no one seemed to know I had an appointment set up.",
+          "audit_note": "Repeated scheduling/contact breakdown."
+        },
+        {
+          "theme": "communication_clarity",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "Had to repeat the same information many times to many different people",
+          "audit_note": "Role/process clarity failure."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "they're not even licensed in my state",
+          "audit_note": "Severe competence / trust failure."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_115",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_115",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "Completely disappointed – do not trust this firm with your disability case. They failed me during my appeal. Multiple calls were canceled or no-showed, communication barriers made it impossible, and no attorney ever really reviewed my case or spoke to me.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "They failed me during my appeal",
+          "audit_note": "Clear result failure."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "Multiple calls were canceled or no-showed",
+          "audit_note": "Repeated communication breakdown."
+        },
+        {
+          "theme": "communication_clarity",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "communication barriers made it impossible",
+          "audit_note": "Direct statement that communication barriers made the representation impossible to navigate."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "do not trust this firm with your disability case",
+          "audit_note": "Explicit trust failure stated directly by the reviewer."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "no attorney ever really reviewed my case or spoke to me",
+          "audit_note": "Representation expectation collapses completely."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_119",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_119",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "Over two years and still waiting. I have not received any information about my case. Whenever I call I get attitude. They have no answers for why it is taking this long.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "communication_clarity",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I have not received any information about my case.",
+          "audit_note": "Direct information-clarity failure."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "Whenever I call I get attitude.",
+          "audit_note": "Active contact attempts do not yield helpful response."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_130",
+      "canonical_status": "disputed_excluded",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_130",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo. Excluded from the main benchmark gate on 2026-03-28 because the explicit positive outcome claim conflicts with the frozen broad-truth comparator for the same review.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "Outcome was great, disability approved. Cons: I was never once offered a chance to meet anyone in person, messages were not returned sometimes for several days, and I did not know who was representing me on the final hearing until 1-2 weeks before. I always felt like a number, not a person.",
+      "star_rating": 2,
+      "sentiment_mix_tag": "mixed",
+      "expected_labels": [
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "Outcome was great, disability approved.",
+          "audit_note": "Positive overall result."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "messages were not returned sometimes for several days",
+          "audit_note": "Substantive complaint inside a 2-star mixed review."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I did not know who was representing me on the final hearing until 1-2 weeks before",
+          "audit_note": "Representation expectations were not set."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_131",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_131",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "I am a former client of SGS. Be prepared: this process is about money, not justice or principle. Through a wrongful death claim, promised charges were never filed, I uncovered critical pieces of evidence myself, and we were pushed into mediation and settlement we didn't want. Profit is number one.",
+      "star_rating": 2,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "promised charges were never filed",
+          "audit_note": "Promise-versus-reality failure."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "we were pushed into mediation and settlement we didn't want",
+          "audit_note": "Clear dissatisfaction with practical result."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_134",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_134",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "Kojo was very pleasant to work with, and always helped me with all my questions. Shannon Carey handled my auto accident case with grace and patience. In the end I received a fair settlement.",
+      "star_rating": 4,
+      "sentiment_mix_tag": "single_positive",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "always helped me with all my questions",
+          "audit_note": "Reliable, question-level responsiveness."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "In the end I received a fair settlement.",
+          "audit_note": "Positive result language."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_137",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_137",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "After being denied for SSD, I decided to hire Hoglund Law and from the very first day I knew I was dealing with professionals. They answered all my questions and kept me informed until the day I was approved.",
+      "star_rating": 4,
+      "sentiment_mix_tag": "single_positive",
+      "expected_labels": [
+        {
+          "theme": "professionalism_trust",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "I knew I was dealing with professionals.",
+          "audit_note": "Clean trust / professionalism statement."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "They answered all my questions and kept me informed",
+          "audit_note": "Explicit question-answering and ongoing updates."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "legacy_140",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_140",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "The hearing went very well. It sounded like you were prepared. The only problem for me was that I didn't know who was handling my case at times.",
+      "star_rating": 4,
+      "sentiment_mix_tag": "mixed",
+      "expected_labels": [
+        {
+          "theme": "communication_clarity",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I didn't know who was handling my case at times.",
+          "audit_note": "Positive-overall review with a clear governance complaint about role clarity."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "exp_heartland_1",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "heartland_1",
+      "source_platform": "trustpilot",
+      "source_url": "https://www.trustpilot.com/review/heartlandlawfirm.com",
+      "provenance_note": "Collected from public Trustpilot firm page on 2026-03-27; full text visible in page output.",
+      "firm_name": "Heartland Law Firm",
+      "city": "Glenview",
+      "state": "IL",
+      "practice_area": "estate planning; elder law",
+      "review_date": "2026-01-22",
+      "review_text": "Horrible communication and lack of follow through. Scheduled free consultation with Chris Proctor 9/25/25, retained him, and signed the client agreement. Filled out intake form and sent pertinent documents for my mom's estate. Had discovery phone call with paralegal Jaclyn. It seemed that they were attentive at first until I called a week later. I was told Chris got married which is he hasn't called but I should hear from someone at the end of the week. I didn't hear from anyone. I called back and left Chris and Jaclyn both a voicemail saying I wanted to know what is going on with the case or I might have to hire a different attorney. I got a voicemail from Jaclyn that the lawyers were working on my case and I should get the court documents soon. Thanksgiving and Christmas roll by and I heard nothing else from these guys. No phone call, no email, no letter, no telegraph, no smoke signal, nothing. I wish I didn't pay this lawfirm $600 to retain them. It was a mistake I consider a lesson learned. Never rely on Google ratings.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "Thanksgiving and Christmas roll by and I heard nothing else from these guys.",
+          "audit_note": "Long silence after retainment."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I was told Chris got married ... but I should hear from someone at the end of the week. I did not hear from anyone.",
+          "audit_note": "Stated next-step expectation is not met."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I wish I didn't pay this lawfirm $600 to retain them.",
+          "audit_note": "Client sees no value or progress from representation."
+        }
+      ],
+      "length_bucket": "long"
+    },
+    {
+      "benchmark_id": "exp_greatlakes_4_mixed",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "greatlakes_4_mixed",
+      "source_platform": "trustpilot",
+      "source_url": "https://www.trustpilot.com/review/www.greatlakeslf.com",
+      "provenance_note": "Collected from public Trustpilot firm page on 2026-03-27; mixed-sentiment 4-star review.",
+      "firm_name": "Great Lakes Law Firm",
+      "city": "Madison",
+      "state": "WI",
+      "practice_area": "business law; bankruptcy law; FDCPA; civil litigation",
+      "review_date": "2023-10-13",
+      "review_text": "Sometimes there was uncertainty on whether anything was being worked on. I had to call several times to check status. I even called my so call attorney in the beginning who did nothing to return my call. But overall things are moving along more.",
+      "star_rating": 4,
+      "sentiment_mix_tag": "mixed",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I had to call several times to check status. I even called my so call attorney in the beginning who did nothing to return my call.",
+          "audit_note": "Exactly the 4-star mixed review slice we were missing."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "But overall things are moving along more.",
+          "audit_note": "Mixed review still lands with a mildly positive progress/outcome frame."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "exp_turnbull_2",
+      "canonical_status": "disputed_excluded",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "turnbull_2",
+      "source_platform": "trustpilot",
+      "source_url": "https://www.trustpilot.com/review/turnbulllawgroup.com",
+      "provenance_note": "Collected from public Trustpilot firm page on 2026-03-27; full text visible in page output. Excluded from the main benchmark gate on 2026-03-28 because it is a single-example overfit trap with no matching frozen broad-truth row.",
+      "firm_name": "Turnbull Law Group",
+      "city": "Downers Grove",
+      "state": "IL",
+      "practice_area": "bankruptcy; consumer litigation defense; FDCPA",
+      "review_date": "2026-01-13",
+      "review_text": "I have asked questions and get the same stupid answers. My credit card companies are turning things over to collections. I am still being told we have your account holders on board, which they do not.",
+      "star_rating": 2,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I have asked questions and get the same stupid answers.",
+          "audit_note": "Questions are not being helpfully answered."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I am still being told we have your account holders on board, which they do not.",
+          "audit_note": "Promise-versus-reality mismatch."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "exp_century_1",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "century_1",
+      "source_platform": "trustpilot",
+      "source_url": "https://www.trustpilot.com/review/centurylawfirm.com",
+      "provenance_note": "Collected from public Trustpilot firm page on 2026-03-27; full text visible in page output.",
+      "firm_name": "Century Law Firm",
+      "city": "Jacksonville",
+      "state": "FL",
+      "practice_area": "bankruptcy; personal injury; debt defense; FDCPA",
+      "review_date": "2026-02-27",
+      "review_text": "This company lies about their abilities and experience to get you to sign up with them. I was told they have relationships with creditors that mean clients rarely get sued. I was sued my first month in the program and have now been sued twice, all because of the steps they instructed me to take. They guaranteed that when lawsuits do happen they settle them for much less than owed. Both of mine have been settled for full amounts plus fees. Their agents tend to all tell you different things, and you don't get a dedicated representative that you can call directly, so getting reasonable updates and consistent information is nearly impossible. Just save yourself the headache and choose another firm.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "professionalism_trust",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "This company lies about their abilities and experience to get you to sign up with them.",
+          "audit_note": "Direct deception allegation."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "severe_negative",
+          "severity_note": "severe negative",
+          "evidence_span": "They guaranteed that when lawsuits do happen they settle them for much less than owed.",
+          "audit_note": "Strong overpromise / guarantee language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "Both of mine have been settled for far more than Century represented.",
+          "audit_note": "Negative practical result versus promised result."
+        }
+      ],
+      "length_bucket": "long"
+    },
+    {
+      "benchmark_id": "exp_century_5",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "century_5",
+      "source_platform": "trustpilot",
+      "source_url": "https://www.trustpilot.com/review/centurylawfirm.com",
+      "provenance_note": "Collected from public Trustpilot firm page on 2026-03-27; full text visible in page output.",
+      "firm_name": "Century Law Firm",
+      "city": "Jacksonville",
+      "state": "FL",
+      "practice_area": "bankruptcy; personal injury; debt defense; FDCPA",
+      "review_date": "2026-01-27",
+      "review_text": "The entire staff has made us so at ease with any legal issue that arises from creditors. Lauren takes the time to explain in detail what to expect, how to handle the calls and what to do if we get served. The relief both financially and emotionally they gave us is worth more than I can express.",
+      "star_rating": 5,
+      "sentiment_mix_tag": "single_positive",
+      "expected_labels": [
+        {
+          "theme": "communication_clarity",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "Lauren takes the time to explain in detail",
+          "audit_note": "Strong explanation language."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "what to expect, how to handle the calls and what to do if we get served",
+          "audit_note": "Excellent process prep and expectation setting."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "The relief both financially and emotionally they gave us is worth more than I can express.",
+          "audit_note": "Strong satisfaction / value result."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "exp_fla_1",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "fla_1",
+      "source_platform": "trustpilot",
+      "source_url": "https://www.trustpilot.com/review/floridalegaladvice.com",
+      "provenance_note": "Collected from public Trustpilot firm page on 2026-03-27; full text visible in page output.",
+      "firm_name": "Florida Law Advisers, P.A.",
+      "city": "Plant City",
+      "state": "FL",
+      "practice_area": "family law; divorce; bankruptcy; foreclosure",
+      "review_date": "2019-07-24",
+      "review_text": "3 years and $10,000 later all I got was a temporary order that's not in affect anymore. Not a good Father's right lawyer; they go for the minimum and don't even fight hard to get that. They lay back and get nothing done. I wouldn't recommend to anyone thanks Sara and Matthew for wasting my time and hard earned money.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "3 years and $10,000 later all I got was a temporary order",
+          "audit_note": "Very poor result after long duration and high spend."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "they go for the minimum and don't even fight hard to get that",
+          "audit_note": "Client no longer trusts quality of advocacy."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "exp_ashoori_1",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "ashoori_1",
+      "source_platform": "trustpilot",
+      "source_url": "https://www.trustpilot.com/review/www.ashoorilaw.com",
+      "provenance_note": "Collected from public Trustpilot firm page on 2026-03-27; full text visible in page output.",
+      "firm_name": "Ashoori Law",
+      "city": "Woodland Hills",
+      "state": "CA",
+      "practice_area": "immigration",
+      "review_date": "2025-11-21",
+      "review_text": "I’m writing this review to share my honest and personal experience working with Ashoori Law regarding my EB-2 NIW petition. After signing the agreement and paying a significant portion of the legal fee, I was referred to a secondary attorney by Ashoori Law. From that point on, Ashoori Law took no further part in my case, neither oversight, support, nor even basic responsiveness to my questions or concerns. The entire case was handed off without any clear indication of ongoing responsibility. The referred attorney unfortunately did not complete the work thoroughly. Many key documents were missing or not attached to my petition, and several critical errors or omissions were never flagged or corrected. The responsiveness was also disappointing—at times it took several business days or longer to receive replies to simple questions. This caused significant delays, frustration, and stress during a time-sensitive immigration process.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "The entire case was handed off without any clear indication of ongoing responsibility.",
+          "audit_note": "Ownership expectations become unclear after signing."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "nor even basic responsiveness to my questions or concerns",
+          "audit_note": "Direct responsiveness failure."
+        },
+        {
+          "theme": "communication_clarity",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "without any clear indication of ongoing responsibility",
+          "audit_note": "Responsibility / role clarity breakdown."
+        }
+      ],
+      "length_bucket": "long"
+    },
+    {
+      "benchmark_id": "exp_robertjewett_5",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "robertjewett_5",
+      "source_platform": "trustpilot",
+      "source_url": "https://www.trustpilot.com/review/robertjewettlaw.com",
+      "provenance_note": "Collected from public Trustpilot firm page on 2026-03-27; full text visible in page output.",
+      "firm_name": "Robert Jewett Law",
+      "city": "Cypress",
+      "state": "TX",
+      "practice_area": "estate planning",
+      "review_date": "2024-01-05",
+      "review_text": "I would like to offer my strongest recommendation and heartfelt gratitude for the services of Attorney Robert Jewett. Guiding me through the probate process with his calm demeanor, he conveyed that I was in good, steady hands through the entire legal process. He manages to strike a delicate balance of competence and compassion through what was a difficult, emotional and confusing time. Options that worked best for my particular situation were fully explained in email or over the phone if I wished. He offered straightforward pricing with no hidden surprises.",
+      "star_rating": 5,
+      "sentiment_mix_tag": "single_positive",
+      "expected_labels": [
+        {
+          "theme": "professionalism_trust",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "Guiding me through the probate process with his calm demeanor, he conveyed that I was in good, steady hands",
+          "audit_note": "Strong competence / trust signal."
+        },
+        {
+          "theme": "communication_clarity",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "Options that worked best for my family were laid out carefully and compassionately.",
+          "audit_note": "Clear explanation of options."
+        }
+      ],
+      "length_bucket": "long"
+    },
+    {
+      "benchmark_id": "legacy_092",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "legacy_real_reviews",
+      "source_record_id": "legacy_afterfix_idx_92",
+      "source_platform": null,
+      "source_url": null,
+      "provenance_note": "Promoted from legacy real calibration CSV via parent-agent audit on 2026-03-27; original public source metadata is not present in repo.",
+      "firm_name": null,
+      "city": null,
+      "state": null,
+      "practice_area": null,
+      "review_date": null,
+      "review_text": "If you expect them to help you with Student Loan Discharge, you thought wrong. They just want money from you and want you do all the work.",
+      "star_rating": 3,
+      "length_bucket": "medium",
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "If you expect them to help you with Student Loan Discharge, you thought wrong.",
+          "audit_note": "Clear promise-versus-reality framing in a 3-star review."
+        }
+      ]
+    },
+    {
+      "benchmark_id": "exp_wave80_kowalski_bradcanard_1",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "kowalski_20260328_bradcanard_1",
+      "source_platform": "google_maps",
+      "source_url": "https://www.google.com/maps/place/Kowalski,+Wilson+%26+Vang,+LLC/@43.097286,-89.5466183,11z/data=!3m1!5s0x8807af6aa34c5011:0x3f3b1a8b48165325!4m8!3m7!1s0x8807ae8a8dfd43c7:0xcf096024b34dfbbf!8m2!3d43.0761239!4d-89.5318687!9m1!1b1!16s%2Fg%2F1ptwbrkh0?entry=ttu",
+      "provenance_note": "Promoted from reviewed Wave80 benchmark_candidate set on 2026-04-08 after human truth review; Captured from public Google Maps place page via agent browser capture on 2026-03-28; full review text visible in live page snapshot.",
+      "firm_name": "Kowalski, Wilson & Vang, LLC",
+      "city": "Madison",
+      "state": "WI",
+      "practice_area": "family law; divorce custody",
+      "review_date": "a year ago",
+      "review_text": "I hired attorney Kathleen Hessel to help me with a contempt hearing. From the start, Ms. Hessel was not looking out for my best interests. She did not offer concrete steps I could take. I had to require her to take my offers to the other side. I was able to do that myself. It was a complete waste of money for me to hire this law firm.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "She did not offer concrete steps I could take",
+          "audit_note": "Kept. Strong one-star family-law row with explicit expectation failure, loyalty breach, and wasted-value language."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "Ms. Hessel was not looking out for my best interests",
+          "audit_note": "Kept. Strong one-star family-law row with explicit expectation failure, loyalty breach, and wasted-value language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "It was a complete waste of money for me to hire this law firm",
+          "audit_note": "Kept. Strong one-star family-law row with explicit expectation failure, loyalty breach, and wasted-value language."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "exp_wave80_morgan_elishaurgent_1",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "morgan_20260328_elishaurgent_1",
+      "source_platform": "google_maps",
+      "source_url": "https://www.google.com/maps/place/Morgan+%26+Morgan/@33.7590553,-84.3867271,15z/data=!4m8!3m7!1s0x88f504787324de49:0xb50b0c4aed7cc181!8m2!3d33.7590553!4d-84.3867271!9m1!1b1!16s%2Fg%2F1tcvvpwq?entry=ttu",
+      "provenance_note": "Promoted from reviewed Wave80 benchmark_candidate set on 2026-04-08 after human truth review; Captured from public Google Maps place page via agent browser capture on 2026-03-28; full review text visible in live page snapshot.",
+      "firm_name": "Morgan & Morgan",
+      "city": "Atlanta",
+      "state": "GA",
+      "practice_area": "personal injury; injury litigation",
+      "review_date": "2 months ago",
+      "review_text": "I initially contacted Morgan & Morgan about a month ago regarding an injury I sustained after being burned at Cuts Steakhouse in Suwanee. I provided all of my information and was told they would start my case. After waiting a full month without any communication or updates, I reached out to ask for a status update. Today, I received a call from one of their attorneys, Alex Griffin. He stated that because the case would likely only be worth around $3,000?$5,000, they may not be able to take it due to the recovery of their fees. I explained that I had first tried to resolve my medical bills on my own directly with Cuts Steakhouse, but received no response, which is why I sought legal help. His response was essentially, \"You were injured, but it?s not enough for us to take on.\" He showed no empathy, became irritated when I asked questions, and was rude and disrespectful. He eventually said the call was \"going nowhere,\" told me he would reach back out in February, and then hung up on me. I called Morgan & Morgan back to report the interaction and requested another attorney. I made a formal report, and less than an hour later, Alex Griffin left me a voicemail stating that he was dropping my case. At no point was I rude or raised my voice?he was clearly irritated simply because I was asking questions. Morgan & Morgan advertises that they are \"for the people,\" but my experience was extremely uncomfortable and disappointing. I will never use them again, and based on how I was treated, I would not recommend them to anyone else.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "After waiting a full month without any communication or updates",
+          "audit_note": "Kept. Strong one-star personal-injury row with explicit nonresponse, intake reversal, and disrespectful treatment."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I provided all of my information and was told they would start my case",
+          "audit_note": "Kept. Strong one-star personal-injury row with explicit nonresponse, intake reversal, and disrespectful treatment."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "He showed no empathy, became irritated when I asked questions, and was rude and disrespectful",
+          "audit_note": "Kept. Strong one-star personal-injury row with explicit nonresponse, intake reversal, and disrespectful treatment."
+        }
+      ],
+      "length_bucket": "long"
+    },
+    {
+      "benchmark_id": "exp_wave80_matthewlind_wayne_2",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "matthewlind_20260329_wayne_2",
+      "source_platform": "avvo",
+      "source_url": "https://www.avvo.com/attorneys/98370-wa-matthew-lind-36088.html?rating=2",
+      "provenance_note": "Promoted from reviewed Wave80 benchmark_candidate set on 2026-04-08 after human truth review; Captured from public Avvo attorney review page on 2026-03-29 after filtering to 2-star reviews; full review text was visible in the page output.",
+      "firm_name": "Sherrard McGonagle Tizzano, P.S.",
+      "city": "Poulsbo",
+      "state": "WA",
+      "practice_area": "real estate; business estate planning",
+      "review_date": "February 01, 2016",
+      "review_text": "Matt Failed to capitalize on the facts of my case. He told me our strategy, but failed to follow his own strategy of waiting for an offer to come to us, but he still charged me with meetings with the opposition with no offer on the table. We never received any replies to requests for information, but he was very insistent that we provide every scrap of paper from my personal files to the opposing lawyer before any discovery or even before he made our case. When we went to mediation, he was not familiar with the points of my case, and I explained for myself. I gave him information from my personal files, neatly and in folders, when it was returned, not everything was returned and it was a mess, not very professional. The outcome of my case was far less than expected and cost far more than the services I received. The facts are that I gave away part of my property for a right of way, needlessly.",
+      "star_rating": 2,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "failed to follow his own strategy of waiting for an offer to come to us",
+          "audit_note": "Kept. Strong two-star real-estate row with concrete strategy failure, poor preparation, and bad outcome language."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "When we went to mediation, he was not familiar with the points of my case",
+          "audit_note": "Kept. Strong two-star real-estate row with concrete strategy failure, poor preparation, and bad outcome language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "The outcome of my case was far less than expected and cost far more than the services I received",
+          "audit_note": "Kept. Strong two-star real-estate row with concrete strategy failure, poor preparation, and bad outcome language."
+        }
+      ],
+      "length_bucket": "long"
+    },
+    {
+      "benchmark_id": "exp_wave80_edgardgarcia_anonymous_4",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "edgardgarcia_20260329_anonymous_4",
+      "source_platform": "avvo",
+      "source_url": "https://www.avvo.com/attorneys/92243-ca-edgard-garcia-1909912.html",
+      "provenance_note": "Promoted from reviewed Wave80 benchmark_candidate set on 2026-04-08 after human truth review; Captured from public Avvo attorney review page on 2026-03-29; the full 4-star review was expanded in the browser snapshot before capture.",
+      "firm_name": "The Law Office of Edgard Garcia",
+      "city": "El Centro",
+      "state": "CA",
+      "practice_area": "family law; domestic violence child support",
+      "review_date": "February 09, 2022",
+      "review_text": "Mr. Garcia did a great job defending me in court and assisting me in receiving my restraining order. The only issue with his services was the time he took to file my court documents. Our last court date was in early December, when I was granted my restraining order, and he did not file it with the court until the first week of February. I know holidays made things delayed, but he could've filed the documents the same day of our last hearing. His justification was that the court gave him issues filing, which I honestly don't believe. Mr. Garcia also took several days to respond to my emails and calls, which made me feel lost and upset. For the amount of money I paid, I believe he could've done a better job.",
+      "star_rating": 4,
+      "sentiment_mix_tag": "mixed",
+      "expected_labels": [
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "did a great job defending me in court and assisting me in receiving my restraining order",
+          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "he did not file it with the court until the first week of February",
+          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "Mr. Garcia also took several days to respond to my emails and calls",
+          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats."
+        }
+      ],
+      "length_bucket": "long"
+    },
+    {
+      "benchmark_id": "exp_wave80_newfrontier_vlopez_1",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "newfrontier_20260403_vlopez_1",
+      "source_platform": "google_maps",
+      "source_url": "https://www.google.com/maps/place/New+Frontier+Immigration+Law/@33.4599444,-112.0823207,17z/data=!4m8!3m7!1s0x872b13e7a7465d3d:0x23f216f055126c22!8m2!3d33.4599444!4d-112.0823207!9m1!1b1!16s%2Fg%2F11gnpzc7mf?authuser=0&hl=en&entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D",
+      "provenance_note": "Promoted from reviewed Wave80 benchmark_candidate set on 2026-04-08 after human truth review; Captured from public Google Maps place page via agent browser capture on 2026-04-03; full review text visible in live page snapshot.",
+      "firm_name": "New Frontier Immigration Law",
+      "city": "Phoenix",
+      "state": "AZ",
+      "practice_area": "immigration",
+      "review_date": "5 months ago",
+      "review_text": "Disappointing Experience - Beware of Misleading Positive Reviews\n\nDespite the many glowing reviews, my experience with New Frontier was extremely disappointing. We hired them for a straightforward Permanent Resident card renewal, but the process was mishandled at every stage:\n\nDelayed submission: Our application was submitted over 60 days late, with no valid explanation despite all fees being paid and documents provided upfront.\nIncorrect forms: They submitted the wrong application, resulting in a denial. Initially, they tried to charge us a resubmission fee for their own error, only reversing this after I insisted.\nPoor communication: Scheduled meetings were missed at least five times, and I only received responses after repeatedly following up.\nLack of transparency: Important correspondence was never shared proactively. Critical documents were withheld for over 60 days, impacting our ability to renew license.\nNeglect of details: The online access code was never sent, and by the time I asked, it had expired-creating further unnecessary work.\n\nGiven these repeated issues, I am genuinely skeptical of the overwhelmingly positive reviews. Our simple case became a source of frustration and wasted time. I strongly advise others to look elsewhere for reliable immigration services.\n\nI am taking a huge risk here as my Moms case is still open with them but I simply cannot in good faith hold off until the process is complete. Stay away... And if someone from this office comments and tells me to call them.. I have very frequently and nothing changed. Spoke to the actual Attorney handling the case and nothing changed. Disgusted to say the least. If this is how they treat their customers, many who may not question them and think this is normal they should not be serving our community.",
+      "star_rating": 1,
+      "sentiment_mix_tag": "single_negative",
+      "expected_labels": [
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "Our application was submitted over 60 days late",
+          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "Scheduled meetings were missed at least five times",
+          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "Initially, they tried to charge us a resubmission fee for their own error",
+          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage."
+        }
+      ],
+      "length_bucket": "long"
+    },
+    {
+      "benchmark_id": "exp_wave80_ryangarry_noellevitzthum_5",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "ryangarry_20260329_noellevitzthum_5",
+      "source_platform": "google_maps",
+      "source_url": "https://www.google.com/maps/place/Ryan+Garry+LLC,+Minneapolis+Criminal+Defense+Attorneys/@44.9742544,-93.2675756,17z/data=!3m1!4b1!4m6!3m5!1s0x52b3329db246668f:0xf1250c222b7411cc!8m2!3d44.9742544!4d-93.2675756!16s%2Fg%2F1td04prs?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D",
+      "provenance_note": "Promoted from reviewed Wave80 benchmark_candidate set on 2026-04-08 after human truth review; Captured from public Google Maps place page via agent browser capture on 2026-03-29; full review text visible after expanding the review body with More.",
+      "firm_name": "Ryan Garry LLC, Minneapolis Criminal Defense Attorneys",
+      "city": "Minneapolis",
+      "state": "MN",
+      "practice_area": "criminal defense; felony defense",
+      "review_date": "2 weeks ago",
+      "review_text": "I cannot recommend Ryan enough as an attorney! From the beginning, Ryan and his team were professional, knowledgeable, and very easy to work with. They took the time to explain everything clearly and made sure I understood my options every step of the way. What stood out most to me was how responsive and supportive they were throughout the process. I always felt like my questions were taken seriously and that they genuinely cared about helping me get the best possible outcome and as quickly as possible! Ryan was the only lawyer I connected with that had a positive outlook about my case and was willing to put in the work to get my charge dismissed! I will be forever grateful for their services and would highly recommend them to anyone looking for a trustworthy and dedicated attorney. Thank you so much Ryan, Elizabeth and Shelly!",
+      "star_rating": 5,
+      "sentiment_mix_tag": "single_positive",
+      "expected_labels": [
+        {
+          "theme": "professionalism_trust",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "professional, knowledgeable, and very easy to work with",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        },
+        {
+          "theme": "communication_clarity",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "They took the time to explain everything clearly and made sure I understood my options every step of the way",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "What stood out most to me was how responsive and supportive they were throughout the process",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "was willing to put in the work to get my charge dismissed",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        }
+      ],
+      "length_bucket": "long"
+    },
+    {
+      "benchmark_id": "exp_wave80_fulton_kellieprenslow_5",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted",
+      "source_record_id": "fulton_20260403_kellieprenslow_5",
+      "source_platform": "google_maps",
+      "source_url": "https://www.google.com/maps/place/Philip+J.+Fulton+Law+Office/@39.9688393,-85.3066395,8z/data=!3m1!5s0x88388f2ebc4519a9:0x770d18e5cffa9076!4m12!1m2!2m1!1ssocial+security+disability+attorney+Columbus+OH!3m8!1s0x88388f2ebdb75551:0xa0e57b9b139da84f!8m2!3d39.9688393!4d-82.9995106!9m1!1b1!15sCi9zb2NpYWwgc2VjdXJpdHkgZGlzYWJpbGl0eSBhdHRvcm5leSBDb2x1bWJ1cyBPSCIDiAEBWjEiL3NvY2lhbCBzZWN1cml0eSBkaXNhYmlsaXR5IGF0dG9ybmV5IGNvbHVtYnVzIG9okgEWcGVyc29uYWxfaW5qdXJ5X2xhd3llcpoBJENoZERTVWhOTUc5blMwVkpRMEZuU1VSa2NqUXRZVE4zUlJBQuABAPoBBAgAEDM!16s%2Fg%2F1tddsw02?entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D",
+      "provenance_note": "Promoted from reviewed Wave80 benchmark_candidate set on 2026-04-08 after human truth review; Captured from public Google Maps place page via agent browser capture on 2026-04-03; full review text visible in live page snapshot.",
+      "firm_name": "Philip J. Fulton Law Office",
+      "city": "Columbus",
+      "state": "OH",
+      "practice_area": "social security disability; workers compensation",
+      "review_date": "7 months ago",
+      "review_text": "I could not be happier with the services I received from the Fulton Law Office. I initially used their services for a workman's compensation claim. Once Mr. Fulton took over, I breathed a sigh of relief. He answered all my questions, explained everything so I could understand and kept in communication with me. My case was approved! Everyone I encountered or spoke to there was pleasant and professional.\n\nWhen I needed their services again for a Social Security Disability claim, Chelsea Rubin and Kay Sanchez were amazing. They handled obtaining all my medical records and submitting them to Social Security. If I had a concern or question, even over a weekend, Kay would respond to me quickly! They were thorough and efficient! I could not have handled this without them. Because of their hard work, my Disability claim was approved within 5 month, which is very quick!\n\nI would highly recommend them for any workman's compensation or Social Security Disability claims! At a time when I was trying to handle some very stressful issues, they took the stress away. Can't thank them all enough!",
+      "star_rating": 5,
+      "sentiment_mix_tag": "single_positive",
+      "expected_labels": [
+        {
+          "theme": "communication_clarity",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "explained everything so I could understand",
+          "audit_note": "Kept. Strong five-star SSD row with explicit clarity, responsiveness, and approval outcome language."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "kept in communication with me",
+          "audit_note": "Kept. Strong five-star SSD row with explicit clarity, responsiveness, and approval outcome language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "My case was approved!",
+          "audit_note": "Kept. Strong five-star SSD row with explicit clarity, responsiveness, and approval outcome language."
+        }
+      ],
+      "length_bucket": "long"
+    }
+  ]
+}

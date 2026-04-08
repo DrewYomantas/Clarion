@@ -21,7 +21,7 @@ _This file tracks current repo truth. Historical pass detail lives in `CHANGELOG
 ### Render Truth
 - Render may still be on a stale deploy.
 - Repo auth/session fixes for the Postgres row bug and single-worker guard exist in repo truth.
-- Benchmark credibility is still the higher-priority product blocker, but the active repo lane is now Wave80 real-review acquisition execution, not another deterministic-engine tweak pass.
+- Benchmark credibility is still the higher-priority product blocker, and the active repo lane is now benchmark-facing diagnosis on the newly promoted Wave80 pressure set, not another collection pass.
 
 ---
 
@@ -38,17 +38,17 @@ _This file tracks current repo truth. Historical pass detail lives in `CHANGELOG
 
 ## Current Phase
 
-**Wave80 real-review acquisition is the active repo priority.**
+**Wave80 benchmark promotion pressure is now the active repo priority.**
 
-Recent passes established a real-only canonical benchmark, improved recall on the five target governance themes, cleaned up the stale benchmark route story, ran a disciplined generalization pass, completed a benchmark truth-correction pass to remove disputed gate pressure from the main canonical set, shipped two narrow broad-safe low-star boundary passes, completed a short remaining-cluster audit, finished a benchmark-design review of the remaining sparse disagreement clusters, laid out a concrete real-world review acquisition plan, completed the full Phase 1 acquisition batch, triaged the Phase 1 corpus into protected subsets, ran a narrow human-truth review on the candidate subset to shrink it to a more trustworthy benchmark-prep core, started Wave80 live with the first captured Google Maps block, completed Wave80 Collection Pass 2 with a targeted Avvo gap-fill to cover missing `2-star` and mixed `4-star` slices, completed Wave80 Collection Pass 3 with a Google Maps-first rebalance that doubled Google Maps share in the live Wave80 batch, recovered momentum after the stalled Google Maps mixed `4-star` hunt by adding controlled full-text Avvo mixed `4-star` gap-fill rows, completed a broader Wave80 growth pass that added six new Google Maps rows while widening into Minnesota and Colorado, completed a milestone-scale Google Maps-first growth pass that took the live Wave80 batch to `40` rows while widening into `AZ`, `NV`, `OH`, `VA`, `FL`, and `PA`, completed Pass 35 on `2026-04-04` with an honest Google Maps-first fallback block that pushed Wave80 to `48` rows while documenting that live `2-star` capture still did not honestly surface, completed Pass 36 on `2026-04-04` by proving the Google Maps `2-star` surfacing bottleneck with six documented dead lanes and adding four controlled fallback `2-star` rows across immigration, disability, estate planning, and criminal defense, completed Pass 37 on `2026-04-04` by re-earning that fallback rule inside the pass, adding three more controlled `2-star` rows, and honestly stopping short of the target band when no new Google Maps `2-star` body surfaced before the fallback cap was exhausted, completed Pass 38 on `2026-04-04` by converting those repeated lane results into a persistent registry-backed qualification and harvest model, completed Pass 39 on `2026-04-04` by using that harvest model to land the first materially larger `12`-row Google Maps-heavy block, completed Pass 40 on `2026-04-05` by closing the `mixed_4_star` gap at `15/15` via controlled Avvo fallback after four confirmed dead Google Maps mixed-4-star lanes, completed Pass 41 on `2026-04-05` by closing the `2-star` gap at `20/20` with two Google Maps rows from Denver CO SSD firms and one controlled Avvo fallback row from Kansas City MO immigration — all primary Wave80 count targets are now met — completed Pass 42 on `2026-04-05` by opening Wave80 triage with `15` `benchmark_candidate`, `10` `holdout`, `6` `audit_only`, and `41` `corpus_only` rows assigned from the `72`-row Wave80 corpus, and completed Pass 43 on `2026-04-08` by human-reviewing those `15` Wave80 candidates, keeping `12` as reviewed `benchmark_candidate`, downgrading `2` to `audit_only`, and downgrading `1` to `corpus_only`.
+Recent passes established a real-only canonical benchmark, improved recall on the five target governance themes, cleaned up the stale benchmark route story, ran a disciplined generalization pass, completed a benchmark truth-correction pass to remove disputed gate pressure from the main canonical set, shipped two narrow broad-safe low-star boundary passes, completed a short remaining-cluster audit, finished a benchmark-design review of the remaining sparse disagreement clusters, laid out a concrete real-world review acquisition plan, completed the full Phase 1 acquisition batch, triaged the Phase 1 corpus into protected subsets, ran a narrow human-truth review on the candidate subset to shrink it to a more trustworthy benchmark-prep core, started Wave80 live with the first captured Google Maps block, completed Wave80 Collection Pass 2 with a targeted Avvo gap-fill to cover missing `2-star` and mixed `4-star` slices, completed Wave80 Collection Pass 3 with a Google Maps-first rebalance that doubled Google Maps share in the live Wave80 batch, recovered momentum after the stalled Google Maps mixed `4-star` hunt by adding controlled full-text Avvo mixed `4-star` gap-fill rows, completed a broader Wave80 growth pass that added six new Google Maps rows while widening into Minnesota and Colorado, completed a milestone-scale Google Maps-first growth pass that took the live Wave80 batch to `40` rows while widening into `AZ`, `NV`, `OH`, `VA`, `FL`, and `PA`, completed Pass 35 on `2026-04-04` with an honest Google Maps-first fallback block that pushed Wave80 to `48` rows while documenting that live `2-star` capture still did not honestly surface, completed Pass 36 on `2026-04-04` by proving the Google Maps `2-star` surfacing bottleneck with six documented dead lanes and adding four controlled fallback `2-star` rows across immigration, disability, estate planning, and criminal defense, completed Pass 37 on `2026-04-04` by re-earning that fallback rule inside the pass, adding three more controlled `2-star` rows, and honestly stopping short of the target band when no new Google Maps `2-star` body surfaced before the fallback cap was exhausted, completed Pass 38 on `2026-04-04` by converting those repeated lane results into a persistent registry-backed qualification and harvest model, completed Pass 39 on `2026-04-04` by using that harvest model to land the first materially larger `12`-row Google Maps-heavy block, completed Pass 40 on `2026-04-05` by closing the `mixed_4_star` gap at `15/15` via controlled Avvo fallback after four confirmed dead Google Maps mixed-4-star lanes, completed Pass 41 on `2026-04-05` by closing the `2-star` gap at `20/20` with two Google Maps rows from Denver CO SSD firms and one controlled Avvo fallback row from Kansas City MO immigration — all primary Wave80 count targets are now met — completed Pass 42 on `2026-04-05` by opening Wave80 triage with `15` `benchmark_candidate`, `10` `holdout`, `6` `audit_only`, and `41` `corpus_only` rows assigned from the `72`-row Wave80 corpus, and completed Pass 43 on `2026-04-08` by human-reviewing those `15` Wave80 candidates, keeping `12` as reviewed `benchmark_candidate`, downgrading `2` to `audit_only`, and downgrading `1` to `corpus_only`, and completed Pass 44 on `2026-04-08` by promoting `7` reviewed Wave80 rows into canonical truth and rerunning both the canonical five-theme gate and the frozen broad `143-real` comparator without changing the engine.
 
-**Current benchmark truth as of 2026-03-28**
-- Canonical benchmark: `100.00%` agreement, `22/22` clean reviews, `0` total disagreements after human-truth correction. `legacy_130` and `exp_turnbull_2` are preserved in the file as `disputed_excluded`, not active gate rows.
-- Broad 143-real sanity benchmark: `55.94%` agreement, `80/143` clean reviews, `92` total disagreements, `0` AI errors, compared against frozen AI truth from the accepted `20260328_final_hardcase_143real_rerun` artifact.
+**Current benchmark truth as of 2026-04-08**
+- Canonical benchmark: `75.86%` agreement, `22/29` clean reviews, `16` total disagreements after promoting `7` reviewed Wave80 rows into the active gate. `legacy_130` and `exp_turnbull_2` are preserved in the file as `disputed_excluded`, not active gate rows.
+- Broad 143-real sanity benchmark: `55.94%` agreement, `80/143` clean reviews, `92` total disagreements, `0` AI errors, compared against frozen AI truth from the accepted `20260408_wave80_promotion_broad_rerun` artifact.
 - Honest readiness: `improved but not demo-safe`.
 
 **Why readiness is still not demo-safe**
-- The canonical gate is now clean, but the broader `143-real` set is still weak.
+- The canonical gate now carries meaningful new pressure, but the broader `143-real` set is still weak.
 - Broad `1-star` performance is still weak.
 - `expectation_setting`, `outcome_satisfaction`, and `professionalism_trust` still bleed into each other in low-rating narratives on the broader set.
 
@@ -69,18 +69,18 @@ Recent passes established a real-only canonical benchmark, improved recall on th
 - Star rating is part of benchmark context and is preserved in analysis.
 
 ### Latest Accepted Benchmark Artifacts
-- Canonical rerun: `data/calibration/runs/20260328_lowstar_boundary_cleanup_canonical_rerun/`
-- Broad 143-real comparator: `data/calibration/runs/20260328_lowstar_boundary_cleanup_broad_rerun/`
+- Canonical rerun: `data/calibration/runs/20260408_wave80_promotion_canonical_rerun/`
+- Broad 143-real comparator: `data/calibration/runs/20260408_wave80_promotion_broad_rerun/`
 
 ---
 
 ## Current Benchmark Findings
 
 ### What Improved
-- The canonical gate is clean after human-truth correction: `22/22` clean, `0` disagreements.
-- The benchmark file now separates stable gate rows from disputed audit rows instead of forcing the engine to satisfy contradictory labels.
+- The canonical gate now includes `7` promoted Wave80 rows, so benchmark pressure is broader and more representative than the earlier `22`-row clean gate.
+- The benchmark file still separates stable gate rows from disputed audit rows instead of forcing the engine to satisfy contradictory labels.
 - Broad 143-real agreement improved to `55.94%`, with `80/143` clean reviews.
-- The latest broad-safe pass cleaned up additional low-star boundary mistakes without breaking the clean canonical gate.
+- The broad frozen comparator held flat through this promotion pass, so the new canonical pressure did not introduce broad regression.
 - Broad target-theme disagreement counts on the accepted broad comparator now sit at:
   - `communication_responsiveness` held at `9`
   - `communication_clarity` held at `8`
@@ -93,9 +93,10 @@ Recent passes established a real-only canonical benchmark, improved recall on th
 ### What Still Fails
 - Broad `1-star` review disagreement is still the biggest risk slice.
 - Broad `professionalism_trust` remains stubborn at `15` disagreements.
+- The canonical gate is no longer clean after Wave80 promotion: `16` disagreements across `7` newly promoted rows.
 - The remaining ambiguity is no longer in the active canonical gate; it now lives in preserved disputed rows like `legacy_130` and `exp_turnbull_2`.
 - The remaining broad misses are now mostly sparse, inference-heavy, or one-off boundary cases rather than a clean repeated cluster.
-- The current blocker now looks more like benchmark-design and human-truth ambiguity plus insufficient repeated real evidence than another clean deterministic rule gap.
+- The current blocker now looks like the newly promoted repeated misses themselves, especially around `expectation_setting`, `communication_responsiveness`, `professionalism_trust`, and `outcome_satisfaction`.
 
 ### Current Boundary Problem
 - low-star phone/intake edge cases that still split across responsiveness, office staff, clarity, and expectation
@@ -117,10 +118,10 @@ Recent passes established a real-only canonical benchmark, improved recall on th
 
 ### Current Next Pass
 5. Honest next move:
-   - latest completed milestone is Pass 43 (`2026-04-08`)
-   - keep the current calibration wave closed unless new benchmark evidence is added
+   - latest completed milestone is Pass 44 (`2026-04-08`)
+   - keep collection closed; the benchmark-facing promotion pass is complete
    - treat Phase 1 as complete and protected, not as the live active batch
-   - start Wave80 from [REVIEW_ACQUISITION_WAVE80.md](C:/Users/beyon/OneDrive/Desktop/CLARION/law-firm-insights-main/docs/REVIEW_ACQUISITION_WAVE80.md)
+   - use [REVIEW_ACQUISITION_WAVE80.md](C:/Users/beyon/OneDrive/Desktop/CLARION/law-firm-insights-main/docs/REVIEW_ACQUISITION_WAVE80.md) as the source of truth for the remaining Wave80 promotion queue
    - use [REVIEW_ACQUISITION_SYSTEM.md](C:/Users/beyon/OneDrive/Desktop/CLARION/law-firm-insights-main/docs/REVIEW_ACQUISITION_SYSTEM.md) for the scalable queueing, batch, and status model
    - use an agent-driven model where agents own capture + triage prep and human review stays narrow
    - protect the completed Phase 1 subsets:
@@ -137,10 +138,8 @@ Recent passes established a real-only canonical benchmark, improved recall on th
      - Wave80 harvest-ready queue now lives in `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`
      - Wave80 live role split is `12 benchmark_candidate`, `10 holdout`, `8 audit_only`, `42 corpus_only`
      - combined totals are `20 benchmark_candidate`, `14 holdout`, `13 audit_only`, `49 corpus_only`
-     - no Phase 1 row has been promoted into benchmark truth or canonical truth
-   - the Wave80 human truth review is complete on the original `15`-row candidate subset
-   - next useful step is promotion review of the `12` kept Wave80 `benchmark_candidate` rows
-   - do not run benchmark reruns or engine edits before promotion decisions are made
+     - `7` reviewed Wave80 rows now drive canonical benchmark truth; `5` reviewed Wave80 rows remain unpromoted
+     - next useful step is narrow diagnosis of the promoted canonical misses before any engine pass
 
 ### Later
 6. Deployed launch-truth pass on Render after benchmark credibility improves further.

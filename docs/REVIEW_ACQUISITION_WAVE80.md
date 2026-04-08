@@ -295,13 +295,21 @@ Pass 43 - Wave80 Benchmark-Candidate Human Truth Review is now complete:
 - combined dataset (phase1 + wave80) is now `20` `benchmark_candidate`, `14` `holdout`, `13` `audit_only`, `49` `corpus_only`
 - holdout queue stayed untouched; acquisition status was updated and kept in sync
 
+Pass 44 - Wave80 Benchmark Promotion + Authoritative Rerun is now complete:
+- promoted `7` reviewed Wave80 rows into active canonical truth: `kowalski_bradcanard`, `morgan_elishaurgent`, `matthewlind_wayne`, `edgardgarcia_anonymous`, `newfrontier_vlopez`, `ryangarry_noellevitzthum`, `fulton_kellieprenslow`
+- left `5` reviewed rows unpromoted because they still looked too boundary-fragile or inference-heavy for benchmark-driving pressure: `donstewart_amy`, `ericmark_marie`, `chayet_caw8taw`, `ericpalacios_gabrielrodriguez`, `anchor_ag`
+- active canonical benchmark expanded from `22` to `29` rows
+- canonical five-theme rerun landed at `75.86%` agreement, `22/29` clean reviews, `16` disagreements
+- broad frozen `143-real` rerun held flat at `55.94%` agreement, `80/143` clean reviews, `92` disagreements
+- no queue-role changes were made; acquisition status was rebuilt for integrity only
+
 Current next pass priorities:
-1. `2-star` is closed at `20/20` — do not reopen
-2. `mixed_4_star` is closed at `15/15` — do not reopen
-3. the Wave80 human truth review is complete — `12` reviewed `benchmark_candidate` rows remain
-4. next useful step is promotion review of the `12` kept reviewed rows
-5. do not run benchmark reruns or engine edits until promotion decisions are made
-6. reviewed `benchmark_candidate` rows are still intake-only — they do not drive benchmark truth until promoted through the human review gate
+1. `2-star` is closed at `20/20` - do not reopen
+2. `mixed_4_star` is closed at `15/15` - do not reopen
+3. benchmark promotion is now complete for the strongest reviewed subset - `7` Wave80 rows now drive canonical benchmark truth
+4. `5` reviewed Wave80 rows remain unpromoted and should stay out of benchmark truth unless they clear a later promotion gate
+5. next useful step is a narrow benchmark-facing diagnosis of the `7` promoted misses before any engine work
+6. do not reopen collection before that diagnosis
 
 ---
 

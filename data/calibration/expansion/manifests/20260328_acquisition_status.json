@@ -18,8 +18,8 @@
     "long_form_count": 29,
     "weak_tag_counts": {
       "long_form": 49,
-      "explicit_positive_outcome": 21,
       "explicit_positive_trust": 35,
+      "explicit_positive_outcome": 21,
       "trust_vs_outcome_ambiguity": 26,
       "low_star_expectation_break": 49,
       "low_star_contact_failure": 28,

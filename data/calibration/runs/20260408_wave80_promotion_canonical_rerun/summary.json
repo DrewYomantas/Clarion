@@ -1,0 +1,54 @@
+{
+  "run_type": "canonical_v1_focus_scoped",
+  "comparison_source": "human_corrected_canonical_truth_20260408",
+  "total_reviews": 29,
+  "total_expected_labels": 71,
+  "total_disagreements": 16,
+  "zero_disagreement_reviews": 22,
+  "agreement_rate": 0.7586,
+  "disagreement_by_type": {
+    "missing_theme": 13,
+    "missed_severe_phrase": 1,
+    "wrong_polarity": 1,
+    "extra_theme": 1
+  },
+  "disagreement_by_theme": {
+    "expectation_setting": 5,
+    "communication_responsiveness": 4,
+    "professionalism_trust": 3,
+    "outcome_satisfaction": 3,
+    "communication_clarity": 1
+  },
+  "star_band_review_disagreement_rate": {
+    "1": {
+      "review_count": 13,
+      "reviews_with_disagreements": 3,
+      "total_disagreements": 6,
+      "rate": 0.23076923076923078
+    },
+    "2": {
+      "review_count": 3,
+      "reviews_with_disagreements": 1,
+      "total_disagreements": 2,
+      "rate": 0.3333333333333333
+    },
+    "3": {
+      "review_count": 2,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    },
+    "4": {
+      "review_count": 7,
+      "reviews_with_disagreements": 1,
+      "total_disagreements": 3,
+      "rate": 0.14285714285714285
+    },
+    "5": {
+      "review_count": 4,
+      "reviews_with_disagreements": 2,
+      "total_disagreements": 5,
+      "rate": 0.5
+    }
+  }
+}
