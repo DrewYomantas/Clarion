@@ -1,5 +1,39 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 48 - Wave80 Staged-Pressure Replay
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Replayed the preserved staged `7`-row Wave80 pressure set against the live benchmark engine after the narrow positive-cluster recovery pass.
+- Measured partial staged-pressure relief without changing benchmark truth:
+  - `communication_clarity` improved `1 -> 0`
+  - `communication_responsiveness` improved `4 -> 2`
+  - `professionalism_trust` improved `3 -> 2`
+  - `outcome_satisfaction` improved `3 -> 2`
+  - `expectation_setting` stayed flat at `5`
+- Confirmed the clearest replay payoff landed on `fulton_kellieprenslow`, with partial improvement on `ryangarry_noellevitzthum` and `newfrontier_vlopez`.
+- Synced the live-state docs so they no longer say the staged replay is still pending and instead point to one more diagnosis / design pass on the residual `expectation_setting`-dominant pressure.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No collection reopening
+- No canonical rerun
+- No broad rerun
+- No new promotion attempt
+
+### Verification
+- Active canonical gate remains `100.00%`, `22/22` clean reviews, `0` disagreements
+- `data/calibration/canonical/benchmark_canonical_v1.json` remained untouched
+- `data/calibration/canonical/wave80_staged_pressure_20260408.json` remained untouched
+- No engine files were edited in this pass
+- Docs now state that the staged replay happened and that the next move is another diagnosis / design pass, not a promotion retry or broad rerun
+
 ## 2026-04-08 - Pass 47 - Wave80 Positive-Cluster Recovery
 
 ### Files Changed
