@@ -303,13 +303,20 @@ Pass 44 - Wave80 Benchmark Promotion + Authoritative Rerun is now complete:
 - broad frozen `143-real` rerun held flat at `55.94%` agreement, `80/143` clean reviews, `92` disagreements
 - no queue-role changes were made; acquisition status was rebuilt for integrity only
 
+Pass 45 - Wave80 Canonical Gate Restoration + Miss Audit is now complete:
+- restored the active canonical benchmark to the last clean accepted `22`-row gate
+- preserved the `7` failed-promotion rows in `data/calibration/canonical/wave80_staged_pressure_20260408.json` instead of leaving them in active canonical truth
+- wrote a narrow restoration-proof canonical rerun to `data/calibration/runs/20260408_wave80_gate_restore_canonical_rerun/`
+- grouped the exposed staged miss clusters: `expectation_setting` (`5`), `communication_responsiveness` (`4`), `professionalism_trust` (`3`), `outcome_satisfaction` (`3`), `communication_clarity` (`1`)
+- broad truth was left unchanged; the failed promotion experiment remains preserved as audit evidence, not accepted benchmark truth
+
 Current next pass priorities:
 1. `2-star` is closed at `20/20` - do not reopen
 2. `mixed_4_star` is closed at `15/15` - do not reopen
-3. benchmark promotion is now complete for the strongest reviewed subset - `7` Wave80 rows now drive canonical benchmark truth
-4. `5` reviewed Wave80 rows remain unpromoted and should stay out of benchmark truth unless they clear a later promotion gate
-5. next useful step is a narrow benchmark-facing diagnosis of the `7` promoted misses before any engine work
-6. do not reopen collection before that diagnosis
+3. the failed `7`-row Wave80 promotion experiment is now preserved as staged calibration pressure, not accepted canonical truth
+4. `5` reviewed Wave80 rows remain unpromoted and should stay outside active benchmark truth unless a later promotion gate is explicitly reopened
+5. next useful step is a focused miss-cluster audit / calibration-design pass on `data/calibration/canonical/wave80_staged_pressure_20260408.json`
+6. do not reopen collection or attempt another fresh promotion before that diagnosis
 
 ---
 

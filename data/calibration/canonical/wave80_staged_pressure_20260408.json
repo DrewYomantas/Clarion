@@ -1,0 +1,637 @@
+{
+  "version": "v1",
+  "created_at": "2026-04-08",
+  "artifact_type": "wave80_staged_calibration_pressure",
+  "status": "staged_not_in_active_canonical_gate",
+  "source_commit": "dfa5517bc86f021a38fe8371738f28556ec7c307",
+  "notes": "These seven reviewed Wave80 rows were promoted experimentally into the active canonical gate on 2026-04-08. The promotion exposed real repeated misses but was not accepted as the new active gate. The rows are preserved here as staged calibration pressure for the next focused benchmark-design / calibration pass.",
+  "restored_active_gate_target": {
+    "agreement_rate": 1.0,
+    "clean_reviews": "22/22",
+    "total_disagreements": 0,
+    "reference_artifact": "data/calibration/runs/20260328_lowstar_boundary_cleanup_canonical_rerun/summary.json"
+  },
+  "experiment_artifacts": {
+    "promotion_rerun_summary": "data/calibration/runs/20260408_wave80_promotion_canonical_rerun/summary.json",
+    "promotion_rerun_raw_results": "data/calibration/runs/20260408_wave80_promotion_canonical_rerun/raw_results.json"
+  },
+  "summary": {
+    "staged_record_count": 7,
+    "themes_exposed": {
+      "expectation_setting": 5,
+      "professionalism_trust": 3,
+      "communication_responsiveness": 4,
+      "outcome_satisfaction": 3,
+      "communication_clarity": 1
+    },
+    "primary_clusters": [
+      "expectation_setting",
+      "communication_responsiveness",
+      "professionalism_trust",
+      "outcome_satisfaction"
+    ],
+    "secondary_clusters": [
+      "communication_clarity"
+    ]
+  },
+  "grouped_miss_summary": {
+    "expectation_setting": [
+      {
+        "benchmark_id": "exp_wave80_kowalski_bradcanard_1",
+        "record_id": "kowalski_20260328_bradcanard_1",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "negative",
+        "ai_evidence_span": "She did not offer concrete steps I could take",
+        "deterministic_phrase": null
+      },
+      {
+        "benchmark_id": "exp_wave80_morgan_elishaurgent_1",
+        "record_id": "morgan_20260328_elishaurgent_1",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "negative",
+        "ai_evidence_span": "I provided all of my information and was told they would start my case",
+        "deterministic_phrase": null
+      },
+      {
+        "benchmark_id": "exp_wave80_matthewlind_wayne_2",
+        "record_id": "matthewlind_20260329_wayne_2",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "negative",
+        "ai_evidence_span": "failed to follow his own strategy of waiting for an offer to come to us",
+        "deterministic_phrase": null
+      },
+      {
+        "benchmark_id": "exp_wave80_edgardgarcia_anonymous_4",
+        "record_id": "edgardgarcia_20260329_anonymous_4",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "negative",
+        "ai_evidence_span": "he did not file it with the court until the first week of February",
+        "deterministic_phrase": null
+      },
+      {
+        "benchmark_id": "exp_wave80_newfrontier_vlopez_1",
+        "record_id": "newfrontier_20260403_vlopez_1",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "negative",
+        "ai_evidence_span": "Our application was submitted over 60 days late",
+        "deterministic_phrase": null
+      }
+    ],
+    "professionalism_trust": [
+      {
+        "benchmark_id": "exp_wave80_kowalski_bradcanard_1",
+        "record_id": "kowalski_20260328_bradcanard_1",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "negative",
+        "ai_evidence_span": "Ms. Hessel was not looking out for my best interests",
+        "deterministic_phrase": null
+      },
+      {
+        "benchmark_id": "exp_wave80_newfrontier_vlopez_1",
+        "record_id": "newfrontier_20260403_vlopez_1",
+        "disagreement_type": "wrong_polarity",
+        "deterministic_polarity": "positive",
+        "ai_polarity": "negative",
+        "ai_evidence_span": "Initially, they tried to charge us a resubmission fee for their own error",
+        "deterministic_phrase": "reliable"
+      },
+      {
+        "benchmark_id": "exp_wave80_fulton_kellieprenslow_5",
+        "record_id": "fulton_20260403_kellieprenslow_5",
+        "disagreement_type": "extra_theme",
+        "deterministic_polarity": "positive",
+        "ai_polarity": null,
+        "ai_evidence_span": null,
+        "deterministic_phrase": "professional"
+      }
+    ],
+    "communication_responsiveness": [
+      {
+        "benchmark_id": "exp_wave80_morgan_elishaurgent_1",
+        "record_id": "morgan_20260328_elishaurgent_1",
+        "disagreement_type": "missed_severe_phrase",
+        "deterministic_polarity": "severe_negative",
+        "ai_polarity": "negative",
+        "ai_evidence_span": "After waiting a full month without any communication or updates",
+        "deterministic_phrase": "hung up on me"
+      },
+      {
+        "benchmark_id": "exp_wave80_edgardgarcia_anonymous_4",
+        "record_id": "edgardgarcia_20260329_anonymous_4",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "negative",
+        "ai_evidence_span": "Mr. Garcia also took several days to respond to my emails and calls",
+        "deterministic_phrase": null
+      },
+      {
+        "benchmark_id": "exp_wave80_ryangarry_noellevitzthum_5",
+        "record_id": "ryangarry_20260329_noellevitzthum_5",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "positive",
+        "ai_evidence_span": "What stood out most to me was how responsive and supportive they were throughout the process",
+        "deterministic_phrase": null
+      },
+      {
+        "benchmark_id": "exp_wave80_fulton_kellieprenslow_5",
+        "record_id": "fulton_20260403_kellieprenslow_5",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "positive",
+        "ai_evidence_span": "kept in communication with me",
+        "deterministic_phrase": null
+      }
+    ],
+    "outcome_satisfaction": [
+      {
+        "benchmark_id": "exp_wave80_matthewlind_wayne_2",
+        "record_id": "matthewlind_20260329_wayne_2",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "negative",
+        "ai_evidence_span": "The outcome of my case was far less than expected and cost far more than the services I received",
+        "deterministic_phrase": null
+      },
+      {
+        "benchmark_id": "exp_wave80_edgardgarcia_anonymous_4",
+        "record_id": "edgardgarcia_20260329_anonymous_4",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "positive",
+        "ai_evidence_span": "did a great job defending me in court and assisting me in receiving my restraining order",
+        "deterministic_phrase": null
+      },
+      {
+        "benchmark_id": "exp_wave80_fulton_kellieprenslow_5",
+        "record_id": "fulton_20260403_kellieprenslow_5",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "positive",
+        "ai_evidence_span": "My case was approved!",
+        "deterministic_phrase": null
+      }
+    ],
+    "communication_clarity": [
+      {
+        "benchmark_id": "exp_wave80_ryangarry_noellevitzthum_5",
+        "record_id": "ryangarry_20260329_noellevitzthum_5",
+        "disagreement_type": "missing_theme",
+        "deterministic_polarity": null,
+        "ai_polarity": "positive",
+        "ai_evidence_span": "They took the time to explain everything clearly and made sure I understood my options every step of the way",
+        "deterministic_phrase": null
+      }
+    ]
+  },
+  "records": [
+    {
+      "benchmark_id": "exp_wave80_kowalski_bradcanard_1",
+      "source_record_id": "kowalski_20260328_bradcanard_1",
+      "firm_name": "Kowalski, Wilson & Vang, LLC",
+      "state": "WI",
+      "practice_area": "family law; divorce custody",
+      "star_rating": 1,
+      "source_platform": "google_maps",
+      "sentiment_mix_tag": "single_negative",
+      "truth_decision_note": "Kept. Strong one-star family-law row with explicit expectation failure, loyalty breach, and wasted-value language.",
+      "review_text": "I hired attorney Kathleen Hessel to help me with a contempt hearing. From the start, Ms. Hessel was not looking out for my best interests. She did not offer concrete steps I could take. I had to require her to take my offers to the other side. I was able to do that myself. It was a complete waste of money for me to hire this law firm.",
+      "expected_labels": [
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "She did not offer concrete steps I could take",
+          "audit_note": "Kept. Strong one-star family-law row with explicit expectation failure, loyalty breach, and wasted-value language."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "Ms. Hessel was not looking out for my best interests",
+          "audit_note": "Kept. Strong one-star family-law row with explicit expectation failure, loyalty breach, and wasted-value language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "It was a complete waste of money for me to hire this law firm",
+          "audit_note": "Kept. Strong one-star family-law row with explicit expectation failure, loyalty breach, and wasted-value language."
+        }
+      ],
+      "promotion_experiment_disagreements": [
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "expectation_setting",
+          "deterministic_polarity": null,
+          "ai_polarity": "negative",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "She did not offer concrete steps I could take",
+          "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 3
+        },
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "professionalism_trust",
+          "deterministic_polarity": null,
+          "ai_polarity": "negative",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "Ms. Hessel was not looking out for my best interests",
+          "detail": "AI tagged 'professionalism_trust' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 3
+        }
+      ]
+    },
+    {
+      "benchmark_id": "exp_wave80_morgan_elishaurgent_1",
+      "source_record_id": "morgan_20260328_elishaurgent_1",
+      "firm_name": "Morgan & Morgan",
+      "state": "GA",
+      "practice_area": "personal injury; injury litigation",
+      "star_rating": 1,
+      "source_platform": "google_maps",
+      "sentiment_mix_tag": "single_negative",
+      "truth_decision_note": "Kept. Strong one-star personal-injury row with explicit nonresponse, intake reversal, and disrespectful treatment.",
+      "review_text": "I initially contacted Morgan & Morgan about a month ago regarding an injury I sustained after being burned at Cuts Steakhouse in Suwanee. I provided all of my information and was told they would start my case. After waiting a full month without any communication or updates, I reached out to ask for a status update. Today, I received a call from one of their attorneys, Alex Griffin. He stated that because the case would likely only be worth around $3,000?$5,000, they may not be able to take it due to the recovery of their fees. I explained that I had first tried to resolve my medical bills on my own directly with Cuts Steakhouse, but received no response, which is why I sought legal help. His response was essentially, \"You were injured, but it?s not enough for us to take on.\" He showed no empathy, became irritated when I asked questions, and was rude and disrespectful. He eventually said the call was \"going nowhere,\" told me he would reach back out in February, and then hung up on me. I called Morgan & Morgan back to report the interaction and requested another attorney. I made a formal report, and less than an hour later, Alex Griffin left me a voicemail stating that he was dropping my case. At no point was I rude or raised my voice?he was clearly irritated simply because I was asking questions. Morgan & Morgan advertises that they are \"for the people,\" but my experience was extremely uncomfortable and disappointing. I will never use them again, and based on how I was treated, I would not recommend them to anyone else.",
+      "expected_labels": [
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "After waiting a full month without any communication or updates",
+          "audit_note": "Kept. Strong one-star personal-injury row with explicit nonresponse, intake reversal, and disrespectful treatment."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "I provided all of my information and was told they would start my case",
+          "audit_note": "Kept. Strong one-star personal-injury row with explicit nonresponse, intake reversal, and disrespectful treatment."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "He showed no empathy, became irritated when I asked questions, and was rude and disrespectful",
+          "audit_note": "Kept. Strong one-star personal-injury row with explicit nonresponse, intake reversal, and disrespectful treatment."
+        }
+      ],
+      "promotion_experiment_disagreements": [
+        {
+          "disagreement_type": "missed_severe_phrase",
+          "theme": "communication_responsiveness",
+          "deterministic_polarity": "severe_negative",
+          "ai_polarity": "negative",
+          "deterministic_phrase": "hung up on me",
+          "ai_evidence_span": "After waiting a full month without any communication or updates",
+          "detail": "Deterministic matched severe phrase 'hung up on me' for 'communication_responsiveness'; AI only returned 'negative'. Potential missed severe pattern in AI output.",
+          "severity_flag": true,
+          "disagreement_priority": 4
+        },
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "expectation_setting",
+          "deterministic_polarity": null,
+          "ai_polarity": "negative",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "I provided all of my information and was told they would start my case",
+          "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 3
+        }
+      ]
+    },
+    {
+      "benchmark_id": "exp_wave80_matthewlind_wayne_2",
+      "source_record_id": "matthewlind_20260329_wayne_2",
+      "firm_name": "Sherrard McGonagle Tizzano, P.S.",
+      "state": "WA",
+      "practice_area": "real estate; business estate planning",
+      "star_rating": 2,
+      "source_platform": "avvo",
+      "sentiment_mix_tag": "single_negative",
+      "truth_decision_note": "Kept. Strong two-star real-estate row with concrete strategy failure, poor preparation, and bad outcome language.",
+      "review_text": "Matt Failed to capitalize on the facts of my case. He told me our strategy, but failed to follow his own strategy of waiting for an offer to come to us, but he still charged me with meetings with the opposition with no offer on the table. We never received any replies to requests for information, but he was very insistent that we provide every scrap of paper from my personal files to the opposing lawyer before any discovery or even before he made our case. When we went to mediation, he was not familiar with the points of my case, and I explained for myself. I gave him information from my personal files, neatly and in folders, when it was returned, not everything was returned and it was a mess, not very professional. The outcome of my case was far less than expected and cost far more than the services I received. The facts are that I gave away part of my property for a right of way, needlessly.",
+      "expected_labels": [
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "failed to follow his own strategy of waiting for an offer to come to us",
+          "audit_note": "Kept. Strong two-star real-estate row with concrete strategy failure, poor preparation, and bad outcome language."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "When we went to mediation, he was not familiar with the points of my case",
+          "audit_note": "Kept. Strong two-star real-estate row with concrete strategy failure, poor preparation, and bad outcome language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "The outcome of my case was far less than expected and cost far more than the services I received",
+          "audit_note": "Kept. Strong two-star real-estate row with concrete strategy failure, poor preparation, and bad outcome language."
+        }
+      ],
+      "promotion_experiment_disagreements": [
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "expectation_setting",
+          "deterministic_polarity": null,
+          "ai_polarity": "negative",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "failed to follow his own strategy of waiting for an offer to come to us",
+          "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 3
+        },
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "outcome_satisfaction",
+          "deterministic_polarity": null,
+          "ai_polarity": "negative",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "The outcome of my case was far less than expected and cost far more than the services I received",
+          "detail": "AI tagged 'outcome_satisfaction' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 3
+        }
+      ]
+    },
+    {
+      "benchmark_id": "exp_wave80_edgardgarcia_anonymous_4",
+      "source_record_id": "edgardgarcia_20260329_anonymous_4",
+      "firm_name": "The Law Office of Edgard Garcia",
+      "state": "CA",
+      "practice_area": "family law; domestic violence child support",
+      "star_rating": 4,
+      "source_platform": "avvo",
+      "sentiment_mix_tag": "mixed",
+      "truth_decision_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats.",
+      "review_text": "Mr. Garcia did a great job defending me in court and assisting me in receiving my restraining order. The only issue with his services was the time he took to file my court documents. Our last court date was in early December, when I was granted my restraining order, and he did not file it with the court until the first week of February. I know holidays made things delayed, but he could've filed the documents the same day of our last hearing. His justification was that the court gave him issues filing, which I honestly don't believe. Mr. Garcia also took several days to respond to my emails and calls, which made me feel lost and upset. For the amount of money I paid, I believe he could've done a better job.",
+      "expected_labels": [
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "did a great job defending me in court and assisting me in receiving my restraining order",
+          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats."
+        },
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "he did not file it with the court until the first week of February",
+          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "standard negative",
+          "evidence_span": "Mr. Garcia also took several days to respond to my emails and calls",
+          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats."
+        }
+      ],
+      "promotion_experiment_disagreements": [
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "communication_responsiveness",
+          "deterministic_polarity": null,
+          "ai_polarity": "negative",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "Mr. Garcia also took several days to respond to my emails and calls",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 3
+        },
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "expectation_setting",
+          "deterministic_polarity": null,
+          "ai_polarity": "negative",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "he did not file it with the court until the first week of February",
+          "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 3
+        },
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "outcome_satisfaction",
+          "deterministic_polarity": null,
+          "ai_polarity": "positive",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "did a great job defending me in court and assisting me in receiving my restraining order",
+          "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 1
+        }
+      ]
+    },
+    {
+      "benchmark_id": "exp_wave80_newfrontier_vlopez_1",
+      "source_record_id": "newfrontier_20260403_vlopez_1",
+      "firm_name": "New Frontier Immigration Law",
+      "state": "AZ",
+      "practice_area": "immigration",
+      "star_rating": 1,
+      "source_platform": "google_maps",
+      "sentiment_mix_tag": "single_negative",
+      "truth_decision_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage.",
+      "review_text": "Disappointing Experience - Beware of Misleading Positive Reviews\n\nDespite the many glowing reviews, my experience with New Frontier was extremely disappointing. We hired them for a straightforward Permanent Resident card renewal, but the process was mishandled at every stage:\n\nDelayed submission: Our application was submitted over 60 days late, with no valid explanation despite all fees being paid and documents provided upfront.\nIncorrect forms: They submitted the wrong application, resulting in a denial. Initially, they tried to charge us a resubmission fee for their own error, only reversing this after I insisted.\nPoor communication: Scheduled meetings were missed at least five times, and I only received responses after repeatedly following up.\nLack of transparency: Important correspondence was never shared proactively. Critical documents were withheld for over 60 days, impacting our ability to renew license.\nNeglect of details: The online access code was never sent, and by the time I asked, it had expired-creating further unnecessary work.\n\nGiven these repeated issues, I am genuinely skeptical of the overwhelmingly positive reviews. Our simple case became a source of frustration and wasted time. I strongly advise others to look elsewhere for reliable immigration services.\n\nI am taking a huge risk here as my Moms case is still open with them but I simply cannot in good faith hold off until the process is complete. Stay away... And if someone from this office comments and tells me to call them.. I have very frequently and nothing changed. Spoke to the actual Attorney handling the case and nothing changed. Disgusted to say the least. If this is how they treat their customers, many who may not question them and think this is normal they should not be serving our community.",
+      "expected_labels": [
+        {
+          "theme": "expectation_setting",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "Our application was submitted over 60 days late",
+          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "Scheduled meetings were missed at least five times",
+          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage."
+        },
+        {
+          "theme": "professionalism_trust",
+          "polarity": "negative",
+          "severity_note": "severe negative",
+          "evidence_span": "Initially, they tried to charge us a resubmission fee for their own error",
+          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage."
+        }
+      ],
+      "promotion_experiment_disagreements": [
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "expectation_setting",
+          "deterministic_polarity": null,
+          "ai_polarity": "negative",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "Our application was submitted over 60 days late",
+          "detail": "AI tagged 'expectation_setting' with polarity 'negative' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 3
+        },
+        {
+          "disagreement_type": "wrong_polarity",
+          "theme": "professionalism_trust",
+          "deterministic_polarity": "positive",
+          "ai_polarity": "negative",
+          "deterministic_phrase": "reliable",
+          "ai_evidence_span": "Initially, they tried to charge us a resubmission fee for their own error",
+          "detail": "Polarity conflict on 'professionalism_trust': det='positive', ai='negative'. Det phrase: 'reliable', AI evidence: 'Initially, they tried to charge us a resubmission fee for their own error'",
+          "severity_flag": false,
+          "disagreement_priority": 2
+        }
+      ]
+    },
+    {
+      "benchmark_id": "exp_wave80_ryangarry_noellevitzthum_5",
+      "source_record_id": "ryangarry_20260329_noellevitzthum_5",
+      "firm_name": "Ryan Garry LLC, Minneapolis Criminal Defense Attorneys",
+      "state": "MN",
+      "practice_area": "criminal defense; felony defense",
+      "star_rating": 5,
+      "source_platform": "google_maps",
+      "sentiment_mix_tag": "single_positive",
+      "truth_decision_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language.",
+      "review_text": "I cannot recommend Ryan enough as an attorney! From the beginning, Ryan and his team were professional, knowledgeable, and very easy to work with. They took the time to explain everything clearly and made sure I understood my options every step of the way. What stood out most to me was how responsive and supportive they were throughout the process. I always felt like my questions were taken seriously and that they genuinely cared about helping me get the best possible outcome and as quickly as possible! Ryan was the only lawyer I connected with that had a positive outlook about my case and was willing to put in the work to get my charge dismissed! I will be forever grateful for their services and would highly recommend them to anyone looking for a trustworthy and dedicated attorney. Thank you so much Ryan, Elizabeth and Shelly!",
+      "expected_labels": [
+        {
+          "theme": "professionalism_trust",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "professional, knowledgeable, and very easy to work with",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        },
+        {
+          "theme": "communication_clarity",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "They took the time to explain everything clearly and made sure I understood my options every step of the way",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "What stood out most to me was how responsive and supportive they were throughout the process",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "was willing to put in the work to get my charge dismissed",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        }
+      ],
+      "promotion_experiment_disagreements": [
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "communication_clarity",
+          "deterministic_polarity": null,
+          "ai_polarity": "positive",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "They took the time to explain everything clearly and made sure I understood my options every step of the way",
+          "detail": "AI tagged 'communication_clarity' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 1
+        },
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "communication_responsiveness",
+          "deterministic_polarity": null,
+          "ai_polarity": "positive",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "What stood out most to me was how responsive and supportive they were throughout the process",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 1
+        }
+      ]
+    },
+    {
+      "benchmark_id": "exp_wave80_fulton_kellieprenslow_5",
+      "source_record_id": "fulton_20260403_kellieprenslow_5",
+      "firm_name": "Philip J. Fulton Law Office",
+      "state": "OH",
+      "practice_area": "social security disability; workers compensation",
+      "star_rating": 5,
+      "source_platform": "google_maps",
+      "sentiment_mix_tag": "single_positive",
+      "truth_decision_note": "Kept. Strong five-star SSD row with explicit clarity, responsiveness, and approval outcome language.",
+      "review_text": "I could not be happier with the services I received from the Fulton Law Office. I initially used their services for a workman's compensation claim. Once Mr. Fulton took over, I breathed a sigh of relief. He answered all my questions, explained everything so I could understand and kept in communication with me. My case was approved! Everyone I encountered or spoke to there was pleasant and professional.\n\nWhen I needed their services again for a Social Security Disability claim, Chelsea Rubin and Kay Sanchez were amazing. They handled obtaining all my medical records and submitting them to Social Security. If I had a concern or question, even over a weekend, Kay would respond to me quickly! They were thorough and efficient! I could not have handled this without them. Because of their hard work, my Disability claim was approved within 5 month, which is very quick!\n\nI would highly recommend them for any workman's compensation or Social Security Disability claims! At a time when I was trying to handle some very stressful issues, they took the stress away. Can't thank them all enough!",
+      "expected_labels": [
+        {
+          "theme": "communication_clarity",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "explained everything so I could understand",
+          "audit_note": "Kept. Strong five-star SSD row with explicit clarity, responsiveness, and approval outcome language."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "kept in communication with me",
+          "audit_note": "Kept. Strong five-star SSD row with explicit clarity, responsiveness, and approval outcome language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "My case was approved!",
+          "audit_note": "Kept. Strong five-star SSD row with explicit clarity, responsiveness, and approval outcome language."
+        }
+      ],
+      "promotion_experiment_disagreements": [
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "communication_responsiveness",
+          "deterministic_polarity": null,
+          "ai_polarity": "positive",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "kept in communication with me",
+          "detail": "AI tagged 'communication_responsiveness' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 1
+        },
+        {
+          "disagreement_type": "missing_theme",
+          "theme": "outcome_satisfaction",
+          "deterministic_polarity": null,
+          "ai_polarity": "positive",
+          "deterministic_phrase": null,
+          "ai_evidence_span": "My case was approved!",
+          "detail": "AI tagged 'outcome_satisfaction' with polarity 'positive' (confidence=high); no deterministic phrase matched.",
+          "severity_flag": false,
+          "disagreement_priority": 1
+        },
+        {
+          "disagreement_type": "extra_theme",
+          "theme": "professionalism_trust",
+          "deterministic_polarity": "positive",
+          "ai_polarity": null,
+          "deterministic_phrase": "professional",
+          "ai_evidence_span": null,
+          "detail": "Deterministic tagged 'professionalism_trust' as 'positive' via phrase 'professional'. AI did not tag this theme.",
+          "severity_flag": false,
+          "disagreement_priority": 2
+        }
+      ]
+    }
+  ]
+}

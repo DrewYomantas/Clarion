@@ -1,31 +1,30 @@
 # Current Build
 
-Latest completed milestone: `2026-04-08 - Pass 44 - Wave80 Benchmark Promotion + Authoritative Rerun`.
+Latest completed milestone: `2026-04-08 - Pass 45 - Wave80 Canonical Gate Restoration + Miss Audit`.
 
 Current product truth:
-- canonical benchmark: `75.86%` agreement, `22/29` clean reviews, `16` disagreements
+- canonical benchmark: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
 - broad 143-real sanity benchmark: `55.94%` agreement, `80/143` clean reviews, `92` disagreements, `0` AI errors
 - readiness: `improved but not demo-safe`
 
 What changed in the latest pass:
-- promoted `7` reviewed Wave80 rows into the active canonical benchmark: `kowalski_bradcanard`, `morgan_elishaurgent`, `matthewlind_wayne`, `edgardgarcia_anonymous`, `newfrontier_vlopez`, `ryangarry_noellevitzthum`, `fulton_kellieprenslow`
-- left `5` reviewed Wave80 rows unpromoted: `donstewart_amy`, `ericmark_marie`, `chayet_caw8taw`, `ericpalacios_gabrielrodriguez`, `anchor_ag`
-- expanded the active canonical set from `22` to `29` rows and reran the canonical five-theme gate against the promoted truth
-- reran the broad frozen `143-real` comparator against the accepted March 28 frozen AI truth
-- wrote new run artifacts to `data/calibration/runs/20260408_wave80_promotion_canonical_rerun/` and `data/calibration/runs/20260408_wave80_promotion_broad_rerun/`
-- rebuilt acquisition status for integrity; queue-role counts stayed unchanged at `20 benchmark_candidate`, `14 holdout`, `13 audit_only`, `49 corpus_only`
+- removed the `7` experimental Wave80 promotion rows from the active canonical gate and restored the accepted `22`-row active benchmark
+- preserved those same `7` rows in a dedicated staged-pressure artifact: `data/calibration/canonical/wave80_staged_pressure_20260408.json`
+- kept the failed promotion experiment artifacts intact for audit: `data/calibration/runs/20260408_wave80_promotion_canonical_rerun/` and `data/calibration/runs/20260408_wave80_promotion_broad_rerun/`
+- wrote a narrow restoration-proof canonical rerun to `data/calibration/runs/20260408_wave80_gate_restore_canonical_rerun/`
+- audited the staged miss clusters: `expectation_setting` (`5`), `communication_responsiveness` (`4`), `professionalism_trust` (`3`), `outcome_satisfaction` (`3`), `communication_clarity` (`1`)
+- left queues and collection data unchanged; the `7` rows remain reviewed Wave80 evidence, just not active canonical truth
 
 Verification:
-- batch/label queue sync: `0` role mismatches
-- row count integrity: `72` batch rows, `72` label rows, `10` holdout queue rows
-- canonical rerun: `75.86%` agreement, `22/29` clean reviews, `16` disagreements
-- broad 143-real rerun: `55.94%` agreement, `80/143` clean reviews, `92` disagreements, `0` AI errors
+- restored canonical rerun: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
+- broad 143-real truth remains `55.94%` agreement, `80/143` clean reviews, `92` disagreements, unchanged by the failed promotion experiment
+- staged-pressure artifact exists and preserves all `7` rows plus grouped miss details
 - no engine files were edited in this pass
 
 Current next pass:
-- promotion review is complete for the strongest reviewed Wave80 rows
-- next useful step: inspect the `7` newly promoted canonical misses and decide whether a narrow engine pass is warranted
-- do not reopen collection before that benchmark-facing diagnosis
+- the failed Wave80 promotion experiment is now preserved as staged calibration pressure, not active benchmark truth
+- next useful step: run a focused miss-cluster audit / calibration-design pass on the `7` staged Wave80 rows
+- do not reopen collection or attempt another fresh promotion before that diagnosis
 - see `docs/REVIEW_ACQUISITION_WAVE80.md` for priorities
 
 Read `PROJECT_STATE.md`.

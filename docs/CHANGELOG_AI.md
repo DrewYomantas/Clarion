@@ -1,5 +1,38 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 45 - Wave80 Canonical Gate Restoration + Miss Audit
+
+### Files Changed
+- `data/calibration/canonical/benchmark_canonical_v1.json`
+- `data/calibration/canonical/wave80_staged_pressure_20260408.json`
+- `data/calibration/runs/20260408_wave80_gate_restore_canonical_rerun/raw_results.json`
+- `data/calibration/runs/20260408_wave80_gate_restore_canonical_rerun/summary.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Removed the `7` experimental Wave80 promotion rows from the active canonical gate and restored the accepted `22`-row benchmark.
+- Preserved those `7` rows as staged calibration pressure in `data/calibration/canonical/wave80_staged_pressure_20260408.json`.
+- Preserved the failed promotion experiment artifacts instead of deleting them.
+- Wrote a narrow restoration-proof canonical rerun to `data/calibration/runs/20260408_wave80_gate_restore_canonical_rerun/`.
+- Audited the exact staged miss clusters exposed by the failed promotion experiment: `expectation_setting` (`5`), `communication_responsiveness` (`4`), `professionalism_trust` (`3`), `outcome_satisfaction` (`3`), `communication_clarity` (`1`).
+
+### Explicitly Not Touched
+- No engine edits
+- No `benchmark_engine.py` changes
+- No deterministic rule tweaks
+- No collection reopening
+- No new promotion attempt
+- No UI, auth, deployment, or unrelated cleanup
+
+### Verification
+- Restored canonical rerun: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
+- Staged-pressure artifact preserves all `7` failed-promotion rows plus grouped miss details
+- Broad truth remains unchanged from the accepted frozen comparator: `55.94%`, `80/143` clean, `92` disagreements
+- No engine files were edited in this pass
+
 ## 2026-04-08 - Pass 44 - Wave80 Benchmark Promotion + Authoritative Rerun
 
 ### Files Changed
