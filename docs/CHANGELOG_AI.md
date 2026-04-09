@@ -1,5 +1,39 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 52 - Staged Pressure Re-Triage
+
+### Files Changed
+- `data/calibration/canonical/wave80_staged_pressure_20260408.json`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Re-triaged the preserved `7`-row Wave80 staged set after the filing-delay truth narrowing and post-narrowing replay.
+- Split the staged set into a narrower live shape:
+  - promotion shortlist: `ryangarry_noellevitzthum`, `fulton_kellieprenslow`, `newfrontier_vlopez`
+  - keep staged pressure: `morgan_elishaurgent`
+  - downgrade out of staged pressure: `kowalski_bradcanard`, `matthewlind_wayne`, `edgardgarcia_anonymous`
+- Preserved `morgan_elishaurgent` as the only remaining expectation-setting seed because it still carries the cleanest intake-promise reversal pressure.
+- Removed the more fragmented rows from active staged pressure so future benchmark-facing decisions are driven by a smaller, cleaner set.
+- Synced the staged artifact, Wave80 label queue notes, and live-state docs to match the new re-triage truth.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits to the active canonical gate
+- No collection reopening
+- No canonical rerun
+- No broad rerun
+- No new promotion attempt
+
+### Verification
+- Active canonical gate remains `100.00%`, `22/22` clean reviews, `0` disagreements
+- `data/calibration/canonical/benchmark_canonical_v1.json` remained untouched
+- No engine files were edited in this pass
+- Docs now state that the staged set has been narrowed into a shortlist plus residual staged seed rather than one broad pressure blob
+
 ## 2026-04-08 - Pass 51 - Post-Narrowing Staged Replay
 
 ### Files Changed

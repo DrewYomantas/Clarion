@@ -318,10 +318,13 @@ Current next pass priorities:
 5. the narrow positive phrase recovery pass is now complete and the active canonical gate stayed clean
 6. the staged-only replay is complete and the filing-delay truth review is complete
 7. `edgardgarcia_anonymous` and `newfrontier_vlopez` now treat their filing-delay complaints as `timeliness_progress`, not `expectation_setting`
-8. the fresh replay after that narrowing leaves remaining staged pressure at `expectation_setting 3`, `professionalism_trust 2`, `outcome_satisfaction 2`, `communication_responsiveness 1`
-9. `ryangarry_noellevitzthum` and `fulton_kellieprenslow` now score clean against staged truth, but the overall set is still too fragmented for an honest promotion retry
-10. keep promise-reversal intake language staged and keep the broader mixed trust/outcome rows staged until a later pass proves a cleaner repeated pattern
-11. do not reopen collection or attempt another fresh promotion before a different cleaner pressure lane is identified
+8. the staged re-triage after that replay now yields:
+   - promotion shortlist: `ryangarry_noellevitzthum`, `fulton_kellieprenslow`, `newfrontier_vlopez`
+   - keep staged pressure: `morgan_elishaurgent`
+   - downgrade out of staged pressure: `kowalski_bradcanard`, `matthewlind_wayne`, `edgardgarcia_anonymous`
+9. keep promise-reversal intake language staged and keep the shortlist staged until one more narrow trust / outcome truth review is complete
+10. keep the downgraded fragmented rows out of active staged pressure unless a later benchmark-design pass reopens them deliberately
+11. do not reopen collection or attempt another fresh promotion before that shortlist review is complete
 
 ---
 

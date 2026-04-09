@@ -4,7 +4,7 @@
   "artifact_type": "wave80_staged_calibration_pressure",
   "status": "staged_not_in_active_canonical_gate",
   "source_commit": "dfa5517bc86f021a38fe8371738f28556ec7c307",
-  "notes": "These seven reviewed Wave80 rows were promoted experimentally into the active canonical gate on 2026-04-08. The promotion exposed real repeated misses but was not accepted as the new active gate. The rows are preserved here as staged calibration pressure for the next focused benchmark-design / calibration pass.",
+  "notes": "These seven reviewed Wave80 rows were promoted experimentally into the active canonical gate on 2026-04-08. The promotion exposed real repeated misses but was not accepted as the new active gate. The rows are preserved here as staged calibration pressure for the next focused benchmark-design / calibration pass. Pass 52 re-triage narrowed the set into a 3-row promotion shortlist, 1 staged-pressure seed, and 3 downgraded fragmented rows.",
   "restored_active_gate_target": {
     "agreement_rate": 1.0,
     "clean_reviews": "22/22",
@@ -32,7 +32,14 @@
     ],
     "secondary_clusters": [
       "communication_clarity"
-    ]
+    ],
+    "current_retriage": {
+      "promotion_shortlist_count": 3,
+      "keep_staged_pressure_count": 1,
+      "downgrade_out_of_staged_pressure_count": 3,
+      "recommended_next_move": "B",
+      "note": "Re-triage after the filing-delay truth narrowing and staged replay. Keep a narrow shortlist, preserve one expectation-setting seed as staged pressure, and shrink the fragmented rows out of active staged pressure."
+    }
   },
   "grouped_miss_summary": {
     "expectation_setting": [
@@ -248,6 +255,16 @@
           "severity_flag": false,
           "disagreement_priority": 3
         }
+      ],
+      "current_disposition": "downgrade_out_of_staged_pressure",
+      "current_disposition_note": "Downgraded out of staged pressure. Still benchmark-design-useful as a fragmented low-star boundary row, but no longer a good engine-pressure driver because expectation, trust, and value dissatisfaction remain bundled together without a clean repeated lane.",
+      "current_live_misses": [
+        "expectation_setting",
+        "professionalism_trust"
+      ],
+      "removed_by_truth_narrowing": [],
+      "current_extra_hits": [
+        "empathy_support"
       ]
     },
     {
@@ -307,6 +324,15 @@
           "severity_flag": false,
           "disagreement_priority": 3
         }
+      ],
+      "current_disposition": "keep_staged_pressure",
+      "current_disposition_note": "Kept as staged pressure. Not clean enough for a promotion shortlist because the unresolved pressure still depends on sparse intake-promise reversal language, but it remains the best live seed for future expectation-setting benchmark-design review.",
+      "current_live_misses": [
+        "expectation_setting"
+      ],
+      "removed_by_truth_narrowing": [],
+      "current_extra_hits": [
+        "empathy_support"
       ]
     },
     {
@@ -366,7 +392,15 @@
           "severity_flag": false,
           "disagreement_priority": 3
         }
-      ]
+      ],
+      "current_disposition": "downgrade_out_of_staged_pressure",
+      "current_disposition_note": "Downgraded out of staged pressure. The remaining expectation-setting and outcome complaints are too strategy-specific and benchmark-design-heavy to keep driving engine pressure honestly.",
+      "current_live_misses": [
+        "expectation_setting",
+        "outcome_satisfaction"
+      ],
+      "removed_by_truth_narrowing": [],
+      "current_extra_hits": []
     },
     {
       "benchmark_id": "exp_wave80_edgardgarcia_anonymous_4",
@@ -436,7 +470,17 @@
           "severity_flag": false,
           "disagreement_priority": 1
         }
-      ]
+      ],
+      "current_disposition": "downgrade_out_of_staged_pressure",
+      "current_disposition_note": "Downgraded out of staged pressure. Filing-delay ambiguity is now cleaned up, but the row still mixes positive outcome with timeliness and responsiveness in a way that is more useful for boundary review than for future engine pressure.",
+      "current_live_misses": [
+        "communication_responsiveness",
+        "outcome_satisfaction"
+      ],
+      "removed_by_truth_narrowing": [
+        "expectation_setting"
+      ],
+      "current_extra_hits": []
     },
     {
       "benchmark_id": "exp_wave80_newfrontier_vlopez_1",
@@ -495,7 +539,16 @@
           "severity_flag": false,
           "disagreement_priority": 2
         }
-      ]
+      ],
+      "current_disposition": "promotion_shortlist",
+      "current_disposition_note": "Promotion shortlist. After the filing-delay truth narrowing this row is down to one remaining professionalism-trust miss, and the remaining pressure is strong, text-rich, and no longer obviously fragmented.",
+      "current_live_misses": [
+        "professionalism_trust"
+      ],
+      "removed_by_truth_narrowing": [
+        "expectation_setting"
+      ],
+      "current_extra_hits": []
     },
     {
       "benchmark_id": "exp_wave80_ryangarry_noellevitzthum_5",
@@ -561,6 +614,13 @@
           "severity_flag": false,
           "disagreement_priority": 1
         }
+      ],
+      "current_disposition": "promotion_shortlist",
+      "current_disposition_note": "Promotion shortlist. This row now scores clean against staged truth and remains a strong, text-rich positive benchmark-pressure candidate with no unresolved boundary dependency.",
+      "current_live_misses": [],
+      "removed_by_truth_narrowing": [],
+      "current_extra_hits": [
+        "empathy_support"
       ]
     },
     {
@@ -631,7 +691,12 @@
           "severity_flag": false,
           "disagreement_priority": 2
         }
-      ]
+      ],
+      "current_disposition": "promotion_shortlist",
+      "current_disposition_note": "Promotion shortlist. This row now scores clean against staged truth and remains a strong, text-rich positive benchmark-pressure candidate with no unresolved boundary dependency.",
+      "current_live_misses": [],
+      "removed_by_truth_narrowing": [],
+      "current_extra_hits": []
     }
   ]
 }
