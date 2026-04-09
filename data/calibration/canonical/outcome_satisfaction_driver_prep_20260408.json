@@ -1,0 +1,233 @@
+{
+  "version": "v1",
+  "created_at": "2026-04-08",
+  "artifact_type": "outcome_satisfaction_driver_prep",
+  "status": "prepared_for_wider_engine_pass",
+  "source_commit": "b49013e",
+  "source_artifacts": {
+    "broad_rerun_summary": "data/calibration/runs/20260408_wave80_selective_promotion_broad_rerun/summary.json",
+    "broad_rerun_raw_results": "data/calibration/runs/20260408_wave80_selective_promotion_broad_rerun/raw_results.json",
+    "baseline_broad_summary": "data/calibration/runs/20260328_lowstar_boundary_cleanup_broad_rerun/summary.json",
+    "baseline_broad_raw_results": "data/calibration/runs/20260328_lowstar_boundary_cleanup_broad_rerun/raw_results.json"
+  },
+  "notes": "This artifact trims the broad outcome_satisfaction disagreement lane into explicit future engine drivers versus explicit non-drivers. It is a design-review artifact only and does not change the active canonical gate.",
+  "lane_summary": {
+    "broad_disagreement_count": 15,
+    "bucket_counts": {
+      "explicit_result_driver": 2,
+      "explicit_negative_outcome_driver": 2,
+      "mixed_outcome_service_boundary": 4,
+      "generic_praise_not_outcome": 3,
+      "speculative_or_quoted_result_false_positive": 2,
+      "too_weak_to_drive": 2
+    },
+    "driver_shortlist_count": 4,
+    "conditional_driver_count": 0,
+    "rejected_non_driver_count": 11
+  },
+  "future_engine_driver_shortlist": [
+    {
+      "raw_result_index": 49,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 50,
+      "bucket": "explicit_result_driver",
+      "driver_role": "positive_explicit_result",
+      "review_text": "Got the job done and won so to speak",
+      "reason": "Direct success language with little overlap into other themes.",
+      "phrase_seed": "got the job done and won"
+    },
+    {
+      "raw_result_index": 103,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 104,
+      "bucket": "explicit_result_driver",
+      "driver_role": "positive_explicit_result",
+      "review_text": "My attorney at this law firm was very helpful with getting my social security disability approved. I felt him and all the staff did everything in their power to make me feel comfortable and showed their support even to the end.",
+      "reason": "Approval language is explicit and outcome-led even though the row also carries empathy.",
+      "phrase_seed": "getting my social security disability approved"
+    },
+    {
+      "raw_result_index": 65,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 66,
+      "bucket": "explicit_negative_outcome_driver",
+      "driver_role": "negative_explicit_result",
+      "review_text": "I was disappointed in the entire process. I was assigned to 3 different attorneys. Each time a little information and understanding of my case was lost. I feel my settlement amount suffered. After 2 years, I received a final settlement offer. The entire staff is really nice, professional and qualified. I'm not sure if they have a large turnover issue. I kept calling and sending messages without replies.",
+      "reason": "The complaint is outcome-specific because the reviewer says the settlement amount suffered.",
+      "phrase_seed": "my settlement amount suffered"
+    },
+    {
+      "raw_result_index": 115,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 116,
+      "bucket": "explicit_negative_outcome_driver",
+      "driver_role": "negative_explicit_result",
+      "review_text": "Completely disappointed - do not trust this firm with your disability case. They failed me during my appeal. Multiple calls were canceled or no-showed, communication barriers made it impossible, and no attorney ever really reviewed my case or spoke to me.",
+      "reason": "The negative result statement is explicit even though the row also carries other severe service failures.",
+      "phrase_seed": "failed me during my appeal"
+    }
+  ],
+  "reviewed_rows": [
+    {
+      "raw_result_index": 6,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 7,
+      "bucket": "too_weak_to_drive",
+      "keep_as_driver": false,
+      "review_text": "Jeremy helped my husband and I get a trust in m place so our finances were secure. It was very thorough so our loved ones could avoid costs and time not having to deal with probate.",
+      "judgment": "Preventive benefit language is positive but too indirect for the first wider engine pass."
+    },
+    {
+      "raw_result_index": 13,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 14,
+      "bucket": "generic_praise_not_outcome",
+      "keep_as_driver": false,
+      "review_text": "My husband and I worked with Jeremy for our estate planning. He is incredibly knowledgeable, experienced, and thorough, bringing a high level of integrity to what he does. I expected the process of creating a will and thinking through everything to be daunting, however Jeremy ensured that we covered it all and guided us through our different options, patiently answering all of our questions from the beginning. He was very kind and made the process painless. Would highly recommend.",
+      "judgment": "Recommendation language is not outcome truth."
+    },
+    {
+      "raw_result_index": 21,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 22,
+      "bucket": "speculative_or_quoted_result_false_positive",
+      "keep_as_driver": false,
+      "review_text": "I have been denied disability twice now. I called the firm for advice and help. After a series of about 4 to 5 questions, the woman on the phone told me that I was not going to be able to receive disability because I claim an income. My income is less than 12,000 a year. I was informed that you cannot claim any kind of income if you want to be approved for disability and she hung up on me.",
+      "judgment": "Quoted approval language inside a negative row should not drive outcome phrases."
+    },
+    {
+      "raw_result_index": 26,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 27,
+      "bucket": "mixed_outcome_service_boundary",
+      "keep_as_driver": false,
+      "review_text": "If you want to pay someone $3,500 just to be screamed at and thrown out of their office, then this is the lawyer for you. I hired him to handle my case, but during what should have been a routine office visit, he lost his temper simply because I was wearing a beer T-shirt under a zipped hoodie. When I calmly told him I didn't appreciate being spoken to that way-especially after paying him thousands of dollars-he threw my folder across the desk, told me it was \"16 hours of work\" and that I wouldn't be getting anything back, then ordered his secretary to kick me out. I never received a refund, never got proper legal help from him, and ultimately had to hire another attorney (Albert Altamore) to fix the mess. This incident happened about a year ago, and I waited until all my court matters were resolved before posting this review to make sure he couldn't jeopardize my case. I'm writing this now to warn others: save your money, time, and peace of mind.",
+      "judgment": "The row is dominated by trust, fee, and abuse complaints rather than a clean outcome lane."
+    },
+    {
+      "raw_result_index": 38,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 39,
+      "bucket": "mixed_outcome_service_boundary",
+      "keep_as_driver": false,
+      "review_text": "These guys are horrible. First court date the Lawyer showed up late didn't even know he had to come. Second court date came around another lawyer showed up and all she did was fix the other lawyers problems that he had done. They sent me to another courtroom I wasn't suppose to go to. The lawyers were extremely rude and one actually racist saying that 'oh I deal with your kind all the time'. This was my first time having to get a lawyer and had to deal with these scums. Nothing but wasting my time and money.",
+      "judgment": "Time-and-money frustration is not clean outcome pressure for the next pass."
+    },
+    {
+      "raw_result_index": 42,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 43,
+      "bucket": "mixed_outcome_service_boundary",
+      "keep_as_driver": false,
+      "review_text": "We submitted all of the paperwork for our living will and trust and after six weeks, nothing was completed at all. After following up a month and one half later, we found that nothing had been worked on. When we questioned the status, we were told that we never gave a timeframe. We ended up going with a different provider.",
+      "judgment": "The row is primarily timeliness and expectation boundary pressure, not clean outcome dissatisfaction."
+    },
+    {
+      "raw_result_index": 43,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 44,
+      "bucket": "generic_praise_not_outcome",
+      "keep_as_driver": false,
+      "review_text": "It was a fantastic experience working with the Baudin Law Group!! They are like family and still feel that way. Randy, Kelly and Myrna you guys are the best! We appreciate everything you guys did for our family.",
+      "judgment": "Gratitude and family-style praise do not create outcome truth."
+    },
+    {
+      "raw_result_index": 49,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 50,
+      "bucket": "explicit_result_driver",
+      "keep_as_driver": true,
+      "review_text": "Got the job done and won so to speak",
+      "judgment": "Keep as a compact positive result driver."
+    },
+    {
+      "raw_result_index": 57,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 58,
+      "bucket": "mixed_outcome_service_boundary",
+      "keep_as_driver": false,
+      "review_text": "I truly wonder if other Black people had great experiences here. They accepted thousands of dollars but never really did anything towards my son's appeal, never really fought. The case was transferred multiple times. They never even really had meetings with me or my son. Truly horrible.",
+      "judgment": "The row still reads as trust, expectation, and responsiveness failure more than explicit outcome dissatisfaction."
+    },
+    {
+      "raw_result_index": 65,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 66,
+      "bucket": "explicit_negative_outcome_driver",
+      "keep_as_driver": true,
+      "review_text": "I was disappointed in the entire process. I was assigned to 3 different attorneys. Each time a little information and understanding of my case was lost. I feel my settlement amount suffered. After 2 years, I received a final settlement offer. The entire staff is really nice, professional and qualified. I'm not sure if they have a large turnover issue. I kept calling and sending messages without replies.",
+      "judgment": "Keep as a negative outcome driver because the settlement complaint is explicit."
+    },
+    {
+      "raw_result_index": 100,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 101,
+      "bucket": "speculative_or_quoted_result_false_positive",
+      "keep_as_driver": false,
+      "review_text": "Working with Andrew Kinney was a game-changer in my social security case. His deep understanding of the legal complexities, coupled with his dedication to my case, hopefully will make a significant difference in the outcome.",
+      "judgment": "Hypothetical future-impact wording should not drive the first outcome pass."
+    },
+    {
+      "raw_result_index": 103,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 104,
+      "bucket": "explicit_result_driver",
+      "keep_as_driver": true,
+      "review_text": "My attorney at this law firm was very helpful with getting my social security disability approved. I felt him and all the staff did everything in their power to make me feel comfortable and showed their support even to the end.",
+      "judgment": "Keep as an explicit positive outcome row built around approval language."
+    },
+    {
+      "raw_result_index": 104,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 105,
+      "bucket": "generic_praise_not_outcome",
+      "keep_as_driver": false,
+      "review_text": "My attorney Andrew Kinney was very professional and knowledgeable. He knew what was coming ahead of time and explained everything to me as we were at the hearing. Everything went well because of Andrew.",
+      "judgment": "Generic success framing is too praise-like for the first wider outcome pass."
+    },
+    {
+      "raw_result_index": 115,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 116,
+      "bucket": "explicit_negative_outcome_driver",
+      "keep_as_driver": true,
+      "review_text": "Completely disappointed - do not trust this firm with your disability case. They failed me during my appeal. Multiple calls were canceled or no-showed, communication barriers made it impossible, and no attorney ever really reviewed my case or spoke to me.",
+      "judgment": "Keep as an explicit severe negative outcome row."
+    },
+    {
+      "raw_result_index": 133,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 134,
+      "bucket": "too_weak_to_drive",
+      "keep_as_driver": false,
+      "review_text": "Peter Riley and his secretary and assistant are awesome. I was at my very bottom and my world had turned upside down. They assisted me with my case and got me all the help to recover from my accident.",
+      "judgment": "Recovery-help language overlaps too heavily with empathy and general assistance."
+    }
+  ],
+  "explicit_non_drivers": {
+    "generic_praise_not_outcome": [
+      "Would highly recommend",
+      "We appreciate everything you guys did for our family.",
+      "Everything went well because of Andrew."
+    ],
+    "speculative_or_quoted_result_false_positive": [
+      "approved for disability",
+      "hopefully will make a significant difference in the outcome"
+    ],
+    "mixed_outcome_service_boundary": [
+      "never got proper legal help from him",
+      "nothing but wasting my time and money",
+      "nothing was completed at all",
+      "Truly horrible."
+    ],
+    "too_weak_to_drive": [
+      "avoid costs and time not having to deal with probate",
+      "got me all the help to recover from my accident"
+    ]
+  },
+  "recommended_next_move": {
+    "decision": "A",
+    "label": "lane_is_now_clean_enough_for_one_wider_multi_row_outcome_satisfaction_engine_pass",
+    "why": "The lane now has a compact, row-backed driver shortlist with two explicit positive result rows and two explicit negative outcome rows, while the noisy recommendation, hypothetical-result, and service-only rows are explicitly marked as non-drivers."
+  }
+}

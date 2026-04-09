@@ -1,6 +1,6 @@
 # Current Build
 
-Latest completed milestone: `2026-04-08 - Pass 57 - Broad Outcome Satisfaction Benchmark-Design Review`.
+Latest completed milestone: `2026-04-08 - Pass 58 - Outcome Satisfaction Truth Shaping`.
 
 Current product truth:
 - canonical benchmark: `100.00%` agreement, `24/24` clean reviews, `0` disagreements
@@ -8,15 +8,17 @@ Current product truth:
 - readiness: `improved but not demo-safe`
 
 What changed in the latest pass:
-- reviewed the broad `outcome_satisfaction` disagreement set row by row instead of continuing micro phrase work
-- grouped the lane into benchmark-design buckets:
-  - explicit positive result language
-  - generic praise / recommendation that should not count as outcome
-  - explicit negative outcome dissatisfaction
-  - mixed outcome + service complaint rows
-  - speculative or quoted-result false-positive rows
-- confirmed that `outcome_satisfaction` is a real future engine lane, but not clean enough yet for a wider pass because too many current disagreements still mix actual result language with recommendation, gratitude, timeliness, or generic dissatisfaction
-- narrowed the next honest move to one truth-shaping pass on `outcome_satisfaction` before any larger engine pass
+- completed the truth-shaping pass on the broad `outcome_satisfaction` lane
+- wrote a narrow driver-prep artifact at `data/calibration/canonical/outcome_satisfaction_driver_prep_20260408.json`
+- trimmed the lane to a clean future engine shortlist:
+  - positive explicit result drivers:
+    - `real_reviews.csv:50`
+    - `real_reviews.csv:104`
+  - negative explicit outcome drivers:
+    - `real_reviews.csv:66`
+    - `real_reviews.csv:116`
+- explicitly rejected recommendation, gratitude, hypothetical-result, quoted-result, and service-only rows as non-drivers for the next engine pass
+- synced live-state docs so the next honest move is now one wider multi-row `outcome_satisfaction` engine pass, not another design-only audit
 
 Verification:
 - canonical benchmark truth is now `100.00%` agreement, `24/24` clean reviews, `0` disagreements
@@ -32,8 +34,8 @@ Current next pass:
 - keep `newfrontier_vlopez` on the shortlist but staged until its remaining trust ambiguity is resolved
 - keep `morgan_elishaurgent` staged as the lone expectation-setting seed
 - the broad sanity checkpoint held flat, so the selective promotion did not create a broad regression
-- `outcome_satisfaction` is still the next real lane, but the bucket is not yet clean enough for a wider engine pass
-- next useful step is one truth-shaping pass on the broad `outcome_satisfaction` disagreement set to strip out recommendation, gratitude, hypothetical-result, and service-only rows before any wider engine pass or further promotion widening
+- `outcome_satisfaction` is still the next real lane and is now narrowed to a clean driver shortlist
+- next useful step is one wider multi-row `outcome_satisfaction` engine pass using only the prepared driver set, with tests plus canonical rerun plus broad rerun in the same pass
 - treat `professionalism_trust` as the likely runner-up lane, with `empathy_support` and `timeliness_progress` held as later engine-phrase candidates rather than the immediate design pass
 - do not reopen collection or broaden promotion beyond the already accepted ready subset
 - see `docs/REVIEW_ACQUISITION_WAVE80.md` for priorities

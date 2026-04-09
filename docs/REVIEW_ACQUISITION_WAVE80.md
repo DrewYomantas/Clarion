@@ -339,7 +339,10 @@ Current next pass priorities:
 16. the broad `outcome_satisfaction` benchmark-design review is now complete:
    - explicit result rows exist and are usable future engine pressure
    - recommendation, gratitude, hypothetical-result, and service-only rows still contaminate the lane
-17. next useful benchmark-facing step is one truth-shaping pass on the broad `outcome_satisfaction` bucket before any wider engine pass or further promotion widening
+17. the truth-shaping follow-up is now complete:
+   - clean future drivers now live in `data/calibration/canonical/outcome_satisfaction_driver_prep_20260408.json`
+   - recommendation, gratitude, hypothetical-result, and service-only rows are explicitly preserved there as non-drivers
+18. next useful benchmark-facing step is one wider multi-row `outcome_satisfaction` engine pass using only that prepared driver set, with tests plus canonical rerun plus broad rerun in the same pass
 
 ---
 

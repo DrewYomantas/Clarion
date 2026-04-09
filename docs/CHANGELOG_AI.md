@@ -1,5 +1,43 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 58 - Outcome Satisfaction Truth Shaping
+
+### Files Changed
+- `data/calibration/canonical/outcome_satisfaction_driver_prep_20260408.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reviewed the full `15`-row broad `outcome_satisfaction` disagreement lane row by row and assigned each row into one of:
+  - `explicit_result_driver`
+  - `explicit_negative_outcome_driver`
+  - `mixed_outcome_service_boundary`
+  - `generic_praise_not_outcome`
+  - `speculative_or_quoted_result_false_positive`
+  - `too_weak_to_drive`
+- Wrote `data/calibration/canonical/outcome_satisfaction_driver_prep_20260408.json` as the narrow repo-native design artifact for the next wider engine pass.
+- Trimmed the lane to a clean four-row future driver shortlist:
+  - `real_reviews.csv:50`
+  - `real_reviews.csv:104`
+  - `real_reviews.csv:66`
+  - `real_reviews.csv:116`
+- Explicitly preserved the praise-like, hypothetical-result, quoted-result, and service-only rows as non-drivers so the next engine pass does not drift back into them.
+- Synced the live-state docs so the next honest move is now one wider multi-row `outcome_satisfaction` engine pass with tests plus canonical and broad reruns in the same pass.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No reruns
+- No promotion widening
+- No collection reopening
+
+### Verification
+- `benchmark_canonical_v1.json` remained untouched
+- No engine files were edited in this pass
+- Docs and the new driver-prep artifact now point to a clean, row-backed `outcome_satisfaction` engine lane
+
 ## 2026-04-08 - Pass 57 - Broad Outcome Satisfaction Benchmark-Design Review
 
 ### Files Changed
