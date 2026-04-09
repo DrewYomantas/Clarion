@@ -1,5 +1,38 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 55 - Broad Sanity Checkpoint
+
+### Files Changed
+- `data/calibration/runs/20260408_wave80_selective_promotion_broad_rerun/raw_results.json`
+- `data/calibration/runs/20260408_wave80_selective_promotion_broad_rerun/summary.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reran the frozen broad `143-real` sanity comparator after the selective two-row Wave80 promotion.
+- Reused the live deterministic engine with the accepted frozen broad AI comparator truth from `data/calibration/runs/20260328_lowstar_boundary_cleanup_broad_rerun/raw_results.json`.
+- Wrote fresh broad rerun artifacts to `data/calibration/runs/20260408_wave80_selective_promotion_broad_rerun/`.
+- Confirmed the broad result held exactly flat:
+  - `55.94%` agreement
+  - `80/143` clean reviews
+  - `92` disagreements
+  - `0` AI errors
+- Synced the live-state docs so they now say the selective promotion did not create a broad regression and the next honest move is a narrower truth / benchmark-design review on the remaining staged rows.
+
+### Explicitly Not Touched
+- No engine edits
+- No canonical benchmark edits
+- No collection reopening
+- No promotion widening
+
+### Verification
+- `data/calibration/runs/20260408_wave80_selective_promotion_broad_rerun/summary.json` is present and readable
+- `data/calibration/canonical/benchmark_canonical_v1.json` remained untouched
+- No engine files were edited in this pass
+- No canonical rerun was performed in this pass
+
 ## 2026-04-08 - Pass 54 - Selective Promotion Retry
 
 ### Files Changed
