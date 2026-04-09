@@ -1,5 +1,36 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 49 - Expectation Evidence Audit
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Audited the existing in-repo real-review corpus for materially similar expectation-setting evidence without reopening collection or rerunning benchmarks.
+- Confirmed that promise-reversal intake language is still too sparse for a narrow engine pass:
+  - `morgan_elishaurgent` remains the only clean staged intake-promise seed
+  - the nearest corpus neighbors are either already covered by different phrase logic or materially different from the intake-promise pattern
+- Confirmed that filing-delay / submission-delay rows do recur, but they read mostly as expectation-vs-`timeliness_progress` benchmark-design boundary cases rather than a safe new `expectation_setting` phrase family.
+- Synced the live-state docs so they now point to a filing-delay truth-label review before any new expectation-setting engine work.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No collection reopening
+- No canonical rerun
+- No broad rerun
+- No new promotion attempt
+
+### Verification
+- Active canonical gate remains `100.00%`, `22/22` clean reviews, `0` disagreements
+- `data/calibration/canonical/benchmark_canonical_v1.json` remained untouched
+- `data/calibration/canonical/wave80_staged_pressure_20260408.json` remained untouched
+- No engine files were edited in this pass
+- Docs now state that the next move is a filing-delay truth-label review, not an expectation-setting engine pass
+
 ## 2026-04-08 - Pass 48 - Wave80 Staged-Pressure Replay
 
 ### Files Changed

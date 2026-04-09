@@ -1,6 +1,6 @@
 # Current Build
 
-Latest completed milestone: `2026-04-08 - Pass 48 - Wave80 Staged-Pressure Replay`.
+Latest completed milestone: `2026-04-08 - Pass 49 - Expectation Evidence Audit`.
 
 Current product truth:
 - canonical benchmark: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
@@ -8,16 +8,12 @@ Current product truth:
 - readiness: `improved but not demo-safe`
 
 What changed in the latest pass:
-- replayed the preserved staged `7`-row Wave80 pressure set against the live benchmark engine after the narrow positive-cluster recovery pass
-- measured real staged-pressure relief without changing active benchmark truth:
-  - `communication_clarity` improved `1 -> 0`
-  - `communication_responsiveness` improved `4 -> 2`
-  - `professionalism_trust` improved `3 -> 2`
-  - `outcome_satisfaction` improved `3 -> 2`
-  - `expectation_setting` stayed flat at `5`
-- confirmed the clearest row-level payoff landed on `fulton_kellieprenslow`, with partial improvement on `ryangarry_noellevitzthum` and `newfrontier_vlopez`
-- confirmed the remaining staged blocker is still the negative `expectation_setting` cluster, not the positive-cluster slice that just shipped
-- left the active canonical gate file, staged Wave80 pressure artifact, and broad benchmark truth unchanged
+- audited the existing in-repo corpus for real repeated evidence behind any future narrow `expectation_setting` move
+- confirmed promise-reversal intake language is still too sparse to justify phrase work:
+  - `morgan_elishaurgent` remains the only clean staged intake-promise seed
+  - the closest corpus neighbors are either already covered by other phrase logic or materially different from the intake-promise pattern
+- confirmed filing-delay / submission-delay rows do recur, but they read mostly as `timeliness_progress` or mixed expectation-vs-timeliness boundary cases rather than a safe new `expectation_setting` phrase family
+- left the active canonical gate file, staged Wave80 pressure artifact, engine, and broad benchmark truth unchanged
 
 Verification:
 - canonical benchmark truth remains `100.00%` agreement, `22/22` clean reviews, `0` disagreements
@@ -28,10 +24,10 @@ Verification:
 
 Current next pass:
 - the failed Wave80 promotion experiment remains staged calibration pressure, not active benchmark truth
-- next useful step: stay staged and run one more diagnosis/design pass on the residual `expectation_setting`-dominant pressure set before any renewed promotion or broad rerun discussion
-- treat the positive-cluster recovery as partial relief, not as enough evidence for a selective promotion retry yet
+- next useful step: run a benchmark-design review on the filing-delay / submission-delay truth labels before any `expectation_setting` engine work
+- treat promise-reversal intake language as still too sparse for a narrow engine pass
 - keep the broader negative `expectation_setting` and mixed outcome/trust rows staged for now
-- do not reopen collection, rerun broad, or attempt another fresh promotion before that follow-up diagnosis pass
+- do not reopen collection, rerun broad, or attempt another fresh promotion before that truth-label review
 - see `docs/REVIEW_ACQUISITION_WAVE80.md` for priorities
 
 Read `PROJECT_STATE.md`.

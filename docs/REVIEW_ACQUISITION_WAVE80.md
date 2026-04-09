@@ -316,10 +316,11 @@ Current next pass priorities:
 3. the failed `7`-row Wave80 promotion experiment is now preserved as staged calibration pressure, not accepted canonical truth
 4. `5` reviewed Wave80 rows remain unpromoted and should stay outside active benchmark truth unless a later promotion gate is explicitly reopened
 5. the narrow positive phrase recovery pass is now complete and the active canonical gate stayed clean
-6. the staged-only replay is now complete and showed partial relief, not enough payoff for a renewed promotion discussion
-7. next useful step is one more diagnosis / design pass on the unchanged negative `expectation_setting` cluster plus the residual mixed trust/outcome rows
-8. keep the broader negative `expectation_setting` and mixed trust/outcome rows staged until that later pass proves a cleaner repeated pattern
-9. do not reopen collection or attempt another fresh promotion before that follow-up diagnosis pass
+6. the staged-only replay is complete and the corpus audit found no clean repeated intake-promise lane for `expectation_setting`
+7. next useful step is a benchmark-design review on the filing-delay / submission-delay truth labels before any `expectation_setting` engine work
+8. keep promise-reversal intake language staged until more repeated real evidence exists
+9. keep the broader negative `expectation_setting` and mixed trust/outcome rows staged until a later pass proves a cleaner repeated pattern
+10. do not reopen collection or attempt another fresh promotion before that truth-label review
 
 ---
 
