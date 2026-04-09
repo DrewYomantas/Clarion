@@ -336,7 +336,10 @@ Current next pass priorities:
    - `outcome_satisfaction` is the next best benchmark-design lane
    - `professionalism_trust` is the runner-up
    - `empathy_support` and `timeliness_progress` are later engine-phrase lanes, not the immediate design pass
-16. next useful benchmark-facing step is a broad `outcome_satisfaction` benchmark-design review before any wider engine pass or further promotion widening
+16. the broad `outcome_satisfaction` benchmark-design review is now complete:
+   - explicit result rows exist and are usable future engine pressure
+   - recommendation, gratitude, hypothetical-result, and service-only rows still contaminate the lane
+17. next useful benchmark-facing step is one truth-shaping pass on the broad `outcome_satisfaction` bucket before any wider engine pass or further promotion widening
 
 ---
 

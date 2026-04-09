@@ -1,5 +1,36 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 57 - Broad Outcome Satisfaction Benchmark-Design Review
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reviewed the full broad `outcome_satisfaction` disagreement set from the live `143-real` comparator instead of doing another micro phrase pass.
+- Grouped the lane into benchmark-design buckets:
+  - explicit positive result language
+  - generic praise / recommendation that should not count as outcome
+  - explicit negative outcome dissatisfaction
+  - mixed outcome + service complaint rows
+  - speculative or quoted-result false positives
+- Confirmed that `outcome_satisfaction` is still the right next lane, but not yet clean enough for a wider engine pass because too many disagreements still mix actual result language with recommendation, gratitude, hypothetical-result wording, or service-only complaints.
+- Synced the live-state docs so the next honest move is one truth-shaping pass on `outcome_satisfaction` before any wider multi-row engine pass.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No reruns
+- No promotion widening
+- No collection reopening
+
+### Verification
+- `benchmark_canonical_v1.json` remained untouched
+- No engine files were edited in this pass
+- Docs now point to one `outcome_satisfaction` truth-shaping pass before any wider engine work
+
 ## 2026-04-08 - Pass 56 - Broad Disagreement-Cluster Audit
 
 ### Files Changed

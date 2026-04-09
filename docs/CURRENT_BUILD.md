@@ -1,6 +1,6 @@
 # Current Build
 
-Latest completed milestone: `2026-04-08 - Pass 56 - Broad Disagreement-Cluster Audit`.
+Latest completed milestone: `2026-04-08 - Pass 57 - Broad Outcome Satisfaction Benchmark-Design Review`.
 
 Current product truth:
 - canonical benchmark: `100.00%` agreement, `24/24` clean reviews, `0` disagreements
@@ -8,22 +8,22 @@ Current product truth:
 - readiness: `improved but not demo-safe`
 
 What changed in the latest pass:
-- audited the stubborn broad disagreement buckets as a system:
-  - `professionalism_trust`
-  - `outcome_satisfaction`
-  - `empathy_support`
-  - `timeliness_progress`
-- classified `outcome_satisfaction` as the next best benchmark-design lane because it is the clearest large mixed bucket with both `missing_theme` and `extra_theme` pressure, plus evidence that current broad truth often blurs explicit result language with generic praise or generic dissatisfaction
-- classified `professionalism_trust` as mixed but more engine-phrase-leaning than `outcome_satisfaction`
-- classified `empathy_support` and `timeliness_progress` as mainly live engine phrase gaps, not the next design-first lane
-- synced live-state docs so the next honest move is a broad `outcome_satisfaction` benchmark-design review, not another micro-pass or promotion widening
+- reviewed the broad `outcome_satisfaction` disagreement set row by row instead of continuing micro phrase work
+- grouped the lane into benchmark-design buckets:
+  - explicit positive result language
+  - generic praise / recommendation that should not count as outcome
+  - explicit negative outcome dissatisfaction
+  - mixed outcome + service complaint rows
+  - speculative or quoted-result false-positive rows
+- confirmed that `outcome_satisfaction` is a real future engine lane, but not clean enough yet for a wider pass because too many current disagreements still mix actual result language with recommendation, gratitude, timeliness, or generic dissatisfaction
+- narrowed the next honest move to one truth-shaping pass on `outcome_satisfaction` before any larger engine pass
 
 Verification:
 - canonical benchmark truth is now `100.00%` agreement, `24/24` clean reviews, `0` disagreements
 - broad 143-real truth remains `55.94%` agreement, `80/143` clean reviews, `92` disagreements, `0` AI errors from the latest broad checkpoint
 - `benchmark_canonical_v1.json` remained untouched in this pass
 - no engine edits were made in this pass
-- no reruns or promotion widening were performed in this pass
+- no reruns, promotion widening, or benchmark-truth edits were performed in this pass
 
 Current next pass:
 - the failed Wave80 promotion experiment remains staged calibration pressure, not active benchmark truth
@@ -32,7 +32,8 @@ Current next pass:
 - keep `newfrontier_vlopez` on the shortlist but staged until its remaining trust ambiguity is resolved
 - keep `morgan_elishaurgent` staged as the lone expectation-setting seed
 - the broad sanity checkpoint held flat, so the selective promotion did not create a broad regression
-- next useful step is a broad benchmark-design review of the `outcome_satisfaction` disagreement bucket before any wider engine pass or further promotion widening
+- `outcome_satisfaction` is still the next real lane, but the bucket is not yet clean enough for a wider engine pass
+- next useful step is one truth-shaping pass on the broad `outcome_satisfaction` disagreement set to strip out recommendation, gratitude, hypothetical-result, and service-only rows before any wider engine pass or further promotion widening
 - treat `professionalism_trust` as the likely runner-up lane, with `empathy_support` and `timeliness_progress` held as later engine-phrase candidates rather than the immediate design pass
 - do not reopen collection or broaden promotion beyond the already accepted ready subset
 - see `docs/REVIEW_ACQUISITION_WAVE80.md` for priorities
