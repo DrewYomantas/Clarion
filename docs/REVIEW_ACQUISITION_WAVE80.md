@@ -332,7 +332,11 @@ Current next pass priorities:
    - keep on shortlist but not ready: `newfrontier_vlopez`
 13. do not reopen collection or widen promotion beyond the already accepted ready subset
 14. the broad `143-real` sanity checkpoint is now complete and held flat at `55.94%`, `80/143`, `92` disagreements
-15. next useful benchmark-facing step is a narrow truth / benchmark-design review on the remaining staged rows before any further promotion widening or new engine work
+15. the broad disagreement-cluster audit is now complete:
+   - `outcome_satisfaction` is the next best benchmark-design lane
+   - `professionalism_trust` is the runner-up
+   - `empathy_support` and `timeliness_progress` are later engine-phrase lanes, not the immediate design pass
+16. next useful benchmark-facing step is a broad `outcome_satisfaction` benchmark-design review before any wider engine pass or further promotion widening
 
 ---
 

@@ -1,6 +1,6 @@
 # Current Build
 
-Latest completed milestone: `2026-04-08 - Pass 55 - Broad Sanity Checkpoint`.
+Latest completed milestone: `2026-04-08 - Pass 56 - Broad Disagreement-Cluster Audit`.
 
 Current product truth:
 - canonical benchmark: `100.00%` agreement, `24/24` clean reviews, `0` disagreements
@@ -8,21 +8,22 @@ Current product truth:
 - readiness: `improved but not demo-safe`
 
 What changed in the latest pass:
-- reran the broad frozen `143-real` sanity comparator after the selective `2`-row Wave80 promotion
-- confirmed the current live engine holds broad performance exactly flat:
-  - `55.94%` agreement
-  - `80/143` clean reviews
-  - `92` disagreements
-- wrote fresh broad rerun artifacts for this checkpoint without touching the active canonical gate
-- synced live-state docs to the post-promotion broad-checkpoint truth
+- audited the stubborn broad disagreement buckets as a system:
+  - `professionalism_trust`
+  - `outcome_satisfaction`
+  - `empathy_support`
+  - `timeliness_progress`
+- classified `outcome_satisfaction` as the next best benchmark-design lane because it is the clearest large mixed bucket with both `missing_theme` and `extra_theme` pressure, plus evidence that current broad truth often blurs explicit result language with generic praise or generic dissatisfaction
+- classified `professionalism_trust` as mixed but more engine-phrase-leaning than `outcome_satisfaction`
+- classified `empathy_support` and `timeliness_progress` as mainly live engine phrase gaps, not the next design-first lane
+- synced live-state docs so the next honest move is a broad `outcome_satisfaction` benchmark-design review, not another micro-pass or promotion widening
 
 Verification:
 - canonical benchmark truth is now `100.00%` agreement, `24/24` clean reviews, `0` disagreements
-- broad 143-real truth reran and stayed flat at `55.94%` agreement, `80/143` clean reviews, `92` disagreements, `0` AI errors
-- new broad rerun artifacts exist at `data/calibration/runs/20260408_wave80_selective_promotion_broad_rerun/`
+- broad 143-real truth remains `55.94%` agreement, `80/143` clean reviews, `92` disagreements, `0` AI errors from the latest broad checkpoint
 - `benchmark_canonical_v1.json` remained untouched in this pass
 - no engine edits were made in this pass
-- no canonical rerun or promotion widening was performed in this pass
+- no reruns or promotion widening were performed in this pass
 
 Current next pass:
 - the failed Wave80 promotion experiment remains staged calibration pressure, not active benchmark truth
@@ -31,7 +32,8 @@ Current next pass:
 - keep `newfrontier_vlopez` on the shortlist but staged until its remaining trust ambiguity is resolved
 - keep `morgan_elishaurgent` staged as the lone expectation-setting seed
 - the broad sanity checkpoint held flat, so the selective promotion did not create a broad regression
-- next useful step is a narrow truth / benchmark-design review on the remaining staged rows before any further promotion widening or new engine work
+- next useful step is a broad benchmark-design review of the `outcome_satisfaction` disagreement bucket before any wider engine pass or further promotion widening
+- treat `professionalism_trust` as the likely runner-up lane, with `empathy_support` and `timeliness_progress` held as later engine-phrase candidates rather than the immediate design pass
 - do not reopen collection or broaden promotion beyond the already accepted ready subset
 - see `docs/REVIEW_ACQUISITION_WAVE80.md` for priorities
 

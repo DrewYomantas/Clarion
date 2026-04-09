@@ -1,5 +1,36 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 56 - Broad Disagreement-Cluster Audit
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Audited the four stubborn broad disagreement buckets as a system instead of continuing with one-row or two-row truth tweaks:
+  - `professionalism_trust`
+  - `outcome_satisfaction`
+  - `empathy_support`
+  - `timeliness_progress`
+- Classified `outcome_satisfaction` as the next best benchmark-design lane because it is both large and mixed: `7` `missing_theme`, `7` `extra_theme`, and `1` `likely_false_positive`, with repeated boundary drift between explicit result language, generic praise, and generic dissatisfaction.
+- Classified `professionalism_trust` as the runner-up lane: still large and mixed, but more engine-phrase-leaning than `outcome_satisfaction`.
+- Classified `empathy_support` and `timeliness_progress` as mostly live engine phrase-gap families rather than the next design-first pass.
+- Synced the live-state docs so the next honest move is a broad `outcome_satisfaction` benchmark-design review before any wider engine pass or further promotion widening.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No reruns
+- No promotion widening
+- No collection reopening
+
+### Verification
+- `benchmark_canonical_v1.json` remained untouched
+- No engine files were edited in this pass
+- Docs now point to `outcome_satisfaction` as the next best benchmark-design lane and keep `professionalism_trust` as the runner-up
+
 ## 2026-04-08 - Pass 55 - Broad Sanity Checkpoint
 
 ### Files Changed
