@@ -1,6 +1,6 @@
 # Current Build
 
-Latest completed milestone: `2026-04-08 - Pass 50 - Filing-Delay Boundary Truth Review`.
+Latest completed milestone: `2026-04-08 - Pass 51 - Post-Narrowing Staged Replay`.
 
 Current product truth:
 - canonical benchmark: `100.00%` agreement, `22/22` clean reviews, `0` disagreements
@@ -8,28 +8,33 @@ Current product truth:
 - readiness: `improved but not demo-safe`
 
 What changed in the latest pass:
-- reviewed the staged and corpus filing-delay / submission-delay boundary rows row by row
-- narrowed the staged truth so filing-delay stops over-pressuring `expectation_setting`:
-  - `edgardgarcia_anonymous` now treats the filing-delay complaint as `timeliness_progress`, not `expectation_setting`
-  - `newfrontier_vlopez` now treats the delayed-submission complaint as `timeliness_progress`, not `expectation_setting`
-- left active canonical truth unchanged because `legacy_106` still carries a real `expectation_setting` complaint on unexplained guidance, even though the same row also contains a timeliness complaint
-- confirmed filing-delay is not a reusable `expectation_setting` family; it is mostly `timeliness_progress` or mixed boundary truth
+- replayed the staged `7`-row Wave80 pressure set against the current live engine after the filing-delay truth narrowing
+- confirmed the narrowed filing-delay lane removed `2` staged `expectation_setting` misses:
+  - `edgardgarcia_anonymous`
+  - `newfrontier_vlopez`
+- confirmed the remaining staged miss map is now:
+  - `expectation_setting`: `3`
+  - `professionalism_trust`: `2`
+  - `outcome_satisfaction`: `2`
+  - `communication_responsiveness`: `1`
+- confirmed `ryangarry_noellevitzthum` and `fulton_kellieprenslow` now score clean against staged truth, while `newfrontier_vlopez` is down to one remaining trust miss
+- confirmed the remaining pressure is fragmented rather than one clean repeated engine cluster
 
 Verification:
 - canonical benchmark truth remains `100.00%` agreement, `22/22` clean reviews, `0` disagreements
 - broad 143-real truth remains `55.94%` agreement, `80/143` clean reviews, `92` disagreements
-- staged-pressure artifact remains preserved and now reflects the narrowed filing-delay truth
-- the staged artifact and Wave80 label queue now reflect the narrowed filing-delay truth
+- staged-pressure artifact remained untouched in this pass
+- `benchmark_canonical_v1.json` remained untouched in this pass
 - no engine edits were made in this pass
 - no broad rerun, canonical rerun, or promotion attempt were performed in this pass
 
 Current next pass:
 - the failed Wave80 promotion experiment remains staged calibration pressure, not active benchmark truth
-- the filing-delay truth review is now complete; keep `expectation_setting` engine work closed on this lane
-- future pressure from these rows should pivot away from `expectation_setting` and stay with cleaner lanes or timeliness-led review
-- treat promise-reversal intake language as still too sparse for a narrow engine pass
-- keep the broader negative `expectation_setting` and mixed outcome/trust rows staged for now
-- do not reopen collection, rerun broad, or attempt another fresh promotion before a different cleaner pressure lane is identified
+- filing-delay no longer inflates staged `expectation_setting` pressure; keep expectation work closed on that lane
+- the remaining staged pressure is now split across sparse `expectation_setting`, `professionalism_trust`, and `outcome_satisfaction` misses rather than one clean family
+- do not retry promotion yet; two rows are now clean and one is near-clean, but the set is still too fragmented for an honest retry
+- next useful step is another narrow truth / calibration-design review on the remaining mixed expectation, trust, and outcome rows before any new engine pass
+- do not reopen collection, rerun broad, or attempt another fresh promotion before a cleaner repeated family is proven
 - see `docs/REVIEW_ACQUISITION_WAVE80.md` for priorities
 
 Read `PROJECT_STATE.md`.

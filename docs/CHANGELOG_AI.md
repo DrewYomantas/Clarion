@@ -1,5 +1,41 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 51 - Post-Narrowing Staged Replay
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Replayed the staged `7`-row Wave80 pressure set against the live benchmark engine after the filing-delay truth narrowing pass.
+- Confirmed that truth narrowing removed `2` staged `expectation_setting` misses from the replay:
+  - `edgardgarcia_anonymous`
+  - `newfrontier_vlopez`
+- Measured the remaining staged miss map as:
+  - `expectation_setting` `3`
+  - `professionalism_trust` `2`
+  - `outcome_satisfaction` `2`
+  - `communication_responsiveness` `1`
+- Confirmed `ryangarry_noellevitzthum` and `fulton_kellieprenslow` now score clean against staged truth, while `newfrontier_vlopez` is down to a single remaining trust miss.
+- Synced the live-state docs so they no longer imply the filing-delay follow-up is still the active replay target and now point to a narrower truth / calibration-design review on the remaining mixed rows.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No collection reopening
+- No canonical rerun
+- No broad rerun
+- No new promotion attempt
+
+### Verification
+- Active canonical gate remains `100.00%`, `22/22` clean reviews, `0` disagreements
+- `data/calibration/canonical/benchmark_canonical_v1.json` remained untouched
+- `data/calibration/canonical/wave80_staged_pressure_20260408.json` remained untouched
+- No engine files were edited in this pass
+- Docs now state that the filing-delay lane is closed and that the remaining staged pressure is fragmented rather than one clean repeated engine family
+
 ## 2026-04-08 - Pass 50 - Filing-Delay Boundary Truth Review
 
 ### Files Changed
