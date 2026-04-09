@@ -1,5 +1,41 @@
 # AI Pass Changelog
 
+## 2026-04-09 - Pass 59 - Benchmark Baseline Reconciliation
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `data/calibration/runs/20260409_baseline_reconcile_canonical_rerun/raw_results.json`
+- `data/calibration/runs/20260409_baseline_reconcile_canonical_rerun/summary.json`
+- `data/calibration/runs/20260409_baseline_reconcile_broad_rerun/raw_results.json`
+- `data/calibration/runs/20260409_baseline_reconcile_broad_rerun/summary.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reconciled committed `backend/services/benchmark_engine.py` to the live dirty-worktree baseline that had already been producing the documented benchmark truth.
+- Verified the committed baseline now reproduces the active canonical gate at `100.00%`, `24/24`, `0` disagreements.
+- Verified the same committed baseline still reproduces the documented broad `143-real` state at `55.94%`, `80/143`, `92` disagreements.
+- Wrote fresh verification artifacts to:
+  - `data/calibration/runs/20260409_baseline_reconcile_canonical_rerun/`
+  - `data/calibration/runs/20260409_baseline_reconcile_broad_rerun/`
+- Synced the live-state docs so the repo truth now honestly says committed code matches the benchmark baseline already in use.
+
+### Explicitly Not Touched
+- No new family-level calibration work
+- No outcome-satisfaction driver additions
+- No collection reopening
+- No promotion widening
+- No benchmark-truth edits to the active canonical gate
+
+### Verification
+- `backend/tests/test_benchmark_engine.py`: `8 passed`
+- canonical verification: `24/24` clean, `0` disagreements
+- broad verification: `55.94%`, `80/143` clean, `92` disagreements
+- `benchmark_canonical_v1.json` remained untouched
+- blocked `outcome_satisfaction` family-pass hunks stayed out of this pass
+
 ## 2026-04-08 - Pass 58 - Outcome Satisfaction Truth Shaping
 
 ### Files Changed

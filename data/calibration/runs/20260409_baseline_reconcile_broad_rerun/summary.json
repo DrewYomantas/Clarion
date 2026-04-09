@@ -1,0 +1,23 @@
+{
+  "agreement_rate": 0.5594405594405595,
+  "zero_disagreement_reviews": 80,
+  "total_reviews": 143,
+  "total_disagreements": 92,
+  "disagreement_buckets": {
+    "missing_theme": 62,
+    "extra_theme": 26,
+    "wrong_severity": 4
+  },
+  "theme_buckets": {
+    "empathy_support": 14,
+    "expectation_setting": 9,
+    "timeliness_progress": 12,
+    "communication_responsiveness": 9,
+    "professionalism_trust": 15,
+    "outcome_satisfaction": 15,
+    "communication_clarity": 8,
+    "billing_transparency": 2,
+    "fee_value": 4,
+    "office_staff_experience": 4
+  }
+}

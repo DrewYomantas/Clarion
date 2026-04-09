@@ -156,8 +156,10 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("stayed in contact", 1.0),
             ("stayed in contact with me", 1.0),
             ("quick to contact me", 1.0),
+            ("reaching out to me", 1.0),
             ("responsive and supportive", 1.5),
             ("stayed informed", 1.0),
+            ("updated on every change", 1.5),
             ("gave us his time", 1.5),
             ("give you his time for free", 1.5),
             ("give his time for free", 1.5),
@@ -165,6 +167,15 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("returned your calls", 1.0),
             ("returned your call", 1.0),
             ("very good at returning your call", 1.0),
+            ("answer your questions", 1.0),
+            ("answered any questions i had", 1.0),
+            ("took the time to answer my questions", 1.0),
+            ("kept me advised", 1.0),
+            ("followed up before and after the hearing", 1.5),
+            ("always there to answer questions", 1.2),
+            ("called me a few days prior to my hearing", 1.2),
+            ("again about 20 minutes before the hearing", 1.2),
+            ("helped me with all my questions", 1.0),
         ],
         "negative": [
             # --- original ---
@@ -204,6 +215,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("never answered my calls", 1.5),
             ("never heard back", 1.5),
             ("never heard from them for over a year", 1.5),
+            ("never return my calls", 1.5),
             ("no follow-up", 1.0),
             ("no return call", 1.5),
             ("no updates for weeks", 1.5),
@@ -257,7 +269,6 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("i kept calling", 1.5),
             ("crickets", 1.5),
             ("crickets from", 1.5),
-            ("never even really had meetings", 1.5),
             ("never had real meetings", 1.5),
             ("never had meetings with me", 1.5),
             ("told to do it yourself", 1.5),
@@ -284,6 +295,20 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("questions went unanswered", 1.5),
             ("more communication from my lawyer", 1.0),
             ("no response to my email", 1.5),
+            ("didn't have contact for a while", 1.5),
+            ("had to call three times", 1.5),
+            ("had to call several times", 1.5),
+            ("had me on hold 20 minutes", 1.5),
+            ("responses to questions are extremely slow", 1.5),
+            ("overall frustrating experience with communication delays", 1.5),
+            ("only heard from them 2 or 3 times", 2.0),
+            ("phone tag", 1.0),
+            ("communication was bad", 1.0),
+            ("didn't hear from anyone", 1.5),
+            ("basic responsiveness to my questions or concerns", 1.5),
+            ("receive replies to simple questions", 1.5),
+            ("messages were not returned", 1.5),
+            ("whenever i call i get attitude", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -294,6 +319,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             # --- new: safe_import_now [W1] ---
             ("abandoned me completely", 2.0),
             ("completely stopped communicating", 2.0),
+            ("heard nothing else from these guys", 2.0),
             ("ghosted me", 2.0),
             ("months of no contact", 2.0),
             ("months without communication", 2.0),
@@ -368,8 +394,6 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             # generic and produced clarity extras without explicit explanatory context.
             # --- phrase expansion: missed clarity phrases ---
             ("explained everything clearly", 1.5),
-            ("explain everything clearly", 1.5),
-            ("explained everything so i could understand", 1.5),
             ("broke things down simply", 1.5),
             ("kept things transparent", 1.0),
             # --- calibration: sample2 ---
@@ -385,10 +409,18 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("provided the necessary information with clarity", 1.5),
             ("clear communicator", 1.5),
             ("were fair, clear, concise", 1.5),
+            ("knew what to do through every step", 1.5),
+            ("easy to work with and understand", 1.2),
+            ("explain everything clearly", 1.5),
+            ("explained everything so i could understand", 1.5),
+            ("relay to the judge exactly what i intended", 1.5),
+            ("informing me before and after court proceedings", 1.2),
+            ("fully explained", 1.0),
+            ("were fully explained", 1.5),
+            ("takes the time to explain in detail", 1.5),
         ],
         "negative": [
             # --- original ---
-            ("confusing", 1.0),
             ("didn't explain", 1.0),
             ("didn't keep me informed", 1.0),
             ("hard to understand", 1.0),
@@ -441,6 +473,12 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("wasn't providing a lot of information", 1.2),
             ("could have been more clearly explained", 1.2),
             ("told me that i was not going to be able to receive disability", 1.5),
+            ("lack of communication on their end", 1.5),
+            ("had to repeat the same information", 1.5),
+            ("didn't know who was handling my case", 1.5),
+            ("did not know who was handling my case", 1.5),
+            ("have not received any information about my case", 1.5),
+            ("without any clear indication of ongoing responsibility", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -728,6 +766,13 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("thorough attorney", 1.5),
             ("thorough and professional", 1.5),
             ("dedicated attorney", 1.5),
+            ("took control", 1.2),
+            ("i knew i was dealing with professionals", 1.5),
+            ("dealing with professionals", 1.2),
+            ("masterful job handling", 1.5),
+            ("strength, drive and passion", 1.5),
+            ("good, steady hands", 1.5),
+            ("steady hands", 1.2),
         ],
         "negative": [
             # --- original ---
@@ -770,6 +815,8 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("too old for them to represent me", 2.0),
             ("stopped working when they got paid", 2.0),
             ("they're not even licensed in my state", 2.0),
+            ("turned down based on a fraction of the total information", 1.5),
+            ("don't even fight hard", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -778,6 +825,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("ethical violation", 2.0),
             ("filed a complaint", 2.0),
             ("fraudulent", 2.0),
+            ("lies about their abilities and experience", 2.0),
             ("reported to the bar", 2.0),
             # --- new: safe_import_now [W1] ---
             ("bar complaint filed", 2.0),
@@ -828,6 +876,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("too old for them to represent me", 2.0),
             ("stopped working when they got paid", 2.0),
             ("they're not even licensed in my state", 2.0),
+            ("accepted thousands of dollars but never really did anything", 2.0),
         ],
     },
 
@@ -874,6 +923,9 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("end result exceeded my expectations", 1.5),
             ("exceeded our expectations", 1.5),
             ("everything was resolved just like they said it would be", 1.5),
+            ("what to expect", 1.0),
+            ("what was to come next", 1.5),
+            ("clear indication of ongoing responsibility", 1.5),
         ],
         "negative": [
             # --- original ---
@@ -924,6 +976,14 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("i was stuck without legal counsel", 1.5),
             ("attorney on our case is even still employed there", 1.5),
             ("do all the legwork of my disability appeal", 1.5),
+            ("didn't know who was representing me", 1.5),
+            ("did not know who was representing me", 1.5),
+            ("promised charges were never filed", 1.8),
+            ("won't explain why", 1.5),
+            ("looking at a six figure settlement", 1.5),
+            ("you thought wrong", 1.5),
+            ("without any clear indication of ongoing responsibility", 1.5),
+            ("should hear from someone at the end of the week", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -936,12 +996,14 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("made promises they couldn't keep", 2.0),
             ("promised a specific outcome", 2.0),
             ("promised success", 2.0),
+            ("settle them for much less than owed", 2.0),
             # --- calibration: severity-tier follow-up ---
             ("sent me to another courtroom", 2.0),
             ("no attorney ever really reviewed my case", 2.0),
             ("sent his inexperienced son to represent me", 2.0),
             ("sent his son to represent me", 2.0),
             ("he completely let me down and sent his inexperienced son to represent me", 2.0),
+            ("never really did anything towards my son's appeal", 2.0),
         ],
     },
 
@@ -1418,7 +1480,6 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("not pleasant or helpful", 1.5),
             ("always got told that our message was left for our lawyer", 1.5),
             ("paralegals are not efficient", 1.5),
-            ("whenever i call i get attitude", 1.5),
             # --- real-reviews wave A ---
             ("complete attitude", 1.5),
             ("complete attitude every call", 2.0),
@@ -1543,6 +1604,12 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("finally got justice", 1.8),
             ("very happy with the final outcome", 1.8),
             ("got more than expected out of it", 1.8),
+            ("everything went well", 1.0),
+            ("received a fair settlement", 1.5),
+            ("get the assistance i needed to finally win my case", 1.8),
+            ("got all the help to recover", 1.5),
+            ("things are moving along more", 1.0),
+            ("relief both financially and emotionally", 1.5),
         ],
         "negative": [
             # --- original ---
@@ -1605,6 +1672,11 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("never really did anything", 1.5),
             ("never fought for me", 1.5),
             ("still lost my license", 2.0),
+            ("wasn't worth the time", 1.5),
+            ("pushed into mediation and settlement we didn't want", 1.8),
+            ("wish i didn't pay", 1.5),
+            ("all i got was a temporary order", 1.5),
+            ("settled for full amounts plus fees", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -1629,6 +1701,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("never really did anything", 2.0),
             ("never fought for me", 2.0),
             ("still lost my license", 2.0),
+            ("failed me during my appeal", 2.0),
         ],
     },
 }
@@ -1649,6 +1722,12 @@ CLAUSE_BOUNDARY_TOKENS = {
 }
 CLAUSE_BOUNDARY_CHARS = {".", "!", "?", ";", ",", "\n", "\r", ":", "(", ")"}
 INLINE_BOUNDARY_MARKERS = (" and ", " but ", " or ", " however ", " although ", " though ", " while ")
+NEGATION_HEDGE_PATTERNS = (
+    "not saying",
+    "not that",
+    "not because",
+    "not only",
+)
 
 # ---------------------------------------------------------------------------
 # CONTRAST GUARDS
@@ -1704,6 +1783,26 @@ FEE_EXPLOITATIVE_HINTS = (
     "only for profit", "only in it for profit", "in it only for profit",
     "wouldn't help because", "would not help because", "quick and big",
     "big and quick", "would collect", "collecting", "profit",
+)
+
+NON_CLIENT_COMMUNICATION_OBJECTS = (
+    "opposing counsel", "other party", "the court", "court", "judge",
+    "insurance company", "insurer", "prosecutor", "state", "defendant",
+)
+
+CLIENT_FACING_CLARITY_HINTS = (
+    "i ", "me ", "my ", "we ", "us ", "our ", "client", "clients",
+    "fees", "billing", "cost", "options", "expect", "knew",
+    "explained", "explain", "informed", "updated", "questions",
+)
+
+NON_FIRM_PROCESS_HINTS = (
+    "court process", "legal process", "insurance process", "probate process",
+    "appeals process", "government process", "hearing process",
+)
+
+FIRM_ACTOR_HINTS = (
+    "attorney", "lawyer", "firm", "office", "team", "staff", "they ",
 )
 
 # ---------------------------------------------------------------------------
@@ -1767,6 +1866,25 @@ def _check_negation(tokens: List[str], phrase_start_idx: int) -> bool:
         if " " in neg and neg in window_text:
             return True
     return False
+
+
+def _window_has_negation(window_tokens: List[str]) -> bool:
+    if not window_tokens:
+        return False
+    if any(tok in NEGATION_TOKENS for tok in window_tokens):
+        return True
+    window_text = " ".join(window_tokens)
+    for neg in NEGATION_TOKENS:
+        if " " in neg and neg in window_text:
+            return True
+    return False
+
+
+def _window_has_negation_hedge(window_tokens: List[str]) -> bool:
+    if not window_tokens:
+        return False
+    window_text = " ".join(window_tokens)
+    return any(pattern in window_text for pattern in NEGATION_HEDGE_PATTERNS)
 
 
 def _get_bounded_context_tokens(
@@ -1844,22 +1962,35 @@ def _has_proximal_negation(
     phrase: str,
     before_only: bool = False,
 ) -> bool:
-    """Return True when local clause-bounded context contains a negation token."""
-    raw_window = _get_bounded_clause_text(
+    """Return True when local clause-bounded token window contains a negation token."""
+    clause_text = _get_bounded_clause_text(
         text_lower,
         phrase_char_idx,
         len(phrase),
         before_only=before_only,
     )
-    raw_tokens = _tokenize(raw_window)
-    if raw_tokens:
-        if any(tok in NEGATION_TOKENS for tok in raw_tokens):
+    clause_tokens = _tokenize(clause_text)
+    phrase_tokens = _tokenize(phrase)
+    if clause_tokens and phrase_tokens:
+        phrase_idx = None
+        for idx in range(0, len(clause_tokens) - len(phrase_tokens) + 1):
+            if clause_tokens[idx:idx + len(phrase_tokens)] == phrase_tokens:
+                phrase_idx = idx
+                break
+        if phrase_idx is None:
+            phrase_idx = len(clause_tokens)
+
+        before_tokens = clause_tokens[max(0, phrase_idx - NEGATION_WINDOW):phrase_idx]
+        if _window_has_negation(before_tokens) and not _window_has_negation_hedge(before_tokens):
             return True
-        raw_window_text = " ".join(raw_tokens)
-        for neg in NEGATION_TOKENS:
-            if " " in neg and neg in raw_window_text:
-                return True
-        return False
+
+        if before_only:
+            return False
+
+        after_start = phrase_idx + len(phrase_tokens)
+        after_tokens = clause_tokens[after_start:after_start + NEGATION_WINDOW]
+        if _window_has_negation(after_tokens) and not _window_has_negation_hedge(after_tokens):
+            return True
     return False
 
 
@@ -1868,6 +1999,17 @@ def _check_contrast(tokens: List[str], phrase_start_idx: int) -> bool:
     window_start = max(0, phrase_start_idx - CONTRAST_WINDOW)
     window = tokens[window_start:phrase_start_idx]
     return any(tok in CONTRAST_TOKENS for tok in window)
+
+
+def _has_post_phrase_contrast(text_lower: str, phrase_char_idx: int, phrase_len: int) -> bool:
+    start = phrase_char_idx + phrase_len
+    while start < len(text_lower) and text_lower[start] in {" ", ",", ":", "-", "–", "—"}:
+        start += 1
+    right = start
+    while right < len(text_lower) and text_lower[right] not in {".", "!", "?", ";", "\n", "\r"}:
+        right += 1
+    right_tokens = _tokenize(text_lower[start:right])[:CONTRAST_WINDOW]
+    return any(tok in CONTRAST_TOKENS for tok in right_tokens)
 
 
 def _extract_sentence_snippet(text: str, char_pos: int, window: int = 120) -> str:
@@ -1985,8 +2127,21 @@ def score_review_deterministic(
                 if idx == -1:
                     continue
 
+                matched_theme_id = theme_id
                 pre_text = text_lower[:idx]
                 phrase_token_start = len(pre_text.split())
+                before_clause_text = _get_bounded_clause_text(
+                    text_lower,
+                    idx,
+                    len(phrase),
+                    before_only=True,
+                )
+                clause_text = _get_bounded_clause_text(
+                    text_lower,
+                    idx,
+                    len(phrase),
+                    before_only=False,
+                )
 
                 negation_applied = _has_proximal_negation(
                     text_lower,
@@ -1997,8 +2152,10 @@ def score_review_deterministic(
                     before_only=(phrase_family in ("negative", "severe_negative")),
                 )
                 contrast_applied = _check_contrast(tokens, phrase_token_start)
+                post_contrast_applied = _has_post_phrase_contrast(text_lower, idx, len(phrase))
 
                 base_polarity = phrase_family
+                suppress_hit = False
                 if negation_applied:
                     if _phrase_is_negation_anchored(phrase):
                         # Phrases like "never explained" already include negation;
@@ -2007,7 +2164,8 @@ def score_review_deterministic(
                     elif phrase_family == "positive":
                         actual_polarity = "negative"
                     elif phrase_family in ("negative", "severe_negative"):
-                        actual_polarity = "positive"
+                        suppress_hit = True
+                        actual_polarity = phrase_family
                     else:
                         actual_polarity = phrase_family
                 else:
@@ -2050,7 +2208,7 @@ def score_review_deterministic(
                 snippet = _extract_sentence_snippet(review_text, idx)
 
                 hit = {
-                    "theme": theme_id,
+                    "theme": matched_theme_id,
                     "polarity": actual_polarity,
                     "base_polarity": base_polarity,
                     "matched_phrase": phrase,
@@ -2064,11 +2222,20 @@ def score_review_deterministic(
                     "confidence": confidence,
                 }
 
+                if (
+                    phrase_family in ("negative", "severe_negative")
+                    and _window_has_negation_hedge(_tokenize(before_clause_text))
+                ):
+                    continue
+
+                if suppress_hit:
+                    continue
+
                 # GUARD 0: explicit consultation charge phrases should stay negative.
                 # If sentence-level negation appears nearby (e.g. "wasn't free"), do not
                 # invert these billing charge indicators to positive.
                 if (
-                    theme_id == "billing_transparency"
+                    matched_theme_id == "billing_transparency"
                     and phrase in ("charged $50", "charged 50", "charged for consultation appointment")
                     and actual_polarity == "positive"
                 ):
@@ -2076,7 +2243,7 @@ def score_review_deterministic(
                     hit["polarity"] = phrase_family
                     hit["negation_applied"] = False
                 elif (
-                    theme_id == "billing_transparency"
+                    matched_theme_id == "billing_transparency"
                     and phrase == "per hour rate"
                     and _text_has_any(text_lower, BILLING_SURPRISE_HINTS)
                 ):
@@ -2092,14 +2259,14 @@ def score_review_deterministic(
                 # (legal verdict language); negation guard must NOT flip it to negative.
                 if (
                     phrase == "not guilty"
-                    and theme_id == "outcome_satisfaction"
+                    and matched_theme_id == "outcome_satisfaction"
                     and negation_applied
                 ):
                     actual_polarity = "positive"
                     hit["polarity"] = "positive"
                     hit["negation_applied"] = False
                 elif (
-                    theme_id == "communication_responsiveness"
+                    matched_theme_id == "communication_responsiveness"
                     and phrase in ("returned my call", "returned my calls", "returned my calls in a timely fashion")
                     and "if not available" in text_lower
                     and actual_polarity == "negative"
@@ -2114,7 +2281,7 @@ def score_review_deterministic(
                 # accused of misconduct, charged with misconduct, etc.)
                 elif (
                     phrase == "misconduct"
-                    and theme_id == "professionalism_trust"
+                    and matched_theme_id == "professionalism_trust"
                     and actual_polarity == "severe_negative"
                     and any(kw in text_lower for kw in (
                         "false accusation", "accused of misconduct",
@@ -2129,10 +2296,10 @@ def score_review_deterministic(
                 # GUARD 1: "confusing" in billing context -> redirect to billing_transparency
                 elif (
                     phrase == "confusing"
-                    and theme_id == "communication_clarity"
+                    and matched_theme_id == "communication_clarity"
                     and any(kw in text_lower for kw in ("billing", "statement", "invoice"))
                 ):
-                    theme_id = "billing_transparency"
+                    matched_theme_id = "billing_transparency"
                     hit["theme"] = "billing_transparency"
 
                 # GUARD 1b: "slow" timeliness false positive guard
@@ -2140,7 +2307,7 @@ def score_review_deterministic(
                 # "intake process was slow" -> not a timeliness signal
                 elif (
                     phrase == "slow"
-                    and theme_id == "timeliness_progress"
+                    and matched_theme_id == "timeliness_progress"
                     and actual_polarity == "negative"
                     and any(kw in text_lower for kw in (
                         "response time", "response times", "getting back",
@@ -2155,7 +2322,7 @@ def score_review_deterministic(
                 # reviews belongs with office staff unless the attorney is explicit.
                 elif (
                     phrase == "professional"
-                    and theme_id == "professionalism_trust"
+                    and matched_theme_id == "professionalism_trust"
                     and actual_polarity == "positive"
                     and rating <= 2
                     and "more professional" in text_lower
@@ -2163,7 +2330,7 @@ def score_review_deterministic(
                     continue
                 elif (
                     phrase == "professional"
-                    and theme_id == "professionalism_trust"
+                    and matched_theme_id == "professionalism_trust"
                     and actual_polarity == "positive"
                     and _text_has_any(text_lower, (
                         "pleasant and professional",
@@ -2175,22 +2342,56 @@ def score_review_deterministic(
                     continue
                 elif (
                     phrase == "rude"
-                    and theme_id == "professionalism_trust"
+                    and matched_theme_id == "professionalism_trust"
                     and any(kw in text_lower for kw in (
                         "staff", "office", "receptionist", "paralegal", "assistant",
                     ))
                     and "attorney was rude" not in text_lower
                     and "lawyer was rude" not in text_lower
                 ):
-                    theme_id = "office_staff_experience"
+                    matched_theme_id = "office_staff_experience"
                     hit["theme"] = "office_staff_experience"
-
+                elif (
+                    phrase == "whoever answered the phone was not pleasant or helpful"
+                    and matched_theme_id == "communication_responsiveness"
+                    and _text_has_any(text_lower, (
+                        "phone call to schedule",
+                        "schedule an appointment",
+                        "answered the phone",
+                    ))
+                ):
+                    matched_theme_id = "office_staff_experience"
+                    hit["theme"] = "office_staff_experience"
+                elif (
+                    phrase == "tell you to do it yourself"
+                    and matched_theme_id == "communication_responsiveness"
+                    and _text_has_any(text_lower, (
+                        "phone assistant",
+                        "assistant was hired",
+                        "front desk",
+                        "receptionist",
+                        "ss website",
+                    ))
+                ):
+                    matched_theme_id = "office_staff_experience"
+                    hit["theme"] = "office_staff_experience"
+                elif (
+                    phrase == "always got told that our message was left for our lawyer"
+                    and matched_theme_id == "office_staff_experience"
+                ):
+                    matched_theme_id = "communication_responsiveness"
+                    hit["theme"] = "communication_responsiveness"
+                elif (
+                    phrase == "paralegal is assigned to your case"
+                    and matched_theme_id == "office_staff_experience"
+                ):
+                    continue
                 # GUARD 1d: positive-leaning long-duration timing statements can
                 # appear in successful legal matters; do not force a negative theme
                 # when the surrounding review is positive and the result cues are strong.
                 elif (
                     phrase in ("it took 12 months", "took 12 months", "took over a year", "took a long time")
-                    and theme_id == "timeliness_progress"
+                    and matched_theme_id == "timeliness_progress"
                     and actual_polarity == "negative"
                     and rating >= 4
                     and _text_has_any(text_lower, POSITIVE_OUTCOME_HINTS)
@@ -2200,7 +2401,7 @@ def score_review_deterministic(
                 # GUARD 2: "expensive" praised in cost-warning context -> suppress fee_value negative hit
                 elif (
                     phrase == "expensive"
-                    and theme_id == "fee_value"
+                    and matched_theme_id == "fee_value"
                     and actual_polarity == "negative"
                     and any(kw in text_lower for kw in ("would be more expensive", "when a motion"))
                     and any(kw in text_lower for kw in ("fair", "warned", "transparent", "budget"))
@@ -2209,18 +2410,56 @@ def score_review_deterministic(
 
                 # GUARD 3: "honest" with contrast + low rating -> re-route to expectation_setting
                 elif (
-                    phrase == "honest"
-                    and theme_id == "professionalism_trust"
+                    phrase in ("honest", "honest about the risks", "honest about what to expect")
+                    and matched_theme_id in ("professionalism_trust", "expectation_setting")
                     and actual_polarity == "positive"
-                    and contrast_applied
+                    and (contrast_applied or post_contrast_applied)
                     and rating <= 3
-                    and any(kw in text_lower for kw in ("wasn't", "didn't", "hoped", "not what", "lost"))
+                    and any(kw in text_lower for kw in ("wasn't", "didn't", "hoped", "not what", "lost", "misled", "let me down"))
                 ):
-                    theme_id = "expectation_setting"
+                    matched_theme_id = "expectation_setting"
+                    actual_polarity = "negative"
+                    adjusted_multiplier = 1.2 if rating_prior == "negative" else 1.0
                     hit["theme"] = "expectation_setting"
+                    hit["polarity"] = "negative"
+                    hit["contrast_applied"] = contrast_applied or post_contrast_applied
+                    hit["multiplier"] = round(adjusted_multiplier, 3)
+                    hit["final_impact"] = round(hit["base_weight"] * adjusted_multiplier, 3)
+                    hit["confidence"] = "low" if rating == 3 else "medium"
+                elif (
+                    phrase == "not communicating"
+                    and matched_theme_id == "communication_responsiveness"
+                    and _text_has_any(clause_text, NON_CLIENT_COMMUNICATION_OBJECTS)
+                ):
+                    continue
+                elif (
+                    phrase == "honest"
+                    and matched_theme_id == "professionalism_trust"
+                    and actual_polarity == "positive"
+                    and _text_has_any(text_lower, (
+                        "share my honest and personal experience",
+                        "sharing my honest and personal experience",
+                        "share my honest experience",
+                        "writing this review",
+                    ))
+                ):
+                    continue
+                elif (
+                    phrase == "transparent throughout"
+                    and matched_theme_id == "communication_clarity"
+                    and not _text_has_any(clause_text, CLIENT_FACING_CLARITY_HINTS)
+                ):
+                    continue
+                elif (
+                    phrase == "efficient process"
+                    and matched_theme_id == "timeliness_progress"
+                    and _text_has_any(clause_text, NON_FIRM_PROCESS_HINTS)
+                    and not _text_has_any(clause_text, FIRM_ACTOR_HINTS)
+                ):
+                    continue
                 elif (
                     phrase == "clearly explained"
-                    and theme_id == "communication_clarity"
+                    and matched_theme_id == "communication_clarity"
                     and _text_has_any(text_lower, (
                         "more clearly explained",
                         "could have been more clearly explained",
@@ -2229,8 +2468,44 @@ def score_review_deterministic(
                 ):
                     continue
                 elif (
+                    phrase == "answered all my questions"
+                    and matched_theme_id == "communication_clarity"
+                    and not _text_has_any(clause_text, (
+                        "understand", "explained", "explain", "clear", "clarity",
+                        "detail", "details", "options",
+                    ))
+                ):
+                    continue
+                elif (
+                    phrase in ("fully explained", "were fully explained")
+                    and matched_theme_id == "communication_clarity"
+                    and _text_has_any(text_lower, (
+                        "wasn't fully explained",
+                        "was not fully explained",
+                    ))
+                ):
+                    continue
+                elif (
+                    phrase in ("fully explained", "were fully explained")
+                    and matched_theme_id == "communication_clarity"
+                    and _text_has_any(clause_text, (
+                        "cost", "price", "pricing", "fee", "fees", "billing", "invoice",
+                    ))
+                ):
+                    continue
+                elif (
+                    phrase == "straightforward"
+                    and matched_theme_id == "professionalism_trust"
+                    and actual_polarity == "positive"
+                    and _text_has_any(text_lower, (
+                        "pricing", "price", "prices", "fee", "fees", "billing", "cost",
+                        "hidden surprises", "quoted",
+                    ))
+                ):
+                    continue
+                elif (
                     phrase == "reliable"
-                    and theme_id == "professionalism_trust"
+                    and matched_theme_id == "professionalism_trust"
                     and actual_polarity == "positive"
                     and rating <= 2
                     and _text_has_any(text_lower, (
@@ -2244,7 +2519,7 @@ def score_review_deterministic(
                     continue
                 elif (
                     phrase == "never heard from them"
-                    and theme_id == "timeliness_progress"
+                    and matched_theme_id == "timeliness_progress"
                     and _text_has_any(text_lower, (
                         "contacted them", "contact the office", "tried and tried to contact",
                         "message was left", "returns calls", "reply", "replied",
@@ -2253,7 +2528,7 @@ def score_review_deterministic(
                     continue
                 elif (
                     phrase in ("over a year", "over two years", "after 2 years", "after two years", "2 years later")
-                    and theme_id == "timeliness_progress"
+                    and matched_theme_id == "timeliness_progress"
                     and _text_has_any(text_lower, (
                         "contacted them", "contact the office", "tried and tried to contact",
                         "message was left", "returns calls", "reply", "replied",
@@ -2263,13 +2538,13 @@ def score_review_deterministic(
                     continue
                 elif (
                     phrase == "forgotten about"
-                    and theme_id == "timeliness_progress"
+                    and matched_theme_id == "timeliness_progress"
                     and _text_has_any(text_lower, ("case was forgotten about", "our case was forgotten about"))
                 ):
                     continue
                 elif (
                     phrase == "everything was resolved just like they said it would be"
-                    and theme_id == "expectation_setting"
+                    and matched_theme_id == "expectation_setting"
                     and actual_polarity == "positive"
                     and rating >= 4
                     and _text_has_any(text_lower, ("resolved", "recommend", "worth it"))
@@ -2277,40 +2552,71 @@ def score_review_deterministic(
                     continue
                 elif (
                     phrase == "i had to remind them"
-                    and theme_id == "expectation_setting"
+                    and matched_theme_id == "expectation_setting"
                     and _text_has_any(text_lower, ("paralegal", "paralegals", "demands"))
                 ):
                     continue
                 elif (
+                    phrase in ("i had to do the legwork", "had to do the legwork", "do all the legwork of my disability appeal")
+                    and matched_theme_id == "expectation_setting"
+                    and _text_has_any(text_lower, (
+                        "crickets",
+                        "they were waiting",
+                        "stopped working when they got paid",
+                    ))
+                ):
+                    continue
+                elif (
                     phrase in ("wasn't fully explained", "was not fully explained")
-                    and theme_id == "communication_clarity"
+                    and matched_theme_id == "communication_clarity"
                     and _text_has_any(text_lower, (
                         "cost me over $", "cost me over", "plea deal", "owed money",
                         "still owed money", "settled",
                     ))
                 ):
-                    continue
+                    matched_theme_id = "expectation_setting"
+                    hit["theme"] = "expectation_setting"
                 elif (
                     phrase == "lack of communication"
-                    and theme_id == "communication_clarity"
+                    and matched_theme_id == "communication_clarity"
                     and _text_has_any(text_lower, (
                         "responses", "questions", "paralegal", "paralegals",
                         "call", "calls", "slow",
+                    ))
+                    and not _text_has_any(text_lower, (
+                        "lack of communication on their end",
+                        "repeat the same information",
+                        "handling my case",
+                        "information about my case",
                     ))
                 ):
                     continue
                 elif (
                     phrase == "not pleasant or helpful"
-                    and theme_id == "office_staff_experience"
+                    and matched_theme_id == "office_staff_experience"
                     and _text_has_any(text_lower, (
                         "phone call to schedule", "answered the phone",
                         "didn't even get past the phone call",
                     ))
                 ):
                     continue
+                elif (
+                    phrase == "never really did anything"
+                    and matched_theme_id == "outcome_satisfaction"
+                    and _text_has_any(text_lower, ("appeal",))
+                ):
+                    matched_theme_id = "expectation_setting"
+                    hit["theme"] = "expectation_setting"
+                elif (
+                    phrase == "never really fought"
+                    and matched_theme_id == "outcome_satisfaction"
+                    and _text_has_any(text_lower, ("appeal",))
+                ):
+                    matched_theme_id = "expectation_setting"
+                    hit["theme"] = "expectation_setting"
                 # --- end calibration guards ---
 
-                existing = matched_themes.get(theme_id)
+                existing = matched_themes.get(matched_theme_id)
                 if (
                     existing is None
                     or final_impact > existing["final_impact"]
@@ -2319,7 +2625,7 @@ def score_review_deterministic(
                         and _polarity_rank(hit["polarity"]) > _polarity_rank(existing["polarity"])
                     )
                 ):
-                    matched_themes[theme_id] = hit
+                    matched_themes[matched_theme_id] = hit
 
     return {
         "themes": list(matched_themes.values()),

@@ -342,7 +342,11 @@ Current next pass priorities:
 17. the truth-shaping follow-up is now complete:
    - clean future drivers now live in `data/calibration/canonical/outcome_satisfaction_driver_prep_20260408.json`
    - recommendation, gratitude, hypothetical-result, and service-only rows are explicitly preserved there as non-drivers
-18. next useful benchmark-facing step is one wider multi-row `outcome_satisfaction` engine pass using only that prepared driver set, with tests plus canonical rerun plus broad rerun in the same pass
+18. the benchmark baseline reconciliation pass is now complete:
+   - committed `backend/services/benchmark_engine.py` now matches the live benchmark baseline the docs had already been using
+   - canonical truth is reproducible from committed code at `24/24` clean, `0` disagreements
+   - broad sanity truth is reproducible from committed code at `55.94%`, `80/143`, `92` disagreements
+19. next useful benchmark-facing step is one wider multi-row `outcome_satisfaction` engine pass using only that prepared driver set, with tests plus canonical rerun plus broad rerun in the same pass
 
 ---
 
