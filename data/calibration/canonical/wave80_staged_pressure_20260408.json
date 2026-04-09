@@ -4,7 +4,7 @@
   "artifact_type": "wave80_staged_calibration_pressure",
   "status": "staged_not_in_active_canonical_gate",
   "source_commit": "dfa5517bc86f021a38fe8371738f28556ec7c307",
-  "notes": "These seven reviewed Wave80 rows were promoted experimentally into the active canonical gate on 2026-04-08. The promotion exposed real repeated misses but was not accepted as the new active gate. The rows are preserved here as staged calibration pressure for the next focused benchmark-design / calibration pass. Pass 52 re-triage narrowed the set into a 3-row promotion shortlist, 1 staged-pressure seed, and 3 downgraded fragmented rows.",
+  "notes": "These seven reviewed Wave80 rows were promoted experimentally into the active canonical gate on 2026-04-08. The first 7-row promotion exposed real repeated misses and was not accepted as the new active gate. The rows were preserved here as staged calibration pressure, then re-triaged. On 2026-04-08 a very selective retry promoted ryangarry_noellevitzthum and fulton_kellieprenslow into the active canonical gate, while newfrontier_vlopez remained on the shortlist and morgan_elishaurgent remained staged as the only expectation-setting seed.",
   "restored_active_gate_target": {
     "agreement_rate": 1.0,
     "clean_reviews": "22/22",
@@ -34,11 +34,11 @@
       "communication_clarity"
     ],
     "current_retriage": {
-      "promotion_shortlist_count": 3,
+      "promotion_shortlist_count": 1,
       "keep_staged_pressure_count": 1,
       "downgrade_out_of_staged_pressure_count": 3,
-      "recommended_next_move": "A",
-      "note": "Shortlist truth review after the re-triage found two rows ready for a very selective promotion retry and one row that should stay on the shortlist but remain staged because professionalism-trust truth is not stable enough yet.",
+      "recommended_next_move": "completed_selective_retry",
+      "note": "Selective promotion retry promoted the two ready shortlist rows into the active canonical gate. New Frontier stays on the shortlist but staged because professionalism-trust truth is still not stable enough.",
       "shortlist_ready_count": 2,
       "shortlist_not_ready_count": 1,
       "shortlist_ready_rows": [
@@ -47,6 +47,11 @@
       ],
       "shortlist_not_ready_rows": [
         "newfrontier_vlopez"
+      ],
+      "selective_promotion_retry_ready_count": 2,
+      "selective_promotion_retry_promoted_rows": [
+        "ryangarry_noellevitzthum",
+        "fulton_kellieprenslow"
       ]
     }
   },
@@ -626,15 +631,15 @@
           "disagreement_priority": 1
         }
       ],
-      "current_disposition": "promotion_shortlist",
-      "current_disposition_note": "Promotion shortlist. Ready for selective promotion retry: this row scores clean against staged truth, has stable professionalism-trust and outcome-satisfaction evidence, and no longer depends on unresolved boundary judgment.",
+      "current_disposition": "promoted_to_active_canonical",
+      "current_disposition_note": "Promoted to active canonical truth in the selective retry after the shortlist truth review confirmed the row was benchmark-stable enough for pressure.",
       "current_live_misses": [],
       "removed_by_truth_narrowing": [],
       "current_extra_hits": [
         "empathy_support"
       ],
-      "shortlist_review_status": "ready_for_selective_promotion",
-      "shortlist_review_note": "Ready. Trust, clarity, responsiveness, and dismissal-outcome truth are stable, text-rich, and no longer rely on unresolved boundary judgment; the extra empathy hit does not undercut benchmark pressure value."
+      "shortlist_review_status": "promoted_to_active_canonical",
+      "shortlist_review_note": "Promoted to active canonical truth in the selective retry on 2026-04-08."
     },
     {
       "benchmark_id": "exp_wave80_fulton_kellieprenslow_5",
@@ -705,13 +710,13 @@
           "disagreement_priority": 2
         }
       ],
-      "current_disposition": "promotion_shortlist",
-      "current_disposition_note": "Promotion shortlist. Ready for selective promotion retry: this row scores clean against staged truth, its outcome and communication labels are stable, and the prior bare-professional trust spillover no longer makes the row boundary-ambiguous.",
+      "current_disposition": "promoted_to_active_canonical",
+      "current_disposition_note": "Promoted to active canonical truth in the selective retry after the shortlist truth review confirmed the row was benchmark-stable enough for pressure.",
       "current_live_misses": [],
       "removed_by_truth_narrowing": [],
       "current_extra_hits": [],
-      "shortlist_review_status": "ready_for_selective_promotion",
-      "shortlist_review_note": "Ready. Clarity, responsiveness, and approval-outcome truth are stable and text-rich, while the old bare-professional trust spillover is already excluded from truth and no longer creates benchmark-design ambiguity."
+      "shortlist_review_status": "promoted_to_active_canonical",
+      "shortlist_review_note": "Promoted to active canonical truth in the selective retry on 2026-04-08."
     }
   ]
 }

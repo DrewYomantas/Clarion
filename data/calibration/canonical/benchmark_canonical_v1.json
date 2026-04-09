@@ -11,26 +11,25 @@
     "outcome_satisfaction"
   ],
   "stratification_summary": {
-    "record_count": 22,
+    "record_count": 24,
     "star_rating": {
       "1": 10,
       "2": 2,
       "3": 2,
       "4": 6,
-      "5": 2
+      "5": 4
     },
     "sentiment_mix": {
       "single_negative": 14,
       "mixed": 3,
-      "single_positive": 5
+      "single_positive": 7
     },
     "length_bucket": {
-      "short": 0,
-      "medium": 18,
-      "long": 4
+      "medium": 19,
+      "long": 5
     },
-    "practice_area_known_records": 7,
-    "geography_known_records": 7
+    "practice_area_known_records": 9,
+    "geography_known_records": 9
   },
   "records": [
     {
@@ -914,6 +913,97 @@
           "audit_note": "Clear promise-versus-reality framing in a 3-star review."
         }
       ]
+    },
+    {
+      "benchmark_id": "exp_wave80_ryangarry_noellevitzthum_5",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted_wave80",
+      "source_record_id": "ryangarry_20260329_noellevitzthum_5",
+      "source_platform": "google_maps",
+      "source_url": null,
+      "provenance_note": "Promoted from the reviewed Wave80 staged-pressure shortlist on 2026-04-08 after Pass 53 truth review confirmed the row was ready for a very selective promotion retry.",
+      "firm_name": "Ryan Garry LLC, Minneapolis Criminal Defense Attorneys",
+      "city": null,
+      "state": "MN",
+      "practice_area": "criminal defense; felony defense",
+      "review_date": null,
+      "review_text": "I cannot recommend Ryan enough as an attorney! From the beginning, Ryan and his team were professional, knowledgeable, and very easy to work with. They took the time to explain everything clearly and made sure I understood my options every step of the way. What stood out most to me was how responsive and supportive they were throughout the process. I always felt like my questions were taken seriously and that they genuinely cared about helping me get the best possible outcome and as quickly as possible! Ryan was the only lawyer I connected with that had a positive outlook about my case and was willing to put in the work to get my charge dismissed! I will be forever grateful for their services and would highly recommend them to anyone looking for a trustworthy and dedicated attorney. Thank you so much Ryan, Elizabeth and Shelly!",
+      "star_rating": 5,
+      "sentiment_mix_tag": "single_positive",
+      "expected_labels": [
+        {
+          "theme": "professionalism_trust",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "professional, knowledgeable, and very easy to work with",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        },
+        {
+          "theme": "communication_clarity",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "They took the time to explain everything clearly and made sure I understood my options every step of the way",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "What stood out most to me was how responsive and supportive they were throughout the process",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "was willing to put in the work to get my charge dismissed",
+          "audit_note": "Kept. Strong five-star criminal-defense row with explicit trust, clarity, responsiveness, and dismissal outcome language."
+        }
+      ],
+      "length_bucket": "medium"
+    },
+    {
+      "benchmark_id": "exp_wave80_fulton_kellieprenslow_5",
+      "canonical_status": "active",
+      "source_kind": "real",
+      "source_pool": "expansion_promoted_wave80",
+      "source_record_id": "fulton_20260403_kellieprenslow_5",
+      "source_platform": "google_maps",
+      "source_url": null,
+      "provenance_note": "Promoted from the reviewed Wave80 staged-pressure shortlist on 2026-04-08 after Pass 53 truth review confirmed the row was ready for a very selective promotion retry.",
+      "firm_name": "Philip J. Fulton Law Office",
+      "city": null,
+      "state": "OH",
+      "practice_area": "social security disability; workers compensation",
+      "review_date": null,
+      "review_text": "I could not be happier with the services I received from the Fulton Law Office. I initially used their services for a workman's compensation claim. Once Mr. Fulton took over, I breathed a sigh of relief. He answered all my questions, explained everything so I could understand and kept in communication with me. My case was approved! Everyone I encountered or spoke to there was pleasant and professional.\n\nWhen I needed their services again for a Social Security Disability claim, Chelsea Rubin and Kay Sanchez were amazing. They handled obtaining all my medical records and submitting them to Social Security. If I had a concern or question, even over a weekend, Kay would respond to me quickly! They were thorough and efficient! I could not have handled this without them. Because of their hard work, my Disability claim was approved within 5 month, which is very quick!\n\nI would highly recommend them for any workman's compensation or Social Security Disability claims! At a time when I was trying to handle some very stressful issues, they took the stress away. Can't thank them all enough!",
+      "star_rating": 5,
+      "sentiment_mix_tag": "single_positive",
+      "expected_labels": [
+        {
+          "theme": "communication_clarity",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "explained everything so I could understand",
+          "audit_note": "Kept. Strong five-star SSD row with explicit clarity, responsiveness, and approval outcome language."
+        },
+        {
+          "theme": "communication_responsiveness",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "kept in communication with me",
+          "audit_note": "Kept. Strong five-star SSD row with explicit clarity, responsiveness, and approval outcome language."
+        },
+        {
+          "theme": "outcome_satisfaction",
+          "polarity": "positive",
+          "severity_note": "positive",
+          "evidence_span": "My case was approved!",
+          "audit_note": "Kept. Strong five-star SSD row with explicit clarity, responsiveness, and approval outcome language."
+        }
+      ],
+      "length_bucket": "long"
     }
   ]
 }

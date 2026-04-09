@@ -327,7 +327,11 @@ Current next pass priorities:
    - keep on shortlist but not ready: `newfrontier_vlopez`
 10. keep promise-reversal intake language staged through `morgan_elishaurgent`
 11. keep the downgraded fragmented rows out of active staged pressure unless a later benchmark-design pass reopens them deliberately
-12. do not reopen collection, rerun broad, or widen the retry beyond the ready subset
+12. the selective promotion retry is now complete:
+   - promoted into active canonical truth: `ryangarry_noellevitzthum`, `fulton_kellieprenslow`
+   - keep on shortlist but not ready: `newfrontier_vlopez`
+13. do not reopen collection or widen promotion beyond the already accepted ready subset
+14. next useful benchmark-facing step is a broad `143-real` sanity rerun before any further promotion widening or new engine work
 
 ---
 

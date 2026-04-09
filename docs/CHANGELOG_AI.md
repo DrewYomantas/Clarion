@@ -1,5 +1,39 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 54 - Selective Promotion Retry
+
+### Files Changed
+- `data/calibration/canonical/benchmark_canonical_v1.json`
+- `data/calibration/canonical/wave80_staged_pressure_20260408.json`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `data/calibration/runs/20260408_wave80_selective_promotion_canonical_rerun/raw_results.json`
+- `data/calibration/runs/20260408_wave80_selective_promotion_canonical_rerun/summary.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Promoted only the ready subset of the Wave80 shortlist into active canonical truth:
+  - `ryangarry_noellevitzthum`
+  - `fulton_kellieprenslow`
+- Left `newfrontier_vlopez` on the shortlist but staged because the remaining `professionalism_trust` pressure is still boundary-sensitive.
+- Updated the staged-pressure artifact and Wave80 label queue notes so they now distinguish the two promoted rows from the one shortlisted-but-not-ready row.
+- Ran a canonical-only authoritative rerun after promotion and confirmed the expanded active gate stays clean at `24/24` with `0` disagreements.
+- Synced the live-state docs to the new truth and moved the next-step language to a broad sanity rerun before any future promotion widening.
+
+### Explicitly Not Touched
+- No engine edits
+- No collection reopening
+- No broad rerun
+- No new promotion beyond the ready subset
+
+### Verification
+- Active canonical gate is now `100.00%`, `24/24` clean reviews, `0` disagreements
+- `data/calibration/runs/20260408_wave80_selective_promotion_canonical_rerun/summary.json` is present and readable
+- `data/calibration/canonical/benchmark_canonical_v1.json` changed only to add the two promoted Wave80 rows
+- No engine files were edited in this pass
+
 ## 2026-04-08 - Pass 53 - Promotion Shortlist Truth Review
 
 ### Files Changed
