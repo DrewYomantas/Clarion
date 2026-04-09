@@ -1,5 +1,46 @@
 # AI Pass Changelog
 
+## 2026-04-09 - Pass 60 - Outcome Satisfaction Family Pass
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `backend/tests/test_benchmark_engine.py`
+- `data/calibration/runs/20260409_outcome_satisfaction_family_canonical_rerun/raw_results.json`
+- `data/calibration/runs/20260409_outcome_satisfaction_family_canonical_rerun/summary.json`
+- `data/calibration/runs/20260409_outcome_satisfaction_family_broad_rerun/raw_results.json`
+- `data/calibration/runs/20260409_outcome_satisfaction_family_broad_rerun/summary.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Ran the first wider family-level engine pass on `outcome_satisfaction` only, using the prepared four-row driver shortlist from `data/calibration/canonical/outcome_satisfaction_driver_prep_20260408.json`.
+- Added only the narrow explicit driver recoveries needed for this lane:
+  - `getting my social security disability approved`
+  - `my settlement amount suffered`
+- Added narrow false-positive guards to keep first-pass non-drivers out of `outcome_satisfaction`:
+  - quoted `approved for` disability language
+  - generic `everything went well because of ...` praise
+  - service-only `never got proper legal help`, `had to hire another attorney`, `nothing but wasting my time and money`, and `nothing was completed at all` rows
+- Added focused tests for the four driver patterns plus the key rejected patterns from the prep artifact.
+- Ran canonical and broad reruns in the same pass and wrote fresh artifacts for both.
+- Improved the broad rerun from `55.94%`, `80/143`, `92` disagreements to `57.34%`, `82/143`, `86` disagreements, while preserving the canonical gate at `24/24`, `0` disagreements.
+
+### Explicitly Not Touched
+- No promotion widening
+- No benchmark-truth edits to the active canonical gate
+- No collection reopening
+- No drift into `professionalism_trust`, `empathy_support`, `timeliness_progress`, or `expectation_setting` as primary work
+
+### Verification
+- `backend/tests/test_benchmark_engine.py`: `17 passed`
+- canonical rerun: `100.00%`, `24/24` clean, `0` disagreements
+- broad rerun: `57.34%`, `82/143` clean, `86` disagreements
+- broad `outcome_satisfaction` bucket: `15 -> 9`
+- `benchmark_canonical_v1.json` remained untouched
+- fresh canonical and broad rerun artifacts are present and readable
+
 ## 2026-04-09 - Pass 59 - Benchmark Baseline Reconciliation
 
 ### Files Changed

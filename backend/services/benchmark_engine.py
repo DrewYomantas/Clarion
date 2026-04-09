@@ -1599,6 +1599,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("helped me get approved", 1.5),
             ("got approved", 1.5),
             ("my case was approved", 1.8),
+            ("getting my social security disability approved", 1.8),
             ("approved for", 1.0),
             ("dismissed the battery charge", 1.8),
             ("finally got justice", 1.8),
@@ -1655,6 +1656,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("very disappointed with the result", 1.5),
             ("very poor result", 1.5),
             ("we lost", 1.5),
+            ("my settlement amount suffered", 1.8),
             # --- calibration: gap-report wave (real-review evidence) ---
             ("complete waste of money", 2.0),
             ("nothing but wasting my time and money", 2.0),
@@ -2265,6 +2267,53 @@ def score_review_deterministic(
                     actual_polarity = "positive"
                     hit["polarity"] = "positive"
                     hit["negation_applied"] = False
+                elif (
+                    phrase == "approved for"
+                    and matched_theme_id == "outcome_satisfaction"
+                    and _text_has_any(text_lower, (
+                        "if you want to be approved for disability",
+                        "you want to be approved for disability",
+                        "told me that i was not going to be able to receive disability",
+                        "i was informed that you cannot",
+                        "cannot claim any kind of income",
+                    ))
+                ):
+                    continue
+                elif (
+                    phrase == "everything went well"
+                    and matched_theme_id == "outcome_satisfaction"
+                    and _text_has_any(text_lower, ("because of ",))
+                    and not _text_has_any(text_lower, (
+                        "approved",
+                        "dismissed",
+                        "won",
+                        "settlement",
+                        "verdict",
+                        "charges were dropped",
+                    ))
+                ):
+                    continue
+                elif (
+                    phrase in (
+                        "never got proper legal help",
+                        "never got proper legal help from him",
+                        "had to hire another attorney",
+                        "nothing but wasting my time and money",
+                        "nothing was completed at all",
+                    )
+                    and matched_theme_id == "outcome_satisfaction"
+                ):
+                    continue
+                elif (
+                    phrase == "case was lost"
+                    and matched_theme_id == "outcome_satisfaction"
+                    and _text_has_any(text_lower, (
+                        "understanding of my case was lost",
+                        "information and understanding of my case was lost",
+                        "information about my case was lost",
+                    ))
+                ):
+                    continue
                 elif (
                     matched_theme_id == "communication_responsiveness"
                     and phrase in ("returned my call", "returned my calls", "returned my calls in a timely fashion")

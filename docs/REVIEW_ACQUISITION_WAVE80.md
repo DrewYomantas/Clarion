@@ -346,7 +346,11 @@ Current next pass priorities:
    - committed `backend/services/benchmark_engine.py` now matches the live benchmark baseline the docs had already been using
    - canonical truth is reproducible from committed code at `24/24` clean, `0` disagreements
    - broad sanity truth is reproducible from committed code at `55.94%`, `80/143`, `92` disagreements
-19. next useful benchmark-facing step is one wider multi-row `outcome_satisfaction` engine pass using only that prepared driver set, with tests plus canonical rerun plus broad rerun in the same pass
+19. the first wider `outcome_satisfaction` family pass is now complete:
+   - canonical truth held clean at `24/24`, `0` disagreements
+   - broad sanity improved to `57.34%`, `82/143`, `86` disagreements
+   - the broad `outcome_satisfaction` disagreement bucket dropped from `15` to `9`
+20. next useful benchmark-facing step is a fresh broad disagreement-cluster re-audit on the updated broad truth; `professionalism_trust` is now the likely next lane, but confirm that from the new bucket map before the next engine pass
 
 ---
 

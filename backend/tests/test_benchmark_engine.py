@@ -83,3 +83,88 @@ def test_staged_fulton_row_now_hits_responsiveness_and_outcome_without_trust_ext
     assert themes["communication_responsiveness"]["polarity"] == "positive"
     assert themes["outcome_satisfaction"]["polarity"] == "positive"
     assert "professionalism_trust" not in themes
+
+
+def test_outcome_driver_hits_got_the_job_done_and_won():
+    themes = _themes_by_id(
+        "Got the job done and won so to speak",
+        5,
+    )
+    assert themes["outcome_satisfaction"]["polarity"] == "positive"
+    assert themes["outcome_satisfaction"]["matched_phrase"] == "got the job done"
+
+
+def test_outcome_driver_hits_social_security_disability_approved():
+    themes = _themes_by_id(
+        "My attorney at this law firm was very helpful with getting my social security disability approved. "
+        "I felt him and all the staff did everything in their power to make me feel comfortable and showed their support even to the end.",
+        5,
+    )
+    assert themes["outcome_satisfaction"]["polarity"] == "positive"
+    assert themes["outcome_satisfaction"]["matched_phrase"] == "getting my social security disability approved"
+
+
+def test_outcome_driver_hits_settlement_amount_suffered():
+    themes = _themes_by_id(
+        "I was disappointed in the entire process. I was assigned to 3 different attorneys. "
+        "Each time a little information and understanding of my case was lost. "
+        "I feel my settlement amount suffered. After 2 years, I received a final settlement offer.",
+        3,
+    )
+    assert themes["outcome_satisfaction"]["polarity"] == "negative"
+    assert themes["outcome_satisfaction"]["matched_phrase"] == "my settlement amount suffered"
+
+
+def test_outcome_driver_hits_failed_me_during_my_appeal():
+    themes = _themes_by_id(
+        "Completely disappointed - do not trust this firm with your disability case. "
+        "They failed me during my appeal.",
+        1,
+    )
+    assert themes["outcome_satisfaction"]["polarity"] == "severe_negative"
+    assert themes["outcome_satisfaction"]["matched_phrase"] == "failed me during my appeal"
+
+
+def test_outcome_guard_blocks_quoted_approved_for_language():
+    themes = _themes_by_id(
+        "I was informed that you cannot claim any kind of income if you want to be approved for disability and she hung up on me.",
+        1,
+    )
+    assert "outcome_satisfaction" not in themes
+
+
+def test_outcome_guard_blocks_generic_because_of_praise():
+    themes = _themes_by_id(
+        "My attorney Andrew Kinney was very professional and knowledgeable. "
+        "He knew what was coming ahead of time and explained everything to me as we were at the hearing. "
+        "Everything went well because of Andrew.",
+        4,
+    )
+    assert "outcome_satisfaction" not in themes
+
+
+def test_outcome_guard_blocks_service_only_legal_help_row():
+    themes = _themes_by_id(
+        "He lost his temper, threw my folder across the desk, and I never got proper legal help from him. "
+        "I had to hire another attorney to fix the mess.",
+        1,
+    )
+    assert "outcome_satisfaction" not in themes
+
+
+def test_outcome_guard_blocks_service_only_time_and_money_row():
+    themes = _themes_by_id(
+        "These guys are horrible. The lawyer showed up late and was extremely rude. "
+        "Nothing but wasting my time and money.",
+        1,
+    )
+    assert "outcome_satisfaction" not in themes
+
+
+def test_outcome_guard_blocks_service_only_nothing_completed_row():
+    themes = _themes_by_id(
+        "We submitted all of the paperwork for our living will and trust and after six weeks, nothing was completed at all. "
+        "When we questioned the status, we were told that we never gave a timeframe.",
+        2,
+    )
+    assert "outcome_satisfaction" not in themes

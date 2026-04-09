@@ -1,0 +1,1042 @@
+[
+  {
+    "benchmark_id": "legacy_057",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "never even really had meetings",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "\u2026eally fought. The case was transferred multiple times. They never even really had meetings with me or my son. Truly horr\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "accepted thousands of dollars but never really did anything",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "\u2026nder if other Black people had great experiences here. They accepted thousands of dollars but never really did anything\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "never really did anything towards my son's appeal",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "\u2026at experiences here. They accepted thousands of dollars but never really did anything towards my son's appeal, never rea\u2026",
+        "negation_applied": false,
+        "contrast_applied": true,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_075",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "didn't have contact for a while",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026did not give 5 stars was because there were points where we didn't have contact for a while and I was unsure what was go\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.0,
+        "final_impact": 1.5,
+        "confidence": "medium"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "got more than expected out of it",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026good with the law firm. I not only got my case handled but got more than expected out of it. The only reason I did not\u2026",
+        "negation_applied": false,
+        "contrast_applied": true,
+        "base_weight": 1.8,
+        "multiplier": 0.72,
+        "final_impact": 1.296,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_080",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "had to call three times",
+        "phrase_family": "negative",
+        "sentence_snippet": "Paralegal Allison was very unhelpful. I had to call three times over two weeks to get an answer that\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_088",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "responses to questions are extremely slow",
+        "phrase_family": "negative",
+        "sentence_snippet": "Responses to questions are EXTREMELY slow. The paralegals ar\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.0,
+        "final_impact": 1.5,
+        "confidence": "medium"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "lack of communication on their end",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026tions are EXTREMELY slow. The paralegals are not efficient. Lack of communication on their end. The lawyer was way bette\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.0,
+        "final_impact": 1.5,
+        "confidence": "medium"
+      },
+      {
+        "theme": "timeliness_progress",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "extremely slow",
+        "phrase_family": "negative",
+        "sentence_snippet": "Responses to questions are EXTREMELY slow. The paralegals are not efficient. Lack of co\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.0,
+        "final_impact": 1.5,
+        "confidence": "medium"
+      },
+      {
+        "theme": "office_staff_experience",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "paralegals are not efficient",
+        "phrase_family": "negative",
+        "sentence_snippet": "Responses to questions are EXTREMELY slow. The paralegals are not efficient. Lack of communication on their\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.0,
+        "final_impact": 1.5,
+        "confidence": "medium"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_097",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "called me a few days prior to my hearing",
+        "phrase_family": "positive",
+        "sentence_snippet": "Andrew called me a few days prior to my hearing to discuss how thin\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.2,
+        "multiplier": 1.2,
+        "final_impact": 1.44,
+        "confidence": "medium"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "relay to the judge exactly what i intended",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026as glad to have an attorney to speak for me. He was able to relay to the judge exactly what I intended.",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "what to expect",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026days prior to my hearing to discuss how things would go and what to expect, and then again about 20 minutes before the h\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.0,
+        "multiplier": 1.2,
+        "final_impact": 1.2,
+        "confidence": "medium"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_106",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "wasn't fully explained",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026was given guidance that ultimately cost me over $1,000 and wasn't fully explained. My case was delayed nearly five mont\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "timeliness_progress",
+        "polarity": "severe_negative",
+        "base_polarity": "negative",
+        "matched_phrase": "delayed",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026cost me over $1,000 and wasn't fully explained. My case was delayed nearly five months, only to end in a plea deal that\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.8,
+        "multiplier": 1.2,
+        "final_impact": 2.16,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_112",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "only heard from them 2 or 3 times",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026ers and associate are not caring at all. Waited 2 years and only heard from them 2 or 3 times. Only heard from the actua\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      },
+      {
+        "theme": "empathy_support",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "not caring at all",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "Lawyers and associate are not caring at all. Waited 2 years and only heard from them 2\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_114",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "phone tag",
+        "phrase_family": "negative",
+        "sentence_snippet": "Horrible appointment setup, phone tag, and no one seemed to know I had an appointment se\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.0,
+        "multiplier": 1.2,
+        "final_impact": 1.2,
+        "confidence": "medium"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "had to repeat the same information",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026tag, and no one seemed to know I had an appointment set up. Had to repeat the same information many times to many differ\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "they're not even licensed in my state",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "\u2026mation many times to many different people only to find out they're not even licensed in my state.",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_115",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "multiple calls were canceled",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "\u2026with your disability case. They failed me during my appeal. Multiple calls were canceled or no-showed, communication bar\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "communication barriers made it impossible",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "\u2026uring my appeal. Multiple calls were canceled or no-showed, communication barriers made it impossible, and no attorney e\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "do not trust this firm",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "Completely disappointed \u2013 do not trust this firm with your disability case. They faile\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "no attorney ever really reviewed my case",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "\u2026r no-showed, communication barriers made it impossible, and no attorney ever really reviewed my case or spoke to me.",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "failed me during my appeal",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "\u2026ed \u2013 do not trust this firm with your disability case. They failed me during my appeal. Multiple calls were canceled or\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_119",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "whenever i call i get attitude",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026waiting. I have not received any information about my case. Whenever I call I get attitude. They have no answers for why\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "have not received any information about my case",
+        "phrase_family": "negative",
+        "sentence_snippet": "Over two years and still waiting. I have not received any information about my case. Whenever I\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "timeliness_progress",
+        "polarity": "severe_negative",
+        "base_polarity": "negative",
+        "matched_phrase": "still waiting",
+        "phrase_family": "negative",
+        "sentence_snippet": "Over two years and still waiting. I have not received any information about my\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.8,
+        "multiplier": 1.2,
+        "final_impact": 2.16,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_131",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "promised charges were never filed",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026, not justice or principle. Through a wrongful death claim, promised charges were never filed, I uncovered critical piec\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.8,
+        "multiplier": 1.2,
+        "final_impact": 2.16,
+        "confidence": "high"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "pushed into mediation and settlement we didn't want",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026I uncovered critical pieces of evidence myself, and we were pushed into mediation and settlement we didn't want. Profit\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.8,
+        "multiplier": 1.2,
+        "final_impact": 2.16,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_134",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "helped me with all my questions",
+        "phrase_family": "positive",
+        "sentence_snippet": "Kojo was very pleasant to work with, and always helped me with all my questions. Shannon Carey handled my au\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.0,
+        "multiplier": 1.2,
+        "final_impact": 1.2,
+        "confidence": "medium"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "received a fair settlement",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026my auto accident case with grace and patience. In the end I received a fair settlement.",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_137",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "kept me informed",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026ling with professionals. They answered all my questions and kept me informed until the day I was approved.",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.0,
+        "multiplier": 1.2,
+        "final_impact": 1.2,
+        "confidence": "medium"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "i knew i was dealing with professionals",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026, I decided to hire Hoglund Law and from the very first day I knew I was dealing with professionals. They answered all m\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_140",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "didn't know who was handling my case",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026like you were prepared. The only problem for me was that I didn't know who was handling my case at times.",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.0,
+        "final_impact": 1.5,
+        "confidence": "medium"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "exp_heartland_1",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "heard nothing else from these guys",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "\u2026rt documents soon. Thanksgiving and Christmas roll by and I heard nothing else from these guys. No phone call, no email,\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "should hear from someone at the end of the week",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026was told Chris got married which is he hasn't called but I should hear from someone at the end of the week. I didn't he\u2026",
+        "negation_applied": false,
+        "contrast_applied": true,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "wish i didn't pay",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026email, no letter, no telegraph, no smoke signal, nothing. I wish I didn't pay this lawfirm $600 to retain them. It was a\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "exp_greatlakes_4_mixed",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "had to call several times",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026was uncertainty on whether anything was being worked on. I had to call several times to check status. I even called my\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.0,
+        "final_impact": 1.5,
+        "confidence": "medium"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "things are moving along more",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026he beginning who did nothing to return my call. But overall things are moving along more.",
+        "negation_applied": false,
+        "contrast_applied": true,
+        "base_weight": 1.0,
+        "multiplier": 0.72,
+        "final_impact": 0.72,
+        "confidence": "medium"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "exp_century_1",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "lies about their abilities and experience",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "This company lies about their abilities and experience to get you to sign\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "severe_negative",
+        "base_polarity": "severe_negative",
+        "matched_phrase": "settle them for much less than owed",
+        "phrase_family": "severe_negative",
+        "sentence_snippet": "\u2026to take. They guaranteed that when lawsuits do happen they settle them for much less than owed. Both of mine have been\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "settled for full amounts plus fees",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026settle them for much less than owed. Both of mine have been settled for full amounts plus fees. Their agents tend to all\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "exp_century_5",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "takes the time to explain in detail",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026ase with any legal issue that arises from creditors. Lauren takes the time to explain in detail what to expect, how to h\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "what to expect",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026from creditors. Lauren takes the time to explain in detail what to expect, how to handle the calls and what to do if we\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.0,
+        "multiplier": 1.2,
+        "final_impact": 1.2,
+        "confidence": "medium"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "relief both financially and emotionally",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026ow to handle the calls and what to do if we get served. The relief both financially and emotionally they gave us is wort\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "exp_fla_1",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "professionalism_trust",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "don't even fight hard",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026t a good Father's right lawyer; they go for the minimum and don't even fight hard to get that. They lay back and get not\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "all i got was a temporary order",
+        "phrase_family": "negative",
+        "sentence_snippet": "3 years and $10,000 later all I got was a temporary order that's not in affect anymore\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "exp_ashoori_1",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "basic responsiveness to my questions or concerns",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026rther part in my case, neither oversight, support, nor even basic responsiveness to my questions or concerns. The entire\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "without any clear indication of ongoing responsibility",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026to my questions or concerns. The entire case was handed off without any clear indication of ongoing responsibility. The\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "without any clear indication of ongoing responsibility",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026to my questions or concerns. The entire case was handed off without any clear indication of ongoing responsibility. The\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "timeliness_progress",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "delays",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026eceive replies to simple questions. This caused significant delays, frustration, and stress during a time-sensitive immi\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.0,
+        "multiplier": 1.2,
+        "final_impact": 1.2,
+        "confidence": "medium"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "exp_robertjewett_5",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "were fully explained",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026time. Options that worked best for my particular situation were fully explained in email or over the phone if I wished.\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "good, steady hands",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026e process with his calm demeanor, he conveyed that I was in good, steady hands through the entire legal process. He mana\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "legacy_092",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "you thought wrong",
+        "phrase_family": "negative",
+        "sentence_snippet": "If you expect them to help you with Student Loan Discharge, you thought wrong. They just want money from you and want yo\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.0,
+        "final_impact": 1.5,
+        "confidence": "medium"
+      },
+      {
+        "theme": "fee_value",
+        "polarity": "negative",
+        "base_polarity": "negative",
+        "matched_phrase": "they just want money from you",
+        "phrase_family": "negative",
+        "sentence_snippet": "\u2026to help you with Student Loan Discharge, you thought wrong. They just want money from you and want you do all the work.",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.0,
+        "final_impact": 1.5,
+        "confidence": "medium"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "exp_wave80_ryangarry_noellevitzthum_5",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "responsive and supportive",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026ns every step of the way. What stood out most to me was how responsive and supportive they were throughout the process.\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "explain everything clearly",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026edgeable, and very easy to work with. They took the time to explain everything clearly and made sure I understood my opt\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "empathy_support",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "genuinely cared",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026s felt like my questions were taken seriously and that they genuinely cared about helping me get the best possible outco\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "trustworthy",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026ces and would highly recommend them to anyone looking for a trustworthy and dedicated attorney. Thank you so much Ryan,\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "best possible outcome",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026usly and that they genuinely cared about helping me get the best possible outcome and as quickly as possible! Ryan was t\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 2.0,
+        "multiplier": 1.2,
+        "final_impact": 2.4,
+        "confidence": "high"
+      }
+    ]
+  },
+  {
+    "benchmark_id": "exp_wave80_fulton_kellieprenslow_5",
+    "disagreements": [],
+    "deterministic": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "kept in communication with me",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026y questions, explained everything so I could understand and kept in communication with me. My case was approved! Everyon\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "explained everything so i could understand",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026I breathed a sigh of relief. He answered all my questions, explained everything so I could understand and kept in commu\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.5,
+        "multiplier": 1.2,
+        "final_impact": 1.8,
+        "confidence": "high"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "base_polarity": "positive",
+        "matched_phrase": "my case was approved",
+        "phrase_family": "positive",
+        "sentence_snippet": "\u2026ng so I could understand and kept in communication with me. My case was approved! Everyone I encountered or spoke to the\u2026",
+        "negation_applied": false,
+        "contrast_applied": false,
+        "base_weight": 1.8,
+        "multiplier": 1.2,
+        "final_impact": 2.16,
+        "confidence": "high"
+      }
+    ]
+  }
+]
