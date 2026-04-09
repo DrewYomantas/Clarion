@@ -377,7 +377,7 @@
       "star_rating": 4,
       "source_platform": "avvo",
       "sentiment_mix_tag": "mixed",
-      "truth_decision_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats.",
+      "truth_decision_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete response-delay caveat; the filing-delay language is better treated as timeliness_progress-led boundary truth than expectation_setting pressure.",
       "review_text": "Mr. Garcia did a great job defending me in court and assisting me in receiving my restraining order. The only issue with his services was the time he took to file my court documents. Our last court date was in early December, when I was granted my restraining order, and he did not file it with the court until the first week of February. I know holidays made things delayed, but he could've filed the documents the same day of our last hearing. His justification was that the court gave him issues filing, which I honestly don't believe. Mr. Garcia also took several days to respond to my emails and calls, which made me feel lost and upset. For the amount of money I paid, I believe he could've done a better job.",
       "expected_labels": [
         {
@@ -385,21 +385,21 @@
           "polarity": "positive",
           "severity_note": "positive",
           "evidence_span": "did a great job defending me in court and assisting me in receiving my restraining order",
-          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats."
+          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete response-delay caveat; the filing-delay language is better treated as timeliness_progress-led boundary truth than expectation_setting pressure."
         },
         {
-          "theme": "expectation_setting",
+          "theme": "timeliness_progress",
           "polarity": "negative",
           "severity_note": "standard negative",
           "evidence_span": "he did not file it with the court until the first week of February",
-          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats."
+          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete response-delay caveat; the filing-delay language is better treated as timeliness_progress-led boundary truth than expectation_setting pressure."
         },
         {
           "theme": "communication_responsiveness",
           "polarity": "negative",
           "severity_note": "standard negative",
           "evidence_span": "Mr. Garcia also took several days to respond to my emails and calls",
-          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete filing-delay and response-delay caveats."
+          "audit_note": "Kept. Useful mixed four-star family-law row with explicit positive court result plus concrete response-delay caveat; the filing-delay language is better treated as timeliness_progress-led boundary truth than expectation_setting pressure."
         }
       ],
       "promotion_experiment_disagreements": [
@@ -447,29 +447,29 @@
       "star_rating": 1,
       "source_platform": "google_maps",
       "sentiment_mix_tag": "single_negative",
-      "truth_decision_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage.",
+      "truth_decision_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage; the delayed-submission language is timeliness_progress-led, not expectation_setting pressure.",
       "review_text": "Disappointing Experience - Beware of Misleading Positive Reviews\n\nDespite the many glowing reviews, my experience with New Frontier was extremely disappointing. We hired them for a straightforward Permanent Resident card renewal, but the process was mishandled at every stage:\n\nDelayed submission: Our application was submitted over 60 days late, with no valid explanation despite all fees being paid and documents provided upfront.\nIncorrect forms: They submitted the wrong application, resulting in a denial. Initially, they tried to charge us a resubmission fee for their own error, only reversing this after I insisted.\nPoor communication: Scheduled meetings were missed at least five times, and I only received responses after repeatedly following up.\nLack of transparency: Important correspondence was never shared proactively. Critical documents were withheld for over 60 days, impacting our ability to renew license.\nNeglect of details: The online access code was never sent, and by the time I asked, it had expired-creating further unnecessary work.\n\nGiven these repeated issues, I am genuinely skeptical of the overwhelmingly positive reviews. Our simple case became a source of frustration and wasted time. I strongly advise others to look elsewhere for reliable immigration services.\n\nI am taking a huge risk here as my Moms case is still open with them but I simply cannot in good faith hold off until the process is complete. Stay away... And if someone from this office comments and tells me to call them.. I have very frequently and nothing changed. Spoke to the actual Attorney handling the case and nothing changed. Disgusted to say the least. If this is how they treat their customers, many who may not question them and think this is normal they should not be serving our community.",
       "expected_labels": [
         {
-          "theme": "expectation_setting",
+          "theme": "timeliness_progress",
           "polarity": "negative",
           "severity_note": "severe negative",
           "evidence_span": "Our application was submitted over 60 days late",
-          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage."
+          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage; the delayed-submission language is timeliness_progress-led, not expectation_setting pressure."
         },
         {
           "theme": "communication_responsiveness",
           "polarity": "negative",
           "severity_note": "severe negative",
           "evidence_span": "Scheduled meetings were missed at least five times",
-          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage."
+          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage; the delayed-submission language is timeliness_progress-led, not expectation_setting pressure."
         },
         {
           "theme": "professionalism_trust",
           "polarity": "negative",
           "severity_note": "severe negative",
           "evidence_span": "Initially, they tried to charge us a resubmission fee for their own error",
-          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage."
+          "audit_note": "Kept. Strong one-star immigration row with repeated operational failures, missed meetings, and fee-trust damage; the delayed-submission language is timeliness_progress-led, not expectation_setting pressure."
         }
       ],
       "promotion_experiment_disagreements": [

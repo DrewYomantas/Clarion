@@ -1,5 +1,37 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 50 - Filing-Delay Boundary Truth Review
+
+### Files Changed
+- `data/calibration/canonical/wave80_staged_pressure_20260408.json`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reviewed the four filing-delay / submission-delay boundary rows row by row against their exact text, reviewed truth, and current live deterministic behavior.
+- Shifted two staged Wave80 rows out of `expectation_setting` and into `timeliness_progress`:
+  - `edgardgarcia_anonymous`
+  - `newfrontier_vlopez`
+- Updated the staged artifact and Wave80 label queue notes so those rows no longer drive expectation-setting pressure.
+- Left active canonical truth unchanged because the directly affected canonical row `legacy_106` still carries a real expectation-setting complaint on unexplained guidance, even though it also contains a timeliness complaint.
+- Synced the live-state docs so they now say this filing-delay lane should stop driving expectation-setting work.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark reruns
+- No collection reopening
+- No new promotion attempt
+- No broad benchmark changes
+
+### Verification
+- Active canonical gate remains `100.00%`, `22/22` clean reviews, `0` disagreements
+- `data/calibration/canonical/benchmark_canonical_v1.json` remained untouched
+- No engine files were edited in this pass
+- Docs now state that the filing-delay truth review is complete and that future expectation-setting work should pivot away from this lane
+
 ## 2026-04-08 - Pass 49 - Expectation Evidence Audit
 
 ### Files Changed
