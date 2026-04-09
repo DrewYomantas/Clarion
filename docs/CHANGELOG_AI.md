@@ -1,5 +1,35 @@
 # AI Pass Changelog
 
+## 2026-04-08 - Pass 53 - Promotion Shortlist Truth Review
+
+### Files Changed
+- `data/calibration/canonical/wave80_staged_pressure_20260408.json`
+- `data/calibration/expansion/queues/20260328_wave80_label_queue.csv`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Truth-reviewed the `3`-row Wave80 promotion shortlist against each row's exact text, staged expected labels, preserved failed-promotion evidence, and replay history.
+- Confirmed `ryangarry_noellevitzthum` and `fulton_kellieprenslow` are ready for a very selective promotion retry because their trust / communication / outcome truth is stable enough for benchmark pressure.
+- Kept `newfrontier_vlopez` on the shortlist but marked it not ready because the remaining `professionalism_trust` pressure still depends on a boundary-sensitive fee-error / reliability judgment.
+- Synced the staged artifact, Wave80 label queue notes, and live-state docs so the shortlist now distinguishes the ready subset from the one row that should remain staged.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits to the active canonical gate
+- No collection reopening
+- No canonical rerun
+- No broad rerun
+- No promotion execution
+
+### Verification
+- Active canonical gate remains `100.00%`, `22/22` clean reviews, `0` disagreements
+- `data/calibration/canonical/benchmark_canonical_v1.json` remained untouched
+- No engine files were edited in this pass
+- Docs now state that a very selective promotion retry is justified only for `ryangarry_noellevitzthum` and `fulton_kellieprenslow`, while `newfrontier_vlopez` remains staged on the shortlist
+
 ## 2026-04-08 - Pass 52 - Staged Pressure Re-Triage
 
 ### Files Changed

@@ -37,8 +37,17 @@
       "promotion_shortlist_count": 3,
       "keep_staged_pressure_count": 1,
       "downgrade_out_of_staged_pressure_count": 3,
-      "recommended_next_move": "B",
-      "note": "Re-triage after the filing-delay truth narrowing and staged replay. Keep a narrow shortlist, preserve one expectation-setting seed as staged pressure, and shrink the fragmented rows out of active staged pressure."
+      "recommended_next_move": "A",
+      "note": "Shortlist truth review after the re-triage found two rows ready for a very selective promotion retry and one row that should stay on the shortlist but remain staged because professionalism-trust truth is not stable enough yet.",
+      "shortlist_ready_count": 2,
+      "shortlist_not_ready_count": 1,
+      "shortlist_ready_rows": [
+        "ryangarry_noellevitzthum",
+        "fulton_kellieprenslow"
+      ],
+      "shortlist_not_ready_rows": [
+        "newfrontier_vlopez"
+      ]
     }
   },
   "grouped_miss_summary": {
@@ -541,14 +550,16 @@
         }
       ],
       "current_disposition": "promotion_shortlist",
-      "current_disposition_note": "Promotion shortlist. After the filing-delay truth narrowing this row is down to one remaining professionalism-trust miss, and the remaining pressure is strong, text-rich, and no longer obviously fragmented.",
+      "current_disposition_note": "Promotion shortlist, but not ready. After the filing-delay truth narrowing this row is down to one remaining professionalism-trust miss, but that surviving trust pressure is still too boundary-sensitive for an honest selective promotion retry.",
       "current_live_misses": [
         "professionalism_trust"
       ],
       "removed_by_truth_narrowing": [
         "expectation_setting"
       ],
-      "current_extra_hits": []
+      "current_extra_hits": [],
+      "shortlist_review_status": "keep_on_shortlist_but_not_ready",
+      "shortlist_review_note": "Not ready. After filing-delay truth narrowing the row is much cleaner, but the remaining professionalism-trust pressure still hinges on a sensitive fee-error / reliability boundary and should stay staged until that trust truth is more stable."
     },
     {
       "benchmark_id": "exp_wave80_ryangarry_noellevitzthum_5",
@@ -616,12 +627,14 @@
         }
       ],
       "current_disposition": "promotion_shortlist",
-      "current_disposition_note": "Promotion shortlist. This row now scores clean against staged truth and remains a strong, text-rich positive benchmark-pressure candidate with no unresolved boundary dependency.",
+      "current_disposition_note": "Promotion shortlist. Ready for selective promotion retry: this row scores clean against staged truth, has stable professionalism-trust and outcome-satisfaction evidence, and no longer depends on unresolved boundary judgment.",
       "current_live_misses": [],
       "removed_by_truth_narrowing": [],
       "current_extra_hits": [
         "empathy_support"
-      ]
+      ],
+      "shortlist_review_status": "ready_for_selective_promotion",
+      "shortlist_review_note": "Ready. Trust, clarity, responsiveness, and dismissal-outcome truth are stable, text-rich, and no longer rely on unresolved boundary judgment; the extra empathy hit does not undercut benchmark pressure value."
     },
     {
       "benchmark_id": "exp_wave80_fulton_kellieprenslow_5",
@@ -693,10 +706,12 @@
         }
       ],
       "current_disposition": "promotion_shortlist",
-      "current_disposition_note": "Promotion shortlist. This row now scores clean against staged truth and remains a strong, text-rich positive benchmark-pressure candidate with no unresolved boundary dependency.",
+      "current_disposition_note": "Promotion shortlist. Ready for selective promotion retry: this row scores clean against staged truth, its outcome and communication labels are stable, and the prior bare-professional trust spillover no longer makes the row boundary-ambiguous.",
       "current_live_misses": [],
       "removed_by_truth_narrowing": [],
-      "current_extra_hits": []
+      "current_extra_hits": [],
+      "shortlist_review_status": "ready_for_selective_promotion",
+      "shortlist_review_note": "Ready. Clarity, responsiveness, and approval-outcome truth are stable and text-rich, while the old bare-professional trust spillover is already excluded from truth and no longer creates benchmark-design ambiguity."
     }
   ]
 }

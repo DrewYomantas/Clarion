@@ -322,9 +322,12 @@ Current next pass priorities:
    - promotion shortlist: `ryangarry_noellevitzthum`, `fulton_kellieprenslow`, `newfrontier_vlopez`
    - keep staged pressure: `morgan_elishaurgent`
    - downgrade out of staged pressure: `kowalski_bradcanard`, `matthewlind_wayne`, `edgardgarcia_anonymous`
-9. keep promise-reversal intake language staged and keep the shortlist staged until one more narrow trust / outcome truth review is complete
-10. keep the downgraded fragmented rows out of active staged pressure unless a later benchmark-design pass reopens them deliberately
-11. do not reopen collection or attempt another fresh promotion before that shortlist review is complete
+9. the shortlist truth review is now complete:
+   - ready for a very selective promotion retry: `ryangarry_noellevitzthum`, `fulton_kellieprenslow`
+   - keep on shortlist but not ready: `newfrontier_vlopez`
+10. keep promise-reversal intake language staged through `morgan_elishaurgent`
+11. keep the downgraded fragmented rows out of active staged pressure unless a later benchmark-design pass reopens them deliberately
+12. do not reopen collection, rerun broad, or widen the retry beyond the ready subset
 
 ---
 
