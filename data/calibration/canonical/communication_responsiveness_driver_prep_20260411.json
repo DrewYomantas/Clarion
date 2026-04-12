@@ -1,0 +1,130 @@
+{
+  "artifact": "communication_responsiveness_driver_prep_20260411",
+  "created": "2026-04-11",
+  "pass": 74,
+  "source_rerun": "data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/raw_results.json",
+  "source_reviews": "data/calibration/inputs/real_reviews.csv",
+  "purpose": "Row-by-row truth-shaping review of all 9 broad communication_responsiveness disagreement rows. Selected as next benchmark-facing lane by Pass 73 lane selection audit. Produces a clean driver shortlist for Pass 75 engine work.",
+  "lane_disagreement_count": 9,
+  "rows_reviewed": [
+    {
+      "index": 2,
+      "direction": "extra_theme",
+      "stars": "5",
+      "text_anchor": "responsive estate-planning attorney",
+      "full_context": "Highly recommended for anyone who wants an organized, trustworthy, and responsive estate-planning attorney.",
+      "classification": "generic_positive_non_driver",
+      "reason": "Engine already fires on this row via a positive responsiveness phrase. The disagreement is an AI false-negative on a 5-star positive review. No new phrase work needed.",
+      "action": "exclude"
+    },
+    {
+      "index": 25,
+      "direction": "missing_theme",
+      "stars": "1",
+      "text_anchor": "lost his temper",
+      "full_context": "he lost his temper simply because I was wearing a beer T-shirt... threw my folder across the desk... never got proper legal help from him",
+      "classification": "wrong_lane_trust_abuse",
+      "reason": "Review is dominated by attorney misconduct — screaming, throwing folders, ejecting the client from the office. The primary complaint is professionalism_trust abuse, not communication failure. 'Never got proper legal help' is an outcome complaint, not a responsiveness failure.",
+      "action": "exclude"
+    },
+    {
+      "index": 88,
+      "direction": "missing_theme",
+      "stars": "3",
+      "text_anchor": "lack of communication",
+      "full_context": "I had a five star review, but between the lack of communication and just being mocked by someone in the background of a call I have to drop a couple of stars.",
+      "classification": "real_driver_candidate_needs_guard",
+      "reason": "The phrase 'lack of communication' is a real responsiveness signal — client dropped from 5-star to 3-star because of it. However: (1) the phrase is very short and could cause false positives if added without a guard; (2) the co-occurring 'mocked by someone in the background of a call' is already recovered by the Pass 65 trust engine. The row fires as a missing_theme in the communication_responsiveness lane because neither the communication complaint nor its co-occurrence with the trust phrase is enough to trigger the current engine. Candidate for the narrow engine pass but requires a phrase guard — do not add 'lack of communication' as a standalone open phrase.",
+      "proposed_phrase": "lack of communication",
+      "guard_required": "must not fire on reviews already dominated by positive outcome or trust language; consider anchoring to negative-star context or co-occurring service dissatisfaction",
+      "action": "include_with_guard"
+    },
+    {
+      "index": 101,
+      "direction": "missing_theme",
+      "stars": "5",
+      "text_anchor": "people picking up the phone are very nice",
+      "full_context": "The customer service is amazing, people picking up the phone are very nice. My attorney was incredibly helpful and professional.",
+      "classification": "office_staff_positive_non_driver",
+      "reason": "This is a 5-star positive review praising office staff phone behavior. It is not a responsiveness failure. The engine should not fire communication_responsiveness here — this disagreement is an AI false-positive suggesting the lane should fire when it should not.",
+      "action": "exclude"
+    },
+    {
+      "index": 104,
+      "direction": "missing_theme",
+      "stars": "5",
+      "text_anchor": "communicate well what information is needed",
+      "full_context": "Easy to work with and they communicate well what information is needed along the way to make sure your case is ready on time.",
+      "classification": "already_covered_via_timeliness_clarity_overlap",
+      "reason": "This is a positive 5-star review. 'Ready on time' language was already recovered in the Pass 62 timeliness_progress pass. The 'communicate well what information is needed' phrase is a positive clarity attribute — adding it would cause false-positive communication_responsiveness fires on good reviews. This row is an AI false-negative on a 5-star positive, not a missing phrase gap.",
+      "action": "exclude"
+    },
+    {
+      "index": 107,
+      "direction": "missing_theme",
+      "stars": "1",
+      "text_anchor": "my attorney would always say they were waiting",
+      "full_context": "Shortly after becoming my attorney I had to call offices and judges myself because my attorney would always say they were waiting. They stopped working when they got paid. I had to do the legwork my attorney never did.",
+      "classification": "primary_driver_candidate",
+      "reason": "Explicit chronic non-responsiveness: the attorney claimed to be 'waiting' while the client had to call offices and judges themselves to move the case forward. This is a clear, repeatable, instruction-following failure in a negative 1-star review. The phrase 'would always say they were waiting' is specific enough to anchor a narrow engine phrase without catching generic reviews. The co-occurring 'stopped working when they got paid' is nonperformance context that does not contaminate the responsiveness anchor.",
+      "proposed_phrase": "would always say they were waiting",
+      "guard_required": "none — phrase is specific enough to self-guard in 1-star context",
+      "action": "include"
+    },
+    {
+      "index": 110,
+      "direction": "missing_theme",
+      "stars": "1",
+      "text_anchor": "person on the phone got every little detail... won't explain why and give you the run around",
+      "full_context": "Called to get help and the person on the phone got every little detail of my personal life for 45 minutes only to be told while still on the phone that they won't work with me. But won't explain why and give you the run around.",
+      "classification": "intake_boundary_non_driver",
+      "reason": "This is a pre-intake rejection complaint — a 45-minute intake call that ended in the firm refusing to take the case with no explanation. The 'person on the phone' is office staff, not the attorney. 'Give you the run around' is a real communication failure but it is embedded in an intake rejection scenario that sits at the office_staff / intake boundary. Adding a phrase for this row would risk firing on intake rejection reviews that are not about ongoing attorney-client communication responsiveness.",
+      "action": "exclude"
+    },
+    {
+      "index": 111,
+      "direction": "wrong_severity",
+      "stars": "1",
+      "text_anchor": "Waited 2 years and only heard from them 2 or 3 times",
+      "full_context": "Waited 2 years and only heard from them 2 or 3 times. Only heard from the actual attorney a day before the hearing. They didn't even get all my health information that they were supposed to.",
+      "classification": "already_covered_severity_variant",
+      "reason": "The phrase 'Only heard from the actual attorney a day before the hearing' was recovered in the Pass 62 timeliness_progress pass. The '2 or 3 times' language is a severity amplifier of the existing pattern, not a new missing phrase. This disagreement is a wrong_severity miss — the engine fires on the timeliness phrase but the AI expects a stronger communication_responsiveness label. No new phrase needed.",
+      "action": "exclude"
+    },
+    {
+      "index": 122,
+      "direction": "missing_theme",
+      "stars": "1",
+      "text_anchor": "rudely accused of not saying anything like that over the phone",
+      "full_context": "I had set up an appointment and wanted to show a piece of paper in person, but I was rudely accused of not saying anything like that over the phone and blamed for not coming in when that's what I wanted in the first place.",
+      "classification": "wrong_lane_office_staff_scheduling",
+      "reason": "This complaint is about office staff rudeness during a scheduling dispute — the client was accused of lying about what they requested over the phone. It is not an attorney communication responsiveness failure. The lane is professionalism_trust or office_staff_experience, not communication_responsiveness.",
+      "action": "exclude"
+    }
+  ],
+  "driver_shortlist": [
+    {
+      "index": 107,
+      "phrase": "would always say they were waiting",
+      "type": "primary_driver",
+      "note": "Chronic non-responsiveness anchor. Specific enough to self-guard in 1-star context. Engine should fire communication_responsiveness when this phrase appears."
+    },
+    {
+      "index": 88,
+      "phrase": "lack of communication",
+      "type": "secondary_driver_needs_guard",
+      "note": "Real signal. Short phrase — add only with a negative-context guard so it does not fire on positive reviews containing the word 'communication'."
+    }
+  ],
+  "excluded_rows": [2, 25, 101, 104, 110, 111, 122],
+  "exclusion_reasons_summary": {
+    "generic_positive_non_driver": [2, 101, 104],
+    "wrong_lane_trust_abuse": [25],
+    "intake_boundary_non_driver": [110],
+    "already_covered_severity_variant": [111],
+    "wrong_lane_office_staff": [122]
+  },
+  "pass_75_scope": "narrow engine pass using only the 2-row driver shortlist. Add 'would always say they were waiting' as primary phrase. Add 'lack of communication' only with a negative-star or service-dissatisfaction guard. Do not add any phrase from the excluded rows. Preserve the active canonical gate at 24/24 clean with 0 disagreements.",
+  "no_engine_work_this_pass": true,
+  "no_rerun_this_pass": true
+}

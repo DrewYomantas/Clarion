@@ -1,0 +1,83 @@
+{
+  "artifact": "lane_selection_audit_pass73_20260411",
+  "created": "2026-04-11",
+  "pass": 73,
+  "source_rerun": "data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/raw_results.json",
+  "source_reviews": "data/calibration/inputs/real_reviews.csv",
+  "purpose": "Fresh remaining-lane selection audit after Pass 72 confirmed outcome_satisfaction is driver-exhausted. Evaluate the four remaining broad-disagreement lanes to select the next benchmark-facing lane.",
+  "lanes_audited": [
+    {
+      "lane": "professionalism_trust",
+      "broad_disagreement_count": 12,
+      "verdict": "no_fresh_shortlist",
+      "reason": "Pass 70 and Pass 72 both confirmed this. Remaining 12 rows break into 3 already-recovered extra_theme rows, 5 recommendation/generic-praise non-drivers, 2 service-or-outcome-or-expectation overlap rows, and 2 too-subjective or too-weak rows. No unrecovered phrase candidates remain.",
+      "action": "stop — do not reopen without new evidence"
+    },
+    {
+      "lane": "expectation_setting",
+      "broad_disagreement_count": 9,
+      "verdict": "one_thin_driver",
+      "rows_reviewed": [
+        {"index": 0,  "direction": "extra_theme", "text_anchor": "took the time to explain all of our choices", "classification": "already_recovered"},
+        {"index": 25, "direction": "missing_theme", "text_anchor": "never got proper legal help", "classification": "wrong_lane_trust_boundary"},
+        {"index": 54, "direction": "extra_theme", "text_anchor": "came up with a plan", "classification": "already_recovered"},
+        {"index": 64, "direction": "missing_theme", "text_anchor": "disappointed in the entire process", "classification": "too_vague"},
+        {"index": 65, "direction": "missing_theme", "text_anchor": "pushed for me to accept a settlement worth a third of what I was entitled to", "classification": "wrong_lane_outcome_pressure"},
+        {"index": 82, "direction": "missing_theme", "text_anchor": "ran my SSI for medical issues and not mental health like I asked", "classification": "real_driver_candidate", "note": "Explicit instruction-reversal. The only genuine new phrase seed in the lane."},
+        {"index": 105, "direction": "extra_theme", "text_anchor": "wasn't fully explained", "classification": "already_recovered"},
+        {"index": 106, "direction": "missing_theme", "text_anchor": "huge headache", "classification": "too_vague"},
+        {"index": 122, "direction": "missing_theme", "text_anchor": "blamed for not coming in when that's what I wanted", "classification": "office_intake_friction_not_expectation"}
+      ],
+      "real_driver_candidates": [82],
+      "reason": "3 extra_theme rows are already recovered. Row 82 is the only genuine new seed — explicit instruction-reversal language. Everything else is vague, wrong-lane, or intake boundary. One candidate is too thin to justify a lane pass.",
+      "action": "stop — one candidate is insufficient for a truth-shaping pass"
+    },
+    {
+      "lane": "communication_responsiveness",
+      "broad_disagreement_count": 9,
+      "verdict": "narrowest_viable_next_lane",
+      "rows_reviewed": [
+        {"index": 2,   "direction": "missing_theme", "text_anchor": "responsive", "classification": "too_generic_positive_estate_planning"},
+        {"index": 25,  "direction": "missing_theme", "text_anchor": "lost his temper", "classification": "wrong_lane_trust_abuse"},
+        {"index": 88,  "direction": "missing_theme", "text_anchor": "lack of communication", "classification": "real_driver_candidate", "note": "Real responsiveness pressure. Phrase is short — needs tight guard before adding."},
+        {"index": 101, "direction": "missing_theme", "text_anchor": "people picking up the phone are very nice", "classification": "office_staff_positive_too_generic"},
+        {"index": 104, "direction": "missing_theme", "text_anchor": "they communicate well what information is needed", "classification": "already_covered_via_timeliness_overlap"},
+        {"index": 107, "direction": "missing_theme", "text_anchor": "my attorney would always say they were waiting", "classification": "real_driver_candidate", "note": "Explicit chronic non-responsiveness narrative. Strong anchor for a narrow engine phrase."},
+        {"index": 110, "direction": "missing_theme", "text_anchor": "person on the phone got every little detail... only to be told they won't take my case", "classification": "intake_responsiveness_office_staff_boundary"},
+        {"index": 111, "direction": "wrong_severity", "text_anchor": "Waited 2 years and only heard from them 2 or 3 times", "classification": "already_covered_severity_variant"},
+        {"index": 122, "direction": "missing_theme", "text_anchor": "rudely accused of not saying anything like that over the phone", "classification": "wrong_lane_trust_office_staff"}
+      ],
+      "real_driver_candidates": [107, 88],
+      "reason": "Row 107 ('my attorney would always say they were waiting') is the clearest chronic non-responsiveness anchor. Row 88 ('lack of communication') is real but short and needs a guard before adding. The remaining rows are generic, wrong-lane, or already-covered. Two candidates is the minimum threshold for a truth-shaping pass.",
+      "action": "proceed — write a truth-shaping prep artifact as the next pass before any engine work"
+    },
+    {
+      "lane": "communication_clarity",
+      "broad_disagreement_count": 8,
+      "verdict": "too_thin_and_overlapping",
+      "rows_reviewed": [
+        {"index": 20,  "direction": "extra_theme", "classification": "already_recovered"},
+        {"index": 33,  "direction": "extra_theme", "classification": "already_recovered"},
+        {"index": 69,  "direction": "missing_theme", "text_anchor": "stayed in contact with me the entire time", "classification": "wrong_lane_responsiveness_not_clarity"},
+        {"index": 96,  "direction": "extra_theme", "classification": "already_recovered"},
+        {"index": 105, "direction": "missing_theme", "text_anchor": "wasn't fully explained", "classification": "real_driver_candidate_but_overlaps_expectation_setting"},
+        {"index": 110, "direction": "missing_theme", "text_anchor": "won't explain why and give you the run around", "classification": "real_driver_candidate_but_overlaps_responsiveness"},
+        {"index": 118, "direction": "extra_theme", "classification": "already_recovered"},
+        {"index": 125, "direction": "missing_theme", "text_anchor": "communication from staff was by far the worst", "classification": "too_vague_office_staff_boundary"}
+      ],
+      "real_driver_candidates": [105, 110],
+      "reason": "4 of 8 rows are already-recovered extra_theme. Real missing_theme pressure is sparse: rows 105 and 110 have genuine clarity gaps but both also appear in other lanes (expectation_setting and communication_responsiveness respectively). The lane is thin and overlapping — weaker than communication_responsiveness.",
+      "action": "stop — revisit after communication_responsiveness truth-shaping is complete"
+    }
+  ],
+  "selected_next_lane": "communication_responsiveness",
+  "selected_next_action": "truth_shaping_pass",
+  "selection_rationale": "communication_responsiveness has the clearest row-backed phrase candidates (107, 88) and the fewest wrong-lane contaminations after removing the trust, office-staff, and generic-positive rows. The anchor phrase at row 107 is strong enough to seed a narrow truth-shaping prep artifact. A lane-selection audit alone is not sufficient to move to engine work — a truth-shaping pass is required first, same pattern as all prior lanes.",
+  "explicitly_not_next": [
+    "professionalism_trust — no fresh unrecovered shortlist",
+    "expectation_setting — one candidate is too thin for a pass",
+    "communication_clarity — too thin and overlaps with the selected lane"
+  ],
+  "no_engine_work_this_pass": true,
+  "no_rerun_this_pass": true
+}

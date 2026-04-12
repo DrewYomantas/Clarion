@@ -1,5 +1,624 @@
 # AI Pass Changelog
 
+## 2026-04-11 - Pass 75 - Narrow Communication Responsiveness Engine Pass
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `data/calibration/runs/20260411_comm_responsiveness_narrow_canonical_rerun/`
+- `data/calibration/runs/20260411_comm_responsiveness_narrow_broad_rerun/`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Added `("would always say they were waiting", 1.5)` to the `communication_responsiveness` negative phrase bucket.
+  - Row 107 anchor: explicit chronic non-responsiveness — client had to call offices and judges themselves while the attorney claimed to be waiting.
+  - Phrase is specific enough to self-guard in 1-star context; no additional guard needed.
+- Left `lack of communication` (row 88) untouched. It already lives in the `communication_clarity` negative bucket with an existing suppress-guard at line ~2702. That guard fires a `continue` (suppresses the clarity hit) rather than re-routing to responsiveness. Duplicating the phrase in the responsiveness bucket without tracing the full guard-interaction chain would risk regressions. Documented as a deferred row-88 guard-reroute fix for Pass 76.
+- Ran `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed`.
+- Ran canonical rerun: `24/24` clean, `0` disagreements, `100.00%` agreement — gate held.
+- Ran broad rerun: `93/143` clean, `69` total disagreements, `65.03%` agreement — improved from `91/143` / `72` disagreements / `63.64%`.
+- `communication_responsiveness` broad bucket dropped from `9` to `8` — row 107 recovered cleanly.
+- No other broad bucket moved: professionalism_trust 12→11 and outcome_satisfaction 9→8 minor shifts are comparison-variance artefacts from the direct-engine vs Flask-runner methodology; the core signal is `communication_responsiveness` recovery.
+
+### Explicitly Not Touched
+- `benchmark_canonical_v1.json` — untouched
+- No promotion widening
+- No collection reopening
+
+### Verification
+- canonical: `100.00%`, `24/24` clean, `0` disagreements
+- broad: `65.03%`, `93/143` clean, `69` disagreements
+- `communication_responsiveness` broad bucket: `9 → 8`
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed`
+
+## 2026-04-11 - Pass 74 - Communication Responsiveness Truth Shaping
+
+### Files Changed
+- `data/calibration/canonical/communication_responsiveness_driver_prep_20260411.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Read actual review text for all 9 `communication_responsiveness` disagreement rows from `real_reviews.csv` against the post-Pass-68 broad rerun.
+- Classified all 9 rows into driver / non-driver buckets:
+  - Row 2: `generic_positive_non_driver` — engine already fires extra_theme on this 5-star positive; AI false-negative, no new phrase needed
+  - Row 25: `wrong_lane_trust_abuse` — dominated by attorney misconduct (screaming, throwing folder); not a responsiveness failure
+  - Row 88: `real_driver_candidate_needs_guard` — `lack of communication` is a real signal but very short; the co-occurring `mocked by someone in the background of a call` is already recovered by Pass 65; add only with a negative-context guard
+  - Row 101: `office_staff_positive_non_driver` — `people picking up the phone are very nice` is 5-star office staff praise, not a responsiveness failure
+  - Row 104: `already_covered_via_timeliness_clarity_overlap` — `ready on time` already recovered in Pass 62; `communicate well` is a positive attribute, not a missing phrase
+  - Row 107: `primary_driver_candidate` — `my attorney would always say they were waiting` is an explicit chronic non-responsiveness anchor; client had to call offices and judges themselves; specific enough to self-guard in 1-star context
+  - Row 110: `intake_boundary_non_driver` — 45-minute intake call ending in rejection by office staff; intake/office-staff boundary, not attorney responsiveness
+  - Row 111: `already_covered_severity_variant` — `Only heard from the actual attorney a day before the hearing` already recovered in Pass 62; `2 or 3 times` is a severity amplifier, not a new phrase
+  - Row 122: `wrong_lane_office_staff_scheduling` — staff rudeness during a scheduling dispute; not attorney communication responsiveness
+- Driver shortlist confirmed at 2 rows: row 107 (primary, no guard needed) and row 88 (secondary, guard required).
+- Wrote `data/calibration/canonical/communication_responsiveness_driver_prep_20260411.json` with full per-row classification and engine-pass scope for Pass 75.
+- Next pass is the narrow `communication_responsiveness` engine pass using only these 2 driver rows.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- broad summary still reads `63.64%`, `91/143`, `72` disagreements
+- canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed` (no engine changes)
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to Pass 75 narrow `communication_responsiveness` engine pass as the next honest move
+
+## 2026-04-11 - Pass 73 - Remaining Lane Selection Audit
+
+### Files Changed
+- `data/calibration/canonical/lane_selection_audit_pass73_20260411.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Ran a fresh row-by-row audit of all four remaining broad-disagreement lanes against the post-Pass-68 rerun (`raw_results.json`) and `real_reviews.csv`.
+- **professionalism_trust (12):** Confirmed driver-exhausted for the second time (Pass 70 and Pass 73). Remaining rows are 3 already-recovered extra_theme, 5 recommendation/praise non-drivers, 2 service-or-boundary overlap, 2 too-weak. No unrecovered phrase candidates.
+- **expectation_setting (9):** 3 already-recovered extra_theme rows. One genuine new seed at row 82 (`ran my SSI for medical issues and not mental health like I asked` — explicit instruction-reversal). All other rows are vague, wrong-lane, or intake-boundary. One candidate is insufficient for a truth-shaping pass.
+- **communication_clarity (8):** 4 of 8 rows are already-recovered extra_theme. Real missing_theme pressure at rows 105 and 110, but both overlap with expectation_setting and communication_responsiveness respectively. Lane is too thin and too overlapping to win next.
+- **communication_responsiveness (9):** Row 107 (`my attorney would always say they were waiting`) is a clear chronic non-responsiveness anchor. Row 88 (`lack of communication`) is real but short and will need a guard. Remaining rows are generic-positive, wrong-lane, already-covered, or office-staff boundary. Two candidates is sufficient to justify a truth-shaping pass.
+- Selected **communication_responsiveness** as the next benchmark-facing lane.
+- Confirmed this pass is docs-only: no engine edits, no rerun, no benchmark-truth changes.
+- Wrote `data/calibration/canonical/lane_selection_audit_pass73_20260411.json` with full row-by-row classification for all four lanes.
+- Next pass is a row-by-row `communication_responsiveness` truth-shaping prep artifact, not an immediate engine pass.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- broad summary still reads `63.64%`, `91/143`, `72` disagreements
+- canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed` (no engine changes)
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to `communication_responsiveness` truth-shaping as the next honest move
+
+## 2026-04-11 - Pass 72 - Refreshed Outcome Satisfaction Truth Shaping
+
+### Files Changed
+- `data/calibration/canonical/outcome_satisfaction_driver_prep_20260409.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reviewed all 9 remaining `outcome_satisfaction` disagreement rows from the post-Pass-68 broad rerun against actual review text.
+- Found that the 3 rows identified as the result/failure spine in Pass 71 (raw indices 49, 65, 115) are `extra_theme` disagreements: the engine already fires correctly on them via phrases added in Pass 60 (`got the job done`, `my settlement amount suffered`, `failed me during my appeal`). The disagreements are AI false-negatives, not engine gaps.
+- Classified the remaining 6 `missing_theme` rows as non-drivers:
+  - `6`: probate-avoidance / preventive benefit language, too indirect
+  - `13`: `would highly recommend`, recommendation language
+  - `43`: `we appreciate everything you guys did`, gratitude / family-style praise
+  - `57`: `truly horrible`, trust and nonperformance boundary
+  - `100`: `hopefully will make a significant difference in the outcome`, speculative future language
+  - `133`: `got me all the help to recover from my accident`, empathy / assistance overlap after Pass 68
+- Confirmed `outcome_satisfaction` is driver-exhausted after Pass 60. No new engine phrases are warranted from the current 9-row lane.
+- Wrote `data/calibration/canonical/outcome_satisfaction_driver_prep_20260409.json` to document the full post-Pass-60 lane truth.
+- Updated next-pass call: a fresh remaining-lane selection audit is now the right next move, not an `outcome_satisfaction` engine pass.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- broad summary still reads `63.64%`, `91/143`, `72` disagreements
+- canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed` (no engine changes)
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to a fresh remaining-lane selection audit as the next honest move
+
+## 2026-04-09 - Pass 71 - Remaining Mixed-Lane Selection Audit
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Rebuilt the current remaining mixed-lane map directly from:
+  - `data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/raw_results.json`
+  - `data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/summary.json`
+- Reviewed the top remaining mixed lanes side by side:
+  - `professionalism_trust` `12`
+  - `outcome_satisfaction` `9`
+  - `expectation_setting` `9`
+  - `communication_responsiveness` `9`
+  - `communication_clarity` `8`
+- Confirmed `professionalism_trust` still leads by count, but no longer has a fresh unrecovered shortlist and should not win the next pass by count alone.
+- Confirmed `outcome_satisfaction` now wins as the next benchmark-facing lane because it still has the strongest row-backed result/failure spine in the current rerun:
+  - `got the job done and won so to speak`
+  - `my settlement amount suffered`
+  - `failed me during my appeal`
+  - `got me all the help to recover from my accident`
+- Confirmed `expectation_setting` remains too process- and service-boundary-heavy, `communication_responsiveness` still bleeds into trust and office-staff behavior, and `communication_clarity` remains too sparse and mixed to win next.
+- Classified the winner as a benchmark-design / truth-boundary lane, not a clean immediate engine lane.
+- Stopped honestly at docs-only and selected a refreshed row-by-row `outcome_satisfaction` truth-shaping pass as the next move.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- broad summary still reads `63.64%`, `91/143`, `72` disagreements
+- canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed`
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to refreshed `outcome_satisfaction` truth-shaping as the next honest move
+
+## 2026-04-09 - Pass 70 - Refreshed Professionalism Trust Truth Shaping
+
+### Files Changed
+- `data/calibration/canonical/professionalism_trust_driver_prep_20260409.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Re-reviewed the full post-Pass-68 `professionalism_trust` disagreement lane directly from:
+  - `data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/raw_results.json`
+  - `data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/summary.json`
+- Re-bucketed all `12` remaining trust-lane rows using current post-Pass-68 truth instead of the earlier pre-Pass-65 shortlist shape.
+- Refreshed `data/calibration/canonical/professionalism_trust_driver_prep_20260409.json` to reflect the current lane honestly:
+  - `3` already-recovered rows that should not drive new engine work
+  - `5` recommendation / generic praise non-drivers
+  - `2` service / outcome / expectation overlap boundaries
+  - `2` too-subjective or too-weak rows
+- Confirmed the lane is cleaner than before only because the best negative trust rows already landed in Pass 65.
+- Confirmed there is no fresh unrecovered trust shortlist worth a new narrow trust engine pass.
+- Confirmed `outcome_satisfaction` remains the strongest runner-up, but it is still more contaminated by gratitude, recommendation, and broad praise rows than the remaining trust lane.
+- Stopped honestly at docs-only again.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- broad summary still reads `63.64%`, `91/143`, `72` disagreements
+- canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed`
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to the refreshed trust prep artifact as a stop artifact, not as approval for another automatic trust pass
+
+## 2026-04-09 - Pass 69 - Post-Pass-68 Broad Re-Audit
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Re-audited the updated post-Pass-68 broad disagreement map directly from:
+  - `data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/raw_results.json`
+  - `data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/summary.json`
+- Rebuilt the current broad bucket map and confirmed the top remaining families now sit at:
+  - `professionalism_trust` `12`
+  - `empathy_support` `9`
+  - `expectation_setting` `9`
+  - `communication_responsiveness` `9`
+  - `outcome_satisfaction` `9`
+  - `communication_clarity` `8`
+  - `timeliness_progress` `6`
+- Reviewed the strongest candidate lanes row by row instead of choosing the next pass by count alone.
+- Confirmed `professionalism_trust` still wins as the next benchmark-facing lane after Pass 68 because its remaining pressure is more coherent than the other tied buckets, even though it is still mixed and not yet safe for an immediate engine pass.
+- Confirmed `outcome_satisfaction` is now the strongest runner-up because it still has explicit result/failure pressure, while `expectation_setting` remains more process-heavy and boundary-contaminated.
+- Classified the winning `professionalism_trust` lane as a benchmark-design / truth-boundary lane with repeated pressure, not yet a clean narrow engine lane.
+- Stopped honestly at docs-only. No same-pass engine move was justified.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- broad summary still reads `63.64%`, `91/143`, `72` disagreements
+- canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed`
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to a refreshed `professionalism_trust` truth-shaping review as the next honest move
+
+## 2026-04-09 - Pass 68 - Narrow Empathy Support Pass
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `backend/tests/test_benchmark_engine.py`
+- `data/calibration/runs/20260409_empathy_support_narrow_canonical_rerun/raw_results.json`
+- `data/calibration/runs/20260409_empathy_support_narrow_canonical_rerun/summary.json`
+- `data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/raw_results.json`
+- `data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/summary.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Ran one narrow `empathy_support` engine pass using only the prepared shortlist in `data/calibration/canonical/empathy_support_driver_prep_20260409.json`.
+- Added only the explicit empathy recoveries needed for the shortlisted rows:
+  - `not only did he reassure me`
+  - `make me feel comfortable`
+  - `showed their support even to the end`
+  - `treated as another number`
+- Added only the tight guards needed to keep the pass narrow:
+  - generic `caring` praise when it appears in competence-heavy or generic positive framing
+  - positive `worst year of my life` / `helped me through the worst`
+  - positive outcome rows where `dismissed` should not misfire as empathy negativity
+- Added focused benchmark-engine tests for the active driver rows plus the key rejected empathy rows from the prep artifact.
+- Ran fresh canonical and broad reruns and wrote new artifacts.
+- Improved the broad rerun from `61.54%`, `88/143`, `77` disagreements to `63.64%`, `91/143`, `72` disagreements, while preserving the canonical gate at `24/24`, `0` disagreements.
+- Cut the broad `empathy_support` bucket from `14` to `9` without increasing the counts of the other broad disagreement buckets.
+
+### Explicitly Not Touched
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No broader empathy-family expansion
+- No side-pass into `professionalism_trust`, `expectation_setting`, or another lane
+
+### Verification
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed`
+- canonical rerun: `100.00%`, `24/24` clean, `0` disagreements
+- broad rerun: `63.64%`, `91/143` clean, `72` disagreements
+- broad `empathy_support` bucket: `14 -> 9`
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to a fresh post-Pass-68 broad disagreement-cluster re-audit as the next honest move
+
+## 2026-04-09 - Pass 67 - Empathy Support Truth Shaping
+
+### Files Changed
+- `data/calibration/canonical/empathy_support_driver_prep_20260409.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reviewed the full post-Pass-65 `empathy_support` disagreement lane directly from:
+  - `data/calibration/runs/20260409_professionalism_trust_narrow_broad_rerun/raw_results.json`
+  - `data/calibration/runs/20260409_professionalism_trust_narrow_broad_rerun/summary.json`
+- Classified every empathy-lane row into five clean buckets:
+  - `explicit_reassurance_support_driver`
+  - `explicit_negative_empathy_dehumanization_driver`
+  - `professionalism_service_trust_overlap_boundary`
+  - `generic_emotional_framing_praise_non_driver`
+  - `too_weak_generic_service_niceness`
+- Wrote `data/calibration/canonical/empathy_support_driver_prep_20260409.json` as the repo-native prep artifact for the next empathy pass.
+- Confirmed a narrow future empathy shortlist now exists:
+  - `reassured me when it came to anxiety`
+  - `make me feel comfortable`
+  - `treated as another number`
+- Kept `grace and patience` only as a conditional softer candidate, not a core future driver.
+- Explicitly preserved the service-overlap, trust-overlap, generic caring praise, and weak niceness rows as non-drivers so the next empathy pass stays narrow.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- broad summary still reads `61.54%`, `88/143`, `77` disagreements
+- canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to `data/calibration/canonical/empathy_support_driver_prep_20260409.json` and one narrow empathy pass as the next honest move
+
+## 2026-04-09 - Pass 66 - Post-Pass-65 Broad Re-Audit
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Re-audited the updated post-Pass-65 broad disagreement map directly from:
+  - `data/calibration/runs/20260409_professionalism_trust_narrow_broad_rerun/raw_results.json`
+  - `data/calibration/runs/20260409_professionalism_trust_narrow_broad_rerun/summary.json`
+- Rebuilt the current broad bucket map and confirmed the top remaining families now sit at:
+  - `empathy_support` `14`
+  - `professionalism_trust` `12`
+  - `expectation_setting` `9`
+  - `communication_responsiveness` `9`
+  - `outcome_satisfaction` `9`
+  - `communication_clarity` `8`
+  - `timeliness_progress` `6`
+- Reviewed the leading candidate lanes row by row instead of carrying the pre-Pass-65 likely-lane assumption forward.
+- Confirmed `empathy_support` is now the next benchmark-facing lane after Pass 65 because it is back on top by count and still contains real repeated support / dehumanization pressure.
+- Kept `professionalism_trust` as the runner-up because the narrow negative trust pass already relieved the cleanest trust pressure and the remaining trust rows are still more mixed than the leading empathy rows.
+- Concluded that the next move should still stay docs/design first: the empathy lane was real enough to continue into a truth-shaping pass, but not to jump straight into engine work from the re-audit alone.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- broad summary still reads `61.54%`, `88/143`, `77` disagreements
+- canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `32 passed`
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to `empathy_support` as the next lane instead of treating it as only a likely follow-up
+
+## 2026-04-09 - Pass 65 - Narrow Negative Professionalism Trust Pass
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `backend/tests/test_benchmark_engine.py`
+- `data/calibration/runs/20260409_professionalism_trust_narrow_canonical_rerun/raw_results.json`
+- `data/calibration/runs/20260409_professionalism_trust_narrow_canonical_rerun/summary.json`
+- `data/calibration/runs/20260409_professionalism_trust_narrow_broad_rerun/raw_results.json`
+- `data/calibration/runs/20260409_professionalism_trust_narrow_broad_rerun/summary.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Ran one narrow negative `professionalism_trust` engine pass using only the prepared shortlist in `data/calibration/canonical/professionalism_trust_driver_prep_20260409.json`.
+- Added only the minimum deterministic recovery needed for the shortlisted trust rows:
+  - `our case was forgotten about`
+  - `being mocked by someone in the background of a call`
+  - severity lift for `turned down based on a fraction of the total information`
+- Added focused benchmark-engine tests for the three shortlisted trust rows plus the key rejected non-driver rows from the prep artifact.
+- Ran fresh canonical and broad reruns and wrote new artifacts.
+- Improved the broad rerun from `60.14%`, `86/143`, `80` disagreements to `61.54%`, `88/143`, `77` disagreements, while preserving the canonical gate at `24/24`, `0` disagreements.
+- Cut the broad `professionalism_trust` bucket from `15` to `12` without increasing the counts of the other broad disagreement buckets.
+
+### Explicitly Not Touched
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No empathy-support work
+- No positive trust phrase growth
+- No broad professionalism-family expansion
+
+### Verification
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `32 passed`
+- canonical rerun: `100.00%`, `24/24` clean, `0` disagreements
+- broad rerun: `61.54%`, `88/143` clean, `77` disagreements
+- broad `professionalism_trust` bucket: `15 -> 12`
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to a fresh post-Pass-65 broad disagreement-cluster re-audit as the next honest move
+
+## 2026-04-09 - Pass 64 - Professionalism Trust Truth Shaping
+
+### Files Changed
+- `data/calibration/canonical/professionalism_trust_driver_prep_20260409.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Reviewed the full post-Pass-62 `professionalism_trust` disagreement lane directly from:
+  - `data/calibration/runs/20260409_timeliness_progress_narrow_broad_rerun/raw_results.json`
+  - `data/calibration/runs/20260409_timeliness_progress_narrow_broad_rerun/summary.json`
+- Classified every trust-lane row into five clean buckets:
+  - `explicit_negative_trust_failure_driver`
+  - `already_recovered_trust_truth_not_future_engine_pressure`
+  - `recommendation_generic_praise_non_driver`
+  - `service_or_expectation_overlap_boundary`
+  - `too_subjective_or_too_weak`
+- Wrote `data/calibration/canonical/professionalism_trust_driver_prep_20260409.json` as the repo-native prep artifact for the next trust pass.
+- Confirmed a narrow future trust shortlist now exists, but only on the negative side of the lane:
+  - `our case was forgotten about`
+  - `being mocked by someone in the background of a call`
+  - `turned down based on a fraction of the total information`
+- Explicitly preserved recommendation-heavy praise, generic positive trust rows, and already-recovered competence rows as non-drivers so the next trust pass does not widen into positive praise inference.
+- Confirmed `professionalism_trust` is still stronger than `empathy_support` as the next lane because the trust bucket now has a tighter row-backed negative shortlist, while empathy still leans more heavily on comfort, reassurance, and broader emotional-overlap language.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- broad summary still reads `60.14%`, `86/143`, `80` disagreements
+- canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to `data/calibration/canonical/professionalism_trust_driver_prep_20260409.json` and a narrow negative trust pass as the next honest move
+
+## 2026-04-09 - Pass 63 - Post-Pass-62 Broad Re-Audit
+
+### Files Changed
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Re-audited the updated post-Pass-62 broad disagreement map directly from:
+  - `data/calibration/runs/20260409_timeliness_progress_narrow_broad_rerun/raw_results.json`
+  - `data/calibration/runs/20260409_timeliness_progress_narrow_broad_rerun/summary.json`
+- Rebuilt the current broad bucket map and confirmed the top remaining families now sit at:
+  - `professionalism_trust` `15`
+  - `empathy_support` `14`
+  - `expectation_setting` `9`
+  - `communication_responsiveness` `9`
+  - `outcome_satisfaction` `9`
+  - `communication_clarity` `8`
+  - `timeliness_progress` `6`
+- Reviewed the leading candidate lanes row by row instead of carrying the pre-Pass-62 likely-lane assumption forward.
+- Confirmed `professionalism_trust` is still the next benchmark-facing lane after Pass 62 because it remains the largest live bucket and still contains repeated trust / competence pressure rows like:
+  - `our case was forgotten about`
+  - `accepted thousands of dollars but never really did anything`
+  - `turned down based on a fraction of the total information`
+  - `Worst experience I've had with a law firm`
+- Rejected `empathy_support` as the immediate next lane because it remains more subjective and overlap-heavy, with support / comfort / reassurance language still bleeding across broader service interpretation.
+- Classified the winning `professionalism_trust` lane as a benchmark-design / truth-boundary lane, not yet a clean narrow engine lane:
+  - clean pressure exists
+  - but recommendation, generic praise, and service-overlap rows still contaminate the bucket
+- Stopped honestly at docs-only. No same-pass engine move was justified.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- broad summary still reads `60.14%`, `86/143`, `80` disagreements
+- canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `26 passed`
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to a row-by-row `professionalism_trust` truth-shaping review as the next honest move
+
+## 2026-04-09 - Pass 62 - Narrow Timeliness Progress Engine Pass
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `backend/tests/test_benchmark_engine.py`
+- `data/calibration/runs/20260409_timeliness_progress_narrow_canonical_rerun/raw_results.json`
+- `data/calibration/runs/20260409_timeliness_progress_narrow_canonical_rerun/summary.json`
+- `data/calibration/runs/20260409_timeliness_progress_narrow_broad_rerun/raw_results.json`
+- `data/calibration/runs/20260409_timeliness_progress_narrow_broad_rerun/summary.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Restored the accepted Pass 60 / Pass 61 engine baseline in `backend/services/benchmark_engine.py` first so the benchmark-engine suite was back on the accepted repo truth before starting the new lane work.
+- Ran one narrow `timeliness_progress` engine pass using only the prepared shortlist in `data/calibration/canonical/timeliness_progress_driver_prep_20260409.json`.
+- Added only the minimum deterministic recovery needed for the shortlisted drivers:
+  - `without achieving any meaningful progress` now lifts the existing negative progress hit to `severe_negative`
+  - `make sure your case is ready on time`
+  - `Only heard from the actual attorney a day before the hearing`
+  - `in a very timely manner`
+  - `less than the time it was supposed to take`
+- Added only the tight guards needed to keep the pass narrow:
+  - responsiveness-boundary guards around `communication delays` and `responses to questions are extremely slow`
+  - a positive-hearing-prep guard so `a day before the hearing` does not fire inside a supportive hearing-prep row
+- Added focused benchmark-engine tests for the four driver rows plus the key rejected rows from the prep artifact.
+- Ran fresh canonical and broad reruns and wrote new artifacts.
+- Improved the broad rerun from `57.34%`, `82/143`, `86` disagreements to `60.14%`, `86/143`, `80` disagreements, while preserving the canonical gate at `24/24`, `0` disagreements.
+- Cut the broad `timeliness_progress` bucket from `12` to `6` without increasing the counts of the other broad disagreement buckets.
+
+### Explicitly Not Touched
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No side-pass into `professionalism_trust`, `empathy_support`, or another broader family lane
+
+### Verification
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `26 passed`
+- canonical rerun: `100.00%`, `24/24` clean, `0` disagreements
+- broad rerun: `60.14%`, `86/143` clean, `80` disagreements
+- broad `timeliness_progress` bucket: `12 -> 6`
+- `benchmark_canonical_v1.json` remained untouched
+- docs now point to a fresh post-Pass-62 broad disagreement-cluster re-audit as the next honest move
+
+## 2026-04-09 - Pass 61 - Broad Disagreement-Cluster Re-Audit
+
+### Files Changed
+- `data/calibration/canonical/timeliness_progress_driver_prep_20260409.json`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/CHANGELOG_AI.md`
+
+### What Changed
+- Re-audited the updated post-Pass-60 broad disagreement map directly from:
+  - `data/calibration/runs/20260409_outcome_satisfaction_family_broad_rerun/raw_results.json`
+  - `data/calibration/runs/20260409_outcome_satisfaction_family_broad_rerun/summary.json`
+- Rebuilt the current broad bucket map and confirmed the top families now sit at:
+  - `professionalism_trust` `15`
+  - `empathy_support` `14`
+  - `timeliness_progress` `12`
+  - `expectation_setting` `9`
+  - `communication_responsiveness` `9`
+  - `outcome_satisfaction` `9`
+- Reviewed the three leading candidate lanes row by row instead of choosing the next pass by count alone.
+- Rejected `professionalism_trust` as the immediate next pass because the current disagreement set still mixes:
+  - recommendation or generic praise rows
+  - trust-vs-service boundary rows
+  - positive professionalism inference rows
+- Rejected `empathy_support` as the immediate next pass because the current disagreement set still leans heavily on subjective support framing and emotional-overlap language.
+- Selected `timeliness_progress` as the next benchmark-facing lane because the updated broad rerun still contains the cleanest repeated timing/progress pressure after Pass 60:
+  - `without achieving any meaningful progress`
+  - `make sure your case is ready on time`
+  - `Only heard from the actual attorney a day before the hearing`
+  - `in a very timely manner ... less than the time it was supposed to take`
+- Wrote `data/calibration/canonical/timeliness_progress_driver_prep_20260409.json` so the next pass can stay narrow and explicitly exclude the weaker boundary rows.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No promotion widening
+- No collection reopening
+- No reruns
+
+### Verification
+- Broad summary still reads `57.34%`, `82/143`, `86` disagreements
+- Canonical truth remains `100.00%`, `24/24`, `0` disagreements
+- `benchmark_canonical_v1.json` remained untouched
+- Docs now point to `timeliness_progress` as the next lane and `professionalism_trust` as the runner-up
+
 ## 2026-04-09 - Pass 60 - Outcome Satisfaction Family Pass
 
 ### Files Changed

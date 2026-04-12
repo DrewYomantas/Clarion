@@ -309,6 +309,12 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("receive replies to simple questions", 1.5),
             ("messages were not returned", 1.5),
             ("whenever i call i get attitude", 1.5),
+            # --- calibration: Pass 75 communication_responsiveness narrow pass ---
+            # Row 107: explicit chronic non-responsiveness; client called offices/judges themselves
+            ("would always say they were waiting", 1.5),
+            # Row 88 ("lack of communication") already present in communication_clarity negative
+            # with an existing redirect guard at line ~2702. Not duplicated here to avoid
+            # guard-interaction risk. Re-evaluate if row 88 remains a miss after this pass.
         ],
         "severe_negative": [
             # --- original ---
@@ -512,6 +518,8 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("kind and understanding", 1.5),
             ("listened to my concerns", 1.0),
             ("made me feel comfortable", 1.0),
+            ("make me feel comfortable", 1.0),
+            ("showed their support even to the end", 1.5),
             ("supportive", 1.0),
             ("truly understood", 1.0),
             # NOTE: bare "understanding" removed -- fires on "deep understanding of
@@ -548,6 +556,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("warm and compassionate", 1.5),
             # --- phrase expansion: real-review evidence ---
             ("reassured me", 1.5),
+            ("not only did he reassure me", 1.5),
             ("in my corner", 1.5),
             ("like family", 1.5),
             ("worst year of my life", 2.0),
@@ -643,6 +652,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("did not care about my situation", 1.5),
             ("made me feel ignored", 1.5),
             ("treated me like a number", 1.5),
+            ("treated as another number", 1.5),
             ("emotionally dismissive", 1.5),
             ("cold attitude", 1.2),
             ("rude and has zero compassion", 1.5),
@@ -817,6 +827,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("they're not even licensed in my state", 2.0),
             ("turned down based on a fraction of the total information", 1.5),
             ("don't even fight hard", 1.5),
+            ("being mocked by someone in the background of a call", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -852,6 +863,8 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("my case was handed off to a junior associate", 2.0),
             ("an absolute nightmare", 2.0),
             ("crooked law office", 2.0),
+            ("our case was forgotten about", 2.0),
+            ("case was forgotten about", 2.0),
             # --- calibration: gap-report wave 2 (final_summary.json) ---
             ("let me down and sent his inexperienced son", 2.0),
             ("did almost no work", 2.0),
@@ -1281,7 +1294,10 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("stayed on schedule", 1.0),
             ("work was done promptly", 1.0),
             ("made sure your case is ready on time", 1.5),
+            ("make sure your case is ready on time", 1.5),
             ("made sure everything was done correctly and on time", 1.5),
+            ("in a very timely manner", 1.5),
+            ("less than the time it was supposed to take", 1.5),
             ("answered them within a day", 1.0),
             # --- calibration: sample2 ---
             ("always knew when the next court date was", 1.5),
@@ -1380,6 +1396,7 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("missed statute of limitations", 2.0),
             ("showed up late", 2.0),
             ("didn't even know he had to come", 2.0),
+            ("only heard from the actual attorney a day before the hearing", 2.0),
             ("taken more than 2 years", 2.0),
             ("taken more then 2 years", 2.0),
             ("tanked my case", 2.0),
@@ -2072,11 +2089,17 @@ def _maybe_escalate_negative_severity(
         case_harm = _text_has_any(text_lower, TIMELINESS_CASE_HARM_HINTS)
         if phrase in ("2 and a half years", "two and a half years"):
             return "severe_negative"
+        if phrase == "without achieving any meaningful progress":
+            return "severe_negative"
         if phrase in ("delayed", "still waiting", "still waiting after", "still waiting for resolution") and (long_delay or case_harm):
             return "severe_negative"
 
     if theme_id == "billing_transparency":
         if phrase == "per hour rate" and _text_has_any(text_lower, BILLING_SURPRISE_HINTS):
+            return "severe_negative"
+
+    if theme_id == "professionalism_trust":
+        if phrase == "turned down based on a fraction of the total information":
             return "severe_negative"
 
     if theme_id == "fee_value":
@@ -2359,7 +2382,7 @@ def score_review_deterministic(
                     and matched_theme_id == "timeliness_progress"
                     and actual_polarity == "negative"
                     and any(kw in text_lower for kw in (
-                        "response time", "response times", "getting back",
+                        "response time", "response times", "responses to questions", "getting back",
                         "intake", "intake process", "confusing",
                     ))
                 ):
@@ -2446,6 +2469,29 @@ def score_review_deterministic(
                     and _text_has_any(text_lower, POSITIVE_OUTCOME_HINTS)
                 ):
                     continue
+                elif (
+                    phrase in ("delays", "communication delays", "overall frustrating experience with communication delays")
+                    and matched_theme_id == "timeliness_progress"
+                    and _text_has_any(text_lower, ("communication delays",))
+                ):
+                    continue
+                elif (
+                    phrase in ("extremely slow", "responses to questions are extremely slow")
+                    and matched_theme_id == "timeliness_progress"
+                    and _text_has_any(text_lower, (
+                        "responses to questions",
+                        "lack of communication",
+                        "paralegals",
+                        "getting back",
+                    ))
+                ):
+                    continue
+                elif (
+                    phrase == "a day before the hearing"
+                    and matched_theme_id == "timeliness_progress"
+                    and _text_has_any(text_lower, ("called me a few days prior", "again about 20 minutes before the hearing"))
+                ):
+                    continue
 
                 # GUARD 2: "expensive" praised in cost-warning context -> suppress fee_value negative hit
                 elif (
@@ -2523,6 +2569,39 @@ def score_review_deterministic(
                         "understand", "explained", "explain", "clear", "clarity",
                         "detail", "details", "options",
                     ))
+                ):
+                    continue
+                elif (
+                    phrase == "caring"
+                    and matched_theme_id == "empathy_support"
+                    and (
+                        _text_has_any(text_lower, ("caring and responsive",))
+                        or _text_has_any(text_lower, ("intelligent", "know the law", "aggressive"))
+                    )
+                    and not _text_has_any(clause_text, (
+                        "comfortable", "support", "supported", "anxiety",
+                        "heard", "concerns", "concern", "listen",
+                    ))
+                ):
+                    continue
+                elif (
+                    phrase in ("saved my life", "worst year of my life", "helped me through the worst")
+                    and matched_theme_id == "empathy_support"
+                    and actual_polarity == "positive"
+                ):
+                    continue
+                elif (
+                    phrase == "dismissed"
+                    and matched_theme_id == "empathy_support"
+                    and actual_polarity == "negative"
+                    and _text_has_any(text_lower, ("prosecutor dismissed", "charges dismissed", "case dismissed"))
+                ):
+                    continue
+                elif (
+                    phrase == "helped me through"
+                    and matched_theme_id == "empathy_support"
+                    and actual_polarity == "positive"
+                    and _text_has_any(text_lower, ("worst year of my life",))
                 ):
                     continue
                 elif (
