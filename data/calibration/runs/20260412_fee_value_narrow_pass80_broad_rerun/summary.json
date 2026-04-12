@@ -1,0 +1,20 @@
+{
+  "run_name": "20260412_fee_value_narrow_pass80_broad_rerun",
+  "pass": 80,
+  "total_reviews": 143,
+  "zero_disagreement_reviews": 99,
+  "total_disagreements": 60,
+  "agreement_rate": 0.6923,
+  "disagreement_by_theme": {
+    "empathy_support": 9,
+    "timeliness_progress": 6,
+    "expectation_setting": 8,
+    "communication_responsiveness": 5,
+    "professionalism_trust": 11,
+    "outcome_satisfaction": 8,
+    "communication_clarity": 6,
+    "billing_transparency": 2,
+    "fee_value": 1,
+    "office_staff_experience": 4
+  }
+}

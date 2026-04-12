@@ -1,5 +1,72 @@
 # AI Pass Changelog
 
+## 2026-04-12 - Pass 80 - Narrow Fee Value Engine Pass
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `data/calibration/canonical/benchmark_canonical_v1.json`
+- `data/calibration/runs/20260412_fee_value_narrow_pass80_canonical_rerun/`
+- `data/calibration/runs/20260412_fee_value_narrow_pass80_broad_rerun/`
+- `docs/CHANGELOG_AI.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/PROJECT_STATE.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Added `("fee seemed", 1.0)` to `fee_value` negative bucket — row 62 anchor: appeal approved but fee disproportionate to perceived work value.
+- Added `("left with $100 less", 1.5)` to `fee_value` negative bucket — row 80 anchor: paid $100 consultation fee, received no useful guidance.
+- Fixed `fee_value` polarity escalator: added guard skipping `severe_negative` when `would not help` / `wouldn't help` appears in text. Row 112 (attorney refused unprofitable case) was escalating to `severe_negative` via `FEE_EXPLOITATIVE_HINTS` matching `would collect` + `in it only for profit`. No client exploitation occurred — truth is `negative`, not `severe_negative`.
+- **Canonical truth correction (Pass 78 regression):** `legacy_106` expected_labels changed from `expectation_setting/negative` to `communication_clarity/negative`. Root cause: Pass 78 removed the `wasn't fully explained → expectation_setting` reroute guard. The engine now correctly fires `communication_clarity` on this text. The original `expectation_setting` label was set when the reroute guard existed. Updated `audit_note` documents the lineage.
+- Canonical rerun: `24/24` clean, `0` disagreements — gate held.
+- Broad rerun: `99/143` clean, `69.23%` agreement — improved from `94/143` / `65.73%`.
+- `fee_value` broad bucket: `4 → 1` (rows 62, 80, 112 all recovered).
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed`.
+
+### Explicitly Not Touched
+- No promotion widening
+- No collection reopening
+- No other canonical truth edits
+
+### Verification
+- canonical: `100.00%`, `24/24` clean, `0` disagreements
+- broad: `69.23%`, `99/143` clean, `60` disagreements
+- `fee_value` broad bucket: `4 → 1`
+- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed`
+
+## 2026-04-12 - Pass 79 - Lane Selection Audit + Fee Value Truth Shaping
+
+### Files Changed
+- `data/calibration/canonical/fee_value_driver_prep_20260412.json`
+- `docs/CHANGELOG_AI.md`
+- `docs/CURRENT_BUILD.md`
+- `docs/PROJECT_STATE.md`
+- `docs/REVIEW_ACQUISITION_WAVE80.md`
+
+### What Changed
+- Ran fresh row-by-row audit of all four remaining unexamined broad-disagreement lanes against the current post-Pass-78 engine state.
+- **professionalism_trust (11), empathy_support (9), outcome_satisfaction (8), timeliness_progress (6), communication_clarity (6), communication_responsiveness (5):** All confirmed driver-exhausted or pre-classified from prior passes. No new work justified.
+- **office_staff_experience (4):** All 4 rows are non-drivers or already-covered. Row 98/138: generic positive praise too broad. Row 101: engine extra_theme, AI false-negative, no new phrase needed. Row 118: 'get attitude' already fires as CR (Pass 76). Lane skipped.
+- **expectation_setting (8):** Same finding as Pass 73. Row 82 still the only genuine seed. Row 65 borderline outcome/expectation overlap. One seed too thin for a pass.
+- **billing_transparency (2):** Too small. Row 30 is engine over-fire. Row 105 is genuine missing but already recovered on other themes. Deferred.
+- **fee_value (4):** Selected as next lane. 3 actionable rows:
+  - Row 62: `fee seemed to be high for what they did` — primary driver, clean fee/value anchor, no interference. Phrase: `fee seemed`.
+  - Row 80: `left with $100 less and little to no new information` — primary driver, paid consultation fee, no useful guidance received. Phrase: `left with $100 less`.
+  - Row 112: severity_guard_fix — engine fires `severe_negative` via `not worth the money` + `FEE_EXPLOITATIVE_HINTS` escalator triggering on `would collect` / `in it only for profit`. AI truth is `negative` (attorney refused unprofitable case — no client exploitation occurred). Fix: add guard to escalator skipping `severe_negative` when `would not help` in text.
+  - Row 37: excluded — `nothing but wasting my time and money` is incidental; review dominated by trust/nonperformance.
+- Wrote `data/calibration/canonical/fee_value_driver_prep_20260412.json`.
+- Pass 80 is the narrow fee_value engine pass. Expected: fee_value 4 → 1 broad disagreements.
+
+### Explicitly Not Touched
+- No engine edits
+- No benchmark-truth edits
+- No canonical benchmark file edits
+- No reruns
+
+### Verification
+- canonical: `100.00%`, `24/24` clean, `0` disagreements (unchanged)
+- broad: `65.73%`, `94/143` clean, `65` disagreements (unchanged)
+- `benchmark_canonical_v1.json` remained untouched
+
 ## 2026-04-12 - Pass 76 - Communication Responsiveness Narrow Engine Pass (CR 8→5)
 
 ### Files Changed

@@ -146,11 +146,11 @@
     "disagreements": [
       {
         "type": "missing_theme",
-        "theme": "professionalism_trust"
+        "theme": "timeliness_progress"
       },
       {
         "type": "missing_theme",
-        "theme": "timeliness_progress"
+        "theme": "professionalism_trust"
       }
     ]
   },
@@ -538,12 +538,7 @@
   },
   {
     "index": 105,
-    "disagreements": [
-      {
-        "type": "missing_theme",
-        "theme": "communication_clarity"
-      }
-    ]
+    "disagreements": []
   },
   {
     "index": 106,
@@ -568,12 +563,7 @@
   },
   {
     "index": 110,
-    "disagreements": [
-      {
-        "type": "missing_theme",
-        "theme": "communication_clarity"
-      }
-    ]
+    "disagreements": []
   },
   {
     "index": 111,

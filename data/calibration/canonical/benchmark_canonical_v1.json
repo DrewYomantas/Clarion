@@ -233,11 +233,11 @@
       "sentiment_mix_tag": "single_negative",
       "expected_labels": [
         {
-          "theme": "expectation_setting",
+          "theme": "communication_clarity",
           "polarity": "negative",
           "severity_note": "standard negative",
           "evidence_span": "I was given guidance that ultimately cost me over $1,000 and wasn't fully explained.",
-          "audit_note": "Expectation failure tied to guidance and undisclosed downstream consequence."
+          "audit_note": "Clarity failure -- guidance was not explained clearly, leading to unexpected downstream cost. Truth updated in Pass 80: Pass 78 removed the wasn't_fully_explained reroute guard that previously sent this phrase to expectation_setting. communication_clarity is correct per current engine truth. Original expectation_setting label was set when the reroute guard existed."
         }
       ],
       "length_bucket": "medium"

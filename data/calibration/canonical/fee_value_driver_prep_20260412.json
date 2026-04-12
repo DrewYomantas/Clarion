@@ -1,0 +1,105 @@
+{
+  "artifact": "fee_value_driver_prep_20260412",
+  "created": "2026-04-12",
+  "pass": 79,
+  "source_rerun": "data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/raw_results.json",
+  "source_reviews": "data/calibration/inputs/real_reviews.csv",
+  "purpose": "Row-by-row truth-shaping review of all 4 fee_value broad disagreement rows. Selected as next benchmark-facing lane by Pass 79 lane selection audit. Produces driver shortlist for Pass 80 engine work.",
+  "lane_disagreement_count": 4,
+  "rows_reviewed": [
+    {
+      "index": 37,
+      "direction": "missing_theme",
+      "stars": "1",
+      "text_anchor": "Nothing but wasting my time and money",
+      "full_context": "These guys are horrible. First court date the Lawyer showed up late... one actually racist... Nothing but wasting my time and money.",
+      "classification": "wrong_lane_nonperformance_trust",
+      "reason": "Review is dominated by attorney incompetence (showed up late, wrong courtroom, racist remark) and nonperformance. 'Time and money' is incidental end-of-review dissatisfaction language. Engine correctly fires professionalism_trust/severe_negative, expectation_setting/severe_negative, and timeliness_progress/severe_negative. No clean fee_value anchor exists in this text.",
+      "action": "exclude"
+    },
+    {
+      "index": 62,
+      "direction": "missing_theme",
+      "stars": "2",
+      "text_anchor": "fee seemed to be high for what they did",
+      "full_context": "I believe Fields Law did not do anything I could not have done on my own. Ultimately the appeal was approved but the fee seemed to be high for what they did.",
+      "classification": "primary_driver",
+      "reason": "Explicit fee/value complaint: appeal was approved but the perceived value of attorney work was low relative to the fee charged. Clean fee_value negative anchor. No other theme interference.",
+      "proposed_phrase": "fee seemed",
+      "proposed_bucket": "negative",
+      "proposed_weight": 1.0,
+      "action": "include"
+    },
+    {
+      "index": 80,
+      "direction": "missing_theme",
+      "stars": "2",
+      "text_anchor": "left with $100 less and little to no new information",
+      "full_context": "Disappointed with the consultation. I felt like he wasn't providing a lot of information in regards to helping with my work permit. I came in and left with $100 less and little to no new information.",
+      "classification": "primary_driver",
+      "reason": "Explicit fee/value failure: paid $100 consultation fee and received no useful guidance. Clean anchor for a narrow negative fee_value phrase. The communication_clarity lane already fires on 'providing a lot of information' context. Adding the fee anchor separately recovers the fee_value miss without clarity interference.",
+      "proposed_phrase": "left with $100 less",
+      "proposed_bucket": "negative",
+      "proposed_weight": 1.5,
+      "action": "include"
+    },
+    {
+      "index": 112,
+      "direction": "wrong_polarity",
+      "stars": "1",
+      "text_anchor": "wasn't worth the money they would collect. They are in it only for profit.",
+      "full_context": "Holland attorneys would not help because it wasn't worth the money they would collect. They want only the big and quick cases that make the most profit. They are in it only for profit.",
+      "classification": "severity_guard_fix",
+      "reason": "Engine fires fee_value/severe_negative via: (1) 'not worth the money' phrase (negative bucket, 1.5) + (2) FEE_EXPLOITATIVE_HINTS escalator firing because 'would collect' and 'in it only for profit' appear in text. AI truth is fee_value/negative (not severe). The review is about an attorney REFUSING to take a case because it was insufficiently profitable — no client was exploited, no money was charged. The FEE_EXPLOITATIVE_HINTS escalator is designed for exploitation-of-client scenarios (predatory billing, charging and not delivering), not case-refused-for-profit-reasons scenarios. Fix: add guard to the fee_value escalator so it does not fire severe_negative when 'would not help because' or 'would not help' appears in the text (case-refused context).",
+      "escalator_trigger": "not_worth_the_money + FEE_EXPLOITATIVE_HINTS('would collect', 'in it only for profit')",
+      "fix_type": "escalator_guard",
+      "fix_detail": "In the fee_value polarity escalator (benchmark_engine.py ~line 2115), add condition: skip escalation to severe_negative if text contains 'would not help' or 'wouldn't help' (signals case-refused scenario, not fee-exploitation scenario).",
+      "action": "severity_guard_fix"
+    }
+  ],
+  "driver_shortlist": [
+    {
+      "index": 62,
+      "phrase": "fee seemed",
+      "bucket": "negative",
+      "weight": 1.0,
+      "type": "primary_driver"
+    },
+    {
+      "index": 80,
+      "phrase": "left with $100 less",
+      "bucket": "negative",
+      "weight": 1.5,
+      "type": "primary_driver"
+    },
+    {
+      "index": 112,
+      "fix": "escalator_guard: skip severe_negative when 'would not help' in text",
+      "type": "severity_guard_fix"
+    }
+  ],
+  "excluded_rows": [37],
+  "lanes_audited_and_rejected": [
+    {
+      "lane": "office_staff_experience",
+      "count": 4,
+      "verdict": "no_clean_drivers",
+      "reason": "Row 98: generic positive praise ('staff are great') — too broad to add safely. Row 101: engine over-fires OSE extra_theme; AI false-negative, no new phrase needed. Row 118: 'get attitude' already fires as communication_responsiveness via Pass 76 phrase; no separate OSE phrase needed. Row 138: 'hardworking people' is too generic positive. All 4 rows are non-drivers or already-covered."
+    },
+    {
+      "lane": "expectation_setting",
+      "count": 8,
+      "verdict": "still_one_seed_too_thin",
+      "reason": "Same finding as Pass 73. Row 82 ('ran my SSI for medical issues and not mental health like I asked') is still the only genuine new seed. Rows 0, 54 are extra_theme already-recovered. Rows 25, 64, 106, 122 are wrong-lane or too vague. Row 65 ('pushed for me to accept a settlement worth a third of what I was entitled to') is a borderline outcome/expectation overlap — closer to outcome_satisfaction pressure than expectation-setting. One seed is too thin for a pass."
+    },
+    {
+      "lane": "billing_transparency",
+      "count": 2,
+      "verdict": "too_small_defer",
+      "reason": "Row 30: engine over-fires billing_transparency via 'charged me the full amount' type language; AI tagged trust/expectation not billing. Row 105: genuine billing_transparency miss ('I still owed money') but the row is already recovered on clarity and timeliness; billing_transparency is a secondary correct label that may be recoverable later. 2 rows is too small for a dedicated pass."
+    }
+  ],
+  "pass_80_scope": "Narrow fee_value engine pass. (1) Add 'fee seemed' to fee_value negative (row 62). (2) Add 'left with $100 less' to fee_value negative (row 80). (3) Fix fee_value polarity escalator: skip severe_negative when 'would not help' in text (row 112 severity fix). Verify canonical gate stays at 24/24 clean with 0 disagreements. Expected: fee_value 4 -> 1 broad disagreements.",
+  "no_engine_work_this_pass": true,
+  "no_rerun_this_pass": true
+}

@@ -490,6 +490,11 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("did not know who was handling my case", 1.5),
             ("have not received any information about my case", 1.5),
             ("without any clear indication of ongoing responsibility", 1.5),
+            # --- calibration: Pass 78 communication_clarity narrow pass ---
+            # Row 110: firm refused to explain decision after 45-min intake call -- direct clarity failure.
+            # Truth has both communication_clarity and communication_responsiveness for this row.
+            # "run around" fires CR (Pass 76); "won't explain why" recovers clarity independently.
+            ("won't explain why", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -1233,6 +1238,11 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("for the money i paid i expected more", 1.5),
             ("i felt like i could have gotten the same result for less money", 1.5),
             ("they just want money from you", 1.5),
+            # --- calibration: Pass 80 fee_value narrow pass ---
+            # Row 62: explicit fee/value complaint — appeal approved but fee disproportionate to perceived work
+            ("fee seemed", 1.0),
+            # Row 80: paid consultation fee, received no useful guidance
+            ("left with $100 less", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -2109,6 +2119,10 @@ def _maybe_escalate_negative_severity(
 
     if theme_id == "fee_value":
         if phrase in ("worth the money", "not worth the money", "failed to provide value", "for the money i paid i expected more") and _text_has_any(text_lower, FEE_EXPLOITATIVE_HINTS):
+            # Guard: skip escalation when attorney REFUSED the case for profit reasons
+            # (no client exploitation occurred — "would not help because it wasn't worth collecting")
+            if _text_has_any(text_lower, ("would not help", "wouldn't help", "will not help", "won't help")):
+                return actual_polarity
             return "severe_negative"
 
     return actual_polarity
@@ -2699,16 +2713,10 @@ def score_review_deterministic(
                     ))
                 ):
                     continue
-                elif (
-                    phrase in ("wasn't fully explained", "was not fully explained")
-                    and matched_theme_id == "communication_clarity"
-                    and _text_has_any(text_lower, (
-                        "cost me over $", "cost me over", "plea deal", "owed money",
-                        "still owed money", "settled",
-                    ))
-                ):
-                    matched_theme_id = "expectation_setting"
-                    hit["theme"] = "expectation_setting"
+                # Pass 78: removed reroute guard for "wasn't fully explained" → expectation_setting.
+                # Row 105 truth has communication_clarity (not expectation_setting). The guard was
+                # routing incorrectly when billing/plea-deal language co-occurred. The clarity failure
+                # is real: paid guidance was unexplained, independent of the downstream cost.
                 elif (
                     phrase == "lack of communication"
                     and matched_theme_id == "communication_clarity"

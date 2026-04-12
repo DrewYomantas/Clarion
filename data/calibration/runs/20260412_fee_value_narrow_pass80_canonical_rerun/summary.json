@@ -1,0 +1,9 @@
+{
+  "run_name": "20260412_fee_value_narrow_pass80_canonical_rerun",
+  "pass": 80,
+  "total_reviews": 24,
+  "zero_disagreement_reviews": 24,
+  "total_disagreements": 0,
+  "agreement_rate": 1.0,
+  "disagreement_by_theme": {}
+}

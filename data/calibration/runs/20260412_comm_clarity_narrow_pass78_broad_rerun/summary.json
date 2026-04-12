@@ -1,0 +1,76 @@
+{
+  "run_name": "20260412_comm_clarity_narrow_pass78_broad_rerun",
+  "pass": 78,
+  "date": "2026-04-12",
+  "engine_edits": [
+    {
+      "type": "phrase_add",
+      "theme": "communication_clarity",
+      "bucket": "negative",
+      "phrase": "won't explain why",
+      "weight": 1.5,
+      "target_row": 110,
+      "rationale": "Firm refused to explain case decline decision after 45-min intake call. Direct clarity failure distinct from responsiveness. Truth has both CR (fires via 'run around', Pass 76) and clarity. This recovers the clarity theme independently."
+    },
+    {
+      "type": "guard_remove",
+      "theme": "communication_clarity",
+      "phrase": "wasn't fully explained / was not fully explained",
+      "guard_action_removed": "reroute to expectation_setting when billing/plea-deal language co-occurs",
+      "target_row": 105,
+      "rationale": "Row 105 truth has communication_clarity, not expectation_setting. The guidance was unexplained -- that is a clarity failure regardless of downstream cost. Removing the reroute guard lets the phrase stay in clarity. Expectation_setting extra-fire also drops since this was the only trigger."
+    }
+  ],
+  "canonical_rerun": {
+    "active_rows": 24,
+    "clean": 24,
+    "disagreements": 0,
+    "gate": "PASS"
+  },
+  "broad_rerun": {
+    "total_reviews": 143,
+    "clean": 94,
+    "disagreement_rows": 49,
+    "total_disagrees": 65,
+    "agreement_rate": 0.6573,
+    "disagreement_by_theme": {
+      "communication_responsiveness": 5,
+      "communication_clarity": 6,
+      "empathy_support": 9,
+      "professionalism_trust": 12,
+      "timeliness_progress": 6,
+      "expectation_setting": 8,
+      "billing_transparency": 2,
+      "fee_value": 4,
+      "office_staff_experience": 4,
+      "outcome_satisfaction": 9
+    }
+  },
+  "delta_vs_pass77": {
+    "communication_clarity_disagrees": "8 -> 6 (-2)",
+    "communication_responsiveness_disagrees": "5 -> 5 (0)",
+    "total_disagrees": "68 -> 65 (-3)",
+    "agreement_rate": "65.03% -> 65.73% (+0.70%)"
+  },
+  "target_row_outcomes": {
+    "row_105": "CLEAN on clarity -- reroute guard removed, wasn't fully explained now stays in communication_clarity. billing_transparency still missing (separate lane problem).",
+    "row_110": "CLEAN -- won't explain why fires communication_clarity. run around fires CR (Pass 76). Both themes now correctly recovered."
+  },
+  "remaining_clarity_disagrees": {
+    "count": 6,
+    "breakdown": [
+      {"row": 20,  "type": "extra_theme", "verdict": "defer -- root phrase unclear, wrong-lane intake behavior"},
+      {"row": 33,  "type": "extra_theme", "verdict": "viable suppression -- billing/retainer language triggering clarity"},
+      {"row": 69,  "type": "missing_theme", "verdict": "do not chase -- wrong_lane, truth is responsiveness not clarity"},
+      {"row": 96,  "type": "extra_theme", "verdict": "defer -- 'what to expect' positive phrase, low priority"},
+      {"row": 118, "type": "extra_theme", "verdict": "borderline -- 'no answers' near-clarity language, truth is timeliness+office_staff"},
+      {"row": 125, "type": "missing_theme", "verdict": "do not chase -- too vague, no specific clarity phrase anchor"}
+    ],
+    "suppression_viable_now": ["row_33"],
+    "suppression_deferred": ["row_20", "row_96", "row_118"],
+    "non_drivers_confirmed": ["row_69", "row_125"]
+  },
+  "lane_exhausted": false,
+  "lane_notes": "communication_clarity narrow pass complete. 6 remaining disagrees are all pre-classified. Lane is stable -- no new unknown disagreements appeared. Row 33 suppression (billing context) is the only remaining viable action but is low-priority given the small gain.",
+  "readiness": "improved but not demo-safe"
+}

@@ -278,12 +278,7 @@
   },
   {
     "index": 48,
-    "disagreements": [
-      {
-        "type": "extra_theme",
-        "theme": "outcome_satisfaction"
-      }
-    ]
+    "disagreements": []
   },
   {
     "index": 49,
@@ -331,12 +326,12 @@
     "index": 56,
     "disagreements": [
       {
-        "type": "extra_theme",
-        "theme": "professionalism_trust"
-      },
-      {
         "type": "missing_theme",
         "theme": "outcome_satisfaction"
+      },
+      {
+        "type": "extra_theme",
+        "theme": "professionalism_trust"
       }
     ]
   },
@@ -362,12 +357,7 @@
   },
   {
     "index": 62,
-    "disagreements": [
-      {
-        "type": "missing_theme",
-        "theme": "fee_value"
-      }
-    ]
+    "disagreements": []
   },
   {
     "index": 63,
@@ -463,12 +453,7 @@
   },
   {
     "index": 80,
-    "disagreements": [
-      {
-        "type": "missing_theme",
-        "theme": "fee_value"
-      }
-    ]
+    "disagreements": []
   },
   {
     "index": 81,
@@ -543,12 +528,7 @@
   },
   {
     "index": 95,
-    "disagreements": [
-      {
-        "type": "extra_theme",
-        "theme": "professionalism_trust"
-      }
-    ]
+    "disagreements": []
   },
   {
     "index": 96,
@@ -580,12 +560,12 @@
     "index": 99,
     "disagreements": [
       {
-        "type": "extra_theme",
-        "theme": "professionalism_trust"
-      },
-      {
         "type": "missing_theme",
         "theme": "outcome_satisfaction"
+      },
+      {
+        "type": "extra_theme",
+        "theme": "professionalism_trust"
       }
     ]
   },
@@ -673,12 +653,7 @@
   },
   {
     "index": 112,
-    "disagreements": [
-      {
-        "type": "wrong_polarity",
-        "theme": "fee_value"
-      }
-    ]
+    "disagreements": []
   },
   {
     "index": 113,
@@ -709,12 +684,12 @@
     "index": 118,
     "disagreements": [
       {
-        "type": "extra_theme",
-        "theme": "communication_clarity"
-      },
-      {
         "type": "missing_theme",
         "theme": "office_staff_experience"
+      },
+      {
+        "type": "extra_theme",
+        "theme": "communication_clarity"
       }
     ]
   },
