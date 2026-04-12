@@ -1,0 +1,192 @@
+{
+  "version": "v1",
+  "created_at": "2026-04-12",
+  "artifact_type": "communication_clarity_driver_prep",
+  "status": "prepared_for_narrow_engine_pass",
+  "pass": 77,
+  "source_commit": "5980b88",
+  "source_artifacts": {
+    "broad_rerun_summary": "data/calibration/runs/20260412_comm_responsiveness_narrow_pass76_broad_rerun/summary.json",
+    "broad_rerun_raw_results": "data/calibration/runs/20260412_comm_responsiveness_narrow_pass76_broad_rerun/raw_results.json"
+  },
+  "notes": "First truth-shaping prep for the communication_clarity lane. Pass 73 flagged this lane as viable but deferred it pending CR completion. CR is now done (Pass 76, CR 8->5). This artifact classifies all 8 current communication_clarity disagreement rows from the post-Pass-76 broad rerun, confirms 2 real driver candidates, and documents 4 extra-fire suppression candidates. No engine work in this pass.",
+  "lane_summary": {
+    "broad_disagreement_count": 8,
+    "extra_theme_count": 4,
+    "missing_theme_count": 4,
+    "bucket_counts": {
+      "real_missing_theme_driver": 2,
+      "wrong_lane_or_weak_truth_label": 1,
+      "too_vague_boundary": 1,
+      "extra_fire_wrong_lane": 3,
+      "extra_fire_borderline": 1
+    },
+    "future_engine_driver_shortlist_count": 2,
+    "rejected_non_driver_count": 6
+  },
+  "future_engine_driver_shortlist": [
+    {
+      "raw_result_index": 105,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 106,
+      "bucket": "real_missing_theme_driver",
+      "direction": "missing_theme",
+      "driver_role": "negative_clarity_unexplained_guidance",
+      "review_text": "I wasn't planning to leave a review, but after today I'm done. I hired Hoglund for a criminal matter. I was given guidance that ultimately cost me over $1,000 and wasn't fully explained. My case was delayed nearly five months, only to end in a plea deal that likely could have happened much earlier. I was contacted six months after my case was settled and told I still owed money.",
+      "phrase_seed": "wasn't fully explained",
+      "reason": "Explicit statement that paid guidance was not explained to the client. Directly describes a clarity failure, not an expectation or billing failure. The engine currently extra-fires expectation_setting for this row and misses communication_clarity entirely. Also missing billing_transparency, but that is a separate lane recovery problem. phrase_seed is specific enough to be low false-positive risk.",
+      "also_disagrees": ["extra_theme: expectation_setting", "missing_theme: billing_transparency"],
+      "guard_needed": false
+    },
+    {
+      "raw_result_index": 110,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 111,
+      "bucket": "real_missing_theme_driver",
+      "direction": "missing_theme",
+      "driver_role": "negative_clarity_refusal_to_explain_decision",
+      "review_text": "Called to get help and the person on the phone got every little detail of my personal life for 45 minutes only to be told while still on the phone that they won't work with me. But won't explain why and give you the run around.",
+      "phrase_seed": "won't explain why",
+      "reason": "Firm gathered extensive client information then declined the case and refused to explain the decision. That refusal is a genuine clarity failure distinct from the responsiveness failure. 'give you the run around' now sits in communication_responsiveness negative (Pass 76). Adding 'won't explain why' to communication_clarity is correct -- truth has both themes and both should fire. phrase_seed is specific to refusal-to-explain behavior.",
+      "also_disagrees": [],
+      "guard_needed": false,
+      "guard_note": "Phrase checked against the full 143-real set. Appears only in row 110. No guard required."
+    }
+  ],
+  "extra_fire_suppression_candidates": [
+    {
+      "raw_result_index": 20,
+      "direction": "extra_theme",
+      "review_text": "After a series of about 4 to 5 questions, the woman on the phone told me that I was not going to be able to receive disability because I claim an income... she hung up on me.",
+      "current_engine_behavior": "fires communication_clarity — likely triggered by advice/explanation language around disability income rules",
+      "truth_has": "likely professionalism_trust or office_staff_experience",
+      "suppression_verdict": "defer — root cause unclear without inspecting which phrase fires. Document for now."
+    },
+    {
+      "raw_result_index": 33,
+      "direction": "extra_theme",
+      "review_text": "The billing statements I have received are confusing - retainer amounts change with no explanation.",
+      "current_engine_behavior": "fires communication_clarity — 'confusing' and 'no explanation' likely trigger clarity positive/negative phrases",
+      "truth_has": "billing_transparency",
+      "suppression_verdict": "viable suppression — billing confusion and unexplained retainer changes should route to billing_transparency, not communication_clarity. A guard on billing/statement context could suppress this false positive. Defer to Pass 78 engine work."
+    },
+    {
+      "raw_result_index": 96,
+      "direction": "extra_theme",
+      "review_text": "Andrew called me a few days prior to my hearing to discuss how things would go and what to expect, and then again about 20 minutes before the hearing.",
+      "current_engine_behavior": "fires communication_clarity — 'what to expect' likely triggers a clarity positive phrase",
+      "truth_has": "no communication_clarity label",
+      "suppression_verdict": "defer — positive clarity phrase may legitimately match here. The truth label is the mismatch, not necessarily an engine error. Low priority."
+    },
+    {
+      "raw_result_index": 118,
+      "direction": "extra_theme",
+      "review_text": "They have no answers for why it is taking this long.",
+      "current_engine_behavior": "fires communication_clarity — 'no answers' likely triggers clarity negative phrase",
+      "truth_has": "office_staff_experience, timeliness_progress",
+      "suppression_verdict": "borderline — 'no answers' is genuinely close to clarity language but truth routes this row to office_staff + timeliness. Note for Pass 78 engine work. Could be left as an acceptable false positive given how close it sits to clarity territory."
+    }
+  ],
+  "reviewed_rows": [
+    {
+      "raw_result_index": 20,
+      "direction": "extra_theme",
+      "bucket": "extra_fire_wrong_lane",
+      "keep_as_driver": false,
+      "review_text": "I have been denied disability twice now. I called the firm for advice and help. After a series of about 4 to 5 questions, the woman on the phone told me that I was not going to be able to receive disability because I claim an income. My income is less than 12,000 a year. I was informed that you cannot claim any kind of income if you want to be approved for disability and she hung up on me.",
+      "judgment": "Engine over-fires communication_clarity. No clear clarity failure here -- the advice was blunt and likely wrong, but the row is really about abrupt intake behavior and bad guidance. Truth probably routes this to professionalism_trust or office_staff. Not a clarity driver."
+    },
+    {
+      "raw_result_index": 33,
+      "direction": "extra_theme",
+      "bucket": "extra_fire_wrong_lane",
+      "keep_as_driver": false,
+      "review_text": "The billing statements I have received are confusing - retainer amounts change with no explanation.",
+      "judgment": "Engine over-fires communication_clarity based on 'confusing' and 'no explanation' language. This is billing_transparency pressure. A suppression guard around billing/retainer context is viable but deferred to the engine pass."
+    },
+    {
+      "raw_result_index": 69,
+      "direction": "missing_theme",
+      "bucket": "wrong_lane_or_weak_truth_label",
+      "keep_as_driver": false,
+      "review_text": "Someone from Field's Law office was quick to contact me and guide me through the disability process. They stayed in contact with me the entire time.",
+      "judgment": "Truth has communication_clarity but the dominant signal is responsiveness. 'Guide me through' has a weak clarity angle but 'stayed in contact with me the entire time' is pure responsiveness. Classified as wrong_lane in Pass 73. Do not chase."
+    },
+    {
+      "raw_result_index": 96,
+      "direction": "extra_theme",
+      "bucket": "extra_fire_wrong_lane",
+      "keep_as_driver": false,
+      "review_text": "Andrew called me a few days prior to my hearing to discuss how things would go and what to expect, and then again about 20 minutes before the hearing. I was glad to have an attorney to speak for me. He was able to relay to the judge exactly what I intended.",
+      "judgment": "Engine over-fires communication_clarity for 'what to expect' language. Truth likely routes this row to communication_responsiveness or competence. Acceptable false positive -- low priority to suppress."
+    },
+    {
+      "raw_result_index": 105,
+      "direction": "missing_theme",
+      "bucket": "real_missing_theme_driver",
+      "keep_as_driver": true,
+      "review_text": "I wasn't planning to leave a review, but after today I'm done. I hired Hoglund for a criminal matter. I was given guidance that ultimately cost me over $1,000 and wasn't fully explained. My case was delayed nearly five months, only to end in a plea deal that likely could have happened much earlier. I was contacted six months after my case was settled and told I still owed money.",
+      "judgment": "Real clarity driver. 'Wasn't fully explained' is a direct clarity failure -- paid guidance was not explained. Distinct from expectation_setting (no promises involved) and billing (the money loss is downstream of the unexplained guidance). See future_engine_driver_shortlist."
+    },
+    {
+      "raw_result_index": 110,
+      "direction": "missing_theme",
+      "bucket": "real_missing_theme_driver",
+      "keep_as_driver": true,
+      "review_text": "Called to get help and the person on the phone got every little detail of my personal life for 45 minutes only to be told while still on the phone that they won't work with me. But won't explain why and give you the run around.",
+      "judgment": "Real clarity driver. 'Won't explain why' is a direct refusal to explain a decision. Truth has both communication_clarity and communication_responsiveness for this row. 'Run around' now fires CR (Pass 76). Adding clarity for 'won't explain why' correctly recovers the second theme. Guard check required before engine add. See future_engine_driver_shortlist."
+    },
+    {
+      "raw_result_index": 118,
+      "direction": "extra_theme",
+      "bucket": "extra_fire_borderline",
+      "keep_as_driver": false,
+      "review_text": "Over two years and still waiting. I have not received any information about my case. Whenever I call I get attitude. They have no answers for why it is taking this long.",
+      "judgment": "Engine fires clarity for 'no answers for why' -- close to clarity language but truth routes this row to office_staff_experience and timeliness_progress. Borderline false positive. Note for engine pass but do not suppress aggressively -- the phrase is genuinely near-clarity."
+    },
+    {
+      "raw_result_index": 125,
+      "direction": "missing_theme",
+      "bucket": "too_vague_boundary",
+      "keep_as_driver": false,
+      "review_text": "Horrible. We barely had communication with the lawyer and when we did he was very rushed. The communication from staff was by far the worst. I absolutely hated our entire experience. Save yourself and go somewhere else.",
+      "judgment": "No specific clarity failure described. 'He was very rushed' is empathy/responsiveness, not clarity. 'Communication from staff was by far the worst' is too vague to anchor a clarity phrase. Confirmed non-driver per Pass 73. Do not chase."
+    }
+  ],
+  "explicit_non_drivers": {
+    "wrong_lane_or_weak_truth_label": [
+      "stayed in contact with me the entire time (responsiveness, not clarity)"
+    ],
+    "too_vague_boundary": [
+      "the communication from staff was by far the worst",
+      "he was very rushed"
+    ],
+    "extra_fire_wrong_lane": [
+      "billing statements I have received are confusing (billing_transparency, not clarity)",
+      "no explanation for retainer changes (billing_transparency, not clarity)",
+      "what to expect from the hearing (competence/responsiveness, not clarity)"
+    ],
+    "extra_fire_borderline": [
+      "they have no answers for why it is taking this long (timeliness + office_staff, borderline clarity)"
+    ]
+  },
+  "lane_shape_judgment": {
+    "compared_to_pass73_assessment": "unchanged -- same 2 missing_theme candidates identified in Pass 73 are confirmed here. No new candidates have appeared since then.",
+    "extra_fire_problem": "4 of 8 disagreements are extra-fires (engine over-fires clarity). This is a suppression problem separate from the missing_theme recovery. The two main suppression targets are billing language (row 33) and wrong-lane intake/competence language (rows 20, 96). Deferred to Pass 78 engine work.",
+    "pass76_impact": "Pass 76 added 'run around' to CR negative. Row 110 now fires CR but still misses clarity. That confirms 'won't explain why' and 'run around' are separate signals in the same row -- both should fire independently.",
+    "risk_level": "low -- both phrase seeds are specific and negative. No positive-row collision risk identified from reading the 143-real set. Row 110 guard check is precautionary."
+  },
+  "recommended_next_move": {
+    "decision": "A",
+    "label": "lane_ready_for_narrow_engine_pass",
+    "why": "Two confirmed missing_theme driver candidates with distinct phrase seeds. Extra-fire rows documented but not blocking. Guard check on 'won't explain why' is the only open pre-engine task."
+  },
+  "guard_check_required_before_engine_work": {
+    "phrase": "won't explain why",
+    "check": "Scan the 143-real broad set for any positive or neutral rows that contain this phrase or close variants. If found, add a negative-context guard before committing. If not found, add without guard.",
+    "status": "complete -- phrase appears only in row 110. No other rows in the 143-real set contain 'won't explain why', 'won't explain', or 'explain why'. No guard needed.",
+    "also_checked": "'wasn't fully explained' -- appears only in row 105. No other rows in the 143-real set. No guard needed."
+  },
+  "no_engine_work_this_pass": true,
+  "no_canonical_changes_this_pass": true
+}

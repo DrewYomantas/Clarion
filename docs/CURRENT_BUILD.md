@@ -1,6 +1,28 @@
 # Current Build
 
-Latest completed milestone: `2026-04-12 - Pass 76 - Communication Responsiveness Narrow Engine Pass (CR 8→5)`.
+Latest completed milestone: `2026-04-12 - Pass 77 - Communication Clarity Truth-Shaping Prep`.
+
+Current product truth:
+- canonical benchmark: `100.00%` agreement, `24/24` clean reviews, `0` disagreements
+- broad 143-real sanity benchmark: `65.03%` agreement, `75/143` clean reviews, `68` disagreements, `0` AI errors
+- readiness: `improved but not demo-safe`
+
+What changed in the latest pass:
+- Pass 77: docs-only truth-shaping prep for `communication_clarity` lane
+- all 8 post-Pass-76 clarity disagreement rows classified
+- 2 confirmed missing_theme driver candidates: row 105 ("wasn't fully explained"), row 110 ("won't explain why")
+- 4 extra-fire rows documented: rows 20, 33, 96 (wrong-lane), row 118 (borderline)
+- guard check complete on both phrase seeds -- unique in 143-real set, no guard needed
+- prep artifact written to `data/calibration/canonical/communication_clarity_driver_prep_20260412.json`
+- no engine edits, no canonical changes, no rerun
+
+Current next pass:
+- Pass 78: narrow `communication_clarity` engine pass
+- add "wasn't fully explained" to `communication_clarity` negative bucket
+- add "won't explain why" to `communication_clarity` negative bucket
+- run canonical rerun (gate must hold at 24/24, 0 disagrees)
+- run broad rerun (target: communication_clarity bucket 8 -> lower)
+- evaluate suppression candidates for extra-fire rows (rows 33, 118) if broad regression appears
 
 Current product truth:
 - canonical benchmark: `100.00%` agreement, `24/24` clean reviews, `0` disagreements
