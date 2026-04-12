@@ -24,7 +24,9 @@ Verification:
 - run artifacts: `data/calibration/runs/20260412_fee_value_narrow_pass80_canonical_rerun/` and `data/calibration/runs/20260412_fee_value_narrow_pass80_broad_rerun/`
 
 Current next pass:
-- Pass 81: fresh lane selection audit across updated broad bucket counts
-- updated top buckets: professionalism_trust 11, empathy_support 9, expectation_setting 8, outcome_satisfaction 8, timeliness_progress 6, communication_clarity 6, communication_responsiveness 5, office_staff_experience 4, billing_transparency 2
-- do not reopen collection or broaden promotion
-- see `docs/REVIEW_ACQUISITION_WAVE80.md` for priorities
+- **Render deploy verification (active)** — deploy of `0798b4a` in progress; verify build completes clean
+- Confirm required env vars are set in Render dashboard: `DATABASE_URL`, `SECRET_KEY`, `ADMIN_PASSWORD`, `INTERNAL_BENCHMARK_SECRET`, `WEB_CONCURRENCY` (should be `1` or unset)
+- Hit `/internal/benchmark` on live URL with Bearer token; confirm engine returns canonical 24/24 and broad ~99/143
+- Smoke the auth/login/session flow end-to-end on live Postgres instance
+- After deploy confirmed: decide whether Pass 81 calibration work is warranted (top 3 broad buckets all driver-exhausted; diminishing returns) or whether focus shifts to frontend polish / domain cutover / Stripe wiring
+- Pass 81 calibration is low-priority until deploy is confirmed healthy — do not reopen calibration work until Render truth is verified

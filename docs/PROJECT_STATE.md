@@ -194,8 +194,30 @@ Recent passes established a real-only canonical benchmark, improved recall on th
 4. Engine boundary cleanup + docs truth sync - complete.
 
 ### Current Next Pass
-5. Honest next move:
-   - latest completed milestone is Pass 71 (`2026-04-09`)
+5. **Render deploy verification (active as of 2026-04-12)**
+   - repo is clean at `0798b4a` (Pass 80 engine + canonical + docs all committed and pushed)
+   - deploy of `0798b4a` triggered on push to `main`; build status must be confirmed in Render dashboard
+   - **required env var checklist (must be set in Render environment):**
+     - `DATABASE_URL` — if missing, app silently falls back to ephemeral SQLite and loses all data on restart
+     - `SECRET_KEY` — if missing or weak, app hard-crashes at startup (enforced in `config.py`)
+     - `ADMIN_PASSWORD` — if missing or weak, app hard-crashes at startup (enforced in `config.py`)
+     - `INTERNAL_BENCHMARK_SECRET` — must be set to access `/internal/benchmark` API via Bearer token
+     - `WEB_CONCURRENCY` — should be `1` or unset; Render starter tier default is safe but confirm
+     - `RENDER=true` — set automatically by Render; enables `SESSION_COOKIE_SECURE` flag
+   - **post-deploy smoke checklist:**
+     - `/` public landing loads without error
+     - `/login` → submit credentials → session cookie set with `Secure; HttpOnly; SameSite=Lax`
+     - authenticated dashboard loads and `current_user` is not anonymous (confirms `CompatRow` fix working)
+     - `GET /internal/benchmark/` with `Authorization: Bearer <INTERNAL_BENCHMARK_SECRET>` returns results
+     - benchmark result shows canonical `24/24` clean, broad `~99/143`
+   - **known risks if env vars missing:**
+     - no `DATABASE_URL` → SQLite fallback → data loss on every Render restart; auth still works but no persistence
+     - no `SECRET_KEY` → startup crash, site is down
+     - `SESSION_COOKIE_SECURE` missing (only if `RENDER` env var not injected) → login succeeds but cookie silently dropped by browser on HTTPS → every page load is unauthenticated
+   - after deploy confirmed healthy: evaluate whether Pass 81 calibration is warranted
+     - top 3 broad buckets (`professionalism_trust 11`, `empathy_support 9`, `expectation_setting 8`) are all driver-exhausted
+     - honest next calibration move requires a full row-by-row audit pass just to confirm no new shortlist exists
+     - diminishing returns — shift focus to frontend polish, domain cutover, or Stripe wiring instead
    - keep collection closed; the active canonical gate restoration is complete
    - treat Phase 1 as complete and protected, not as the live active batch
    - use [REVIEW_ACQUISITION_WAVE80.md](C:/Users/beyon/OneDrive/Desktop/CLARION/law-firm-insights-main/docs/REVIEW_ACQUISITION_WAVE80.md) plus `data/calibration/canonical/wave80_staged_pressure_20260408.json` as the source of truth for the staged Wave80 pressure set
@@ -280,17 +302,15 @@ Recent passes established a real-only canonical benchmark, improved recall on th
      - broad improved to `65.03%`, `93/143`, `69` disagreements; `communication_responsiveness` bucket `9 -> 8`
      - row 88 (`lack of communication`) remains unrecovered -- guard-reroute fix deferred to Pass 76
    - fresh rerun artifacts written to `data/calibration/runs/20260411_comm_responsiveness_narrow_canonical_rerun/` and `data/calibration/runs/20260411_comm_responsiveness_narrow_broad_rerun/`
-   - Pass 76 next steps: re-audit remaining `communication_responsiveness` disagreements, evaluate row 88 guard-reroute fix, then run a fresh remaining-lane selection audit before committing to a new lane
-   - keep promise-reversal intake language staged through `morgan_elishaurgent` until more repeated real evidence exists
-   - keep `newfrontier_vlopez` staged on the shortlist until its trust ambiguity is resolved
-   - keep the downgraded fragmented rows out of active staged pressure unless a later benchmark-design pass reopens them deliberately
+   - Pass 76–80 complete: CR guard reroute, clarity narrow pass, fee_value narrow pass, canonical corrections — see CHANGELOG_AI.md
+   - calibration is paused at Pass 80; top remaining broad buckets are all driver-exhausted; do not reopen without new evidence or a new review corpus wave
 
 ### Later
-6. Deployed launch-truth pass on Render after benchmark credibility improves further.
-7. Setup-dependent delivery proof.
+6. Pass 81 calibration (only if deploy is healthy and a new driver shortlist emerges — not warranted at current broad bucket state)
+7. Frontend polish and bundle/code-splitting work.
 8. Domain cutover to `clarion.co`.
-9. Agent Office audit.
-10. Frontend bundle/code-splitting work.
+9. Stripe webhook URL update + end-to-end subscription smoke test.
+10. Agent Office audit.
 
 ---
 
@@ -310,7 +330,7 @@ Recent passes established a real-only canonical benchmark, improved recall on th
 
 - Local seeded product smoke remains historically confirmed.
 - Current product blocker is not basic workspace flow comprehension.
-- Current blocker is benchmark credibility plus the need for more repeated real-world review evidence.
+- Current blocker is **Render deploy verification and live env var audit** — repo is clean at Pass 80, auth/session/Postgres fixes are committed, but live deploy state has not been confirmed post-push. Calibration is no longer the gating concern.
 
 ---
 
