@@ -1,0 +1,25 @@
+{
+  "agreement_rate": 0.6364,
+  "zero_disagreement_reviews": 91,
+  "total_reviews": 143,
+  "total_disagreements": 72,
+  "disagreement_buckets": {
+    "missing_theme": 53,
+    "extra_theme": 16,
+    "likely_context_guard_failure": 1,
+    "wrong_severity": 1,
+    "missed_severe_phrase": 1
+  },
+  "theme_buckets": {
+    "empathy_support": 9,
+    "expectation_setting": 9,
+    "timeliness_progress": 6,
+    "communication_responsiveness": 9,
+    "professionalism_trust": 12,
+    "outcome_satisfaction": 9,
+    "communication_clarity": 8,
+    "billing_transparency": 2,
+    "fee_value": 4,
+    "office_staff_experience": 4
+  }
+}

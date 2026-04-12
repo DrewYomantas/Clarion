@@ -1,0 +1,205 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Map · Use arrow keys to pan the map. · Get details about a place by pressing its corresponding number key." [ref=e8]
+    - search [ref=e14]:
+      - generic [ref=e15]:
+        - combobox [ref=e17]: Walk-In Wills
+        - button "Search" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: ?
+        - button "Close" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: ?
+    - region "Available search options for this area" [ref=e262]:
+      - generic [ref=e265]:
+        - button "Restaurants" [ref=e267] [cursor=pointer]:
+          - generic [ref=e268]:
+            - generic [ref=e270]: ?
+            - generic [ref=e271]: Restaurants
+        - button "Hotels" [ref=e273] [cursor=pointer]:
+          - generic [ref=e274]:
+            - generic [ref=e276]: ?
+            - generic [ref=e277]: Hotels
+        - button "Things to do" [ref=e279] [cursor=pointer]:
+          - generic [ref=e280]:
+            - generic [ref=e282]: ?
+            - generic [ref=e283]: Things to do
+        - button "Transit" [ref=e285] [cursor=pointer]:
+          - generic [ref=e286]:
+            - generic [ref=e288]: ?
+            - generic [ref=e289]: Transit
+        - button "Parking" [ref=e291] [cursor=pointer]:
+          - generic [ref=e292]:
+            - generic [ref=e294]: ?
+            - generic [ref=e295]: Parking
+        - button "Pharmacies" [ref=e297] [cursor=pointer]:
+          - generic [ref=e298]:
+            - generic [ref=e300]: ?
+            - generic [ref=e301]: Pharmacies
+        - button "ATMs" [ref=e303] [cursor=pointer]:
+          - generic [ref=e304]:
+            - generic [ref=e306]: ?
+            - generic [ref=e307]: ATMs
+      - button "Next page" [ref=e308] [cursor=pointer]:
+        - generic [ref=e309]: ?
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - button "Menu" [ref=e29] [cursor=pointer]:
+              - generic [ref=e31]: ?
+          - listitem [ref=e32]:
+            - button "Saved" [ref=e33] [cursor=pointer]:
+              - generic [ref=e35]: ?
+              - generic [ref=e37]: Saved
+          - listitem [ref=e38]:
+            - button "Recents" [ref=e39] [cursor=pointer]:
+              - generic [ref=e41]: ?
+              - generic [ref=e43]: Recents
+          - listitem [ref=e311]:
+            - button "Walk-In Wills" [ref=e312] [cursor=pointer]:
+              - generic [ref=e318]: Walk-In Wills
+          - listitem [ref=e45]:
+            - button "Get app" [ref=e46] [cursor=pointer]:
+              - generic [ref=e48]: ?
+              - generic [ref=e50]: Get app
+        - main "Walk-In Wills" [ref=e55]:
+          - generic [ref=e56]:
+            - button "Photo of Walk-In Wills" [active] [ref=e58] [cursor=pointer]:
+              - img [ref=e59]
+            - button "See photos" [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: ?
+              - generic [ref=e62]: See photos
+          - generic [ref=e65]:
+            - heading "Walk-In Wills" [level=1] [ref=e67]: Walk-In Wills
+            - generic [ref=e69]:
+              - generic [ref=e72]:
+                - text: "4.6"
+                - img "4.6 stars" [ref=e73]
+              - generic [ref=e79]:
+                - button "Law firm" [ref=e82]
+                - text: ·
+                - img "Wheelchair accessible entrance" [ref=e83]: ?
+          - tablist [ref=e86]:
+            - tab "Overview of Walk-In Wills" [selected] [ref=e87]:
+              - generic [ref=e89]: Overview
+            - tab "About Walk-In Wills" [ref=e91]:
+              - generic [ref=e93]: About
+          - region "Actions for Walk-In Wills" [ref=e95]:
+            - button "Directions" [ref=e97] [cursor=pointer]:
+              - generic [ref=e99]: ?
+              - generic [ref=e100]: Directions
+            - button "Save" [ref=e102] [cursor=pointer]:
+              - generic [ref=e104]: ?
+              - generic [ref=e105]: Save
+            - button "Nearby" [ref=e107] [cursor=pointer]:
+              - generic [ref=e109]: ?
+              - generic [ref=e110]: Nearby
+            - button "Send to phone" [ref=e112] [cursor=pointer]:
+              - generic [ref=e114]: ?
+              - generic [ref=e115]: Send to phone
+            - button "Share" [ref=e117] [cursor=pointer]:
+              - generic [ref=e119]: ?
+              - generic [ref=e120]: Share
+          - region "Information for Walk-In Wills" [ref=e123]:
+            - generic [ref=e124]:
+              - 'button "Address: 2000 Carlisle Blvd NE G, Albuquerque, NM 87110" [ref=e125] [cursor=pointer]':
+                - generic [ref=e126]:
+                  - generic [ref=e128]: ?
+                  - generic [ref=e130]: 2000 Carlisle Blvd NE G, Albuquerque, NM 87110
+              - button "Copy address" [ref=e133] [cursor=pointer]:
+                - generic [ref=e135]: ?
+            - button "Hours Closed · Opens 9 AM Mon Show open hours for the week" [ref=e137] [cursor=pointer]:
+              - img "Hours" [ref=e138]: ?
+              - generic [ref=e140]:
+                - generic [ref=e142]: Closed · Opens 9 AM Mon
+                - img "Show open hours for the week" [ref=e143]: ?
+            - generic [ref=e144]:
+              - 'link "Website: walkinwills.com" [ref=e145] [cursor=pointer]':
+                - /url: https://walkinwills.com/
+                - generic [ref=e146]:
+                  - generic [ref=e148]: ?
+                  - generic [ref=e150]: walkinwills.com
+              - generic [ref=e151]:
+                - link "Open website" [ref=e153] [cursor=pointer]:
+                  - /url: https://walkinwills.com/
+                  - generic [ref=e155]: ?
+                - button "Copy website" [ref=e157] [cursor=pointer]:
+                  - generic [ref=e159]: ?
+            - generic [ref=e160]:
+              - 'button "Phone: (505) 903-7000" [ref=e161] [cursor=pointer]':
+                - generic [ref=e162]:
+                  - generic [ref=e164]: ?
+                  - generic [ref=e166]: (505) 903-7000
+              - generic [ref=e167]:
+                - button "Copy phone number" [ref=e169] [cursor=pointer]:
+                  - generic [ref=e171]: ?
+                - link "Call phone number" [ref=e173] [cursor=pointer]:
+                  - /url: tel:+15059037000
+                  - generic [ref=e175]: ?
+            - generic [ref=e176]:
+              - 'button "Plus code: 492W+CF Albuquerque, New Mexico" [ref=e177] [cursor=pointer]':
+                - generic [ref=e178]:
+                  - generic [ref=e180]: ?
+                  - generic [ref=e182]: 492W+CF Albuquerque, New Mexico
+              - generic [ref=e183]:
+                - button "Copy plus code" [ref=e185] [cursor=pointer]:
+                  - generic [ref=e187]: ?
+                - button "Learn more about plus codes" [ref=e189] [cursor=pointer]:
+                  - generic [ref=e191]: ?
+          - button "Suggest an edit" [ref=e195] [cursor=pointer]:
+            - generic [ref=e196]:
+              - generic [ref=e197]: ?
+              - generic [ref=e198]: Suggest an edit
+          - heading "Photos" [level=2] [ref=e202]
+          - button "Street View" [ref=e205] [cursor=pointer]:
+            - img [ref=e207]
+          - button "Add photos & videos" [ref=e214] [cursor=pointer]:
+            - generic [ref=e215]:
+              - generic [ref=e216]: ?
+              - generic [ref=e217]: Add photos & videos
+          - button "Write a review" [ref=e223] [cursor=pointer]:
+            - generic [ref=e224]:
+              - generic [ref=e225]: ?
+              - generic [ref=e226]: Write a review
+          - link "About this data" [ref=e231] [cursor=pointer]:
+            - /url: https://support.google.com/local-listings?p=how_google_sources&authuser=0&hl=en
+            - generic [ref=e233]: About this data
+          - generic [ref=e236]:
+            - generic [ref=e238]: ?
+            - generic [ref=e239]:
+              - text: You're seeing a limited view of Google Maps.
+              - button "Learn more about limited view" [ref=e240] [cursor=pointer]: Learn more
+          - heading "Get the most out of Google Maps Sign in" [level=2] [ref=e244]:
+            - generic [ref=e245]: Get the most out of Google Maps
+            - button "Sign in" [ref=e248] [cursor=pointer]:
+              - generic [ref=e250]: Sign in
+      - button "Collapse side panel" [ref=e252] [cursor=pointer]:
+        - generic [ref=e253]: ?
+    - generic [ref=e322]:
+      - button "Google apps" [ref=e326] [cursor=pointer]:
+        - img [ref=e327]
+      - link "Sign in" [ref=e330] [cursor=pointer]:
+        - /url: https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https%3A%2F%2Fwww.google.com%2Fmaps%2Fplace%2FWalk-In%2BWills%2F%4035.101014%2C-106.603804%2C17z%2Fdata%3D!3m1!4b1!4m6!3m5!1s0x87220b36739a31b3%3A0x2188043a2df9f848!8m2!3d35.101014!4d-106.603804!16s%252Fg%252F1td05j2r%3Fauthuser%3D0%26hl%3Den%26g_ep%3DEgoyMDI2MDQwMS4wIMCaEyoASAFQAw%253D%253D&service=local&ec=GAZAcQ
+    - generic:
+      - generic:
+        - button "Show Your Location" [ref=e333] [cursor=pointer]:
+          - generic [ref=e335]: ?
+        - generic [ref=e337] [cursor=pointer]:
+          - button "Zoom in" [ref=e338]
+          - button "Zoom out" [ref=e341]
+      - generic [ref=e347]:
+        - button "Browse Street View images" [ref=e349]
+        - button "Street View" [ref=e351] [cursor=pointer]
+      - generic [ref=e355]:
+        - generic "Interactive map" [ref=e356]
+        - generic [ref=e360] [cursor=pointer]:
+          - generic [ref=e361]: ?
+          - generic [ref=e362]: Layers
+        - button "Layers" [ref=e363] [cursor=pointer]
+    - generic [ref=e365]:
+      - contentinfo [ref=e368]:
+        - text: Imagery ©2026 , Map data ©2026 Google
+        - button "United States" [ref=e369] [cursor=pointer]
+        - button "Terms" [ref=e370] [cursor=pointer]
+        - button "Privacy" [ref=e371] [cursor=pointer]
+        - button "Send Product Feedback" [ref=e372] [cursor=pointer]
+      - button "200 ft" [ref=e374] [cursor=pointer]: 200 ft

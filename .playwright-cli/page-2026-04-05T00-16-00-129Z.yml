@@ -1,0 +1,349 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Map · Use arrow keys to pan the map. · Get details about a place by pressing its corresponding number key." [ref=e8]
+    - search [ref=e14]:
+      - generic [ref=e15]:
+        - combobox [ref=e17]: Detroit Immigration
+        - button "Search" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+        - button "Close" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: 
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - button "Menu" [ref=e29] [cursor=pointer]:
+              - generic [ref=e31]: 
+          - listitem [ref=e32]:
+            - button "Saved" [ref=e33] [cursor=pointer]:
+              - generic [ref=e35]: 
+              - generic [ref=e37]: Saved
+          - listitem [ref=e38]:
+            - button "Recents" [disabled] [ref=e39]:
+              - generic [ref=e41]: 
+              - generic [ref=e43]: Recents
+          - listitem [ref=e45]:
+            - button "Get app" [ref=e46] [cursor=pointer]:
+              - generic [ref=e48]: 
+              - generic [ref=e50]: Get app
+        - main "Detroit Immigration" [ref=e55]:
+          - generic [ref=e56]:
+            - button "Photo of Detroit Immigration" [active] [ref=e58] [cursor=pointer]:
+              - img [ref=e59]
+            - button "See photos" [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: 
+              - generic [ref=e62]: See photos
+          - generic [ref=e65]:
+            - heading "Detroit Immigration" [level=1] [ref=e67]: Detroit Immigration
+            - generic [ref=e69]:
+              - generic [ref=e71]:
+                - generic [ref=e72]:
+                  - text: "4.7"
+                  - img "4.7 stars" [ref=e73]
+                - img "57 reviews" [ref=e81]: (57)
+              - generic [ref=e82]:
+                - button "Immigration attorney" [ref=e85]
+                - text: ·
+                - img "Wheelchair accessible entrance" [ref=e86]: 
+          - tablist [ref=e89]:
+            - tab "Overview of Detroit Immigration" [selected] [ref=e90]:
+              - generic [ref=e92]: Overview
+            - tab "Reviews for Detroit Immigration" [ref=e94]:
+              - generic [ref=e96]: Reviews
+            - tab "About Detroit Immigration" [ref=e98]:
+              - generic [ref=e100]: About
+          - region "Actions for Detroit Immigration" [ref=e102]:
+            - button "Directions" [ref=e104] [cursor=pointer]:
+              - generic [ref=e106]: 
+              - generic [ref=e107]: Directions
+            - button "Save" [ref=e109] [cursor=pointer]:
+              - generic [ref=e111]: 
+              - generic [ref=e112]: Save
+            - button "Nearby" [ref=e114] [cursor=pointer]:
+              - generic [ref=e116]: 
+              - generic [ref=e117]: Nearby
+            - button "Send to phone" [ref=e119] [cursor=pointer]:
+              - generic [ref=e121]: 
+              - generic [ref=e122]: Send to phone
+            - button "Share" [ref=e124] [cursor=pointer]:
+              - generic [ref=e126]: 
+              - generic [ref=e127]: Share
+          - region "Information for Detroit Immigration" [ref=e130]:
+            - generic [ref=e131]:
+              - 'button "Address: 7071 Orchard Lake Rd #320, West Bloomfield Township, MI 48322" [ref=e132] [cursor=pointer]':
+                - generic [ref=e133]:
+                  - generic [ref=e135]: 
+                  - generic [ref=e137]: "7071 Orchard Lake Rd #320, West Bloomfield Township, MI 48322"
+              - button "Copy address" [ref=e140] [cursor=pointer]:
+                - generic [ref=e142]: 
+            - button "Hours Closed · Opens 9 AM Mon Show open hours for the week" [ref=e144] [cursor=pointer]:
+              - img "Hours" [ref=e145]: 
+              - generic [ref=e147]:
+                - generic [ref=e149]: Closed · Opens 9 AM Mon
+                - img "Show open hours for the week" [ref=e150]: 
+            - generic [ref=e151]:
+              - 'link "Website: detroitimmigration.com" [ref=e152] [cursor=pointer]':
+                - /url: http://www.detroitimmigration.com/
+                - generic [ref=e153]:
+                  - generic [ref=e155]: 
+                  - generic [ref=e157]: detroitimmigration.com
+              - generic [ref=e158]:
+                - link "Open website" [ref=e160] [cursor=pointer]:
+                  - /url: http://www.detroitimmigration.com/
+                  - generic [ref=e162]: 
+                - button "Copy website" [ref=e164] [cursor=pointer]:
+                  - generic [ref=e166]: 
+            - generic [ref=e167]:
+              - 'button "Phone: (248) 254-3441" [ref=e168] [cursor=pointer]':
+                - generic [ref=e169]:
+                  - generic [ref=e171]: 
+                  - generic [ref=e173]: (248) 254-3441
+              - generic [ref=e174]:
+                - button "Copy phone number" [ref=e176] [cursor=pointer]:
+                  - generic [ref=e178]: 
+                - link "Call phone number" [ref=e180] [cursor=pointer]:
+                  - /url: tel:+12482543441
+                  - generic [ref=e182]: 
+            - generic [ref=e183]:
+              - 'button "Plus code: GJMR+P9 Farmington Hills, Michigan" [ref=e184] [cursor=pointer]':
+                - generic [ref=e185]:
+                  - generic [ref=e187]: 
+                  - generic [ref=e189]: GJMR+P9 Farmington Hills, Michigan
+              - generic [ref=e190]:
+                - button "Copy plus code" [ref=e192] [cursor=pointer]:
+                  - generic [ref=e194]: 
+                - button "Learn more about plus codes" [ref=e196] [cursor=pointer]:
+                  - generic [ref=e198]: 
+          - button "Suggest an edit" [ref=e202] [cursor=pointer]:
+            - generic [ref=e203]:
+              - generic [ref=e204]: 
+              - generic [ref=e205]: Suggest an edit
+          - generic [ref=e208]:
+            - heading "Photos & videos" [level=2] [ref=e210]
+            - region "Photos of Detroit Immigration" [ref=e211]:
+              - generic [ref=e214]:
+                - generic [ref=e215] [cursor=pointer]:
+                  - button "All" [ref=e216]
+                  - generic:
+                    - generic: All
+                - generic [ref=e217] [cursor=pointer]:
+                  - button "Inside" [ref=e218]
+                  - generic:
+                    - generic: Inside
+                - generic [ref=e219] [cursor=pointer]:
+                  - button "By owner" [ref=e220]
+                  - generic:
+                    - generic: By owner
+                - generic [ref=e221] [cursor=pointer]:
+                  - button "Street View & 360°" [ref=e222]
+                  - generic:
+                    - generic: Street View & 360°
+          - button "Add photos & videos" [ref=e227] [cursor=pointer]:
+            - generic [ref=e228]:
+              - generic [ref=e229]: 
+              - generic [ref=e230]: Add photos & videos
+          - generic [ref=e233]:
+            - heading "Review summary" [level=2] [ref=e234]
+            - button "More information about the review summary" [ref=e235] [cursor=pointer]:
+              - generic [ref=e236]: 
+          - generic [ref=e238] [cursor=pointer]:
+            - table [ref=e240]:
+              - rowgroup [ref=e241]:
+                - img "5 stars, 52 reviews" [ref=e242]: "5"
+                - img "4 stars, 0 reviews" [ref=e245]: "4"
+                - img "3 stars, 1 review" [ref=e248]: "3"
+                - img "2 stars, 0 reviews" [ref=e251]: "2"
+                - img "1 stars, 4 reviews" [ref=e254]: "1"
+            - generic [ref=e257]:
+              - generic [ref=e258]: "4.7"
+              - img "4.7 stars" [ref=e259]
+              - button "57 reviews" [ref=e265]:
+                - generic [ref=e267]: 57 reviews
+          - generic [ref=e269]:
+            - link "Photo of reviewer who wrote \"He accompanied us to our interview and was a reassuring presence in the room.\"" [ref=e270] [cursor=pointer]:
+              - /url: https://www.google.com/maps/contrib/107607595535999118510?hl=en-US
+            - button "\"He accompanied us to our interview and was a reassuring presence in the room.\"" [ref=e271] [cursor=pointer]:
+              - generic [ref=e272]: "\"He accompanied us to our interview and was a reassuring presence in the room.\""
+          - generic [ref=e274]:
+            - link "Photo of reviewer who wrote \"Superb service and friendly people.\"" [ref=e275] [cursor=pointer]:
+              - /url: https://www.google.com/maps/contrib/107255338871441602648?hl=en-US
+            - button "\"Superb service and friendly people.\"" [ref=e276] [cursor=pointer]:
+              - generic [ref=e277]: "\"Superb service and friendly people.\""
+          - button "Write a review" [ref=e281] [cursor=pointer]:
+            - generic [ref=e282]:
+              - generic [ref=e283]: 
+              - generic [ref=e284]: Write a review
+          - generic [ref=e287]:
+            - generic [ref=e289]:
+              - heading "Reviews" [level=2] [ref=e292]
+              - button "Search reviews" [ref=e295] [cursor=pointer]:
+                - generic [ref=e297]: 
+            - button "Sort reviews" [ref=e299] [cursor=pointer]:
+              - generic [ref=e300]:
+                - generic [ref=e301]: 
+                - generic [ref=e302]: Sort
+          - radiogroup "Refine reviews" [ref=e303]:
+            - radio "All reviews" [checked] [ref=e305] [cursor=pointer]:
+              - generic [ref=e306]:
+                - generic [ref=e307]: 
+                - generic [ref=e308]: All
+            - radio "team, mentioned in 10 reviews" [ref=e310] [cursor=pointer]:
+              - generic [ref=e311]:
+                - generic [ref=e312]: team
+                - generic [ref=e313]: "10"
+            - radio "questions, mentioned in 8 reviews" [ref=e315] [cursor=pointer]:
+              - generic [ref=e316]:
+                - generic [ref=e317]: questions
+                - generic [ref=e318]: "8"
+            - radio "immigration law, mentioned in 7 reviews" [ref=e320] [cursor=pointer]:
+              - generic [ref=e321]:
+                - generic [ref=e322]: immigration law
+                - generic [ref=e323]: "7"
+            - radio "knowledge, mentioned in 6 reviews" [ref=e325] [cursor=pointer]:
+              - generic [ref=e326]:
+                - generic [ref=e327]: knowledge
+                - generic [ref=e328]: "6"
+            - button "View 6 more Topics" [ref=e330] [cursor=pointer]:
+              - generic [ref=e332]: "+6"
+          - generic "Alex Urban" [ref=e333]:
+            - generic [ref=e335]:
+              - button "Photo of Alex Urban" [ref=e336]
+              - generic [ref=e338]:
+                - button "Alex Urban Local Guide · 44 reviews · 2 photos" [ref=e340]:
+                  - generic [ref=e341]: Alex Urban
+                  - generic [ref=e342]: Local Guide · 44 reviews · 2 photos
+                - button "Actions for Alex Urban's review" [ref=e343] [cursor=pointer]:
+                  - generic [ref=e345]: 
+              - generic [ref=e346]:
+                - generic [ref=e347]:
+                  - img "5 stars" [ref=e348]:
+                    - generic [ref=e349]: 
+                    - generic [ref=e350]: 
+                    - generic [ref=e351]: 
+                    - generic [ref=e352]: 
+                    - generic [ref=e353]: 
+                  - generic [ref=e354]: a month ago
+                - generic [ref=e356]:
+                  - text: Attorney Herman Dhade is a trusted authority in immigration law, known for his deep knowledge of the system and his relentless advocacy for clients. He approaches every case with an unwavering commitment to achieving the best possible …
+                  - button "See more" [ref=e358] [cursor=pointer]: More
+                - generic [ref=e359]:
+                  - button "Like" [ref=e360]:
+                    - generic [ref=e361] [cursor=pointer]:
+                      - generic [ref=e362]: 
+                      - generic [ref=e364]: Like
+                  - button "Share Alex Urban's review." [ref=e365]:
+                    - generic [ref=e366] [cursor=pointer]:
+                      - generic [ref=e367]: 
+                      - generic [ref=e368]: Share
+          - generic "navin mathew" [ref=e372]:
+            - generic [ref=e374]:
+              - button "Photo of navin mathew" [ref=e375]
+              - generic [ref=e377]:
+                - button "navin mathew 12 reviews · 1 photo" [ref=e379]:
+                  - generic [ref=e380]: navin mathew
+                  - generic [ref=e381]: 12 reviews · 1 photo
+                - button "Actions for navin mathew's review" [ref=e382] [cursor=pointer]:
+                  - generic [ref=e384]: 
+              - generic [ref=e385]:
+                - generic [ref=e386]:
+                  - img "1 star" [ref=e387]:
+                    - generic [ref=e388]: 
+                    - generic [ref=e389]: 
+                    - generic [ref=e390]: 
+                    - generic [ref=e391]: 
+                    - generic [ref=e392]: 
+                  - generic [ref=e393]: 7 months ago
+                - generic [ref=e395]:
+                  - text: Do not waste your hard earned money on this lawyer. I paid upfront and they did absolutely nothing in our immigration case. We had to file all of the paperwork ourselves and did all of the work. Couldn't even get in touch with Herman after …
+                  - button "See more" [ref=e397] [cursor=pointer]: More
+                - generic [ref=e398]:
+                  - button "Like" [ref=e399]:
+                    - generic [ref=e400] [cursor=pointer]:
+                      - generic [ref=e401]: 
+                      - generic [ref=e403]: Like
+                  - button "Share navin mathew's review." [ref=e404]:
+                    - generic [ref=e405] [cursor=pointer]:
+                      - generic [ref=e406]: 
+                      - generic [ref=e407]: Share
+          - generic "Kim Hartlep" [ref=e411]:
+            - generic [ref=e413]:
+              - button "Photo of Kim Hartlep" [ref=e414]
+              - generic [ref=e416]:
+                - button "Kim Hartlep 3 reviews" [ref=e418]:
+                  - generic [ref=e419]: Kim Hartlep
+                  - generic [ref=e420]: 3 reviews
+                - button "Actions for Kim Hartlep's review" [ref=e421] [cursor=pointer]:
+                  - generic [ref=e423]: 
+              - generic [ref=e424]:
+                - generic [ref=e425]:
+                  - img "5 stars" [ref=e426]:
+                    - generic [ref=e427]: 
+                    - generic [ref=e428]: 
+                    - generic [ref=e429]: 
+                    - generic [ref=e430]: 
+                    - generic [ref=e431]: 
+                  - generic [ref=e432]: 2 years ago
+                - generic [ref=e434]:
+                  - text: I am extremely happy with the services I received from The Law Office of Dhade & Associates, especially from Sandra, who was my primary point of contact. She was extremely professional, pleasant, patient, and answered all of my questions …
+                  - button "See more" [ref=e436] [cursor=pointer]: More
+                - generic [ref=e437]:
+                  - button "Like" [ref=e438]:
+                    - generic [ref=e439] [cursor=pointer]:
+                      - generic [ref=e440]: 
+                      - generic [ref=e442]: Like
+                  - button "Share Kim Hartlep's review." [ref=e443]:
+                    - generic [ref=e444] [cursor=pointer]:
+                      - generic [ref=e445]: 
+                      - generic [ref=e446]: Share
+          - button "More reviews (54)" [ref=e450]:
+            - generic [ref=e452] [cursor=pointer]: More reviews (54)
+          - heading "People also search for" [level=2] [ref=e456]
+          - generic [ref=e460]:
+            - link "Immigration Logic · 4.0 stars · 4 reviews · Immigration attorney" [ref=e461] [cursor=pointer]:
+              - generic [ref=e464]:
+                - generic [ref=e466]: Immigration Logic
+                - img "4.0 stars 4 Reviews" [ref=e469]:
+                  - text: "4.0"
+                  - text: (4)
+                - generic [ref=e471]: Immigration attorney
+            - link "Dallo Law, P.C. · 4.9 stars · 560 reviews · Criminal justice attorney" [ref=e472] [cursor=pointer]:
+              - generic [ref=e475]:
+                - generic [ref=e477]: Dallo Law, P.C.
+                - img "4.9 stars 560 Reviews" [ref=e480]:
+                  - text: "4.9"
+                  - text: (560)
+                - generic [ref=e482]: Criminal justice attorney
+            - link "Mann Law Group, P.C. · 4.7 stars · 286 reviews · Immigration attorney" [ref=e483] [cursor=pointer]:
+              - generic [ref=e486]:
+                - generic [ref=e488]: Mann Law Group, P.C.
+                - img "4.7 stars 286 Reviews" [ref=e491]:
+                  - text: "4.7"
+                  - text: (286)
+                - generic [ref=e493]: Immigration attorney
+            - link "American Immigration Law Center · 4.4 stars · 14 reviews · Law firm" [ref=e494] [cursor=pointer]:
+              - generic [ref=e497]:
+                - generic [ref=e499]: American Immigration Law Center
+                - img "4.4 stars 14 Reviews" [ref=e502]:
+                  - text: "4.4"
+                  - text: (14)
+                - generic [ref=e504]: Law firm
+            - link "Law Office of Givi Kutidze · 4.9 stars · 108 reviews · Immigration attorney" [ref=e505] [cursor=pointer]:
+              - generic [ref=e508]:
+                - generic [ref=e510]: Law Office of Givi Kutidze
+                - img "4.9 stars 108 Reviews" [ref=e513]:
+                  - text: "4.9"
+                  - text: (108)
+                - generic [ref=e515]: Immigration attorney
+          - heading "Web results" [level=2] [ref=e520]
+          - region [ref=e523]
+          - link "About this data" [ref=e562] [cursor=pointer]:
+            - /url: https://support.google.com/local-listings?p=how_google_sources&authuser=0&hl=en
+            - generic [ref=e564]: About this data
+          - heading "Get the most out of Google Maps Sign in" [level=2] [ref=e568]:
+            - generic [ref=e569]: Get the most out of Google Maps
+            - button "Sign in" [ref=e572] [cursor=pointer]:
+              - generic [ref=e574]: Sign in
+      - generic [ref=e575]:
+        - button "Collapse side panel" [ref=e576] [cursor=pointer]:
+          - generic [ref=e577]: 
+        - generic [ref=e578]: Collapse side panel

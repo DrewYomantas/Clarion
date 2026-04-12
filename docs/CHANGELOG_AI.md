@@ -1,5 +1,27 @@
 # AI Pass Changelog
 
+## 2026-04-12 - Pass 76 - Communication Responsiveness Narrow Engine Pass (CR 8→5)
+
+### Files Changed
+- `backend/services/benchmark_engine.py`
+- `data/calibration/runs/20260412_comm_responsiveness_narrow_pass76_canonical_rerun/`
+- `data/calibration/runs/20260412_comm_responsiveness_narrow_pass76_broad_rerun/`
+- `docs/CHANGELOG_AI.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CURRENT_BUILD.md`
+
+### What Changed
+- **Guard reroute (row 88):** "lack of communication" guard was firing `continue`, dropping the hit entirely. Rerouted to `communication_responsiveness` instead. Follows the same pattern as the `wasn't fully explained` → `expectation_setting` reroute.
+- **Positive phrase add (row 104):** `("communicate well", 1.0)` added to CR positive bucket. Review said "they communicate well" — no prior phrase matched.
+- **Negative phrase add (row 110):** `("run around", 1.5)` added to CR negative bucket. Review said "give you the run around" — circular deflection pattern, no prior match.
+- **Polarity revert (row 111 / legacy_112):** Edit 4 from session had moved `"only heard from them 2 or 3 times"` to `severe_negative`. Canonical benchmark (`legacy_112`) authoritatively labels this review `negative` (severity_note: "standard negative"). Broad AI over-fired — canonical ground truth wins. Phrase placed in `negative` bucket at 1.5.
+- Deferred rows 2, 25, 101, 122 — borderline/professionalism overlaps with no safe phrase candidates.
+
+### Verification
+- `python -m pytest backend/tests/test_benchmark_engine.py -p no:cacheprovider --capture=no -q` → **38 passed**
+- `python run_pass76_canonical.py` → **24/24 PASS, 0 disagrees**
+- `python run_pass76.py` → **CR 8 → 5**, overall 68 disagrees, 65.03% agreement
+
 ## 2026-04-11 - Pass 75 - Narrow Communication Responsiveness Engine Pass
 
 ### Files Changed

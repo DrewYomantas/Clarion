@@ -1,0 +1,379 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Map · Use arrow keys to pan the map. · Get details about a place by pressing its corresponding number key." [ref=e8]
+    - search [ref=e14]:
+      - button "Back" [ref=e16] [cursor=pointer]:
+        - generic [ref=e17]: 
+      - generic [ref=e18]:
+        - combobox [ref=e20]: Morgan & Morgan
+        - button "Search" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: 
+        - button "Close" [ref=e25] [cursor=pointer]:
+          - generic [ref=e26]: 
+    - generic [ref=e27]:
+      - generic [ref=e28]:
+        - list [ref=e30]:
+          - listitem [ref=e31]:
+            - button "Menu" [ref=e32] [cursor=pointer]:
+              - generic [ref=e34]: 
+          - listitem [ref=e35]:
+            - button "Saved" [ref=e36] [cursor=pointer]:
+              - generic [ref=e38]: 
+              - generic [ref=e40]: Saved
+          - listitem [ref=e41]:
+            - button "Recents" [disabled] [ref=e42]:
+              - generic [ref=e44]: 
+              - generic [ref=e46]: Recents
+          - listitem [ref=e48]:
+            - button "Get app" [ref=e49] [cursor=pointer]:
+              - generic [ref=e51]: 
+              - generic [ref=e53]: Get app
+        - main "Morgan & Morgan" [ref=e58]:
+          - tablist [ref=e61]:
+            - tab "Overview of Morgan & Morgan" [ref=e62]:
+              - generic [ref=e64]: Overview
+            - tab "Reviews for Morgan & Morgan" [active] [selected] [ref=e66]:
+              - generic [ref=e68]: Reviews
+            - tab "About Morgan & Morgan" [ref=e70]:
+              - generic [ref=e72]: About
+          - generic [ref=e74]:
+            - button "Information" [ref=e76] [cursor=pointer]:
+              - generic [ref=e77]: 
+            - generic [ref=e79]:
+              - table [ref=e81]:
+                - rowgroup [ref=e82]:
+                  - img "5 stars, 9,374 reviews" [ref=e83]: "5"
+                  - img "4 stars, 928 reviews" [ref=e86]: "4"
+                  - img "3 stars, 323 reviews" [ref=e89]: "3"
+                  - img "2 stars, 191 reviews" [ref=e92]: "2"
+                  - img "1 stars, 845 reviews" [ref=e95]: "1"
+              - generic [ref=e98]:
+                - generic [ref=e99]: "4.5"
+                - img "4.5 stars" [ref=e100]
+                - generic [ref=e106]: 11,661 reviews
+            - button "Write a review" [ref=e110] [cursor=pointer]:
+              - generic [ref=e111]:
+                - generic [ref=e112]: 
+                - generic [ref=e113]: Write a review
+            - generic [ref=e116]:
+              - button "Search reviews" [ref=e122] [cursor=pointer]:
+                - generic [ref=e124]: 
+              - button "Sort reviews" [ref=e126] [cursor=pointer]:
+                - generic [ref=e127]:
+                  - generic [ref=e128]: 
+                  - generic [ref=e129]: Sort
+            - radiogroup "Refine reviews" [ref=e130]:
+              - radio "All reviews" [checked] [ref=e132] [cursor=pointer]:
+                - generic [ref=e134]: All
+              - radio "commercials, mentioned in 30 reviews" [ref=e136] [cursor=pointer]:
+                - generic [ref=e137]:
+                  - generic [ref=e138]: commercials
+                  - generic [ref=e139]: "30"
+              - radio "voicemail, mentioned in 26 reviews" [ref=e141] [cursor=pointer]:
+                - generic [ref=e142]:
+                  - generic [ref=e143]: voicemail
+                  - generic [ref=e144]: "26"
+              - radio "consultant, mentioned in 23 reviews" [ref=e146] [cursor=pointer]:
+                - generic [ref=e147]:
+                  - generic [ref=e148]: consultant
+                  - generic [ref=e149]: "23"
+              - radio "case worker, mentioned in 21 reviews" [ref=e151] [cursor=pointer]:
+                - generic [ref=e152]:
+                  - generic [ref=e153]: case worker
+                  - generic [ref=e154]: "21"
+              - radio "joke, mentioned in 18 reviews" [ref=e156] [cursor=pointer]:
+                - generic [ref=e157]:
+                  - generic [ref=e158]: joke
+                  - generic [ref=e159]: "18"
+              - radio "john morgan, mentioned in 10 reviews" [ref=e161] [cursor=pointer]:
+                - generic [ref=e162]:
+                  - generic [ref=e163]: john morgan
+                  - generic [ref=e164]: "10"
+              - radio "homeless, mentioned in 8 reviews" [ref=e166] [cursor=pointer]:
+                - generic [ref=e167]:
+                  - generic [ref=e168]: homeless
+                  - generic [ref=e169]: "8"
+              - radio "bar association, mentioned in 7 reviews" [ref=e171] [cursor=pointer]:
+                - generic [ref=e172]:
+                  - generic [ref=e173]: bar association
+                  - generic [ref=e174]: "7"
+              - radio "accounting, mentioned in 6 reviews" [ref=e176] [cursor=pointer]:
+                - generic [ref=e177]:
+                  - generic [ref=e178]: accounting
+                  - generic [ref=e179]: "6"
+              - radio "fax, mentioned in 5 reviews" [ref=e181] [cursor=pointer]:
+                - generic [ref=e182]:
+                  - generic [ref=e183]: fax
+                  - generic [ref=e184]: "5"
+            - generic [ref=e185]:
+              - generic "Zxena G." [ref=e186]:
+                - generic [ref=e188]:
+                  - button "Photo of Zxena G." [ref=e189]
+                  - generic [ref=e191]:
+                    - button "Zxena G. Local Guide · 40 reviews · 29 photos" [ref=e193]:
+                      - generic [ref=e194]: Zxena G.
+                      - generic [ref=e195]: Local Guide · 40 reviews · 29 photos
+                    - button "Actions for Zxena G.'s review" [ref=e196] [cursor=pointer]:
+                      - generic [ref=e198]: 
+                  - generic [ref=e199]:
+                    - generic [ref=e200]:
+                      - img "1 star" [ref=e201]:
+                        - generic [ref=e202]: 
+                        - generic [ref=e203]: 
+                        - generic [ref=e204]: 
+                        - generic [ref=e205]: 
+                        - generic [ref=e206]: 
+                      - generic [ref=e207]: Edited a month ago
+                    - generic [ref=e209]:
+                      - text: "Update: 👇🏽👇🏽 I literally JUST Hired Morgan & Morgan to Represent Me, & I am extremely BIG on Professionalism with *Any business. Update: 3/2/26 Morgan & Morgan dismissed Our Case very Casually by Voicemail, (Collin is asst paralegal to the …"
+                      - button "See more" [ref=e211] [cursor=pointer]: More
+                    - generic [ref=e212]:
+                      - button "Photo 1 on Zxena G.'s review" [ref=e213] [cursor=pointer]
+                      - button "Photo 2 on Zxena G.'s review" [ref=e214] [cursor=pointer]
+                      - button "Photo 3 on Zxena G.'s review" [ref=e215] [cursor=pointer]
+                      - button "Photo 4 on Zxena G.'s review" [ref=e216] [cursor=pointer]
+                    - generic [ref=e217]:
+                      - button "Like" [ref=e218]:
+                        - generic [ref=e219] [cursor=pointer]:
+                          - generic [ref=e220]: 
+                          - generic [ref=e222]: Like
+                      - button "Share Zxena G.'s review." [ref=e223]:
+                        - generic [ref=e224] [cursor=pointer]:
+                          - generic [ref=e225]: 
+                          - generic [ref=e226]: Share
+                    - generic [ref=e227]:
+                      - generic [ref=e228]: Response from the owner 2 months ago
+                      - generic [ref=e229]:
+                        - text: Thank you, Zxena, for your wonderful review! We're thrilled to hear about your positive experience and appreciate your recognition of our team's professionalism and empathy. It's our goal to provide attentive care and support during …
+                        - button "See more" [ref=e231] [cursor=pointer]: More
+              - generic "Gregory Wright" [ref=e235]:
+                - generic [ref=e237]:
+                  - button "Photo of Gregory Wright" [ref=e238]
+                  - generic [ref=e240]:
+                    - button "Gregory Wright Local Guide · 10 reviews" [ref=e242]:
+                      - generic [ref=e243]: Gregory Wright
+                      - generic [ref=e244]: Local Guide · 10 reviews
+                    - button "Actions for Gregory Wright's review" [ref=e245] [cursor=pointer]:
+                      - generic [ref=e247]: 
+                  - generic [ref=e248]:
+                    - generic [ref=e249]:
+                      - img "5 stars" [ref=e250]:
+                        - generic [ref=e251]: 
+                        - generic [ref=e252]: 
+                        - generic [ref=e253]: 
+                        - generic [ref=e254]: 
+                        - generic [ref=e255]: 
+                      - generic [ref=e256]: Edited a month ago
+                    - generic [ref=e258]:
+                      - text: Started good. Got text messages right away. Took a few tried emails & texts messages with case mgr, but finally got answers and can mgr helping with all issues. I know they are a busy firm and that maybe why it took so many tried contacting …
+                      - button "See more" [ref=e260] [cursor=pointer]: More
+                    - generic [ref=e261]:
+                      - button "1 like" [ref=e262]:
+                        - generic [ref=e263] [cursor=pointer]:
+                          - generic [ref=e264]: 
+                          - generic [ref=e266]: "1"
+                      - button "Share Gregory Wright's review." [ref=e267]:
+                        - generic [ref=e268] [cursor=pointer]:
+                          - generic [ref=e269]: 
+                          - generic [ref=e270]: Share
+                    - generic [ref=e271]:
+                      - generic [ref=e272]: Response from the owner 2 months ago
+                      - generic [ref=e273]: Hello Gregory, We appreciate your positive feedback about your experience. We take pride in serving our customers and hope to see you again soon!
+              - generic "Daniel" [ref=e277]:
+                - generic [ref=e279]:
+                  - button "Photo of Daniel" [ref=e280]
+                  - generic [ref=e282]:
+                    - button "Daniel Local Guide · 16 reviews · 7 photos" [ref=e284]:
+                      - generic [ref=e285]: Daniel
+                      - generic [ref=e286]: Local Guide · 16 reviews · 7 photos
+                    - button "Actions for Daniel's review" [ref=e287] [cursor=pointer]:
+                      - generic [ref=e289]: 
+                  - generic [ref=e290]:
+                    - generic [ref=e291]:
+                      - img "5 stars" [ref=e292]:
+                        - generic [ref=e293]: 
+                        - generic [ref=e294]: 
+                        - generic [ref=e295]: 
+                        - generic [ref=e296]: 
+                        - generic [ref=e297]: 
+                      - generic [ref=e298]: 2 months ago
+                    - generic [ref=e300]:
+                      - text: I’m BEYOND thankful to Morgan and Morgan for ALL of their help in closing my case. It was a long emotional journey that I hope to never endure again. But if I had to do it again, I’d choose this office. I had the wonderful opportunity …
+                      - button "See more" [ref=e302] [cursor=pointer]: More
+                    - generic [ref=e303]:
+                      - button "Like" [ref=e304]:
+                        - generic [ref=e305] [cursor=pointer]:
+                          - generic [ref=e306]: 
+                          - generic [ref=e308]: Like
+                      - button "Share Daniel's review." [ref=e309]:
+                        - generic [ref=e310] [cursor=pointer]:
+                          - generic [ref=e311]: 
+                          - generic [ref=e312]: Share
+                    - generic [ref=e313]:
+                      - generic [ref=e314]: Response from the owner 2 months ago
+                      - generic [ref=e315]:
+                        - text: Thank you, Daniel! We're thrilled to hear about your positive experience with Attorney Robinson and the team. Your journey matters to us, and we're glad we could support you. We truly appreciate your recommendation and look forward to …
+                        - button "See more" [ref=e317] [cursor=pointer]: More
+              - generic "Cynthia Reid" [ref=e321]:
+                - generic [ref=e323]:
+                  - button "Photo of Cynthia Reid" [ref=e324]
+                  - generic [ref=e326]:
+                    - button "Cynthia Reid Local Guide · 27 reviews · 7 photos" [ref=e328]:
+                      - generic [ref=e329]: Cynthia Reid
+                      - generic [ref=e330]: Local Guide · 27 reviews · 7 photos
+                    - button "Actions for Cynthia Reid's review" [ref=e331] [cursor=pointer]:
+                      - generic [ref=e333]: 
+                  - generic [ref=e334]:
+                    - generic [ref=e335]:
+                      - img "5 stars" [ref=e336]:
+                        - generic [ref=e337]: 
+                        - generic [ref=e338]: 
+                        - generic [ref=e339]: 
+                        - generic [ref=e340]: 
+                        - generic [ref=e341]: 
+                      - generic [ref=e342]: 2 months ago
+                    - generic [ref=e344]:
+                      - text: From the first home call to settlement Morgan and Morgan, more specifically Angela Anderson and Tiffany Robinson were amazing. The communication was exceptional for an attorney’s office. Tiffany Robinson was my assigned attorney but I spoke …
+                      - button "See more" [ref=e346] [cursor=pointer]: More
+                    - generic [ref=e347]:
+                      - button "Like" [ref=e348]:
+                        - generic [ref=e349] [cursor=pointer]:
+                          - generic [ref=e350]: 
+                          - generic [ref=e352]: Like
+                      - button "Share Cynthia Reid's review." [ref=e353]:
+                        - generic [ref=e354] [cursor=pointer]:
+                          - generic [ref=e355]: 
+                          - generic [ref=e356]: Share
+                    - generic [ref=e357]:
+                      - generic [ref=e358]: Response from the owner 2 months ago
+                      - generic [ref=e359]:
+                        - text: Thank you, Cynthia! We’re thrilled to hear about your positive experience with Angela and Tiffany. Your kind words about their communication and care truly highlight our commitment to clients. We appreciate your recommendation. If there is …
+                        - button "See more" [ref=e361] [cursor=pointer]: More
+              - generic "Alison Horne" [ref=e365]:
+                - generic [ref=e367]:
+                  - button "Photo of Alison Horne" [ref=e368]
+                  - generic [ref=e370]:
+                    - button "Alison Horne Local Guide · 10 reviews" [ref=e372]:
+                      - generic [ref=e373]: Alison Horne
+                      - generic [ref=e374]: Local Guide · 10 reviews
+                    - button "Actions for Alison Horne's review" [ref=e375] [cursor=pointer]:
+                      - generic [ref=e377]: 
+                  - generic [ref=e378]:
+                    - generic [ref=e379]:
+                      - img "5 stars" [ref=e380]:
+                        - generic [ref=e381]: 
+                        - generic [ref=e382]: 
+                        - generic [ref=e383]: 
+                        - generic [ref=e384]: 
+                        - generic [ref=e385]: 
+                      - generic [ref=e386]: a month ago
+                    - generic [ref=e388]:
+                      - text: I have had more encounters and uses for attorneys in the past few years and I Morgan and Morgan knows what they are doing.. This was a great experience from beginning to end. Everyone was so attentive, personable, respectful, engaging...it …
+                      - button "See more" [ref=e390] [cursor=pointer]: More
+                    - generic [ref=e391]:
+                      - button "Like" [ref=e392]:
+                        - generic [ref=e393] [cursor=pointer]:
+                          - generic [ref=e394]: 
+                          - generic [ref=e396]: Like
+                      - button "Share Alison Horne's review." [ref=e397]:
+                        - generic [ref=e398] [cursor=pointer]:
+                          - generic [ref=e399]: 
+                          - generic [ref=e400]: Share
+              - generic "Charles Ball" [ref=e404]:
+                - generic [ref=e406]:
+                  - button "Photo of Charles Ball" [ref=e407]
+                  - generic [ref=e409]:
+                    - button "Charles Ball 2 reviews" [ref=e411]:
+                      - generic [ref=e412]: Charles Ball
+                      - generic [ref=e413]: 2 reviews
+                    - button "Actions for Charles Ball's review" [ref=e414] [cursor=pointer]:
+                      - generic [ref=e416]: 
+                  - generic [ref=e417]:
+                    - generic [ref=e418]:
+                      - img "5 stars" [ref=e419]:
+                        - generic [ref=e420]: 
+                        - generic [ref=e421]: 
+                        - generic [ref=e422]: 
+                        - generic [ref=e423]: 
+                        - generic [ref=e424]: 
+                      - generic [ref=e425]: 3 months ago
+                    - generic [ref=e427]:
+                      - text: My case seemed to drag on for longer than anticipated and I was really beginning to get concerned about it but all of my worries went out the window when My case was taken over by attorney RUSS DEUTSCHMAN. …
+                      - button "See more" [ref=e429] [cursor=pointer]: More
+                    - generic [ref=e430]:
+                      - button "Like" [ref=e431]:
+                        - generic [ref=e432] [cursor=pointer]:
+                          - generic [ref=e433]: 
+                          - generic [ref=e435]: Like
+                      - button "Share Charles Ball's review." [ref=e436]:
+                        - generic [ref=e437] [cursor=pointer]:
+                          - generic [ref=e438]: 
+                          - generic [ref=e439]: Share
+                    - generic [ref=e440]:
+                      - generic [ref=e441]: Response from the owner 3 months ago
+                      - generic [ref=e442]: Thank you, Charles, for your fantastic review! We're thrilled to hear that Russ made such a positive impact on your case and kept you informed throughout the process. Your recommendation means a lot to us, and we're glad everything worked out well. We appreciate your trust in our team! Client Experience Department – CX@forthepeople.com
+              - generic "Tiffany Johnson" [ref=e446]:
+                - generic [ref=e448]:
+                  - button "Photo of Tiffany Johnson" [ref=e449]
+                  - generic [ref=e451]:
+                    - button "Tiffany Johnson 12 reviews · 2 photos" [ref=e453]:
+                      - generic [ref=e454]: Tiffany Johnson
+                      - generic [ref=e455]: 12 reviews · 2 photos
+                    - button "Actions for Tiffany Johnson's review" [ref=e456] [cursor=pointer]:
+                      - generic [ref=e458]: 
+                  - generic [ref=e459]:
+                    - generic [ref=e460]:
+                      - img "5 stars" [ref=e461]:
+                        - generic [ref=e462]: 
+                        - generic [ref=e463]: 
+                        - generic [ref=e464]: 
+                        - generic [ref=e465]: 
+                        - generic [ref=e466]: 
+                      - generic [ref=e467]: 2 months ago
+                    - generic [ref=e469]: Hassansh and John are absolutely the best in Atlanta. Very professional, knowledgeable and prompt,. They responded to all calls, texts, and emails the same day. The best experience I've ever had. Contact them today. You will not be disappointed.
+                    - generic [ref=e470]:
+                      - button "Like" [ref=e471]:
+                        - generic [ref=e472] [cursor=pointer]:
+                          - generic [ref=e473]: 
+                          - generic [ref=e475]: Like
+                      - button "Share Tiffany Johnson's review." [ref=e476]:
+                        - generic [ref=e477] [cursor=pointer]:
+                          - generic [ref=e478]: 
+                          - generic [ref=e479]: Share
+                    - generic [ref=e480]:
+                      - generic [ref=e481]: Response from the owner 2 months ago
+                      - generic [ref=e482]:
+                        - text: Thank you, Tiffany! We're thrilled to hear about your positive experience with Hassansh and John. We pride ourselves on professionalism and responsiveness, and it’s great to know we met your expectations. Your recommendation means a lot to …
+                        - button "See more" [ref=e484] [cursor=pointer]: More
+              - generic "Stephen Shepherd" [ref=e488]:
+                - generic [ref=e490]:
+                  - button "Photo of Stephen Shepherd" [ref=e491]
+                  - generic [ref=e493]:
+                    - button "Stephen Shepherd 1 review" [ref=e495]:
+                      - generic [ref=e496]: Stephen Shepherd
+                      - generic [ref=e497]: 1 review
+                    - button "Actions for Stephen Shepherd's review" [ref=e498] [cursor=pointer]:
+                      - generic [ref=e500]: 
+                  - generic [ref=e501]:
+                    - generic [ref=e502]:
+                      - img "5 stars" [ref=e503]:
+                        - generic [ref=e504]: 
+                        - generic [ref=e505]: 
+                        - generic [ref=e506]: 
+                        - generic [ref=e507]: 
+                        - generic [ref=e508]: 
+                      - generic [ref=e509]: a month ago
+                    - generic [ref=e511]: Excellent Service! My attorney was thoughtful and concerned about my interest in representation even when I felt the process was not favorable. I highly recommend Morgan and Morgan to be your one and only call for injury representation.
+                    - generic [ref=e512]:
+                      - button "Like" [ref=e513]:
+                        - generic [ref=e514] [cursor=pointer]:
+                          - generic [ref=e515]: 
+                          - generic [ref=e517]: Like
+                      - button "Share Stephen Shepherd's review." [ref=e518]:
+                        - generic [ref=e519] [cursor=pointer]:
+                          - generic [ref=e520]: 
+                          - generic [ref=e521]: Share
+      - generic [ref=e555]:
+        - button "Collapse side panel" [ref=e556] [cursor=pointer]:
+          - generic [ref=e557]: 
+        - generic [ref=e558]: Collapse side panel

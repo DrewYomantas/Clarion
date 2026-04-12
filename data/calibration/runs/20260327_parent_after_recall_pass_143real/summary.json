@@ -1,0 +1,60 @@
+{
+  "run_name": "20260327_parent_after_recall_pass_143real",
+  "total_reviews": 143,
+  "ai_error_count": 1,
+  "total_disagreements": 106,
+  "zero_disagreement_reviews": 67,
+  "agreement_rate": 0.468531,
+  "disagreement_by_type": {
+    "missing_theme": 69,
+    "extra_theme": 26,
+    "missed_severe_phrase": 3,
+    "likely_false_positive": 3,
+    "likely_context_guard_failure": 2,
+    "wrong_severity": 3
+  },
+  "disagreement_by_theme": {
+    "timeliness_progress": 12,
+    "communication_responsiveness": 19,
+    "professionalism_trust": 14,
+    "outcome_satisfaction": 12,
+    "office_staff_experience": 7,
+    "empathy_support": 13,
+    "billing_transparency": 3,
+    "communication_clarity": 8,
+    "fee_value": 4,
+    "expectation_setting": 14
+  },
+  "star_band": {
+    "1": {
+      "reviews": 35,
+      "reviews_with_disagreements": 22,
+      "total_disagreements": 37,
+      "review_disagreement_rate": 0.628571
+    },
+    "2": {
+      "reviews": 22,
+      "reviews_with_disagreements": 12,
+      "total_disagreements": 12,
+      "review_disagreement_rate": 0.545455
+    },
+    "3": {
+      "reviews": 19,
+      "reviews_with_disagreements": 10,
+      "total_disagreements": 13,
+      "review_disagreement_rate": 0.526316
+    },
+    "4": {
+      "reviews": 43,
+      "reviews_with_disagreements": 24,
+      "total_disagreements": 36,
+      "review_disagreement_rate": 0.55814
+    },
+    "5": {
+      "reviews": 24,
+      "reviews_with_disagreements": 8,
+      "total_disagreements": 8,
+      "review_disagreement_rate": 0.333333
+    }
+  }
+}

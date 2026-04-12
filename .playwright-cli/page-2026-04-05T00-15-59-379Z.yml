@@ -1,0 +1,134 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Map · Use arrow keys to pan the map. · Get details about a place by pressing its corresponding number key." [ref=e8]
+    - search [ref=e14]:
+      - generic [ref=e15]:
+        - combobox [ref=e17]: American Immigration Law Center
+        - button "Search" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+        - button "Close" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: 
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - button "Menu" [ref=e29] [cursor=pointer]:
+              - generic [ref=e31]: 
+          - listitem [ref=e32]:
+            - button "Saved" [ref=e33] [cursor=pointer]:
+              - generic [ref=e35]: 
+              - generic [ref=e37]: Saved
+          - listitem [ref=e38]:
+            - button "Recents" [disabled] [ref=e39]:
+              - generic [ref=e41]: 
+              - generic [ref=e43]: Recents
+          - listitem [ref=e45]:
+            - button "Get app" [ref=e46] [cursor=pointer]:
+              - generic [ref=e48]: 
+              - generic [ref=e50]: Get app
+        - main "American Immigration Law Center" [ref=e55]:
+          - button "Photo of American Immigration Law Center" [active] [ref=e58] [cursor=pointer]:
+            - img [ref=e59]
+          - generic [ref=e62]:
+            - heading "American Immigration Law Center" [level=1] [ref=e64]: American Immigration Law Center
+            - generic [ref=e66]:
+              - generic [ref=e69]:
+                - text: "4.4"
+                - img "4.4 stars" [ref=e70]
+              - generic [ref=e76]:
+                - button "Law firm" [ref=e79]
+                - text: ·
+                - img "Wheelchair accessible entrance" [ref=e80]: 
+          - tablist [ref=e83]:
+            - tab "Overview of American Immigration Law Center" [selected] [ref=e84]:
+              - generic [ref=e86]: Overview
+            - tab "About American Immigration Law Center" [ref=e88]:
+              - generic [ref=e90]: About
+          - region "Actions for American Immigration Law Center" [ref=e92]:
+            - button "Directions" [ref=e94] [cursor=pointer]:
+              - generic [ref=e96]: 
+              - generic [ref=e97]: Directions
+            - button "Save" [ref=e99] [cursor=pointer]:
+              - generic [ref=e101]: 
+              - generic [ref=e102]: Save
+            - button "Nearby" [ref=e104] [cursor=pointer]:
+              - generic [ref=e106]: 
+              - generic [ref=e107]: Nearby
+            - button "Send to phone" [ref=e109] [cursor=pointer]:
+              - generic [ref=e111]: 
+              - generic [ref=e112]: Send to phone
+            - button "Share" [ref=e114] [cursor=pointer]:
+              - generic [ref=e116]: 
+              - generic [ref=e117]: Share
+          - region "Information for American Immigration Law Center" [ref=e120]:
+            - generic [ref=e121]:
+              - 'button "Address: 1001 Woodward Ave #9th, Detroit, MI 48226" [ref=e122] [cursor=pointer]':
+                - generic [ref=e123]:
+                  - generic [ref=e125]: 
+                  - generic [ref=e127]: "1001 Woodward Ave #9th, Detroit, MI 48226"
+              - button "Copy address" [ref=e130] [cursor=pointer]:
+                - generic [ref=e132]: 
+            - generic [ref=e133]:
+              - 'button "Phone: (313) 396-5000" [ref=e134] [cursor=pointer]':
+                - generic [ref=e135]:
+                  - generic [ref=e137]: 
+                  - generic [ref=e139]: (313) 396-5000
+              - generic [ref=e140]:
+                - button "Copy phone number" [ref=e142] [cursor=pointer]:
+                  - generic [ref=e144]: 
+                - link "Call phone number" [ref=e146] [cursor=pointer]:
+                  - /url: tel:+13133965000
+                  - generic [ref=e148]: 
+            - generic [ref=e149]:
+              - 'button "Plus code: 8XJ2+RW Detroit, Michigan" [ref=e150] [cursor=pointer]':
+                - generic [ref=e151]:
+                  - generic [ref=e153]: 
+                  - generic [ref=e155]: 8XJ2+RW Detroit, Michigan
+              - generic [ref=e156]:
+                - button "Copy plus code" [ref=e158] [cursor=pointer]:
+                  - generic [ref=e160]: 
+                - button "Learn more about plus codes" [ref=e162] [cursor=pointer]:
+                  - generic [ref=e164]: 
+          - button "Suggest an edit" [ref=e168] [cursor=pointer]:
+            - generic [ref=e169]:
+              - generic [ref=e170]: 
+              - generic [ref=e171]: Suggest an edit
+          - generic [ref=e174]:
+            - heading "Add missing information" [level=2] [ref=e175]
+            - button "More info" [ref=e176] [cursor=pointer]:
+              - generic [ref=e177]: 
+          - button "Add hours" [ref=e179]:
+            - generic [ref=e180]:
+              - generic [ref=e181]: 
+              - generic [ref=e182]: Add hours
+          - button "Add website" [ref=e184]:
+            - generic [ref=e185]:
+              - generic [ref=e186]: 
+              - generic [ref=e187]: Add website
+          - heading "Photos" [level=2] [ref=e191]
+          - button "Street View" [ref=e194] [cursor=pointer]:
+            - img [ref=e196]
+          - button "Add photos & videos" [ref=e203] [cursor=pointer]:
+            - generic [ref=e204]:
+              - generic [ref=e205]: 
+              - generic [ref=e206]: Add photos & videos
+          - button "Write a review" [ref=e212] [cursor=pointer]:
+            - generic [ref=e213]:
+              - generic [ref=e214]: 
+              - generic [ref=e215]: Write a review
+          - link "About this data" [ref=e220] [cursor=pointer]:
+            - /url: https://support.google.com/local-listings?p=how_google_sources&authuser=0&hl=en
+            - generic [ref=e222]: About this data
+          - generic [ref=e225]:
+            - generic [ref=e227]: 
+            - generic [ref=e228]:
+              - text: You're seeing a limited view of Google Maps.
+              - button "Learn more about limited view" [ref=e229] [cursor=pointer]: Learn more
+          - heading "Get the most out of Google Maps Sign in" [level=2] [ref=e233]:
+            - generic [ref=e234]: Get the most out of Google Maps
+            - button "Sign in" [ref=e237] [cursor=pointer]:
+              - generic [ref=e239]: Sign in
+      - generic [ref=e240]:
+        - button "Collapse side panel" [ref=e241] [cursor=pointer]:
+          - generic [ref=e242]: 
+        - generic [ref=e243]: Collapse side panel

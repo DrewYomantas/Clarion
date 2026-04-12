@@ -1,0 +1,20 @@
+{
+  "run_name": "20260412_comm_responsiveness_narrow_pass76_broad_rerun",
+  "pass": 76,
+  "total_reviews": 143,
+  "zero_disagreement_reviews": 93,
+  "total_disagreements": 68,
+  "agreement_rate": 0.6503,
+  "disagreement_by_theme": {
+    "communication_responsiveness": 5,
+    "communication_clarity": 8,
+    "empathy_support": 9,
+    "professionalism_trust": 12,
+    "timeliness_progress": 6,
+    "expectation_setting": 9,
+    "billing_transparency": 2,
+    "fee_value": 4,
+    "office_staff_experience": 4,
+    "outcome_satisfaction": 9
+  }
+}

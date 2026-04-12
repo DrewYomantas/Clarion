@@ -1,0 +1,197 @@
+{
+  "version": "v1",
+  "created_at": "2026-04-09",
+  "artifact_type": "timeliness_progress_driver_prep",
+  "status": "prepared_for_narrow_engine_pass",
+  "source_commit": "7fe5f59",
+  "source_artifacts": {
+    "broad_rerun_summary": "data/calibration/runs/20260409_outcome_satisfaction_family_broad_rerun/summary.json",
+    "broad_rerun_raw_results": "data/calibration/runs/20260409_outcome_satisfaction_family_broad_rerun/raw_results.json"
+  },
+  "notes": "This artifact trims the post-Pass-60 broad timeliness_progress disagreement lane into explicit future engine drivers versus explicit non-drivers. It is a design-review artifact only and does not change the active canonical gate or any benchmark truth.",
+  "lane_summary": {
+    "broad_disagreement_count": 12,
+    "bucket_counts": {
+      "explicit_negative_progress_driver": 2,
+      "explicit_positive_timing_driver": 2,
+      "timing_outcome_context_boundary": 2,
+      "responsiveness_not_timeliness_boundary": 2,
+      "nonperformance_boundary": 2,
+      "ai_overread_or_too_weak": 2
+    },
+    "driver_shortlist_count": 4,
+    "conditional_driver_count": 0,
+    "rejected_non_driver_count": 8
+  },
+  "future_engine_driver_shortlist": [
+    {
+      "raw_result_index": 44,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 45,
+      "bucket": "explicit_negative_progress_driver",
+      "driver_role": "negative_progress_failure",
+      "review_text": "I hired Dane Loizzo as my third attorney during my divorce case. Within just three weeks, Dane racked up over $7,000 in charges, many of which appeared inflated, before withdrawing from my case without achieving any meaningful progress. He failed to provide value, transparency, or support.",
+      "reason": "This is direct progress-failure language and already scores timeliness_progress, but it likely needs a severity lift rather than a new theme family."
+    },
+    {
+      "raw_result_index": 105,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 106,
+      "bucket": "explicit_positive_timing_driver",
+      "driver_role": "positive_on_time_readiness",
+      "review_text": "Easy to work with and they communicate well what information is needed along the way to make sure your case is ready on time.",
+      "reason": "The timing claim is explicit, compact, and not just generic praise."
+    },
+    {
+      "raw_result_index": 112,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 113,
+      "bucket": "explicit_negative_progress_driver",
+      "driver_role": "negative_delay_or_late_case_handling",
+      "review_text": "Lawyers and associate are not caring at all. Waited 2 years and only heard from them 2 or 3 times. Only heard from the actual attorney a day before the hearing. They didn't even get all my health information that they were supposed to.",
+      "reason": "The row contains explicit duration and late-hearing timing language that is stronger and cleaner than generic responsiveness delay alone."
+    },
+    {
+      "raw_result_index": 132,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 133,
+      "bucket": "explicit_positive_timing_driver",
+      "driver_role": "positive_timely_completion",
+      "review_text": "Cody Scharph is fantastic! Did what she was asked with no attitude in a very timely manner and got me a settlement in less than the time it was supposed to take. She took the time to answer my questions as the case was progressing.",
+      "reason": "This is explicit positive timing language with both timely manner and faster-than-expected completion cues."
+    }
+  ],
+  "reviewed_rows": [
+    {
+      "raw_result_index": 1,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 2,
+      "bucket": "ai_overread_or_too_weak",
+      "keep_as_driver": false,
+      "review_text": "Very knowledgeable with estate planning. Jeremy was wonderful at answering all of our many questions in a way that was easily understood. He took the time to explain all of our choices to insure we took the decisions that best suited our needs. Jeremy also explained all of the final documentation so we were clear on any next steps.",
+      "judgment": "Clear on next steps reads more like clarity and client guidance than timing pressure."
+    },
+    {
+      "raw_result_index": 27,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 28,
+      "bucket": "ai_overread_or_too_weak",
+      "keep_as_driver": false,
+      "review_text": "Divorces are messy even if you don't want them to be! Having a paralegal like Maria makes a huge difference. She GETS it! And I knew she was in my corner all the way! Mason was great and he could not do what he does without a team behind him. It was an annoying, frustrating process but the Crosby team did what they could within the confines of the law.",
+      "judgment": "Did what they could within the confines of the law is too weak and indirect for a timeliness driver."
+    },
+    {
+      "raw_result_index": 44,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 45,
+      "bucket": "explicit_negative_progress_driver",
+      "keep_as_driver": true,
+      "review_text": "I hired Dane Loizzo as my third attorney during my divorce case. Within just three weeks, Dane racked up over $7,000 in charges, many of which appeared inflated, before withdrawing from my case without achieving any meaningful progress. He failed to provide value, transparency, or support.",
+      "judgment": "Keep as a clean negative progress driver and likely severity-adjustment row."
+    },
+    {
+      "raw_result_index": 55,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 56,
+      "bucket": "timing_outcome_context_boundary",
+      "keep_as_driver": false,
+      "review_text": "4.5 Star Rating! I hired Attorney Mehlos to help me fight a battery charge. Corey helped me through the worst year of my life. From day 1, Attorney Mehlos and I came up with a plan and continued to refine our strategy until the prosecutor dismissed the battery charge. It took 12 months to get it done. Attorney Mehlos was confident and prepared to win at trial. The prosecutor eventually released knowing he'd have a tough case. I highly recommend Attorney Mehlos for any criminal case.",
+      "judgment": "The timing reference is explicit but bound up with outcome and recommendation language, so it should not anchor the first narrow pass."
+    },
+    {
+      "raw_result_index": 87,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 88,
+      "bucket": "responsiveness_not_timeliness_boundary",
+      "keep_as_driver": false,
+      "review_text": "I went through them to apply for social security disability. Kong was very understanding and helped me through paperwork. Then the denial came. I called to inquire about appeals. Overall frustrating experience with communication delays.",
+      "judgment": "Communication delays is better treated as responsiveness pressure, not a clean timeliness driver."
+    },
+    {
+      "raw_result_index": 88,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 89,
+      "bucket": "responsiveness_not_timeliness_boundary",
+      "keep_as_driver": false,
+      "review_text": "Responses to questions are EXTREMELY slow. The paralegals are not efficient. Lack of communication on their end. The lawyer was way better than the paralegals. Paralegals would receive zero stars.",
+      "judgment": "Extremely slow here reads as response latency and staff handling, not progress-through-case timing."
+    },
+    {
+      "raw_result_index": 92,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 93,
+      "bucket": "nonperformance_boundary",
+      "keep_as_driver": false,
+      "review_text": "If you expect them to help you with Student Loan Discharge, you thought wrong. They just want money from you and want you do all the work.",
+      "judgment": "Doing all the work is a nonperformance and expectation boundary, not yet a clean timing phrase."
+    },
+    {
+      "raw_result_index": 105,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 106,
+      "bucket": "explicit_positive_timing_driver",
+      "keep_as_driver": true,
+      "review_text": "Easy to work with and they communicate well what information is needed along the way to make sure your case is ready on time.",
+      "judgment": "Keep as a clean positive on-time readiness driver."
+    },
+    {
+      "raw_result_index": 108,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 109,
+      "bucket": "nonperformance_boundary",
+      "keep_as_driver": false,
+      "review_text": "If I could go after them for misrepresentation I definitely would. Shortly after becoming my attorney I had to call offices and judges myself because my attorney would always say they were waiting. They stopped working when they got paid. I had to do the legwork my attorney never did.",
+      "judgment": "Stopped working when they got paid is stronger trust and nonperformance pressure than a clean timeliness row."
+    },
+    {
+      "raw_result_index": 112,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 113,
+      "bucket": "explicit_negative_progress_driver",
+      "keep_as_driver": true,
+      "review_text": "Lawyers and associate are not caring at all. Waited 2 years and only heard from them 2 or 3 times. Only heard from the actual attorney a day before the hearing. They didn't even get all my health information that they were supposed to.",
+      "judgment": "Keep as a clean duration-plus-late-hearing negative timing row."
+    },
+    {
+      "raw_result_index": 132,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 133,
+      "bucket": "explicit_positive_timing_driver",
+      "keep_as_driver": true,
+      "review_text": "Cody Scharph is fantastic! Did what she was asked with no attitude in a very timely manner and got me a settlement in less than the time it was supposed to take. She took the time to answer my questions as the case was progressing.",
+      "judgment": "Keep as a clean positive timing row with explicit timely and faster-than-expected completion language."
+    },
+    {
+      "raw_result_index": 139,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 140,
+      "bucket": "timing_outcome_context_boundary",
+      "keep_as_driver": false,
+      "review_text": "I came to Hoglund Law for help and although it took a while I was able to get the assistance I needed to finally win my case. Thanks to all of the hardworking people and my attorney.",
+      "judgment": "Although it took a while is explicit timing language, but it is still too tied to generic gratitude and outcome framing for the first narrow pass."
+    }
+  ],
+  "explicit_non_drivers": {
+    "ai_overread_or_too_weak": [
+      "clear on any next steps",
+      "did what they could within the confines of the law"
+    ],
+    "responsiveness_not_timeliness_boundary": [
+      "communication delays",
+      "Responses to questions are EXTREMELY slow"
+    ],
+    "nonperformance_boundary": [
+      "want you do all the work",
+      "They stopped working when they got paid"
+    ],
+    "timing_outcome_context_boundary": [
+      "It took 12 months to get it done.",
+      "although it took a while"
+    ]
+  },
+  "recommended_next_move": {
+    "decision": "A",
+    "label": "lane_is_clean_enough_for_one_narrow_multi_row_timeliness_progress_engine_pass_after_this_audit",
+    "why": "The updated broad lane has four explicit timing/progress rows that are cleaner and more reusable than the current professionalism_trust bucket, while the remaining timeliness disagreements can be explicitly excluded as responsiveness, nonperformance, or outcome-context boundary rows."
+  }
+}

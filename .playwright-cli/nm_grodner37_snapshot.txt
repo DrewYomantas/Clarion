@@ -1,0 +1,3 @@
+The browser 'nm_grodner37' is not open, please run open first
+
+  playwright-cli -s=nm_grodner37 open [params]

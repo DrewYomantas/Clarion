@@ -1,0 +1,1 @@
+batch_id,stage,batch_date,batch_file,label_queue_file,holdout_queue_file,collection_notes_file,status,total_rows,deduped_rows,benchmark_candidate_rows,holdout_rows,source_mix_note,notes

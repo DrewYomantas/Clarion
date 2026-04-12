@@ -1,0 +1,220 @@
+{
+  "version": "v1",
+  "created_at": "2026-04-09",
+  "artifact_type": "empathy_support_driver_prep",
+  "status": "prepared_for_narrow_engine_pass",
+  "source_commit": "7fe5f59",
+  "source_artifacts": {
+    "broad_rerun_summary": "data/calibration/runs/20260409_professionalism_trust_narrow_broad_rerun/summary.json",
+    "broad_rerun_raw_results": "data/calibration/runs/20260409_professionalism_trust_narrow_broad_rerun/raw_results.json"
+  },
+  "notes": "This artifact trims the post-Pass-65 empathy_support disagreement lane into explicit future engine drivers versus explicit non-drivers. It is a design-review artifact only and does not change the active canonical gate or any benchmark truth. The resulting future lane stays narrow and should not widen into generic kindness, recommendation, or service-overlap language.",
+  "lane_summary": {
+    "broad_disagreement_count": 14,
+    "bucket_counts": {
+      "explicit_reassurance_support_driver": 3,
+      "explicit_negative_empathy_dehumanization_driver": 1,
+      "professionalism_service_trust_overlap_boundary": 5,
+      "generic_emotional_framing_praise_non_driver": 3,
+      "too_weak_generic_service_niceness": 2
+    },
+    "driver_shortlist_count": 3,
+    "conditional_driver_count": 1,
+    "rejected_non_driver_count": 10
+  },
+  "future_engine_driver_shortlist": [
+    {
+      "raw_result_index": 28,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 30,
+      "bucket": "explicit_reassurance_support_driver",
+      "driver_role": "positive_explicit_reassurance",
+      "review_text": "It was a long process because the family legal system can be frustrating. Mason and his staff really helped me through a lot of uncertainty and he reassured me when it came to anxiety over the outcomes.",
+      "reason": "Reassured me when it came to anxiety is direct support language and cleaner than generic caring praise.",
+      "phrase_seed": "reassured me when it came to anxiety"
+    },
+    {
+      "raw_result_index": 102,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 104,
+      "bucket": "explicit_reassurance_support_driver",
+      "driver_role": "positive_explicit_support_and_comfort",
+      "review_text": "My attorney at this law firm was very helpful with getting my social security disability approved. I felt him and all the staff did everything in their power to make me feel comfortable and showed their support even to the end.",
+      "reason": "Make me feel comfortable and showed their support even to the end are explicit empathy cues, even though the row also carries outcome language.",
+      "phrase_seed": "make me feel comfortable"
+    },
+    {
+      "raw_result_index": 128,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 130,
+      "bucket": "explicit_negative_empathy_dehumanization_driver",
+      "driver_role": "negative_dehumanized_treatment",
+      "review_text": "From the moment they got all of the money I was treated as another number. Calls go unreturned. Emails go unanswered. There were canceled calls and no-shows. No one even knew what was going on with my case.",
+      "reason": "Treated as another number is a direct dehumanization complaint and is cleaner empathy pressure than the nearby service-failure language.",
+      "phrase_seed": "treated as another number"
+    }
+  ],
+  "conditional_future_driver_candidates": [
+    {
+      "raw_result_index": 133,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 135,
+      "bucket": "explicit_reassurance_support_driver",
+      "driver_role": "positive_supportive_style_candidate",
+      "review_text": "The law office handled my auto accident case with grace and patience.",
+      "reason": "Grace and patience points at empathy, but it is still more style-coded and weaker than the primary shortlist.",
+      "phrase_seed": "grace and patience"
+    }
+  ],
+  "reviewed_rows": [
+    {
+      "raw_result_index": 0,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 2,
+      "bucket": "too_weak_generic_service_niceness",
+      "keep_as_driver": false,
+      "review_text": "Very knowledgeable with estate planning. Jeremy was wonderful at answering all of our many questions in a way that was easily understood. He took the time to explain all of our choices to insure we took the decisions that best suited our needs. Jeremy also explained all of the final documentation so we were clear on any next steps.",
+      "judgment": "Best suited our needs is too weak and service-guidance-coded for a narrow empathy pass."
+    },
+    {
+      "raw_result_index": 25,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 27,
+      "bucket": "professionalism_service_trust_overlap_boundary",
+      "keep_as_driver": false,
+      "review_text": "If you want to pay someone $3,500 just to be screamed at and thrown out of their office, then this is the lawyer for you. I calmly told him I didn't appreciate being spoken to that way. He threw my folder across the desk and ordered his secretary to kick me out.",
+      "judgment": "This is a real mistreatment row, but it is dominated by professionalism, abuse, and service-failure overlap rather than a clean empathy pattern."
+    },
+    {
+      "raw_result_index": 28,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 30,
+      "bucket": "explicit_reassurance_support_driver",
+      "keep_as_driver": true,
+      "review_text": "It was a long process because the family legal system can be frustrating. Mason and his staff really helped me through a lot of uncertainty and he reassured me when it came to anxiety over the outcomes.",
+      "judgment": "Keep as a clean reassurance-support driver."
+    },
+    {
+      "raw_result_index": 33,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 35,
+      "bucket": "generic_emotional_framing_praise_non_driver",
+      "keep_as_driver": false,
+      "review_text": "The lawyers are caring and responsive.",
+      "judgment": "Caring is too generic and praise-like to drive the next empathy pass."
+    },
+    {
+      "raw_result_index": 54,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 56,
+      "bucket": "generic_emotional_framing_praise_non_driver",
+      "keep_as_driver": false,
+      "review_text": "Corey helped me through the worst year of my life.",
+      "judgment": "This is emotional framing, but it is too broad and praise-heavy for a narrow reusable empathy rule."
+    },
+    {
+      "raw_result_index": 55,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 57,
+      "bucket": "generic_emotional_framing_praise_non_driver",
+      "keep_as_driver": false,
+      "review_text": "Attorney Bolton saved my life both literally and figuratively.",
+      "judgment": "Saved my life is too broad, outcome-adjacent, and praise-heavy to anchor empathy work."
+    },
+    {
+      "raw_result_index": 90,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 92,
+      "bucket": "professionalism_service_trust_overlap_boundary",
+      "keep_as_driver": false,
+      "review_text": "Some people might be anxious going through stuff so asking questions and not getting answers is difficult.",
+      "judgment": "This is better treated as responsiveness pressure with emotional context, not a clean empathy driver."
+    },
+    {
+      "raw_result_index": 102,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 104,
+      "bucket": "explicit_reassurance_support_driver",
+      "keep_as_driver": true,
+      "review_text": "My attorney at this law firm was very helpful with getting my social security disability approved. I felt him and all the staff did everything in their power to make me feel comfortable and showed their support even to the end.",
+      "judgment": "Keep as a clean explicit support-and-comfort row, while leaving the outcome language out of the empathy driver itself."
+    },
+    {
+      "raw_result_index": 125,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 127,
+      "bucket": "professionalism_service_trust_overlap_boundary",
+      "keep_as_driver": false,
+      "review_text": "I absolutely hated our entire experience.",
+      "judgment": "This is broad dissatisfaction, not a reusable empathy signal."
+    },
+    {
+      "raw_result_index": 126,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 128,
+      "bucket": "professionalism_service_trust_overlap_boundary",
+      "keep_as_driver": false,
+      "review_text": "They didn't help me enough to have my back in everything.",
+      "judgment": "Have my back in everything is too service-overlap-heavy and vague for the next empathy pass."
+    },
+    {
+      "raw_result_index": 127,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 129,
+      "bucket": "professionalism_service_trust_overlap_boundary",
+      "keep_as_driver": false,
+      "review_text": "The moment they get all of your money, you are dead to them.",
+      "judgment": "Dead to them reads more like abandonment, trust failure, and service collapse than a clean empathy phrase."
+    },
+    {
+      "raw_result_index": 128,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 130,
+      "bucket": "explicit_negative_empathy_dehumanization_driver",
+      "keep_as_driver": true,
+      "review_text": "From the moment they got all of the money I was treated as another number. Calls go unreturned. Emails go unanswered. There were canceled calls and no-shows. No one even knew what was going on with my case.",
+      "judgment": "Keep as the cleanest negative empathy driver because treated as another number is explicit dehumanization."
+    },
+    {
+      "raw_result_index": 133,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 135,
+      "bucket": "explicit_reassurance_support_driver",
+      "keep_as_driver": false,
+      "review_text": "The law office handled my auto accident case with grace and patience.",
+      "judgment": "Grace and patience is plausible empathy pressure, but it stays conditional because it is more stylistic and weaker than the primary shortlist."
+    },
+    {
+      "raw_result_index": 137,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 139,
+      "bucket": "too_weak_generic_service_niceness",
+      "keep_as_driver": false,
+      "review_text": "Very nice and helpful.",
+      "judgment": "Nice and helpful is too generic to drive empathy phrase work safely."
+    }
+  ],
+  "explicit_non_drivers": {
+    "professionalism_service_trust_overlap_boundary": [
+      "I didn't appreciate being spoken to that way",
+      "asking questions and not getting answers is difficult",
+      "I absolutely hated our entire experience",
+      "didn't help me enough to have my back in everything",
+      "you are dead to them"
+    ],
+    "generic_emotional_framing_praise_non_driver": [
+      "The lawyers are caring",
+      "helped me through the worst year of my life",
+      "saved my life both literally and figuratively"
+    ],
+    "too_weak_generic_service_niceness": [
+      "best suited our needs",
+      "Very nice and helpful"
+    ]
+  },
+  "recommended_next_move": {
+    "decision": "A",
+    "label": "lane_is_clean_enough_for_one_narrow_empathy_support_engine_pass",
+    "why": "The updated empathy lane now has a compact row-backed shortlist built around reassurance, comfort/support, and dehumanized-treatment language, while the overlapping service, trust, and generic-praise rows are explicitly preserved as non-drivers."
+  }
+}

@@ -1,0 +1,832 @@
+[
+  {
+    "benchmark_id": "legacy_057",
+    "star_rating": 1,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "They accepted thousands of dollars but never really did anything",
+        "audit_note": "Takes money while failing to materially advocate; strong trust failure."
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "never really did anything towards my son's appeal, never really fought.",
+        "audit_note": "Promise of representation breaks down into non-performance."
+      },
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "They never even really had meetings with me or my son.",
+        "audit_note": "Client contact is materially absent in a 1-star narrative and is severe enough to count as a severe responsiveness failure."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "severe_negative",
+        "matched_phrase": "never even really had meetings"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "matched_phrase": "accepted thousands of dollars but never really did anything"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "severe_negative",
+        "matched_phrase": "never really did anything towards my son's appeal"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "I truly wonder if other Black people had great experiences here. They accepted thousands of dollars but never really did anything towards my son's appeal, never really fought. The case was transferred multiple times. They never even really had meetings with me or my son. Truly horrible."
+  },
+  {
+    "benchmark_id": "legacy_075",
+    "star_rating": 4,
+    "sentiment_mix_tag": "mixed",
+    "expected_labels": [
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "I not only got my case handled but got more than expected out of it.",
+        "audit_note": "Overall result is positive."
+      },
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "there were points where we didn't have contact for a while",
+        "audit_note": "Positive-overall review with a real governance complaint."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "matched_phrase": "didn't have contact for a while"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "matched_phrase": "got more than expected out of it"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "My experience was really good with the law firm. I not only got my case handled but got more than expected out of it. The only reason I did not give 5 stars was because there were points where we didn't have contact for a while and I was unsure what was going on during that time."
+  },
+  {
+    "benchmark_id": "legacy_080",
+    "star_rating": 2,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "I had to call three times over two weeks to get an answer",
+        "audit_note": "Classic delay / no-response complaint in a 2-star review."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "matched_phrase": "had to call three times"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "Paralegal Allison was very unhelpful. I had to call three times over two weeks to get an answer that took them less than 5 minutes."
+  },
+  {
+    "benchmark_id": "legacy_088",
+    "star_rating": 3,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "Responses to questions are EXTREMELY slow.",
+        "audit_note": "Direct response-speed complaint."
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "Lack of communication on their end.",
+        "audit_note": "Separate clarity / information-flow complaint, not just speed."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "matched_phrase": "responses to questions are extremely slow"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "matched_phrase": "lack of communication on their end"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "Responses to questions are EXTREMELY slow. The paralegals are not efficient. Lack of communication on their end. The lawyer was way better than the paralegals. Paralegals would receive zero stars."
+  },
+  {
+    "benchmark_id": "legacy_097",
+    "star_rating": 4,
+    "sentiment_mix_tag": "single_positive",
+    "expected_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "Andrew called me a few days prior to my hearing",
+        "audit_note": "Proactive outreach before hearing."
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "to discuss how things would go and what to expect",
+        "audit_note": "Sets process expectations clearly."
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "He was able to relay to the judge exactly what I intended.",
+        "audit_note": "Strong role / articulation clarity."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "matched_phrase": "called me a few days prior to my hearing"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "matched_phrase": "relay to the judge exactly what i intended"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "positive",
+        "matched_phrase": "what to expect"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "Andrew called me a few days prior to my hearing to discuss how things would go and what to expect, and then again about 20 minutes before the hearing. I was glad to have an attorney to speak for me. He was able to relay to the judge exactly what I intended."
+  },
+  {
+    "benchmark_id": "legacy_106",
+    "star_rating": 1,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "I was given guidance that ultimately cost me over $1,000 and wasn't fully explained.",
+        "audit_note": "Expectation failure tied to guidance and undisclosed downstream consequence."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "matched_phrase": "wasn't fully explained"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "I wasn't planning to leave a review, but after today I'm done. I hired Hoglund for a criminal matter. I was given guidance that ultimately cost me over $1,000 and wasn't fully explained. My case was delayed nearly five months, only to end in a plea deal that likely could have happened much earlier. I was contacted six months after my case was settled and told I still owed money."
+  },
+  {
+    "benchmark_id": "legacy_112",
+    "star_rating": 1,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "Waited 2 years and only heard from them 2 or 3 times.",
+        "audit_note": "Long low-rating narrative with explicit low-contact complaint."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "matched_phrase": "only heard from them 2 or 3 times"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "Lawyers and associate are not caring at all. Waited 2 years and only heard from them 2 or 3 times. Only heard from the actual attorney a day before the hearing. They didn't even get all my health information that they were supposed to."
+  },
+  {
+    "benchmark_id": "legacy_114",
+    "star_rating": 1,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "Horrible appointment setup, phone tag, and no one seemed to know I had an appointment set up.",
+        "audit_note": "Repeated scheduling/contact breakdown."
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "Had to repeat the same information many times to many different people",
+        "audit_note": "Role/process clarity failure."
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "they're not even licensed in my state",
+        "audit_note": "Severe competence / trust failure."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "matched_phrase": "phone tag"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "matched_phrase": "had to repeat the same information"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "matched_phrase": "they're not even licensed in my state"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "Horrible appointment setup, phone tag, and no one seemed to know I had an appointment set up. Had to repeat the same information many times to many different people only to find out they're not even licensed in my state."
+  },
+  {
+    "benchmark_id": "legacy_115",
+    "star_rating": 1,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "They failed me during my appeal",
+        "audit_note": "Clear result failure."
+      },
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "Multiple calls were canceled or no-showed",
+        "audit_note": "Repeated communication breakdown."
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "communication barriers made it impossible",
+        "audit_note": "Direct statement that communication barriers made the representation impossible to navigate."
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "do not trust this firm with your disability case",
+        "audit_note": "Explicit trust failure stated directly by the reviewer."
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "no attorney ever really reviewed my case or spoke to me",
+        "audit_note": "Representation expectation collapses completely."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "severe_negative",
+        "matched_phrase": "multiple calls were canceled"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "severe_negative",
+        "matched_phrase": "communication barriers made it impossible"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "matched_phrase": "do not trust this firm"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "severe_negative",
+        "matched_phrase": "no attorney ever really reviewed my case"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "severe_negative",
+        "matched_phrase": "failed me during my appeal"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "Completely disappointed \u2013 do not trust this firm with your disability case. They failed me during my appeal. Multiple calls were canceled or no-showed, communication barriers made it impossible, and no attorney ever really reviewed my case or spoke to me."
+  },
+  {
+    "benchmark_id": "legacy_119",
+    "star_rating": 1,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "I have not received any information about my case.",
+        "audit_note": "Direct information-clarity failure."
+      },
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "Whenever I call I get attitude.",
+        "audit_note": "Active contact attempts do not yield helpful response."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "matched_phrase": "whenever i call i get attitude"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "matched_phrase": "have not received any information about my case"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "Over two years and still waiting. I have not received any information about my case. Whenever I call I get attitude. They have no answers for why it is taking this long."
+  },
+  {
+    "benchmark_id": "legacy_131",
+    "star_rating": 2,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "promised charges were never filed",
+        "audit_note": "Promise-versus-reality failure."
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "we were pushed into mediation and settlement we didn't want",
+        "audit_note": "Clear dissatisfaction with practical result."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "matched_phrase": "promised charges were never filed"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "matched_phrase": "pushed into mediation and settlement we didn't want"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "I am a former client of SGS. Be prepared: this process is about money, not justice or principle. Through a wrongful death claim, promised charges were never filed, I uncovered critical pieces of evidence myself, and we were pushed into mediation and settlement we didn't want. Profit is number one."
+  },
+  {
+    "benchmark_id": "legacy_134",
+    "star_rating": 4,
+    "sentiment_mix_tag": "single_positive",
+    "expected_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "always helped me with all my questions",
+        "audit_note": "Reliable, question-level responsiveness."
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "In the end I received a fair settlement.",
+        "audit_note": "Positive result language."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "matched_phrase": "helped me with all my questions"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "matched_phrase": "received a fair settlement"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "Kojo was very pleasant to work with, and always helped me with all my questions. Shannon Carey handled my auto accident case with grace and patience. In the end I received a fair settlement."
+  },
+  {
+    "benchmark_id": "legacy_137",
+    "star_rating": 4,
+    "sentiment_mix_tag": "single_positive",
+    "expected_labels": [
+      {
+        "theme": "professionalism_trust",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "I knew I was dealing with professionals.",
+        "audit_note": "Clean trust / professionalism statement."
+      },
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "They answered all my questions and kept me informed",
+        "audit_note": "Explicit question-answering and ongoing updates."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "positive",
+        "matched_phrase": "kept me informed"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "positive",
+        "matched_phrase": "i knew i was dealing with professionals"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "After being denied for SSD, I decided to hire Hoglund Law and from the very first day I knew I was dealing with professionals. They answered all my questions and kept me informed until the day I was approved."
+  },
+  {
+    "benchmark_id": "legacy_140",
+    "star_rating": 4,
+    "sentiment_mix_tag": "mixed",
+    "expected_labels": [
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "I didn't know who was handling my case at times.",
+        "audit_note": "Positive-overall review with a clear governance complaint about role clarity."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "matched_phrase": "didn't know who was handling my case"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "The hearing went very well. It sounded like you were prepared. The only problem for me was that I didn't know who was handling my case at times."
+  },
+  {
+    "benchmark_id": "exp_heartland_1",
+    "star_rating": 1,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "Thanksgiving and Christmas roll by and I heard nothing else from these guys.",
+        "audit_note": "Long silence after retainment."
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "I was told Chris got married ... but I should hear from someone at the end of the week. I did not hear from anyone.",
+        "audit_note": "Stated next-step expectation is not met."
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "I wish I didn't pay this lawfirm $600 to retain them.",
+        "audit_note": "Client sees no value or progress from representation."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "severe_negative",
+        "matched_phrase": "heard nothing else from these guys"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "matched_phrase": "should hear from someone at the end of the week"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "matched_phrase": "wish i didn't pay"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "Horrible communication and lack of follow through. Scheduled free consultation with Chris Proctor 9/25/25, retained him, and signed the client agreement. Filled out intake form and sent pertinent documents for my mom's estate. Had discovery phone call with paralegal Jaclyn. It seemed that they were attentive at first until I called a week later. I was told Chris got married which is he hasn't called but I should hear from someone at the end of the week. I didn't hear from anyone. I called back and left Chris and Jaclyn both a voicemail saying I wanted to know what is going on with the case or I might have to hire a different attorney. I got a voicemail from Jaclyn that the lawyers were working on my case and I should get the court documents soon. Thanksgiving and Christmas roll by and I heard nothing else from these guys. No phone call, no email, no letter, no telegraph, no smoke signal, nothing. I wish I didn't pay this lawfirm $600 to retain them. It was a mistake I consider a lesson learned. Never rely on Google ratings."
+  },
+  {
+    "benchmark_id": "exp_greatlakes_4_mixed",
+    "star_rating": 4,
+    "sentiment_mix_tag": "mixed",
+    "expected_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "I had to call several times to check status. I even called my so call attorney in the beginning who did nothing to return my call.",
+        "audit_note": "Exactly the 4-star mixed review slice we were missing."
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "But overall things are moving along more.",
+        "audit_note": "Mixed review still lands with a mildly positive progress/outcome frame."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "matched_phrase": "had to call several times"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "matched_phrase": "things are moving along more"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "Sometimes there was uncertainty on whether anything was being worked on. I had to call several times to check status. I even called my so call attorney in the beginning who did nothing to return my call. But overall things are moving along more."
+  },
+  {
+    "benchmark_id": "exp_century_1",
+    "star_rating": 1,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "This company lies about their abilities and experience to get you to sign up with them.",
+        "audit_note": "Direct deception allegation."
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "severe_negative",
+        "severity_note": "severe negative",
+        "evidence_span": "They guaranteed that when lawsuits do happen they settle them for much less than owed.",
+        "audit_note": "Strong overpromise / guarantee language."
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "Both of mine have been settled for far more than Century represented.",
+        "audit_note": "Negative practical result versus promised result."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "professionalism_trust",
+        "polarity": "severe_negative",
+        "matched_phrase": "lies about their abilities and experience"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "severe_negative",
+        "matched_phrase": "settle them for much less than owed"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "matched_phrase": "settled for full amounts plus fees"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "This company lies about their abilities and experience to get you to sign up with them. I was told they have relationships with creditors that mean clients rarely get sued. I was sued my first month in the program and have now been sued twice, all because of the steps they instructed me to take. They guaranteed that when lawsuits do happen they settle them for much less than owed. Both of mine have been settled for full amounts plus fees. Their agents tend to all tell you different things, and you don't get a dedicated representative that you can call directly, so getting reasonable updates and consistent information is nearly impossible. Just save yourself the headache and choose another firm."
+  },
+  {
+    "benchmark_id": "exp_century_5",
+    "star_rating": 5,
+    "sentiment_mix_tag": "single_positive",
+    "expected_labels": [
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "Lauren takes the time to explain in detail",
+        "audit_note": "Strong explanation language."
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "what to expect, how to handle the calls and what to do if we get served",
+        "audit_note": "Excellent process prep and expectation setting."
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "The relief both financially and emotionally they gave us is worth more than I can express.",
+        "audit_note": "Strong satisfaction / value result."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "matched_phrase": "takes the time to explain in detail"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "positive",
+        "matched_phrase": "what to expect"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "positive",
+        "matched_phrase": "relief both financially and emotionally"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "The entire staff has made us so at ease with any legal issue that arises from creditors. Lauren takes the time to explain in detail what to expect, how to handle the calls and what to do if we get served. The relief both financially and emotionally they gave us is worth more than I can express."
+  },
+  {
+    "benchmark_id": "exp_fla_1",
+    "star_rating": 1,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "3 years and $10,000 later all I got was a temporary order",
+        "audit_note": "Very poor result after long duration and high spend."
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "they go for the minimum and don't even fight hard to get that",
+        "audit_note": "Client no longer trusts quality of advocacy."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "professionalism_trust",
+        "polarity": "negative",
+        "matched_phrase": "don't even fight hard"
+      },
+      {
+        "theme": "outcome_satisfaction",
+        "polarity": "negative",
+        "matched_phrase": "all i got was a temporary order"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "3 years and $10,000 later all I got was a temporary order that's not in affect anymore. Not a good Father's right lawyer; they go for the minimum and don't even fight hard to get that. They lay back and get nothing done. I wouldn't recommend to anyone thanks Sara and Matthew for wasting my time and hard earned money."
+  },
+  {
+    "benchmark_id": "exp_ashoori_1",
+    "star_rating": 1,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "The entire case was handed off without any clear indication of ongoing responsibility.",
+        "audit_note": "Ownership expectations become unclear after signing."
+      },
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "nor even basic responsiveness to my questions or concerns",
+        "audit_note": "Direct responsiveness failure."
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "without any clear indication of ongoing responsibility",
+        "audit_note": "Responsibility / role clarity breakdown."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_responsiveness",
+        "polarity": "negative",
+        "matched_phrase": "basic responsiveness to my questions or concerns"
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "negative",
+        "matched_phrase": "without any clear indication of ongoing responsibility"
+      },
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "matched_phrase": "without any clear indication of ongoing responsibility"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "I\u2019m writing this review to share my honest and personal experience working with Ashoori Law regarding my EB-2 NIW petition. After signing the agreement and paying a significant portion of the legal fee, I was referred to a secondary attorney by Ashoori Law. From that point on, Ashoori Law took no further part in my case, neither oversight, support, nor even basic responsiveness to my questions or concerns. The entire case was handed off without any clear indication of ongoing responsibility. The referred attorney unfortunately did not complete the work thoroughly. Many key documents were missing or not attached to my petition, and several critical errors or omissions were never flagged or corrected. The responsiveness was also disappointing\u2014at times it took several business days or longer to receive replies to simple questions. This caused significant delays, frustration, and stress during a time-sensitive immigration process."
+  },
+  {
+    "benchmark_id": "exp_robertjewett_5",
+    "star_rating": 5,
+    "sentiment_mix_tag": "single_positive",
+    "expected_labels": [
+      {
+        "theme": "professionalism_trust",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "Guiding me through the probate process with his calm demeanor, he conveyed that I was in good, steady hands",
+        "audit_note": "Strong competence / trust signal."
+      },
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "severity_note": "positive",
+        "evidence_span": "Options that worked best for my family were laid out carefully and compassionately.",
+        "audit_note": "Clear explanation of options."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "communication_clarity",
+        "polarity": "positive",
+        "matched_phrase": "were fully explained"
+      },
+      {
+        "theme": "professionalism_trust",
+        "polarity": "positive",
+        "matched_phrase": "good, steady hands"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "I would like to offer my strongest recommendation and heartfelt gratitude for the services of Attorney Robert Jewett. Guiding me through the probate process with his calm demeanor, he conveyed that I was in good, steady hands through the entire legal process. He manages to strike a delicate balance of competence and compassion through what was a difficult, emotional and confusing time. Options that worked best for my particular situation were fully explained in email or over the phone if I wished. He offered straightforward pricing with no hidden surprises."
+  },
+  {
+    "benchmark_id": "legacy_092",
+    "star_rating": 3,
+    "sentiment_mix_tag": "single_negative",
+    "expected_labels": [
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "severity_note": "standard negative",
+        "evidence_span": "If you expect them to help you with Student Loan Discharge, you thought wrong.",
+        "audit_note": "Clear promise-versus-reality framing in a 3-star review."
+      }
+    ],
+    "deterministic_labels": [
+      {
+        "theme": "expectation_setting",
+        "polarity": "negative",
+        "matched_phrase": "you thought wrong"
+      }
+    ],
+    "disagreements": [],
+    "review_text": "If you expect them to help you with Student Loan Discharge, you thought wrong. They just want money from you and want you do all the work."
+  }
+]

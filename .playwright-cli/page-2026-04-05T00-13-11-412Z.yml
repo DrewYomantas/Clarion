@@ -1,0 +1,152 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Map · Use arrow keys to pan the map. · Get details about a place by pressing its corresponding number key." [ref=e8]
+    - search [ref=e14]:
+      - generic [ref=e15]:
+        - combobox [ref=e17]: Albuquerque Legal & Fiduciary
+        - button "Search" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+        - button "Close" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: 
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - button "Menu" [ref=e29] [cursor=pointer]:
+              - generic [ref=e31]: 
+          - listitem [ref=e32]:
+            - button "Saved" [ref=e33] [cursor=pointer]:
+              - generic [ref=e35]: 
+              - generic [ref=e37]: Saved
+          - listitem [ref=e38]:
+            - button "Recents" [disabled] [ref=e39]:
+              - generic [ref=e41]: 
+              - generic [ref=e43]: Recents
+          - listitem [ref=e45]:
+            - button "Get app" [ref=e46] [cursor=pointer]:
+              - generic [ref=e48]: 
+              - generic [ref=e50]: Get app
+        - main "Albuquerque Legal & Fiduciary" [ref=e55]:
+          - generic [ref=e56]:
+            - button "Photo of Albuquerque Legal & Fiduciary" [active] [ref=e58] [cursor=pointer]:
+              - img [ref=e59]
+            - button "See photos" [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: 
+              - generic [ref=e62]: See photos
+          - generic [ref=e65]:
+            - heading "Albuquerque Legal & Fiduciary" [level=1] [ref=e67]: Albuquerque Legal & Fiduciary
+            - generic [ref=e69]:
+              - generic [ref=e72]:
+                - text: "4.4"
+                - img "4.4 stars" [ref=e73]
+              - generic [ref=e79]:
+                - button "Attorney" [ref=e82]
+                - text: ·
+                - img "Wheelchair accessible entrance" [ref=e83]: 
+          - tablist [ref=e86]:
+            - tab "Overview of Albuquerque Legal & Fiduciary" [selected] [ref=e87]:
+              - generic [ref=e89]: Overview
+            - tab "About Albuquerque Legal & Fiduciary" [ref=e91]:
+              - generic [ref=e93]: About
+          - region "Actions for Albuquerque Legal & Fiduciary" [ref=e95]:
+            - button "Directions" [ref=e97] [cursor=pointer]:
+              - generic [ref=e99]: 
+              - generic [ref=e100]: Directions
+            - button "Save" [ref=e102] [cursor=pointer]:
+              - generic [ref=e104]: 
+              - generic [ref=e105]: Save
+            - button "Nearby" [ref=e107] [cursor=pointer]:
+              - generic [ref=e109]: 
+              - generic [ref=e110]: Nearby
+            - button "Send to phone" [ref=e112] [cursor=pointer]:
+              - generic [ref=e114]: 
+              - generic [ref=e115]: Send to phone
+            - button "Share" [ref=e117] [cursor=pointer]:
+              - generic [ref=e119]: 
+              - generic [ref=e120]: Share
+          - region "Information for Albuquerque Legal & Fiduciary" [ref=e123]:
+            - generic [ref=e124]:
+              - 'button "Address: 1909 Carlisle Blvd NE, Albuquerque, NM 87110" [ref=e125] [cursor=pointer]':
+                - generic [ref=e126]:
+                  - generic [ref=e128]: 
+                  - generic [ref=e130]: 1909 Carlisle Blvd NE, Albuquerque, NM 87110
+              - button "Copy address" [ref=e133] [cursor=pointer]:
+                - generic [ref=e135]: 
+            - button "Hours Closed · Opens 8 AM Mon Show open hours for the week" [ref=e137] [cursor=pointer]:
+              - img "Hours" [ref=e138]: 
+              - generic [ref=e140]:
+                - generic [ref=e142]: Closed · Opens 8 AM Mon
+                - img "Show open hours for the week" [ref=e143]: 
+            - generic [ref=e144]:
+              - link "pumafirm.com" [ref=e145] [cursor=pointer]:
+                - /url: https://www.pumafirm.com/contact/?npcmp=dir:local:5132512:87110
+                - generic [ref=e146]:
+                  - generic [ref=e148]: 
+                  - generic [ref=e150]: pumafirm.com
+              - link "Open booking link" [ref=e153] [cursor=pointer]:
+                - /url: https://www.pumafirm.com/contact/?npcmp=dir:local:5132512:87110
+                - generic [ref=e155]: 
+            - generic [ref=e156]:
+              - 'link "Website: pumafirm.com" [ref=e157] [cursor=pointer]':
+                - /url: https://www.pumafirm.com/?npcmp=dir:local:5132512:87110
+                - generic [ref=e158]:
+                  - generic [ref=e160]: 
+                  - generic [ref=e162]: pumafirm.com
+              - generic [ref=e163]:
+                - link "Open website" [ref=e165] [cursor=pointer]:
+                  - /url: https://www.pumafirm.com/?npcmp=dir:local:5132512:87110
+                  - generic [ref=e167]: 
+                - button "Copy website" [ref=e169] [cursor=pointer]:
+                  - generic [ref=e171]: 
+            - generic [ref=e172]:
+              - 'button "Phone: (505) 985-5563" [ref=e173] [cursor=pointer]':
+                - generic [ref=e174]:
+                  - generic [ref=e176]: 
+                  - generic [ref=e178]: (505) 985-5563
+              - generic [ref=e179]:
+                - button "Copy phone number" [ref=e181] [cursor=pointer]:
+                  - generic [ref=e183]: 
+                - link "Call phone number" [ref=e185] [cursor=pointer]:
+                  - /url: tel:+15059855563
+                  - generic [ref=e187]: 
+            - generic [ref=e188]:
+              - 'button "Plus code: 492W+66 Albuquerque, New Mexico" [ref=e189] [cursor=pointer]':
+                - generic [ref=e190]:
+                  - generic [ref=e192]: 
+                  - generic [ref=e194]: 492W+66 Albuquerque, New Mexico
+              - generic [ref=e195]:
+                - button "Copy plus code" [ref=e197] [cursor=pointer]:
+                  - generic [ref=e199]: 
+                - button "Learn more about plus codes" [ref=e201] [cursor=pointer]:
+                  - generic [ref=e203]: 
+          - button "Suggest an edit" [ref=e207] [cursor=pointer]:
+            - generic [ref=e208]:
+              - generic [ref=e209]: 
+              - generic [ref=e210]: Suggest an edit
+          - heading "Photos" [level=2] [ref=e214]
+          - button "Street View" [ref=e217] [cursor=pointer]:
+            - img [ref=e219]
+          - button "Add photos & videos" [ref=e226] [cursor=pointer]:
+            - generic [ref=e227]:
+              - generic [ref=e228]: 
+              - generic [ref=e229]: Add photos & videos
+          - button "Write a review" [ref=e235] [cursor=pointer]:
+            - generic [ref=e236]:
+              - generic [ref=e237]: 
+              - generic [ref=e238]: Write a review
+          - link "About this data" [ref=e243] [cursor=pointer]:
+            - /url: https://support.google.com/local-listings?p=how_google_sources&authuser=0&hl=en
+            - generic [ref=e245]: About this data
+          - generic [ref=e248]:
+            - generic [ref=e250]: 
+            - generic [ref=e251]:
+              - text: You're seeing a limited view of Google Maps.
+              - button "Learn more about limited view" [ref=e252] [cursor=pointer]: Learn more
+          - heading "Get the most out of Google Maps Sign in" [level=2] [ref=e256]:
+            - generic [ref=e257]: Get the most out of Google Maps
+            - button "Sign in" [ref=e260] [cursor=pointer]:
+              - generic [ref=e262]: Sign in
+      - generic [ref=e263]:
+        - button "Collapse side panel" [ref=e264] [cursor=pointer]:
+          - generic [ref=e265]: 
+        - generic [ref=e266]: Collapse side panel

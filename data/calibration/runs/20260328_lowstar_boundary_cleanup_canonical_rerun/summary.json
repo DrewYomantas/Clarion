@@ -1,0 +1,43 @@
+{
+  "run_type": "canonical_v1_focus_scoped",
+  "comparison_source": "human_corrected_canonical_truth_20260328",
+  "total_reviews": 22,
+  "total_expected_labels": 49,
+  "total_disagreements": 0,
+  "zero_disagreement_reviews": 22,
+  "agreement_rate": 1.0,
+  "disagreement_by_type": {},
+  "disagreement_by_theme": {},
+  "star_band_review_disagreement_rate": {
+    "1": {
+      "review_count": 10,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    },
+    "2": {
+      "review_count": 2,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    },
+    "3": {
+      "review_count": 2,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    },
+    "4": {
+      "review_count": 6,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    },
+    "5": {
+      "review_count": 2,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    }
+  }
+}

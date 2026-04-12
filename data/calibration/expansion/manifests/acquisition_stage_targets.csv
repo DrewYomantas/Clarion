@@ -1,0 +1,5 @@
+stage,target_reviews,one_star_target,two_star_target,mixed_4_star_target,explicit_positive_outcome_target,explicit_positive_trust_target,long_form_target,state_target,practice_area_target,holdout_target,benchmark_candidate_target,notes
+phase1,24,7,5,4,4,4,8,3,3,4,8,"Phase 1 starter batch"
+wave80,80,25,20,15,15,15,20,6,5,20,30,"First reopening checkpoint before benchmark-design or calibration work"
+wave160,160,45,35,30,30,30,40,10,7,40,60,"Second-scale corpus checkpoint with stronger geography and practice diversity"
+wave320,320,90,70,60,60,60,80,15,9,80,120,"Larger corpus expansion checkpoint for broad generalization work"

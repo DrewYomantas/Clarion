@@ -1,0 +1,770 @@
+[
+  {
+    "index": 0,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "timeliness_progress"
+      },
+      {
+        "type": "missing_theme",
+        "theme": "empathy_support"
+      }
+    ]
+  },
+  {
+    "index": 1,
+    "disagreements": []
+  },
+  {
+    "index": 2,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "communication_responsiveness"
+      }
+    ]
+  },
+  {
+    "index": 3,
+    "disagreements": []
+  },
+  {
+    "index": 4,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "disagreements": []
+  },
+  {
+    "index": 6,
+    "disagreements": []
+  },
+  {
+    "index": 7,
+    "disagreements": []
+  },
+  {
+    "index": 8,
+    "disagreements": []
+  },
+  {
+    "index": 9,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 10,
+    "disagreements": []
+  },
+  {
+    "index": 11,
+    "disagreements": []
+  },
+  {
+    "index": 12,
+    "disagreements": []
+  },
+  {
+    "index": 13,
+    "disagreements": []
+  },
+  {
+    "index": 14,
+    "disagreements": []
+  },
+  {
+    "index": 15,
+    "disagreements": []
+  },
+  {
+    "index": 16,
+    "disagreements": []
+  },
+  {
+    "index": 17,
+    "disagreements": []
+  },
+  {
+    "index": 18,
+    "disagreements": []
+  },
+  {
+    "index": 19,
+    "disagreements": []
+  },
+  {
+    "index": 20,
+    "disagreements": [
+      {
+        "type": "extra_theme",
+        "theme": "communication_clarity"
+      }
+    ]
+  },
+  {
+    "index": 21,
+    "disagreements": []
+  },
+  {
+    "index": 22,
+    "disagreements": []
+  },
+  {
+    "index": 23,
+    "disagreements": []
+  },
+  {
+    "index": 24,
+    "disagreements": []
+  },
+  {
+    "index": 25,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "communication_responsiveness"
+      },
+      {
+        "type": "missing_theme",
+        "theme": "empathy_support"
+      }
+    ]
+  },
+  {
+    "index": 26,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "professionalism_trust"
+      },
+      {
+        "type": "missing_theme",
+        "theme": "timeliness_progress"
+      }
+    ]
+  },
+  {
+    "index": 27,
+    "disagreements": []
+  },
+  {
+    "index": 28,
+    "disagreements": []
+  },
+  {
+    "index": 29,
+    "disagreements": []
+  },
+  {
+    "index": 30,
+    "disagreements": []
+  },
+  {
+    "index": 31,
+    "disagreements": []
+  },
+  {
+    "index": 32,
+    "disagreements": []
+  },
+  {
+    "index": 33,
+    "disagreements": [
+      {
+        "type": "extra_theme",
+        "theme": "communication_clarity"
+      }
+    ]
+  },
+  {
+    "index": 34,
+    "disagreements": []
+  },
+  {
+    "index": 35,
+    "disagreements": []
+  },
+  {
+    "index": 36,
+    "disagreements": []
+  },
+  {
+    "index": 37,
+    "disagreements": []
+  },
+  {
+    "index": 38,
+    "disagreements": []
+  },
+  {
+    "index": 39,
+    "disagreements": []
+  },
+  {
+    "index": 40,
+    "disagreements": []
+  },
+  {
+    "index": 41,
+    "disagreements": []
+  },
+  {
+    "index": 42,
+    "disagreements": []
+  },
+  {
+    "index": 43,
+    "disagreements": []
+  },
+  {
+    "index": 44,
+    "disagreements": []
+  },
+  {
+    "index": 45,
+    "disagreements": []
+  },
+  {
+    "index": 46,
+    "disagreements": []
+  },
+  {
+    "index": 47,
+    "disagreements": []
+  },
+  {
+    "index": 48,
+    "disagreements": []
+  },
+  {
+    "index": 49,
+    "disagreements": []
+  },
+  {
+    "index": 50,
+    "disagreements": []
+  },
+  {
+    "index": 51,
+    "disagreements": []
+  },
+  {
+    "index": 52,
+    "disagreements": []
+  },
+  {
+    "index": 53,
+    "disagreements": []
+  },
+  {
+    "index": 54,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "timeliness_progress"
+      }
+    ]
+  },
+  {
+    "index": 55,
+    "disagreements": [
+      {
+        "type": "extra_theme",
+        "theme": "empathy_support"
+      }
+    ]
+  },
+  {
+    "index": 56,
+    "disagreements": [
+      {
+        "type": "extra_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 57,
+    "disagreements": []
+  },
+  {
+    "index": 58,
+    "disagreements": []
+  },
+  {
+    "index": 59,
+    "disagreements": []
+  },
+  {
+    "index": 60,
+    "disagreements": []
+  },
+  {
+    "index": 61,
+    "disagreements": []
+  },
+  {
+    "index": 62,
+    "disagreements": []
+  },
+  {
+    "index": 63,
+    "disagreements": []
+  },
+  {
+    "index": 64,
+    "disagreements": []
+  },
+  {
+    "index": 65,
+    "disagreements": []
+  },
+  {
+    "index": 66,
+    "disagreements": [
+      {
+        "type": "extra_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 67,
+    "disagreements": []
+  },
+  {
+    "index": 68,
+    "disagreements": []
+  },
+  {
+    "index": 69,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "communication_clarity"
+      }
+    ]
+  },
+  {
+    "index": 70,
+    "disagreements": []
+  },
+  {
+    "index": 71,
+    "disagreements": []
+  },
+  {
+    "index": 72,
+    "disagreements": []
+  },
+  {
+    "index": 73,
+    "disagreements": []
+  },
+  {
+    "index": 74,
+    "disagreements": []
+  },
+  {
+    "index": 75,
+    "disagreements": []
+  },
+  {
+    "index": 76,
+    "disagreements": []
+  },
+  {
+    "index": 77,
+    "disagreements": []
+  },
+  {
+    "index": 78,
+    "disagreements": []
+  },
+  {
+    "index": 79,
+    "disagreements": []
+  },
+  {
+    "index": 80,
+    "disagreements": []
+  },
+  {
+    "index": 81,
+    "disagreements": []
+  },
+  {
+    "index": 82,
+    "disagreements": []
+  },
+  {
+    "index": 83,
+    "disagreements": []
+  },
+  {
+    "index": 84,
+    "disagreements": []
+  },
+  {
+    "index": 85,
+    "disagreements": []
+  },
+  {
+    "index": 86,
+    "disagreements": []
+  },
+  {
+    "index": 87,
+    "disagreements": []
+  },
+  {
+    "index": 88,
+    "disagreements": []
+  },
+  {
+    "index": 89,
+    "disagreements": []
+  },
+  {
+    "index": 90,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "empathy_support"
+      }
+    ]
+  },
+  {
+    "index": 91,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "timeliness_progress"
+      }
+    ]
+  },
+  {
+    "index": 92,
+    "disagreements": []
+  },
+  {
+    "index": 93,
+    "disagreements": []
+  },
+  {
+    "index": 94,
+    "disagreements": []
+  },
+  {
+    "index": 95,
+    "disagreements": [
+      {
+        "type": "extra_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 96,
+    "disagreements": [
+      {
+        "type": "extra_theme",
+        "theme": "communication_clarity"
+      }
+    ]
+  },
+  {
+    "index": 97,
+    "disagreements": []
+  },
+  {
+    "index": 98,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 99,
+    "disagreements": [
+      {
+        "type": "extra_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 100,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 101,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "communication_responsiveness"
+      }
+    ]
+  },
+  {
+    "index": 102,
+    "disagreements": []
+  },
+  {
+    "index": 103,
+    "disagreements": []
+  },
+  {
+    "index": 104,
+    "disagreements": []
+  },
+  {
+    "index": 105,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "communication_clarity"
+      }
+    ]
+  },
+  {
+    "index": 106,
+    "disagreements": []
+  },
+  {
+    "index": 107,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "timeliness_progress"
+      }
+    ]
+  },
+  {
+    "index": 108,
+    "disagreements": []
+  },
+  {
+    "index": 109,
+    "disagreements": []
+  },
+  {
+    "index": 110,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "communication_clarity"
+      }
+    ]
+  },
+  {
+    "index": 111,
+    "disagreements": [
+      {
+        "type": "wrong_polarity",
+        "theme": "communication_responsiveness"
+      }
+    ]
+  },
+  {
+    "index": 112,
+    "disagreements": []
+  },
+  {
+    "index": 113,
+    "disagreements": []
+  },
+  {
+    "index": 114,
+    "disagreements": []
+  },
+  {
+    "index": 115,
+    "disagreements": []
+  },
+  {
+    "index": 116,
+    "disagreements": []
+  },
+  {
+    "index": 117,
+    "disagreements": []
+  },
+  {
+    "index": 118,
+    "disagreements": [
+      {
+        "type": "extra_theme",
+        "theme": "communication_clarity"
+      }
+    ]
+  },
+  {
+    "index": 119,
+    "disagreements": []
+  },
+  {
+    "index": 120,
+    "disagreements": []
+  },
+  {
+    "index": 121,
+    "disagreements": []
+  },
+  {
+    "index": 122,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "communication_responsiveness"
+      }
+    ]
+  },
+  {
+    "index": 123,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 124,
+    "disagreements": []
+  },
+  {
+    "index": 125,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "communication_clarity"
+      },
+      {
+        "type": "missing_theme",
+        "theme": "empathy_support"
+      }
+    ]
+  },
+  {
+    "index": 126,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "empathy_support"
+      }
+    ]
+  },
+  {
+    "index": 127,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "empathy_support"
+      }
+    ]
+  },
+  {
+    "index": 128,
+    "disagreements": []
+  },
+  {
+    "index": 129,
+    "disagreements": []
+  },
+  {
+    "index": 130,
+    "disagreements": []
+  },
+  {
+    "index": 131,
+    "disagreements": []
+  },
+  {
+    "index": 132,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 133,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "empathy_support"
+      }
+    ]
+  },
+  {
+    "index": 134,
+    "disagreements": []
+  },
+  {
+    "index": 135,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "professionalism_trust"
+      }
+    ]
+  },
+  {
+    "index": 136,
+    "disagreements": []
+  },
+  {
+    "index": 137,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "empathy_support"
+      }
+    ]
+  },
+  {
+    "index": 138,
+    "disagreements": [
+      {
+        "type": "missing_theme",
+        "theme": "timeliness_progress"
+      }
+    ]
+  },
+  {
+    "index": 139,
+    "disagreements": []
+  },
+  {
+    "index": 140,
+    "disagreements": []
+  },
+  {
+    "index": 141,
+    "disagreements": []
+  },
+  {
+    "index": 142,
+    "disagreements": []
+  }
+]

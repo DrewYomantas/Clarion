@@ -1,0 +1,88 @@
+{
+  "run_type": "canonical_v1_focus_scoped",
+  "generated_at": "2026-03-28T16:28:00Z",
+  "total_reviews": 24,
+  "total_expected_labels": 52,
+  "total_disagreements": 20,
+  "zero_disagreement_reviews": 13,
+  "agreement_rate": 0.5416666666666666,
+  "disagreement_by_type": {
+    "missing_theme": 15,
+    "wrong_severity": 1,
+    "extra_theme": 4
+  },
+  "disagreement_by_theme": {
+    "expectation_setting": 3,
+    "communication_responsiveness": 6,
+    "outcome_satisfaction": 5,
+    "communication_clarity": 3,
+    "professionalism_trust": 3
+  },
+  "star_band_review_disagreement_rate": {
+    "1": {
+      "review_count": 10,
+      "reviews_with_disagreements": 5,
+      "total_disagreements": 11,
+      "rate": 0.5
+    },
+    "2": {
+      "review_count": 4,
+      "reviews_with_disagreements": 2,
+      "total_disagreements": 4,
+      "rate": 0.5
+    },
+    "3": {
+      "review_count": 2,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    },
+    "4": {
+      "review_count": 6,
+      "reviews_with_disagreements": 3,
+      "total_disagreements": 3,
+      "rate": 0.5
+    },
+    "5": {
+      "review_count": 2,
+      "reviews_with_disagreements": 1,
+      "total_disagreements": 2,
+      "rate": 0.5
+    }
+  },
+  "mixed_sentiment_review_disagreement_rate": {
+    "mixed": {
+      "review_count": 4,
+      "reviews_with_disagreements": 1,
+      "total_disagreements": 2,
+      "rate": 0.25
+    },
+    "single_negative": {
+      "review_count": 15,
+      "reviews_with_disagreements": 6,
+      "total_disagreements": 13,
+      "rate": 0.4
+    },
+    "single_positive": {
+      "review_count": 5,
+      "reviews_with_disagreements": 4,
+      "total_disagreements": 5,
+      "rate": 0.8
+    }
+  },
+  "positive_only_review_disagreement_rate": {
+    "single_positive": {
+      "review_count": 5,
+      "reviews_with_disagreements": 4,
+      "total_disagreements": 5,
+      "rate": 0.8
+    }
+  },
+  "focus_themes": [
+    "communication_responsiveness",
+    "expectation_setting",
+    "professionalism_trust",
+    "communication_clarity",
+    "outcome_satisfaction"
+  ]
+}

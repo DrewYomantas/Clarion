@@ -6,9 +6,9 @@ _Single reference for all working rules, pass discipline, scope boundaries, and 
 
 ## Startup Context
 Load these three docs at the top of every session:
-1. `NORTH_STAR.md` — what the product is, what it should feel like, canonical brief spine
-2. `PROJECT_STATE.md` — where things stand right now, architecture map, active pass
-3. `AI_WORKING_RULES.md` (this file) — how to work, what's protected, pass format
+1. `NORTH_STAR.md` â€” what the product is, what it should feel like, canonical brief spine
+2. `PROJECT_STATE.md` â€” where things stand right now, architecture map, active pass
+3. `AI_WORKING_RULES.md` (this file) â€” how to work, what's protected, pass format
 
 Load only the additional files needed for the active task. Read them fully before editing anything.
 
@@ -29,19 +29,19 @@ Protected docs are not frozen docs. If reality changes, update the relevant doc 
 
 ## Pass Discipline
 
-**One goal per pass — not one file per pass.**
+**One goal per pass â€” not one file per pass.**
 
 A pass can touch multiple related files when they serve a single coherent outcome. Examples of appropriate scope:
-- Landing pacing changes across 4–5 section components → one pass
-- Brief output vocabulary alignment across 3 frontend files + 1 backend template → one pass
-- Authenticated continuity audit + targeted fixes across 2–3 pages → one pass
+- Landing pacing changes across 4â€“5 section components â†’ one pass
+- Brief output vocabulary alignment across 3 frontend files + 1 backend template â†’ one pass
+- Authenticated continuity audit + targeted fixes across 2â€“3 pages â†’ one pass
 
 **Not appropriate in a single pass:**
 - Backend logic change + unrelated frontend redesign
 - Calibration work + UX polish
 - Auth changes + anything else
 
-Scope creep means adding *unrelated* changes — not touching multiple files for one clear purpose.
+Scope creep means adding *unrelated* changes â€” not touching multiple files for one clear purpose.
 
 Required pass behavior:
 - Confirm exact file ownership before edits.
@@ -75,27 +75,27 @@ Required pass behavior:
 
 ## Protected Systems
 
-These require deliberate justification before touching. "Protected" means inspect carefully — not never touch.
+These require deliberate justification before touching. "Protected" means inspect carefully â€” not never touch.
 
 ### Always High-Caution (require explicit scope + review)
 
-**`backend/app.py` — Security/Auth/Session boundary**
+**`backend/app.py` â€” Security/Auth/Session boundary**
 - Login/session checks, role guards, CSRF handlers, rate-limit decorators, security headers
 - Safe pattern: additive route-local changes only; never modify global middleware defaults
 
-**`backend/services/governance_insights.py` — Governance Signal Engine**
+**`backend/services/governance_insights.py` â€” Governance Signal Engine**
 - Severity thresholds, ratio normalization, signal/action generation rules, output shapes
 - Safe pattern: keep outputs backward compatible; add tests for any rule change
 
-**`backend/services/benchmark_*.py` + `automation/calibration/*.py` — Calibration Pipeline**
+**`backend/services/benchmark_*.py` + `automation/calibration/*.py` â€” Calibration Pipeline**
 - Batch runner behavior, chunking, synthetic top-up assumptions, audit artifact handling
 - Safe pattern: preserve audit artifact separation; validate with dry-run before merge
 
-**`backend/pdf_generator.py` — Governance Brief Rendering**
+**`backend/pdf_generator.py` â€” Governance Brief Rendering**
 - Core document layout, data binding, watermark/plan-limit dependencies
 - Safe pattern: narrowly scoped section edits only; verify PDF renders after any change
 
-### Smoke-Tested — Accessible for UI/Narrative Changes
+### Smoke-Tested â€” Accessible for UI/Narrative Changes
 
 `Dashboard.tsx`, `ExecutionPage.tsx`, `Upload.tsx`, `ReportsPage.tsx`, `ReportDetail.tsx`
 
@@ -120,29 +120,29 @@ Minor passes (doc updates, small copy fixes): abbreviated is fine.
 
 ## Doc Evolution
 
-These docs should evolve when they're stale or wrong — fix it as part of the pass that reveals the problem.
+These docs should evolve when they're stale or wrong â€” fix it as part of the pass that reveals the problem.
 
-- `NORTH_STAR.md` — update only when product identity, design direction, or canonical brief spine genuinely changes
-- `PROJECT_STATE.md` — keep current; trim historical detail to `CHANGELOG_AI.md` when it stops being actionable
-- `AI_WORKING_RULES.md` (this file) — update when a rule is wrong, a protection level changes, or scope guidance needs adjustment
-- `CHANGELOG_AI.md` — append-only historical log; never rewrite or trim
+- `NORTH_STAR.md` â€” update only when product identity, design direction, or canonical brief spine genuinely changes
+- `PROJECT_STATE.md` â€” keep current; trim historical detail to `CHANGELOG_AI.md` when it stops being actionable
+- `AI_WORKING_RULES.md` (this file) â€” update when a rule is wrong, a protection level changes, or scope guidance needs adjustment
+- `CHANGELOG_AI.md` â€” append-only historical log; never rewrite or trim
 
 Doc update policy:
 - Update docs only when a pass materially changes live truth, operating rules, or current priorities.
 - For narrow passes, make narrow doc edits.
 - Do not duplicate the same architecture/current-state narrative across multiple docs.
 
-**Anti-scope-creep guard:** If a request implies broad reimagining while a pass is scoped to something specific — stop, document the out-of-scope items, complete only the scoped work, surface the larger question.
+**Anti-scope-creep guard:** If a request implies broad reimagining while a pass is scoped to something specific â€” stop, document the out-of-scope items, complete only the scoped work, surface the larger question.
 
 ---
 
-## Architecture Reference (Critical — Do Not Lose)
+## Architecture Reference (Critical â€” Do Not Lose)
 
 **Calibration engines are separate:**
-- `backend/services/benchmark_engine.py` — live calibration path (`/internal/benchmark/batch`); all phrase/guard changes go here
-- `backend/services/bench/deterministic_tagger.py` — standalone harness only, not called by Flask
+- `backend/services/benchmark_engine.py` â€” live calibration path (`/internal/benchmark/batch`); all phrase/guard changes go here
+- `backend/services/bench/deterministic_tagger.py` â€” legacy harness only; it is not the authoritative path and is reachable only through the frozen `/internal/bench` compatibility route when `BENCH_ENABLED=1`
 
-**Phrase dictionary:** `THEME_PHRASES` in `benchmark_engine.py`. Add/tweak only — never remove existing phrases without explicit instruction.
+**Phrase dictionary:** `THEME_PHRASES` in `benchmark_engine.py`. Add/tweak only â€” never remove existing phrases without explicit instruction.
 
 **Frontend contracts:** TypeScript types and `/api/*` response shapes are not changed without a matching backend change in the same scoped pass.
 
@@ -150,17 +150,17 @@ Doc update policy:
 
 ## Repository Hygiene (Enforced Every Session)
 
-Claude actively enforces these rules — not just when asked:
+Claude actively enforces these rules â€” not just when asked:
 
 **Never commit:**
-- `*.db`, `*.sqlite` — database files
-- `diag_*.py`, `tmp_*.py` — diagnostic scripts
-- `tmp/` contents — temporary files
+- `*.db`, `*.sqlite` â€” database files
+- `diag_*.py`, `tmp_*.py` â€” diagnostic scripts
+- `tmp/` contents â€” temporary files
 - `*.bat`, `*.ps1` operational convenience scripts
-- `data/calibration/runs/` — generated run artifacts
-- `archive/` — legacy reference material
+- `data/calibration/runs/` â€” generated run artifacts
+- `archive/` â€” legacy reference material
 
-**Cleanup checkpoint trigger:** After every 5–10 sessions, Claude should proactively note if a cleanup pass is due and offer to run it. The checklist lives in `docs/ENGINEERING_PRACTICES.md`.
+**Cleanup checkpoint trigger:** After every 5â€“10 sessions, Claude should proactively note if a cleanup pass is due and offer to run it. The checklist lives in `docs/ENGINEERING_PRACTICES.md`.
 
 **Commit messages must follow the format:** `scope: short description`
 - Good: `fix: remove RETURNING clause from verify-email upsert`

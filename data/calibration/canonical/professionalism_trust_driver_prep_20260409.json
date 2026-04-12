@@ -1,0 +1,170 @@
+{
+  "version": "v2",
+  "created_at": "2026-04-09",
+  "artifact_type": "professionalism_trust_driver_prep",
+  "status": "refreshed_docs_only_no_new_narrow_engine_pass_justified",
+  "source_commit": "7fe5f59",
+  "source_artifacts": {
+    "broad_rerun_summary": "data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/summary.json",
+    "broad_rerun_raw_results": "data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/raw_results.json"
+  },
+  "notes": "This refreshed artifact re-buckets the remaining post-Pass-68 professionalism_trust disagreement lane after the narrow negative trust and empathy passes have already landed. The lane is cleaner than the pre-Pass-65 version only because the obvious negative trust shortlist has already been recovered. The remaining rows are now mostly recommendation, generic praise, or cross-lane boundary pressure. No new narrow trust engine pass is justified from current repo truth.",
+  "lane_summary": {
+    "broad_disagreement_count": 12,
+    "bucket_counts": {
+      "already_recovered_row_not_future_engine_pressure": 3,
+      "recommendation_or_generic_praise_non_driver": 5,
+      "service_or_outcome_or_expectation_overlap_boundary": 2,
+      "too_subjective_or_too_weak": 2
+    },
+    "future_engine_driver_shortlist_count": 0,
+    "rejected_or_non_driver_count": 12
+  },
+  "lane_shape_judgment": {
+    "compared_to_pre_pass65": "cleaner_but_only_because_the_best_negative_trust_rows_are_already_recovered",
+    "current_read": "still_mixed_and_not_a_clean_immediate_engine_lane",
+    "why_professionalism_trust_still_beats_outcome_satisfaction": "The remaining trust pressure is still slightly more coherent than the runner-up outcome lane. Outcome_satisfaction still has a visible result/failure spine, but it remains more contaminated by gratitude, recommendation, and broad praise rows than the remaining trust lane."
+  },
+  "future_engine_driver_shortlist": [],
+  "reviewed_rows": [
+    {
+      "raw_result_index": 4,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 6,
+      "bucket": "recommendation_or_generic_praise_non_driver",
+      "keep_as_driver": false,
+      "review_text": "Jeremy took a daunting task and broke it down into manageable parts. It was truly a lovely experience doing our estate planning with Jeremy. He is friendly, patient, and incredibly organized. Thank you so much for everything and helping us protect our family and prepare for the future!",
+      "judgment": "Lovely experience and thank-you language are praise-heavy and should not drive more trust phrase growth."
+    },
+    {
+      "raw_result_index": 9,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 11,
+      "bucket": "too_subjective_or_too_weak",
+      "keep_as_driver": false,
+      "review_text": "I could not even inquire about a Will or Power of Attorney without being judged for having a phone number area code that was not 815. I had exact opposite experience of most reviews here and could not get a word in from this person. If you don't have an 815 number don't waste your time. This was a disappointing referral. I chose to find a Rockford attorney with a more professional, kinder personality.",
+      "judgment": "The complaint is real, but the trust language is a subjective personality comparison rather than a reusable competence or trust rule."
+    },
+    {
+      "raw_result_index": 26,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 28,
+      "bucket": "recommendation_or_generic_praise_non_driver",
+      "keep_as_driver": false,
+      "review_text": "Divorces are messy even if you don't want them to be! Having a paralegal like Maria makes a huge difference. She GETS it! And I knew she was in my corner all the way! Mason was great and he could not do what he does without a team behind him. It was an annoying, frustrating process but the Crosby team did what they could within the confines of the law. Unfortunately, laws can hamstring alot of things but Mason and Maira did a good job of guiding where it matters most. Thanks to you both!",
+      "judgment": "This is still recommendation and gratitude-heavy praise, not clean future trust-driver pressure."
+    },
+    {
+      "raw_result_index": 56,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 58,
+      "bucket": "already_recovered_row_not_future_engine_pressure",
+      "keep_as_driver": false,
+      "review_text": "I truly wonder if other Black people had great experiences here. They accepted thousands of dollars but never really did anything towards my son's appeal, never really fought. The case was transferred multiple times. They never even really had meetings with me or my son. Truly horrible.",
+      "judgment": "This is real trust-failure truth, but the live engine already recovers it and it should not justify another narrow trust pass."
+    },
+    {
+      "raw_result_index": 66,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 68,
+      "bucket": "service_or_outcome_or_expectation_overlap_boundary",
+      "keep_as_driver": false,
+      "review_text": "I think there could have been more communication from my lawyer at times. At beginning of case I was told we were looking at a six figure settlement and as time went on I was lucky to get a lot less. I kind of felt misled. Lawyer was very nice in person.",
+      "judgment": "Misled language here is still too entangled with expectation-setting and outcome disappointment to anchor a safe trust-only pass."
+    },
+    {
+      "raw_result_index": 95,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 97,
+      "bucket": "already_recovered_row_not_future_engine_pressure",
+      "keep_as_driver": false,
+      "review_text": "Hoglund Law did a masterful job handling my business needs. I would highly recommend them to others.",
+      "judgment": "The engine already recovers the competence signal, and the row remains recommendation-adjacent enough that it should not justify more positive trust widening."
+    },
+    {
+      "raw_result_index": 98,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 100,
+      "bucket": "recommendation_or_generic_praise_non_driver",
+      "keep_as_driver": false,
+      "review_text": "From the experience with these attorneys and their staff this far has been great. Mr. Kinney and his staff are great. Thanks for your representation.",
+      "judgment": "Generic positive praise is not clean future trust-driver truth."
+    },
+    {
+      "raw_result_index": 99,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 101,
+      "bucket": "already_recovered_row_not_future_engine_pressure",
+      "keep_as_driver": false,
+      "review_text": "Working with Andrew Kinney was a game-changer in my social security case. His deep understanding of the legal complexities, coupled with his dedication to my case, hopefully will make a significant difference in the outcome.",
+      "judgment": "The engine already recovers this competence language, so it should not be reused to justify new positive trust phrase growth."
+    },
+    {
+      "raw_result_index": 100,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 102,
+      "bucket": "recommendation_or_generic_praise_non_driver",
+      "keep_as_driver": false,
+      "review_text": "Andrew Kinney is by far the best attorney, he is so very easy to work with and understand. He works for Hoglund law firm and I would refer Hoglund to all my family and friends.",
+      "judgment": "Referral language is recommendation truth, not future professionalism-trust driver truth."
+    },
+    {
+      "raw_result_index": 123,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 125,
+      "bucket": "service_or_outcome_or_expectation_overlap_boundary",
+      "keep_as_driver": false,
+      "review_text": "Worst experience I've had with a law firm. You can't ever talk to an actual lawyer. A paralegal is assigned to your case. Horrible experience.",
+      "judgment": "This is real dissatisfaction, but it still overlaps too heavily with responsiveness and service dissatisfaction to anchor another narrow trust pass safely."
+    },
+    {
+      "raw_result_index": 132,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 134,
+      "bucket": "recommendation_or_generic_praise_non_driver",
+      "keep_as_driver": false,
+      "review_text": "Peter Riley and his secretary and assistant are awesome. I was at my very bottom and my world had turned upside down. They assisted me with my case and got me all the help to recover from my accident.",
+      "judgment": "Awesome is generic praise and still too entangled with empathy and outcome help to drive trust work."
+    },
+    {
+      "raw_result_index": 135,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 137,
+      "bucket": "too_subjective_or_too_weak",
+      "keep_as_driver": false,
+      "review_text": "I had an amazing experience with Ms. Tracy Kinney. She thoroughly reviewed over 50,000 pages of records and pointed out for the judge which page gave an example summary. She was very knowledgeable and followed up before and after the hearing.",
+      "judgment": "The competence evidence here is still too generic and praise-like for a safe narrow future pass."
+    }
+  ],
+  "explicit_non_drivers": {
+    "recommendation_or_generic_praise_non_driver": [
+      "lovely experience doing our estate planning",
+      "Mason was great",
+      "this far has been great",
+      "refer Hoglund to all my family and friends",
+      "Peter Riley and his secretary and assistant are awesome"
+    ],
+    "service_or_outcome_or_expectation_overlap_boundary": [
+      "felt misled",
+      "Worst experience I've had with a law firm"
+    ],
+    "too_subjective_or_too_weak": [
+      "more professional, kinder personality",
+      "She was very knowledgeable"
+    ],
+    "already_recovered_row_not_future_engine_pressure": [
+      "accepted thousands of dollars but never really did anything",
+      "masterful job handling",
+      "deep understanding of the legal complexities"
+    ]
+  },
+  "recommended_next_move": {
+    "decision": "B",
+    "label": "docs_only_stop_again_no_new_narrow_trust_engine_pass",
+    "why": "The refreshed post-Pass-68 trust lane no longer has a clean unrecovered driver shortlist. The obvious negative trust rows are already in the live engine, and the remaining rows are now mostly recommendation, generic praise, or cross-lane boundary pressure."
+  },
+  "runner_up_lane": {
+    "label": "outcome_satisfaction",
+    "why_it_is_runner_up_not_winner": "It still has explicit result/failure pressure, but the lane remains more contaminated by gratitude, recommendation, and broad praise rows than the remaining professionalism_trust lane."
+  }
+}

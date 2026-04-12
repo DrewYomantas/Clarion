@@ -176,6 +176,9 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("called me a few days prior to my hearing", 1.2),
             ("again about 20 minutes before the hearing", 1.2),
             ("helped me with all my questions", 1.0),
+            # --- calibration: Pass 76 communication_responsiveness narrow pass ---
+            # Row 104: "they communicate well what information is needed along the way"
+            ("communicate well", 1.0),
         ],
         "negative": [
             # --- original ---
@@ -301,7 +304,6 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             ("had me on hold 20 minutes", 1.5),
             ("responses to questions are extremely slow", 1.5),
             ("overall frustrating experience with communication delays", 1.5),
-            ("only heard from them 2 or 3 times", 2.0),
             ("phone tag", 1.0),
             ("communication was bad", 1.0),
             ("didn't hear from anyone", 1.5),
@@ -312,9 +314,12 @@ THEME_PHRASES: Dict[str, Dict[str, List[Tuple[str, float]]]] = {
             # --- calibration: Pass 75 communication_responsiveness narrow pass ---
             # Row 107: explicit chronic non-responsiveness; client called offices/judges themselves
             ("would always say they were waiting", 1.5),
-            # Row 88 ("lack of communication") already present in communication_clarity negative
-            # with an existing redirect guard at line ~2702. Not duplicated here to avoid
-            # guard-interaction risk. Re-evaluate if row 88 remains a miss after this pass.
+            # --- calibration: Pass 76 communication_responsiveness narrow pass ---
+            # Row 110: "give you the run around" — circular deflection / refusal to engage
+            ("run around", 1.5),
+            # Row 111 (canonical revert): canonical benchmark labels legacy_112 standard negative;
+            # broad AI over-fired severe. Correct polarity = negative.
+            ("only heard from them 2 or 3 times", 1.5),
         ],
         "severe_negative": [
             # --- original ---
@@ -2718,7 +2723,9 @@ def score_review_deterministic(
                         "information about my case",
                     ))
                 ):
-                    continue
+                    # Pass 76 (row 88): reroute to responsiveness instead of dropping
+                    matched_theme_id = "communication_responsiveness"
+                    hit["theme"] = "communication_responsiveness"
                 elif (
                     phrase == "not pleasant or helpful"
                     and matched_theme_id == "office_staff_experience"

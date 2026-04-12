@@ -1,0 +1,377 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Map · Use arrow keys to pan the map. · Get details about a place by pressing its corresponding number key." [ref=e8]
+    - search [ref=e14]:
+      - generic [ref=e15]:
+        - combobox [ref=e17]: criminal defense attorney Charlotte NC
+        - button "Search" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+        - button "Close" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: 
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - button "Menu" [ref=e29] [cursor=pointer]:
+              - generic [ref=e31]: 
+          - listitem [ref=e32]:
+            - button "Saved" [ref=e33] [cursor=pointer]:
+              - generic [ref=e35]: 
+              - generic [ref=e37]: Saved
+          - listitem [ref=e38]:
+            - button "Recents" [disabled] [ref=e39]:
+              - generic [ref=e41]: 
+              - generic [ref=e43]: Recents
+          - listitem [ref=e45]:
+            - button "Get app" [ref=e46] [cursor=pointer]:
+              - generic [ref=e48]: 
+              - generic [ref=e50]: Get app
+        - main [ref=e55]:
+          - generic [ref=e56]:
+            - feed "Results for criminal defense attorney Charlotte NC" [ref=e57]:
+              - generic [ref=e58]:
+                - generic [ref=e60]:
+                  - heading "Results" [level=1] [ref=e61]
+                  - button "Learn more about legal disclosure regarding public reviews on Google Maps" [ref=e65]:
+                    - generic [ref=e69]: 
+                - button "Share" [ref=e73]:
+                  - generic [ref=e74] [cursor=pointer]:
+                    - generic [ref=e75]: 
+                    - generic [ref=e76]: Share
+              - article "Randall Law PLLC" [ref=e78]:
+                - link "Randall Law PLLC" [ref=e79] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Randall+Law+PLLC/data=!4m7!3m6!1s0x88569f797b2d2f9b:0xc0194f57231b7039!8m2!3d35.2180349!4d-80.8375568!16s%2Fg%2F1ptx9_y8l!19sChIJmy8te3mfVogROXAbI1dPGcA?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Randall Law PLLC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.9 stars 226 Reviews":
+                                    - text: "4.9"
+                                    - text: (226)
+                            - generic:
+                              - generic:
+                                - generic: Criminal justice attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e80] [cursor=pointer]:
+                                    - generic [ref=e81]: 
+                                - generic: "· 301 S McDowell St #504"
+                              - generic:
+                                - generic:
+                                  - generic: Open 24 hours
+                                - generic: · (980) 294-1080
+                    - generic:
+                      - link "Visit Randall Law PLLC's website" [ref=e82] [cursor=pointer]:
+                        - /url: https://www.federaldefensenc.com/?utm_source=google&utm_medium=maps&utm_campaign=charlotte&st-t=charlotte
+                        - generic [ref=e84]: 
+                        - generic [ref=e85]: Website
+                      - button "Get directions to Randall Law PLLC" [ref=e86] [cursor=pointer]:
+                        - generic [ref=e88]: 
+                        - generic [ref=e89]: Directions
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: "\"He was able to get my case thrown out of court with no extra fees.\""
+              - article "The Law Office of Jason H. Reece" [ref=e92]:
+                - link "The Law Office of Jason H. Reece" [ref=e93] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/The+Law+Office+of+Jason+H.+Reece/data=!4m7!3m6!1s0x88569f9bed81b029:0x8237920338684b91!8m2!3d35.2040641!4d-80.8481438!16s%2Fg%2F1tdv_lk2!19sChIJKbCB7ZufVogRkUtoOAOSN4I?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: The Law Office of Jason H. Reece
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "5.0 stars 232 Reviews":
+                                    - text: "5.0"
+                                    - text: (232)
+                            - generic:
+                              - generic:
+                                - generic: Criminal justice attorney
+                                - generic: · 1018 East Blvd STE 1
+                              - generic:
+                                - generic:
+                                  - generic: Open 24 hours
+                                - generic: · (704) 714-8888
+                    - generic:
+                      - link "Visit The Law Office of Jason H. Reece's website" [ref=e94] [cursor=pointer]:
+                        - /url: https://jasonhreecelaw.com/
+                        - generic [ref=e96]: 
+                        - generic [ref=e97]: Website
+                      - button "Get directions to The Law Office of Jason H. Reece" [ref=e98] [cursor=pointer]:
+                        - generic [ref=e100]: 
+                        - generic [ref=e101]: Directions
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: "\"He took on my case and ultimately had all charges dismissed.\""
+              - article "RTS LAW GROUP" [ref=e104]:
+                - link "RTS LAW GROUP" [ref=e105] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/RTS+LAW+GROUP/data=!4m7!3m6!1s0x8856a020321d135f:0x247357b4f2aedf5e!8m2!3d35.2073048!4d-80.8510975!16s%2Fg%2F1wzt326v!19sChIJXxMdMiCgVogRXt-u8rRXcyQ?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: RTS LAW GROUP
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "5.0 stars": "5.0"
+                            - generic:
+                              - generic:
+                                - generic: Criminal justice attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e106] [cursor=pointer]:
+                                    - generic [ref=e107]: 
+                                - generic: · 715 East Blvd
+                              - generic:
+                                - generic:
+                                  - generic: Open 24 hours
+                                - generic: · (704) 396-4520
+                    - generic:
+                      - link "Visit RTS LAW GROUP's website" [ref=e108] [cursor=pointer]:
+                        - /url: https://www.rtslawgroup.com/?utm_campaign=GMB
+                        - generic [ref=e110]: 
+                        - generic [ref=e111]: Website
+                      - button "Get directions to RTS LAW GROUP" [ref=e112] [cursor=pointer]:
+                        - generic [ref=e114]: 
+                        - generic [ref=e115]: Directions
+              - article "Powers Law Firm PA" [ref=e118]:
+                - link "Powers Law Firm PA" [ref=e119] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Powers+Law+Firm+PA/data=!4m7!3m6!1s0x8856a1e11aaab60d:0xac0acec8e55c7521!8m2!3d35.2251357!4d-80.8799128!16s%2Fg%2F1tg4m2jb!19sChIJDbaqGuGhVogRIXVc5cjOCqw?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Powers Law Firm PA
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.9 stars 255 Reviews":
+                                    - text: "4.9"
+                                    - text: (255)
+                            - generic:
+                              - generic:
+                                - generic: Criminal justice attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e120] [cursor=pointer]:
+                                    - generic [ref=e121]: 
+                                - generic: · 2412 Arty Ave
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8:30 AM Mon
+                                - generic: · (704) 342-4357
+                    - generic:
+                      - link "Visit Powers Law Firm PA's website" [ref=e122] [cursor=pointer]:
+                        - /url: https://www.carolinaattorneys.com/?utm_source=google_my_business&utm_medium=organic
+                        - generic [ref=e124]: 
+                        - generic [ref=e125]: Website
+                      - button "Get directions to Powers Law Firm PA" [ref=e126] [cursor=pointer]:
+                        - generic [ref=e128]: 
+                        - generic [ref=e129]: Directions
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: "\"They helped me get through a difficult case with compassion, and knowledge.\""
+              - article "Browning & Long, PLLC" [ref=e132]:
+                - link "Browning & Long, PLLC" [ref=e133] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Browning+%26+Long,+PLLC/data=!4m7!3m6!1s0x8856a021176ede19:0xa340bc8784eaf742!8m2!3d35.2206775!4d-80.835174!16s%2Fg%2F11cm8hd6pw!19sChIJGd5uFyGgVogRQvfqhIe8QKM?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Browning & Long, PLLC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.9 stars 745 Reviews":
+                                    - text: "4.9"
+                                    - text: (745)
+                            - generic:
+                              - generic:
+                                - generic: Criminal justice attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e134] [cursor=pointer]:
+                                    - generic [ref=e135]: 
+                                - generic: · 101 N McDowell St Suite 100
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8:30 AM Mon
+                                - generic: · (980) 207-3355
+                    - generic:
+                      - link "Visit Browning & Long, PLLC's website" [ref=e136] [cursor=pointer]:
+                        - /url: https://www.browninglonglaw.com/
+                        - generic [ref=e138]: 
+                        - generic [ref=e139]: Website
+                      - button "Get directions to Browning & Long, PLLC" [ref=e140] [cursor=pointer]:
+                        - generic [ref=e142]: 
+                        - generic [ref=e143]: Directions
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: "\"Very friendly, kept me updated with the process and my case was dismissed.\""
+              - article "Arnold & Smith PLLC" [ref=e146]:
+                - link "Arnold & Smith PLLC" [ref=e147] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Arnold+%26+Smith+PLLC/data=!4m7!3m6!1s0x8856a021ca292a5d:0x480b6959bb3175b6!8m2!3d35.2211745!4d-80.833495!16s%2Fg%2F1tjt2n3y!19sChIJXSopyiGgVogRtnUxu1lpC0g?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Arnold & Smith PLLC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.8 stars 499 Reviews":
+                                    - text: "4.8"
+                                    - text: (499)
+                            - generic:
+                              - generic:
+                                - generic: Criminal justice attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e148] [cursor=pointer]:
+                                    - generic [ref=e149]: 
+                                - generic: · The Historic John Price Carr House, 200 N McDowell St
+                              - generic:
+                                - generic:
+                                  - generic: Open 24 hours
+                                - generic: · (704) 370-2828
+                    - generic:
+                      - link "Visit Arnold & Smith PLLC's website" [ref=e150] [cursor=pointer]:
+                        - /url: https://www.arnoldsmithlaw.com/?utm_source=google&utm_medium=local
+                        - generic [ref=e152]: 
+                        - generic [ref=e153]: Website
+                      - button "Get directions to Arnold & Smith PLLC" [ref=e154] [cursor=pointer]:
+                        - generic [ref=e156]: 
+                        - generic [ref=e157]: Directions
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: "\"Brad was able to get my case dismissed after 7 years.\""
+              - article "The Olsinski Law Firm, PLLC" [ref=e160]:
+                - link "The Olsinski Law Firm, PLLC" [ref=e161] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/The+Olsinski+Law+Firm,+PLLC/data=!4m7!3m6!1s0x8856a03b7b4ed95d:0x87eeaf405dcada51!8m2!3d35.208318!4d-80.8368995!16s%2Fg%2F1hhhbl3jz!19sChIJXdlOezugVogRUdrKXUCv7oc?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: The Olsinski Law Firm, PLLC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.9 stars 239 Reviews":
+                                    - text: "4.9"
+                                    - text: (239)
+                            - generic:
+                              - generic:
+                                - generic: Criminal justice attorney
+                                - generic: · 1355 Greenwood Cliff STE 300
+                              - generic:
+                                - generic:
+                                  - generic: Open 24 hours
+                                - generic: · (704) 240-5592
+                    - generic:
+                      - link "Visit The Olsinski Law Firm, PLLC's website" [ref=e162] [cursor=pointer]:
+                        - /url: https://www.jcolaw.com/
+                        - generic [ref=e164]: 
+                        - generic [ref=e165]: Website
+                      - button "Get directions to The Olsinski Law Firm, PLLC" [ref=e166] [cursor=pointer]:
+                        - generic [ref=e168]: 
+                        - generic [ref=e169]: Directions
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: "\"In the end, my case was dismissed and I’m able to get back to my life.\""
+              - article "The Law Offices of Attorney Timothy J. Pavone, PLLC" [ref=e172]:
+                - link "The Law Offices of Attorney Timothy J. Pavone, PLLC" [ref=e173] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/The+Law+Offices+of+Attorney+Timothy+J.+Pavone,+PLLC/data=!4m7!3m6!1s0x8854201cc4ff4ebd:0x46ed591377c0fb7e!8m2!3d35.2190032!4d-80.8351056!16s%2Fg%2F11h9vh9v_l!19sChIJvU7_xBwgVIgRfvvAdxNZ7UY?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: The Law Offices of Attorney Timothy J. Pavone, PLLC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.9 stars 1,204 Reviews":
+                                    - text: "4.9"
+                                    - text: (1,204)
+                            - generic:
+                              - generic:
+                                - generic: Criminal justice attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e174] [cursor=pointer]:
+                                    - generic [ref=e175]: 
+                                - generic: · 901 E 4th St Unit B
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8 AM Mon
+                                - generic: · (980) 613-4849
+                    - generic:
+                      - link "Visit The Law Offices of Attorney Timothy J. Pavone, PLLC's website" [ref=e176] [cursor=pointer]:
+                        - /url: https://charlottelawoffices.com/
+                        - generic [ref=e178]: 
+                        - generic [ref=e179]: Website
+                      - button "Get directions to The Law Offices of Attorney Timothy J. Pavone, PLLC" [ref=e180] [cursor=pointer]:
+                        - generic [ref=e182]: 
+                        - generic [ref=e183]: Directions
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: "\"Tim got my case dismissed and kept me well-informed every step of the way.\""
+            - generic [ref=e219]:
+              - generic [ref=e221]: 
+              - generic [ref=e222]:
+                - text: You're seeing a limited view of Google Maps.
+                - button "Learn more about limited view" [ref=e223] [cursor=pointer]: Learn more
+            - heading "Get the most out of Google Maps Sign in" [level=2] [ref=e227]:
+              - generic [ref=e228]: Get the most out of Google Maps
+              - button "Sign in" [ref=e231] [cursor=pointer]:
+                - generic [ref=e233]: Sign in
+            - checkbox "Update results when map moves" [ref=e235] [cursor=pointer]:
+              - generic [ref=e237]: 
+              - text: Update results when map moves
+      - generic [ref=e238]:
+        - button "Collapse side panel" [ref=e239] [cursor=pointer]:
+          - generic [ref=e240]: 
+        - generic [ref=e241]: Collapse side panel

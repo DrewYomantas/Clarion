@@ -1,0 +1,88 @@
+{
+  "run_type": "canonical_v1_focus_scoped",
+  "generated_at": "2026-03-28T18:14:52.151432Z",
+  "focus_themes": [
+    "communication_responsiveness",
+    "expectation_setting",
+    "professionalism_trust",
+    "communication_clarity",
+    "outcome_satisfaction"
+  ],
+  "total_reviews": 24,
+  "total_expected_labels": 52,
+  "total_disagreements": 6,
+  "zero_disagreement_reviews": 20,
+  "agreement_rate": 0.8333333333333334,
+  "disagreement_by_type": {
+    "wrong_severity": 1,
+    "extra_theme": 2,
+    "missing_theme": 3
+  },
+  "disagreement_by_theme": {
+    "communication_responsiveness": 2,
+    "communication_clarity": 1,
+    "professionalism_trust": 1,
+    "outcome_satisfaction": 1,
+    "expectation_setting": 1
+  },
+  "star_band_review_disagreement_rate": {
+    "1": {
+      "review_count": 10,
+      "reviews_with_disagreements": 2,
+      "total_disagreements": 3,
+      "rate": 0.2
+    },
+    "2": {
+      "review_count": 4,
+      "reviews_with_disagreements": 2,
+      "total_disagreements": 3,
+      "rate": 0.5
+    },
+    "3": {
+      "review_count": 2,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    },
+    "4": {
+      "review_count": 6,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    },
+    "5": {
+      "review_count": 2,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    }
+  },
+  "mixed_sentiment_review_disagreement_rate": {
+    "mixed": {
+      "review_count": 4,
+      "reviews_with_disagreements": 1,
+      "total_disagreements": 1,
+      "rate": 0.25
+    },
+    "single_negative": {
+      "review_count": 15,
+      "reviews_with_disagreements": 3,
+      "total_disagreements": 5,
+      "rate": 0.2
+    },
+    "single_positive": {
+      "review_count": 5,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    }
+  },
+  "positive_only_review_disagreement_rate": {
+    "single_positive": {
+      "review_count": 5,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    }
+  }
+}

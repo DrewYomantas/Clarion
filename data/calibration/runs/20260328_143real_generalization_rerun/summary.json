@@ -1,0 +1,87 @@
+{
+  "run_type": "143_real_sanity",
+  "generated_at": "2026-03-28T16:47:10.355575Z",
+  "total_reviews": 143,
+  "ai_error_count": 0,
+  "total_disagreements": 105,
+  "zero_disagreement_reviews": 71,
+  "agreement_rate": 0.4965034965034965,
+  "disagreement_by_type": {
+    "missing_theme": 62,
+    "extra_theme": 30,
+    "missed_severe_phrase": 3,
+    "likely_false_positive": 2,
+    "likely_context_guard_failure": 2,
+    "wrong_severity": 6
+  },
+  "disagreement_by_theme": {
+    "empathy_support": 17,
+    "expectation_setting": 12,
+    "timeliness_progress": 13,
+    "professionalism_trust": 14,
+    "outcome_satisfaction": 11,
+    "communication_clarity": 9,
+    "communication_responsiveness": 15,
+    "office_staff_experience": 9,
+    "billing_transparency": 2,
+    "fee_value": 3
+  },
+  "star_band_review_disagreement_rate": {
+    "1": {
+      "review_count": 35,
+      "reviews_with_disagreements": 22,
+      "total_disagreements": 37,
+      "rate": 0.6285714285714286
+    },
+    "2": {
+      "review_count": 22,
+      "reviews_with_disagreements": 12,
+      "total_disagreements": 13,
+      "rate": 0.5454545454545454
+    },
+    "3": {
+      "review_count": 19,
+      "reviews_with_disagreements": 10,
+      "total_disagreements": 14,
+      "rate": 0.5263157894736842
+    },
+    "4": {
+      "review_count": 43,
+      "reviews_with_disagreements": 20,
+      "total_disagreements": 30,
+      "rate": 0.46511627906976744
+    },
+    "5": {
+      "review_count": 24,
+      "reviews_with_disagreements": 8,
+      "total_disagreements": 11,
+      "rate": 0.3333333333333333
+    }
+  },
+  "sentiment_proxy_review_disagreement_rate": {
+    "mixed": {
+      "review_count": 4,
+      "reviews_with_disagreements": 2,
+      "total_disagreements": 3,
+      "rate": 0.5
+    },
+    "negative_only": {
+      "review_count": 66,
+      "reviews_with_disagreements": 42,
+      "total_disagreements": 61,
+      "rate": 0.6363636363636364
+    },
+    "positive_only": {
+      "review_count": 62,
+      "reviews_with_disagreements": 26,
+      "total_disagreements": 39,
+      "rate": 0.41935483870967744
+    },
+    "unlabeled": {
+      "review_count": 11,
+      "reviews_with_disagreements": 2,
+      "total_disagreements": 2,
+      "rate": 0.18181818181818182
+    }
+  }
+}

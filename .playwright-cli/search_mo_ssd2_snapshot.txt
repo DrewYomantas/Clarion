@@ -1,0 +1,367 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Map · Use arrow keys to pan the map. · Get details about a place by pressing its corresponding number key." [ref=e8]
+    - search [ref=e14]:
+      - generic [ref=e15]:
+        - combobox [ref=e17]: social security disability lawyer St. Louis MO
+        - button "Search" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: ?
+        - button "Close" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: ?
+    - region "Available filters for this search" [ref=e249]:
+      - generic [ref=e252]:
+        - button "Hours" [ref=e254] [cursor=pointer]:
+          - generic [ref=e255]:
+            - generic [ref=e256]: ?
+            - generic [ref=e257]: Hours
+            - generic [ref=e258]: ?
+        - button "All filters" [ref=e260] [cursor=pointer]:
+          - generic [ref=e261]:
+            - generic [ref=e262]: ?
+            - generic [ref=e263]: All filters
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - button "Menu" [ref=e29] [cursor=pointer]:
+              - generic [ref=e31]: ?
+          - listitem [ref=e32]:
+            - button "Saved" [ref=e33] [cursor=pointer]:
+              - generic [ref=e35]: ?
+              - generic [ref=e37]: Saved
+          - listitem [ref=e38]:
+            - button "Recents" [disabled] [ref=e39]:
+              - generic [ref=e41]: ?
+              - generic [ref=e43]: Recents
+          - listitem [ref=e45]:
+            - button "Get app" [ref=e46] [cursor=pointer]:
+              - generic [ref=e48]: ?
+              - generic [ref=e50]: Get app
+        - main [ref=e55]:
+          - generic [ref=e56]:
+            - feed "Results for social security disability lawyer St. Louis MO" [ref=e57]:
+              - generic [ref=e58]:
+                - generic [ref=e60]:
+                  - heading "Results" [level=1] [ref=e61]
+                  - button "Learn more about legal disclosure regarding public reviews on Google Maps" [ref=e65]:
+                    - generic [ref=e69]: ?
+                - button "Share" [ref=e73]:
+                  - generic [ref=e74] [cursor=pointer]:
+                    - generic [ref=e75]: ?
+                    - generic [ref=e76]: Share
+              - article "Crowe & Shanahan The Social Security Law Group" [ref=e78]:
+                - link "Crowe & Shanahan The Social Security Law Group" [ref=e79] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Crowe+%26+Shanahan+The+Social+Security+Law+Group/data=!4m7!3m6!1s0x87d8b31931a9a549:0x69093daaf935dedb!8m2!3d38.6296365!4d-90.1880149!16s%2Fg%2F1vb9dlpn!19sChIJSaWpMRmz2IcR2941-ao9CWk?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Crowe & Shanahan The Social Security Law Group
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.7 stars": "4.7"
+                            - generic:
+                              - generic:
+                                - generic: Social security attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e80] [cursor=pointer]:
+                                    - generic [ref=e81]: ?
+                                - generic: "· 500 N Broadway #1420"
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8:30 AM Mon
+                                - generic: · (314) 231-6660
+                    - generic:
+                      - link "Visit Crowe & Shanahan The Social Security Law Group's website" [ref=e82] [cursor=pointer]:
+                        - /url: https://www.croweshanahan.com/?npcmp=dir:local:1832550:63102
+                        - generic [ref=e84]: ?
+                        - generic [ref=e85]: Website
+                      - button "Get directions to Crowe & Shanahan The Social Security Law Group" [ref=e86] [cursor=pointer]:
+                        - generic [ref=e88]: ?
+                        - generic [ref=e89]: Directions
+              - article "Parmele Disability Advocates, LLC" [ref=e92]:
+                - link "Parmele Disability Advocates, LLC" [ref=e93] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Parmele+Disability+Advocates,+LLC/data=!4m7!3m6!1s0x87d8b3e0c1e6870b:0xb0af51368bb6fae!8m2!3d38.6822538!4d-90.4730181!16s%2Fg%2F11f79xcmpv!19sChIJC4fmweCz2IcRrm-7aBP1Cgs?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Parmele Disability Advocates, LLC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.7 stars": "4.7"
+                            - generic:
+                              - generic:
+                                - generic: Social security office
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e94] [cursor=pointer]:
+                                    - generic [ref=e95]: ?
+                                - generic: "· 1215 Fern Ridge Pkwy #206"
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8:30 AM Mon
+                                - generic: · (866) 889-2570
+                    - generic:
+                      - link "Visit Parmele Disability Advocates, LLC's website" [ref=e96] [cursor=pointer]:
+                        - /url: https://parmeledisability.com/locations/missouri/st-louis-creve-coeur/
+                        - generic [ref=e98]: ?
+                        - generic [ref=e99]: Website
+                      - button "Get directions to Parmele Disability Advocates, LLC" [ref=e100] [cursor=pointer]:
+                        - generic [ref=e102]: ?
+                        - generic [ref=e103]: Directions
+              - article "Access Disability, LLC" [ref=e106]:
+                - link "Access Disability, LLC" [ref=e107] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Access+Disability,+LLC/data=!4m7!3m6!1s0x87df2d0de5fa6125:0x789bb185cc42d289!8m2!3d38.6822538!4d-90.4730181!16s%2Fg%2F1hm41qs8n!19sChIJJWH65Q0t34cRidJCzIWxm3g?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Access Disability, LLC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.3 stars": "4.3"
+                            - generic:
+                              - generic:
+                                - generic: Social security attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e108] [cursor=pointer]:
+                                    - generic [ref=e109]: ?
+                                - generic: "· 1215 Fern Ridge Pkwy # 101"
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8 AM Mon
+                                - generic: · (314) 450-4700
+                    - generic:
+                      - link "Visit Access Disability, LLC's website" [ref=e110] [cursor=pointer]:
+                        - /url: https://www.accessdisabilitylaw.com/
+                        - generic [ref=e112]: ?
+                        - generic [ref=e113]: Website
+                      - button "Get directions to Access Disability, LLC" [ref=e114] [cursor=pointer]:
+                        - generic [ref=e116]: ?
+                        - generic [ref=e117]: Directions
+              - article "Dennis W. Fox & Associates" [ref=e120]:
+                - link "Dennis W. Fox & Associates" [ref=e121] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Dennis+W.+Fox+%26+Associates/data=!4m7!3m6!1s0x87d8b31e8a8f8ccd:0xfb8ffb4913eed8a8!8m2!3d38.6276115!4d-90.1895457!16s%2Fg%2F1thgb_ck!19sChIJzYyPih6z2IcRqNjuE0n7j_s?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Dennis W. Fox & Associates
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.0 stars": "4.0"
+                            - generic:
+                              - generic:
+                                - generic: Social security attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e122] [cursor=pointer]:
+                                    - generic [ref=e123]: ?
+                                - generic: "· 211 N Broadway #2400"
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 9 AM Mon
+                                - generic: · (314) 241-9666
+                    - generic:
+                      - link "Visit Dennis W. Fox & Associates's website" [ref=e124] [cursor=pointer]:
+                        - /url: http://www.dwfox.com/
+                        - generic [ref=e126]: ?
+                        - generic [ref=e127]: Website
+                      - button "Get directions to Dennis W. Fox & Associates" [ref=e128] [cursor=pointer]:
+                        - generic [ref=e130]: ?
+                        - generic [ref=e131]: Directions
+              - article "Hoglund Law" [ref=e134]:
+                - link "Hoglund Law" [ref=e135] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Hoglund+Law/data=!4m7!3m6!1s0x87df33d23c6491d9:0x923ab605e561f6ac!8m2!3d38.6730412!4d-90.4414669!16s%2Fg%2F11fk1qmx9d!19sChIJ2ZFkPNIz34cRrPZh5QW2OpI?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Hoglund Law
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.8 stars": "4.8"
+                            - generic:
+                              - generic:
+                                - generic: Social security attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e136] [cursor=pointer]:
+                                    - generic [ref=e137]: ?
+                                - generic: · 2 Cityplace Dr suite 253
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8:30 AM Mon
+                                - generic: · (314) 269-1507
+                    - generic:
+                      - link "Visit Hoglund Law's website" [ref=e138] [cursor=pointer]:
+                        - /url: https://hoglundlaw.com/contact/
+                        - generic [ref=e140]: ?
+                        - generic [ref=e141]: Website
+                      - button "Get directions to Hoglund Law" [ref=e142] [cursor=pointer]:
+                        - generic [ref=e144]: ?
+                        - generic [ref=e145]: Directions
+              - 'article "Crowe & Shanahan: Donald J. Derse" [ref=e148]':
+                - 'link "Crowe & Shanahan: Donald J. Derse" [ref=e149] [cursor=pointer]':
+                  - /url: https://www.google.com/maps/place/Crowe+%26+Shanahan:+Donald+J.+Derse/data=!4m7!3m6!1s0x87d8b31900000001:0x6ddf432c87fd9963!8m2!3d38.6295628!4d-90.1878748!16s%2Fg%2F11c2k1m_nx!19sChIJAQAAABmz2IcRY5n9hyxD320?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "Crowe & Shanahan: Donald J. Derse"
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "5.0 stars": "5.0"
+                            - generic:
+                              - generic:
+                                - generic: Attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e150] [cursor=pointer]:
+                                    - generic [ref=e151]: ?
+                                - generic: "· 500 N Broadway #1420"
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8:30 AM Mon
+                                - generic: · (314) 231-6660
+                    - generic:
+                      - 'link "Visit Crowe & Shanahan: Donald J. Derse''s website" [ref=e152] [cursor=pointer]':
+                        - /url: http://www.croweshanahan.com/
+                        - generic [ref=e154]: ?
+                        - generic [ref=e155]: Website
+                      - 'button "Get directions to Crowe & Shanahan: Donald J. Derse" [ref=e156] [cursor=pointer]':
+                        - generic [ref=e158]: ?
+                        - generic [ref=e159]: Directions
+              - article "Bridgepoint Law Firm" [ref=e162]:
+                - link "Bridgepoint Law Firm" [ref=e163] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Bridgepoint+Law+Firm/data=!4m7!3m6!1s0x87d8cb9441757101:0xde068bc0ac163faf!8m2!3d38.5932074!4d-90.3593936!16s%2Fg%2F1pp2wznf6!19sChIJAXF1QZTL2IcRrz8WrMCLBt4?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Bridgepoint Law Firm
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "5.0 stars": "5.0"
+                            - generic:
+                              - generic:
+                                - generic: Social security attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e164] [cursor=pointer]:
+                                    - generic [ref=e165]: ?
+                                - generic: "· 75 W Lockwood Ave #222"
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 9 AM Mon
+                                - generic: · (314) 925-0730
+                    - generic:
+                      - link "Visit Bridgepoint Law Firm's website" [ref=e166] [cursor=pointer]:
+                        - /url: http://disabilitystl.com/
+                        - generic [ref=e168]: ?
+                        - generic [ref=e169]: Website
+                      - button "Get directions to Bridgepoint Law Firm" [ref=e170] [cursor=pointer]:
+                        - generic [ref=e172]: ?
+                        - generic [ref=e173]: Directions
+              - article "Veterans Disability Law LLC" [ref=e176]:
+                - link "Veterans Disability Law LLC" [ref=e177] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Veterans+Disability+Law+LLC/data=!4m7!3m6!1s0x87df352bf9383ced:0xb3c8da53e7529c4e!8m2!3d38.6735814!4d-90.3746942!16s%2Fg%2F11lfgqf52c!19sChIJ7Tw4-Ss134cRTpxS51PayLM?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Veterans Disability Law LLC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "1.0 stars": "1.0"
+                            - generic:
+                              - generic:
+                                - generic: Social security attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e178] [cursor=pointer]:
+                                    - generic [ref=e179]: ?
+                                - generic: "· 9378 Olive Blvd #201"
+                              - generic:
+                                - generic:
+                                  - generic: Temporarily closed
+                                - generic: · (314) 402-0967
+                    - button "Get directions to Veterans Disability Law LLC" [ref=e180] [cursor=pointer]:
+                      - generic [ref=e182]: ?
+                      - generic [ref=e183]: Directions
+            - generic [ref=e219]:
+              - generic [ref=e221]: ?
+              - generic [ref=e222]:
+                - text: You're seeing a limited view of Google Maps.
+                - button "Learn more about limited view" [ref=e223] [cursor=pointer]: Learn more
+            - heading "Get the most out of Google Maps Sign in" [level=2] [ref=e227]:
+              - generic [ref=e228]: Get the most out of Google Maps
+              - button "Sign in" [ref=e231] [cursor=pointer]:
+                - generic [ref=e233]: Sign in
+            - checkbox "Update results when map moves" [ref=e235] [cursor=pointer]:
+              - generic [ref=e237]: ?
+              - text: Update results when map moves
+      - button "Collapse side panel" [ref=e239] [cursor=pointer]:
+        - generic [ref=e240]: ?
+    - generic [ref=e267]:
+      - button "Google apps" [ref=e271] [cursor=pointer]:
+        - img [ref=e272]
+      - link "Sign in" [ref=e275] [cursor=pointer]:
+        - /url: https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https%3A%2F%2Fwww.google.com%2Fmaps%2Fsearch%2Fsocial%2Bsecurity%2Bdisability%2Blawyer%2BSt.%2BLouis%2BMO%2F%4038.6461835%2C-90.3643139%2C11z%2Fdata%3D!3m1!4b1%3Fg_ep%3DEgoyMDI2MDQwMS4wIMCaEyoASAFQAw%253D%253D&service=local&ec=GAZAcQ
+    - generic:
+      - generic:
+        - button "Show Your Location" [ref=e278] [cursor=pointer]:
+          - generic [ref=e280]: ?
+        - generic [ref=e282] [cursor=pointer]:
+          - button "Zoom in" [ref=e283]
+          - button "Zoom out" [ref=e286]
+      - button "Browse Street View images" [ref=e294]
+      - generic [ref=e296]:
+        - generic "Interactive map" [ref=e297]
+        - generic [ref=e301] [cursor=pointer]:
+          - generic [ref=e302]: ?
+          - generic [ref=e303]: Layers
+        - button "Layers" [ref=e304] [cursor=pointer]
+    - generic [ref=e306]:
+      - contentinfo [ref=e309]:
+        - text: Imagery ©2026 , Map data ©2026 Google
+        - button "United States" [ref=e310] [cursor=pointer]
+        - button "Terms" [ref=e311] [cursor=pointer]
+        - button "Privacy" [ref=e312] [cursor=pointer]
+        - button "Send Product Feedback" [ref=e313] [cursor=pointer]
+      - button "2 mi" [ref=e315] [cursor=pointer]: 2 mi

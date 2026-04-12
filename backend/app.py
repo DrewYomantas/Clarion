@@ -16893,7 +16893,7 @@ if os.environ.get('BENCH_ENABLED', '').strip() == '1':
     try:
         from routes.bench_routes import bench_bp
         app.register_blueprint(bench_bp)
-        app.logger.info('bench: calibration harness registered at /internal/bench')
+        app.logger.info('bench: legacy /internal/bench route registered in frozen mode')
     except Exception as _bench_import_err:
         app.logger.warning('bench: failed to register bench routes: %s', _bench_import_err)
 # ---------------------------------------------------------------------------

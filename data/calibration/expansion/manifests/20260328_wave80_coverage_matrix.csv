@@ -1,0 +1,9 @@
+slice_id,stage,star_band,practice_area_bucket,state,firm_size_proxy,review_type,target_count,priority_weight,notes
+wave80_1star_contact,wave80,1,any,any,any,low_star_contact_failure,25,5,"Major low-star recall evidence bucket"
+wave80_2star_expectation,wave80,2,any,any,any,low_star_expectation_break,20,5,"Major 2-star expectation evidence bucket"
+wave80_mixed_4star,wave80,4,any,any,any,mixed_4_star,15,4,"Repeated 4-star mixed evidence"
+wave80_positive_outcome,wave80,any,any,any,any,explicit_positive_outcome,15,4,"Explicit positive outcome evidence"
+wave80_positive_trust,wave80,any,any,any,any,explicit_positive_trust,15,4,"Explicit positive trust evidence"
+wave80_long_form,wave80,any,any,any,any,long_form,20,3,"Long-form coverage"
+wave80_solo_small,wave80,any,any,any,solo_small_firm,any,20,3,"Prevent large-firm source bias"
+wave80_regional,wave80,any,any,any,regional_firm,any,20,3,"Prevent single-firm-size bias"

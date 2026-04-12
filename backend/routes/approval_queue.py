@@ -37,6 +37,16 @@ from flask_login import current_user, login_required
 
 approval_queue_bp = Blueprint("approval_queue", __name__)
 
+# ── Admin guard ───────────────────────────────────────────────────────────────
+
+def _require_admin():
+    """Return a 403 response tuple if the current user is not an admin.
+    Usage: err = _require_admin(); if err: return err
+    """
+    if not getattr(current_user, "is_admin", False):
+        return jsonify({"error": "Forbidden"}), 403
+    return None
+
 # ── Paths ─────────────────────────────────────────────────────────────────────
 
 def _agency_dir() -> Path:

@@ -1,0 +1,124 @@
+{
+  "version": "v2",
+  "created_at": "2026-04-11",
+  "artifact_type": "outcome_satisfaction_driver_prep",
+  "status": "driver_exhausted_no_new_engine_work_warranted",
+  "source_artifacts": {
+    "broad_rerun_summary": "data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/summary.json",
+    "broad_rerun_raw_results": "data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/raw_results.json"
+  },
+  "notes": "Refreshed truth-shaping review against the post-Pass-68 broad rerun (Pass 72). The v1 artifact was built against the pre-Pass-60 15-row set. Pass 60 recovered all viable drivers. This v2 artifact reflects the current 9-row post-Pass-60 lane. All 3 explicit result/failure rows are already recovered by the engine (extra_theme: det fires, AI disagrees). The 6 missing_theme rows are non-drivers. No new outcome_satisfaction engine pass is warranted.",
+  "lane_summary": {
+    "broad_disagreement_count": 9,
+    "bucket_counts": {
+      "already_recovered_engine_fires_correctly": 3,
+      "generic_praise_non_driver": 2,
+      "too_weak_or_indirect_to_drive": 1,
+      "mixed_outcome_service_boundary": 1,
+      "speculative_or_hypothetical_false_positive": 1,
+      "empathy_service_overlap": 1
+    },
+    "fresh_driver_count": 0,
+    "already_recovered_count": 3,
+    "non_driver_count": 6
+  },
+  "already_recovered_rows": [
+    {
+      "raw_result_index": 49,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 50,
+      "disagreement_type": "extra_theme",
+      "bucket": "already_recovered_engine_fires_correctly",
+      "review_text": "Got the job done and won so to speak",
+      "engine_phrase": "got the job done",
+      "note": "Engine correctly fires positive outcome_satisfaction via phrase added in Pass 60. AI does not tag this theme. Disagreement is an AI false-negative, not an engine gap."
+    },
+    {
+      "raw_result_index": 65,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 66,
+      "disagreement_type": "extra_theme",
+      "bucket": "already_recovered_engine_fires_correctly",
+      "review_text": "I was disappointed in the entire process. I was assigned to 3 different attorneys. Each time a little information and understanding of my case was lost. I feel my settlement amount suffered. After 2 years, I received a final settlement offer. The entire staff is really nice, professional and qualified. I'm not sure if they have a large turnover issue. I kept calling and sending messages without replies.",
+      "engine_phrase": "my settlement amount suffered",
+      "note": "Engine correctly fires negative outcome_satisfaction. AI does not tag this theme. Disagreement is an AI false-negative."
+    },
+    {
+      "raw_result_index": 115,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 116,
+      "disagreement_type": "extra_theme",
+      "bucket": "already_recovered_engine_fires_correctly",
+      "review_text": "Completely disappointed - do not trust this firm with your disability case. They failed me during my appeal. Multiple calls were canceled or no-showed, communication barriers made it impossible, and no attorney ever really reviewed my case or spoke to me.",
+      "engine_phrase": "failed me during my appeal",
+      "note": "Engine correctly fires negative outcome_satisfaction. AI does not tag this theme. Disagreement is an AI false-negative."
+    }
+  ],
+  "non_driver_rows": [
+    {
+      "raw_result_index": 6,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 7,
+      "disagreement_type": "missing_theme",
+      "bucket": "too_weak_or_indirect_to_drive",
+      "review_text": "Jeremy helped my husband and I get a trust in m place so our finances were secure. It was very thorough so our loved ones could avoid costs and time not having to deal with probate.",
+      "ai_evidence_span": "It was very thorough so our loved ones could avoid costs and time",
+      "reason": "Probate-avoidance / preventive legal benefit language. Too indirect — no explicit outcome claim, no result statement."
+    },
+    {
+      "raw_result_index": 13,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 14,
+      "disagreement_type": "missing_theme",
+      "bucket": "generic_praise_non_driver",
+      "review_text": "My husband and I worked with Jeremy for our estate planning... Would highly recommend.",
+      "ai_evidence_span": "Would highly recommend",
+      "reason": "Recommendation language. Not an outcome claim."
+    },
+    {
+      "raw_result_index": 43,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 44,
+      "disagreement_type": "missing_theme",
+      "bucket": "generic_praise_non_driver",
+      "review_text": "It was a fantastic experience working with the Baudin Law Group!! They are like family and still feel that way. Randy, Kelly and Myrna you guys are the best! We appreciate everything you guys did for our family.",
+      "ai_evidence_span": "We appreciate everything you guys did for our family.",
+      "reason": "Gratitude and family-style appreciation. Not an outcome claim."
+    },
+    {
+      "raw_result_index": 57,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 58,
+      "disagreement_type": "missing_theme",
+      "bucket": "mixed_outcome_service_boundary",
+      "review_text": "I truly wonder if other Black people had great experiences here. They accepted thousands of dollars but never really did anything towards my son's appeal, never really fought. The case was transferred multiple times. They never even really had meetings with me or my son. Truly horrible.",
+      "ai_evidence_span": "Truly horrible.",
+      "reason": "Dominated by trust and nonperformance complaints. 'Truly horrible' is too vague to anchor an outcome_satisfaction phrase. Primary lane is professionalism_trust / expectation failure."
+    },
+    {
+      "raw_result_index": 100,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 101,
+      "disagreement_type": "missing_theme",
+      "bucket": "speculative_or_hypothetical_false_positive",
+      "review_text": "Working with Andrew Kinney was a game-changer in my social security case. His deep understanding of the legal complexities, coupled with his dedication to my case, hopefully will make a significant difference in the outcome.",
+      "ai_evidence_span": "His deep understanding of the legal complexities, coupled with his dedication to my case",
+      "reason": "Contains 'hopefully will make a significant difference in the outcome' — a forward-looking hypothetical, not a completed result. The AI evidence span also does not anchor to an actual outcome."
+    },
+    {
+      "raw_result_index": 133,
+      "source_file": "data/calibration/inputs/real_reviews.csv",
+      "source_line": 134,
+      "disagreement_type": "missing_theme",
+      "bucket": "empathy_service_overlap",
+      "review_text": "Peter Riley and his secretary and assistant are awesome. I was at my very bottom and my world had turned upside down. They assisted me with my case and got me all the help to recover from my accident.",
+      "ai_evidence_span": "They assisted me with my case and got me all the help to recover from my accident.",
+      "reason": "Assistance / help language. Sits in empathy and support territory after Pass 68 built out the empathy lane. Not an explicit outcome claim."
+    }
+  ],
+  "recommended_next_move": {
+    "decision": "no_new_outcome_satisfaction_engine_pass",
+    "label": "driver_exhausted_new_remaining_lane_selection_audit_needed",
+    "why": "All viable outcome_satisfaction drivers were recovered in Pass 60. The 3 explicit result/failure rows are already correctly handled by the engine. The 6 missing_theme rows are non-drivers. A fresh remaining-lane selection audit across the other buckets (expectation_setting, communication_responsiveness, communication_clarity, professionalism_trust) is now the right next move."
+  }
+}

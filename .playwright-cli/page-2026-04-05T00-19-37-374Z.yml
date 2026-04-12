@@ -1,0 +1,137 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Main Display" [ref=e8]
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - list [ref=e14]:
+          - listitem [ref=e15]:
+            - button "Menu" [ref=e16] [cursor=pointer]:
+              - generic [ref=e18]: 
+          - listitem [ref=e19]:
+            - button "Saved" [ref=e20] [cursor=pointer]:
+              - generic [ref=e22]: 
+              - generic [ref=e24]: Saved
+          - listitem [ref=e25]:
+            - button "Recents" [disabled] [ref=e26]:
+              - generic [ref=e28]: 
+              - generic [ref=e30]: Recents
+          - listitem [ref=e32]:
+            - button "Get app" [ref=e33] [cursor=pointer]:
+              - generic [ref=e35]: 
+              - generic [ref=e37]: Get app
+        - main "Access Disability, LLC" [ref=e45]:
+          - generic [ref=e46]:
+            - button "Photo of Access Disability, LLC" [ref=e48] [cursor=pointer]:
+              - img [ref=e49]
+            - button "See photos" [ref=e50] [cursor=pointer]:
+              - generic [ref=e51]: 
+              - generic [ref=e52]: See photos
+          - generic [ref=e55]:
+            - heading "Access Disability, LLC" [level=1] [ref=e57]: Access Disability, LLC
+            - generic [ref=e59]:
+              - generic [ref=e62]:
+                - text: "4.3"
+                - img "4.3 stars" [ref=e63]
+              - generic [ref=e69]:
+                - button "Social security attorney" [ref=e72]
+                - text: ·
+                - img "Wheelchair accessible entrance" [ref=e73]: 
+          - tablist [ref=e76]:
+            - tab "Overview of Access Disability, LLC" [selected] [ref=e77]:
+              - generic [ref=e79]: Overview
+            - tab "About Access Disability, LLC" [ref=e81]:
+              - generic [ref=e83]: About
+          - region "Actions for Access Disability, LLC" [ref=e85]:
+            - button "Directions" [ref=e87] [cursor=pointer]:
+              - generic [ref=e89]: 
+              - generic [ref=e90]: Directions
+            - button "Save" [ref=e92] [cursor=pointer]:
+              - generic [ref=e94]: 
+              - generic [ref=e95]: Save
+            - button "Nearby" [ref=e97] [cursor=pointer]:
+              - generic [ref=e99]: 
+              - generic [ref=e100]: Nearby
+            - button "Send to phone" [ref=e102] [cursor=pointer]:
+              - generic [ref=e104]: 
+              - generic [ref=e105]: Send to phone
+            - button "Share" [ref=e107] [cursor=pointer]:
+              - generic [ref=e109]: 
+              - generic [ref=e110]: Share
+          - region "Information for Access Disability, LLC" [ref=e113]:
+            - generic [ref=e114]:
+              - 'button "Address: 1215 Fern Ridge Pkwy # 101, St. Louis, MO 63141" [ref=e115] [cursor=pointer]':
+                - generic [ref=e116]:
+                  - generic [ref=e118]: 
+                  - generic [ref=e120]: "1215 Fern Ridge Pkwy # 101, St. Louis, MO 63141"
+              - button "Copy address" [ref=e123] [cursor=pointer]:
+                - generic [ref=e125]: 
+            - button "Floor 1 · Fern Ridge Office Park" [ref=e127] [cursor=pointer]:
+              - generic [ref=e131]: Floor 1 · Fern Ridge Office Park
+            - button "Hours Closed · Opens 8 AM Mon Show open hours for the week" [ref=e133] [cursor=pointer]:
+              - img "Hours" [ref=e134]: 
+              - generic [ref=e136]:
+                - generic [ref=e138]: Closed · Opens 8 AM Mon
+                - img "Show open hours for the week" [ref=e139]: 
+            - generic [ref=e140]:
+              - 'link "Website: accessdisabilitylaw.com" [ref=e141] [cursor=pointer]':
+                - /url: https://www.accessdisabilitylaw.com/
+                - generic [ref=e142]:
+                  - generic [ref=e144]: 
+                  - generic [ref=e146]: accessdisabilitylaw.com
+              - generic [ref=e147]:
+                - link "Open website" [ref=e149] [cursor=pointer]:
+                  - /url: https://www.accessdisabilitylaw.com/
+                  - generic [ref=e151]: 
+                - button "Copy website" [ref=e153] [cursor=pointer]:
+                  - generic [ref=e155]: 
+            - generic [ref=e156]:
+              - 'button "Phone: (314) 450-4700" [ref=e157] [cursor=pointer]':
+                - generic [ref=e158]:
+                  - generic [ref=e160]: 
+                  - generic [ref=e162]: (314) 450-4700
+              - generic [ref=e163]:
+                - button "Copy phone number" [ref=e165] [cursor=pointer]:
+                  - generic [ref=e167]: 
+                - link "Call phone number" [ref=e169] [cursor=pointer]:
+                  - /url: tel:+13144504700
+                  - generic [ref=e171]: 
+            - generic [ref=e172]:
+              - 'button "Plus code: MGJG+WQ St. Louis, Missouri" [ref=e173] [cursor=pointer]':
+                - generic [ref=e174]:
+                  - generic [ref=e176]: 
+                  - generic [ref=e178]: MGJG+WQ St. Louis, Missouri
+              - generic [ref=e179]:
+                - button "Copy plus code" [ref=e181] [cursor=pointer]:
+                  - generic [ref=e183]: 
+                - button "Learn more about plus codes" [ref=e185] [cursor=pointer]:
+                  - generic [ref=e187]: 
+          - button "Suggest an edit" [ref=e191] [cursor=pointer]:
+            - generic [ref=e192]:
+              - generic [ref=e193]: 
+              - generic [ref=e194]: Suggest an edit
+          - generic [ref=e197]:
+            - heading "Add missing information" [level=2] [ref=e198]
+            - button "More info" [ref=e199] [cursor=pointer]:
+              - generic [ref=e200]: 
+          - button "Add a photo" [ref=e202]:
+            - generic [ref=e203]:
+              - generic [ref=e204]: 
+              - generic [ref=e205]: Add a photo
+          - button "Write a review" [ref=e211] [cursor=pointer]:
+            - generic [ref=e212]:
+              - generic [ref=e213]: 
+              - generic [ref=e214]: Write a review
+          - link "About this data" [ref=e219] [cursor=pointer]:
+            - /url: https://support.google.com/local-listings?p=how_google_sources&authuser=0&hl=en
+            - generic [ref=e221]: About this data
+          - generic [ref=e224]:
+            - generic [ref=e226]: 
+            - generic [ref=e227]:
+              - text: You're seeing a limited view of Google Maps.
+              - button "Learn more about limited view" [ref=e228] [cursor=pointer]: Learn more
+          - heading "Get the most out of Google Maps Sign in" [level=2] [ref=e232]:
+            - generic [ref=e233]: Get the most out of Google Maps
+            - button "Sign in" [ref=e236] [cursor=pointer]:
+              - generic [ref=e238]: Sign in
+      - button "Collapse side panel" [ref=e240] [cursor=pointer]:
+        - generic [ref=e241]: 

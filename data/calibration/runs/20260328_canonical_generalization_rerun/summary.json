@@ -1,0 +1,88 @@
+{
+  "run_type": "canonical_v1_focus_scoped",
+  "generated_at": "2026-03-28T16:42:59.063379Z",
+  "focus_themes": [
+    "communication_responsiveness",
+    "expectation_setting",
+    "professionalism_trust",
+    "communication_clarity",
+    "outcome_satisfaction"
+  ],
+  "total_reviews": 24,
+  "total_expected_labels": 52,
+  "total_disagreements": 10,
+  "zero_disagreement_reviews": 19,
+  "agreement_rate": 0.7916666666666666,
+  "disagreement_by_type": {
+    "missing_theme": 6,
+    "wrong_severity": 1,
+    "extra_theme": 3
+  },
+  "disagreement_by_theme": {
+    "expectation_setting": 2,
+    "communication_responsiveness": 4,
+    "outcome_satisfaction": 2,
+    "communication_clarity": 1,
+    "professionalism_trust": 1
+  },
+  "star_band_review_disagreement_rate": {
+    "1": {
+      "review_count": 10,
+      "reviews_with_disagreements": 3,
+      "total_disagreements": 6,
+      "rate": 0.3
+    },
+    "2": {
+      "review_count": 4,
+      "reviews_with_disagreements": 2,
+      "total_disagreements": 4,
+      "rate": 0.5
+    },
+    "3": {
+      "review_count": 2,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    },
+    "4": {
+      "review_count": 6,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    },
+    "5": {
+      "review_count": 2,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    }
+  },
+  "mixed_sentiment_review_disagreement_rate": {
+    "mixed": {
+      "review_count": 4,
+      "reviews_with_disagreements": 1,
+      "total_disagreements": 2,
+      "rate": 0.25
+    },
+    "single_negative": {
+      "review_count": 15,
+      "reviews_with_disagreements": 4,
+      "total_disagreements": 8,
+      "rate": 0.26666666666666666
+    },
+    "single_positive": {
+      "review_count": 5,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    }
+  },
+  "positive_only_review_disagreement_rate": {
+    "single_positive": {
+      "review_count": 5,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "rate": 0.0
+    }
+  }
+}

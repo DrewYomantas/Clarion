@@ -1,0 +1,152 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Map · Use arrow keys to pan the map. · Get details about a place by pressing its corresponding number key." [ref=e8]
+    - search [ref=e14]:
+      - generic [ref=e15]:
+        - combobox [ref=e17]: Oklahoma Estate Attorneys PLLC
+        - button "Search" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+        - button "Close" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: 
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - button "Menu" [ref=e29] [cursor=pointer]:
+              - generic [ref=e31]: 
+          - listitem [ref=e32]:
+            - button "Saved" [ref=e33] [cursor=pointer]:
+              - generic [ref=e35]: 
+              - generic [ref=e37]: Saved
+          - listitem [ref=e38]:
+            - button "Recents" [disabled] [ref=e39]:
+              - generic [ref=e41]: 
+              - generic [ref=e43]: Recents
+          - listitem [ref=e45]:
+            - button "Get app" [ref=e46] [cursor=pointer]:
+              - generic [ref=e48]: 
+              - generic [ref=e50]: Get app
+        - main "Oklahoma Estate Attorneys PLLC" [ref=e55]:
+          - generic [ref=e56]:
+            - button "Photo of Oklahoma Estate Attorneys PLLC" [active] [ref=e58] [cursor=pointer]:
+              - img [ref=e59]
+            - button "See photos" [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]: 
+              - generic [ref=e62]: See photos
+          - generic [ref=e65]:
+            - heading "Oklahoma Estate Attorneys PLLC" [level=1] [ref=e67]: Oklahoma Estate Attorneys PLLC
+            - generic [ref=e69]:
+              - generic [ref=e72]:
+                - text: "4.7"
+                - img "4.7 stars" [ref=e73]
+              - generic [ref=e79]:
+                - button "Estate planning attorney" [ref=e82]
+                - text: ·
+                - img "Wheelchair accessible entrance" [ref=e83]: 
+          - tablist [ref=e86]:
+            - tab "Overview of Oklahoma Estate Attorneys PLLC" [selected] [ref=e87]:
+              - generic [ref=e89]: Overview
+            - tab "About Oklahoma Estate Attorneys PLLC" [ref=e91]:
+              - generic [ref=e93]: About
+          - region "Actions for Oklahoma Estate Attorneys PLLC" [ref=e95]:
+            - button "Directions" [ref=e97] [cursor=pointer]:
+              - generic [ref=e99]: 
+              - generic [ref=e100]: Directions
+            - button "Save" [ref=e102] [cursor=pointer]:
+              - generic [ref=e104]: 
+              - generic [ref=e105]: Save
+            - button "Nearby" [ref=e107] [cursor=pointer]:
+              - generic [ref=e109]: 
+              - generic [ref=e110]: Nearby
+            - button "Send to phone" [ref=e112] [cursor=pointer]:
+              - generic [ref=e114]: 
+              - generic [ref=e115]: Send to phone
+            - button "Share" [ref=e117] [cursor=pointer]:
+              - generic [ref=e119]: 
+              - generic [ref=e120]: Share
+          - region "Information for Oklahoma Estate Attorneys PLLC" [ref=e123]:
+            - generic [ref=e124]:
+              - 'button "Address: 2909 NW 156th St, Edmond, OK 73013" [ref=e125] [cursor=pointer]':
+                - generic [ref=e126]:
+                  - generic [ref=e128]: 
+                  - generic [ref=e130]: 2909 NW 156th St, Edmond, OK 73013
+              - button "Copy address" [ref=e133] [cursor=pointer]:
+                - generic [ref=e135]: 
+            - button "Hours Closed · Opens 8 AM Mon Show open hours for the week" [ref=e137] [cursor=pointer]:
+              - img "Hours" [ref=e138]: 
+              - generic [ref=e140]:
+                - generic [ref=e142]: Closed · Opens 8 AM Mon
+                - img "Show open hours for the week" [ref=e143]: 
+            - generic [ref=e144]:
+              - 'link "Website: estateplan.expert" [ref=e145] [cursor=pointer]':
+                - /url: http://estateplan.expert/
+                - generic [ref=e146]:
+                  - generic [ref=e148]: 
+                  - generic [ref=e150]: estateplan.expert
+              - generic [ref=e151]:
+                - link "Open website" [ref=e153] [cursor=pointer]:
+                  - /url: http://estateplan.expert/
+                  - generic [ref=e155]: 
+                - button "Copy website" [ref=e157] [cursor=pointer]:
+                  - generic [ref=e159]: 
+            - generic [ref=e160]:
+              - 'button "Phone: (405) 733-8686" [ref=e161] [cursor=pointer]':
+                - generic [ref=e162]:
+                  - generic [ref=e164]: 
+                  - generic [ref=e166]: (405) 733-8686
+              - generic [ref=e167]:
+                - button "Copy phone number" [ref=e169] [cursor=pointer]:
+                  - generic [ref=e171]: 
+                - link "Call phone number" [ref=e173] [cursor=pointer]:
+                  - /url: tel:+14057338686
+                  - generic [ref=e175]: 
+            - generic [ref=e176]:
+              - 'button "Plus code: JCJJ+2M Edmond, Oklahoma" [ref=e177] [cursor=pointer]':
+                - generic [ref=e178]:
+                  - generic [ref=e180]: 
+                  - generic [ref=e182]: JCJJ+2M Edmond, Oklahoma
+              - generic [ref=e183]:
+                - button "Copy plus code" [ref=e185] [cursor=pointer]:
+                  - generic [ref=e187]: 
+                - button "Learn more about plus codes" [ref=e189] [cursor=pointer]:
+                  - generic [ref=e191]: 
+            - generic [ref=e196]: Identifies as veteran-owned
+          - button "Suggest an edit" [ref=e200] [cursor=pointer]:
+            - generic [ref=e201]:
+              - generic [ref=e202]: 
+              - generic [ref=e203]: Suggest an edit
+          - generic [ref=e206]:
+            - heading "Add missing information" [level=2] [ref=e207]
+            - button "More info" [ref=e208] [cursor=pointer]:
+              - generic [ref=e209]: 
+          - button "Add a photo" [ref=e211]:
+            - generic [ref=e212]:
+              - generic [ref=e213]: 
+              - generic [ref=e214]: Add a photo
+          - generic [ref=e217]:
+            - generic [ref=e218]: From the owner
+            - button "See local posts" [ref=e220] [cursor=pointer]:
+              - generic [ref=e222]:
+                - generic [ref=e224]: Do I Need A Partition? My three siblings and I inherited real property and one of them refuses to sell or help pay the taxes; is a partition my only option? Sound familiar? Partitions are often the by-product of one’s failure to make an estate plan, but are sometimes also the result of a poorly-created estate plan. Sometimes well-meaning parents create estate plans that are almost guaranteed to result in the filing of a partition action. A single parent, hoping to help her children avoid probate, adds all three of her children to the deed on her homestead or executes a Transfer on Death deed, naming all three. Upon her passing, the children now own the homestead equally, as either joint tenants or tenants in common, each one entitled to possess, use, and enjoy the land.
+                - generic [ref=e225]: 4 days ago
+                - generic [ref=e226]: Learn more
+          - button "Write a review" [ref=e234] [cursor=pointer]:
+            - generic [ref=e235]:
+              - generic [ref=e236]: 
+              - generic [ref=e237]: Write a review
+          - link "About this data" [ref=e242] [cursor=pointer]:
+            - /url: https://support.google.com/local-listings?p=how_google_sources&authuser=0&hl=en
+            - generic [ref=e244]: About this data
+          - generic [ref=e247]:
+            - generic [ref=e249]: 
+            - generic [ref=e250]:
+              - text: You're seeing a limited view of Google Maps.
+              - button "Learn more about limited view" [ref=e251] [cursor=pointer]: Learn more
+          - heading "Get the most out of Google Maps Sign in" [level=2] [ref=e255]:
+            - generic [ref=e256]: Get the most out of Google Maps
+            - button "Sign in" [ref=e259] [cursor=pointer]:
+              - generic [ref=e261]: Sign in
+      - generic [ref=e262]:
+        - button "Collapse side panel" [ref=e263] [cursor=pointer]:
+          - generic [ref=e264]: 
+        - generic [ref=e265]: Collapse side panel

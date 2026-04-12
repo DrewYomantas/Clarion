@@ -1,0 +1,372 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Map · Use arrow keys to pan the map. · Get details about a place by pressing its corresponding number key." [ref=e242]
+    - search [ref=e13]:
+      - generic [ref=e14]:
+        - combobox [ref=e16]: probate lawyer Albuquerque NM
+        - button "Search" [ref=e18] [cursor=pointer]:
+          - generic [ref=e19]: ?
+        - button "Close" [ref=e21] [cursor=pointer]:
+          - generic [ref=e22]: ?
+    - region "Available filters for this search" [ref=e250]:
+      - generic [ref=e253]:
+        - button "Rating" [ref=e255] [cursor=pointer]:
+          - generic [ref=e256]:
+            - generic [ref=e257]: ?
+            - generic [ref=e258]: Rating
+            - generic [ref=e259]: ?
+        - button "Hours" [ref=e261] [cursor=pointer]:
+          - generic [ref=e262]:
+            - generic [ref=e263]: ?
+            - generic [ref=e264]: Hours
+            - generic [ref=e265]: ?
+        - button "All filters" [ref=e267] [cursor=pointer]:
+          - generic [ref=e268]:
+            - generic [ref=e269]: ?
+            - generic [ref=e270]: All filters
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - list [ref=e26]:
+          - listitem [ref=e27]:
+            - button "Menu" [ref=e28] [cursor=pointer]:
+              - generic [ref=e30]: ?
+          - listitem [ref=e31]:
+            - button "Saved" [ref=e32] [cursor=pointer]:
+              - generic [ref=e34]: ?
+              - generic [ref=e36]: Saved
+          - listitem [ref=e37]:
+            - button "Recents" [disabled] [ref=e38]:
+              - generic [ref=e40]: ?
+              - generic [ref=e42]: Recents
+          - listitem [ref=e44]:
+            - button "Get app" [ref=e45] [cursor=pointer]:
+              - generic [ref=e47]: ?
+              - generic [ref=e49]: Get app
+        - main [ref=e54]:
+          - generic [ref=e55]:
+            - feed "Results for probate lawyer Albuquerque NM" [ref=e56]:
+              - generic [ref=e57]:
+                - generic [ref=e59]:
+                  - heading "Results" [level=1] [ref=e60]
+                  - button "Learn more about legal disclosure regarding public reviews on Google Maps" [ref=e64]:
+                    - generic [ref=e68]: ?
+                - button "Share" [ref=e72]:
+                  - generic [ref=e73] [cursor=pointer]:
+                    - generic [ref=e74]: ?
+                    - generic [ref=e75]: Share
+              - article "New Mexico Probate and Estate Lawyers" [ref=e77]:
+                - link "New Mexico Probate and Estate Lawyers" [ref=e78] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/New+Mexico+Probate+and+Estate+Lawyers/data=!4m7!3m6!1s0x87189fb1d49091cd:0x82b57efaa2c2d8e!8m2!3d35.1400666!4d-106.5169717!16s%2Fg%2F11kj127n_y!19sChIJzZGQ1LGfGIcRji0squ9XKwg?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: New Mexico Probate and Estate Lawyers
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.8 stars": "4.8"
+                            - generic:
+                              - generic:
+                                - generic: Legal services
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e79] [cursor=pointer]:
+                                    - generic [ref=e80]: ?
+                                - generic: · 5203 Juan Tabo Blvd NE STE 2E
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 9 AM Mon
+                                - generic: · (505) 370-1500
+                    - generic:
+                      - link "Visit New Mexico Probate and Estate Lawyers's website" [ref=e81] [cursor=pointer]:
+                        - /url: http://www.nmprobatelaw.com/
+                        - generic [ref=e83]: ?
+                        - generic [ref=e84]: Website
+                      - button "Get directions to New Mexico Probate and Estate Lawyers" [ref=e85] [cursor=pointer]:
+                        - generic [ref=e87]: ?
+                        - generic [ref=e88]: Directions
+              - article "Walk-In Wills" [ref=e91]:
+                - link "Walk-In Wills" [ref=e92] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Walk-In+Wills/data=!4m7!3m6!1s0x87220b36739a31b3:0x2188043a2df9f848!8m2!3d35.101014!4d-106.603804!16s%2Fg%2F1td05j2r!19sChIJszGaczYLIocRSPj5LToEiCE?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Walk-In Wills
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.6 stars": "4.6"
+                            - generic:
+                              - generic:
+                                - generic: Law firm
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e93] [cursor=pointer]:
+                                    - generic [ref=e94]: ?
+                                - generic: · 2000 Carlisle Blvd NE G
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 9 AM Mon
+                                - generic: · (505) 903-7000
+                    - generic:
+                      - link "Visit Walk-In Wills's website" [ref=e95] [cursor=pointer]:
+                        - /url: https://walkinwills.com/
+                        - generic [ref=e97]: ?
+                        - generic [ref=e98]: Website
+                      - button "Get directions to Walk-In Wills" [ref=e99] [cursor=pointer]:
+                        - generic [ref=e101]: ?
+                        - generic [ref=e102]: Directions
+              - article "Atkinson Law Firm, LTD | Estate Planning & Probate" [ref=e105]:
+                - link "Atkinson Law Firm, LTD | Estate Planning & Probate" [ref=e106] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Atkinson+Law+Firm,+LTD+%7C+Estate+Planning+%26+Probate/data=!4m7!3m6!1s0x87227589f60e8bc5:0xa54d09dc2a7a57f6!8m2!3d35.1751404!4d-106.536334!16s%2Fg%2F1tlw9jn0!19sChIJxYsO9ol1IocR9ld6KtwJTaU?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Atkinson Law Firm, LTD | Estate Planning & Probate
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.9 stars": "4.9"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e107] [cursor=pointer]:
+                                    - generic [ref=e108]: ?
+                                - generic: · 9400 Holly Ave NE Building 4
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8 AM Mon
+                                - generic: · (505) 944-1050
+                    - generic:
+                      - link "Visit Atkinson Law Firm, LTD | Estate Planning & Probate's website" [ref=e109] [cursor=pointer]:
+                        - /url: https://atkinsonlawnm.com/
+                        - generic [ref=e111]: ?
+                        - generic [ref=e112]: Website
+                      - button "Get directions to Atkinson Law Firm, LTD | Estate Planning & Probate" [ref=e113] [cursor=pointer]:
+                        - generic [ref=e115]: ?
+                        - generic [ref=e116]: Directions
+              - article "New Mexico Financial & Estate Planning Attorneys" [ref=e119]:
+                - link "New Mexico Financial & Estate Planning Attorneys" [ref=e120] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/New+Mexico+Financial+%26+Estate+Planning+Attorneys/data=!4m7!3m6!1s0x87220aeac967d6d3:0xa5fbec9cfa6cd258!8m2!3d35.0834121!4d-106.6514843!16s%2Fg%2F1tf6h2ns!19sChIJ09ZnyeoKIocRWNJs-pzs-6U?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: New Mexico Financial & Estate Planning Attorneys
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.6 stars": "4.6"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e121] [cursor=pointer]:
+                                    - generic [ref=e122]: ?
+                                - generic: "· 320 Gold Ave SW #1401"
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 9 AM Mon
+                                - generic: · (505) 503-1637
+                    - generic:
+                      - link "Visit New Mexico Financial & Estate Planning Attorneys's website" [ref=e123] [cursor=pointer]:
+                        - /url: https://nmfinanciallaw.com/?utm_source=G_places&utm_medium=map_click&utm_campaign=map_traffic
+                        - generic [ref=e125]: ?
+                        - generic [ref=e126]: Website
+                      - button "Get directions to New Mexico Financial & Estate Planning Attorneys" [ref=e127] [cursor=pointer]:
+                        - generic [ref=e129]: ?
+                        - generic [ref=e130]: Directions
+              - article "Baker Law Group, PLLC" [ref=e133]:
+                - link "Baker Law Group, PLLC" [ref=e134] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Baker+Law+Group,+PLLC/data=!4m7!3m6!1s0x87227580238d8091:0x895d29f8f7c45d6a!8m2!3d35.1522588!4d-106.5849674!16s%2Fg%2F11zkk5tkzg!19sChIJkYCNI4B1IocRal3E9_gpXYk?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Baker Law Group, PLLC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "5.0 stars": "5.0"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e135] [cursor=pointer]:
+                                    - generic [ref=e136]: ?
+                                - generic: · 5700 Harper Dr NE Ste 210, Office 234A
+                              - generic:
+                                - generic:
+                                  - generic: Open 24 hours
+                                - generic: · (505) 578-7008
+                    - generic:
+                      - link "Visit Baker Law Group, PLLC's website" [ref=e137] [cursor=pointer]:
+                        - /url: https://jbakerlawgroup.com/albuquerque-estate-planning-lawyer/?utm_source=google&utm_medium=maps&utm_campaign=albuquerque
+                        - generic [ref=e139]: ?
+                        - generic [ref=e140]: Website
+                      - button "Get directions to Baker Law Group, PLLC" [ref=e141] [cursor=pointer]:
+                        - generic [ref=e143]: ?
+                        - generic [ref=e144]: Directions
+              - article "Albuquerque Legal & Fiduciary" [ref=e147]:
+                - link "Albuquerque Legal & Fiduciary" [ref=e148] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Albuquerque+Legal+%26+Fiduciary/data=!4m7!3m6!1s0x87220b36111abda9:0x2f417176b31f7f2a!8m2!3d35.1005845!4d-106.6044314!16s%2Fg%2F11bv1bk350!19sChIJqb0aETYLIocRKn8fs3ZxQS8?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Albuquerque Legal & Fiduciary
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.4 stars": "4.4"
+                            - generic:
+                              - generic:
+                                - generic: Attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e149] [cursor=pointer]:
+                                    - generic [ref=e150]: ?
+                                - generic: · 1909 Carlisle Blvd NE
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8 AM Mon
+                                - generic: · (505) 985-5563
+                    - generic:
+                      - link "Visit Albuquerque Legal & Fiduciary's website" [ref=e151] [cursor=pointer]:
+                        - /url: https://www.pumafirm.com/?npcmp=dir:local:5132512:87110
+                        - generic [ref=e153]: ?
+                        - generic [ref=e154]: Website
+                      - button "Get directions to Albuquerque Legal & Fiduciary" [ref=e155] [cursor=pointer]:
+                        - generic [ref=e157]: ?
+                        - generic [ref=e158]: Directions
+              - article "Richard Grodner Law Firm" [ref=e161]:
+                - link "Richard Grodner Law Firm" [ref=e162] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Richard+Grodner+Law+Firm/data=!4m7!3m6!1s0x87220ab0bd0394af:0x1c21b4bf9482b20e!8m2!3d35.1738531!4d-106.5914225!16s%2Fg%2F1tfcj6dt!19sChIJr5QDvbAKIocRDrKClL-0IRw?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Richard Grodner Law Firm
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.4 stars": "4.4"
+                            - generic:
+                              - generic:
+                                - generic: Attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e163] [cursor=pointer]:
+                                    - generic [ref=e164]: ?
+                                - generic: · 4801 Lang Ave NE UNIT 110
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 9 AM Mon
+                                - generic: · (505) 266-2566
+                    - button "Get directions to Richard Grodner Law Firm" [ref=e165] [cursor=pointer]:
+                      - generic [ref=e167]: ?
+                      - generic [ref=e168]: Directions
+              - article "Law Offices of Erika E Anderson" [ref=e171]:
+                - link "Law Offices of Erika E Anderson" [ref=e172] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Law+Offices+of+Erika+E+Anderson/data=!4m7!3m6!1s0x87227320c7e55555:0xbb2b0c3c3ceda835!8m2!3d35.0799033!4d-106.6097986!16s%2Fg%2F11fxcgl1yc!19sChIJVVXlxyBzIocRNajtPDwMK7s?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Law Offices of Erika E Anderson
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.4 stars": "4.4"
+                            - generic:
+                              - generic:
+                                - generic: Law firm
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e173] [cursor=pointer]:
+                                    - generic [ref=e174]: ?
+                                - generic: · 105 Bryn Mawr Dr SE
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 9 AM Mon
+                                - generic: · (505) 944-9039
+                    - generic:
+                      - link "Visit Law Offices of Erika E Anderson's website" [ref=e175] [cursor=pointer]:
+                        - /url: https://eandersonlaw.com/
+                        - generic [ref=e177]: ?
+                        - generic [ref=e178]: Website
+                      - button "Get directions to Law Offices of Erika E Anderson" [ref=e179] [cursor=pointer]:
+                        - generic [ref=e181]: ?
+                        - generic [ref=e182]: Directions
+            - generic [ref=e218]:
+              - generic [ref=e220]: ?
+              - generic [ref=e221]:
+                - text: You're seeing a limited view of Google Maps.
+                - button "Learn more about limited view" [ref=e222] [cursor=pointer]: Learn more
+            - heading "Get the most out of Google Maps Sign in" [level=2] [ref=e226]:
+              - generic [ref=e227]: Get the most out of Google Maps
+              - button "Sign in" [ref=e230] [cursor=pointer]:
+                - generic [ref=e232]: Sign in
+            - checkbox "Update results when map moves" [ref=e234] [cursor=pointer]:
+              - generic [ref=e236]: ?
+              - text: Update results when map moves
+      - button "Collapse side panel" [ref=e238] [cursor=pointer]:
+        - generic [ref=e239]: ?
+    - generic [ref=e274]:
+      - button "Google apps" [ref=e278] [cursor=pointer]:
+        - img [ref=e279]
+      - link "Sign in" [ref=e282] [cursor=pointer]:
+        - /url: https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https%3A%2F%2Fwww.google.com%2Fmaps%2Fsearch%2Fprobate%2Blawyer%2BAlbuquerque%2BNM%2F%4035.1426672%2C-106.5849604%2C12z%2Fdata%3D!3m1!4b1%3Fg_ep%3DEgoyMDI2MDQwMS4wIMCaEyoASAFQAw%253D%253D&service=local&ec=GAZAcQ
+    - generic:
+      - generic:
+        - button "Show Your Location" [ref=e285] [cursor=pointer]:
+          - generic [ref=e287]: ?
+        - generic [ref=e289] [cursor=pointer]:
+          - button "Zoom in" [ref=e290]
+          - button "Zoom out" [ref=e293]
+      - button "Browse Street View images" [ref=e301]
+      - generic [ref=e303]:
+        - generic "Interactive map" [ref=e304]
+        - generic [ref=e308] [cursor=pointer]:
+          - generic [ref=e309]: ?
+          - generic [ref=e310]: Layers
+        - button "Layers" [ref=e311] [cursor=pointer]
+    - generic [ref=e313]:
+      - contentinfo [ref=e316]:
+        - text: Imagery ©2026 , Map data ©2026 Google
+        - button "United States" [ref=e317] [cursor=pointer]
+        - button "Terms" [ref=e318] [cursor=pointer]
+        - button "Privacy" [ref=e319] [cursor=pointer]
+        - button "Send Product Feedback" [ref=e320] [cursor=pointer]
+      - button "2 mi" [ref=e322] [cursor=pointer]: 2 mi

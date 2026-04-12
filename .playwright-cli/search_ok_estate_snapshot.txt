@@ -1,0 +1,377 @@
+- generic "Google Maps" [ref=e2]:
+  - generic [ref=e3]:
+    - application "Map · Use arrow keys to pan the map. · Get details about a place by pressing its corresponding number key." [ref=e8]
+    - search [ref=e14]:
+      - generic [ref=e15]:
+        - combobox [ref=e17]: estate planning attorney Oklahoma City OK
+        - button "Search" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: ?
+        - button "Close" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: ?
+    - region "Available filters for this search" [ref=e253]:
+      - generic [ref=e256]:
+        - button "Rating" [ref=e258] [cursor=pointer]:
+          - generic [ref=e259]:
+            - generic [ref=e260]: ?
+            - generic [ref=e261]: Rating
+            - generic [ref=e262]: ?
+        - button "Hours" [ref=e264] [cursor=pointer]:
+          - generic [ref=e265]:
+            - generic [ref=e266]: ?
+            - generic [ref=e267]: Hours
+            - generic [ref=e268]: ?
+        - button "All filters" [ref=e270] [cursor=pointer]:
+          - generic [ref=e271]:
+            - generic [ref=e272]: ?
+            - generic [ref=e273]: All filters
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - list [ref=e27]:
+          - listitem [ref=e28]:
+            - button "Menu" [ref=e29] [cursor=pointer]:
+              - generic [ref=e31]: ?
+          - listitem [ref=e32]:
+            - button "Saved" [ref=e33] [cursor=pointer]:
+              - generic [ref=e35]: ?
+              - generic [ref=e37]: Saved
+          - listitem [ref=e38]:
+            - button "Recents" [disabled] [ref=e39]:
+              - generic [ref=e41]: ?
+              - generic [ref=e43]: Recents
+          - listitem [ref=e45]:
+            - button "Get app" [ref=e46] [cursor=pointer]:
+              - generic [ref=e48]: ?
+              - generic [ref=e50]: Get app
+        - main [ref=e55]:
+          - generic [ref=e56]:
+            - feed "Results for estate planning attorney Oklahoma City OK" [ref=e57]:
+              - generic [ref=e58]:
+                - generic [ref=e60]:
+                  - heading "Results" [level=1] [ref=e61]
+                  - button "Learn more about legal disclosure regarding public reviews on Google Maps" [ref=e65]:
+                    - generic [ref=e69]: ?
+                - button "Share" [ref=e73]:
+                  - generic [ref=e74] [cursor=pointer]:
+                    - generic [ref=e75]: ?
+                    - generic [ref=e76]: Share
+              - article "Seda Estate Planning & Probate - NW Oklahoma City Office" [ref=e78]:
+                - link "Seda Estate Planning & Probate - NW Oklahoma City Office" [ref=e79] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Seda+Estate+Planning+%26+Probate+-+NW+Oklahoma+City+Office/data=!4m7!3m6!1s0x87b21b7b98751a13:0xbb23e86a4f57af43!8m2!3d35.567774!4d-97.5665137!16s%2Fg%2F11md7yyqk6!19sChIJExp1mHsbsocRQ69XT2roI7s?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Seda Estate Planning & Probate - NW Oklahoma City Office
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "5.0 stars": "5.0"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e80] [cursor=pointer]:
+                                    - generic [ref=e81]: ?
+                                - generic: · 9520 N May Ave Suite 217
+                              - generic:
+                                - generic:
+                                  - generic: Open 24 hours
+                                - generic: · (405) 839-7289
+                    - generic:
+                      - link "Visit Seda Estate Planning & Probate - NW Oklahoma City Office's website" [ref=e82] [cursor=pointer]:
+                        - /url: https://www.sedalawfirm.com/our-locations/okc-probate-estate-planning/
+                        - generic [ref=e84]: ?
+                        - generic [ref=e85]: Website
+                      - button "Get directions to Seda Estate Planning & Probate - NW Oklahoma City Office" [ref=e86] [cursor=pointer]:
+                        - generic [ref=e88]: ?
+                        - generic [ref=e89]: Directions
+              - article "Seda Estate Planning & Probate" [ref=e92]:
+                - link "Seda Estate Planning & Probate" [ref=e93] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Seda+Estate+Planning+%26+Probate/data=!4m7!3m6!1s0x87b213eb3f4f1101:0xd8725dfd2a484933!8m2!3d35.3636803!4d-97.5464979!16s%2Fg%2F11j8qtqqj9!19sChIJARFPP-sTsocRM0lIKv1dctg?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Seda Estate Planning & Probate
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "5.0 stars": "5.0"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e94] [cursor=pointer]:
+                                    - generic [ref=e95]: ?
+                                - generic: · 10415 Greenbriar Pl STE A
+                              - generic:
+                                - generic:
+                                  - generic: Open 24 hours
+                                - generic: · (405) 877-6650
+                    - generic:
+                      - link "Visit Seda Estate Planning & Probate's website" [ref=e96] [cursor=pointer]:
+                        - /url: https://www.sedalawfirm.com/our-locations/okc-probate-estate-planning/
+                        - generic [ref=e98]: ?
+                        - generic [ref=e99]: Website
+                      - button "Get directions to Seda Estate Planning & Probate" [ref=e100] [cursor=pointer]:
+                        - generic [ref=e102]: ?
+                        - generic [ref=e103]: Directions
+              - article "Oath - Oklahoma City Estate Planning & Investment Attorneys" [ref=e106]:
+                - link "Oath - Oklahoma City Estate Planning & Investment Attorneys" [ref=e107] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Oath+-+Oklahoma+City+Estate+Planning+%26+Investment+Attorneys/data=!4m7!3m6!1s0x87b217e696fbae1f:0xac37fa43d1992a07!8m2!3d35.471739!4d-97.5216406!16s%2Fg%2F11g0l9q7z9!19sChIJH677luYXsocRByqZ0UP6N6w?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Oath - Oklahoma City Estate Planning & Investment Attorneys
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.9 stars": "4.9"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e108] [cursor=pointer]:
+                                    - generic [ref=e109]: ?
+                                - generic: · 435 N Walker Ave STE 101
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8:30 AM Mon
+                                - generic: · (405) 296-3900
+                    - generic:
+                      - link "Visit Oath - Oklahoma City Estate Planning & Investment Attorneys's website" [ref=e110] [cursor=pointer]:
+                        - /url: https://www.oath.law/offices/oklahoma-city
+                        - generic [ref=e112]: ?
+                        - generic [ref=e113]: Website
+                      - button "Get directions to Oath - Oklahoma City Estate Planning & Investment Attorneys" [ref=e114] [cursor=pointer]:
+                        - generic [ref=e116]: ?
+                        - generic [ref=e117]: Directions
+              - article "Parman & Easterday" [ref=e120]:
+                - link "Parman & Easterday" [ref=e121] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Parman+%26+Easterday/data=!4m7!3m6!1s0x87b21cf52d1ab429:0x2c98215406c17554!8m2!3d35.6123237!4d-97.5706787!16s%2Fg%2F1tgvf41v!19sChIJKbQaLfUcsocRVHXBBlQhmCw?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Parman & Easterday
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.9 stars": "4.9"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e122] [cursor=pointer]:
+                                    - generic [ref=e123]: ?
+                                - generic: · 13913 Quail Pointe Dr Suite B
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 9 AM Mon
+                                - generic: · (405) 843-6100
+                    - generic:
+                      - link "Visit Parman & Easterday's website" [ref=e124] [cursor=pointer]:
+                        - /url: https://www.parmanlaw.com/
+                        - generic [ref=e126]: ?
+                        - generic [ref=e127]: Website
+                      - button "Get directions to Parman & Easterday" [ref=e128] [cursor=pointer]:
+                        - generic [ref=e130]: ?
+                        - generic [ref=e131]: Directions
+              - article "Cortes Law Firm" [ref=e134]:
+                - link "Cortes Law Firm" [ref=e135] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Cortes+Law+Firm/data=!4m7!3m6!1s0x87b2198d9777f851:0xbebd5630703c5dd4!8m2!3d35.5319517!4d-97.5148253!16s%2Fg%2F1tgwbdxx!19sChIJUfh3l40ZsocR1F08cDBWvb4?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Cortes Law Firm
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.9 stars": "4.9"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e136] [cursor=pointer]:
+                                    - generic [ref=e137]: ?
+                                - generic: · 5801 Broadway Extension Hwy Suite 110
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 9 AM Mon
+                                - generic: · (405) 213-0856
+                    - generic:
+                      - link "Visit Cortes Law Firm's website" [ref=e138] [cursor=pointer]:
+                        - /url: https://corteslawfirm.com/
+                        - generic [ref=e140]: ?
+                        - generic [ref=e141]: Website
+                      - button "Get directions to Cortes Law Firm" [ref=e142] [cursor=pointer]:
+                        - generic [ref=e144]: ?
+                        - generic [ref=e145]: Directions
+              - article "Compass Legal Planning PC" [ref=e148]:
+                - link "Compass Legal Planning PC" [ref=e149] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Compass+Legal+Planning+PC/data=!4m7!3m6!1s0x87b21735a48fffff:0x69469b3096db33c2!8m2!3d35.5680615!4d-97.4997761!16s%2Fg%2F11p0vxs1gs!19sChIJ__-PpDUXsocRwjPbljCbRmk?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Compass Legal Planning PC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.9 stars": "4.9"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e150] [cursor=pointer]:
+                                    - generic [ref=e151]: ?
+                                - generic: · 701 Cedar Lake Blvd Suite 310
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 9 AM Mon
+                                - generic: · (405) 968-7007
+                    - generic:
+                      - link "Visit Compass Legal Planning PC's website" [ref=e152] [cursor=pointer]:
+                        - /url: https://compasslegalplanning.com/
+                        - generic [ref=e154]: ?
+                        - generic [ref=e155]: Website
+                      - button "Get directions to Compass Legal Planning PC" [ref=e156] [cursor=pointer]:
+                        - generic [ref=e158]: ?
+                        - generic [ref=e159]: Directions
+              - article "Seda Estate Planning & Probate - Edmond Office" [ref=e162]:
+                - link "Seda Estate Planning & Probate - Edmond Office" [ref=e163] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Seda+Estate+Planning+%26+Probate+-+Edmond+Office/data=!4m7!3m6!1s0x87b21f7a52fda5bd:0x9f2e4cdf60f0761a!8m2!3d35.6400004!4d-97.4827914!16s%2Fg%2F11lczqtq69!19sChIJvaX9UnofsocRGnbwYN9MLp8?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Seda Estate Planning & Probate - Edmond Office
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "5.0 stars": "5.0"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e164] [cursor=pointer]:
+                                    - generic [ref=e165]: ?
+                                - generic: "· 2 E 11th St #115"
+                              - generic:
+                                - generic:
+                                  - generic: Open 24 hours
+                                - generic: · (405) 562-7321
+                    - generic:
+                      - link "Visit Seda Estate Planning & Probate - Edmond Office's website" [ref=e166] [cursor=pointer]:
+                        - /url: https://www.sedalawfirm.com/our-locations/edmond-probate-estate-planning/
+                        - generic [ref=e168]: ?
+                        - generic [ref=e169]: Website
+                      - button "Get directions to Seda Estate Planning & Probate - Edmond Office" [ref=e170] [cursor=pointer]:
+                        - generic [ref=e172]: ?
+                        - generic [ref=e173]: Directions
+              - article "Oklahoma Estate Attorneys PLLC" [ref=e176]:
+                - link "Oklahoma Estate Attorneys PLLC" [ref=e177] [cursor=pointer]:
+                  - /url: https://www.google.com/maps/place/Oklahoma+Estate+Attorneys+PLLC/data=!4m7!3m6!1s0x87b21dd5a00712fd:0x74b449fc3c44a9a7!8m2!3d35.6301245!4d-97.5682711!16s%2Fg%2F11rht7q1q6!19sChIJ_RIHoNUdsocRp6lEPPxJtHQ?authuser=0&hl=en&rclk=1
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: Oklahoma Estate Attorneys PLLC
+                            - generic:
+                              - generic:
+                                - generic:
+                                  - img "4.7 stars": "4.7"
+                            - generic:
+                              - generic:
+                                - generic: Estate planning attorney
+                                - generic:
+                                  - text: ·
+                                  - img "Wheelchair accessible entrance" [ref=e178] [cursor=pointer]:
+                                    - generic [ref=e179]: ?
+                                - generic: · 2909 NW 156th St
+                              - generic:
+                                - generic:
+                                  - generic: Closed · Opens 8 AM Mon
+                                - generic: · (405) 733-8686
+                    - generic:
+                      - link "Visit Oklahoma Estate Attorneys PLLC's website" [ref=e180] [cursor=pointer]:
+                        - /url: http://estateplan.expert/
+                        - generic [ref=e182]: ?
+                        - generic [ref=e183]: Website
+                      - button "Get directions to Oklahoma Estate Attorneys PLLC" [ref=e184] [cursor=pointer]:
+                        - generic [ref=e186]: ?
+                        - generic [ref=e187]: Directions
+            - generic [ref=e223]:
+              - generic [ref=e225]: ?
+              - generic [ref=e226]:
+                - text: You're seeing a limited view of Google Maps.
+                - button "Learn more about limited view" [ref=e227] [cursor=pointer]: Learn more
+            - heading "Get the most out of Google Maps Sign in" [level=2] [ref=e231]:
+              - generic [ref=e232]: Get the most out of Google Maps
+              - button "Sign in" [ref=e235] [cursor=pointer]:
+                - generic [ref=e237]: Sign in
+            - checkbox "Update results when map moves" [ref=e239] [cursor=pointer]:
+              - generic [ref=e241]: ?
+              - text: Update results when map moves
+      - button "Collapse side panel" [ref=e243] [cursor=pointer]:
+        - generic [ref=e244]: ?
+    - generic [ref=e277]:
+      - button "Google apps" [ref=e281] [cursor=pointer]:
+        - img [ref=e282]
+      - link "Sign in" [ref=e285] [cursor=pointer]:
+        - /url: https://accounts.google.com/ServiceLogin?hl=en&passive=true&continue=https%3A%2F%2Fwww.google.com%2Fmaps%2Fsearch%2Festate%2Bplanning%2Battorney%2BOklahoma%2BCity%2BOK%2F%4035.4398104%2C-97.5475856%2C10z%2Fdata%3D!3m1!4b1%3Fg_ep%3DEgoyMDI2MDQwMS4wIMCaEyoASAFQAw%253D%253D&service=local&ec=GAZAcQ
+    - generic:
+      - generic:
+        - button "Show Your Location" [ref=e288] [cursor=pointer]:
+          - generic [ref=e290]: ?
+        - generic [ref=e292] [cursor=pointer]:
+          - button "Zoom in" [ref=e293]
+          - button "Zoom out" [ref=e296]
+      - button "Browse Street View images" [ref=e304]
+      - generic [ref=e306]:
+        - generic "Interactive map" [ref=e307]
+        - generic [ref=e311] [cursor=pointer]:
+          - generic [ref=e312]: ?
+          - generic [ref=e313]: Layers
+        - button "Layers" [ref=e314] [cursor=pointer]
+    - generic [ref=e316]:
+      - contentinfo [ref=e319]:
+        - text: Imagery ©2026 , Map data ©2026 Google
+        - button "United States" [ref=e320] [cursor=pointer]
+        - button "Terms" [ref=e321] [cursor=pointer]
+        - button "Privacy" [ref=e322] [cursor=pointer]
+        - button "Send Product Feedback" [ref=e323] [cursor=pointer]
+      - button "5 mi" [ref=e325] [cursor=pointer]: 5 mi

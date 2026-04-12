@@ -1,0 +1,89 @@
+{
+  "run_name": "20260327_canonical_v1_afterpass",
+  "benchmark_file": "C:\\Users\\beyon\\OneDrive\\Desktop\\CLARION\\law-firm-insights-main\\data\\calibration\\canonical\\benchmark_canonical_v1.json",
+  "focus_themes": [
+    "communication_responsiveness",
+    "expectation_setting",
+    "professionalism_trust",
+    "communication_clarity",
+    "outcome_satisfaction"
+  ],
+  "total_reviews": 24,
+  "total_expected_labels": 52,
+  "total_disagreements": 30,
+  "zero_disagreement_reviews": 9,
+  "agreement_rate": 0.375,
+  "disagreement_by_type": {
+    "wrong_severity": 1,
+    "missing_theme": 22,
+    "extra_theme": 5,
+    "wrong_polarity": 2
+  },
+  "disagreement_by_theme": {
+    "communication_responsiveness": 8,
+    "expectation_setting": 5,
+    "outcome_satisfaction": 7,
+    "communication_clarity": 5,
+    "professionalism_trust": 5
+  },
+  "star_band": {
+    "1": {
+      "reviews": 10,
+      "reviews_with_disagreements": 7,
+      "total_disagreements": 18,
+      "review_disagreement_rate": 0.7,
+      "avg_disagreements_per_review": 1.8
+    },
+    "2": {
+      "reviews": 4,
+      "reviews_with_disagreements": 2,
+      "total_disagreements": 4,
+      "review_disagreement_rate": 0.5,
+      "avg_disagreements_per_review": 1.0
+    },
+    "3": {
+      "reviews": 2,
+      "reviews_with_disagreements": 0,
+      "total_disagreements": 0,
+      "review_disagreement_rate": 0.0,
+      "avg_disagreements_per_review": 0.0
+    },
+    "4": {
+      "reviews": 6,
+      "reviews_with_disagreements": 4,
+      "total_disagreements": 4,
+      "review_disagreement_rate": 0.666667,
+      "avg_disagreements_per_review": 0.666667
+    },
+    "5": {
+      "reviews": 2,
+      "reviews_with_disagreements": 2,
+      "total_disagreements": 4,
+      "review_disagreement_rate": 1.0,
+      "avg_disagreements_per_review": 2.0
+    }
+  },
+  "mixed_sentiment": {
+    "single_negative": {
+      "reviews": 15,
+      "reviews_with_disagreements": 8,
+      "total_disagreements": 20,
+      "review_disagreement_rate": 0.533333,
+      "avg_disagreements_per_review": 1.333333
+    },
+    "mixed": {
+      "reviews": 4,
+      "reviews_with_disagreements": 2,
+      "total_disagreements": 3,
+      "review_disagreement_rate": 0.5,
+      "avg_disagreements_per_review": 0.75
+    },
+    "single_positive": {
+      "reviews": 5,
+      "reviews_with_disagreements": 5,
+      "total_disagreements": 7,
+      "review_disagreement_rate": 1.0,
+      "avg_disagreements_per_review": 1.4
+    }
+  }
+}

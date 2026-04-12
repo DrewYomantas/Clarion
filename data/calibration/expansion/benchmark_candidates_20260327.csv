@@ -1,0 +1,13 @@
+record_id,priority,candidate_reason
+heartland_1,high,"Estate-planning negative review with explicit follow-through failure, long narrative, and clear governance risk."
+heartland_4,medium,"Short 4-star estate review adds clean informative-positive coverage in a currently thin practice/geography slice."
+greatlakes_4_mixed,high,"4-star mixed-sentiment review with delayed updates and eventual progress; good fit for known 4-star benchmark weakness."
+greatlakes_3,high,"3-star fee/settlement math complaint captures mixed value dissatisfaction without total firm rejection."
+turnbull_2,high,"2-star collections anxiety review adds clearer low-rating responsiveness and expectation-setting tension."
+century_1,high,"1-star promise-versus-reality review covers lawsuit escalation, over-promising, and inconsistent updates."
+century_5,medium,"5-star debt-defense review has strong expectation-setting and explanation language with explicit next-step guidance."
+fla_1,high,"Family-law 1-star review broadens practice-area diversity and adds strong low-rating effort/outcome disappointment."
+ashoori_1,high,"Immigration 1-star review adds handoff failure and oversight breakdown not well represented in the current benchmark."
+ashoori_5,medium,"Immigration 5-star review adds long-form positive timeliness/responsiveness signal from outside the Midwest-heavy seed set."
+robertjewett_5,medium,"Texas estate-planning 5-star review broadens geography and adds strong billing-transparency plus process-clarity language."
+consumerjustice_4,medium,"4-star consumer/employment mixed review adds positive tone with a live fee caveat."
