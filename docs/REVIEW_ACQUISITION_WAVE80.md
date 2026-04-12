@@ -444,3 +444,15 @@ Current next pass priorities:
 - no synthetic rows
 - no paraphrased raw review text
 - no automatic promotion from corpus intake into benchmark truth
+
+36. the targeted `fee_value` engine pass (Pass 80) is now complete:
+   - added `fee seemed` to `fee_value` negative bucket
+   - added `left with $100 less` to `fee_value` negative bucket
+   - fixed escalator guard for row 112 (case-refused scenario)
+   - corrected `legacy_106` canonical expected_label from `expectation_setting` → `communication_clarity` (Pass 78 regression: engine correctly fires clarity after reroute guard removal; canonical truth was stale)
+   - `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed`
+   - canonical gate held at `24/24` clean, `0` disagreements
+   - broad improved: `94/143` → `99/143`, `65` → `60` total disagreements, `65.73%` → `69.23%`
+   - `fee_value` broad bucket: `4 → 1`
+   - updated broad bucket map: `professionalism_trust 11`, `empathy_support 9`, `expectation_setting 8`, `outcome_satisfaction 8`, `timeliness_progress 6`, `communication_clarity 6`, `communication_responsiveness 5`, `office_staff_experience 4`, `billing_transparency 2`, `fee_value 1`
+   - next lane decision: top 3 buckets (`professionalism_trust 11`, `empathy_support 9`, `expectation_setting 8`) all confirmed driver-exhausted; real question is whether `billing_transparency` (2 rows) or an `office_staff_experience` guard suppression is worth the next targeted fix, or whether the project should shift focus to the Render launch-truth pass
