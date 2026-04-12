@@ -8853,6 +8853,14 @@ def dashboard():
 
     """Admin dashboard with overview and account status."""
 
+    # SPA handoff: serve React shell immediately when the built dist is present.
+    # The legacy redirect at the bottom of this function redirects to the same
+    # Flask-owned /dashboard route, producing a self-referential 302 loop on
+    # hard refresh (ERR_TOO_MANY_REDIRECTS on Render).  This early return
+    # mirrors the pattern already used by /login GET, /pricing, and the 404 handler.
+    if _react_dist_exists:
+        return send_from_directory(_REACT_DIST, 'index.html')
+
     analysis = analyze_reviews()
 
     account_status = current_user.get_account_status()
