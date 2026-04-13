@@ -6694,10 +6694,14 @@ def _analyze_reviews_tx(c, user_id):
 
     analysis_reviews = reviews
 
-    if not current_user.is_anonymous:
-
-        if not current_user.has_active_subscription() and not current_user.has_unused_one_time_reports():
-
+    # CLI / admin paths have no request context so current_user is None or the
+    # anonymous proxy is absent entirely.  In those cases skip the free-plan cap:
+    # the caller (seed-demo-workspace, admin upload) has already validated the user
+    # and passes subscription_type explicitly.  The cap only applies to live
+    # authenticated web requests.
+    _cu = current_user._get_current_object() if hasattr(current_user, '_get_current_object') else None
+    if _cu is not None and not _cu.is_anonymous:
+        if not _cu.has_active_subscription() and not _cu.has_unused_one_time_reports():
             analysis_reviews = reviews[:FREE_PLAN_MAX_REVIEWS_PER_REPORT]
 
 
