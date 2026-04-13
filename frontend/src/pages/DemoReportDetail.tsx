@@ -17,8 +17,8 @@ const DemoReportDetail = () => {
         <section className="section-container section-padding">
           <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <p className="gov-badge gov-badge-neutral mb-3">Sample Workspace</p>
-            <h1 className="text-2xl font-bold text-slate-900">Sample report unavailable</h1>
-            <p className="mt-2 text-sm text-slate-600">This sample report could not be loaded.</p>
+            <h1 className="text-2xl font-bold text-slate-900">Sample brief unavailable</h1>
+            <p className="mt-2 text-sm text-slate-600">This sample governance brief could not be loaded.</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link to="/demo" className="gov-btn-secondary">
                 Back to sample workspace
