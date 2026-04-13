@@ -260,6 +260,11 @@ export interface User {
   email: string;
   firm_name: string;
   email_verified?: boolean;
+  pending_email_change?: {
+    new_email: string;
+    requested_at?: string | null;
+    last_sent_at?: string | null;
+  } | null;
   onboarding_complete?: boolean;
   firm_id?: number | null;
   firm_role?: "owner" | "partner" | "member" | null;
@@ -1773,6 +1778,7 @@ export async function register(data: RegisterData): Promise<AuthResponse> {
 
 export interface VerifyEmailResponse {
   verified: boolean;
+  purpose?: "signup" | "email_change";
   error?: string;
 }
 
@@ -1787,6 +1793,17 @@ export interface ResendVerificationResponse {
   error?: string;
 }
 
+export interface PendingEmailChangeResponse {
+  success: boolean;
+  user?: User;
+  message?: string;
+  verification_sent?: boolean;
+  verification_delivery_available?: boolean;
+  verification_delivery_method?: string | null;
+  verification_delivery_error?: string | null;
+  error?: string;
+}
+
 export async function verifyEmailToken(token: string): Promise<VerifyEmailResponse> {
   try {
     const response = await fetch(`${API_BASE}/auth/verify-email/${encodeURIComponent(token)}`, {
@@ -1796,6 +1813,10 @@ export async function verifyEmailToken(token: string): Promise<VerifyEmailRespon
     const payload = await safeParseJson(response);
     return {
       verified: Boolean(payload.verified),
+      purpose:
+        payload.purpose === "email_change" || payload.purpose === "signup"
+          ? payload.purpose
+          : undefined,
       error:
         response.ok && payload.verified === true
           ? undefined
@@ -2154,6 +2175,109 @@ export async function updateAccountProfile(input: { firm_name: string }): Promis
 
   }
 
+}
+
+export async function requestEmailChange(input: {
+  new_email: string;
+  current_password: string;
+}): Promise<PendingEmailChangeResponse> {
+  try {
+    const response = await fetch(`${API_BASE}/account/change-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(input),
+    });
+    const payload = await safeParseJson(response);
+    if (!response.ok || payload.success === false) {
+      return {
+        success: false,
+        error: (typeof payload.error === "string" ? payload.error : undefined) || "Unable to start email change.",
+      };
+    }
+    return {
+      success: true,
+      user: (payload.user as User) || undefined,
+      message: typeof payload.message === "string" ? payload.message : undefined,
+      verification_sent: typeof payload.verification_sent === "boolean" ? payload.verification_sent : undefined,
+      verification_delivery_available:
+        typeof payload.verification_delivery_available === "boolean"
+          ? payload.verification_delivery_available
+          : undefined,
+      verification_delivery_method:
+        typeof payload.verification_delivery_method === "string" || payload.verification_delivery_method === null
+          ? payload.verification_delivery_method
+          : undefined,
+      verification_delivery_error:
+        typeof payload.verification_delivery_error === "string" || payload.verification_delivery_error === null
+          ? payload.verification_delivery_error
+          : undefined,
+    };
+  } catch (error) {
+    console.error("[authService] Email change request failed:", error);
+    return { success: false, error: "Unable to start email change right now." };
+  }
+}
+
+export async function resendPendingEmailChange(): Promise<PendingEmailChangeResponse> {
+  try {
+    const response = await fetch(`${API_BASE}/account/change-email/resend`, {
+      method: "POST",
+      credentials: "include",
+    });
+    const payload = await safeParseJson(response);
+    if (!response.ok || payload.success === false) {
+      return {
+        success: false,
+        error: (typeof payload.error === "string" ? payload.error : undefined) || "Unable to resend email change verification.",
+      };
+    }
+    return {
+      success: true,
+      user: (payload.user as User) || undefined,
+      message: typeof payload.message === "string" ? payload.message : undefined,
+      verification_sent: typeof payload.verification_sent === "boolean" ? payload.verification_sent : undefined,
+      verification_delivery_available:
+        typeof payload.verification_delivery_available === "boolean"
+          ? payload.verification_delivery_available
+          : undefined,
+      verification_delivery_method:
+        typeof payload.verification_delivery_method === "string" || payload.verification_delivery_method === null
+          ? payload.verification_delivery_method
+          : undefined,
+      verification_delivery_error:
+        typeof payload.verification_delivery_error === "string" || payload.verification_delivery_error === null
+          ? payload.verification_delivery_error
+          : undefined,
+    };
+  } catch (error) {
+    console.error("[authService] Pending email change resend failed:", error);
+    return { success: false, error: "Unable to resend email change verification right now." };
+  }
+}
+
+export async function cancelPendingEmailChange(): Promise<PendingEmailChangeResponse> {
+  try {
+    const response = await fetch(`${API_BASE}/account/change-email`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    const payload = await safeParseJson(response);
+    if (!response.ok || payload.success === false) {
+      return {
+        success: false,
+        error: (typeof payload.error === "string" ? payload.error : undefined) || "Unable to cancel pending email change.",
+      };
+    }
+    return {
+      success: true,
+      user: (payload.user as User) || undefined,
+      message: typeof payload.message === "string" ? payload.message : undefined,
+    };
+  } catch (error) {
+    console.error("[authService] Pending email change cancel failed:", error);
+    return { success: false, error: "Unable to cancel pending email change right now." };
+  }
 }
 
 export async function createSupportTicket(input: {

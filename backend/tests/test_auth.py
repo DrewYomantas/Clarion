@@ -7,7 +7,7 @@ from services.email_service import EmailDeliveryResult, resolve_from_email_choic
 
 os.environ.setdefault('SECRET_KEY', 'test-secret')
 
-from app import app, create_email_verification_token, db_connect, init_db
+from app import app, create_email_verification_token, create_pending_email_change_token, db_connect, init_db
 
 
 @pytest.fixture
@@ -224,6 +224,8 @@ def test_api_verify_email_logs_user_in_with_onboarding_incomplete(client, monkey
     c.execute('SELECT id FROM users WHERE email = ?', (email,))
     user_id = c.fetchone()[0]
     conn.close()
+    client.get(f'/api/auth/verify-email/{create_email_verification_token(user_id, email)}')
+    client.get(f'/api/auth/verify-email/{create_email_verification_token(user_id, email)}')
 
     token = create_email_verification_token(user_id, email)
     verify_resp = client.get(f'/api/auth/verify-email/{token}')
@@ -515,3 +517,208 @@ def test_api_resend_verification_reports_runtime_failure(client, monkeypatch):
     assert body.get('verification_delivery_method') == 'resend'
     assert body.get('verification_delivery_error_type') == 'provider_network_error'
     assert 'could not be reached' in str(body.get('verification_delivery_error') or '').lower()
+
+
+def test_api_account_change_email_creates_pending_change(client, monkeypatch):
+    email = f"email-change-{uuid.uuid4().hex[:8]}@example.com"
+    new_email = f"email-change-new-{uuid.uuid4().hex[:8]}@example.com"
+
+    register_resp = client.post(
+        '/api/auth/register',
+        json={
+            'email': email,
+            'password': 'StrongPass1!',
+            'full_name': 'Email Change User',
+            'firm_name': 'Email Change LLP',
+        },
+    )
+    assert register_resp.status_code == 201
+
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT id FROM users WHERE email = ?', (email,))
+    user_id = c.fetchone()[0]
+    conn.close()
+    client.get(f'/api/auth/verify-email/{create_email_verification_token(user_id, email)}')
+
+    import app as app_module
+
+    monkeypatch.setenv('RESEND_API_KEY', 'test-resend-key')
+    monkeypatch.setenv('RESEND_FROM_EMAIL', 'onboarding@example.com')
+    monkeypatch.setattr(
+        app_module,
+        'send_email_change_verification_with_result',
+        lambda *args, **kwargs: EmailDeliveryResult(success=True, provider='resend', from_email='Clarion <onboarding@example.com>'),
+    )
+
+    response = client.post(
+        '/api/account/change-email',
+        json={'new_email': new_email, 'current_password': 'StrongPass1!'},
+    )
+    assert response.status_code == 200
+    body = response.get_json()
+    assert body is not None
+    assert body.get('success') is True
+    assert body.get('verification_sent') is True
+    assert ((body.get('user') or {}).get('pending_email_change') or {}).get('new_email') == new_email
+    assert (body.get('user') or {}).get('email') == email
+
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT email FROM users WHERE email = ?', (email,))
+    assert c.fetchone() is not None
+    c.execute('SELECT pending_email FROM pending_email_changes WHERE user_id = ?', (user_id,))
+    pending_row = c.fetchone()
+    conn.close()
+    assert pending_row is not None
+    assert pending_row[0] == new_email
+
+
+def test_api_account_change_email_rejects_duplicate_email(client):
+    original_email = f"original-{uuid.uuid4().hex[:8]}@example.com"
+    existing_email = f"existing-{uuid.uuid4().hex[:8]}@example.com"
+    client.post(
+        '/api/auth/register',
+        json={
+            'email': original_email,
+            'password': 'StrongPass1!',
+            'full_name': 'Original User',
+            'firm_name': 'Original LLP',
+        },
+    )
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT id FROM users WHERE email = ?', (original_email,))
+    original_user_id = c.fetchone()[0]
+    conn.close()
+    client.get(f'/api/auth/verify-email/{create_email_verification_token(original_user_id, original_email)}')
+    with client.session_transaction() as session:
+        session.clear()
+    client.post(
+        '/api/auth/register',
+        json={
+            'email': existing_email,
+            'password': 'StrongPass1!',
+            'full_name': 'Existing User',
+            'firm_name': 'Existing LLP',
+        },
+    )
+    login_resp = client.post(
+        '/api/auth/login',
+        json={'email': original_email, 'password': 'StrongPass1!'},
+    )
+    assert login_resp.status_code == 200
+
+    response = client.post(
+        '/api/account/change-email',
+        json={'new_email': existing_email, 'current_password': 'StrongPass1!'},
+    )
+    assert response.status_code == 409
+    body = response.get_json()
+    assert body is not None
+    assert body.get('success') is False
+
+
+def test_api_verify_email_confirms_pending_email_change(client):
+    current_email = f"current-{uuid.uuid4().hex[:8]}@example.com"
+    new_email = f"updated-{uuid.uuid4().hex[:8]}@example.com"
+
+    register_resp = client.post(
+        '/api/auth/register',
+        json={
+            'email': current_email,
+            'password': 'StrongPass1!',
+            'full_name': 'Pending Change User',
+            'firm_name': 'Pending Change LLP',
+        },
+    )
+    assert register_resp.status_code == 201
+
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT id FROM users WHERE email = ?', (current_email,))
+    user_id = c.fetchone()[0]
+    conn.close()
+    client.get(f'/api/auth/verify-email/{create_email_verification_token(user_id, current_email)}')
+    conn = db_connect()
+    c = conn.cursor()
+    now_iso = '2026-01-01T00:00:00+00:00'
+    c.execute(
+        '''
+        INSERT INTO pending_email_changes (user_id, pending_email, requested_at, last_sent_at)
+        VALUES (?, ?, ?, ?)
+        ''',
+        (user_id, new_email, now_iso, now_iso),
+    )
+    conn.commit()
+    conn.close()
+
+    token = create_pending_email_change_token(user_id, new_email)
+    verify_resp = client.get(f'/api/auth/verify-email/{token}')
+    assert verify_resp.status_code == 200
+    verify_body = verify_resp.get_json()
+    assert verify_body is not None
+    assert verify_body.get('verified') is True
+    assert verify_body.get('purpose') == 'email_change'
+    assert (verify_body.get('user') or {}).get('email') == new_email
+    assert (verify_body.get('user') or {}).get('email_verified') is True
+    assert (verify_body.get('user') or {}).get('pending_email_change') is None
+
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT email, username, email_verified FROM users WHERE id = ?', (user_id,))
+    row = c.fetchone()
+    c.execute('SELECT pending_email FROM pending_email_changes WHERE user_id = ?', (user_id,))
+    pending_row = c.fetchone()
+    conn.close()
+    assert row[0] == new_email
+    assert row[1] == new_email
+    assert int(row[2] or 0) == 1
+    assert pending_row is None
+
+
+def test_api_account_change_email_cancel_clears_pending_change(client):
+    email = f"cancel-change-{uuid.uuid4().hex[:8]}@example.com"
+    pending_email = f"pending-{uuid.uuid4().hex[:8]}@example.com"
+
+    register_resp = client.post(
+        '/api/auth/register',
+        json={
+            'email': email,
+            'password': 'StrongPass1!',
+            'full_name': 'Cancel Change User',
+            'firm_name': 'Cancel Change LLP',
+        },
+    )
+    assert register_resp.status_code == 201
+
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT id FROM users WHERE email = ?', (email,))
+    user_id = c.fetchone()[0]
+    conn.close()
+    client.get(f'/api/auth/verify-email/{create_email_verification_token(user_id, email)}')
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute(
+        '''
+        INSERT INTO pending_email_changes (user_id, pending_email, requested_at, last_sent_at)
+        VALUES (?, ?, '2026-01-01T00:00:00+00:00', '2026-01-01T00:00:00+00:00')
+        ''',
+        (user_id, pending_email)
+    )
+    conn.commit()
+    conn.close()
+
+    response = client.delete('/api/account/change-email')
+    assert response.status_code == 200
+    body = response.get_json()
+    assert body is not None
+    assert body.get('success') is True
+    assert (body.get('user') or {}).get('pending_email_change') is None
+
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT pending_email FROM pending_email_changes WHERE user_id = ?', (user_id,))
+    assert c.fetchone() is None
+    conn.close()

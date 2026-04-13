@@ -263,6 +263,19 @@ def send_verification_email_with_result(to_email: str, verification_link: str, f
     )
 
 
+def send_email_change_verification_with_result(to_email: str, verification_link: str, firm_name: str) -> EmailDeliveryResult:
+    return send_templated_email_result(
+        EmailPayload(
+            to_email=to_email,
+            subject="Confirm your new Clarion email",
+            template_name="verify",
+            context={"verification_link": verification_link, "firm_name": firm_name},
+        ),
+        retries=1,
+        backoff_s=0.0,
+    )
+
+
 def send_password_reset_email(to_email: str, reset_link: str, firm_name: str) -> bool:
     return send_templated_email(
         EmailPayload(

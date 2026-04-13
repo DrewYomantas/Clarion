@@ -40,6 +40,7 @@ const VerifyEmail = () => {
 
   const [view, setView] = useState<VerifyView>("verifying");
   const [error, setError] = useState("");
+  const [verifiedPurpose, setVerifiedPurpose] = useState<"signup" | "email_change">("signup");
   const transitionTimerRef = useRef<number | null>(null);
 
   const token = useMemo(() => pathToken || searchParams.get("token") || "", [pathToken, searchParams]);
@@ -67,6 +68,7 @@ const VerifyEmail = () => {
         setError(humanVerifyError(result.error || ""));
         return;
       }
+      setVerifiedPurpose(result.purpose === "email_change" ? "email_change" : "signup");
 
       // Mark verification timestamp so VerifyComplete can skip an extra /me call
       window.localStorage.setItem(VERIFICATION_COMPLETED_KEY, String(Date.now()));
@@ -139,7 +141,9 @@ const VerifyEmail = () => {
             ) : view === "verified" ? (
               <div className="flex min-h-[220px] flex-col items-center justify-center text-center animate-slide-up">
                 <CheckCircle2 size={34} className="text-emerald-600" />
-                <h1 className="mt-3 text-2xl font-semibold text-foreground">Email Verified</h1>
+                <h1 className="mt-3 text-2xl font-semibold text-foreground">
+                  {verifiedPurpose === "email_change" ? "Email Updated" : "Email Verified"}
+                </h1>
                 <p className="mt-2 text-sm text-muted-foreground">{verifiedNextStepLabel}</p>
               </div>
             ) : (
