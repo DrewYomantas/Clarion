@@ -104,10 +104,16 @@ const ActionCard = ({ action, onDelete }: ActionCardProps) => {
   const reportId = Number(action.report_id || 0) || null;
   const activity = useMemo(() => buildActivityLog(action), [action]);
 
+  const briefName = (action.report_name || "").trim();
+  const briefDate = action.report_created_at
+    ? formatApiDate(action.report_created_at, { month: "long", year: "numeric" }, "")
+    : "";
+
   const metaItems: string[] = [
     owner ? `Partner: ${owner}` : "Unassigned",
     action.due_date ? (isOverdue(action) ? `Due ${dueDate} - overdue` : `Due ${dueDate}`) : "No due date set",
-  ];
+    briefName ? `Brief: ${briefName}${briefDate ? ` · ${briefDate}` : ""}` : "",
+  ].filter(Boolean);
 
   const handleConfirmDelete = async () => {
     if (!onDelete || deleting) return;
@@ -158,7 +164,7 @@ const ActionCard = ({ action, onDelete }: ActionCardProps) => {
                 className="text-[12px] text-[#6B7280] underline underline-offset-4 transition-colors hover:text-slate-700"
                 to={`/dashboard/reports/${reportId}`}
               >
-                Open report
+                Open Governance Brief
               </Link>
             ) : (
               <span />

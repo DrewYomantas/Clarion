@@ -772,6 +772,7 @@ const SignalsPage = () => {
                     description={signal.description}
                     previousCount={signal.previousCount}
                     trendLabel={trendLabel}
+                    sourceBrief={latestReport?.name ?? null}
                     onCreateAction={selectionMode ? undefined : () => openActionForm(signal)}
                     selectionMode={selectionMode}
                     selected={selectedIds.has(signal.id)}

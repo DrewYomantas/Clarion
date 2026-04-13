@@ -31,6 +31,8 @@ export type SignalCardProps = {
   description: string;
   previousCount?: number | null;
   trendLabel?: string | null;
+  /** Source governance brief name — displayed as provenance on the card */
+  sourceBrief?: string | null;
   onCreateAction?: () => void;
   // ── Selection props (optional — used in triage / bulk-select mode) ──
   selected?: boolean;
@@ -59,6 +61,7 @@ export default function SignalCard({
   description,
   previousCount,
   trendLabel,
+  sourceBrief,
   onCreateAction,
   selected = false,
   onToggleSelect,
@@ -70,6 +73,9 @@ export default function SignalCard({
   }
   if (trendLabel) {
     metaItems.push(trendLabel);
+  }
+  if (sourceBrief) {
+    metaItems.push(`Brief: ${sourceBrief}`);
   }
 
   const summaryParts: string[] = [

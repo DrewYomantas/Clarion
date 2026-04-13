@@ -9,11 +9,10 @@
  *   Briefs            /dashboard/reports      FileText      — governance briefs
  *   Issues            /dashboard/signals      ScanLine      — client issues
  *   Follow-Through    /dashboard/actions      ClipboardList — execution
- * ── SETTINGS (below divider) ─────────────────────────────────────────────────
- *   Account           /dashboard/account      Users
- *   Team              /dashboard/team         UserPlus
  * ── ACCOUNT MENU (topbar dropdown) ──────────────────────────────────────────
- *   Meetings          /dashboard/reports      (brief-specific meeting view)
+ *   Meetings          /dashboard/meetings
+ *   Account           /dashboard/account
+ *   Team              /dashboard/team
  *   Billing           /dashboard/billing
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -25,8 +24,6 @@ import {
   FileText,
   Home,
   ScanLine,
-  UserPlus,
-  Users,
 } from "lucide-react";
 import { getLatestExposure } from "@/api/authService";
 import { useAuth } from "@/contexts/AuthContext";
@@ -68,23 +65,6 @@ const PRIMARY_NAV = [
 
 // Approval Queue is founder/admin only — not part of the public PRIMARY_NAV array.
 // It is rendered conditionally in WorkspaceLayout JSX using user?.is_admin.
-
-const SETTINGS_NAV = [
-  {
-    to: "/dashboard/account",
-    label: "Account",
-    Icon: Users,
-    iconClass: "text-[#E2E8F0]",
-    iconActiveClass: "text-white",
-  },
-  {
-    to: "/dashboard/team",
-    label: "Team",
-    Icon: UserPlus,
-    iconClass: "text-[#E2E8F0]",
-    iconActiveClass: "text-white",
-  },
-] as const;
 
 // Union type for badge key across primary nav
 type BadgeKey = "briefs";
@@ -170,12 +150,12 @@ const resolvePageLabel = (pathname: string): string => {
   // Upload is a top-level route outside /dashboard
   if (pathname === "/upload") return "New Review";
 
-  // Settings nav
-  for (const item of SETTINGS_NAV) {
-    if (pathname === item.to || pathname.startsWith(`${item.to}/`)) return item.label;
-  }
-  // Billing is in the account menu but still needs a label
-  if (pathname === "/dashboard/billing") return "Billing";
+  // Account menu routes
+  if (pathname === "/dashboard/meetings") return "Meetings";
+  if (pathname === "/dashboard/billing")  return "Billing";
+  if (pathname === "/dashboard/account")  return "Account";
+  if (pathname === "/dashboard/team")     return "Team";
+  if (pathname === "/dashboard/security") return "Security";
 
   return "Home";
 };
@@ -195,6 +175,9 @@ const resolvePageNote = (pathname: string): string => {
   }
   if (pathname === "/dashboard/reports" || pathname.startsWith("/dashboard/reports/")) {
     return "Open the partner-ready Governance Brief and confirm follow-through and next decisions.";
+  }
+  if (pathname === "/dashboard/meetings") {
+    return "Chronological record of governance review meetings and their associated briefs.";
   }
   if (pathname === "/dashboard/billing") {
     return "Manage your plan and subscription details.";
@@ -349,23 +332,6 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
             ))}
 
             {/* Approval Queue is internal-only; not surfaced in the law-firm workspace nav. */}
-
-            {/* Divider */}
-            <div className="my-4 mx-3 h-px bg-white/8" role="separator" />
-
-            {/* Settings group */}
-            <p className="workspace-shell-nav-label px-3 pb-2 pt-1">Settings</p>
-            {SETTINGS_NAV.map((item) => (
-              <NavItem
-                key={item.to}
-                to={item.to}
-                label={item.label}
-                Icon={item.Icon}
-                isActive={isActive(item.to)}
-                iconClass={item.iconClass}
-                iconActiveClass={item.iconActiveClass}
-              />
-            ))}
           </div>
         </nav>
 
@@ -415,11 +381,26 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
                     <p className="truncate text-[10px] text-[#7A6E63]">{user?.email}</p>
                   </div>
                   <Link
-                    to="/dashboard/reports"
+                    to="/dashboard/meetings"
                     onClick={() => setAccountMenuOpen(false)}
                     className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED]"
                   >
                     Meetings
+                  </Link>
+                  <div className="my-1 h-px bg-[#F0EDE8]" />
+                  <Link
+                    to="/dashboard/account"
+                    onClick={() => setAccountMenuOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED]"
+                  >
+                    Account
+                  </Link>
+                  <Link
+                    to="/dashboard/team"
+                    onClick={() => setAccountMenuOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED]"
+                  >
+                    Team
                   </Link>
                   <Link
                     to="/dashboard/billing"

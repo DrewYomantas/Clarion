@@ -10,11 +10,9 @@ import {
   getGovernanceAlerts,
   getFirmActions,
   getLatestExposure,
-  getPartnerBriefDeliveryStatus,
   getRecentGovernanceActions,
   getReportGovernanceSignals,
   getReports,
-  sendPartnerBriefEmail,
   type DashboardStats,
   type ExposureSnapshot,
   type GovernanceAlert,
@@ -44,19 +42,6 @@ const toTimestamp = (value: string | null | undefined) => {
   if (!value) return 0;
   const ts = Date.parse(value);
   return Number.isFinite(ts) ? ts : 0;
-};
-
-const formatDateTime = (value: string | null | undefined) => {
-  if (!value) return "Not available";
-  const date = new Date(value);
-  if (!Number.isFinite(date.getTime())) return "Not available";
-  return date.toLocaleString([], {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 };
 
 const formatDateOnly = (value: string | null | undefined) => {
@@ -214,8 +199,6 @@ const Dashboard = () => {
   const [teamSeatsUsed, setTeamSeatsUsed] = useState<number | null>(null);
   const [loadError, setLoadError] = useState("");
   const [baselineDismissed, setBaselineDismissed] = useState(false);
-  const [partnerMode, setPartnerMode] = useState(false);
-  const [isSendingBrief, setIsSendingBrief] = useState(false);
   const [followThroughCollapsed, setFollowThroughCollapsed] = useState(true);
 
   const baselineDismissKey = useMemo(
@@ -306,10 +289,6 @@ const Dashboard = () => {
     setBaselineDismissed(dismissed);
   }, [baselineDismissKey]);
 
-  useEffect(() => {
-    const saved = window.localStorage.getItem("dashboard-partner-mode") === "1";
-    setPartnerMode(saved);
-  }, []);
 
   const latestReadyBrief = useMemo(
     () => reports.find((report) => report.status === "ready" && report.download_pdf_url) || null,
@@ -323,7 +302,6 @@ const Dashboard = () => {
   const reviewPeriodLabel = useMemo(() => formatReviewPeriod(latestProcessedReport), [latestProcessedReport]);
   const reviewsAnalyzed = latestProcessedReport?.total_reviews ?? 0;
   const lastProcessedLabel = formatDateOnly(latestProcessedReport?.created_at);
-  const lastProcessedDateTime = formatDateTime(latestProcessedReport?.created_at);
   const readyReportCount = useMemo(() => reports.filter((report) => report.status === "ready").length, [reports]);
   const showBaselineNotice = readyReportCount === 1 && !baselineDismissed;
   const isFirstRunWorkspace = !loading && !loadError && readyReportCount === 0;
@@ -475,37 +453,6 @@ const Dashboard = () => {
     return "This cycle is active, but the latest brief is still being prepared.";
   }, [highSeveritySignalsCount, latestReadyBrief, overdueActions.length, unownedActionsCount]);
 
-  const meetingReadinessBadge = useMemo(() => {
-    if (overdueActions.length > 0) {
-      return {
-        label: "Needs immediate cleanup",
-        toneClassName: "border-rose-200 bg-rose-50 text-rose-700",
-      };
-    }
-    if (unownedActionsCount > 0) {
-      return {
-        label: "Ownership assignment needed",
-        toneClassName: "border-amber-200 bg-amber-50 text-amber-700",
-      };
-    }
-    if (highSeveritySignalsCount > 0) {
-      return {
-        label: "High-severity issues active",
-        toneClassName: "border-[#BFDBFE] bg-[#EFF6FF] text-[#1E3A8A]",
-      };
-    }
-    if (latestReadyBrief) {
-      return {
-        label: "Meeting-ready",
-        toneClassName: "border-emerald-200 bg-emerald-50 text-emerald-700",
-      };
-    }
-    return {
-      label: "Brief in preparation",
-      toneClassName: "border-slate-200 bg-slate-100 text-slate-700",
-    };
-  }, [highSeveritySignalsCount, latestReadyBrief, overdueActions.length, unownedActionsCount]);
-
   const handleExportBrief = useCallback(async (targetBrief?: ReportListItem | null) => {
     const brief = targetBrief || latestReadyBrief;
     if (!brief?.download_pdf_url) {
@@ -614,56 +561,6 @@ const Dashboard = () => {
     setBaselineDismissed(true);
   };
 
-  const togglePartnerMode = () => {
-    setPartnerMode((prev) => {
-      const next = !prev;
-      window.localStorage.setItem("dashboard-partner-mode", next ? "1" : "0");
-      return next;
-    });
-  };
-
-  const handleEmailBrief = async () => {
-    if (isSendingBrief) return;
-    if (!latestProcessedReport) {
-      toast.error("Upload feedback to generate the first governance brief before sending partner delivery.");
-      return;
-    }
-    const statusResult = await getPartnerBriefDeliveryStatus();
-    if (!statusResult.success || !statusResult.status) {
-      toast.error("Partner brief delivery status could not be confirmed. Please try again.");
-      return;
-    }
-    if (!statusResult.status.delivery_available) {
-      toast.error("Partner brief delivery is not configured for this deployment. No email was sent.");
-      return;
-    }
-    const topIssueText = topIssue ? `${topIssue.label} (${topIssueShare}%)` : "No dominant issue identified";
-    const quote = briefFeedbackQuotes[0] || "No client quote available yet.";
-    const htmlContent = `<!doctype html>
-<html>
-  <body style="font-family:Arial,sans-serif;line-height:1.5;color:#0D1B2A;">
-    <h2>Clarion Client Experience Brief</h2>
-    <p><strong>Reporting Period:</strong> ${reviewPeriodLabel}</p>
-    <p><strong>Overall Reputation Risk:</strong> ${exposureRisk}</p>
-    <p><strong>Top Client Issue:</strong> ${topIssueText}</p>
-    <p><strong>Example Client Feedback:</strong> "${quote}"</p>
-    <p><strong>Recommended Partner Discussion:</strong> ${guidance.recommendation}</p>
-  </body>
-</html>`;
-    setIsSendingBrief(true);
-    const result = await sendPartnerBriefEmail(htmlContent);
-    if (result.success) {
-      toast.success(
-        result.recipient_count && result.recipient_count > 0
-          ? `Partner brief delivered to ${result.recipient_count} configured recipient${result.recipient_count === 1 ? "" : "s"}.`
-          : "Partner brief delivered.",
-      );
-    } else {
-      toast.error(result.error || "Partner brief was not delivered.");
-    }
-    setIsSendingBrief(false);
-  };
-
   return (
     /* ── Page shell: transparent so WorkspaceLayout's warm canvas shows through ── */
     <section
@@ -697,153 +594,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* ════════════════════════════════════
-            MEETING VIEW — partner mode active
-            Brief-first, no workspace chrome
-            ════════════════════════════════════ */}
-        {partnerMode ? (
-          <section className="space-y-5">
-            <div className="rounded-[14px] border border-[#CDD9E7] bg-gradient-to-b from-white via-[#F8FBFE] to-[#F2F7FB] px-6 py-6 shadow-[0_12px_30px_rgba(13,27,42,0.1)] sm:px-7">
-              <div className="mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-[#E2E8F0] pb-4">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center rounded-full border border-[#CBD5E1] bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.07em] text-slate-600">
-                    Meeting mode
-                  </span>
-                  <span
-                    className={[
-                      "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.07em]",
-                      meetingReadinessBadge.toneClassName,
-                    ].join(" ")}
-                  >
-                    {meetingReadinessBadge.label}
-                  </span>
-                </div>
-                <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-slate-500">
-                  Artifact-first partner record
-                </p>
-              </div>
-
-              <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-                <div>
-                  <p className="gov-type-eyebrow mb-1">Partner briefing · current governance brief</p>
-                  <h2 className="mt-1 font-serif text-[34px] leading-[1.1] text-[#0D1B2A]">
-                    {latestProcessedReport ? `${reviewPeriodLabel}` : "No brief ready yet"}
-                  </h2>
-                  {latestProcessedReport ? (
-                    <p className="gov-type-body mt-2">
-                      {reviewsAnalyzed} reviews analyzed · last processed {lastProcessedDateTime}
-                    </p>
-                  ) : null}
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  {latestProcessedReport ? (
-                    <Button
-                      type="button"
-                      variant="primary"
-                      onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
-                    >
-                      Open governance brief
-                      <ChevronRight size={14} />
-                    </Button>
-                  ) : null}
-                  {latestReadyBrief ? (
-                    <Button type="button" variant="secondary" onClick={() => void handleExportBrief()}>
-                      {planUsage.pdfWatermark ? "Preview brief PDF" : "Download brief PDF"}
-                      <ChevronRight size={14} />
-                    </Button>
-                  ) : null}
-                </div>
-              </div>
-
-              {latestProcessedReport ? (
-                <div className="space-y-4">
-                  <p className="gov-type-body text-slate-700">
-                    The partner-ready record for this cycle. Review the brief, confirm follow-through state, and carry this
-                    artifact directly into the room.
-                  </p>
-
-                  <div className="grid gap-3 sm:grid-cols-3">
-                    <div className="rounded-[11px] border border-[#D9E2EC] bg-white/90 px-4 py-3">
-                      <p className="gov-type-eyebrow mb-2">Cycle period</p>
-                      <p className="gov-type-h3">{reviewPeriodLabel}</p>
-                    </div>
-                    <div className="rounded-[11px] border border-[#D9E2EC] bg-white/90 px-4 py-3">
-                      <p className="gov-type-eyebrow mb-2">Client issues</p>
-                      <p className="gov-type-h3">
-                        {latestSignals.length} active
-                        <span className="ml-1 font-normal text-[#6B7280]">({highSeveritySignalsCount} high severity)</span>
-                      </p>
-                    </div>
-                    <div className="rounded-[11px] border border-[#D9E2EC] bg-white/90 px-4 py-3">
-                      <p className="gov-type-eyebrow mb-2">Posture</p>
-                      <p className="gov-type-h3">{exposureRisk} exposure</p>
-                    </div>
-                  </div>
-
-                  <div className="rounded-[11px] border border-[#D8E4EF] bg-white/90 px-4 py-3">
-                    <p className="gov-type-eyebrow mb-1">Governance Brief includes</p>
-                    <p className="gov-type-body text-slate-700">
-                      Leadership Briefing, Issues That Matter Most, Assigned Follow-Through, Decisions &amp; Next Steps, and
-                      Supporting Client Evidence.
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <p className="gov-type-body">
-                  Upload a CSV to generate the first governance brief before using meeting view.
-                </p>
-              )}
-            </div>
-
-            {latestProcessedReport ? (
-              <div className="rounded-[12px] border border-[#D5DFEA] bg-white px-6 py-5 shadow-[0_8px_20px_rgba(13,27,42,0.06)]">
-                <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
-                  <div>
-                    <p className="gov-type-eyebrow mb-1">Pre-meeting readiness</p>
-                    <p className="gov-type-body text-slate-700">{cycleAttentionSummary}</p>
-                  </div>
-                  <span
-                    className={[
-                      "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.07em]",
-                      meetingReadinessBadge.toneClassName,
-                    ].join(" ")}
-                  >
-                    {meetingReadinessBadge.label}
-                  </span>
-                </div>
-                <div className="workspace-inline-stats mt-4">
-                  <div className="workspace-inline-stat">
-                    <p className="gov-type-eyebrow">Open follow-through</p>
-                    <p className="mt-1 text-2xl font-semibold text-[#0D1B2A]">{openActions.length}</p>
-                  </div>
-                  <div className="workspace-inline-stat">
-                    <p className="gov-type-eyebrow">Overdue items</p>
-                    <p className={`mt-1 text-2xl font-semibold ${overdueActions.length > 0 ? "text-red-600" : "text-[#0D1B2A]"}`}>
-                      {overdueActions.length}
-                    </p>
-                  </div>
-                  <div className="workspace-inline-stat">
-                    <p className="gov-type-eyebrow">High-severity issues</p>
-                    <p className={`mt-1 text-2xl font-semibold ${highSeveritySignalsCount > 0 ? "text-amber-600" : "text-[#0D1B2A]"}`}>
-                      {highSeveritySignalsCount}
-                    </p>
-                  </div>
-                </div>
-                <p className="mt-4 text-[12px] text-slate-500">
-                  Resolve overdue and unowned items before opening the brief in the meeting.
-                </p>
-              </div>
-            ) : null}
-
-            <div className="flex justify-end">
-              <Button type="button" variant="secondary" size="sm" onClick={togglePartnerMode}>
-                Exit meeting view
-              </Button>
-            </div>
-          </section>
-        ) : null}
-
-        {!partnerMode && isFirstRunWorkspace ? (
+        {isFirstRunWorkspace ? (
           <>
             <section className="mb-8 rounded-[12px] border border-[#D9E2EC] bg-white px-6 py-6 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
               <div className="grid gap-6 xl:grid-cols-[1.3fr_0.7fr]">
@@ -922,7 +673,7 @@ const Dashboard = () => {
 
         {/* Anchored-to strip: suppressed from primary view — data is surfaced in the brief card itself */}
 
-        {!partnerMode && loadError ? (
+        {loadError ? (
           <div className="mb-8">
             <DashboardCard title="Workspace status" subtitle="Connection">
               <p className="gov-body text-red-700">{loadError}</p>
@@ -930,7 +681,7 @@ const Dashboard = () => {
           </div>
         ) : null}
 
-        {!partnerMode && !isFirstRunWorkspace ? (
+        {!isFirstRunWorkspace ? (
         <section className="dash-tier">
           {/* ── Current Governance Brief — dominant hero card ── */}
           {(() => {
@@ -1226,7 +977,7 @@ const Dashboard = () => {
           </div>
 
 
-          {!partnerMode && showBaselineNotice ? (
+          {showBaselineNotice ? (
             <section className="rounded-[8px] border border-[#BFDBFE] bg-[#EFF6FF] px-[18px] py-[14px]">
               <div className="flex items-start gap-3">
                 <Info size={16} className="mt-0.5 text-[#0EA5C2]" />
@@ -1250,7 +1001,7 @@ const Dashboard = () => {
             </section>
           ) : null}
 
-          {!partnerMode && historyTruncated && historyNotice ? (
+          {historyTruncated && historyNotice ? (
             <section className="rounded-[8px] border border-[#BFDBFE] bg-[#EFF6FF] px-[18px] py-[12px] gov-body text-[#1E3A8A]">
               {historyNotice}
             </section>
