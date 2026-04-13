@@ -2857,8 +2857,10 @@ def init_db():
 
     # ── One-time data cleanup: remove trailing tilde from any firm name ────────
     # Fixes "Hargrove & Partners~" → "Hargrove & Partners" left by early setup.
+    # Use '%%~' so psycopg2 treats the leading % as a literal character rather
+    # than a parameter-format marker, which caused IndexError on Postgres startup.
     c.execute(
-        "UPDATE firms SET name = RTRIM(name, '~ ') WHERE name LIKE '%~'"
+        "UPDATE firms SET name = RTRIM(name, '~ ') WHERE name LIKE '%%~'"
     )
 
     conn.commit()
