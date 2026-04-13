@@ -37,7 +37,6 @@ import {
   ScanLine,
   UserPlus,
   Users,
-  CheckSquare,
 } from "lucide-react";
 import { getLatestExposure } from "@/api/authService";
 import { useAuth } from "@/contexts/AuthContext";
@@ -219,10 +218,13 @@ const resolvePageNote = (pathname: string): string => {
   if (pathname === "/dashboard/reports" || pathname.startsWith("/dashboard/reports/")) {
     return "Open the partner-ready governance brief and confirm follow-through and next decisions.";
   }
-  if (pathname === "/dashboard/approval-queue") {
-    return "Review items waiting for firm approval before circulation.";
+  if (pathname === "/dashboard/billing") {
+    return "Manage your plan and subscription details.";
   }
-  return "Secondary workspace settings and account details.";
+  if (pathname === "/dashboard/team") {
+    return "Manage workspace members and access.";
+  }
+  return "Manage your account and workspace preferences.";
 };
 
 export default function WorkspaceLayout({ children }: { children: React.ReactNode }) {
@@ -232,7 +234,6 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
   const navigate = useNavigate();
   const [loggingOut, setLoggingOut] = useState(false);
   const [briefsBadgeCount, setBriefsBadgeCount] = useState<number>(0);
-  const [queueBadgeCount, setQueueBadgeCount]   = useState<number>(0);
   const mainRef = useRef<HTMLElement | null>(null);
 
   const isActive = (href: string) => {
@@ -255,25 +256,6 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
     void loadNavBadges();
     return () => { active = false; controller.abort(); };
   }, []);
-
-  // Approval queue badge — polls every 60s, admin only
-  useEffect(() => {
-    if (!user?.is_admin) return;
-    let active = true;
-    const poll = async () => {
-      try {
-        const res = await fetch("/api/approval-queue/stats", {
-          credentials: "include",
-        });
-        if (!active || !res.ok) return;
-        const s = await res.json();
-        setQueueBadgeCount(s.total_pending ?? 0);
-      } catch { /* silent */ }
-    };
-    void poll();
-    const t = setInterval(poll, 60_000);
-    return () => { active = false; clearInterval(t); };
-  }, [user?.is_admin]);
 
   const handleLogOut = async () => {
     if (loggingOut) return;
@@ -336,7 +318,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
             </span>
           </div>
           <p className="mt-2.5 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[#C4A96A]/80">
-            Client Intelligence
+            Governance Workspace
           </p>
         </div>
 
@@ -363,20 +345,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
               />
             ))}
 
-            {/* Approval Queue — admin/founder only */}
-            {user?.is_admin ? (
-              <NavItem
-                to="/dashboard/approval-queue"
-                label="Approval Queue"
-                Icon={CheckSquare}
-                isActive={isActive("/dashboard/approval-queue")}
-                badgeCount={queueBadgeCount > 0 ? queueBadgeCount : undefined}
-                urgent={false}
-                iconClass="text-amber-300/70"
-                iconActiveClass="text-amber-300"
-                badgeLabel="Items pending approval"
-              />
-            ) : null}
+            {/* Approval Queue is internal-only; not surfaced in the law-firm workspace nav. */}
 
             {/* Divider */}
             <div className="my-4 mx-3 h-px bg-white/8" role="separator" />

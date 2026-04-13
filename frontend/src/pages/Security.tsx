@@ -121,12 +121,12 @@ const Security = () => {
               summary={
                 PRODUCT_FLAGS.enableTwoFactorInV1
                   ? "Email-based two-factor authentication is available in Account Security settings."
-                  : "Two-factor authentication is not included in V1."
+                  : "Two-factor authentication is not currently available."
               }
             >
               {PRODUCT_FLAGS.enableTwoFactorInV1
                 ? "Users can activate email-based 2FA from dashboard security settings."
-                : "For V1, security relies on password authentication, protected sessions, and scoped account access controls."}
+                : "Security currently relies on password authentication, protected sessions, and scoped account access controls."}
             </ShowDetails>
           </div>
         </div>

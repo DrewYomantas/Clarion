@@ -466,7 +466,7 @@ const Dashboard = () => {
       return `${unownedActionsCount} open follow-through item${unownedActionsCount === 1 ? "" : "s"} still need clear ownership before the brief can carry clean follow-through into the room.`;
     }
     if (highSeveritySignalsCount > 0) {
-      return `${highSeveritySignalsCount} high-severity client issue${highSeveritySignalsCount === 1 ? "" : "s"} are active in the current cycle and should be reviewed in the brief first.`;
+      return `${highSeveritySignalsCount} high-severity client issue${highSeveritySignalsCount === 1 ? "" : "s"} ${highSeveritySignalsCount === 1 ? "is" : "are"} active in the current cycle and should be reviewed in the brief first.`;
     }
     if (latestReadyBrief) {
       return "The latest brief is ready to review and current follow-through is in a healthy state.";
@@ -527,7 +527,7 @@ const Dashboard = () => {
           return;
         }
         if (payload.error === "Report outside plan history window") {
-          toast.error("This report is outside your plan's historical intelligence window. Upgrade your plan to access older governance history.");
+          toast.error("This report is outside your plan's governance history window. Upgrade your plan to access older reports.");
           return;
         }
         if (!response.ok) {

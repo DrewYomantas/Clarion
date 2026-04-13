@@ -251,6 +251,7 @@ from services.email_service import (
 
     send_verification_email,
     send_verification_email_with_result,
+    send_email_change_verification_with_result,
     uses_known_working_resend_sender,
 
     send_two_factor_code_email,
@@ -1823,6 +1824,30 @@ def init_db():
 
         '''
 
+        CREATE TABLE IF NOT EXISTS pending_email_changes (
+
+            user_id INTEGER PRIMARY KEY,
+
+            pending_email TEXT UNIQUE NOT NULL,
+
+            requested_at TEXT NOT NULL,
+
+            last_sent_at TEXT,
+
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+
+        )
+
+        '''
+
+    )
+
+
+
+    c.execute(
+
+        '''
+
         CREATE TABLE IF NOT EXISTS user_email_verification (
 
             user_id INTEGER PRIMARY KEY,
@@ -2830,7 +2855,11 @@ def init_db():
 
     )
 
-
+    # ── One-time data cleanup: remove trailing tilde from any firm name ────────
+    # Fixes "Hargrove & Partners~" → "Hargrove & Partners" left by early setup.
+    c.execute(
+        "UPDATE firms SET name = RTRIM(name, '~ ') WHERE name LIKE '%~'"
+    )
 
     conn.commit()
 
@@ -3422,12 +3451,12 @@ def _report_history_metadata(plan):
     if window_days == 90:
         notice = (
             "Your current plan shows the last 90 days of governance history. "
-            "Upgrade to unlock full historical intelligence."
+            "Upgrade to unlock your full governance history."
         )
     else:
         notice = (
             "Your current plan shows the last 12 months of governance history. "
-            "Upgrade to unlock full historical intelligence."
+            "Upgrade to unlock your full governance history."
         )
     return {
         "history_window_days": window_days,
@@ -4194,7 +4223,7 @@ def _report_display_name(report_id, created_at):
 
         stamp = str(created_at)[:10] if created_at else 'Unknown Date'
 
-    return f'Pricing Model Report - {stamp} (#{report_id})'
+    return f'Client Feedback Review - {stamp} (#{report_id})'
 
 
 
@@ -7159,6 +7188,16 @@ def create_email_verification_token(user_id, email):
     payload = {
         'user_id': int(user_id),
         'email': str(email or '').strip().lower(),
+        'purpose': 'signup',
+    }
+    return _email_verification_serializer().dumps(payload, salt=EMAIL_VERIFICATION_SALT)
+
+
+def create_pending_email_change_token(user_id, new_email):
+    payload = {
+        'user_id': int(user_id),
+        'email': str(new_email or '').strip().lower(),
+        'purpose': 'email_change',
     }
     return _email_verification_serializer().dumps(payload, salt=EMAIL_VERIFICATION_SALT)
 
@@ -7172,9 +7211,12 @@ def decode_email_verification_token(token):
         )
         user_id = int(payload.get('user_id'))
         email = str(payload.get('email') or '').strip().lower()
+        purpose = str(payload.get('purpose') or 'signup').strip().lower()
         if not email:
             return None, 'Invalid verification token.'
-        return {'user_id': user_id, 'email': email}, None
+        if purpose not in {'signup', 'email_change'}:
+            return None, 'Invalid verification token.'
+        return {'user_id': user_id, 'email': email, 'purpose': purpose}, None
     except SignatureExpired:
         return None, 'Verification link has expired. Request a new verification email.'
     except (BadSignature, ValueError, TypeError):
@@ -7305,7 +7347,7 @@ def _verification_delivery_response_payload(delivery_status, delivery_result=Non
     }
 
 
-def send_email_verification_link_with_result(to_email, verification_link, firm_name):
+def send_email_verification_link_with_result(to_email, verification_link, firm_name, verification_type='signup'):
     delivery_status = _verification_delivery_status()
     sender_choice = resolve_from_email_choice()
     resolved_sender = sender_choice.from_email
@@ -7319,7 +7361,10 @@ def send_email_verification_link_with_result(to_email, verification_link, firm_n
             return EmailDeliveryResult(success=True, provider='dev')
 
         if delivery_status['method'] in {'resend', 'mail'} and delivery_status['available']:
-            result = send_verification_email_with_result(to_email, verification_link, firm_name)
+            if verification_type == 'email_change':
+                result = send_email_change_verification_with_result(to_email, verification_link, firm_name)
+            else:
+                result = send_verification_email_with_result(to_email, verification_link, firm_name)
         elif delivery_status['method'] == 'smtp' and delivery_status['available']:
             smtp_success = _send_verification_email_smtp(to_email, verification_link, firm_name)
             result = EmailDeliveryResult(
@@ -7409,6 +7454,7 @@ def _allow_dev_auth_shortcuts_for_email(email):
 def _user_response_payload(user):
     firm_membership = _get_user_active_firm_membership(user.id)
     firm_membership_disabled = _has_suspended_membership_without_active(user.id)
+    pending_email_change = _get_pending_email_change(user.id)
     firm_name = (
         (firm_membership.get('firm_name') if firm_membership else None)
         or user.firm_name
@@ -7431,6 +7477,29 @@ def _user_response_payload(user):
         'email_verified': bool(getattr(user, 'email_verified', False) or is_email_verified(user.id)),
         'two_factor_enabled': user.two_factor_enabled,
         'two_factor_available': bool(app.config.get('ENABLE_2FA')),
+        'pending_email_change': pending_email_change,
+    }
+
+
+def _get_pending_email_change(user_id):
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute(
+        '''
+        SELECT pending_email, requested_at, last_sent_at
+        FROM pending_email_changes
+        WHERE user_id = ?
+        ''',
+        (user_id,),
+    )
+    row = c.fetchone()
+    conn.close()
+    if not row:
+        return None
+    return {
+        'new_email': str(row[0] or '').strip().lower(),
+        'requested_at': row[1],
+        'last_sent_at': row[2],
     }
 
 
@@ -7740,7 +7809,8 @@ def features():
 
 def case_studies():
 
-    return render_template("case_studies.html")
+    # Legacy Flask surface — redirect to the canonical React features page.
+    return redirect("/features", 301)
 
 
 
@@ -7801,21 +7871,9 @@ def security():
 
 def index():
 
-    """App landing page."""
+    """Legacy app landing page — redirect to login."""
 
-    return render_template(
-
-        "index.html",
-
-        trial_limit=FREE_PLAN_REPORT_LIMIT,
-
-        onetime_price=app.config['ONETIME_REPORT_PRICE'],
-
-        monthly_price=app.config['MONTHLY_SUBSCRIPTION_PRICE'],
-
-        annual_price=app.config['ANNUAL_SUBSCRIPTION_PRICE'],
-
-    )
+    return redirect("/login", 301)
 
 
 
@@ -10923,13 +10981,64 @@ def api_verify_email(token):
             conn.close()
             return jsonify({'verified': False, 'error': 'Verification token is not valid for an active account.'}), 400
 
-        user_email = str(user_row[1] or '').strip().lower()
-        if user_email != token_data['email']:
-            conn.close()
-            return jsonify({'verified': False, 'error': 'Verification token does not match this account.'}), 400
-
         now_iso = datetime.now(timezone.utc).isoformat()
-        c.execute('UPDATE users SET email_verified = 1, is_verified = 1 WHERE id = ?', (token_data['user_id'],))
+        user_email = str(user_row[1] or '').strip().lower()
+        purpose = token_data.get('purpose') or 'signup'
+
+        if purpose == 'email_change':
+            c.execute(
+                '''
+                SELECT pending_email
+                FROM pending_email_changes
+                WHERE user_id = ?
+                ''',
+                (token_data['user_id'],),
+            )
+            pending_row = c.fetchone()
+            if not pending_row:
+                conn.close()
+                return jsonify({'verified': False, 'error': 'No pending email change was found for this account.'}), 400
+
+            pending_email = str(pending_row[0] or '').strip().lower()
+            if pending_email != token_data['email']:
+                conn.close()
+                return jsonify({'verified': False, 'error': 'Verification token does not match the pending email change.'}), 400
+
+            c.execute(
+                '''
+                SELECT id
+                FROM users
+                WHERE id != ?
+                  AND (email = ? OR username = ?)
+                LIMIT 1
+                ''',
+                (token_data['user_id'], pending_email, pending_email),
+            )
+            if c.fetchone():
+                conn.close()
+                return jsonify({'verified': False, 'error': 'That email address is already in use.'}), 409
+
+            c.execute('SELECT username FROM users WHERE id = ?', (token_data['user_id'],))
+            username_row = c.fetchone()
+            current_username = str(username_row[0] or '').strip().lower() if username_row else ''
+            next_username = pending_email if current_username == user_email else (username_row[0] if username_row else pending_email)
+
+            c.execute(
+                '''
+                UPDATE users
+                SET email = ?, username = ?, email_verified = 1, is_verified = 1
+                WHERE id = ?
+                ''',
+                (pending_email, next_username, token_data['user_id']),
+            )
+            c.execute('DELETE FROM pending_email_changes WHERE user_id = ?', (token_data['user_id'],))
+        else:
+            if user_email != token_data['email']:
+                conn.close()
+                return jsonify({'verified': False, 'error': 'Verification token does not match this account.'}), 400
+
+            c.execute('UPDATE users SET email_verified = 1, is_verified = 1 WHERE id = ?', (token_data['user_id'],))
+
         c.execute(
             '''
             INSERT INTO user_email_verification (user_id, verified_at)
@@ -10949,6 +11058,7 @@ def api_verify_email(token):
             login_user(verified_user, remember=True)
         return jsonify({
             'verified': True,
+            'purpose': purpose,
             'user': _user_response_payload(verified_user) if verified_user else None,
         }), 200
     except Exception:
@@ -11230,6 +11340,167 @@ def api_account_profile_put():
 
 
 
+
+
+@app.route('/api/account/change-email', methods=['POST'])
+@login_required
+def api_account_change_email_request():
+    try:
+        payload = request.get_json(silent=True) or {}
+        new_email = str(payload.get('new_email') or '').strip().lower()
+        current_password = str(payload.get('current_password') or '')
+
+        if not current_password:
+            return jsonify({'success': False, 'error': 'Current password is required.'}), 400
+        if not is_valid_email(new_email):
+            return jsonify({'success': False, 'error': 'A valid new email address is required.'}), 400
+        if new_email == str(current_user.email or '').strip().lower():
+            return jsonify({'success': False, 'error': 'Enter a different email address.'}), 400
+        if not _check_password_for_user(current_user.id, current_password):
+            return jsonify({'success': False, 'error': 'Current password is incorrect.'}), 403
+
+        conn = db_connect()
+        c = conn.cursor()
+        c.execute(
+            '''
+            SELECT id
+            FROM users
+            WHERE id != ?
+              AND (email = ? OR username = ?)
+            LIMIT 1
+            ''',
+            (current_user.id, new_email, new_email),
+        )
+        if c.fetchone():
+            conn.close()
+            return jsonify({'success': False, 'error': 'That email address is already in use.'}), 409
+
+        c.execute(
+            '''
+            SELECT user_id
+            FROM pending_email_changes
+            WHERE pending_email = ?
+              AND user_id != ?
+            LIMIT 1
+            ''',
+            (new_email, current_user.id),
+        )
+        if c.fetchone():
+            conn.close()
+            return jsonify({'success': False, 'error': 'That email address already has a pending verification request.'}), 409
+
+        now_iso = datetime.now(timezone.utc).isoformat()
+        c.execute(
+            '''
+            INSERT INTO pending_email_changes (user_id, pending_email, requested_at, last_sent_at)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(user_id) DO UPDATE SET
+                pending_email = excluded.pending_email,
+                requested_at = excluded.requested_at,
+                last_sent_at = excluded.last_sent_at
+            ''',
+            (current_user.id, new_email, now_iso, now_iso),
+        )
+        conn.commit()
+        conn.close()
+
+        delivery_status = _verification_delivery_status()
+        token = create_pending_email_change_token(current_user.id, new_email)
+        verify_link = _public_verify_email_link(token)
+        delivery_result = send_email_verification_link_with_result(
+            new_email,
+            verify_link,
+            str(current_user.firm_name or app.config.get('FIRM_NAME', 'Your Firm')),
+            verification_type='email_change',
+        )
+        refreshed_user = load_user(current_user.id)
+        _log_security_event(current_user.id, 'email_change_requested', {'pending_email': new_email})
+        return jsonify({
+            'success': True,
+            'message': 'Verify the new email address to finish the change.',
+            'verification_sent': bool(delivery_result.success),
+            **_verification_delivery_response_payload(delivery_status, delivery_result),
+            'user': _user_response_payload(refreshed_user or current_user),
+        }), 200
+    except Exception:
+        return _safe_api_error(
+            'Unable to start the email change right now.',
+            log_message=f'Failed email change request for user {current_user.id}',
+        )
+
+
+@app.route('/api/account/change-email/resend', methods=['POST'])
+@login_required
+def api_account_change_email_resend():
+    try:
+        conn = db_connect()
+        c = conn.cursor()
+        c.execute(
+            '''
+            SELECT pending_email
+            FROM pending_email_changes
+            WHERE user_id = ?
+            ''',
+            (current_user.id,),
+        )
+        row = c.fetchone()
+        if not row:
+            conn.close()
+            return jsonify({'success': False, 'error': 'There is no pending email change to resend.'}), 404
+
+        pending_email = str(row[0] or '').strip().lower()
+        now_iso = datetime.now(timezone.utc).isoformat()
+        c.execute('UPDATE pending_email_changes SET last_sent_at = ? WHERE user_id = ?', (now_iso, current_user.id))
+        conn.commit()
+        conn.close()
+
+        delivery_status = _verification_delivery_status()
+        token = create_pending_email_change_token(current_user.id, pending_email)
+        verify_link = _public_verify_email_link(token)
+        delivery_result = send_email_verification_link_with_result(
+            pending_email,
+            verify_link,
+            str(current_user.firm_name or app.config.get('FIRM_NAME', 'Your Firm')),
+            verification_type='email_change',
+        )
+        refreshed_user = load_user(current_user.id)
+        return jsonify({
+            'success': True,
+            'message': 'Verification email sent.',
+            'verification_sent': bool(delivery_result.success),
+            **_verification_delivery_response_payload(delivery_status, delivery_result),
+            'user': _user_response_payload(refreshed_user or current_user),
+        }), 200
+    except Exception:
+        return _safe_api_error(
+            'Unable to resend the email change verification right now.',
+            log_message=f'Failed email change resend for user {current_user.id}',
+        )
+
+
+@app.route('/api/account/change-email', methods=['DELETE'])
+@login_required
+def api_account_change_email_cancel():
+    try:
+        conn = db_connect()
+        c = conn.cursor()
+        c.execute('DELETE FROM pending_email_changes WHERE user_id = ?', (current_user.id,))
+        changed = c.rowcount
+        conn.commit()
+        conn.close()
+        if changed:
+            _log_security_event(current_user.id, 'email_change_cancelled')
+        refreshed_user = load_user(current_user.id)
+        return jsonify({
+            'success': True,
+            'cancelled': bool(changed),
+            'user': _user_response_payload(refreshed_user or current_user),
+        }), 200
+    except Exception:
+        return _safe_api_error(
+            'Unable to cancel the pending email change right now.',
+            log_message=f'Failed email change cancel for user {current_user.id}',
+        )
 
 
 @app.route('/api/account/branding', methods=['GET'])
@@ -14060,12 +14331,6 @@ def api_report_detail(report_id):
             f"Top focus area: {top_theme['name']} ({top_theme['mentions']} mentions).",
 
             f"{total_reviews} reviews analyzed with an average rating of {avg_rating:.2f}.",
-
-            f"Plan used for this run: {_plan_badge_label(raw_access_type)}.",
-
-            f"Estimated margin impact after remediation: {expected_margin_impact}.",
-
-            f"Model confidence score: {confidence_score} / 100.",
 
         ]
 
@@ -17551,9 +17816,3 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
 
     app.run(host='0.0.0.0', port=port, debug=app.config['DEBUG'])
-
-
-
-
-
-

@@ -51,7 +51,7 @@ const ReportsPage = () => {
         const payload = (await response.json()) as { error?: string; message?: string };
         if (payload.error === "Report outside plan history window") {
           toast.error(
-            "This report is outside your plan’s historical intelligence window. Upgrade your plan to access older governance history.",
+            "This report is outside your plan’s governance history window. Upgrade your plan to access older reports.",
           );
           return;
         }

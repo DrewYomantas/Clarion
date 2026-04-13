@@ -885,7 +885,7 @@ const ReportDetail = () => {
         };
         if (payload.error === "Report outside plan history window") {
           toast.error(
-            "This report is outside your plan's historical intelligence window. Upgrade your plan to access older governance history.",
+            "This report is outside your plan's governance history window. Upgrade your plan to access older reports.",
           );
           return;
         }
@@ -980,7 +980,7 @@ const ReportDetail = () => {
           {isHistoryWindowError ? (
             <div className="mt-3 rounded-md border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-2 text-sm text-[#1E3A8A]">
               {historyNotice ||
-                "Your current plan limits historical intelligence access. Upgrade to unlock older governance reports."}
+                "Your current plan limits governance history access. Upgrade to unlock older reports."}
             </div>
           ) : null}
           {showRateLimitRetryPrompt && (

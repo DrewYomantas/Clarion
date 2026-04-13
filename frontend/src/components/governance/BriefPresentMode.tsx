@@ -54,18 +54,18 @@ export default function BriefPresentMode({ active, onExit, children }: BriefPres
   return (
     <div
       role="dialog"
-      aria-label="Presentation mode"
+      aria-label="Meeting view"
       aria-modal="true"
       className="brief-present-overlay"
     >
       {/* Exit bar */}
       <div className="brief-present-bar" aria-label="Presentation controls">
-        <span className="brief-present-bar-label">Presentation mode</span>
+        <span className="brief-present-bar-label">Meeting view</span>
         <span className="brief-present-bar-hint">Press Esc to exit</span>
         <button
           type="button"
           onClick={onExit}
-          aria-label="Exit presentation mode"
+          aria-label="Exit meeting view"
           className="brief-present-exit-btn"
         >
           <X size={14} aria-hidden />

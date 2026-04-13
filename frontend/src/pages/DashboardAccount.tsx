@@ -5,8 +5,11 @@ import GovPageHeader from "@/components/governance/GovPageHeader";
 import GovSectionCard from "@/components/governance/GovSectionCard";
 import { useAuth } from "@/contexts/AuthContext";
 import {
+  cancelPendingEmailChange,
   createSupportTicket,
   getSupportTickets,
+  requestEmailChange,
+  resendPendingEmailChange,
   type SupportTicket,
 } from "@/api/authService";
 
@@ -138,7 +141,7 @@ const SecurityChecklist = () => {
 
 
 const DashboardAccount = () => {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [supportTickets, setSupportTickets] = useState<SupportTicket[]>([]);
   const [supportLoading, setSupportLoading] = useState(false);
@@ -154,6 +157,10 @@ const DashboardAccount = () => {
   const [supportUrgency, setSupportUrgency] = useState("normal");
   const [supportSubject, setSupportSubject] = useState("");
   const [supportMessage, setSupportMessage] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [emailChangeSubmitting, setEmailChangeSubmitting] = useState(false);
+  const [emailChangeBusyAction, setEmailChangeBusyAction] = useState<"resend" | "cancel" | null>(null);
 
   const activeTab = useMemo<AccountTab>(() => {
     const raw = (searchParams.get("tab") || "profile").toLowerCase();
@@ -229,6 +236,54 @@ const DashboardAccount = () => {
     await refreshSupportTickets();
   };
 
+  const pendingEmailChange = user?.pending_email_change;
+
+  const handleEmailChangeSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setEmailChangeSubmitting(true);
+    const result = await requestEmailChange({
+      new_email: newEmail,
+      current_password: currentPassword,
+    });
+    setEmailChangeSubmitting(false);
+    if (!result.success) {
+      toast.error(result.error || "Unable to start email change.");
+      return;
+    }
+    setCurrentPassword("");
+    setNewEmail("");
+    await refreshUser();
+    toast.success(
+      result.verification_sent
+        ? "Verification sent to your new email."
+        : result.message || "Pending email change saved.",
+    );
+  };
+
+  const handlePendingEmailResend = async () => {
+    setEmailChangeBusyAction("resend");
+    const result = await resendPendingEmailChange();
+    setEmailChangeBusyAction(null);
+    if (!result.success) {
+      toast.error(result.error || "Unable to resend verification.");
+      return;
+    }
+    await refreshUser();
+    toast.success(result.verification_sent ? "Verification email resent." : result.message || "Verification email resend processed.");
+  };
+
+  const handlePendingEmailCancel = async () => {
+    setEmailChangeBusyAction("cancel");
+    const result = await cancelPendingEmailChange();
+    setEmailChangeBusyAction(null);
+    if (!result.success) {
+      toast.error(result.error || "Unable to cancel pending email change.");
+      return;
+    }
+    await refreshUser();
+    toast.success("Pending email change canceled.");
+  };
+
   return (
       <section className="gov-page px-8 py-8">
         <div className="mx-auto w-full max-w-[1200px] space-y-6">
@@ -281,11 +336,64 @@ const DashboardAccount = () => {
                 <p className="gov-micro-label">PRIMARY ACCOUNT EMAIL</p>
                 <p className="mt-1 text-lg font-semibold text-neutral-900">{user?.email || "Not available"}</p>
                 <p className="mt-2 text-sm text-neutral-700">Sign-in and account notices are sent to this address.</p>
+                <div className="mt-4 rounded border border-neutral-200 bg-white p-4">
+                  <p className="text-sm font-semibold text-neutral-900">Change email</p>
+                  <p className="mt-1 text-xs text-neutral-600">
+                    Your current email stays active until the new address is verified.
+                  </p>
+                  <form className="mt-3 space-y-3" onSubmit={handleEmailChangeSubmit}>
+                    <input
+                      type="email"
+                      value={newEmail}
+                      onChange={(event) => setNewEmail(event.target.value)}
+                      placeholder="New email address"
+                      className="w-full rounded border border-neutral-300 px-3 py-2 text-sm"
+                      autoComplete="email"
+                    />
+                    <input
+                      type="password"
+                      value={currentPassword}
+                      onChange={(event) => setCurrentPassword(event.target.value)}
+                      placeholder="Current password"
+                      className="w-full rounded border border-neutral-300 px-3 py-2 text-sm"
+                      autoComplete="current-password"
+                    />
+                    <button type="submit" className="gov-btn-primary" disabled={emailChangeSubmitting}>
+                      {emailChangeSubmitting ? "Sending verification..." : "Change email"}
+                    </button>
+                  </form>
+                  {pendingEmailChange ? (
+                    <div className="mt-4 rounded border border-amber-200 bg-amber-50 px-3 py-3 text-sm text-amber-950">
+                      <p className="font-medium">Pending new email: {pendingEmailChange.new_email}</p>
+                      <p className="mt-1">
+                        Check that inbox and verify the link before the sign-in email changes.
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          className="gov-btn-secondary"
+                          onClick={handlePendingEmailResend}
+                          disabled={emailChangeBusyAction !== null}
+                        >
+                          {emailChangeBusyAction === "resend" ? "Resending..." : "Resend verification"}
+                        </button>
+                        <button
+                          type="button"
+                          className="gov-btn-secondary"
+                          onClick={handlePendingEmailCancel}
+                          disabled={emailChangeBusyAction !== null}
+                        >
+                          {emailChangeBusyAction === "cancel" ? "Canceling..." : "Cancel pending change"}
+                        </button>
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
               </GovSectionCard>
               <GovSectionCard accent="watch" padding="lg" className="md:col-span-2">
                 <h2 className="gov-h2">Team & Seats</h2>
                 <p className="mt-1 text-sm text-neutral-700">
-                  Multi-user team access is not available in this release. Single-seat workspace access is fully operational.
+                  Multi-user team access is not available on this plan. Single-seat workspace access is fully operational.
                 </p>
               </GovSectionCard>
               <GovSectionCard accent="watch" padding="lg" className="md:col-span-2">
