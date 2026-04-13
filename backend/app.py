@@ -17,6 +17,7 @@ import hashlib
 import time as time_module
 import smtplib
 import socket
+import click
 from urllib.parse import urlparse
 from io import StringIO, BytesIO
 from datetime import datetime, timedelta, timezone
@@ -17374,6 +17375,168 @@ try:
 except Exception as _aq_err:
     app.logger.warning('approval_queue: failed to register: %s', _aq_err)
 csrf.exempt(benchmark_bp)
+
+# ===== FLASK CLI COMMANDS =====
+# Run with: flask <command>  (FLASK_APP and env vars must be set, same as normal startup)
+#
+# SYNTHETIC DATA BOUNDARY: the seed-demo-workspace command reads only from
+# backend/data/demo_reviews.csv — a synthetic fixture that has no overlap with
+# data/calibration/, data/benchmark_fixtures.py, or any Wave acquisition corpus.
+# It must never be pointed at real client review files.
+
+@app.cli.command('seed-demo-workspace')
+@click.argument('email')
+@click.option('--firm-name', default='Hargrove & Partners', show_default=True,
+              help='Credible display name to set for the demo account.')
+@click.option('--force', is_flag=True, default=False,
+              help='Re-seed even when reports already exist (clears existing reviews first).')
+def cli_seed_demo_workspace(email, firm_name, force):
+    """[SYNTHETIC DATA ONLY] Seed the demo workspace for sales/demo use.
+
+    Populates the target account with the 40-review synthetic dataset from
+    backend/data/demo_reviews.csv using the identical atomic pipeline the
+    authenticated upload endpoint uses (_insert_user_reviews_tx +
+    _save_report_snapshot_tx).
+
+    Benchmark and calibration files are never touched. demo_reviews.csv has
+    no overlap with data/calibration/ or any benchmark corpus.
+
+    Safe to run multiple times with --force; without --force aborts when
+    reports already exist, protecting against accidental double-seeding.
+    """
+    LABEL = '[SYNTHETIC_DEMO]'
+
+    # 1. Resolve user -------------------------------------------------------
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT id, firm_name, subscription_type FROM users WHERE email = ?', (email,))
+    row = c.fetchone()
+    if not row:
+        conn.close()
+        click.echo(f'{LABEL} ERROR: no user found for email={email!r}', err=True)
+        raise SystemExit(1)
+    user_id, current_firm, sub_type = row[0], row[1], row[2]
+    click.echo(f'{LABEL} Found user id={user_id} firm_name={current_firm!r} sub={sub_type!r}')
+
+    # 2. Guard: abort if already seeded (unless --force) --------------------
+    c.execute('SELECT COUNT(*) FROM reports WHERE user_id = ?', (user_id,))
+    existing_reports = c.fetchone()[0]
+    if existing_reports > 0 and not force:
+        conn.close()
+        click.echo(
+            f'{LABEL} ABORT: {existing_reports} report(s) already exist. '
+            'Pass --force to clear and re-seed.',
+            err=True,
+        )
+        raise SystemExit(1)
+
+    # 3. --force: wipe existing data so hash dedup passes ------------------
+    if existing_reports > 0 and force:
+        click.echo(f'{LABEL} --force: clearing {existing_reports} existing report(s) and owned reviews.')
+        c.execute(
+            'DELETE FROM reviews WHERE id IN '
+            '(SELECT review_id FROM review_ownership WHERE user_id = ?)',
+            (user_id,),
+        )
+        c.execute(
+            'DELETE FROM governance_signals WHERE report_id IN '
+            '(SELECT id FROM reports WHERE user_id = ?)',
+            (user_id,),
+        )
+        c.execute(
+            'DELETE FROM governance_recommendations WHERE report_id IN '
+            '(SELECT id FROM reports WHERE user_id = ?)',
+            (user_id,),
+        )
+        c.execute('DELETE FROM reports WHERE user_id = ?', (user_id,))
+        c.execute('DELETE FROM review_ownership WHERE user_id = ?', (user_id,))
+        conn.commit()
+        click.echo(f'{LABEL} Cleared. Proceeding with fresh seed.')
+
+    # 4. Update firm_name ---------------------------------------------------
+    if firm_name and firm_name != current_firm:
+        c.execute('UPDATE users SET firm_name = ? WHERE id = ?', (firm_name, user_id))
+        # Mirror update into the firms table row owned by this user.
+        c.execute(
+            'UPDATE firms SET name = ? WHERE id IN '
+            '(SELECT firm_id FROM firm_users WHERE user_id = ? AND status = ?)',
+            (firm_name, user_id, 'active'),
+        )
+        conn.commit()
+        click.echo(f'{LABEL} firm_name updated: {current_firm!r} -> {firm_name!r}')
+
+    # 5. Parse demo_reviews.csv --------------------------------------------
+    demo_csv = os.path.join(os.path.dirname(__file__), 'data', 'demo_reviews.csv')
+    if not os.path.isfile(demo_csv):
+        conn.close()
+        click.echo(f'{LABEL} ERROR: demo CSV not found at {demo_csv}', err=True)
+        raise SystemExit(1)
+
+    valid_rows = []
+    with open(demo_csv, newline='', encoding='utf-8-sig') as fh:
+        for csv_row in csv.DictReader(fh):
+            try:
+                rating = float(csv_row['rating'])
+                text = (csv_row.get('review_text') or '').strip()
+                date = (csv_row.get('date') or '').strip() or None
+                if text and 1.0 <= rating <= 5.0:
+                    valid_rows.append((date, rating, text))
+            except (KeyError, ValueError):
+                continue
+
+    if not valid_rows:
+        conn.close()
+        click.echo(f'{LABEL} ERROR: demo CSV parsed to 0 valid rows.', err=True)
+        raise SystemExit(1)
+    click.echo(f'{LABEL} Parsed {len(valid_rows)} synthetic rows from demo_reviews.csv')
+
+    # 6. Dedup check (same hash as _build_report_hash) ---------------------
+    report_hash = _build_report_hash(valid_rows)
+    c.execute(
+        'SELECT id FROM reports WHERE user_id = ? AND report_hash = ?',
+        (user_id, report_hash),
+    )
+    if c.fetchone():
+        conn.close()
+        click.echo(
+            f'{LABEL} ABORT: identical report hash already exists. Use --force to clear and re-seed.',
+            err=True,
+        )
+        raise SystemExit(1)
+
+    # 7. Atomic transaction — identical to /api/onboarding/load-demo -------
+    try:
+        conn.execute('BEGIN')
+        _insert_user_reviews_tx(c, user_id, valid_rows)
+        snapshot_id, pending_alerts = _save_report_snapshot_tx(
+            c, user_id, subscription_type=sub_type or 'trial', report_hash=report_hash,
+        )
+        # Deliberately skip _update_usage_credit_tx: demo seeding must not
+        # burn the account's trial or one-time report credits.
+        conn.commit()
+    except Exception as exc:
+        conn.rollback()
+        conn.close()
+        click.echo(f'{LABEL} ERROR: transaction rolled back — {exc}', err=True)
+        raise SystemExit(1)
+    finally:
+        conn.close()
+
+    _fire_pending_slack_alerts(pending_alerts)
+
+    if snapshot_id:
+        click.echo(
+            f'{LABEL} SUCCESS: seeded {len(valid_rows)} synthetic reviews, '
+            f'report_id={snapshot_id}, firm_name={firm_name!r}. '
+            'Dashboard, Signals, Briefs, and Follow-Through will now show demo content.'
+        )
+    else:
+        click.echo(
+            f'{LABEL} WARNING: reviews inserted but no snapshot created. '
+            'Verify firm_users table has an active row for this account.',
+            err=True,
+        )
+
 
 # ===== APPLICATION ENTRY POINT =====
 
