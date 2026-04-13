@@ -9214,6 +9214,12 @@ def _log_upload_event(user_id, access_type, count, report_id, channel):
 def upload():
     """CSV upload page for bulk review import with tiered limits."""
     if request.method != 'POST':
+        # SPA handoff: serve React shell on hard refresh — mirrors the dashboard() fix.
+        # The legacy redirect below was self-referential (/upload -> /upload) and produced
+        # ERR_TOO_MANY_REDIRECTS. That loop also hammered /login fast enough to exhaust
+        # the 5/min rate limiter, locking users out for 15 minutes.
+        if _react_dist_exists:
+            return send_from_directory(_REACT_DIST, 'index.html')
         return redirect(_resolve_public_app_base_url() + '/upload', code=302)
 
     # TODO: Re-enable email verification gate when email confirmation flow exists.
@@ -9745,7 +9751,12 @@ def account():
 
 
 
-    # Legacy GET /account -> SPA handoff
+    # SPA handoff: serve React shell on hard refresh.
+    # Redirect to _resolve_public_app_base_url() + '/account' is self-referential
+    # (/account -> /account) and would produce ERR_TOO_MANY_REDIRECTS.
+    # Mirrors the dashboard() fix pattern.
+    if _react_dist_exists:
+        return send_from_directory(_REACT_DIST, 'index.html')
     return redirect(_resolve_public_app_base_url() + '/account', code=302)
 
 
@@ -16880,6 +16891,16 @@ def rate_limited(error):
 
 
     reset_ts = int((datetime.now(timezone.utc) + timedelta(minutes=15)).timestamp())
+
+    # SPA-first: when the React dist is present serve index.html with 429 so the
+    # React error boundary handles rate-limit UX. This prevents the legacy Flask
+    # template (different nav/branding) from bleeding through during normal SPA usage.
+    if _react_dist_exists:
+        resp = send_from_directory(_REACT_DIST, 'index.html')
+        resp.status_code = 429
+        resp.headers['X-RateLimit-Reset'] = str(reset_ts)
+        resp.headers['Retry-After'] = '900'
+        return resp
 
     response = render_template('errors/rate_limit.html', reset_timestamp=reset_ts, wait_minutes=15)
 
