@@ -275,6 +275,18 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
     document.title = `${currentPageLabel} - Clarion`;
   }, [currentPageLabel]);
 
+  // Workspace routes are never public — ensure noindex on every mount/route change.
+  useEffect(() => {
+    let tag = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    if (!tag) {
+      tag = document.createElement("meta");
+      tag.name = "robots";
+      document.head.appendChild(tag);
+    }
+    tag.content = "noindex,nofollow";
+    return () => { tag?.remove(); };
+  }, [pathname]);
+
   useEffect(() => {
     const mainElement = mainRef.current;
     if (!mainElement) return;

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: linear-gradient(135deg, #F6F0E4 0%, #EDE5D0 100%);
+    font-family: Georgia, 'Times New Roman', serif;
+    position: relative;
+  }
+
+  /* Left gold accent bar */
+  .accent-bar {
+    position: absolute;
+    left: 80px;
+    top: 80px;
+    width: 4px;
+    height: 120px;
+    background: #C4A96A;
+    border-radius: 2px;
+  }
+
+  /* Main content */
+  .content {
+    position: absolute;
+    left: 108px;
+    top: 80px;
+  }
+
+  .wordmark {
+    font-size: 80px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    color: #111827;
+    line-height: 1;
+    margin-top: 24px;
+  }
+
+  .divider {
+    width: 660px;
+    height: 1.5px;
+    background: #C4A96A;
+    opacity: 0.6;
+    margin-top: 24px;
+    margin-bottom: 22px;
+  }
+
+  .tagline {
+    font-size: 28px;
+    color: #374151;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+  }
+
+  .descriptor {
+    margin-top: 30px;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 18px;
+    color: #6B7280;
+    letter-spacing: 0.3px;
+  }
+
+  /* Pill badges */
+  .badges {
+    display: flex;
+    gap: 12px;
+    margin-top: 52px;
+  }
+
+  .badge {
+    background: white;
+    border: 1px solid #D1CABC;
+    border-radius: 6px;
+    padding: 9px 18px;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    white-space: nowrap;
+  }
+
+  /* URL */
+  .url {
+    position: absolute;
+    left: 108px;
+    bottom: 54px;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    color: #9CA3AF;
+    letter-spacing: 0.5px;
+  }
+
+  /* Right document decoration */
+  .document {
+    position: absolute;
+    right: 80px;
+    top: 156px;
+    width: 180px;
+    height: 260px;
+    border: 1.5px solid rgba(196,169,106,0.3);
+    border-radius: 6px;
+  }
+
+  .doc-line {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    height: 6px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+  <div class="accent-bar"></div>
+
+  <div class="content">
+    <div class="wordmark">CLARION</div>
+    <div class="divider"></div>
+    <div class="tagline">Partner-Ready Client Feedback Governance<br>for Law Firms</div>
+    <div class="descriptor">Upload feedback → governance brief → partner meeting</div>
+    <div class="badges">
+      <div class="badge">Governance Briefs</div>
+      <div class="badge">Signal Review</div>
+      <div class="badge">Follow-Through</div>
+      <div class="badge">Meeting Ready</div>
+    </div>
+  </div>
+
+  <div class="url">law-firm-feedback-saas.onrender.com</div>
+
+  <!-- Document decoration lines -->
+  <div class="document">
+    <div class="doc-line" style="top:24px; background:rgba(196,169,106,0.35);"></div>
+    <div class="doc-line" style="top:44px; width:100px; left:20px; right:auto; background:rgba(196,169,106,0.25);"></div>
+    <div class="doc-line" style="top:64px; width:120px; left:20px; right:auto; background:rgba(196,169,106,0.20);"></div>
+    <div class="doc-line" style="top:92px; background:rgba(17,24,39,0.08);"></div>
+    <div class="doc-line" style="top:112px; width:90px; left:20px; right:auto; background:rgba(17,24,39,0.06);"></div>
+    <div class="doc-line" style="top:132px; width:110px; left:20px; right:auto; background:rgba(17,24,39,0.06);"></div>
+    <div class="doc-line" style="top:152px; background:rgba(17,24,39,0.06);"></div>
+    <div class="doc-line" style="top:172px; width:80px; left:20px; right:auto; background:rgba(17,24,39,0.05);"></div>
+    <div class="doc-line" style="top:200px; background:rgba(17,24,39,0.05);"></div>
+    <div class="doc-line" style="top:220px; width:115px; left:20px; right:auto; background:rgba(17,24,39,0.05);"></div>
+  </div>
+</body>
+</html>

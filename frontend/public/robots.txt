@@ -1,14 +1,43 @@
-User-agent: Googlebot
-Allow: /
+# Clarion - robots.txt
+# Public marketing and sample-workspace routes are indexable.
+# Authenticated, account, and upload routes are private.
 
-User-agent: Bingbot
-Allow: /
+User-agent: *
+# Authenticated workspace
+Disallow: /dashboard/
+Disallow: /upload
+# Auth flows
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password/
+Disallow: /check-email
+Disallow: /verify-email/
+Disallow: /verify-success
+Disallow: /verified/
+# Internal legacy redirect targets (already 301'd, but block crawlers)
+Disallow: /app
+Disallow: /case-studies
 
+# Public routes explicitly allowed
+Allow: /
+Allow: /features
+Allow: /how-it-works
+Allow: /pricing
+Allow: /security
+Allow: /privacy
+Allow: /terms
+Allow: /contact
+Allow: /docs
+Allow: /demo
+Allow: /demo/
+
+# Social crawlers — allow all public routes for previews
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /

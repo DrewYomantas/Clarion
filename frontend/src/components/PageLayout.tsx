@@ -55,6 +55,20 @@ function setCanonical(path: string) {
   tag.href = `${CANONICAL_BASE}${path}`;
 }
 
+function setRobotsTag(noindex: boolean) {
+  let tag = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+  if (noindex) {
+    if (!tag) {
+      tag = document.createElement("meta");
+      tag.name = "robots";
+      document.head.appendChild(tag);
+    }
+    tag.content = "noindex,nofollow";
+  } else {
+    tag?.remove();
+  }
+}
+
 const PageLayout = ({ children }: PropsWithChildren) => {
   const { pathname } = useLocation();
   const isAuthRoute =
@@ -96,7 +110,10 @@ const PageLayout = ({ children }: PropsWithChildren) => {
     if (publicRoutes.includes(pathname) || pathname.startsWith("/demo/reports/")) {
       setCanonical(pathname);
     }
-  }, [pathname]);
+
+    // noindex for auth/non-public routes handled by PageLayout
+    setRobotsTag(isAuthRoute);
+  }, [pathname, isAuthRoute]);
 
   return (
     <div
