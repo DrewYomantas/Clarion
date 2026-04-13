@@ -58,9 +58,9 @@ export type GovernanceBriefCardProps = {
 };
 
 const statusChipMap: Record<BriefStatus, { label: string; variant: "risk" | "warn" | "success" | "muted" }> = {
-  escalation: { label: "Escalation Required", variant: "warn" },
-  ready:      { label: "Ready",               variant: "success" },
-  pending:    { label: "Pending",              variant: "muted" },
+  escalation: { label: "Ready to Send",        variant: "warn" },
+  ready:      { label: "Ready to Send",        variant: "success" },
+  pending:    { label: "Draft",                variant: "muted" },
 };
 
 const accentMap: Record<BriefStatus, "warn" | "success" | "neutral"> = {
@@ -110,7 +110,7 @@ export default function GovernanceBriefCard({
   // Summary line: prefer explicit description, fall back to computed packet summary
   const summaryLine = description ?? buildDescription(signalsCount, actionsCount, status);
 
-  const downloadLabel = planType === "free" ? "Preview PDF (Watermarked)" : "Download PDF";
+  const downloadLabel = planType === "free" ? "Preview PDF" : "Download PDF";
 
   return (
     <GovernanceCard
@@ -153,7 +153,7 @@ export default function GovernanceBriefCard({
               onClick={onView}
               className="inline-flex items-center rounded-[6px] bg-[#0D1B2A] px-3 py-1.5 text-[12px] font-medium text-white transition-colors hover:bg-[#16263b]"
             >
-              View brief
+              Open Governance Brief
             </button>
           ) : null}
           {!isPast && onPrepare ? (
@@ -162,7 +162,7 @@ export default function GovernanceBriefCard({
               onClick={onPrepare}
               className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
             >
-              Prepare meeting brief
+              Open Meeting View
             </button>
           ) : null}
           {onDownload ? (

@@ -283,6 +283,8 @@ const ReportDetail = () => {
   const [briefDeliveryStatus, setBriefDeliveryStatus] =
     useState<PartnerBriefDeliveryStatus | null>(null);
   const [briefDeliveryStatusLoading, setBriefDeliveryStatusLoading] = useState(false);
+  // Eager delivery status — loaded on mount so the toolbar button reflects gating state
+  const [eagerDeliveryAvailable, setEagerDeliveryAvailable] = useState<boolean | null>(null);
 
   const [evidenceOpen, setEvidenceOpen] = useState(false);
 
@@ -644,6 +646,20 @@ const ReportDetail = () => {
     setIsSendingBrief(false);
   };
 
+  // Eager delivery status check — runs once on mount so the toolbar button is truthful
+  useEffect(() => {
+    let active = true;
+    const check = async () => {
+      const result = await getPartnerBriefDeliveryStatus();
+      if (!active) return;
+      setEagerDeliveryAvailable(
+        result.success && result.status ? result.status.delivery_available : false
+      );
+    };
+    void check();
+    return () => { active = false; };
+  }, []);
+
   useEffect(() => {
     if (!emailPreviewOpen) return;
     let active = true;
@@ -653,8 +669,10 @@ const ReportDetail = () => {
       if (!active) return;
       if (result.success && result.status) {
         setBriefDeliveryStatus(result.status);
+        setEagerDeliveryAvailable(result.status.delivery_available);
       } else {
         setBriefDeliveryStatus(null);
+        setEagerDeliveryAvailable(false);
       }
       setBriefDeliveryStatusLoading(false);
     };
@@ -973,7 +991,7 @@ const ReportDetail = () => {
     return (
       <section className="gov-page">
         <div className="gov-level-2 p-6">
-          <h1 className="gov-h1">Report unavailable</h1>
+          <h1 className="gov-h1">Brief unavailable</h1>
           <p className="mt-2 text-sm text-neutral-700">
             {error || "This report could not be loaded."}
           </p>
@@ -1606,7 +1624,7 @@ const ReportDetail = () => {
           {/* Page header */}
           <header className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0 flex-1">
-              <p className="workspace-shell-eyebrow">Current governance brief</p>
+              <p className="workspace-shell-eyebrow">Governance Brief</p>
               {renameMode === "editing" ||
               renameMode === "saving" ||
               renameMode === "error" ? (
@@ -1681,33 +1699,46 @@ const ReportDetail = () => {
 
             {/* Toolbar */}
             <div className="flex flex-wrap items-center gap-2">
-              {/* ★ Present mode — primary brief artifact action */}
+              {/* Open Meeting View — present mode */}
               <button
                 type="button"
                 onClick={enterPresent}
                 className="inline-flex items-center gap-1.5 rounded-[6px] bg-[#0D1B2A] px-3 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b]"
-                title="Open presentation mode (also via ?present=1)"
+                title="Open Meeting View (also via ?present=1)"
               >
                 <Maximize2 size={13} aria-hidden />
-                Present brief
+                Open Meeting View
               </button>
-              <button
-                type="button"
-                className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#0D1B2A] bg-white px-3 py-2 text-[12px] font-semibold text-[#0D1B2A] transition-colors hover:bg-slate-50"
-                onClick={() => setEmailPreviewOpen(true)}
-                disabled={isSendingBrief}
-              >
-                Send partner brief
-              </button>
+              {/* Send Brief — primary only when delivery is available */}
+              {eagerDeliveryAvailable === true ? (
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#0D1B2A] bg-white px-3 py-2 text-[12px] font-semibold text-[#0D1B2A] transition-colors hover:bg-slate-50"
+                  onClick={() => setEmailPreviewOpen(true)}
+                  disabled={isSendingBrief}
+                >
+                  Send Brief
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-2 text-[12px] font-medium text-slate-400 cursor-not-allowed"
+                  disabled
+                  title={eagerDeliveryAvailable === false ? "Delivery not configured — set up outbound email in account settings" : "Checking delivery…"}
+                >
+                  Send Brief
+                  {eagerDeliveryAvailable === false && (
+                    <span className="ml-1 text-[10px] font-normal text-slate-400">(delivery not configured)</span>
+                  )}
+                </button>
+              )}
               <button
                 data-testid="report-view-brief"
                 type="button"
                 className="gov-btn-secondary"
                 onClick={() => void openBrief()}
               >
-                {report.plan_type === "free"
-                  ? "Preview PDF (Watermarked)"
-                  : "Download PDF"}
+                {report.plan_type === "free" ? "Preview PDF" : "Download PDF"}
               </button>
               <button
                 data-testid="report-create-action"
@@ -1849,10 +1880,11 @@ const ReportDetail = () => {
         </div>
       </section>
 
-      {/* Email modal */}
+      {/* Send Brief confirmation modal */}
       <EmailBriefPreviewModal
         open={emailPreviewOpen}
         onOpenChange={setEmailPreviewOpen}
+        matter={report?.name || report?.title || ""}
         averageRating={emailSummaryFields.averageRating}
         topIssue={emailSummaryFields.topIssue}
         exampleQuote={emailSummaryFields.exampleQuote}

@@ -3,35 +3,25 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * Global shell for all authenticated workspace routes.
  *
- * Navigation Information Architecture (Phase 3 Task 3.1)
- * ── PRIMARY (governance narrative order) ─────────────────────────────────────
- *   Overview          /dashboard              Home          — entry point, KPI strip
- *   Evidence          /upload                 Database      — source data ingestion
- *   Signals           /dashboard/signals      ScanLine      — detected client issues
- *   Actions           /dashboard/actions      ClipboardList — follow-through execution
- *   Governance Briefs /dashboard/reports      FileText      — leadership artifacts
+ * Navigation Information Architecture
+ * ── PRIMARY ──────────────────────────────────────────────────────────────────
+ *   Home              /dashboard              Home
+ *   Briefs            /dashboard/reports      FileText      — governance briefs
+ *   Issues            /dashboard/signals      ScanLine      — client issues
+ *   Follow-Through    /dashboard/actions      ClipboardList — execution
  * ── SETTINGS (below divider) ─────────────────────────────────────────────────
  *   Account           /dashboard/account      Users
  *   Team              /dashboard/team         UserPlus
- *   Billing           /dashboard/billing      CreditCard
+ * ── ACCOUNT MENU (topbar dropdown) ──────────────────────────────────────────
+ *   Meetings          /dashboard/reports      (brief-specific meeting view)
+ *   Billing           /dashboard/billing
  * ─────────────────────────────────────────────────────────────────────────────
- *
- * Icon rationale:
- *   Database      → raw source material being loaded into the system
- *   ScanLine      → scanning/detecting patterns in evidence (not generic activity)
- *   ClipboardList → structured follow-through checklist (not an arbitrary "Zap")
- *   FileText      → formal printed artifact ✅ already correct
- *   CreditCard    → billing/subscription management
- *
- * No route changes. No API contract changes.
  */
 
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   ClipboardList,
-  CreditCard,
-  Database,
   FileText,
   Home,
   ScanLine,
@@ -46,29 +36,8 @@ import { useAuth } from "@/contexts/AuthContext";
 const PRIMARY_NAV = [
   {
     to: "/dashboard",
-    label: "Workspace Home",
+    label: "Home",
     Icon: Home,
-    iconClass: "text-[#E2E8F0]",
-    iconActiveClass: "text-white",
-  },
-  {
-    to: "/upload",
-    label: "Upload Cycle",
-    Icon: Database,
-    iconClass: "text-[#E2E8F0]",
-    iconActiveClass: "text-white",
-  },
-  {
-    to: "/dashboard/signals",
-    label: "Signals",
-    Icon: ScanLine,
-    iconClass: "text-[#E2E8F0]",
-    iconActiveClass: "text-white",
-  },
-  {
-    to: "/dashboard/actions",
-    label: "Follow-Through",
-    Icon: ClipboardList,
     iconClass: "text-[#E2E8F0]",
     iconActiveClass: "text-white",
   },
@@ -78,6 +47,20 @@ const PRIMARY_NAV = [
     Icon: FileText,
     badgeKey: "briefs" as const,
     badgeLabel: "Escalation-required briefs",
+    iconClass: "text-[#E2E8F0]",
+    iconActiveClass: "text-white",
+  },
+  {
+    to: "/dashboard/signals",
+    label: "Issues",
+    Icon: ScanLine,
+    iconClass: "text-[#E2E8F0]",
+    iconActiveClass: "text-white",
+  },
+  {
+    to: "/dashboard/actions",
+    label: "Follow-Through",
+    Icon: ClipboardList,
     iconClass: "text-[#E2E8F0]",
     iconActiveClass: "text-white",
   },
@@ -98,13 +81,6 @@ const SETTINGS_NAV = [
     to: "/dashboard/team",
     label: "Team",
     Icon: UserPlus,
-    iconClass: "text-[#E2E8F0]",
-    iconActiveClass: "text-white",
-  },
-  {
-    to: "/dashboard/billing",
-    label: "Billing",
-    Icon: CreditCard,
     iconClass: "text-[#E2E8F0]",
     iconActiveClass: "text-white",
   },
@@ -183,8 +159,8 @@ const resolvePageLabel = (pathname: string): string => {
   // Detail routes first (more specific)
   if (pathname.startsWith("/dashboard/brief-customization")) return "Brief Customization";
   if (pathname.startsWith("/dashboard/approval-queue"))     return "Approval Queue";
-  if (pathname.startsWith("/dashboard/signals/"))             return "Signal Detail";
-  if (pathname.startsWith("/dashboard/reports/"))             return "Brief Packet";
+  if (pathname.startsWith("/dashboard/signals/"))             return "Issue Detail";
+  if (pathname.startsWith("/dashboard/reports/"))             return "Governance Brief";
 
   // Primary nav exact / prefix matches
   for (const item of PRIMARY_NAV) {
@@ -192,31 +168,33 @@ const resolvePageLabel = (pathname: string): string => {
     if (item.to !== "/dashboard" && (pathname === item.to || pathname.startsWith(`${item.to}/`))) return item.label;
   }
   // Upload is a top-level route outside /dashboard
-  if (pathname === "/upload") return "Upload Cycle";
+  if (pathname === "/upload") return "New Review";
 
   // Settings nav
   for (const item of SETTINGS_NAV) {
     if (pathname === item.to || pathname.startsWith(`${item.to}/`)) return item.label;
   }
+  // Billing is in the account menu but still needs a label
+  if (pathname === "/dashboard/billing") return "Billing";
 
-  return "Workspace Home";
+  return "Home";
 };
 
 const resolvePageNote = (pathname: string): string => {
   if (pathname === "/dashboard") {
-    return "Open the current governance brief, confirm what changed, and review follow-through before the next partner meeting.";
+    return "Open the current Governance Brief, confirm what changed, and review follow-through before the next partner meeting.";
   }
   if (pathname === "/upload") {
-    return "Start or continue a review cycle from one law-firm review export.";
+    return "Start a new review cycle from one law-firm feedback export.";
   }
   if (pathname === "/dashboard/signals" || pathname.startsWith("/dashboard/signals/") || pathname.startsWith("/signals/")) {
-    return "Review the client-feedback evidence that feeds the current governance brief.";
+    return "Review the client-feedback issues that feed the current Governance Brief.";
   }
   if (pathname === "/dashboard/actions" || pathname.startsWith("/dashboard/actions/")) {
     return "Review overdue, unowned, and blocked follow-through before the next partner discussion.";
   }
   if (pathname === "/dashboard/reports" || pathname.startsWith("/dashboard/reports/")) {
-    return "Open the partner-ready governance brief and confirm follow-through and next decisions.";
+    return "Open the partner-ready Governance Brief and confirm follow-through and next decisions.";
   }
   if (pathname === "/dashboard/billing") {
     return "Manage your plan and subscription details.";
@@ -234,6 +212,8 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
   const navigate = useNavigate();
   const [loggingOut, setLoggingOut] = useState(false);
   const [briefsBadgeCount, setBriefsBadgeCount] = useState<number>(0);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const accountMenuRef = useRef<HTMLDivElement | null>(null);
   const mainRef = useRef<HTMLElement | null>(null);
 
   const isActive = (href: string) => {
@@ -293,6 +273,17 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
     mainElement.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [pathname]);
 
+  // Close account menu on click outside
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (accountMenuRef.current && !accountMenuRef.current.contains(e.target as Node)) {
+        setAccountMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
   const planLabel = currentPlan?.firmPlan
     ? currentPlan.firmPlan.toUpperCase()
     : currentPlan?.planLabel
@@ -334,10 +325,10 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
           </p>
         </div>
 
-        {/* Primary nav — governance narrative order */}
+        {/* Primary nav */}
         <nav className="flex-1 px-3 py-5" aria-label="Governance workspace">
           <div className="space-y-0.5">
-            <p className="workspace-shell-nav-label px-3 pb-2 pt-1">Current cycle</p>
+            <p className="workspace-shell-nav-label px-3 pb-2 pt-1">Workspace</p>
             {PRIMARY_NAV.map((item) => (
               <NavItem
                 key={item.to}
@@ -405,11 +396,49 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
             <span className="inline-flex items-center rounded-lg border border-[#DDD8D0] bg-white px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-[#7A6E63]">
               {planLabel}
             </span>
-            <div
-              aria-label="User profile"
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#DDD8D0] bg-[#F5F2ED] text-[11px] font-bold tracking-wide text-[#0D1B2A]"
-            >
-              {initials}
+            {/* Account menu */}
+            <div className="relative" ref={accountMenuRef}>
+              <button
+                type="button"
+                onClick={() => setAccountMenuOpen((p) => !p)}
+                aria-label="Open account menu"
+                aria-expanded={accountMenuOpen}
+                aria-haspopup="true"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#DDD8D0] bg-[#F5F2ED] text-[11px] font-bold tracking-wide text-[#0D1B2A] transition-colors hover:bg-[#EBE6DF]"
+              >
+                {initials}
+              </button>
+              {accountMenuOpen && (
+                <div className="absolute right-0 top-full z-50 mt-1.5 w-52 rounded-[10px] border border-[#DDD8D0] bg-white py-1 shadow-lg">
+                  <div className="border-b border-[#F0EDE8] px-3 py-2.5">
+                    <p className="truncate text-[11px] font-semibold text-[#0D1B2A]">{user?.firm_name || userName || "Account"}</p>
+                    <p className="truncate text-[10px] text-[#7A6E63]">{user?.email}</p>
+                  </div>
+                  <Link
+                    to="/dashboard/reports"
+                    onClick={() => setAccountMenuOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED]"
+                  >
+                    Meetings
+                  </Link>
+                  <Link
+                    to="/dashboard/billing"
+                    onClick={() => setAccountMenuOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED]"
+                  >
+                    Billing
+                  </Link>
+                  <div className="my-1 h-px bg-[#F0EDE8]" />
+                  <button
+                    type="button"
+                    onClick={() => { setAccountMenuOpen(false); void handleLogOut(); }}
+                    disabled={loggingOut}
+                    className="flex w-full items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED] disabled:opacity-50"
+                  >
+                    {loggingOut ? "Signing out…" : "Sign out"}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </header>

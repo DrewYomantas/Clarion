@@ -10,6 +10,8 @@ import type { PartnerBriefDeliveryStatus } from "@/api/authService";
 type EmailBriefPreviewModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** The governance brief name / matter identifier shown in the confirmation */
+  matter?: string;
   averageRating: string;
   topIssue: string;
   exampleQuote: string;
@@ -24,6 +26,7 @@ type EmailBriefPreviewModalProps = {
 export default function EmailBriefPreviewModal({
   open,
   onOpenChange,
+  matter,
   averageRating,
   topIssue,
   exampleQuote,
@@ -38,24 +41,51 @@ export default function EmailBriefPreviewModal({
   const deliveryStateKnown = Boolean(deliveryStatus);
   const sendDisabled = isSending || deliveryStatusLoading || !deliveryStateKnown || Boolean(deliveryUnavailable);
   const sendLabel = isSending
-    ? "Sending brief..."
+    ? "Sending…"
     : deliveryStatusLoading
-      ? "Checking delivery..."
+      ? "Checking delivery…"
       : !deliveryStateKnown
         ? "Delivery status unavailable"
         : deliveryUnavailable
           ? "Delivery unavailable"
-          : "Send to configured recipients";
+          : "Send Brief";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Email Brief to Partners</DialogTitle>
+          <DialogTitle>Send Brief</DialogTitle>
           <DialogDescription>
-            Preview the partner brief email before delivery to the configured recipient list for this workspace.
+            Confirm the details below before sending. This delivers the brief immediately to the configured recipient list.
           </DialogDescription>
         </DialogHeader>
+
+        {/* Confirmation: matter + recipient */}
+        {(matter || deliveryStatus) && (
+          <section className="rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] p-4">
+            <h3 className="text-sm font-semibold text-[#0D1B2A]">Confirm send details</h3>
+            <div className="mt-3 space-y-2">
+              {matter && (
+                <div className="flex gap-3">
+                  <p className="w-20 shrink-0 text-xs uppercase tracking-[0.08em] text-[#6B7280]">Matter</p>
+                  <p className="text-sm text-[#0D1B2A]">{matter}</p>
+                </div>
+              )}
+              {deliveryStatus?.delivery_available && deliveryStatus.recipients.length > 0 && (
+                <div className="flex gap-3">
+                  <p className="w-20 shrink-0 text-xs uppercase tracking-[0.08em] text-[#6B7280]">Recipients</p>
+                  <p className="text-sm text-[#0D1B2A] break-all">{deliveryStatus.recipients.join(", ")}</p>
+                </div>
+              )}
+              {deliveryStatus?.delivery_available && deliveryStatus.from_email && (
+                <div className="flex gap-3">
+                  <p className="w-20 shrink-0 text-xs uppercase tracking-[0.08em] text-[#6B7280]">From</p>
+                  <p className="text-sm text-[#0D1B2A]">{deliveryStatus.from_email}</p>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
 
         <section className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
           <h3 className="text-sm font-semibold text-[#0D1B2A]">Current Governance Brief Snapshot</h3>
@@ -79,46 +109,14 @@ export default function EmailBriefPreviewModal({
           </div>
         </section>
 
-        <section className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-          <h3 className="text-sm font-semibold text-[#0D1B2A]">Delivery</h3>
-          {deliveryStatusLoading ? (
-            <div className="mt-3 rounded-[8px] border border-[#E5E7EB] bg-slate-50 p-3 text-sm text-[#475569]">
-              Checking current delivery configuration...
-            </div>
-          ) : deliveryStatus ? (
-            <div
-              className={[
-                "mt-3 rounded-[8px] border p-3 text-sm",
-                deliveryUnavailable
-                  ? "border-amber-200 bg-amber-50 text-amber-900"
-                  : "border-[#E5E7EB] bg-slate-50 text-[#475569]",
-              ].join(" ")}
-            >
-              <p className="font-medium text-[#0D1B2A]">
-                {deliveryStatus.delivery_available
-                  ? `This send goes to ${deliveryStatus.recipient_count} configured recipient${deliveryStatus.recipient_count === 1 ? "" : "s"}.`
-                  : "Partner brief delivery is not configured for this deployment."}
-              </p>
-              <p className="mt-2">
-                {deliveryStatus.delivery_available
-                  ? `From: ${deliveryStatus.from_email || "Configured sender"}`
-                  : "If delivery is unavailable, clicking Send would not dispatch any email."}
-              </p>
-              {deliveryStatus.recipients.length > 0 ? (
-                <p className="mt-2 break-words">Recipients: {deliveryStatus.recipients.join(", ")}</p>
-              ) : null}
-              <p className="mt-2">
-                {deliveryStatus.delivery_available
-                  ? "Clarion sends this immediately through the configured backend sender. If provider delivery fails, the brief is not queued for retry in the UI."
-                  : "Next step: configure outbound email delivery and a partner recipient list, or contact support before trying again."}
-              </p>
-            </div>
-          ) : (
-            <div className="mt-3 rounded-[8px] border border-[#E5E7EB] bg-slate-50 p-3 text-sm text-[#475569]">
-              Delivery status could not be confirmed right now. Clarion will not send until the configured sender and recipient list can be confirmed.
-            </div>
-          )}
-        </section>
+        {deliveryUnavailable && (
+          <section className="rounded-[10px] border border-amber-200 bg-amber-50 p-4">
+            <p className="text-sm font-medium text-amber-900">Delivery not configured</p>
+            <p className="mt-1 text-sm text-amber-800">
+              Partner brief delivery is not set up for this workspace. Configure outbound email and a recipient list before sending.
+            </p>
+          </section>
+        )}
 
         <section className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
           <h3 className="text-sm font-semibold text-[#0D1B2A]">Governance Brief Email Preview</h3>
