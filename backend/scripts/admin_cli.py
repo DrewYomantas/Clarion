@@ -9,26 +9,17 @@ from __future__ import annotations
 
 
 import argparse
-
-import sqlite3
-
 from datetime import datetime, timezone
 
-
-
 from config import Config
+from db_compat import DatabaseConnector
 
 
 
 
 
 def db_connect():
-
-    conn = sqlite3.connect(Config.DATABASE_PATH)
-
-    conn.execute('PRAGMA foreign_keys = ON')
-
-    return conn
+    return DatabaseConnector(Config.DATABASE_URL).connect()
 
 
 
