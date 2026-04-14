@@ -687,10 +687,16 @@ const Dashboard = () => {
           {(() => {
             // Map backend status to canonical chip labels
             const briefStatus = latestProcessedReport?.status;
-            const chipLabel = briefStatus === "pending" ? "Draft"
+            const chipLabel = briefStatus === "sent" ? "Sent"
+              : briefStatus === "acknowledged" ? "Acknowledged"
               : briefStatus === "ready" || briefStatus === "escalation" ? "Ready to Send"
               : "Draft";
-            const chipVariant: "success" | "muted" = (briefStatus === "ready" || briefStatus === "escalation") ? "success" : "muted";
+            const chipVariant: "success" | "muted" | "info" | "warn" =
+              briefStatus === "acknowledged" ? "success"
+              : briefStatus === "sent" ? "info"
+              : briefStatus === "ready" ? "success"
+              : briefStatus === "escalation" ? "warn"
+              : "muted";
             return (
               <div className="rounded-[14px] border border-[#CDD9E7] bg-gradient-to-b from-white via-[#F8FBFE] to-[#F2F7FB] px-6 py-6 shadow-[0_4px_16px_rgba(13,27,42,0.08)]">
                 <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
@@ -711,7 +717,11 @@ const Dashboard = () => {
                             "inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold",
                             chipVariant === "success"
                               ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                              : "border-slate-200 bg-slate-100 text-slate-600",
+                              : chipVariant === "info"
+                                ? "border-blue-200 bg-blue-50 text-blue-700"
+                                : chipVariant === "warn"
+                                  ? "border-amber-200 bg-amber-50 text-amber-700"
+                                  : "border-slate-200 bg-slate-100 text-slate-600",
                           ].join(" ")}
                         >
                           {chipLabel}
@@ -955,8 +965,8 @@ const Dashboard = () => {
                       <GovernanceEmptyState
                         size="sm"
                         icon={<ClipboardList size={18} />}
-                        title="No follow-through assigned yet"
-                        description="Actions are created after reviewing client issues. Assign ownership and due dates — they will appear here."
+                        title="No follow-through from recent Governance Briefs"
+                        description="Follow-through items are created after reviewing client issues in a Governance Brief. Assign ownership and due dates — they will appear here."
                         primaryAction={{ label: "Review issues", href: "/dashboard/signals" }}
                       />
                     ) : (

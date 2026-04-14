@@ -322,10 +322,10 @@ const ReportsPage = () => {
                   <GovernanceEmptyState
                     size="md"
                     icon={<FileText size={20} />}
-                    title="No brief prepared for the upcoming meeting"
-                    description="Create your first governance brief once you have reviewed your top signals and confirmed the issues that need leadership attention."
-                    primaryAction={{ label: "Review client issues", href: "/dashboard/signals" }}
-                    secondaryAction={{ label: "Upload feedback CSV", href: "/upload" }}
+                    title="No Governance Brief ready yet"
+                    description="Start a new review to generate your first Governance Brief. Once a review cycle is processed, the brief will appear here ready to prepare and send."
+                    primaryAction={{ label: "Start a new review", href: "/upload" }}
+                    secondaryAction={{ label: "Review client issues", href: "/dashboard/signals" }}
                   />
                 </section>
               )
@@ -359,9 +359,9 @@ const ReportsPage = () => {
                   <GovernanceEmptyState
                     size="md"
                     icon={<BookOpen size={20} />}
-                    title="No past briefs yet"
-                    description="Prior governance cycles will appear here as a reference archive once more than one brief has been completed. Use them to track issue trends across meetings."
-                    primaryAction={{ label: "View upcoming brief", onClick: () => setBriefsTab("upcoming") }}
+                    title="No past Governance Briefs yet"
+                    description="Completed brief cycles will appear here as a reference archive. Use them to track how client issues change across review periods."
+                    primaryAction={{ label: "View current brief", onClick: () => setBriefsTab("upcoming") }}
                   />
                 </section>
               )

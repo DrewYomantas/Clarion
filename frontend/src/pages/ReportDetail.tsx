@@ -1235,9 +1235,9 @@ const ReportDetail = () => {
       presentMode={presentMode}
     >
       <div className="mb-4 rounded-[10px] border border-[#E5E7EB] bg-[#F8FAFC] px-4 py-3">
-        <p className="gov-type-eyebrow">Follow-through posture</p>
+        <p className="gov-type-eyebrow">What came out of this review</p>
         <p className="mt-1 text-[13px] text-slate-700">
-          Confirm ownership, due dates, and any blocked items before this brief goes into the next partner discussion.
+          Confirm ownership and due dates before this brief is shared with partners. Blocked items should be escalated before the next cycle.
         </p>
         {!presentMode ? (
           <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -1310,7 +1310,7 @@ const ReportDetail = () => {
         {sortedActions.length === 0 ? (
           <div className="rounded-[8px] border border-[#E5E7EB] bg-[#F8FAFC] px-5 py-5">
             <p className="text-[13px] text-slate-600">
-              No actions have been assigned for this brief yet.
+              No follow-through items recorded for this Governance Brief yet.
             </p>
             {!presentMode ? (
               <button
@@ -1318,7 +1318,7 @@ const ReportDetail = () => {
                 className="gov-btn-secondary mt-3"
                 onClick={openCreateAction}
               >
-                Create first action
+                Add the first item
               </button>
             ) : null}
           </div>
@@ -1624,7 +1624,22 @@ const ReportDetail = () => {
           {/* Page header */}
           <header className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0 flex-1">
-              <p className="workspace-shell-eyebrow">Governance Brief</p>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="workspace-shell-eyebrow">Governance Brief</p>
+                <GovStatusChip
+                  label={
+                    report.status === "ready"
+                      ? (escalation.on ? "Ready to Send" : "Ready to Send")
+                      : "Draft"
+                  }
+                  variant={
+                    report.status === "ready"
+                      ? (escalation.on ? "warn" : "success")
+                      : "muted"
+                  }
+                  size="sm"
+                />
+              </div>
               {renameMode === "editing" ||
               renameMode === "saving" ||
               renameMode === "error" ? (
@@ -1683,11 +1698,8 @@ const ReportDetail = () => {
                   </button>
                 </div>
               )}
-              <p className="mt-1.5 text-[13px] text-slate-500">
-                Generated {formatDateTime(report.created_at)}
-              </p>
               <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-slate-600">
-                The governance brief for this cycle — the partner-ready record of what clients said, what the firm is doing about it, and what still needs a decision.
+                The governance brief for this review cycle — the partner-ready record of what clients said, what the firm is doing about it, and what still needs a decision.
               </p>
               {renameMode === "saved" && (
                 <p className="mt-1 text-[11px] text-emerald-700">Saved.</p>
@@ -1750,6 +1762,27 @@ const ReportDetail = () => {
               </button>
             </div>
           </header>
+
+          {/* Meeting Context — brief provenance */}
+          <div className="rounded-[8px] border border-[#E5E7EB] bg-[#F8FAFC] px-4 py-3">
+            <p className="gov-type-eyebrow mb-2">Meeting context</p>
+            <div className="flex flex-wrap gap-x-6 gap-y-1.5">
+              {report.review_date_label ? (
+                <span className="text-[12px] text-slate-600">
+                  <span className="font-medium text-[#0D1B2A]">Review period · </span>
+                  {report.review_date_label}
+                </span>
+              ) : null}
+              <span className="text-[12px] text-slate-600">
+                <span className="font-medium text-[#0D1B2A]">Reviews analyzed · </span>
+                {report.total_reviews}
+              </span>
+              <span className="text-[12px] text-slate-600">
+                <span className="font-medium text-[#0D1B2A]">Generated · </span>
+                {formatDateTime(report.created_at)}
+              </span>
+            </div>
+          </div>
 
           {/* Notices */}
           {isBusyRetrying && (

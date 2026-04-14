@@ -35,7 +35,7 @@ import { Calendar, FileText, Zap } from "lucide-react";
 import GovernanceCard from "./GovernanceCard";
 import GovStatusChip from "./GovStatusChip";
 
-export type BriefStatus = "ready" | "escalation" | "pending";
+export type BriefStatus = "ready" | "escalation" | "pending" | "sent" | "acknowledged";
 
 export type GovernanceBriefCardProps = {
   title: string;
@@ -57,16 +57,20 @@ export type GovernanceBriefCardProps = {
   onPrepare?: () => void;
 };
 
-const statusChipMap: Record<BriefStatus, { label: string; variant: "risk" | "warn" | "success" | "muted" }> = {
-  escalation: { label: "Ready to Send",        variant: "warn" },
-  ready:      { label: "Ready to Send",        variant: "success" },
-  pending:    { label: "Draft",                variant: "muted" },
+const statusChipMap: Record<BriefStatus, { label: string; variant: "risk" | "warn" | "success" | "muted" | "info" }> = {
+  escalation:   { label: "Ready to Send",  variant: "warn" },
+  ready:        { label: "Ready to Send",  variant: "success" },
+  pending:      { label: "Draft",          variant: "muted" },
+  sent:         { label: "Sent",           variant: "info" },
+  acknowledged: { label: "Acknowledged",   variant: "success" },
 };
 
 const accentMap: Record<BriefStatus, "warn" | "success" | "neutral"> = {
-  escalation: "warn",
-  ready:      "success",
-  pending:    "neutral",
+  escalation:   "warn",
+  ready:        "success",
+  pending:      "neutral",
+  sent:         "success",
+  acknowledged: "success",
 };
 
 /** Build the packet-summary description when none is provided */

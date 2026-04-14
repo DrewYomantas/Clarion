@@ -606,19 +606,19 @@ const ExecutionPage = () => {
           <GovernanceEmptyState
             size="lg"
             icon={<ClipboardList size={20} />}
-            title="No follow-through created yet"
+            title="No follow-through items from recent Governance Briefs"
             description={
               !hasAnyCycle
-                ? "The first cycle starts with a CSV upload. Once the report is ready, review client issues and assign ownership here."
+                ? "Start a new review to generate your first Governance Brief. Once the brief is ready, open issues and assign follow-through here."
                 : !hasReadyCycle
-                  ? "Your first governance cycle is still being prepared. Follow-through becomes available once the report is ready for issue review."
-                  : "Follow-through opens after reviewing client issues. Confirm what needs ownership, then assign due dates and partners here."
+                  ? "Your first Governance Brief is still being prepared. Follow-through becomes available once the brief is ready for review."
+                  : "Follow-through is assigned after reviewing client issues in a Governance Brief. Confirm what needs ownership, then set due dates and partners."
             }
             primaryAction={
               !hasAnyCycle
-                ? { label: "Upload feedback CSV", href: "/upload" }
+                ? { label: "Start a new review", href: "/upload" }
                 : !hasReadyCycle
-                  ? { label: "Check report status", href: "/dashboard/reports" }
+                  ? { label: "Check Governance Brief status", href: "/dashboard/reports" }
                   : { label: "Review client issues", href: "/dashboard/signals" }
             }
             secondaryAction={
@@ -644,12 +644,12 @@ const ExecutionPage = () => {
             title={
               actionsTab === "my-actions"
                 ? "No follow-through assigned to you"
-                : "No overdue follow-through - all within due dates"
+                : "No overdue items — all within due dates"
             }
             description={
               actionsTab === "my-actions"
-                ? "Review the brief record to see where ownership is missing and assign yourself to the items that need a named lead."
-                : "All current follow-through is within due dates. Review the firm-wide view to stay ahead of the next discussion."
+                ? "Open the Governance Brief to see where ownership is missing and assign yourself to items that need a named lead."
+                : "All current follow-through is within due dates. Review the firm-wide view to stay ahead of the next partner discussion."
             }
             primaryAction={{ label: "View all follow-through", onClick: () => setActionsTab("firm-wide") }}
           />

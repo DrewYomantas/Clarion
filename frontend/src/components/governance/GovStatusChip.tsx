@@ -14,7 +14,7 @@
  * ── GOVERNANCE LABEL VOCABULARY (use these exact strings) ────────────────────
  *   Severity:   "High"  "Medium"  "Low"
  *   Action:     "Open"  "In Progress"  "Blocked"  "Completed"  "Overdue"
- *   Brief:      "Ready"  "Escalation"  "Pending"
+ *   Brief:      "Draft"  "Ready to Send"  "Sent"  "Acknowledged"
  *   Exposure:   "High Exposure"  "Medium Exposure"  "Low Exposure"
  *   State:      "On Track"  "Overdue"  "Due Soon"  "Unassigned"
  *
@@ -109,8 +109,9 @@ export function resolveChipVariantForBriefStatus(
   status: string | null | undefined,
 ): GovStatusChipVariant {
   const s = (status || "").toLowerCase();
-  if (s === "escalation") return "risk";
-  if (s === "ready")      return "success";
-  if (s === "pending")    return "warn";
-  return "muted";
+  if (s === "escalation")   return "warn";
+  if (s === "ready")        return "success";
+  if (s === "sent")         return "info";
+  if (s === "acknowledged") return "success";
+  return "muted"; // pending / draft / default
 }

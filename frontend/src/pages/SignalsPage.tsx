@@ -626,13 +626,13 @@ const SignalsPage = () => {
             <GovernanceEmptyState
               size="lg"
               icon={<RadioTower size={20} />}
-              title={isNewOnlyFilter ? "No new client issues in this cycle" : "No client issues yet"}
+              title={isNewOnlyFilter ? "No new client issues in this cycle" : "No issues linked to a Governance Brief yet"}
               description={
                 isNewOnlyFilter
                   ? "The latest review cycle does not introduce any issue categories that were absent from the previous period."
-                  : "The first governance cycle starts with a CSV upload. Clarion will surface recurring client issues here once that review period is processed."
+                  : "Start a new review to generate your first Governance Brief. Client issues surface here once a review cycle is processed."
               }
-              primaryAction={!isNewOnlyFilter ? { label: "Upload feedback CSV", href: "/upload" } : undefined}
+              primaryAction={!isNewOnlyFilter ? { label: "Start a new review", href: "/upload" } : undefined}
               secondaryAction={{ label: "Return to dashboard", href: "/dashboard" }}
               footer={
                 <Link to="/demo" className="text-sm text-slate-500 underline underline-offset-4 transition-colors hover:text-slate-700">
@@ -650,14 +650,14 @@ const SignalsPage = () => {
                 signalsTab === "triage"
                   ? "No signals need partner attention right now"
                   : signalsTab === "in-briefs"
-                    ? "No signals included in a governance brief yet"
+                    ? "No issues included in a Governance Brief yet"
                     : "No signals match the current filter"
               }
               description={
                 signalsTab === "triage"
                   ? "All current signals are medium or low severity. Review 'Current Cycle' for the full issue set and emerging patterns."
                   : signalsTab === "in-briefs"
-                    ? "Signals are added to a brief when you prepare a governance packet. Return after completing your first brief cycle."
+                    ? "Issues are linked to a Governance Brief when you prepare a review packet. Complete your first brief cycle to see them here."
                     : "Adjust the active filter or return to all signals to see the full issue queue."
               }
               primaryAction={{ label: "View all signals", onClick: () => setSignalsTab("all") }}
