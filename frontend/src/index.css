@@ -34,8 +34,8 @@
   --gov-slow: 220ms;
   --motion-fast: 140ms;
   --motion-med: 220ms;
-  --motion-slow: 320ms;
-  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-slow: 400ms;
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* -- Interaction tokens --------------------------------------------
      Canonical values for hover/focus/active states.
@@ -1656,7 +1656,7 @@
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -1665,21 +1665,21 @@
 }
 
 .animate-fade-up {
-  animation: fadeUp var(--motion-slow) var(--motion-ease) forwards;
+  animation: fadeUp var(--motion-slow) var(--motion-ease) both;
 }
 
 .animate-fade-up-delay-1 {
-  animation-delay: var(--motion-fast);
+  animation-delay: 60ms;
   opacity: 0;
 }
 
 .animate-fade-up-delay-2 {
-  animation-delay: calc(var(--motion-fast) * 2);
+  animation-delay: 120ms;
   opacity: 0;
 }
 
 .animate-fade-up-delay-3 {
-  animation-delay: calc(var(--motion-fast) * 3);
+  animation-delay: 180ms;
   opacity: 0;
 }
 
