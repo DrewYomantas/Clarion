@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ChevronRight, AlertTriangle, Loader2, X } from "lucide-react";
+import DashboardCard from "@/components/dashboard/DashboardCard";
 import { toast } from "sonner";
 import {
   emitPlanLimitError,
@@ -631,29 +632,26 @@ const Dashboard = () => {
               : briefStatus === "escalation" ? "warn"
               : "muted";
             return (
-              <div className="rounded-[14px] border border-[#CDD9E7] bg-gradient-to-b from-white via-[#F8FBFE] to-[#F2F7FB] px-6 py-5 shadow-[0_4px_16px_rgba(13,27,42,0.08)]">
+              <div className="animate-fade-up rounded-[14px] border border-[#CDD9E7] bg-gradient-to-b from-white via-[#F8FBFE] to-[#F2F7FB] px-6 py-5 shadow-[0_4px_16px_rgba(13,27,42,0.08)]">
                 <div className="mb-3 flex flex-wrap items-start justify-between gap-4">
                   <div>
-                    <p className="gov-type-eyebrow mb-1">Current Governance Brief</p>
-                    <h2 className="mt-1 text-[22px] font-semibold text-[#0D1B2A]">
-                      {latestProcessedReport
-                        ? (latestProcessedReport.name || latestProcessedReport.title || reviewPeriodLabel)
-                        : "No brief ready yet"}
+                    <p className="gov-type-eyebrow mb-1.5">Governance Brief</p>
+                    <h2 className="text-[26px] font-semibold tracking-[-0.02em] text-[#0D1B2A]">
+                      {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
                     </h2>
                     {latestProcessedReport ? (
-                      <div className="mt-2 flex flex-wrap items-center gap-3">
-                        <span className="text-[13px] text-slate-600">{reviewPeriodLabel}</span>
-                        <span className="text-[12px] text-[#7A6E63]">· {reviewsAnalyzed} reviews</span>
+                      <div className="mt-2 flex items-center gap-2.5">
+                        <span className="text-[12px] text-[#6B7280]">{reviewsAnalyzed} reviews analyzed</span>
                         <span
                           className={[
-                            "inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold",
+                            "inline-flex items-center rounded-[5px] border px-2 py-0.5 text-[11px] font-semibold",
                             chipVariant === "success"
                               ? "border-emerald-200 bg-emerald-50 text-emerald-700"
                               : chipVariant === "info"
                                 ? "border-blue-200 bg-blue-50 text-blue-700"
                                 : chipVariant === "warn"
                                   ? "border-amber-200 bg-amber-50 text-amber-700"
-                                  : "border-slate-200 bg-slate-100 text-slate-600",
+                                  : "border-[#E2E8F0] bg-[#F8FAFC] text-[#64748B]",
                           ].join(" ")}
                         >
                           {chipLabel}
@@ -704,69 +702,69 @@ const Dashboard = () => {
 
           {/* ── Needs Attention ── */}
           {(overdueActions.length > 0 || unownedActionsCount > 0 || highSeveritySignalsCount > 0 || exposure?.partner_escalation_required) ? (
-            <div className="rounded-[10px] border border-amber-200 bg-amber-50 px-5 py-3.5">
-              <div className="mb-2 flex items-center gap-1.5">
-                <AlertTriangle size={12} className="text-amber-600" aria-hidden />
-                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-amber-700">Needs attention</p>
+            <div className="animate-fade-up-delay-1 animate-fade-up rounded-[10px] border border-amber-200 bg-amber-50 px-5 py-3.5">
+              <div className="mb-2.5 flex items-center gap-1.5">
+                <AlertTriangle size={11} className="text-amber-600" aria-hidden />
+                <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-amber-700">Needs attention</p>
               </div>
-              <ul className="space-y-2">
+              <ul className="divide-y divide-amber-100">
                 {overdueActions.length > 0 && (
-                  <li className="flex items-center justify-between gap-4">
-                    <span className="text-[13px] text-slate-700">
-                      <span className="font-medium text-[#DC2626]">{overdueActions.length} overdue</span>{" "}
+                  <li className="flex items-center justify-between gap-4 py-2 first:pt-0 last:pb-0">
+                    <span className="text-[13px] text-[#334155]">
+                      <span className="font-semibold text-[#DC2626]">{overdueActions.length} overdue</span>{" "}
                       {overdueActions.length === 1 ? "action" : "actions"}
                     </span>
                     <Link
                       to="/dashboard/actions?filter=overdue"
-                      className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
+                      className="shrink-0 inline-flex items-center rounded-[6px] border border-amber-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-colors hover:bg-amber-50"
                     >
-                      Review overdue →
-                    </Link>
-                  </li>
-                )}
-                {unownedActionsCount > 0 && (
-                  <li className="flex items-center justify-between gap-4">
-                    <span className="text-[13px] text-slate-700">
-                      <span className="font-medium text-amber-700">{unownedActionsCount}</span>{" "}
-                      {unownedActionsCount === 1 ? "action needs" : "actions need"} an owner
-                    </span>
-                    <Link
-                      to="/dashboard/actions"
-                      className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
-                    >
-                      Assign owners →
-                    </Link>
-                  </li>
-                )}
-                {highSeveritySignalsCount > 0 && (
-                  <li className="flex items-center justify-between gap-4">
-                    <span className="text-[13px] text-slate-700">
-                      <span className="font-medium text-amber-700">{highSeveritySignalsCount} high-severity</span>{" "}
-                      {highSeveritySignalsCount === 1 ? "issue" : "issues"}
-                    </span>
-                    <Link
-                      to="/dashboard/signals?filter=high"
-                      className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
-                    >
-                      View issues →
+                      Review →
                     </Link>
                   </li>
                 )}
                 {exposure?.partner_escalation_required ? (
-                  <li className="flex items-center justify-between gap-4">
-                    <span className="text-[13px] text-slate-700">
-                      <span className="font-medium text-[#DC2626]">Partner escalation</span> required
+                  <li className="flex items-center justify-between gap-4 py-2 first:pt-0 last:pb-0">
+                    <span className="text-[13px] text-[#334155]">
+                      <span className="font-semibold text-[#DC2626]">Partner escalation</span> required
                     </span>
                     {latestProcessedReport ? (
                       <Link
                         to={`/dashboard/reports/${latestProcessedReport.id}`}
-                        className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
+                        className="shrink-0 inline-flex items-center rounded-[6px] border border-amber-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-colors hover:bg-amber-50"
                       >
-                        Review brief →
+                        Open brief →
                       </Link>
                     ) : null}
                   </li>
                 ) : null}
+                {highSeveritySignalsCount > 0 && (
+                  <li className="flex items-center justify-between gap-4 py-2 first:pt-0 last:pb-0">
+                    <span className="text-[13px] text-[#334155]">
+                      <span className="font-semibold text-amber-700">{highSeveritySignalsCount} high-severity</span>{" "}
+                      {highSeveritySignalsCount === 1 ? "issue" : "issues"}
+                    </span>
+                    <Link
+                      to="/dashboard/signals?filter=high"
+                      className="shrink-0 inline-flex items-center rounded-[6px] border border-amber-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-colors hover:bg-amber-50"
+                    >
+                      View →
+                    </Link>
+                  </li>
+                )}
+                {unownedActionsCount > 0 && (
+                  <li className="flex items-center justify-between gap-4 py-2 first:pt-0 last:pb-0">
+                    <span className="text-[13px] text-[#334155]">
+                      <span className="font-semibold text-amber-700">{unownedActionsCount}</span>{" "}
+                      {unownedActionsCount === 1 ? "action needs" : "actions need"} an owner
+                    </span>
+                    <Link
+                      to="/dashboard/actions"
+                      className="shrink-0 inline-flex items-center rounded-[6px] border border-amber-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-colors hover:bg-amber-50"
+                    >
+                      Assign →
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           ) : null}
@@ -776,10 +774,11 @@ const Dashboard = () => {
             const briefId = latestProcessedReport?.id;
             const hasReport = Boolean(latestProcessedReport);
             const reportReady = latestProcessedReport?.status === "ready";
+            // Priority: urgent overdue first → then check if brief needs first review → normal operating state
             const activeStep =
               !hasReport || !reportReady ? 0
-              : openActions.length === 0 ? 1
               : overdueActions.length > 0 ? 3
+              : openActions.length === 0 ? 1
               : 2;
             type LoopStep = { label: string; stat: string; to: string };
             const steps: LoopStep[] = [
@@ -800,34 +799,37 @@ const Dashboard = () => {
               },
               {
                 label: "Follow-Through",
-                stat: openActions.length > 0 ? `${openActions.length} open` : "No open items",
+                stat: openActions.length > 0 ? `${openActions.length} open` : "All clear",
                 to: "/dashboard/actions",
               },
             ];
             return (
-              <div className="rounded-[10px] border border-[#DDE3EC] bg-[#F8FAFC] px-5 py-4" style={{ borderLeft: "3px solid #0D1B2A" }}>
+              <div className="animate-fade-up-delay-2 animate-fade-up rounded-[10px] border border-[#DDE3EC] bg-[#F8FAFC] px-5 py-4" style={{ borderLeft: "3px solid #0D1B2A" }}>
                 <p className="gov-type-eyebrow mb-3">Governance Loop</p>
-                <div className="flex flex-wrap items-center gap-1.5">
+                <div className="flex items-start gap-1">
                   {steps.map((step, index) => (
-                    <div key={step.label} className="flex items-center gap-1.5">
+                    <div key={step.label} className="flex items-center gap-1">
                       <Link
                         to={step.to}
                         className={[
-                          "flex flex-col rounded-[8px] px-4 py-2.5 transition-all",
+                          "flex flex-col rounded-[8px] px-3.5 py-2.5 transition-all duration-150",
                           index === activeStep
                             ? "bg-[#0D1B2A] text-white shadow-[0_2px_10px_rgba(13,27,42,0.22)]"
-                            : "bg-white border border-[#E2E8F0] text-[#0D1B2A] hover:border-[#0D1B2A]/30 hover:bg-[#EEF2F7]",
+                            : "bg-white border border-[#E2E8F0] text-[#0D1B2A] hover:border-[rgba(13,27,42,0.25)] hover:bg-[#EEF2F7]",
                         ].join(" ")}
                       >
-                        <span className={["text-[13px] font-semibold leading-tight", index === activeStep ? "text-white" : "text-[#0D1B2A]"].join(" ")}>
+                        <span className={["mb-1 text-[9px] font-bold tracking-[0.14em]", index === activeStep ? "text-[#94A3B8]" : "text-[#B0BAC6]"].join(" ")}>
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className={["text-[12px] font-semibold leading-tight", index === activeStep ? "text-white" : "text-[#0D1B2A]"].join(" ")}>
                           {step.label}
                         </span>
-                        <span className={["mt-0.5 text-[11px] leading-tight", index === activeStep ? "text-slate-300" : "text-slate-500"].join(" ")}>
+                        <span className={["mt-0.5 text-[11px] leading-tight", index === activeStep ? "text-[#94A3B8]" : "text-[#6B7280]"].join(" ")}>
                           {step.stat}
                         </span>
                       </Link>
                       {index < steps.length - 1 && (
-                        <span className="text-[11px] font-light text-[#CBD5E1]" aria-hidden>›</span>
+                        <span className="shrink-0 px-0.5 text-[12px] text-[#D1D9E0]" aria-hidden>→</span>
                       )}
                     </div>
                   ))}
