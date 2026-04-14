@@ -17,7 +17,6 @@ import {
   type ReportActionItem,
   type ReportListItem,
 } from "@/api/authService";
-import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { resolvePlanLimits } from "@/config/planLimits";
 import { DISPLAY_LABELS } from "@/constants/displayLabels";
@@ -511,18 +510,20 @@ const Dashboard = () => {
         style={{ maxWidth: "var(--content-max-w)" }}
       >
         {/* ── Page chrome: firm name + Start New Review ── */}
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <p className="text-[13px] font-semibold text-[#0D1B2A]">
+        <div className="mb-5 flex items-center justify-between gap-3 border-b border-[#E8ECF0] pb-4">
+          <div className="flex items-center gap-2.5">
+            <p className="text-[14px] font-semibold text-[#0D1B2A]">
               {user?.firm_name || "Governance Workspace"}
             </p>
             {latestProcessedReport ? (
-              <span className="text-[11px] text-[#9CA3AF]">· Updated {lastProcessedLabel}</span>
+              <span className="rounded-[4px] bg-[#F1F5F9] px-1.5 py-0.5 text-[10px] text-[#64748B]">
+                Updated {lastProcessedLabel}
+              </span>
             ) : null}
           </div>
           <Link
             to="/upload?start=true"
-            className="inline-flex items-center gap-1.5 rounded-[7px] bg-[#0D1B2A] px-3.5 py-1.5 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b]"
+            className="inline-flex items-center gap-1.5 rounded-[8px] bg-[#0D1B2A] px-3.5 py-2 text-[12px] font-semibold text-white transition-all hover:bg-[#142236] hover:shadow-[0_4px_12px_rgba(13,27,42,0.2)] active:scale-[0.98]"
           >
             Start New Review
           </Link>
@@ -632,105 +633,133 @@ const Dashboard = () => {
               : briefStatus === "escalation" ? "warn"
               : "muted";
             return (
-              <div className="animate-fade-up rounded-[14px] border border-[#CDD9E7] bg-gradient-to-b from-white via-[#F8FBFE] to-[#F2F7FB] px-6 py-5 shadow-[0_4px_16px_rgba(13,27,42,0.08)]">
-                <div className="mb-3 flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <p className="gov-type-eyebrow mb-1.5">Governance Brief</p>
-                    <h2 className="text-[26px] font-semibold tracking-[-0.02em] text-[#0D1B2A]">
-                      {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
-                    </h2>
-                    {latestProcessedReport ? (
-                      <div className="mt-2 flex items-center gap-2.5">
-                        <span className="text-[12px] text-[#6B7280]">{reviewsAnalyzed} reviews analyzed</span>
-                        <span
-                          className={[
-                            "inline-flex items-center rounded-[5px] border px-2 py-0.5 text-[11px] font-semibold",
-                            chipVariant === "success"
-                              ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                              : chipVariant === "info"
-                                ? "border-blue-200 bg-blue-50 text-blue-700"
-                                : chipVariant === "warn"
-                                  ? "border-amber-200 bg-amber-50 text-amber-700"
-                                  : "border-[#E2E8F0] bg-[#F8FAFC] text-[#64748B]",
-                          ].join(" ")}
+              <div
+                className="animate-fade-up relative overflow-hidden rounded-[16px] shadow-[0_8px_40px_rgba(13,27,42,0.18)]"
+                style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
+              >
+                {/* Radial glow — top right */}
+                <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#1a3a6b] opacity-40 blur-3xl" aria-hidden />
+                {/* Subtle dot-grid texture */}
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px)", backgroundSize: "20px 20px" }}
+                  aria-hidden
+                />
+                <div className="relative px-7 py-6">
+                  <div className="flex flex-wrap items-start justify-between gap-5">
+                    <div>
+                      <span className="inline-flex items-center rounded-[5px] border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#4D7FA8]">
+                        Governance Brief
+                      </span>
+                      <h2 className="mt-2.5 text-[32px] font-semibold leading-[1.1] tracking-[-0.03em] text-white">
+                        {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
+                      </h2>
+                      {latestProcessedReport ? (
+                        <div className="mt-2.5 flex items-center gap-2.5">
+                          <span className="text-[12px] text-[#4D6E8A]">{reviewsAnalyzed} reviews analyzed</span>
+                          <span
+                            className={[
+                              "inline-flex items-center rounded-[5px] border px-2 py-0.5 text-[10px] font-semibold",
+                              chipVariant === "success"
+                                ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-300"
+                                : chipVariant === "info"
+                                  ? "border-blue-400/30 bg-blue-400/10 text-blue-300"
+                                  : chipVariant === "warn"
+                                    ? "border-amber-400/30 bg-amber-400/10 text-amber-300"
+                                    : "border-white/10 bg-white/5 text-white/50",
+                            ].join(" ")}
+                          >
+                            {chipLabel}
+                          </span>
+                        </div>
+                      ) : null}
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                      {latestProcessedReport ? (
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
+                          className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] shadow-[0_1px_3px_rgba(0,0,0,0.12)] transition-all hover:bg-[#EEF2F8] hover:shadow-[0_4px_14px_rgba(255,255,255,0.12)] active:scale-[0.98]"
                         >
-                          {chipLabel}
-                        </span>
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    {latestProcessedReport ? (
-                      <Button
-                        type="button"
-                        variant="primary"
-                        onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
-                      >
-                        Open Governance Brief
-                        <ChevronRight size={14} />
-                      </Button>
-                    ) : null}
-                    {latestProcessedReport ? (
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}?present=1`)}
-                        disabled={readyReportCount === 0}
-                        title={readyReportCount === 0 ? "Available after the first completed cycle" : undefined}
-                      >
-                        Open Meeting View
-                      </Button>
-                    ) : null}
-                    {latestReadyBrief ? (
-                      <Button type="button" variant="secondary" onClick={() => void handleExportBrief()}>
-                        {loading ? (
-                          <><Loader2 size={14} className="animate-spin" /> Loading</>
-                        ) : planUsage.pdfWatermark ? "Preview PDF" : "Download PDF"}
-                      </Button>
-                    ) : latestProcessedReport ? null : (
-                      <Button type="button" variant="primary" onClick={() => navigate("/upload")}>
-                        Start New Review
-                        <ChevronRight size={14} />
-                      </Button>
-                    )}
+                          Open Governance Brief <ChevronRight size={13} />
+                        </button>
+                      ) : null}
+                      {latestProcessedReport ? (
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}?present=1`)}
+                          disabled={readyReportCount === 0}
+                          className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/15 bg-white/6 px-4 py-2 text-[13px] font-medium text-white/75 transition-all hover:border-white/25 hover:bg-white/10 hover:text-white active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
+                        >
+                          Open Meeting View
+                        </button>
+                      ) : null}
+                      {latestReadyBrief ? (
+                        <button
+                          type="button"
+                          onClick={() => void handleExportBrief()}
+                          className="inline-flex items-center gap-1.5 rounded-[8px] px-4 py-2 text-[13px] font-medium text-[#4D6E8A] transition-all hover:bg-white/8 hover:text-white active:scale-[0.98]"
+                        >
+                          {loading ? (
+                            <><Loader2 size={13} className="animate-spin" /> Loading</>
+                          ) : planUsage.pdfWatermark ? "Preview PDF" : "Download PDF"}
+                        </button>
+                      ) : latestProcessedReport ? null : (
+                        <button
+                          type="button"
+                          onClick={() => navigate("/upload")}
+                          className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] transition-all hover:bg-[#EEF2F8] active:scale-[0.98]"
+                        >
+                          Start New Review <ChevronRight size={13} />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
-
               </div>
             );
           })()}
 
           {/* ── Needs Attention ── */}
           {(overdueActions.length > 0 || unownedActionsCount > 0 || highSeveritySignalsCount > 0 || exposure?.partner_escalation_required) ? (
-            <div className="animate-fade-up-delay-1 animate-fade-up rounded-[10px] border border-amber-200 bg-amber-50 px-5 py-3.5">
-              <div className="mb-2.5 flex items-center gap-1.5">
-                <AlertTriangle size={11} className="text-amber-600" aria-hidden />
-                <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-amber-700">Needs attention</p>
+            <div className="animate-fade-up-delay-1 animate-fade-up overflow-hidden rounded-[12px] border border-[#E8ECF0] bg-white shadow-[0_2px_16px_rgba(13,27,42,0.06)]">
+              <div className="flex items-center gap-2 border-b border-[#F0F4F8] px-5 py-3">
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-60" style={{ animationDuration: "2s" }} />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-500" />
+                </span>
+                <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#64748B]">Needs attention</p>
               </div>
-              <ul className="divide-y divide-amber-100">
+              <ul className="divide-y divide-[#F8FAFC]">
                 {overdueActions.length > 0 && (
-                  <li className="flex items-center justify-between gap-4 py-2 first:pt-0 last:pb-0">
-                    <span className="text-[13px] text-[#334155]">
-                      <span className="font-semibold text-[#DC2626]">{overdueActions.length} overdue</span>{" "}
-                      {overdueActions.length === 1 ? "action" : "actions"}
-                    </span>
+                  <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-[#FAFBFF]">
+                    <div className="flex items-center gap-3">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#EF4444]" />
+                      <span className="text-[13px] text-[#1E293B]">
+                        <span className="font-semibold text-[#DC2626]">{overdueActions.length} overdue</span>{" "}
+                        {overdueActions.length === 1 ? "action" : "actions"}
+                      </span>
+                    </div>
                     <Link
                       to="/dashboard/actions?filter=overdue"
-                      className="shrink-0 inline-flex items-center rounded-[6px] border border-amber-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-colors hover:bg-amber-50"
+                      className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
                     >
                       Review →
                     </Link>
                   </li>
                 )}
                 {exposure?.partner_escalation_required ? (
-                  <li className="flex items-center justify-between gap-4 py-2 first:pt-0 last:pb-0">
-                    <span className="text-[13px] text-[#334155]">
-                      <span className="font-semibold text-[#DC2626]">Partner escalation</span> required
-                    </span>
+                  <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-[#FAFBFF]">
+                    <div className="flex items-center gap-3">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#EF4444]" />
+                      <span className="text-[13px] text-[#1E293B]">
+                        <span className="font-semibold text-[#DC2626]">Partner escalation</span> required
+                      </span>
+                    </div>
                     {latestProcessedReport ? (
                       <Link
                         to={`/dashboard/reports/${latestProcessedReport.id}`}
-                        className="shrink-0 inline-flex items-center rounded-[6px] border border-amber-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-colors hover:bg-amber-50"
+                        className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
                       >
                         Open brief →
                       </Link>
@@ -738,28 +767,34 @@ const Dashboard = () => {
                   </li>
                 ) : null}
                 {highSeveritySignalsCount > 0 && (
-                  <li className="flex items-center justify-between gap-4 py-2 first:pt-0 last:pb-0">
-                    <span className="text-[13px] text-[#334155]">
-                      <span className="font-semibold text-amber-700">{highSeveritySignalsCount} high-severity</span>{" "}
-                      {highSeveritySignalsCount === 1 ? "issue" : "issues"}
-                    </span>
+                  <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-[#FAFBFF]">
+                    <div className="flex items-center gap-3">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                      <span className="text-[13px] text-[#1E293B]">
+                        <span className="font-semibold text-amber-600">{highSeveritySignalsCount} high-severity</span>{" "}
+                        {highSeveritySignalsCount === 1 ? "issue" : "issues"}
+                      </span>
+                    </div>
                     <Link
                       to="/dashboard/signals?filter=high"
-                      className="shrink-0 inline-flex items-center rounded-[6px] border border-amber-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-colors hover:bg-amber-50"
+                      className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
                     >
                       View →
                     </Link>
                   </li>
                 )}
                 {unownedActionsCount > 0 && (
-                  <li className="flex items-center justify-between gap-4 py-2 first:pt-0 last:pb-0">
-                    <span className="text-[13px] text-[#334155]">
-                      <span className="font-semibold text-amber-700">{unownedActionsCount}</span>{" "}
-                      {unownedActionsCount === 1 ? "action needs" : "actions need"} an owner
-                    </span>
+                  <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-[#FAFBFF]">
+                    <div className="flex items-center gap-3">
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                      <span className="text-[13px] text-[#1E293B]">
+                        <span className="font-semibold text-amber-600">{unownedActionsCount}</span>{" "}
+                        {unownedActionsCount === 1 ? "action needs" : "actions need"} an owner
+                      </span>
+                    </div>
                     <Link
                       to="/dashboard/actions"
-                      className="shrink-0 inline-flex items-center rounded-[6px] border border-amber-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-colors hover:bg-amber-50"
+                      className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
                     >
                       Assign →
                     </Link>
@@ -804,34 +839,48 @@ const Dashboard = () => {
               },
             ];
             return (
-              <div className="animate-fade-up-delay-2 animate-fade-up rounded-[10px] border border-[#DDE3EC] bg-[#F8FAFC] px-5 py-4" style={{ borderLeft: "3px solid #0D1B2A" }}>
-                <p className="gov-type-eyebrow mb-3">Governance Loop</p>
-                <div className="flex items-start gap-1">
+              <div className="animate-fade-up-delay-2 animate-fade-up overflow-hidden rounded-[12px] border border-[#DDE3EC]">
+                <div className="flex items-center justify-between border-b border-[#F0F4F8] bg-[#F8FAFC] px-5 py-3">
+                  <p className="gov-type-eyebrow">Governance Loop</p>
+                  <span className="text-[10px] text-[#9CA3AF]">Step {activeStep + 1} of {steps.length}</span>
+                </div>
+                <div className="grid grid-cols-4 divide-x divide-[#F0F4F8]">
                   {steps.map((step, index) => (
-                    <div key={step.label} className="flex items-center gap-1">
-                      <Link
-                        to={step.to}
-                        className={[
-                          "flex flex-col rounded-[8px] px-3.5 py-2.5 transition-all duration-150",
-                          index === activeStep
-                            ? "bg-[#0D1B2A] text-white shadow-[0_2px_10px_rgba(13,27,42,0.22)]"
-                            : "bg-white border border-[#E2E8F0] text-[#0D1B2A] hover:border-[rgba(13,27,42,0.25)] hover:bg-[#EEF2F7]",
-                        ].join(" ")}
-                      >
-                        <span className={["mb-1 text-[9px] font-bold tracking-[0.14em]", index === activeStep ? "text-[#94A3B8]" : "text-[#B0BAC6]"].join(" ")}>
-                          {String(index + 1).padStart(2, "0")}
+                    <Link
+                      key={step.label}
+                      to={step.to}
+                      className={[
+                        "group flex flex-col px-5 py-4 transition-all duration-150",
+                        index === activeStep
+                          ? "bg-[#0D1B2A]"
+                          : "bg-white hover:bg-[#F8FAFC]",
+                      ].join(" ")}
+                    >
+                      <span className={[
+                        "text-[9px] font-bold tracking-[0.14em]",
+                        index === activeStep ? "text-[#4D7FA8]" : "text-[#C0CAD4]",
+                      ].join(" ")}>
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className={[
+                        "mt-1.5 text-[13px] font-semibold leading-tight",
+                        index === activeStep ? "text-white" : "text-[#0D1B2A]",
+                      ].join(" ")}>
+                        {step.label}
+                      </span>
+                      <span className={[
+                        "mt-1 text-[11px] leading-tight",
+                        index === activeStep ? "text-[#4D7FA8]" : "text-[#94A3B8]",
+                      ].join(" ")}>
+                        {step.stat}
+                      </span>
+                      {index === activeStep && (
+                        <span className="mt-3 flex items-center gap-1.5 text-[10px] font-medium text-[#3B7FBF]">
+                          <span className="h-1 w-1 rounded-full bg-[#3B82F6]" />
+                          Current
                         </span>
-                        <span className={["text-[12px] font-semibold leading-tight", index === activeStep ? "text-white" : "text-[#0D1B2A]"].join(" ")}>
-                          {step.label}
-                        </span>
-                        <span className={["mt-0.5 text-[11px] leading-tight", index === activeStep ? "text-[#94A3B8]" : "text-[#6B7280]"].join(" ")}>
-                          {step.stat}
-                        </span>
-                      </Link>
-                      {index < steps.length - 1 && (
-                        <span className="shrink-0 px-0.5 text-[12px] text-[#D1D9E0]" aria-hidden>→</span>
                       )}
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>
