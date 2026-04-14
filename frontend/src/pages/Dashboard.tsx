@@ -1,37 +1,21 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronRight, AlertTriangle, Info, Loader2, X, ClipboardList, ShieldAlert } from "lucide-react";
-import GovernanceEmptyState from "@/components/governance/GovernanceEmptyState";
+import { ChevronRight, AlertTriangle, Info, Loader2, X } from "lucide-react";
 import { toast } from "sonner";
 import {
   emitPlanLimitError,
   getDashboardStats,
-  getGovernanceAlerts,
   getFirmActions,
   getLatestExposure,
-  getRecentGovernanceActions,
   getReportGovernanceSignals,
   getReports,
   type DashboardStats,
   type ExposureSnapshot,
-  type GovernanceAlert,
   type GovernanceSignal,
-  type RecentGovernanceAction,
   type ReportActionItem,
   type ReportListItem,
 } from "@/api/authService";
-import FirmGovernanceStatus from "@/components/dashboard/FirmGovernanceStatus";
-import SinceLastReview from "@/components/dashboard/SinceLastReview";
-import GovernanceGuidance from "@/components/dashboard/GovernanceGuidance";
-import RecentGovernanceBriefs from "@/components/dashboard/RecentGovernanceBriefs";
-import PlanBadge from "@/components/dashboard/PlanBadge";
-import PartnerBriefPanel from "@/components/dashboard/PartnerBriefPanel";
-import DashboardSectionDivider from "@/components/dashboard/DashboardSectionDivider";
-import OversightBand from "@/components/dashboard/OversightBand";
-import GovernanceNarrativeRail from "@/components/dashboard/GovernanceNarrativeRail";
-import { DashboardCard } from "@/components/ui/card";
-import GovSectionCard from "@/components/governance/GovSectionCard";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { resolvePlanLimits } from "@/config/planLimits";
@@ -171,19 +155,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { currentPlan, user } = useAuth();
 
-  const fetchTeamSeatsUsed = useCallback(async (): Promise<number | null> => {
-    try {
-      const response = await fetch("/api/team/members", { credentials: "include" });
-      const payload = (await response.json()) as {
-        success?: boolean;
-        members?: Array<{ status?: string }>;
-      };
-      if (!response.ok || payload.success === false || !Array.isArray(payload.members)) return null;
-      return payload.members.filter((member) => member.status === "active" || member.status === "invited").length;
-    } catch {
-      return null;
-    }
-  }, []);
 
   const [loading, setLoading] = useState(true);
   const [exposure, setExposure] = useState<ExposureSnapshot | null>(null);
@@ -194,12 +165,8 @@ const Dashboard = () => {
   const [actions, setActions] = useState<ReportActionItem[]>([]);
   const [latestSignals, setLatestSignals] = useState<GovernanceSignal[]>([]);
   const [previousSignals, setPreviousSignals] = useState<GovernanceSignal[]>([]);
-  const [alerts, setAlerts] = useState<GovernanceAlert[]>([]);
-  const [recentGovernanceActions, setRecentGovernanceActions] = useState<RecentGovernanceAction[]>([]);
-  const [teamSeatsUsed, setTeamSeatsUsed] = useState<number | null>(null);
   const [loadError, setLoadError] = useState("");
   const [baselineDismissed, setBaselineDismissed] = useState(false);
-  const [followThroughCollapsed, setFollowThroughCollapsed] = useState(true);
 
   const baselineDismissKey = useMemo(
     () => `baseline-analysis-dismissed:${user?.firm_id ?? user?.email ?? "unknown"}`,
@@ -210,14 +177,11 @@ const Dashboard = () => {
     setLoading(true);
     setLoadError("");
     try {
-      const [exposureResult, statsResult, reportsResult, actionsResult, seatsResult, alertsResult, recentActionsResult] = await Promise.all([
+      const [exposureResult, statsResult, reportsResult, actionsResult] = await Promise.all([
         getLatestExposure(),
         getDashboardStats(),
         getReports(100),
         getFirmActions(),
-        fetchTeamSeatsUsed(),
-        getGovernanceAlerts(),
-        getRecentGovernanceActions(),
       ]);
 
       setExposure(exposureResult.success && exposureResult.exposure ? exposureResult.exposure : null);
@@ -231,9 +195,6 @@ const Dashboard = () => {
       setHistoryNotice(reportsResult.success ? reportsResult.history_notice || null : null);
       setHistoryTruncated(Boolean(reportsResult.success && reportsResult.history_truncated));
       setActions(actionsResult.success && actionsResult.actions ? actionsResult.actions : []);
-      setTeamSeatsUsed(typeof seatsResult === "number" ? seatsResult : null);
-      setAlerts(alertsResult.success && alertsResult.alerts ? alertsResult.alerts : []);
-      setRecentGovernanceActions(recentActionsResult.success && recentActionsResult.actions ? recentActionsResult.actions : []);
 
       const readyReports = sortedReports.filter((report) => report.status === "ready");
       const latestReady = readyReports[0];
@@ -262,13 +223,10 @@ const Dashboard = () => {
       setActions([]);
       setLatestSignals([]);
       setPreviousSignals([]);
-      setAlerts([]);
-      setRecentGovernanceActions([]);
-      setTeamSeatsUsed(null);
     } finally {
       setLoading(false);
     }
-  }, [fetchTeamSeatsUsed]);
+  }, []);
 
   useEffect(() => {
     void loadDashboard();
@@ -500,29 +458,9 @@ const Dashboard = () => {
 
   const planUsage = useMemo(() => {
     const limits = resolvePlanLimits(currentPlan);
-    const now = new Date();
-    const reportsUsedThisMonth = reports.filter((report) => {
-      const parsed = new Date(report.created_at || "");
-      return Number.isFinite(parsed.getTime()) && parsed.getFullYear() === now.getFullYear() && parsed.getMonth() === now.getMonth();
-    }).length;
-    return {
-      reportsUsedThisMonth,
-      reportsLimitPerMonth: limits?.maxReportsPerMonth ?? null,
-      seatsUsed: teamSeatsUsed,
-      seatsLimit: limits?.maxUsers ?? null,
-      reviewUploadLimit: limits?.maxReviewsPerUpload ?? null,
-      pdfWatermark: Boolean(limits.pdfWatermark),
-    };
-  }, [currentPlan, reports, teamSeatsUsed]);
+    return { pdfWatermark: Boolean(limits.pdfWatermark) };
+  }, [currentPlan]);
 
-  const nextUpgradePlan =
-    currentPlan?.firmPlan === "leadership"
-      ? null
-      : currentPlan?.firmPlan === "professional"
-        ? "firm"
-        : "team";
-  const nextUpgradeLabel = nextUpgradePlan === "firm" ? "Firm" : nextUpgradePlan === "team" ? "Team" : null;
-  const planDetailsPath = nextUpgradePlan ? `/pricing?intent=${nextUpgradePlan}` : "/dashboard/billing";
   const oversightMetrics = [
     {
       label: "High-risk signals",
@@ -794,198 +732,139 @@ const Dashboard = () => {
             );
           })()}
 
-          {/* ── Active Briefs ── */}
-          <div style={{ marginTop: "var(--dash-section-gap)" }}>
-            <DashboardSectionDivider label="Active Briefs" description="Partner-ready governance briefs from completed review cycles" />
-            <div style={{ marginTop: "var(--dash-section-gap)" }}>
-              <RecentGovernanceBriefs
-                briefs={recentReadyBriefs}
-                escalationReportId={exposure?.report_id}
-                hasEscalation={exposure?.partner_escalation_required}
-                onView={(reportId) => navigate(`/dashboard/reports/${reportId}`)}
-                onDownload={handleExportBrief}
-              />
-            </div>
-          </div>
-
-          {/* ── Recent Meetings ── */}
-          <div style={{ marginTop: "var(--dash-section-gap)" }}>
-            <DashboardSectionDivider label="Meetings" description="Open a Governance Brief in Meeting View to bring it into a partner discussion" />
-            <div style={{ marginTop: "var(--dash-section-gap)" }}>
-              {recentReadyBriefs.length === 0 ? (
-                <div className="rounded-[10px] border border-[#E5E7EB] bg-white px-5 py-4">
-                  <p className="gov-body text-slate-600">No completed briefs yet. A brief will appear here after the first review cycle.</p>
-                </div>
-              ) : (
-                <ul className="space-y-2">
-                  {recentReadyBriefs.slice(0, 3).map((brief) => (
-                    <li key={brief.id} className="flex flex-wrap items-center justify-between gap-3 rounded-[10px] border border-[#E5E7EB] bg-white px-5 py-4">
-                      <div>
-                        <p className="text-[13px] font-semibold text-[#0D1B2A]">{brief.name || brief.title}</p>
-                        <p className="text-[12px] text-slate-500">{formatDateOnly(brief.created_at)}</p>
-                      </div>
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        onClick={() => navigate(`/dashboard/reports/${brief.id}?present=1`)}
+          {/* ── Needs Attention ── */}
+          {(overdueActions.length > 0 || unownedActionsCount > 0 || highSeveritySignalsCount > 0 || exposure?.partner_escalation_required) ? (
+            <div className="rounded-[10px] border border-amber-200 bg-amber-50 px-5 py-4">
+              <div className="mb-3 flex items-center gap-2">
+                <AlertTriangle size={13} className="text-amber-600" aria-hidden />
+                <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-amber-700">Needs attention</p>
+              </div>
+              <ul className="space-y-2.5">
+                {overdueActions.length > 0 && (
+                  <li className="flex items-center justify-between gap-4">
+                    <span className="text-[13px] text-slate-700">
+                      <span className="font-medium text-[#DC2626]">{overdueActions.length} overdue</span>{" "}
+                      follow-through {overdueActions.length === 1 ? "item" : "items"}
+                    </span>
+                    <Link
+                      to="/dashboard/actions?filter=overdue"
+                      className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
+                    >
+                      View →
+                    </Link>
+                  </li>
+                )}
+                {unownedActionsCount > 0 && (
+                  <li className="flex items-center justify-between gap-4">
+                    <span className="text-[13px] text-slate-700">
+                      <span className="font-medium text-amber-700">{unownedActionsCount} unassigned</span>{" "}
+                      follow-through {unownedActionsCount === 1 ? "item" : "items"}
+                    </span>
+                    <Link
+                      to="/dashboard/actions"
+                      className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
+                    >
+                      Assign →
+                    </Link>
+                  </li>
+                )}
+                {highSeveritySignalsCount > 0 && (
+                  <li className="flex items-center justify-between gap-4">
+                    <span className="text-[13px] text-slate-700">
+                      <span className="font-medium text-amber-700">{highSeveritySignalsCount} high-severity</span>{" "}
+                      client {highSeveritySignalsCount === 1 ? "issue" : "issues"}
+                    </span>
+                    <Link
+                      to="/dashboard/signals?filter=high"
+                      className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
+                    >
+                      Review →
+                    </Link>
+                  </li>
+                )}
+                {exposure?.partner_escalation_required ? (
+                  <li className="flex items-center justify-between gap-4">
+                    <span className="text-[13px] text-slate-700">
+                      <span className="font-medium text-[#DC2626]">Partner escalation</span> flagged on current brief
+                    </span>
+                    {latestProcessedReport ? (
+                      <Link
+                        to={`/dashboard/reports/${latestProcessedReport.id}`}
+                        className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
                       >
-                        Open Meeting View
-                      </Button>
-                    </li>
+                        Open Brief →
+                      </Link>
+                    ) : null}
+                  </li>
+                ) : null}
+              </ul>
+            </div>
+          ) : null}
+
+          {/* ── Governance Loop ── */}
+          {(() => {
+            const briefId = latestProcessedReport?.id;
+            const hasReport = Boolean(latestProcessedReport);
+            const reportReady = latestProcessedReport?.status === "ready";
+            const activeStep =
+              !hasReport || !reportReady ? 0
+              : openActions.length === 0 ? 1
+              : overdueActions.length > 0 ? 3
+              : 2;
+            type LoopStep = { label: string; stat: string; to: string };
+            const steps: LoopStep[] = [
+              {
+                label: "New Review",
+                stat: readyReportCount > 0 ? `${readyReportCount} complete` : "Upload CSV",
+                to: "/upload",
+              },
+              {
+                label: "Governance Brief",
+                stat: hasReport ? reviewPeriodLabel : "Awaiting review",
+                to: briefId ? `/dashboard/reports/${briefId}` : "/dashboard/reports",
+              },
+              {
+                label: "Meeting View",
+                stat: reportReady ? "Ready" : "Pending brief",
+                to: briefId ? `/dashboard/reports/${briefId}?present=1` : "/dashboard/reports",
+              },
+              {
+                label: "Follow-Through",
+                stat: openActions.length > 0 ? `${openActions.length} open` : "No open items",
+                to: "/dashboard/actions",
+              },
+            ];
+            return (
+              <div className="rounded-[10px] border border-[#E5E7EB] bg-white px-5 py-4">
+                <p className="gov-type-eyebrow mb-3">Governance loop</p>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {steps.map((step, index) => (
+                    <div key={step.label} className="flex items-center gap-1.5">
+                      <Link
+                        to={step.to}
+                        className={[
+                          "flex flex-col rounded-[6px] px-3 py-2 transition-colors",
+                          index === activeStep
+                            ? "bg-[#0D1B2A] text-white"
+                            : "bg-[#F8FAFC] text-[#0D1B2A] hover:bg-[#EFF6FF]",
+                        ].join(" ")}
+                      >
+                        <span className={["text-[12px] font-semibold leading-tight", index === activeStep ? "text-white" : "text-[#0D1B2A]"].join(" ")}>
+                          {step.label}
+                        </span>
+                        <span className={["text-[11px] leading-tight", index === activeStep ? "text-slate-300" : "text-slate-500"].join(" ")}>
+                          {step.stat}
+                        </span>
+                      </Link>
+                      {index < steps.length - 1 && (
+                        <span className="text-[12px] text-[#CBD5E1]" aria-hidden>→</span>
+                      )}
+                    </div>
                   ))}
-                </ul>
-              )}
-            </div>
-          </div>
-
-          {/* ── Open Issues ── */}
-          <div style={{ marginTop: "var(--dash-section-gap)" }}>
-            <DashboardSectionDivider
-              label="Open Issues"
-              description="Active client issues from the current review cycle"
-            />
-            <div style={{ marginTop: "var(--dash-section-gap)" }}>
-              <OversightBand loading={loading} metrics={oversightMetrics} />
-            </div>
-          </div>
-
-          {/* ── Follow-Through (collapsed by default) ── */}
-          <div style={{ marginTop: "var(--dash-section-gap)" }}>
-            <button
-              type="button"
-              onClick={() => setFollowThroughCollapsed((p) => !p)}
-              className="flex w-full items-center justify-between rounded-[10px] border border-[#E5E7EB] bg-white px-5 py-4 text-left transition-colors hover:bg-[#FAFBFC]"
-              aria-expanded={!followThroughCollapsed}
-            >
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#7A6E63]">Follow-Through</p>
-                <p className="mt-0.5 text-[13px] text-slate-600">
-                  {openActions.length} open · {overdueActions.length} overdue
-                </p>
-              </div>
-              <ChevronRight
-                size={16}
-                className={["text-slate-400 transition-transform", followThroughCollapsed ? "" : "rotate-90"].join(" ")}
-              />
-            </button>
-            {!followThroughCollapsed && (
-              <div className="mt-2 space-y-3">
-                <div className="grid gap-[var(--dash-section-gap)] xl:grid-cols-2">
-                  <GovernanceGuidance
-                    directive={guidance.directive}
-                    recommendedAction={guidance.recommendation}
-                    onOpenActions={() => navigate("/dashboard/actions")}
-                  />
-
-                  {suggestedActions.length > 0 ? (
-                    <div className="space-y-3">
-                      {suggestedActions.slice(0, 2).map((item) => (
-                        <GovSectionCard key={`suggested-action-${item.id}`} accent="attention" padding="md">
-                          <p className="gov-type-eyebrow mb-1">Assign follow-through</p>
-                          <p className="gov-body mb-2">{item.context}</p>
-                          <p className="gov-type-h3">{item.recommendation}</p>
-                          <div className="mt-4 flex justify-end">
-                            <button
-                              type="button"
-                              onClick={() => navigate(`/dashboard/signals/${item.id}`)}
-                              className="gov-btn-secondary inline-flex items-center px-4 py-2 text-[13px] font-medium"
-                            >
-                              Review issue
-                            </button>
-                          </div>
-                        </GovSectionCard>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-
-                <div className="grid gap-[var(--dash-section-gap)] xl:grid-cols-2">
-                  <DashboardCard
-                    title="Follow-through to review"
-                    subtitle="Ownership gaps and due-state tied to the current Governance Brief."
-                    actions={
-                      <Button type="button" variant="primary" onClick={() => navigate("/dashboard/actions")}>
-                        Open Follow-Through
-                        <ChevronRight size={14} />
-                      </Button>
-                    }
-                  >
-                    <div className="gov-card-content">
-                      <div className="workspace-inline-stats">
-                        <div className="workspace-inline-stat">
-                          <p className="gov-type-eyebrow">Open</p>
-                          <p className="mt-2 text-3xl font-semibold text-[#0D1B2A]">
-                            {loading ? <span className="inline-block h-8 w-10 rounded gov-skel-shimmer" /> : openActions.length}
-                          </p>
-                        </div>
-                        <div className="workspace-inline-stat">
-                          <p className="gov-type-eyebrow">In Progress</p>
-                          <p className="mt-2 text-3xl font-semibold text-[#0D1B2A]">
-                            {loading ? <span className="inline-block h-8 w-10 rounded gov-skel-shimmer" /> : inProgressActions.length}
-                          </p>
-                        </div>
-                        <div className="workspace-inline-stat">
-                          <p className="gov-type-eyebrow">Overdue</p>
-                          <p className="mt-2 text-3xl font-semibold text-[#0D1B2A]">
-                            {loading ? <span className="inline-block h-8 w-10 rounded gov-skel-shimmer" /> : overdueActions.length}
-                          </p>
-                        </div>
-                      </div>
-
-                      {latestProcessedReport ? (
-                        <div className="rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] px-4 py-3">
-                          <p className="gov-body">
-                            These items are reflected in{" "}
-                            <button
-                              type="button"
-                              onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
-                              className="font-semibold text-[#0D1B2A] underline underline-offset-4"
-                            >
-                              the current Governance Brief
-                            </button>
-                            {" "}and should be reviewed there before partner discussion.
-                          </p>
-                        </div>
-                      ) : null}
-                    </div>
-                  </DashboardCard>
-
-                  <DashboardCard title="Recent follow-through" subtitle="Latest issue response, owner, and current status">
-                    {loading ? (
-                      <ul aria-label="Loading recent actions" className="space-y-3">
-                        {(["w-44", "w-56", "w-36"] as const).map((wCls, i) => (
-                          <li key={`recent-action-skel-${i}`} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-                            <div className={`gov-skel-shimmer h-3 rounded ${wCls}`} />
-                            <div className="mt-2 gov-skel-shimmer h-3 w-52 rounded" />
-                            <div className="mt-1.5 gov-skel-shimmer h-2.5 w-36 rounded" />
-                          </li>
-                        ))}
-                      </ul>
-                    ) : recentGovernanceActions.length === 0 ? (
-                      <GovernanceEmptyState
-                        size="sm"
-                        icon={<ClipboardList size={18} />}
-                        title="No follow-through from recent Governance Briefs"
-                        description="Follow-through items are created after reviewing client issues in a Governance Brief. Assign ownership and due dates — they will appear here."
-                        primaryAction={{ label: "Review issues", href: "/dashboard/signals" }}
-                      />
-                    ) : (
-                      <ul className="gov-list-stack">
-                        {recentGovernanceActions.map((item) => (
-                          <li key={item.id} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-                            <p className="gov-body"><span className="font-semibold text-[#0D1B2A]">Issue:</span> {item.issue}</p>
-                            <p className="gov-body mt-1"><span className="font-semibold text-[#0D1B2A]">Action:</span> {item.action}</p>
-                            <p className="gov-type-meta mt-1">Owner: {item.owner || "Unassigned"} · Status: {item.status || "open"}</p>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </DashboardCard>
                 </div>
               </div>
-            )}
-          </div>
-
+            );
+          })()}
 
           {showBaselineNotice ? (
             <section className="rounded-[8px] border border-[#BFDBFE] bg-[#EFF6FF] px-[18px] py-[14px]">
@@ -1016,157 +895,6 @@ const Dashboard = () => {
               {historyNotice}
             </section>
           ) : null}
-
-          {/* ════════════════════════════════════
-              TIER 3 — Supporting context
-              Governance posture, history, brief prep
-              ════════════════════════════════════ */}
-          <div>
-            <div className="dash-tier-gap" />
-            <DashboardSectionDivider
-              label="Supporting cycle context"
-              description="Reference context after immediate follow-through"
-            />
-          </div>
-
-          <div className="dash-tier">
-            <div className="grid gap-[var(--dash-section-gap)] xl:grid-cols-2">
-              <SinceLastReview
-                isLoading={loading}
-                newFeedbackSignals={newSignalsCount}
-                newExposureCategories={newExposureCategories}
-                overdueActionsCreated={overdueActions.length}
-              />
-
-              <DashboardCard title="Escalations and watchpoints" subtitle="Issues that intensified or now require partner attention.">
-                {alerts.length === 0 ? (
-                  <GovernanceEmptyState
-                    size="sm"
-                    icon={<ShieldAlert size={18} />}
-                    title="No active escalations this cycle"
-                    description="Issues that intensify across review periods or require partner escalation will be flagged here."
-                  />
-                ) : (
-                  <ul className="gov-list-stack">
-                    {alerts.map((alert) => (
-                      <li key={alert.id} className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-                        <p className="gov-type-h3">{alert.message}</p>
-                        <p className="gov-type-meta mt-1">
-                          Appeared in {alert.occurrences} new review{alert.occurrences === 1 ? "" : "s"} this week
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </DashboardCard>
-            </div>
-
-            <div className="grid gap-[var(--dash-section-gap)] xl:grid-cols-2">
-              <FirmGovernanceStatus
-                status={exposureRisk}
-                reviewPeriodLabel={reviewPeriodLabel}
-                reviewsAnalyzed={reviewsAnalyzed}
-                metrics={{
-                  signals: latestSignals.length,
-                  newSignals: newSignalsCount,
-                  openActions: openActions.length,
-                  overdueActions: overdueActions.length,
-                }}
-                loading={loading}
-                onOpenSignals={() => navigate("/dashboard/signals")}
-                onOpenNewSignals={() => navigate("/dashboard/signals?filter=new")}
-                onOpenOpenActions={() => navigate("/dashboard/actions")}
-                onOpenOverdueActions={() => navigate("/dashboard/actions?filter=overdue")}
-              />
-
-              <GovernanceNarrativeRail
-                loading={loading}
-                cards={[
-                  {
-                    stage: "Evidence",
-                    description: "Raw client feedback uploaded and processed into this review cycle.",
-                    statusLines: [
-                      `${reviewsAnalyzed} reviews analyzed`,
-                      latestProcessedReport ? `Last cycle: ${reviewPeriodLabel}` : "No cycle yet",
-                    ],
-                    route: "/upload",
-                  },
-                  {
-                    stage: "Signals",
-                    description: "Recurring patterns and client issues extracted from evidence.",
-                    statusLines: [
-                      `${latestSignals.length} client issue${latestSignals.length === 1 ? "" : "s"} detected`,
-                      newSignalsCount > 0 ? `${newSignalsCount} new since last review` : "No net-new signals",
-                    ],
-                    route: "/dashboard/signals",
-                  },
-                  {
-                    stage: "Follow-Through" as never,
-                    description: "Owner-assigned follow-through tied to active client issues.",
-                    statusLines: [
-                      `${openActions.length} open action${openActions.length === 1 ? "" : "s"}`,
-                      overdueActions.length > 0 ? `${overdueActions.length} overdue` : "No overdue actions",
-                    ],
-                    route: "/dashboard/actions",
-                  },
-                  {
-                    stage: "Briefs" as never,
-                    description: "Leadership-ready summaries prepared for partner review.",
-                    statusLines: [
-                      `${readyReportCount} brief${readyReportCount === 1 ? "" : "s"} ready`,
-                      latestReadyBrief ? `Latest: ${formatDateOnly(latestReadyBrief.created_at)}` : "Awaiting first cycle",
-                    ],
-                    route: "/dashboard/reports",
-                  },
-                ]}
-              />
-            </div>
-          </div>
-
-          {/* ════════════════════════════════════
-              TIER 4 — Workspace information / admin
-              Capacity, plan limits, usage
-              ════════════════════════════════════ */}
-          <div>
-            <div className="dash-tier-gap" />
-            <DashboardSectionDivider
-              label="Workspace reference"
-              description="Plan, seat, and capacity details"
-            />
-          </div>
-
-          <div>
-            <DashboardCard
-              title="Plan and capacity"
-              subtitle="Current month usage and seat coverage for this workspace."
-              actions={(
-                <Button type="button" variant="secondary" onClick={() => navigate(planDetailsPath)}>
-                  {nextUpgradeLabel ? `Review ${nextUpgradeLabel} plan` : "Open billing"}
-                </Button>
-              )}
-            >
-              <div className="workspace-inline-stats">
-                <div className="workspace-inline-stat">
-                  <p className="gov-type-eyebrow">Reports this month</p>
-                  <p className="mt-2 text-3xl font-semibold text-[#0D1B2A]">
-                    {planUsage.reportsUsedThisMonth}
-                    <span className="ml-1 text-sm font-medium text-[#6B7280]">/ {planUsage.reportsLimitPerMonth ?? "Unlimited"}</span>
-                  </p>
-                </div>
-                <div className="workspace-inline-stat">
-                  <p className="gov-type-eyebrow">Team seats</p>
-                  <p className="mt-2 text-3xl font-semibold text-[#0D1B2A]">
-                    {planUsage.seatsUsed ?? "-"}
-                    <span className="ml-1 text-sm font-medium text-[#6B7280]">/ {planUsage.seatsLimit ?? "Unlimited"}</span>
-                  </p>
-                </div>
-                <div className="workspace-inline-stat">
-                  <p className="gov-type-eyebrow">Review upload limit</p>
-                  <p className="mt-2 text-3xl font-semibold text-[#0D1B2A]">{planUsage.reviewUploadLimit ?? "Unlimited"}</p>
-                </div>
-              </div>
-            </DashboardCard>
-          </div>
         </section>
         ) : null}
       </div>
