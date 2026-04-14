@@ -1,8 +1,6 @@
-
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronRight, AlertTriangle, Loader2, X } from "lucide-react";
-import DashboardCard from "@/components/dashboard/DashboardCard";
+import { ChevronRight, Loader2, X } from "lucide-react";
 import { toast } from "sonner";
 import {
   emitPlanLimitError,
@@ -500,129 +498,120 @@ const Dashboard = () => {
   };
 
   return (
-    /* ── Page shell: transparent so WorkspaceLayout's warm canvas shows through ── */
     <section
       className="gov-page-shell"
-      style={{ padding: "var(--space-page-y) var(--space-page-x)" }}
+      style={{
+        padding: "var(--space-page-y) var(--space-page-x)",
+        background: "linear-gradient(180deg, #060D1A 0%, #081120 100%)",
+        minHeight: "100vh",
+      }}
     >
       <div
         className="stage-sequence dash-override mx-auto w-full"
         style={{ maxWidth: "var(--content-max-w)" }}
       >
-        {/* ── Page chrome: firm name + Start New Review ── */}
-        <div className="mb-4 flex items-center justify-between gap-3 border-b border-[#E8ECF0] pb-3">
-          <div className="flex items-center gap-2.5">
-            <p className="text-[13px] font-medium text-[#475569]">
+        <div
+          className="mb-6 flex flex-wrap items-center justify-between gap-4"
+          style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", paddingBottom: "14px" }}
+        >
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="m-0 text-[11px] font-bold uppercase tracking-[0.14em] text-[#6E8FAE]">
               {user?.firm_name || "Governance Workspace"}
             </p>
             {latestProcessedReport ? (
-              <span className="text-[11px] text-[#94A3B8]">
-                {lastProcessedLabel}
+              <span className="text-[11px] text-[#5B7692]">
+                Last processed {lastProcessedLabel}
               </span>
             ) : null}
           </div>
           <Link
             to="/upload?start=true"
-            className="inline-flex items-center gap-1.5 rounded-[8px] bg-[#0D1B2A] px-3.5 py-2 text-[12px] font-semibold text-white transition-all hover:bg-[#142236] hover:shadow-[0_4px_12px_rgba(13,27,42,0.2)] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 rounded-full border border-[#1E5E70] bg-[#0A2630] px-4 py-2 text-[12px] font-semibold text-[#8ED7E7] transition-colors hover:border-[#277C91] hover:bg-[#0D2E39]"
           >
             Start New Review
           </Link>
         </div>
 
         {isFirstRunWorkspace ? (
-          <>
-            <section className="mb-8 rounded-[12px] border border-[#D9E2EC] bg-white px-6 py-6 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
-              <div className="grid gap-6 xl:grid-cols-[1.3fr_0.7fr]">
-                <div>
-                  <p className="gov-type-eyebrow mb-2">First review cycle</p>
-                  <h2 className="gov-section-intro">The workspace is intentionally quiet until the first upload starts the cycle.</h2>
-                  <p className="gov-body mt-3 max-w-3xl">
-                    Bring in one CSV from the current review period. Clarion will validate the file, generate the first report,
-                    and open the issue, action, and governance brief workflow from there.
-                  </p>
+          <section className="overflow-hidden rounded-[28px] border border-white/10 bg-[#09121E] shadow-[0_24px_80px_rgba(0,0,0,0.24)]">
+            <div className="grid gap-0 lg:grid-cols-[1.3fr_0.7fr]">
+              <div className="border-b border-white/8 px-6 py-8 sm:px-8 lg:border-b-0 lg:border-r lg:border-white/8">
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6DBDCC]">
+                  First review cycle
+                </p>
+                <h2
+                  className="mt-4 max-w-[12ch] text-[2.1rem] leading-[1.02] text-[#F3F7FB] sm:text-[2.6rem]"
+                  style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
+                >
+                  The workspace stays quiet until the first cycle begins.
+                </h2>
+                <p className="mt-4 max-w-2xl text-[15px] leading-7 text-[#8FA7BC]">
+                  Bring in one CSV from the current review period. Clarion validates the file, generates the first governance brief,
+                  and opens the issue and follow-through workflow from there.
+                </p>
 
-                  <div className="mt-5 rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC]">
-                    <div className="border-b border-[#E5E7EB] px-5 py-4">
-                      <p className="gov-type-eyebrow">What happens next</p>
-                      <p className="gov-body mt-1">The first upload creates the structure the rest of the workspace depends on.</p>
+                <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                  {[
+                    ["01", "Upload feedback", "Use one current review-period CSV to establish the live cycle."],
+                    ["02", "Review signals", "Clarion groups recurring client issues into a decision-ready surface."],
+                    ["03", "Open follow-through", "Assign owners and move directly into the governance brief."],
+                  ].map(([step, title, body]) => (
+                    <div key={step} className="border-t border-white/10 pt-4">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#4E6A84]">{step}</p>
+                      <h3 className="mt-2 text-[15px] font-semibold text-white">{title}</h3>
+                      <p className="mt-2 text-[13px] leading-6 text-[#7F98AE]">{body}</p>
                     </div>
-                    <div className="divide-y divide-[#E5E7EB]">
-                      <div className="flex gap-4 px-5 py-4">
-                        <div className="gov-type-eyebrow shrink-0">01</div>
-                        <div>
-                          <h3 className="gov-type-h3">Upload feedback</h3>
-                          <p className="gov-body mt-1">Use one CSV from the current review period to establish the first live cycle.</p>
-                        </div>
-                      </div>
-                      <div className="flex gap-4 px-5 py-4">
-                        <div className="gov-type-eyebrow shrink-0">02</div>
-                        <div>
-                          <h3 className="gov-type-h3">Review the recurring client issues</h3>
-                          <p className="gov-body mt-1">Clarion groups the feedback into patterns leadership can review in one pass.</p>
-                        </div>
-                      </div>
-                      <div className="flex gap-4 px-5 py-4">
-                        <div className="gov-type-eyebrow shrink-0">03</div>
-                        <div>
-                          <h3 className="gov-type-h3">Assign follow-through and open the Governance Brief</h3>
-                          <p className="gov-body mt-1">Turn the highest-priority issues into owned actions and a leadership-ready Governance Brief.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 flex flex-wrap items-center gap-3">
-                    <Link to="/upload?start=true" className="gov-btn-primary px-4 py-2 text-sm font-semibold inline-flex items-center gap-1.5">
-                      Upload feedback CSV
-                    </Link>
-                    <Link to="/demo" className="gov-type-meta underline underline-offset-4 transition-colors hover:text-[#0D1B2A]">
-                      Review sample workspace
-                    </Link>
-                  </div>
+                  ))}
                 </div>
 
-                <aside className="space-y-4">
-                  <div className="rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] p-4">
-                    <p className="gov-type-eyebrow mb-2">What you need</p>
-                    <p className="gov-body">
-                      One CSV export from the current review period. Clarion checks structure first, then runs full upload validation.
-                    </p>
-                  </div>
-                  <div className="rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] p-4">
-                    <p className="gov-type-eyebrow mb-2">What Clarion creates</p>
-                    <p className="gov-body">
-                      The first upload creates the Governance Brief, action list, and issues the rest of the workspace is built around.
-                    </p>
-                  </div>
-                  <div className="rounded-[10px] border border-[#E5E7EB] bg-white p-4">
-                    <p className="gov-type-eyebrow mb-2">Sample workspace</p>
-                    <p className="gov-body">
-                      The sample workspace uses law-firm example data. Your live workspace remains unchanged until you upload your own feedback CSV.
-                    </p>
-                  </div>
-                </aside>
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <Link
+                    to="/upload?start=true"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#0EA5C2] px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#1494AD]"
+                  >
+                    Upload feedback CSV
+                  </Link>
+                  <Link
+                    to="/demo"
+                    className="text-[13px] font-medium text-[#9CC0D3] underline underline-offset-4 transition-colors hover:text-white"
+                  >
+                    Review sample workspace
+                  </Link>
+                </div>
               </div>
-            </section>
-          </>
+
+              <div className="bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0))] px-6 py-8 sm:px-8">
+                <div className="space-y-5">
+                  {[
+                    ["What you need", "One CSV export from the current review period. Clarion checks structure first, then runs full upload validation."],
+                    ["What Clarion creates", "The first upload creates the governance brief, issue map, and action list the workspace orbits around."],
+                    ["Sample workspace", "The sample workspace uses example law-firm data. Your live workspace stays untouched until you upload your own file."],
+                  ].map(([title, body]) => (
+                    <div key={title} className="border-t border-white/8 pt-4">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#5A7D97]">{title}</p>
+                      <p className="mt-2 text-[13px] leading-6 text-[#89A3B8]">{body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
         ) : null}
 
-        {/* Anchored-to strip: suppressed from primary view — data is surfaced in the brief card itself */}
+        {/* Anchored-to strip: suppressed from primary view; data is surfaced in the brief card itself */}
 
         {loadError ? (
-          <div className="mb-8">
-            <DashboardCard title="Workspace status" subtitle="Connection">
-              <p className="gov-body text-red-700">{loadError}</p>
-            </DashboardCard>
+          <div className="mb-5 rounded-2xl border border-red-400/20 bg-red-500/10 px-5 py-4">
+            <p className="m-0 text-[13px] text-red-200">{loadError}</p>
           </div>
         ) : null}
 
         {!isFirstRunWorkspace ? (
         <section className="dash-tier">
 
-          {/* ── Unified governance slab: hero → directive → attention → loop ── */}
-          <div className="rounded-[16px] overflow-hidden shadow-[0_12px_48px_rgba(13,27,42,0.22)]">
+          <div className="overflow-hidden rounded-[28px] border border-white/10 shadow-[0_28px_90px_rgba(0,0,0,0.24)]">
 
-            {/* ── 1. Current Governance Brief ── */}
+            {/* -- 1. Current Governance Brief -- */}
             {(() => {
               const briefStatus = latestProcessedReport?.status;
               const chipLabel = briefStatus === "sent" ? "Sent"
@@ -640,7 +629,7 @@ const Dashboard = () => {
                   className="relative overflow-hidden"
                   style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
                 >
-                  {/* Radial glow — top right */}
+                  {/* Radial glow - top right */}
                   <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#1a3a6b] opacity-40 blur-3xl" aria-hidden />
                   {/* Dot-grid texture */}
                   <div
@@ -655,7 +644,10 @@ const Dashboard = () => {
                         <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">
                           Governance Brief
                         </span>
-                        <h2 className="mt-2 text-[36px] font-semibold leading-[1.05] tracking-[-0.04em] text-white">
+                        <h2
+                          className="mt-3 max-w-[12ch] text-[40px] leading-[0.98] tracking-[-0.05em] text-white"
+                          style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
+                        >
                           {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
                         </h2>
                         {latestProcessedReport ? (
@@ -720,7 +712,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                   </div>
-                  {/* ── Instrument strip ── */}
+                  {/* -- Instrument strip -- */}
                   {latestProcessedReport ? (
                     <div
                       className="relative flex flex-wrap divide-x divide-white/[0.08]"
@@ -753,7 +745,7 @@ const Dashboard = () => {
               );
             })()}
 
-            {/* ── 2. Guidance directive connector band ── */}
+            {/* -- 2. Guidance directive connector band -- */}
             {guidance.directive ? (
               <div
                 className="relative px-7 py-2.5"
@@ -761,13 +753,13 @@ const Dashboard = () => {
               >
                 <div className="absolute inset-y-0 left-0 w-[3px] bg-[#0EA5C2]" />
                 <p className="text-[12px] font-medium text-[#A0BDD4]">
-                  <span className="mr-1.5 text-[#0EA5C2]">↳</span>
+                  <span className="mr-1.5 text-[#0EA5C2]">{"->"}</span>
                   {guidance.directive}
                 </p>
               </div>
             ) : null}
 
-            {/* ── 3. Needs Attention ── */}
+            {/* -- 3. Needs Attention -- */}
             {(overdueActions.length > 0 || unownedActionsCount > 0 || highSeveritySignalsCount > 0 || exposure?.partner_escalation_required) ? (
               <div
                 className="relative bg-white"
@@ -775,7 +767,6 @@ const Dashboard = () => {
               >
                 <div className="flex items-center gap-2.5 border-b border-[#F4F7FA] px-5 py-3">
                   <span className="relative flex h-2 w-2 shrink-0">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-50" style={{ animationDuration: "2.5s" }} />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-400" />
                   </span>
                   <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#64748B]">Needs attention</p>
@@ -794,7 +785,7 @@ const Dashboard = () => {
                         to="/dashboard/actions?filter=overdue"
                         className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
                       >
-                        Review →
+                        {"Review ->"}
                       </Link>
                     </li>
                 )}
@@ -811,7 +802,7 @@ const Dashboard = () => {
                           to={`/dashboard/reports/${latestProcessedReport.id}`}
                           className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
                         >
-                          Open brief →
+                          {"Open brief ->"}
                         </Link>
                       ) : null}
                     </li>
@@ -829,7 +820,7 @@ const Dashboard = () => {
                         to="/dashboard/signals?filter=high"
                         className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
                       >
-                        View →
+                        {"View ->"}
                       </Link>
                     </li>
                   )}
@@ -846,7 +837,7 @@ const Dashboard = () => {
                         to="/dashboard/actions"
                         className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
                       >
-                        Assign →
+                        {"Assign ->"}
                       </Link>
                     </li>
                   )}
@@ -854,7 +845,7 @@ const Dashboard = () => {
               </div>
             ) : null}
 
-            {/* ── 4. Governance Loop ── */}
+            {/* -- 4. Governance Loop -- */}
             {(() => {
               const briefId = latestProcessedReport?.id;
               const hasReport = Boolean(latestProcessedReport);
@@ -889,7 +880,7 @@ const Dashboard = () => {
               ];
               return (
                 <div style={{ borderTop: "1px solid #E8ECF0" }}>
-                  {/* Loop header — dark navy band */}
+                  {/* Loop header - dark navy band */}
                   <div
                     className="flex items-center justify-between px-5 py-3"
                     style={{ background: "#0F1F33" }}
@@ -953,7 +944,7 @@ const Dashboard = () => {
           {showBaselineNotice ? (
             <div className="flex items-center justify-between gap-3 px-1">
               <p className="text-[11px] text-[#9CA3AF]">
-                First cycle — trend comparison available after next upload.
+                First cycle - trend comparison available after next upload.
               </p>
               <button
                 type="button"
@@ -961,7 +952,7 @@ const Dashboard = () => {
                 aria-label="Dismiss"
                 className="text-[11px] text-[#9CA3AF] transition-colors hover:text-[#6B7280]"
               >
-                ×
+                x
               </button>
             </div>
           ) : null}
@@ -977,3 +968,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
