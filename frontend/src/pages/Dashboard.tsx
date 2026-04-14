@@ -1,7 +1,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronRight, AlertTriangle, Info, Loader2, X } from "lucide-react";
+import { ChevronRight, AlertTriangle, Loader2, X } from "lucide-react";
 import { toast } from "sonner";
 import {
   emitPlanLimitError,
@@ -509,27 +509,22 @@ const Dashboard = () => {
         className="stage-sequence dash-override mx-auto w-full"
         style={{ maxWidth: "var(--content-max-w)" }}
       >
-        {/* ── Persistent top bar: firm name + Start New Review ──────────── */}
-        <div
-          className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-[10px] border border-[#DDD8D0] bg-white px-5 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
-        >
-          <div className="flex items-center gap-3">
+        {/* ── Page chrome: firm name + Start New Review ── */}
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
             <p className="text-[13px] font-semibold text-[#0D1B2A]">
               {user?.firm_name || "Governance Workspace"}
             </p>
             {latestProcessedReport ? (
-              <span className="text-[11px] text-[#7A6E63]">Last updated {lastProcessedLabel}</span>
+              <span className="text-[11px] text-[#9CA3AF]">· Updated {lastProcessedLabel}</span>
             ) : null}
           </div>
-          <div className="flex items-center gap-2">
-            <Link
-              to="/upload?start=true"
-              className="inline-flex items-center gap-1.5 rounded-[7px] bg-[#0D1B2A] px-3.5 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b]"
-            >
-              Start New Review
-            </Link>
-            <Button type="button" variant="secondary" onClick={() => void loadDashboard()}>Refresh</Button>
-          </div>
+          <Link
+            to="/upload?start=true"
+            className="inline-flex items-center gap-1.5 rounded-[7px] bg-[#0D1B2A] px-3.5 py-1.5 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b]"
+          >
+            Start New Review
+          </Link>
         </div>
 
         {isFirstRunWorkspace ? (
@@ -636,8 +631,8 @@ const Dashboard = () => {
               : briefStatus === "escalation" ? "warn"
               : "muted";
             return (
-              <div className="rounded-[14px] border border-[#CDD9E7] bg-gradient-to-b from-white via-[#F8FBFE] to-[#F2F7FB] px-6 py-6 shadow-[0_4px_16px_rgba(13,27,42,0.08)]">
-                <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
+              <div className="rounded-[14px] border border-[#CDD9E7] bg-gradient-to-b from-white via-[#F8FBFE] to-[#F2F7FB] px-6 py-5 shadow-[0_4px_16px_rgba(13,27,42,0.08)]">
+                <div className="mb-3 flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <p className="gov-type-eyebrow mb-1">Current Governance Brief</p>
                     <h2 className="mt-1 text-[22px] font-semibold text-[#0D1B2A]">
@@ -648,8 +643,7 @@ const Dashboard = () => {
                     {latestProcessedReport ? (
                       <div className="mt-2 flex flex-wrap items-center gap-3">
                         <span className="text-[13px] text-slate-600">{reviewPeriodLabel}</span>
-                        <span className="text-[12px] text-[#7A6E63]">·</span>
-                        <span className="text-[12px] text-[#7A6E63]">{reviewsAnalyzed} reviews · {lastProcessedLabel}</span>
+                        <span className="text-[12px] text-[#7A6E63]">· {reviewsAnalyzed} reviews</span>
                         <span
                           className={[
                             "inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold",
@@ -704,67 +698,43 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <div className="workspace-inline-stats">
-                  <div className="workspace-inline-stat">
-                    <p className="gov-type-eyebrow">Review period</p>
-                    <p className="mt-2 gov-type-h3">{reviewPeriodLabel}</p>
-                  </div>
-                  <div className="workspace-inline-stat">
-                    <p className="gov-type-eyebrow">Open issues</p>
-                    <p className="mt-2 gov-type-h3">
-                      {latestSignals.length} active
-                      <span className="ml-1 font-normal text-[#6B7280]">({highSeveritySignalsCount} high)</span>
-                    </p>
-                  </div>
-                  <div className="workspace-inline-stat">
-                    <p className="gov-type-eyebrow">Follow-through</p>
-                    <p className="mt-2 gov-type-h3">
-                      {openActions.length} open
-                      <span className="ml-1 font-normal text-[#6B7280]">({overdueActions.length} overdue)</span>
-                    </p>
-                  </div>
-                </div>
-
-                {cycleAttentionSummary ? (
-                  <p className="mt-4 text-[13px] leading-relaxed text-slate-600">{cycleAttentionSummary}</p>
-                ) : null}
               </div>
             );
           })()}
 
           {/* ── Needs Attention ── */}
           {(overdueActions.length > 0 || unownedActionsCount > 0 || highSeveritySignalsCount > 0 || exposure?.partner_escalation_required) ? (
-            <div className="rounded-[10px] border border-amber-200 bg-amber-50 px-5 py-4">
-              <div className="mb-3 flex items-center gap-2">
-                <AlertTriangle size={13} className="text-amber-600" aria-hidden />
-                <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-amber-700">Needs attention</p>
+            <div className="rounded-[10px] border border-amber-200 bg-amber-50 px-5 py-3.5">
+              <div className="mb-2 flex items-center gap-1.5">
+                <AlertTriangle size={12} className="text-amber-600" aria-hidden />
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-amber-700">Needs attention</p>
               </div>
-              <ul className="space-y-2.5">
+              <ul className="space-y-2">
                 {overdueActions.length > 0 && (
                   <li className="flex items-center justify-between gap-4">
                     <span className="text-[13px] text-slate-700">
                       <span className="font-medium text-[#DC2626]">{overdueActions.length} overdue</span>{" "}
-                      follow-through {overdueActions.length === 1 ? "item" : "items"}
+                      {overdueActions.length === 1 ? "action" : "actions"}
                     </span>
                     <Link
                       to="/dashboard/actions?filter=overdue"
                       className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
                     >
-                      View →
+                      Review overdue →
                     </Link>
                   </li>
                 )}
                 {unownedActionsCount > 0 && (
                   <li className="flex items-center justify-between gap-4">
                     <span className="text-[13px] text-slate-700">
-                      <span className="font-medium text-amber-700">{unownedActionsCount} unassigned</span>{" "}
-                      follow-through {unownedActionsCount === 1 ? "item" : "items"}
+                      <span className="font-medium text-amber-700">{unownedActionsCount}</span>{" "}
+                      {unownedActionsCount === 1 ? "action needs" : "actions need"} an owner
                     </span>
                     <Link
                       to="/dashboard/actions"
                       className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
                     >
-                      Assign →
+                      Assign owners →
                     </Link>
                   </li>
                 )}
@@ -772,27 +742,27 @@ const Dashboard = () => {
                   <li className="flex items-center justify-between gap-4">
                     <span className="text-[13px] text-slate-700">
                       <span className="font-medium text-amber-700">{highSeveritySignalsCount} high-severity</span>{" "}
-                      client {highSeveritySignalsCount === 1 ? "issue" : "issues"}
+                      {highSeveritySignalsCount === 1 ? "issue" : "issues"}
                     </span>
                     <Link
                       to="/dashboard/signals?filter=high"
                       className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
                     >
-                      Review →
+                      View issues →
                     </Link>
                   </li>
                 )}
                 {exposure?.partner_escalation_required ? (
                   <li className="flex items-center justify-between gap-4">
                     <span className="text-[13px] text-slate-700">
-                      <span className="font-medium text-[#DC2626]">Partner escalation</span> flagged on current brief
+                      <span className="font-medium text-[#DC2626]">Partner escalation</span> required
                     </span>
                     {latestProcessedReport ? (
                       <Link
                         to={`/dashboard/reports/${latestProcessedReport.id}`}
                         className="shrink-0 text-[12px] font-medium text-[#0D1B2A] underline underline-offset-4 transition-colors hover:text-[#16263b]"
                       >
-                        Open Brief →
+                        Review brief →
                       </Link>
                     ) : null}
                   </li>
@@ -835,29 +805,29 @@ const Dashboard = () => {
               },
             ];
             return (
-              <div className="rounded-[10px] border border-[#E5E7EB] bg-white px-5 py-4">
-                <p className="gov-type-eyebrow mb-3">Governance loop</p>
+              <div className="rounded-[10px] border border-[#DDE3EC] bg-[#F8FAFC] px-5 py-4" style={{ borderLeft: "3px solid #0D1B2A" }}>
+                <p className="gov-type-eyebrow mb-3">Governance Loop</p>
                 <div className="flex flex-wrap items-center gap-1.5">
                   {steps.map((step, index) => (
                     <div key={step.label} className="flex items-center gap-1.5">
                       <Link
                         to={step.to}
                         className={[
-                          "flex flex-col rounded-[6px] px-3 py-2 transition-colors",
+                          "flex flex-col rounded-[8px] px-4 py-2.5 transition-all",
                           index === activeStep
-                            ? "bg-[#0D1B2A] text-white"
-                            : "bg-[#F8FAFC] text-[#0D1B2A] hover:bg-[#EFF6FF]",
+                            ? "bg-[#0D1B2A] text-white shadow-[0_2px_10px_rgba(13,27,42,0.22)]"
+                            : "bg-white border border-[#E2E8F0] text-[#0D1B2A] hover:border-[#0D1B2A]/30 hover:bg-[#EEF2F7]",
                         ].join(" ")}
                       >
-                        <span className={["text-[12px] font-semibold leading-tight", index === activeStep ? "text-white" : "text-[#0D1B2A]"].join(" ")}>
+                        <span className={["text-[13px] font-semibold leading-tight", index === activeStep ? "text-white" : "text-[#0D1B2A]"].join(" ")}>
                           {step.label}
                         </span>
-                        <span className={["text-[11px] leading-tight", index === activeStep ? "text-slate-300" : "text-slate-500"].join(" ")}>
+                        <span className={["mt-0.5 text-[11px] leading-tight", index === activeStep ? "text-slate-300" : "text-slate-500"].join(" ")}>
                           {step.stat}
                         </span>
                       </Link>
                       {index < steps.length - 1 && (
-                        <span className="text-[12px] text-[#CBD5E1]" aria-hidden>→</span>
+                        <span className="text-[11px] font-light text-[#CBD5E1]" aria-hidden>›</span>
                       )}
                     </div>
                   ))}
@@ -867,33 +837,23 @@ const Dashboard = () => {
           })()}
 
           {showBaselineNotice ? (
-            <section className="rounded-[8px] border border-[#BFDBFE] bg-[#EFF6FF] px-[18px] py-[14px]">
-              <div className="flex items-start gap-3">
-                <Info size={16} className="mt-0.5 text-[#0EA5C2]" />
-                <div className="flex-1">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <h2 className="text-[14px] font-semibold text-[#1E40AF]">Cycle baseline</h2>
-                    <button
-                      type="button"
-                      onClick={dismissBaselineNotice}
-                      aria-label="Dismiss baseline notice"
-                      className="inline-flex h-6 w-6 items-center justify-center rounded text-slate-500 transition-colors hover:bg-slate-200/60 hover:text-slate-700"
-                    >
-                      <X size={14} />
-                    </button>
-                  </div>
-                  <p className="gov-body mt-1">
-                    This is your first review cycle. Future uploads will allow the system to detect trends and changes over time. Your client issues reflect patterns from this upload only.
-                  </p>
-                </div>
-              </div>
-            </section>
+            <div className="flex items-center justify-between gap-3 px-1">
+              <p className="text-[11px] text-[#9CA3AF]">
+                First cycle — trend comparison available after next upload.
+              </p>
+              <button
+                type="button"
+                onClick={dismissBaselineNotice}
+                aria-label="Dismiss"
+                className="text-[11px] text-[#9CA3AF] transition-colors hover:text-[#6B7280]"
+              >
+                ×
+              </button>
+            </div>
           ) : null}
 
           {historyTruncated && historyNotice ? (
-            <section className="rounded-[8px] border border-[#BFDBFE] bg-[#EFF6FF] px-[18px] py-[12px] gov-body text-[#1E3A8A]">
-              {historyNotice}
-            </section>
+            <p className="px-1 text-[11px] text-[#9CA3AF]">{historyNotice}</p>
           ) : null}
         </section>
         ) : null}
