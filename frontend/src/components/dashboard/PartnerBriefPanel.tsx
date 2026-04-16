@@ -52,7 +52,6 @@ export default function PartnerBriefPanel({
     <DashboardCard
       title="CLIENT EXPERIENCE BRIEF"
       subtitle={`Current reporting period: ${reportingPeriod}`}
-      className="animate-slide-up"
     >
       <div className="grid gap-6 md:grid-cols-2">
         <section className="space-y-4">

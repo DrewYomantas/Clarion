@@ -526,7 +526,7 @@ const Dashboard = () => {
           </div>
           <Link
             to="/upload?start=true"
-            className="inline-flex items-center gap-2 rounded-full border border-[#1E5E70] bg-[#0A2630] px-4 py-2 text-[12px] font-semibold text-[#8ED7E7] transition-colors hover:border-[#277C91] hover:bg-[#0D2E39]"
+            className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/[0.05] px-4 py-2 text-[12px] font-medium text-white/60 transition-all hover:bg-white/10 hover:text-white/80"
           >
             Start New Review
           </Link>
@@ -753,7 +753,7 @@ const Dashboard = () => {
               >
                 <div className="absolute inset-y-0 left-0 w-[3px] bg-[#0EA5C2]" />
                 <p className="text-[12px] font-medium text-[#A0BDD4]">
-                  <span className="mr-1.5 text-[#0EA5C2]">{"->"}</span>
+                  <span className="mr-1.5 text-[#0EA5C2]">{"→"}</span>
                   {guidance.directive}
                 </p>
               </div>
@@ -762,82 +762,82 @@ const Dashboard = () => {
             {/* -- 3. Needs Attention -- */}
             {(overdueActions.length > 0 || unownedActionsCount > 0 || highSeveritySignalsCount > 0 || exposure?.partner_escalation_required) ? (
               <div
-                className="relative bg-white"
-                style={{ borderTop: "1px solid #F0F4F8", borderLeft: "4px solid #F59E0B" }}
+                className="relative bg-[#0D1B2A]"
+                style={{ borderTop: "1px solid rgba(255,255,255,0.06)", borderLeft: "3px solid #F59E0B" }}
               >
-                <div className="flex items-center gap-2.5 border-b border-[#F4F7FA] px-5 py-3">
+                <div className="flex items-center gap-2.5 border-b border-white/[0.06] px-5 py-3">
                   <span className="relative flex h-2 w-2 shrink-0">
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-400" />
                   </span>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#64748B]">Needs attention</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#6E8FAE]">Needs attention</p>
                 </div>
-                <ul className="divide-y divide-[#F8FAFC]">
+                <ul className="divide-y divide-white/[0.04]">
                   {overdueActions.length > 0 && (
-                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-[#FFFBF2]">
+                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-white/[0.03]">
                       <div className="flex items-center gap-3">
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#EF4444]" />
-                        <span className="text-[13px] text-[#1E293B]">
-                          <span className="font-semibold text-[#DC2626]">{overdueActions.length} overdue</span>{" "}
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#F87171]" />
+                        <span className="text-[13px] text-[#CBD5E0]">
+                          <span className="font-semibold text-[#F87171]">{overdueActions.length} overdue</span>{" "}
                           {overdueActions.length === 1 ? "action" : "actions"}
                         </span>
                       </div>
                       <Link
                         to="/dashboard/actions?filter=overdue"
-                        className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
+                        className="shrink-0 inline-flex items-center rounded-[6px] border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-semibold text-white/70 transition-all hover:bg-white/10 hover:text-white"
                       >
-                        {"Review ->"}
+                        Review →
                       </Link>
                     </li>
                 )}
                   {exposure?.partner_escalation_required ? (
-                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-[#FFFBF2]">
+                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-white/[0.03]">
                       <div className="flex items-center gap-3">
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#EF4444]" />
-                        <span className="text-[13px] text-[#1E293B]">
-                          <span className="font-semibold text-[#DC2626]">Partner escalation</span> required
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#F87171]" />
+                        <span className="text-[13px] text-[#CBD5E0]">
+                          <span className="font-semibold text-[#F87171]">Partner escalation</span> required
                         </span>
                       </div>
                       {latestProcessedReport ? (
                         <Link
                           to={`/dashboard/reports/${latestProcessedReport.id}`}
-                          className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
+                          className="shrink-0 inline-flex items-center rounded-[6px] border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-semibold text-white/70 transition-all hover:bg-white/10 hover:text-white"
                         >
-                          {"Open brief ->"}
+                          Open brief →
                         </Link>
                       ) : null}
                     </li>
                   ) : null}
                   {highSeveritySignalsCount > 0 && (
-                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-[#FFFBF2]">
+                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-white/[0.03]">
                       <div className="flex items-center gap-3">
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-                        <span className="text-[13px] text-[#1E293B]">
-                          <span className="font-semibold text-amber-600">{highSeveritySignalsCount} high-severity</span>{" "}
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
+                        <span className="text-[13px] text-[#CBD5E0]">
+                          <span className="font-semibold text-amber-400">{highSeveritySignalsCount} high-severity</span>{" "}
                           {highSeveritySignalsCount === 1 ? "issue" : "issues"}
                         </span>
                       </div>
                       <Link
                         to="/dashboard/signals?filter=high"
-                        className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
+                        className="shrink-0 inline-flex items-center rounded-[6px] border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-semibold text-white/70 transition-all hover:bg-white/10 hover:text-white"
                       >
-                        {"View ->"}
+                        View →
                       </Link>
                     </li>
                   )}
                   {unownedActionsCount > 0 && (
-                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-[#FFFBF2]">
+                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-white/[0.03]">
                       <div className="flex items-center gap-3">
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
-                        <span className="text-[13px] text-[#1E293B]">
-                          <span className="font-semibold text-amber-600">{unownedActionsCount}</span>{" "}
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
+                        <span className="text-[13px] text-[#CBD5E0]">
+                          <span className="font-semibold text-amber-400">{unownedActionsCount}</span>{" "}
                           {unownedActionsCount === 1 ? "action needs" : "actions need"} an owner
                         </span>
                       </div>
                       <Link
                         to="/dashboard/actions"
-                        className="shrink-0 inline-flex items-center rounded-[6px] border border-[#E2E8F0] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#0D1B2A] transition-all hover:border-[#CBD5E1] hover:shadow-[0_1px_4px_rgba(13,27,42,0.08)]"
+                        className="shrink-0 inline-flex items-center rounded-[6px] border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-semibold text-white/70 transition-all hover:bg-white/10 hover:text-white"
                       >
-                        {"Assign ->"}
+                        Assign →
                       </Link>
                     </li>
                   )}
@@ -883,7 +883,7 @@ const Dashboard = () => {
                   {/* Loop header - dark navy band */}
                   <div
                     className="flex items-center justify-between px-5 py-3"
-                    style={{ background: "#0F1F33" }}
+                    style={{ background: "#0A1525" }}
                   >
                     <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/70">Governance Loop</p>
                     <span className="text-[10px] font-medium text-[#0EA5C2]">Step {activeStep + 1} of {steps.length}</span>

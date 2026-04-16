@@ -100,7 +100,7 @@ function NavItem({
       className={[
         "group flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150",
         isActive
-          ? "border-l-[2px] border-l-[#C4A96A] bg-white/10 pl-[10px] text-white shadow-sm"
+          ? "border-l-[3px] border-l-[#C4A96A] bg-white/[0.12] pl-[10px] text-white shadow-sm"
           : "border border-transparent text-slate-300/90 hover:bg-white/6 hover:text-white",
       ].join(" ")}
     >
@@ -285,25 +285,25 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
         className="workspace-sidebar sticky top-0 flex h-screen w-[17rem] shrink-0 flex-col overflow-y-auto border-r border-white/10"
       >
         {/* Wordmark */}
-        <div className="workspace-shell-brand flex shrink-0 flex-col justify-center border-b border-white/8 px-5 py-5">
+        <div className="workspace-shell-brand flex shrink-0 flex-col justify-center border-b border-white/8 border-t border-t-[#C4A96A]/20 px-5 py-5">
           <div className="flex items-center gap-2.5">
-            {/* Mark — stylised C with gold accent dot */}
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <path d="M18.5 11A7.5 7.5 0 1 1 11 3.5" stroke="#4A6FA5" strokeWidth="2.2" strokeLinecap="round"/>
-              <path d="M11 3.5C13.2 3.5 15.2 4.4 16.6 5.9" stroke="url(#cg)" strokeWidth="2.2" strokeLinecap="round"/>
-              <circle cx="16.6" cy="5.9" r="1.5" fill="#C4A96A"/>
+            {/* Mark — C arc with navy→gold gradient, bold terminal dot */}
+            <svg width="26" height="26" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path d="M18.5 11A7.5 7.5 0 1 1 11 3.5" stroke="#4A6FA5" strokeWidth="2.6" strokeLinecap="round"/>
+              <path d="M11 3.5C13.2 3.5 15.2 4.4 16.6 5.9" stroke="url(#cg2)" strokeWidth="2.6" strokeLinecap="round"/>
+              <circle cx="16.6" cy="5.9" r="2" fill="#C4A96A"/>
               <defs>
-                <linearGradient id="cg" x1="11" y1="3.5" x2="16.6" y2="5.9" gradientUnits="userSpaceOnUse">
+                <linearGradient id="cg2" x1="11" y1="3.5" x2="16.6" y2="5.9" gradientUnits="userSpaceOnUse">
                   <stop stopColor="#4A6FA5"/>
                   <stop offset="1" stopColor="#C4A96A"/>
                 </linearGradient>
               </defs>
             </svg>
-            <span className="font-serif text-[17px] font-semibold tracking-[0.04em] text-white" style={{ fontFamily: "'Newsreader', Georgia, serif", letterSpacing: "0.06em" }}>
+            <span className="font-serif text-[18px] font-semibold text-white" style={{ fontFamily: "'Newsreader', Georgia, serif", letterSpacing: "0.07em" }}>
               CLARION
             </span>
           </div>
-          <p className="mt-2.5 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[#C4A96A]/80">
+          <p className="mt-2.5 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[#4A6FA5]/90">
             Governance Workspace
           </p>
         </div>
@@ -351,7 +351,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
 
       {/* ── Main content area ────────────────────────────────────────── */}
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="workspace-shell-topbar flex shrink-0 items-center justify-between border-b border-[#DDD8D0] bg-[#FDFCFA] px-6 py-3">
+        <header className="workspace-shell-topbar flex shrink-0 items-center justify-between border-b border-[#E8ECF2] bg-white px-6 py-3">
           <div className="min-w-0">
             <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#7A6E63]">
               {currentPageLabel}
@@ -359,7 +359,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
             <p className="mt-0.5 truncate text-[13px] leading-5 text-[#2C3E50]">{currentPageNote}</p>
           </div>
           <div className="flex items-center gap-2.5">
-            <span className="inline-flex items-center rounded-lg border border-[#DDD8D0] bg-white px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-[#7A6E63]">
+            <span className="inline-flex items-center rounded-lg border border-[#D1D5DB] bg-[#F9FAFB] px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-[#374151]">
               {planLabel}
             </span>
             {/* Account menu */}
@@ -370,7 +370,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
                 aria-label="Open account menu"
                 aria-expanded={accountMenuOpen}
                 aria-haspopup="true"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#DDD8D0] bg-[#F5F2ED] text-[11px] font-bold tracking-wide text-[#0D1B2A] transition-colors hover:bg-[#EBE6DF]"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#D1D5DB] bg-[#F0F4F8] text-[11px] font-bold tracking-wide text-[#0D1B2A] transition-colors hover:bg-[#E2E8F0]"
               >
                 {initials}
               </button>

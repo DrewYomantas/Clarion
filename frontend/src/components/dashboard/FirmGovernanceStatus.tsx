@@ -56,7 +56,6 @@ export default function FirmGovernanceStatus({
       title="Current governance posture"
       subtitle="Supporting posture context for the current brief."
       titleClassName="text-sm font-medium text-neutral-500"
-      className="animate-slide-up"
     >
       <div className="gov-card-content">
         <div>
