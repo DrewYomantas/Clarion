@@ -1733,10 +1733,10 @@ body {
 
 .workspace-shell-nav-label {
   font-size: 0.625rem;
-  font-weight: 800;
-  letter-spacing: 0.2em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(196, 169, 106, 0.5);
+  color: rgba(148, 163, 184, 0.55);
 }
 
 .workspace-shell-topbar {

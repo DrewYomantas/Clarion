@@ -353,10 +353,10 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <header className="workspace-shell-topbar flex shrink-0 items-center justify-between border-b border-[#E8ECF2] bg-white px-6 py-3">
           <div className="min-w-0">
-            <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#7A6E63]">
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#4A6FA5]">
               {currentPageLabel}
             </p>
-            <p className="mt-0.5 truncate text-[13px] leading-5 text-[#2C3E50]">{currentPageNote}</p>
+            <p className="mt-0.5 truncate text-[13px] leading-5 text-[#374151]">{currentPageNote}</p>
           </div>
           <div className="flex items-center gap-2.5">
             <span className="inline-flex items-center rounded-lg border border-[#D1D5DB] bg-[#F9FAFB] px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-[#374151]">
@@ -375,46 +375,46 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
                 {initials}
               </button>
               {accountMenuOpen && (
-                <div className="absolute right-0 top-full z-50 mt-1.5 w-52 rounded-[10px] border border-[#DDD8D0] bg-white py-1 shadow-lg">
-                  <div className="border-b border-[#F0EDE8] px-3 py-2.5">
+                <div className="absolute right-0 top-full z-50 mt-1.5 w-52 rounded-[10px] border border-[#E2E8F0] bg-white py-1 shadow-[0_4px_20px_-4px_rgba(13,27,42,0.14),0_1px_4px_rgba(13,27,42,0.06)]">
+                  <div className="border-b border-[#EEF2F7] px-3 py-2.5">
                     <p className="truncate text-[11px] font-semibold text-[#0D1B2A]">{user?.firm_name || userName || "Account"}</p>
                     <p className="truncate text-[10px] text-[#7A6E63]">{user?.email}</p>
                   </div>
                   <Link
                     to="/dashboard/meetings"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED]"
+                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F1F5F9]"
                   >
                     Meetings
                   </Link>
-                  <div className="my-1 h-px bg-[#F0EDE8]" />
+                  <div className="my-1 h-px bg-[#EEF2F7]" />
                   <Link
                     to="/dashboard/account"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED]"
+                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F1F5F9]"
                   >
                     Account
                   </Link>
                   <Link
                     to="/dashboard/team"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED]"
+                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F1F5F9]"
                   >
                     Team
                   </Link>
                   <Link
                     to="/dashboard/billing"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED]"
+                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F1F5F9]"
                   >
                     Billing
                   </Link>
-                  <div className="my-1 h-px bg-[#F0EDE8]" />
+                  <div className="my-1 h-px bg-[#EEF2F7]" />
                   <button
                     type="button"
                     onClick={() => { setAccountMenuOpen(false); void handleLogOut(); }}
                     disabled={loggingOut}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F5F2ED] disabled:opacity-50"
+                    className="flex w-full items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F1F5F9] disabled:opacity-50"
                   >
                     {loggingOut ? "Signing out…" : "Sign out"}
                   </button>

@@ -512,23 +512,26 @@ const Dashboard = () => {
       >
         <div
           className="mb-6 flex flex-wrap items-center justify-between gap-4"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", paddingBottom: "14px" }}
+          style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", paddingBottom: "16px" }}
         >
           <div className="flex flex-wrap items-center gap-3">
-            <p className="m-0 text-[11px] font-bold uppercase tracking-[0.14em] text-[#6E8FAE]">
-              {user?.firm_name || "Governance Workspace"}
-            </p>
+            <span className="inline-flex items-center gap-2">
+              <span className="h-[14px] w-[2px] rounded-full bg-[#C4A96A]/60" aria-hidden />
+              <p className="m-0 text-[11px] font-bold uppercase tracking-[0.15em] text-[#8EB4D4]">
+                {user?.firm_name || "Governance Workspace"}
+              </p>
+            </span>
             {latestProcessedReport ? (
-              <span className="text-[11px] text-[#5B7692]">
+              <span className="text-[11px] text-[#4A6882]">
                 Last processed {lastProcessedLabel}
               </span>
             ) : null}
           </div>
           <Link
             to="/upload?start=true"
-            className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/[0.05] px-4 py-2 text-[12px] font-medium text-white/60 transition-all hover:bg-white/10 hover:text-white/80"
+            className="inline-flex items-center gap-2 rounded-lg border border-white/[0.12] bg-white/[0.04] px-3.5 py-1.5 text-[11.5px] font-medium text-white/50 transition-all hover:bg-white/[0.08] hover:text-white/75"
           >
-            Start New Review
+            New Review
           </Link>
         </div>
 
@@ -609,7 +612,7 @@ const Dashboard = () => {
         {!isFirstRunWorkspace ? (
         <section className="dash-tier">
 
-          <div className="overflow-hidden rounded-[28px] border border-white/10 shadow-[0_28px_90px_rgba(0,0,0,0.24)]">
+          <div className="overflow-hidden rounded-[28px] border border-white/[0.13] shadow-[0_32px_100px_rgba(0,0,0,0.36),0_0_0_1px_rgba(255,255,255,0.04)]">
 
             {/* -- 1. Current Governance Brief -- */}
             {(() => {
@@ -641,18 +644,24 @@ const Dashboard = () => {
                   <div className="relative px-7 pt-6 pb-5">
                     <div className="flex flex-wrap items-start justify-between gap-5">
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">
-                          Governance Brief
+                        <span className="inline-flex items-center gap-2">
+                          <span className="h-[12px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
+                          <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">
+                            Governance Brief
+                          </span>
                         </span>
-                        <h2
-                          className="mt-3 max-w-[12ch] text-[40px] leading-[0.98] tracking-[-0.05em] text-white"
-                          style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
-                        >
-                          {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
-                        </h2>
+                        <div className="mt-3 flex items-start gap-3">
+                          <span className="mt-1 h-[36px] w-[3px] shrink-0 rounded-full bg-[#C4A96A]/60" aria-hidden />
+                          <h2
+                            className="max-w-[12ch] text-[40px] leading-[0.98] tracking-[-0.05em] text-white"
+                            style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
+                          >
+                            {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
+                          </h2>
+                        </div>
                         {latestProcessedReport ? (
-                          <div className="mt-2.5 flex items-center gap-2.5">
-                            <span className="text-[12px] text-[#4D6E8A]">{reviewsAnalyzed} reviews analyzed</span>
+                          <div className="mt-3 flex items-center gap-2.5 pl-6">
+                            <span className="text-[12px] text-[#3D607C]">{reviewsAnalyzed} reviews analyzed</span>
                             <span
                               className={[
                                 "inline-flex items-center rounded-[5px] border px-2 py-0.5 text-[10px] font-semibold",
@@ -685,7 +694,7 @@ const Dashboard = () => {
                             type="button"
                             onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}?present=1`)}
                             disabled={readyReportCount === 0}
-                            className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/15 bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-white/75 transition-all hover:border-white/25 hover:bg-white/10 hover:text-white active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
+                            className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
                           >
                             Open Meeting View
                           </button>
@@ -715,29 +724,29 @@ const Dashboard = () => {
                   {/* -- Instrument strip -- */}
                   {latestProcessedReport ? (
                     <div
-                      className="relative flex flex-wrap divide-x divide-white/[0.08]"
-                      style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+                      className="relative flex flex-wrap divide-x divide-white/[0.07]"
+                      style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
                     >
-                      <div className="min-w-[80px] px-5 py-3">
-                        <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{latestSignals.length}</p>
-                        <p className="mt-1 text-[11px] text-[#4D6E8A]">Issues detected</p>
+                      <div className="min-w-[88px] px-5 py-3.5">
+                        <p className="text-[24px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{latestSignals.length}</p>
+                        <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Issues detected</p>
                       </div>
-                      <div className="min-w-[80px] px-5 py-3">
-                        <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{openActions.length}</p>
-                        <p className="mt-1 text-[11px] text-[#4D6E8A]">Open actions</p>
+                      <div className="min-w-[88px] px-5 py-3.5">
+                        <p className="text-[24px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{openActions.length}</p>
+                        <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Open actions</p>
                       </div>
-                      <div className="min-w-[80px] px-5 py-3">
+                      <div className="min-w-[88px] px-5 py-3.5">
                         <p
-                          className="text-[22px] font-semibold leading-none"
+                          className="text-[24px] font-semibold leading-none"
                           style={{ fontVariantNumeric: "tabular-nums", color: overdueActions.length > 0 ? "#F87171" : "#ffffff" }}
                         >
                           {overdueActions.length}
                         </p>
-                        <p className="mt-1 text-[11px] text-[#4D6E8A]">Overdue</p>
+                        <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Overdue</p>
                       </div>
-                      <div className="min-w-[80px] px-5 py-3">
-                        <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{reviewsAnalyzed}</p>
-                        <p className="mt-1 text-[11px] text-[#4D6E8A]">Reviews analyzed</p>
+                      <div className="min-w-[88px] px-5 py-3.5">
+                        <p className="text-[24px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{reviewsAnalyzed}</p>
+                        <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Reviews analyzed</p>
                       </div>
                     </div>
                   ) : null}
@@ -879,17 +888,17 @@ const Dashboard = () => {
                 },
               ];
               return (
-                <div style={{ borderTop: "1px solid #E8ECF0" }}>
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
                   {/* Loop header - dark navy band */}
                   <div
                     className="flex items-center justify-between px-5 py-3"
-                    style={{ background: "#0A1525" }}
+                    style={{ background: "#080F1C" }}
                   >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/70">Governance Loop</p>
-                    <span className="text-[10px] font-medium text-[#0EA5C2]">Step {activeStep + 1} of {steps.length}</span>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/50">Governance Loop</p>
+                    <span className="text-[10px] font-semibold text-[#C4A96A]/70">Step {activeStep + 1} / {steps.length}</span>
                   </div>
                   {/* Step columns */}
-                  <div className="grid grid-cols-4 divide-x divide-[#F0F4F8]">
+                  <div className="grid grid-cols-4 divide-x divide-white/[0.06]">
                     {steps.map((step, index) => (
                       <Link
                         key={step.label}
@@ -897,44 +906,38 @@ const Dashboard = () => {
                         className={[
                           "group flex flex-col px-5 py-4 transition-all duration-150",
                           index === activeStep
-                            ? "bg-[#0D1B2A]"
-                            : "bg-white hover:bg-[#F8FAFC]",
+                            ? "bg-[#0B1829]"
+                            : "bg-[#F8FAFC] hover:bg-[#F1F5F9]",
                         ].join(" ")}
-                        style={index === activeStep ? { borderTop: "2px solid #0EA5C2" } : { borderTop: "2px solid transparent" }}
+                        style={index === activeStep ? { borderTop: "2px solid #C4A96A" } : { borderTop: "2px solid transparent" }}
                       >
                         <span className={[
                           "text-[9px] font-bold tracking-[0.14em]",
-                          index === activeStep ? "text-[#4D7FA8]" : "text-[#C0CAD4]",
+                          index === activeStep ? "text-[#4A6882]" : "text-[#B8C4CE]",
                         ].join(" ")}>
                           {String(index + 1).padStart(2, "0")}
                         </span>
                         <span className={[
                           "mt-1.5 text-[13px] font-semibold leading-tight",
-                          index === activeStep ? "text-white" : "text-[#0D1B2A]",
+                          index === activeStep ? "text-white" : "text-[#1E293B]",
                         ].join(" ")}>
                           {step.label}
                         </span>
                         <span className={[
                           "mt-1 text-[11px] leading-tight",
-                          index === activeStep ? "text-[#4D7FA8]" : "text-[#94A3B8]",
+                          index === activeStep ? "text-[#4A6882]" : "text-[#94A3B8]",
                         ].join(" ")}>
                           {step.stat}
                         </span>
                         {index === activeStep && (
-                          <span className="mt-3 flex items-center gap-1.5 text-[10px] font-medium" style={{ color: "#0EA5C2" }}>
-                            <span className="h-1.5 w-1.5 rounded-full" style={{ background: "#0EA5C2" }} />
+                          <span className="mt-3 flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.08em] text-[#C4A96A]/80">
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#C4A96A]/70" />
                             Current
                           </span>
                         )}
                       </Link>
                     ))}
                   </div>
-                  {/* Loop footer */}
-                  {lastProcessedLabel !== "Not available" ? (
-                    <div className="border-t border-[#F0F4F8] px-5 py-2.5">
-                      <p className="text-[11px] text-[#9CA3AF]">Last reviewed: {lastProcessedLabel}</p>
-                    </div>
-                  ) : null}
                 </div>
               );
             })()}
