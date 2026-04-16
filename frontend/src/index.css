@@ -1698,28 +1698,32 @@
   --navy-900: #0B1E3A;
   --navy-800: #142A4F;
   --surface: #FFFFFF;
-  --background: #F3F5F9;
-  --border: #E2E8F0;
-  --surface-tint: #EEF2FF;
+  /* NOTE: --background intentionally NOT redefined here.
+     The canonical warm value (hsl 36 20% 93% ≈ #F2F0EC) is set in the
+     primary :root block above. Redefining to a cool blue-gray here was
+     causing the gov-canvas flex container to render with the wrong
+     background color throughout the authenticated app. */
+  --border: #DDD8D0;
+  --surface-tint: #F2F0EC;
   --accent-primary: #2563EB;
   --sidebar-bg: #0F172A;
   --sidebar-text: #E2E8F0;
   --sidebar-active-bg: #1E293B;
   --sidebar-active-border: rgba(255, 255, 255, 0.2);
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
+  --text-primary: #0D1B2A;
+  --text-secondary: #334155;
   /* Spacing tokens are defined in the canonical :root block above.
      --space-page-x/y, --space-card-x/y, --space-section, --space-grid,
      --space-content, --dash-tier-gap, --dash-section-gap, --content-max-w */
 }
 
 body {
-  background: var(--background);
+  background: hsl(var(--gov-canvas));
   color: var(--text-primary);
 }
 
 .gov-canvas {
-  background: var(--background);
+  background: hsl(var(--gov-canvas));
 }
 
 .workspace-sidebar {
@@ -1827,13 +1831,14 @@ body {
     linear-gradient(
       180deg,
       #0a1522 0px,
-      #0e1d30 40px,
-      #1a2d40 80px,
-      #243446 120px,
-      #2e3d52 160px,
-      #38475d 200px,
-      #e8e4de 360px,
-      #F2F0EC 480px
+      #0d1d32 40px,
+      #152338 80px,
+      #1c2e44 120px,
+      #243650 160px,
+      #2e3e58 200px,
+      #c8c2bb 340px,
+      #EDE9E3 420px,
+      #F2F0EC 500px
     ) !important;
 }
 
@@ -1958,10 +1963,18 @@ body {
 .gov-type-eyebrow { font-size: var(--type-label-size);  font-weight: var(--type-label-weight); line-height: 1; letter-spacing: var(--type-label-ls); text-transform: uppercase; color: var(--type-label); }
 
 .gov-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 0.5rem;
   border: 1px solid var(--navy-900);
   background: var(--navy-900);
   color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: background-color 140ms ease, border-color 140ms ease;
 }
 
 .gov-btn-primary:hover {
@@ -1970,14 +1983,23 @@ body {
 }
 
 .gov-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 0.5rem;
-  border: 1px solid var(--border);
-  background: var(--surface);
+  border: 1px solid #DDD8D0;
+  background: #FFFFFF;
   color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: background-color 140ms ease, border-color 140ms ease;
 }
 
 .gov-btn-secondary:hover {
-  background: #F8FAFC;
+  background: #F8F6F2;
+  border-color: #C8C3BB;
 }
 
 @keyframes gov-fade-in {
@@ -2972,6 +2994,14 @@ body {
   display: block; /* fall back to block layout for dashboard tier system */
 }
 
+/* gov-page-shell — top-level section wrapper used by PageWrapper and Dashboard.
+   Provides transparent background so the workspace-main gradient shows through.
+   Width constraint + centering is applied by the inner wrapper inside PageWrapper. */
+.gov-page-shell {
+  background: transparent;
+  width: 100%;
+}
+
 .workspace-shell-header {
   position: relative;
 }
@@ -2983,7 +3013,7 @@ body {
   right: 0;
   bottom: calc(var(--space-section) * -0.5); /* sits midway in the header->content gap */
   height: 1px;
-  background: linear-gradient(90deg, rgba(203, 213, 225, 0.95) 0%, rgba(203, 213, 225, 0.42) 58%, rgba(203, 213, 225, 0) 100%);
+  background: linear-gradient(90deg, rgba(196, 186, 174, 0.7) 0%, rgba(196, 186, 174, 0.28) 58%, rgba(196, 186, 174, 0) 100%);
 }
 
 .workspace-shell-eyebrow {
@@ -3005,9 +3035,9 @@ body {
 .workspace-inline-stats {
   display: grid;
   gap: 0;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #DDD8D0;
   border-radius: 12px;
-  background: #fafbfc;
+  background: #FAFAF8;
 }
 
 .workspace-inline-stat {
@@ -3015,11 +3045,11 @@ body {
 }
 
 .workspace-inline-stat + .workspace-inline-stat {
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #DDD8D0;
 }
 
 .workspace-divider-list > * + * {
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #E5E0D8;
 }
 
 @media (min-width: 768px) {
@@ -3029,7 +3059,7 @@ body {
 
   .workspace-inline-stat + .workspace-inline-stat {
     border-top: 0;
-    border-left: 1px solid #e5e7eb;
+    border-left: 1px solid #DDD8D0;
   }
 }
 

@@ -58,7 +58,7 @@ const paddingBySize = {
 function ActionButton({ action, primary }: { action: GovernanceEmptyAction; primary: boolean }) {
   const baseClass = primary
     ? "inline-flex items-center justify-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#16263b] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0EA5C2] focus-visible:ring-offset-2"
-    : "inline-flex items-center justify-center rounded-[8px] border border-[#D1D5DB] bg-white px-4 py-2 text-sm font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0EA5C2] focus-visible:ring-offset-2";
+    : "inline-flex items-center justify-center rounded-[8px] border border-[#DDD8D0] bg-white px-4 py-2 text-sm font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0EA5C2] focus-visible:ring-offset-2";
 
   if (action.href) {
     return <Link to={action.href} className={baseClass}>{action.label}</Link>;
@@ -86,7 +86,7 @@ export default function GovernanceEmptyState({
     <div className={`flex flex-col items-center justify-center text-center ${padding} ${className}`}>
       {/* Icon */}
       {icon ? (
-        <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-500">
+        <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-[#DDD8D0] bg-[#F5F3F0] text-[#7A6E63]">
           {icon}
         </div>
       ) : null}

@@ -50,7 +50,7 @@ export function PageTabs({ value, onValueChange, tabs, className = "" }: PageTab
     <TabsPrimitive.Root value={value} onValueChange={onValueChange}>
       <TabsPrimitive.List
         className={[
-          "flex items-end gap-0 border-b border-[#E5E7EB] bg-transparent",
+          "flex items-end gap-0 border-b border-[#E5E0D8] bg-transparent",
           className,
         ].join(" ")}
         aria-label="Page workflow tabs"
@@ -65,9 +65,9 @@ export function PageTabs({ value, onValueChange, tabs, className = "" }: PageTab
               // Typography
               "text-[13px] font-medium leading-none whitespace-nowrap",
               // Default (inactive) state — smooth color + opacity transition
-              "text-slate-400 transition-[color,opacity] duration-150 ease-out",
+              "text-[#9CA3AF] transition-[color,opacity] duration-150 ease-out",
               // Hover — darkens text to near-active weight without committing to active
-              "hover:text-slate-700",
+              "hover:text-[#374151]",
               // Active state — full ink weight
               "data-[state=active]:text-[#0D1B2A]",
               // Active bottom border — slide-in via scaleX so it feels intentional

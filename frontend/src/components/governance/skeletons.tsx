@@ -21,7 +21,7 @@ export function SignalCardSkeleton() {
   return (
     <article
       aria-hidden="true"
-      className="rounded-xl border border-[#E3E8EF] bg-white p-6 shadow-sm"
+      className="rounded-xl border border-[#DDD8D0] bg-white p-6 shadow-sm"
     >
       {/* Title row — matches h-4 text block */}
       <div className="gov-skel-shimmer h-4 w-40 rounded" />
@@ -41,7 +41,7 @@ export function BriefCardSkeleton() {
   return (
     <article
       aria-hidden="true"
-      className="rounded-xl border border-[#E3E8EF] bg-white p-6 shadow-sm"
+      className="rounded-xl border border-[#DDD8D0] bg-white p-6 shadow-sm"
     >
       {/* Title */}
       <div className="gov-skel-shimmer h-4 w-36 rounded" />
@@ -63,7 +63,7 @@ export function ActionColumnSkeleton() {
   return (
     <article
       aria-hidden="true"
-      className="rounded-xl border border-[#E3E8EF] bg-white p-6 shadow-sm"
+      className="rounded-xl border border-[#DDD8D0] bg-white p-6 shadow-sm"
     >
       {/* Column header */}
       <div className="gov-skel-shimmer h-4 w-28 rounded" />
@@ -71,7 +71,7 @@ export function ActionColumnSkeleton() {
         {[0, 1, 2].map((i) => (
           <div
             key={`action-card-stub-${i}`}
-            className="rounded-lg border border-neutral-200 p-3"
+            className="rounded-lg border border-[#EAE7E2] p-3"
           >
             {/* Action title */}
             <div className="gov-skel-shimmer h-3 w-40 rounded" />
@@ -103,7 +103,7 @@ export function DashboardCardSkeleton({
   return (
     <section
       aria-hidden="true"
-      className={`rounded-[10px] border border-[#E5E7EB] bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06)] ${className}`.trim()}
+      className={`rounded-[10px] border border-[#DDD8D0] bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06)] ${className}`.trim()}
     >
       {/* Card header */}
       <div className="mb-4">
