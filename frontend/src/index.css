@@ -11,9 +11,9 @@
   --gov-surface: #FFFFFF;
   --gov-page: #F2F0EC;
 
-  --gov-primary: #2563EB;
-  --gov-primary-hover: #1D4ED8;
-  --gov-primary-tint: #EFF6FF;
+  --gov-primary: #0D1B2A;
+  --gov-primary-hover: #152638;
+  --gov-primary-tint: #F0F4F8;
 
   --gov-risk: #DC2626;
   --gov-risk-hover: #B91C1C;
@@ -1447,13 +1447,13 @@
     background: var(--gov-primary-hover);
     border-color: var(--gov-primary-hover);
     transform: translateY(-1px);
-    box-shadow: 0 8px 16px -14px rgba(29, 78, 216, 0.65);
+    box-shadow: 0 8px 16px -14px rgba(13, 27, 42, 0.5);
   }
 
   .gov-cta-primary:focus-visible {
     outline: 2px solid var(--gov-primary);
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
+    box-shadow: 0 0 0 4px rgba(13, 27, 42, 0.15);
   }
 
   .gov-cta-secondary {
