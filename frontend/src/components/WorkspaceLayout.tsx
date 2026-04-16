@@ -284,30 +284,71 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
         aria-label="Primary navigation"
         className="workspace-sidebar sticky top-0 flex h-screen w-[17rem] shrink-0 flex-col overflow-y-auto border-r border-white/10"
       >
-        {/* Wordmark */}
-        <div className="workspace-shell-brand flex shrink-0 flex-col justify-center border-b border-white/8 border-t border-t-[#C4A96A]/20 px-5 py-5">
-          <div className="flex items-center gap-2.5">
-            {/* Mark — C arc with navy→gold gradient, bold terminal dot */}
-            <svg width="30" height="30" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <path d="M18.5 11A7.5 7.5 0 1 1 11 3.5" stroke="#4A6FA5" strokeWidth="2.8" strokeLinecap="round"/>
-              <path d="M11 3.5C13.2 3.5 15.2 4.4 16.6 5.9" stroke="url(#cg2)" strokeWidth="2.8" strokeLinecap="round"/>
-              {/* Glow halo behind terminal dot */}
-              <circle cx="16.6" cy="5.9" r="4" fill="#C4A96A" fillOpacity="0.18"/>
-              <circle cx="16.6" cy="5.9" r="2.5" fill="#C4A96A"/>
+        {/* Official Clarion brand block */}
+        <div className="workspace-shell-brand flex shrink-0 flex-col justify-center border-b border-white/[0.07] px-5 py-5">
+          <div className="flex items-center gap-3">
+            {/* Official mark — deep-blue C-arc with concentric inner arc, gold terminal needle + glow */}
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
               <defs>
-                <linearGradient id="cg2" x1="11" y1="3.5" x2="16.6" y2="5.9" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#4A6FA5"/>
+                <linearGradient id="cl-outer" x1="18" y1="3" x2="28" y2="9" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#2A4F8A"/>
+                  <stop offset="0.55" stopColor="#3B6CB5"/>
                   <stop offset="1" stopColor="#C4A96A"/>
                 </linearGradient>
+                <linearGradient id="cl-inner" x1="18" y1="8" x2="25" y2="12" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#1E3D70" stopOpacity="0.7"/>
+                  <stop offset="1" stopColor="#C4A96A" stopOpacity="0.5"/>
+                </linearGradient>
+                <radialGradient id="cl-glow" cx="76%" cy="26%" r="30%">
+                  <stop offset="0" stopColor="#C4A96A" stopOpacity="0.55"/>
+                  <stop offset="1" stopColor="#C4A96A" stopOpacity="0"/>
+                </radialGradient>
               </defs>
+              {/* Glow halo behind terminal point */}
+              <circle cx="27.2" cy="9.4" r="6.5" fill="url(#cl-glow)"/>
+              {/* Outer C-arc — main stroke */}
+              <path
+                d="M30.5 18A12.5 12.5 0 1 1 18 5.5"
+                stroke="url(#cl-outer)"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                fill="none"
+              />
+              {/* Outer arc upper arm to terminal */}
+              <path
+                d="M18 5.5 C21.4 5.5 24.5 6.9 26.7 9.2"
+                stroke="url(#cl-outer)"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                fill="none"
+              />
+              {/* Inner concentric arc — subtle depth layer */}
+              <path
+                d="M26.2 18A8.2 8.2 0 1 1 18 9.8"
+                stroke="url(#cl-inner)"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                fill="none"
+                opacity="0.7"
+              />
+              {/* Gold needle line pointing to terminal */}
+              <line x1="20" y1="16" x2="27.2" y2="9.4" stroke="#C4A96A" strokeWidth="1.1" strokeLinecap="round" opacity="0.85"/>
+              {/* Terminal point — gold dot with bright center */}
+              <circle cx="27.2" cy="9.4" r="3" fill="#B8953C"/>
+              <circle cx="27.2" cy="9.4" r="1.5" fill="#E8C97A"/>
             </svg>
-            <span className="font-serif text-[18px] font-semibold text-white" style={{ fontFamily: "'Newsreader', Georgia, serif", letterSpacing: "0.07em" }}>
-              CLARION
-            </span>
+            <div>
+              <p
+                className="text-[17px] font-bold text-white"
+                style={{ fontFamily: "'Manrope', sans-serif", letterSpacing: "0.18em", lineHeight: 1 }}
+              >
+                CLARION
+              </p>
+              <p className="mt-0.5 text-[8.5px] font-bold uppercase tracking-[0.22em] text-[#C4A96A]/70">
+                Client Intelligence
+              </p>
+            </div>
           </div>
-          <p className="mt-2.5 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[#4A6FA5]/90">
-            Governance Workspace
-          </p>
         </div>
 
         {/* Primary nav */}
@@ -353,15 +394,15 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
 
       {/* ── Main content area ────────────────────────────────────────── */}
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="workspace-shell-topbar relative flex shrink-0 items-center justify-between border-b border-[#E8ECF2] bg-white px-6 py-3 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-[#C4A96A]/40">
+        <header className="workspace-shell-topbar relative flex shrink-0 items-center justify-between border-b border-white/[0.07] bg-[#0B1929] px-6 py-3 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-[#C4A96A]/50">
           <div className="min-w-0">
-            <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#4A6FA5]">
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#4A7FAA]">
               {currentPageLabel}
             </p>
-            <p className="mt-0.5 truncate text-[13px] leading-5 text-[#374151]">{currentPageNote}</p>
+            <p className="mt-0.5 truncate text-[13px] leading-5 text-[#8FA7BC]">{currentPageNote}</p>
           </div>
           <div className="flex items-center gap-2.5">
-            <span className="inline-flex items-center rounded-lg border border-[#D1D5DB] bg-[#F9FAFB] px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-[#374151]">
+            <span className="inline-flex items-center rounded-lg border border-white/[0.1] bg-white/[0.05] px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-[#8FA7BC]">
               {planLabel}
             </span>
             {/* Account menu */}
@@ -372,7 +413,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
                 aria-label="Open account menu"
                 aria-expanded={accountMenuOpen}
                 aria-haspopup="true"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#D1D5DB] bg-[#F0F4F8] text-[11px] font-bold tracking-wide text-[#0D1B2A] transition-colors hover:bg-[#E2E8F0]"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.14] bg-white/[0.07] text-[11px] font-bold tracking-wide text-[#CBD5E1] transition-colors hover:bg-white/[0.12] hover:text-white"
               >
                 {initials}
               </button>
@@ -433,7 +474,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
         </header>
         <main
           ref={mainRef}
-          className="workspace-main min-h-0 flex-1 overflow-y-auto bg-[#F2F0EC]"
+          className="workspace-main min-h-0 flex-1 overflow-y-auto"
         >
           <div className="workspace-route-content min-h-full">
             {children}

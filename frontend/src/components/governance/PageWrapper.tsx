@@ -30,16 +30,28 @@ const PageWrapper = ({ title, description, eyebrow, actions, children, contentCl
         className="mx-auto w-full"
         style={{ maxWidth: "var(--content-max-w)" }}
       >
-        {/* Page header */}
+        {/* Page header — renders against dark gradient band; all text is light */}
         <header
-          className="workspace-shell-header flex flex-wrap items-start justify-between border-b border-[#E5E2DC]"
+          className="workspace-shell-header flex flex-wrap items-start justify-between border-b border-white/[0.09]"
           style={{ gap: "var(--space-content)", marginBottom: "var(--space-section)", paddingBottom: "var(--space-section)" }}
         >
           <div className="max-w-3xl">
-            {eyebrow ? <p className="gov-type-eyebrow mb-2">{eyebrow}</p> : null}
-            <h1 className="gov-type-h1">{title}</h1>
+            {eyebrow ? (
+              <p
+                className="mb-2 text-[10.5px] font-bold uppercase tracking-[0.14em]"
+                style={{ color: "#C4A96A" }}
+              >
+                {eyebrow}
+              </p>
+            ) : null}
+            <h1
+              className="text-white"
+              style={{ fontSize: "var(--type-page-size)", fontWeight: "var(--type-page-weight)", lineHeight: "var(--type-page-lh)" }}
+            >
+              {title}
+            </h1>
             {description ? (
-              <p className="gov-type-body mt-2 max-w-2xl">{description}</p>
+              <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-[#8FA7BC]">{description}</p>
             ) : null}
           </div>
           {actions ? (

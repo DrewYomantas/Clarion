@@ -1743,6 +1743,28 @@ body {
   min-height: 56px;
 }
 
+/* ── Authenticated page canvas gradient bridge ─────────────────────────────
+   The dark flagship slab on Briefs / Issues / Follow-Through / Meetings sits
+   on a page background that was plain warm-parchment (#F2F0EC), causing an
+   abrupt dark-to-white visual break. This gradient on workspace-main fades
+   from deep navy at the very top into the standard warm body background,
+   creating an intentional tonal handoff between the slab and the content below.
+──────────────────────────────────────────────────────────────────────────── */
+.workspace-main {
+  background:
+    linear-gradient(
+      180deg,
+      #0a1522 0px,
+      #0e1d30 40px,
+      #1a2d40 80px,
+      #243446 120px,
+      #2e3d52 160px,
+      #38475d 200px,
+      #e8e4de 360px,
+      #F2F0EC 480px
+    ) !important;
+}
+
 .gov-level-1,
 .gov-level-2 {
   background: var(--surface);
