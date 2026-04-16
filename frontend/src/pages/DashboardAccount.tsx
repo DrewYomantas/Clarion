@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
-import GovPageHeader from "@/components/governance/GovPageHeader";
-import GovSectionCard from "@/components/governance/GovSectionCard";
+import PageWrapper from "@/components/governance/PageWrapper";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   cancelPendingEmailChange,
@@ -32,113 +31,96 @@ const TABS: Array<{ key: AccountTab; label: string }> = [
   { key: "security", label: "Security" },
 ];
 
-const tabButtonClass = (active: boolean) =>
-  [
-    "rounded border px-3 py-1.5 text-xs font-medium transition-colors",
-    active
-      ? "border-neutral-300 bg-neutral-100 text-neutral-900"
-      : "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50",
-  ].join(" ");
-
 const supportCategoryLabel = (value: string) =>
-  SUPPORT_CATEGORY_OPTIONS.find((option) => option.value === value)?.label || value;
+  SUPPORT_CATEGORY_OPTIONS.find((o) => o.value === value)?.label || value;
 
 const supportStatusClass = (status: string) => {
-  if (status === "resolved") return "border-emerald-200 bg-emerald-50 text-emerald-800";
-  if (status === "in_review") return "border-blue-200 bg-blue-50 text-blue-800";
-  return "border-amber-200 bg-amber-50 text-amber-900";
+  if (status === "resolved") return "border-[#D1FAE5] bg-[#ECFDF5] text-[#065F46]";
+  if (status === "in_review") return "border-[#BAE6FD] bg-[#EFF6FF] text-[#1E40AF]";
+  return "border-[#FDE68A] bg-[#FFFBEB] text-[#92400E]";
 };
 
 const supportEscalationClass = (level: string) => {
-  if (level === "high" || level === "critical") return "border-rose-200 bg-rose-50 text-rose-800";
-  if (level === "medium") return "border-amber-200 bg-amber-50 text-amber-900";
-  return "border-slate-200 bg-slate-50 text-slate-700";
+  if (level === "high" || level === "critical") return "border-[#FECACA] bg-[#FEF2F2] text-[#991B1B]";
+  if (level === "medium") return "border-[#FDE68A] bg-[#FFFBEB] text-[#92400E]";
+  return "border-[#DDD8D0] bg-[#F8F6F2] text-[#374151]";
 };
 
-const SecurityChecklist = () => {
-  return (
-    <section className="gov-level-2 p-6" aria-label="Security capabilities">
-      <h2 className="gov-h2 mb-1">Security</h2>
-      <p className="mb-4 text-sm text-neutral-700">
-        Current safeguards and operational boundaries for this deployment.
-      </p>
+// ── Security checklist ──────────────────────────────────────────────────────
 
-      <div className="space-y-4">
-        <article className="rounded border border-neutral-200 bg-white p-4">
-          <p className="gov-micro-label">Implemented In Clarion</p>
-          <div className="mt-3 space-y-3 text-sm text-neutral-800">
-            <div>
-              <p className="font-semibold text-neutral-900">Authentication And Session Controls</p>
-              <ul className="mt-1 space-y-1">
-                <li>Session cookies are HttpOnly.</li>
-                <li>Session cookies use SameSite=Lax by default.</li>
-                <li>Secure cookie mode is enabled outside debug by configuration.</li>
+const SecurityChecklist = () => (
+  <div className="space-y-4">
+    {[
+      {
+        label: "Implemented in Clarion",
+        items: [
+          ["Authentication & Session Controls", [
+            "Session cookies are HttpOnly.",
+            "Session cookies use SameSite=Lax by default.",
+            "Secure cookie mode is enabled outside debug by configuration.",
+          ]],
+          ["Access Control & Firm Scoping", [
+            "Firm context is required on governance API routes.",
+            "Reports, actions, and governance briefs are queried with firm scope.",
+            "Cross-firm access attempts are rejected.",
+          ]],
+          ["Request Traceability", [
+            "API responses include a request ID header for support and incident tracing.",
+            "Error responses include request IDs so events can be correlated in server logs.",
+          ]],
+          ["Upload Validation", [
+            "CSV upload checks file type and required structure before processing.",
+            "Server-side row limits and validation are applied during ingestion.",
+          ]],
+          ["Export & Abuse Controls", [
+            "Plan gates and history windows are enforced server-side for report and PDF access.",
+            "Rate limits are applied on authentication and high-cost API endpoints.",
+          ]],
+        ] as [string, string[]][],
+      },
+      {
+        label: "Deployment responsibilities",
+        items: [
+          ["Transport Security (TLS/HTTPS)", ["Enforced by hosting or reverse-proxy configuration."]],
+          ["Encryption at Rest", ["Provided by your infrastructure provider and database/storage configuration."]],
+          ["Backup & Retention Operations", ["Managed at the deployment layer unless separately configured."]],
+        ] as [string, string[]][],
+      },
+      {
+        label: "What matters for law-firm review",
+        items: [
+          ["", [
+            "Firm-scoped access controls for reports, actions, and client issues.",
+            "Server-side plan enforcement on export and report-history endpoints.",
+            "Rate limiting and request correlation for incident and abuse response.",
+            "Clear separation between application controls and infrastructure controls.",
+          ]],
+        ] as [string, string[]][],
+      },
+    ].map(({ label, items }) => (
+      <div key={label} className="settings-card">
+        <p className="text-[10.5px] font-bold uppercase tracking-[0.1em] text-[#7A6E63] mb-4">{label}</p>
+        <div className="space-y-4">
+          {items.map(([title, points]) => (
+            <div key={title || points[0]}>
+              {title && <p className="text-[13px] font-semibold text-[#0D1B2A] mb-1.5">{title}</p>}
+              <ul className="space-y-1">
+                {points.map((p) => (
+                  <li key={p} className="flex items-start gap-2 text-[13px] text-[#374151]">
+                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[#CBD5E1]" aria-hidden />
+                    {p}
+                  </li>
+                ))}
               </ul>
             </div>
-            <div>
-              <p className="font-semibold text-neutral-900">Access Control And Firm Scoping</p>
-              <ul className="mt-1 space-y-1">
-                <li>Firm context is required on governance API routes.</li>
-                <li>Reports, actions, and governance briefs are queried with firm scope.</li>
-                <li>Cross-firm access attempts are rejected.</li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold text-neutral-900">Request Traceability</p>
-              <ul className="mt-1 space-y-1">
-                <li>API responses include a request ID header for support and incident tracing.</li>
-                <li>Error responses include request IDs so events can be correlated in server logs.</li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold text-neutral-900">Upload Validation</p>
-              <ul className="mt-1 space-y-1">
-                <li>CSV upload checks file type and required structure before processing.</li>
-                <li>Server-side row limits and validation are applied during ingestion.</li>
-              </ul>
-            </div>
-            <div>
-              <p className="font-semibold text-neutral-900">Export And Abuse Controls</p>
-              <ul className="mt-1 space-y-1">
-                <li>Plan gates and history windows are enforced server-side for report and PDF access.</li>
-                <li>Rate limits are applied on authentication and high-cost API endpoints.</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <article className="rounded border border-neutral-200 bg-white p-4">
-          <p className="gov-micro-label">Deployment Responsibilities</p>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
-            <li>
-              <span className="font-semibold text-neutral-900">Transport Security (TLS/HTTPS): </span>
-              Enforced by hosting or reverse-proxy configuration.
-            </li>
-            <li>
-              <span className="font-semibold text-neutral-900">Encryption At Rest: </span>
-              Provided by your infrastructure provider and database/storage configuration.
-            </li>
-            <li>
-              <span className="font-semibold text-neutral-900">Backup And Retention Operations: </span>
-              Managed at the deployment layer unless separately configured.
-            </li>
-          </ul>
-        </article>
-
-        <article className="rounded border border-neutral-200 bg-white p-4">
-          <p className="gov-micro-label">What Matters For Law Firm Review</p>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-800">
-            <li>Firm-scoped access controls for reports, actions, and client issues.</li>
-            <li>Server-side plan enforcement on export and report-history endpoints.</li>
-            <li>Rate limiting and request correlation for incident and abuse response.</li>
-            <li>Clear separation between application controls and infrastructure controls.</li>
-          </ul>
-        </article>
+          ))}
+        </div>
       </div>
-    </section>
-  );
-};
+    ))}
+  </div>
+);
 
+// ── Main page ───────────────────────────────────────────────────────────────
 
 const DashboardAccount = () => {
   const { user, refreshUser } = useAuth();
@@ -192,11 +174,8 @@ const DashboardAccount = () => {
       setSupportLoading(false);
     };
     void loadSupport();
-    return () => {
-      active = false;
-    };
+    return () => { active = false; };
   }, [activeTab]);
-
 
   const refreshSupportTickets = async () => {
     const selfResult = await getSupportTickets();
@@ -241,10 +220,7 @@ const DashboardAccount = () => {
   const handleEmailChangeSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setEmailChangeSubmitting(true);
-    const result = await requestEmailChange({
-      new_email: newEmail,
-      current_password: currentPassword,
-    });
+    const result = await requestEmailChange({ new_email: newEmail, current_password: currentPassword });
     setEmailChangeSubmitting(false);
     if (!result.success) {
       toast.error(result.error || "Unable to start email change.");
@@ -264,10 +240,7 @@ const DashboardAccount = () => {
     setEmailChangeBusyAction("resend");
     const result = await resendPendingEmailChange();
     setEmailChangeBusyAction(null);
-    if (!result.success) {
-      toast.error(result.error || "Unable to resend verification.");
-      return;
-    }
+    if (!result.success) { toast.error(result.error || "Unable to resend verification."); return; }
     await refreshUser();
     toast.success(result.verification_sent ? "Verification email resent." : result.message || "Verification email resend processed.");
   };
@@ -276,312 +249,244 @@ const DashboardAccount = () => {
     setEmailChangeBusyAction("cancel");
     const result = await cancelPendingEmailChange();
     setEmailChangeBusyAction(null);
-    if (!result.success) {
-      toast.error(result.error || "Unable to cancel pending email change.");
-      return;
-    }
+    if (!result.success) { toast.error(result.error || "Unable to cancel pending email change."); return; }
     await refreshUser();
     toast.success("Pending email change canceled.");
   };
 
   return (
-      <section className="gov-page px-8 py-8">
-        <div className="mx-auto w-full max-w-[1200px] space-y-6">
-          <GovPageHeader
-            title="Account"
-            subtitle="Profile, billing, and security controls for your workspace."
-          />
+    <PageWrapper
+      eyebrow="Workspace"
+      title="Account"
+      description="Profile, identity, security, and support for your Clarion workspace."
+    >
+      {/* Tab bar */}
+      <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Account sections">
+        {TABS.map((tab) => (
+          <button
+            key={tab.key}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === tab.key}
+            onClick={() => setTab(tab.key)}
+            className={["settings-tab", activeTab === tab.key ? "settings-tab-active" : "settings-tab-inactive"].join(" ")}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
 
-          <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Account sections">
-            {TABS.map((tab) => (
-              <button
-                key={tab.key}
-                type="button"
-                role="tab"
-                aria-selected={activeTab === tab.key}
-                onClick={() => setTab(tab.key)}
-                className={tabButtonClass(activeTab === tab.key)}
-              >
-                {tab.label}
-              </button>
-            ))}
+      {/* Profile tab */}
+      {activeTab === "profile" && (
+        <div className="space-y-5">
+          {/* Workspace overview */}
+          <div className="settings-card">
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.1em] text-[#7A6E63] mb-1">Workspace</p>
+            <div className="mt-3 grid gap-4 md:grid-cols-2">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF]">Firm</p>
+                <p className="mt-1 text-[15px] font-semibold text-[#0D1B2A]">{user?.firm_name || "Not set"}</p>
+                <p className="mt-1 text-[13px] text-[#6B7280]">Primary identity used for report ownership and leadership outputs.</p>
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF]">Account email</p>
+                <p className="mt-1 text-[15px] font-semibold text-[#0D1B2A]">{user?.email || "Not available"}</p>
+                <p className="mt-1 text-[13px] text-[#6B7280]">Sign-in and account notices are sent to this address.</p>
+              </div>
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2 pt-4 border-t border-[#EEF2F7]">
+              <Link to="/dashboard/billing" className="inline-flex items-center rounded-[6px] border border-[#DDD8D0] bg-[#F8F6F2] px-3 py-1.5 text-[12px] font-medium text-[#374151] transition-colors hover:bg-[#EDEBE7]">
+                Billing & Credits
+              </Link>
+              <Link to="/dashboard/team" className="inline-flex items-center rounded-[6px] border border-[#DDD8D0] bg-[#F8F6F2] px-3 py-1.5 text-[12px] font-medium text-[#374151] transition-colors hover:bg-[#EDEBE7]">
+                Team Members
+              </Link>
+            </div>
           </div>
 
-          {activeTab === "profile" && (
-            <section className="grid gap-4 md:grid-cols-2" aria-label="Profile section">
-              <GovSectionCard accent="neutral" padding="lg" className="md:col-span-2">
-                <p className="gov-micro-label">WORKSPACE SETTINGS</p>
-                <h2 className="gov-h2 mt-2">Workspace Settings</h2>
-                <p className="mt-1 max-w-3xl text-sm text-neutral-700">
-                  Manage the workspace basics that support each governance cycle: identity, team access, support intake,
-                  billing, and security.
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <Link to="/dashboard/billing" className="gov-btn-secondary">
-                    Open Billing & Credits
-                  </Link>
-                  <Link to="/dashboard/security" className="gov-btn-secondary">
-                    Open Security
-                  </Link>
+          {/* Change email */}
+          <div className="settings-card">
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.1em] text-[#7A6E63] mb-1">Change email</p>
+            <p className="mt-1 text-[13px] text-[#6B7280]">Your current email stays active until the new address is verified.</p>
+            <form className="mt-4 space-y-3 max-w-md" onSubmit={handleEmailChangeSubmit}>
+              <div>
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63] mb-1.5">New email address</label>
+                <input
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  placeholder="new@yourfirm.com"
+                  className="settings-field"
+                  autoComplete="email"
+                />
+              </div>
+              <div>
+                <label className="block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63] mb-1.5">Current password</label>
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="Current password"
+                  className="settings-field"
+                  autoComplete="current-password"
+                />
+              </div>
+              <button type="submit" disabled={emailChangeSubmitting} className="inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b] disabled:opacity-50">
+                {emailChangeSubmitting ? "Sending verification…" : "Change email"}
+              </button>
+            </form>
+            {pendingEmailChange ? (
+              <div className="mt-5 rounded-[8px] border border-[#FDE68A] bg-[#FFFBEB] px-4 py-3 max-w-md">
+                <p className="text-[13px] font-semibold text-[#92400E]">Pending: {pendingEmailChange.new_email}</p>
+                <p className="mt-1 text-[12px] text-[#A16207]">Check that inbox and verify the link before the sign-in email changes.</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button type="button" onClick={handlePendingEmailResend} disabled={emailChangeBusyAction !== null}
+                    className="inline-flex items-center rounded-[6px] border border-[#FDE68A] bg-white px-3 py-1.5 text-[12px] font-medium text-[#92400E] transition-colors hover:bg-amber-50 disabled:opacity-50">
+                    {emailChangeBusyAction === "resend" ? "Resending…" : "Resend verification"}
+                  </button>
+                  <button type="button" onClick={handlePendingEmailCancel} disabled={emailChangeBusyAction !== null}
+                    className="inline-flex items-center rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-1.5 text-[12px] font-medium text-[#6B7280] transition-colors hover:bg-[#F8F6F2] disabled:opacity-50">
+                    {emailChangeBusyAction === "cancel" ? "Canceling…" : "Cancel"}
+                  </button>
                 </div>
-              </GovSectionCard>
-              <GovSectionCard accent="watch" padding="md">
-                <p className="gov-micro-label">FIRM</p>
-                <p className="mt-1 text-lg font-semibold text-neutral-900">{user?.firm_name || "Not set"}</p>
-                <p className="mt-2 text-sm text-neutral-700">
-                  Primary workspace identity used for report ownership, access control, and leadership-facing outputs.
-                </p>
-              </GovSectionCard>
-              <GovSectionCard accent="watch" padding="md">
-                <p className="gov-micro-label">PRIMARY ACCOUNT EMAIL</p>
-                <p className="mt-1 text-lg font-semibold text-neutral-900">{user?.email || "Not available"}</p>
-                <p className="mt-2 text-sm text-neutral-700">Sign-in and account notices are sent to this address.</p>
-                <div className="mt-4 rounded border border-neutral-200 bg-white p-4">
-                  <p className="text-sm font-semibold text-neutral-900">Change email</p>
-                  <p className="mt-1 text-xs text-neutral-600">
-                    Your current email stays active until the new address is verified.
-                  </p>
-                  <form className="mt-3 space-y-3" onSubmit={handleEmailChangeSubmit}>
-                    <input
-                      type="email"
-                      value={newEmail}
-                      onChange={(event) => setNewEmail(event.target.value)}
-                      placeholder="New email address"
-                      className="w-full rounded border border-neutral-300 px-3 py-2 text-sm"
-                      autoComplete="email"
-                    />
-                    <input
-                      type="password"
-                      value={currentPassword}
-                      onChange={(event) => setCurrentPassword(event.target.value)}
-                      placeholder="Current password"
-                      className="w-full rounded border border-neutral-300 px-3 py-2 text-sm"
-                      autoComplete="current-password"
-                    />
-                    <button type="submit" className="gov-btn-primary" disabled={emailChangeSubmitting}>
-                      {emailChangeSubmitting ? "Sending verification..." : "Change email"}
-                    </button>
-                  </form>
-                  {pendingEmailChange ? (
-                    <div className="mt-4 rounded border border-amber-200 bg-amber-50 px-3 py-3 text-sm text-amber-950">
-                      <p className="font-medium">Pending new email: {pendingEmailChange.new_email}</p>
-                      <p className="mt-1">
-                        Check that inbox and verify the link before the sign-in email changes.
+              </div>
+            ) : null}
+          </div>
+
+          {/* Support */}
+          <div className="settings-card">
+            <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+              <div>
+                <p className="text-[10.5px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">Support</p>
+                <p className="mt-1 text-[13px] text-[#6B7280]">Submit tracked requests for product, billing, account, or security issues.</p>
+              </div>
+              {supportSummary ? (
+                <div className="flex items-center gap-3 text-[12px] text-[#6B7280]">
+                  <span><span className="font-semibold text-[#0D1B2A]">{supportSummary.open_count}</span> open</span>
+                  {supportSummary.escalated_count > 0 && (
+                    <span><span className="font-semibold text-[#EF4444]">{supportSummary.escalated_count}</span> escalated</span>
+                  )}
+                </div>
+              ) : null}
+            </div>
+
+            <div className="grid gap-5 xl:grid-cols-[1.25fr_0.75fr]">
+              {/* Submit form */}
+              <div className="rounded-[8px] border border-[#EEF2F7] bg-[#FAFBFC] p-5">
+                <p className="text-[13px] font-semibold text-[#0D1B2A] mb-3">Open a support ticket</p>
+                <form className="space-y-3" onSubmit={handleSupportSubmit}>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    <div>
+                      <label className="block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63] mb-1">Category</label>
+                      <select value={supportCategory} onChange={(e) => setSupportCategory(e.target.value)} className="settings-field">
+                        {SUPPORT_CATEGORY_OPTIONS.map((o) => (
+                          <option key={o.value} value={o.value}>{o.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63] mb-1">Urgency</label>
+                      <select value={supportUrgency} onChange={(e) => setSupportUrgency(e.target.value)} className="settings-field">
+                        <option value="low">Low</option>
+                        <option value="normal">Normal</option>
+                        <option value="high">High</option>
+                        <option value="critical">Critical</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63] mb-1">Subject</label>
+                    <input value={supportSubject} onChange={(e) => setSupportSubject(e.target.value)} placeholder="Short subject" className="settings-field" />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63] mb-1">Message</label>
+                    <textarea value={supportMessage} onChange={(e) => setSupportMessage(e.target.value)}
+                      placeholder="Describe the issue, page, validation message, or steps to reproduce."
+                      className="min-h-[120px] w-full rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2 text-[13px] text-[#0D1B2A] placeholder:text-[#9CA3AF] focus:border-[#4A7FAA] focus:outline-none focus:ring-2 focus:ring-[#0EA5C2]/12" />
+                  </div>
+                  <button type="submit" disabled={supportSubmitting} className="inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b] disabled:opacity-50">
+                    {supportSubmitting ? "Submitting…" : "Submit request"}
+                  </button>
+                  {supportSubmissionState ? (
+                    <div className="rounded-[6px] border border-[#D1FAE5] bg-[#ECFDF5] px-3 py-3">
+                      <p className="text-[12px] font-semibold text-[#065F46]">Ticket created: {supportSubmissionState.ticketRef}</p>
+                      <p className="mt-1 text-[12px] text-[#047857]">
+                        {supportSubmissionState.autoResponseEmailSent ? "Acknowledgement email sent." : "Ticket stored. No auto-email on this deployment."}
                       </p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        <button
-                          type="button"
-                          className="gov-btn-secondary"
-                          onClick={handlePendingEmailResend}
-                          disabled={emailChangeBusyAction !== null}
-                        >
-                          {emailChangeBusyAction === "resend" ? "Resending..." : "Resend verification"}
-                        </button>
-                        <button
-                          type="button"
-                          className="gov-btn-secondary"
-                          onClick={handlePendingEmailCancel}
-                          disabled={emailChangeBusyAction !== null}
-                        >
-                          {emailChangeBusyAction === "cancel" ? "Canceling..." : "Cancel pending change"}
-                        </button>
-                      </div>
                     </div>
                   ) : null}
-                </div>
-              </GovSectionCard>
-              <GovSectionCard accent="watch" padding="lg" className="md:col-span-2">
-                <h2 className="gov-h2">Team & Seats</h2>
-                <p className="mt-1 text-sm text-neutral-700">
-                  Multi-user team access is not available on this plan. Single-seat workspace access is fully operational.
-                </p>
-              </GovSectionCard>
-              <GovSectionCard accent="watch" padding="lg" className="md:col-span-2">
-                <p className="gov-micro-label">SUPPORT SPACE</p>
-                <h2 className="gov-h2 mt-2">Support</h2>
-                <p className="mt-1 max-w-3xl text-sm text-neutral-700">
-                  Use the tracked support path for product, billing, account, privacy, and security issues. Clarion stores
-                  the request, assigns status and priority, and keeps the latest ticket history visible here.
-                </p>
-                <div className="mt-4 grid gap-3 md:grid-cols-3">
-                  <div className="rounded border border-neutral-200 bg-white px-4 py-3">
-                    <p className="gov-micro-label">PRIMARY PATH</p>
-                    <p className="mt-1 text-sm font-semibold text-neutral-900">Submit a tracked request</p>
-                    <p className="mt-1 text-xs text-neutral-600">Use the form when you need a ticket reference and in-product status updates.</p>
-                  </div>
-                  <div className="rounded border border-neutral-200 bg-white px-4 py-3">
-                    <p className="gov-micro-label">OPEN</p>
-                    <p className="mt-1 text-sm font-semibold text-neutral-900">
-                      {supportSummary ? `${supportSummary.open_count} ticket${supportSummary.open_count === 1 ? "" : "s"}` : "Loading..."}
-                    </p>
-                    <p className="mt-1 text-xs text-neutral-600">Requests still in queue or under review.</p>
-                  </div>
-                  <div className="rounded border border-neutral-200 bg-white px-4 py-3">
-                    <p className="gov-micro-label">ESCALATED</p>
-                    <p className="mt-1 text-sm font-semibold text-neutral-900">
-                      {supportSummary ? `${supportSummary.escalated_count}` : "Loading..."}
-                    </p>
-                    <p className="mt-1 text-xs text-neutral-600">Tickets currently marked for higher-priority handling.</p>
+                </form>
+              </div>
+
+              {/* Right column: contact + history */}
+              <div className="space-y-4">
+                <div className="rounded-[8px] border border-[#EEF2F7] bg-[#FAFBFC] p-4">
+                  <p className="text-[12px] font-semibold text-[#0D1B2A] mb-3">Direct contact</p>
+                  <div className="space-y-2">
+                    <a href="mailto:support@clarionhq.co" className="flex items-center text-[12px] text-[#4A7FAA] hover:text-[#0D1B2A] transition-colors">
+                      support@clarionhq.co
+                    </a>
+                    <a href="mailto:security@clarionhq.co" className="flex items-center text-[12px] text-[#4A7FAA] hover:text-[#0D1B2A] transition-colors">
+                      security@clarionhq.co
+                    </a>
                   </div>
                 </div>
-                <div className="mt-4 grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
-                  <div className="rounded border border-neutral-200 bg-white p-5">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div>
-                        <p className="gov-micro-label">NEW REQUEST</p>
-                        <h3 className="mt-1 text-base font-semibold text-neutral-900">Open a support ticket</h3>
-                        <p className="mt-1 text-sm text-neutral-700">
-                          Describe the issue, expected outcome, and any reproduction steps. The request stays visible here after submission.
-                        </p>
-                      </div>
-                      <div className="rounded border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs text-neutral-600">
-                        Tracked tickets are the preferred support path.
-                      </div>
+
+                <div className="rounded-[8px] border border-[#EEF2F7] bg-[#FAFBFC] p-4">
+                  <p className="text-[12px] font-semibold text-[#0D1B2A] mb-2">{user?.is_admin ? "Recent tickets" : "Your recent tickets"}</p>
+                  {supportError ? <p className="text-[12px] text-[#EF4444]">{supportError}</p> : null}
+                  {supportLoading ? (
+                    <div className="space-y-2 mt-2">
+                      {[1,2].map(i => <div key={i} className="h-10 animate-pulse rounded-[6px] bg-[#E5E7EB]" />)}
                     </div>
-                    <form className="mt-4 space-y-3" onSubmit={handleSupportSubmit}>
-                      <div className="grid gap-3 md:grid-cols-2">
-                        <select
-                          value={supportCategory}
-                          onChange={(event) => setSupportCategory(event.target.value)}
-                          className="rounded border border-neutral-300 px-3 py-2 text-sm"
-                        >
-                          {SUPPORT_CATEGORY_OPTIONS.map((option) => (
-                            <option key={option.value} value={option.value}>
-                              {option.label}
-                            </option>
-                          ))}
-                        </select>
-                        <select
-                          value={supportUrgency}
-                          onChange={(event) => setSupportUrgency(event.target.value)}
-                          className="rounded border border-neutral-300 px-3 py-2 text-sm"
-                        >
-                          <option value="low">Low</option>
-                          <option value="normal">Normal</option>
-                          <option value="high">High</option>
-                          <option value="critical">Critical</option>
-                        </select>
-                      </div>
-                      <input
-                        value={supportSubject}
-                        onChange={(event) => setSupportSubject(event.target.value)}
-                        placeholder="Short subject"
-                        className="w-full rounded border border-neutral-300 px-3 py-2 text-sm"
-                      />
-                      <textarea
-                        value={supportMessage}
-                        onChange={(event) => setSupportMessage(event.target.value)}
-                        placeholder="Describe the issue, page, validation message, or steps to reproduce."
-                        className="min-h-[140px] w-full rounded border border-neutral-300 px-3 py-2 text-sm"
-                      />
-                      <div className="flex flex-wrap items-center gap-2">
-                        <button type="submit" className="gov-btn-primary" disabled={supportSubmitting}>
-                          {supportSubmitting ? "Submitting..." : "Submit support request"}
-                        </button>
-                      </div>
-                      {supportSubmissionState ? (
-                        <div className="rounded border border-emerald-200 bg-emerald-50 px-3 py-3 text-sm text-emerald-900">
-                          <p className="font-medium">Ticket created: {supportSubmissionState.ticketRef}</p>
-                          <p className="mt-1">
-                            {supportSubmissionState.autoResponseEmailSent
-                              ? "An acknowledgement email was sent."
-                              : "No acknowledgement email was sent from this deployment, but the ticket is stored."}
-                          </p>
-                          <p className="mt-1">
-                            {supportSubmissionState.supportNotificationSent
-                              ? "The support inbox was notified automatically."
-                              : "Automatic inbox notification is unavailable on this deployment. Email support@clarionhq.co with the ticket reference if the issue is urgent."}
-                          </p>
-                        </div>
-                      ) : null}
-                    </form>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="rounded border border-neutral-200 bg-white p-5">
-                      <p className="gov-micro-label">STATUS AND CONTACT</p>
-                      <h3 className="mt-1 text-base font-semibold text-neutral-900">Support routing</h3>
-                      <div className="mt-3 space-y-3 text-sm text-neutral-700">
-                        <div className="rounded border border-neutral-200 bg-neutral-50 px-3 py-3">
-                          <p className="font-medium text-neutral-900">Tracked ticket path</p>
-                          <p className="mt-1">
-                            Clarion keeps request status, priority, and escalation handling tied to the ticket history below.
-                          </p>
-                        </div>
-                        <div className="rounded border border-neutral-200 bg-neutral-50 px-3 py-3">
-                          <p className="font-medium text-neutral-900">Direct contact</p>
-                          <p className="mt-1">
-                            Use direct email when inbox delivery or escalation follow-up needs an external thread.
-                          </p>
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            <a href="mailto:support@clarionhq.co" className="gov-btn-secondary">
-                              Email support@clarionhq.co
-                            </a>
-                            <a href="mailto:security@clarionhq.co" className="gov-btn-secondary">
-                              Email security@clarionhq.co
-                            </a>
+                  ) : supportTickets.length === 0 ? (
+                    <p className="text-[12px] text-[#9CA3AF]">No requests yet.</p>
+                  ) : (
+                    <ul className="space-y-2 mt-2">
+                      {supportTickets.slice(0, 5).map((ticket) => (
+                        <li key={ticket.id} className="rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2.5">
+                          <div className="flex flex-wrap items-start justify-between gap-2">
+                            <div>
+                              <p className="text-[11px] font-bold text-[#0D1B2A] uppercase tracking-[0.06em]">{ticket.ticket_ref}</p>
+                              <p className="mt-0.5 text-[12px] text-[#374151]">{ticket.subject}</p>
+                            </div>
+                            <div className="flex flex-wrap gap-1">
+                              <span className={`inline-flex rounded border px-1.5 py-0.5 text-[10px] font-semibold ${supportStatusClass(ticket.status)}`}>
+                                {ticket.status.replaceAll("_", " ")}
+                              </span>
+                              {ticket.escalation_level !== "none" ? (
+                                <span className={`inline-flex rounded border px-1.5 py-0.5 text-[10px] font-semibold ${supportEscalationClass(ticket.escalation_level)}`}>
+                                  Escalated
+                                </span>
+                              ) : null}
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="rounded border border-neutral-200 bg-white p-5">
-                      <p className="gov-micro-label">{user?.is_admin ? "RECENT TICKETS" : "YOUR RECENT TICKETS"}</p>
-                      <h3 className="mt-1 text-base font-semibold text-neutral-900">Recent request history</h3>
-                      <p className="mt-1 text-sm text-neutral-700">
-                        Review the latest ticket references, status, and escalation state for this workspace.
-                      </p>
-                      {supportError ? <p className="mt-3 text-xs text-red-700">{supportError}</p> : null}
-                      {supportLoading ? (
-                        <p className="mt-4 text-sm text-neutral-600">Loading support tickets...</p>
-                      ) : supportTickets.length === 0 ? (
-                        <p className="mt-4 text-sm text-neutral-600">No support requests yet.</p>
-                      ) : (
-                        <ul className="mt-4 space-y-3">
-                          {supportTickets.slice(0, 5).map((ticket) => (
-                            <li key={ticket.id} className="rounded border border-neutral-200 bg-neutral-50 px-3 py-3 text-sm text-neutral-800">
-                              <div className="flex flex-wrap items-start justify-between gap-2">
-                                <div>
-                                  <p className="font-semibold text-neutral-900">{ticket.ticket_ref}</p>
-                                  <p className="mt-1 text-sm text-neutral-900">{ticket.subject}</p>
-                                </div>
-                                <div className="flex flex-wrap gap-1.5">
-                                  <span className={`inline-flex rounded-full border px-2 py-0.5 text-[11px] font-medium ${supportStatusClass(ticket.status)}`}>
-                                    {ticket.status.replaceAll("_", " ")}
-                                  </span>
-                                  {ticket.escalation_level !== "none" ? (
-                                    <span className={`inline-flex rounded-full border px-2 py-0.5 text-[11px] font-medium ${supportEscalationClass(ticket.escalation_level)}`}>
-                                      Escalated: {ticket.escalation_level}
-                                    </span>
-                                  ) : null}
-                                </div>
-                              </div>
-                              <p className="mt-2 text-xs text-neutral-600">
-                                {supportCategoryLabel(ticket.category)} | {ticket.priority} priority
-                              </p>
-                              <p className="mt-1 text-xs text-neutral-500">Updated {new Date(ticket.updated_at).toLocaleString()}</p>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
+                          <p className="mt-1.5 text-[11px] text-[#9CA3AF]">{supportCategoryLabel(ticket.category)} · {ticket.priority} priority</p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-              </GovSectionCard>
-            </section>
-          )}
-
-          {activeTab === "billing" && (
-            <GovSectionCard accent="watch" padding="lg" aria-label="Billing section">
-              <h2 className="gov-h2 mb-2">Billing & Credits</h2>
-              <p className="mb-4 text-sm text-neutral-700">Plan, usage, and automation scheduling are managed in Billing.</p>
-              <Link to="/dashboard/billing" className="gov-btn-secondary">
-                Open Billing & Credits
-              </Link>
-            </GovSectionCard>
-          )}
-
-          {activeTab === "security" && <SecurityChecklist />}
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
+      )}
+
+      {/* Billing redirect tab */}
+      {activeTab === "billing" && (
+        <div className="settings-card max-w-lg">
+          <p className="text-[10.5px] font-bold uppercase tracking-[0.1em] text-[#7A6E63] mb-1">Billing & Credits</p>
+          <p className="mt-2 text-[13px] text-[#6B7280]">Plan, usage, and automation scheduling are managed in Billing.</p>
+          <Link to="/dashboard/billing" className="mt-4 inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b]">
+            Open Billing & Credits
+          </Link>
+        </div>
+      )}
+
+      {/* Security tab */}
+      {activeTab === "security" && <SecurityChecklist />}
+    </PageWrapper>
   );
 };
 

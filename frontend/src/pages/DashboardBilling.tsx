@@ -8,8 +8,7 @@ import {
   type CreditsState,
   type ReportPackSchedule,
 } from "@/api/authService";
-import GovPageHeader from "@/components/governance/GovPageHeader";
-import GovSectionCard from "@/components/governance/GovSectionCard";
+import PageWrapper from "@/components/governance/PageWrapper";
 import PlanCurrentBanner from "@/components/billing/PlanCurrentBanner";
 import { useAuth } from "@/contexts/AuthContext";
 import { resolvePlanLimits } from "@/config/planLimits";
@@ -69,9 +68,7 @@ const DashboardBilling = () => {
   );
 
   const handleSaveSchedule = async () => {
-    if (!schedule) {
-      return;
-    }
+    if (!schedule) return;
     setIsSavingSchedule(true);
     const result = await updateReportPackSchedule({
       enabled: schedule.enabled,
@@ -107,134 +104,146 @@ const DashboardBilling = () => {
   const planLimits = resolvePlanLimits(currentPlan);
 
   return (
-      <section className="gov-page space-y-6">
-        <GovPageHeader
-          title="Billing & Usage"
-          subtitle="Current plan allowances and automation settings."
-          actions={
-            <Link to={focusedUpgradePath} className="gov-btn-secondary">
-              {nextUpgradePlan ? `View ${nextUpgradeLabel} overview` : "View plan details"}
-            </Link>
-          }
-        />
+    <PageWrapper
+      eyebrow="Workspace"
+      title="Billing & Usage"
+      description="Current plan allowances and automation settings."
+      actions={
+        <Link
+          to={focusedUpgradePath}
+          className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15"
+        >
+          {nextUpgradePlan ? `View ${nextUpgradeLabel} overview` : "View plan details"}
+        </Link>
+      }
+    >
+      {error && (
+        <div className="rounded border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-800">{error}</div>
+      )}
 
-        {error && <div className="rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">{error}</div>}
+      <PlanCurrentBanner
+        firmPlan={currentPlan?.firmPlan}
+        planLabel={planLabel}
+        isPaidSubscription={isPaidSubscription}
+        planLimits={planLimits}
+        nextReset={credits?.next_reset}
+        nextUpgradePath={focusedUpgradePath}
+        isLoading={isLoading}
+      />
 
-        <PlanCurrentBanner
-          firmPlan={currentPlan?.firmPlan}
-          planLabel={planLabel}
-          isPaidSubscription={isPaidSubscription}
-          planLimits={planLimits}
-          nextReset={credits?.next_reset}
-          nextUpgradePath={focusedUpgradePath}
-          isLoading={isLoading}
-        />
-
-        <GovSectionCard accent="attention" padding="lg" className="space-y-4">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <h2 className="gov-h2">Automation & Delivery (Included in Team/Firm)</h2>
-              <p className="text-sm text-neutral-700">
-                Save recipient and cadence settings here. Clarion stores these scheduled recipients and cadence for this
-                workspace, but delivery only runs when outbound email is configured for this deployment.
+      {/* Automation & Delivery */}
+      <div className="settings-card space-y-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 className="text-[13px] font-semibold text-[#0D1B2A]">Automation & Delivery</h2>
+            <p className="mt-1 text-xs text-[#6B7280]">
+              Included in Team/Firm. Save recipient and cadence settings here. Delivery runs when outbound email is
+              configured for this deployment.
+            </p>
+            {!canManageSchedule && (
+              <p className="mt-1.5 text-xs text-[#9CA3AF]">
+                Team and Firm unlock saved recipient lists and recurring report-pack cadence for leadership review cycles.
               </p>
-              {!canManageSchedule ? (
-                <p className="mt-2 text-xs text-neutral-600">
-                  Team and Firm unlock saved recipient lists and recurring report-pack cadence for leadership review cycles.
-                </p>
-              ) : null}
-            </div>
-            {canManageSchedule ? (
-              <span className="gov-badge gov-badge-watch">Included in Team/Firm</span>
-            ) : (
-              <Link to="/pricing?intent=team" className="gov-btn-secondary">
-                Upgrade to Team
-              </Link>
             )}
           </div>
-
-          {!canManageSchedule && !scheduleLoading ? (
-            <div className="rounded border border-neutral-200 bg-white p-4">
-              <p className="text-sm font-semibold text-neutral-900">What this unlocks</p>
-              <ul className="mt-2 space-y-1 text-sm text-neutral-700">
-                <li>Save the partner or ops distribution list once instead of re-entering recipients each cycle.</li>
-                <li>Set a recurring weekly or monthly cadence for report-pack delivery.</li>
-                <li>Keep leadership delivery settings attached to the workspace instead of running a manual handoff each time.</li>
-              </ul>
-            </div>
-          ) : null}
-
-          {scheduleError && !scheduleLoading && (
-            <div className="rounded border border-amber-300/60 bg-amber-50/30 px-3 py-2 text-sm text-amber-900">
-              {scheduleError}
-            </div>
+          {canManageSchedule ? (
+            <span className="inline-flex items-center rounded border border-[#C4A96A]/40 bg-[#C4A96A]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#8A6E30]">
+              Included
+            </span>
+          ) : (
+            <Link
+              to="/pricing?intent=team"
+              className="inline-flex items-center rounded-lg border border-[#DDD8D0] bg-white px-3 py-1.5 text-xs font-medium text-[#374151] hover:bg-[#F5F3F0]"
+            >
+              Upgrade to Team
+            </Link>
           )}
+        </div>
 
-          {scheduleLoading ? (
-            <p className="text-sm text-neutral-700">Loading schedule settings...</p>
-          ) : schedule ? (
-            <div className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2">
-                <label className="flex items-center gap-2 text-sm text-neutral-900">
-                  <input
-                    type="checkbox"
-                    checked={schedule.enabled}
-                    disabled={!canManageSchedule}
-                    onChange={(event) => setSchedule((prev) => (prev ? { ...prev, enabled: event.target.checked } : prev))}
-                  />
-                  Enable scheduled report packs
-                </label>
-                <label className="flex items-center gap-2 text-sm text-neutral-900">
-                  Cadence
-                  <select
-                    className="gov-field max-w-[180px]"
-                    value={schedule.cadence}
-                    disabled={!canManageSchedule}
-                    onChange={(event) =>
-                      setSchedule((prev) => (prev ? { ...prev, cadence: event.target.value === "monthly" ? "monthly" : "weekly" } : prev))
-                    }
-                  >
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                  </select>
-                </label>
-              </div>
+        {!canManageSchedule && !scheduleLoading && (
+          <div className="rounded border border-[#EAE7E2] bg-[#F9F8F6] p-4">
+            <p className="text-xs font-semibold text-[#0D1B2A]">What this unlocks</p>
+            <ul className="mt-2 space-y-1 text-xs text-[#6B7280]">
+              <li>Save the partner or ops distribution list once instead of re-entering each cycle.</li>
+              <li>Set a recurring weekly or monthly cadence for report-pack delivery.</li>
+              <li>Keep leadership delivery settings attached to the workspace.</li>
+            </ul>
+          </div>
+        )}
 
-              <label className="block text-sm text-neutral-900">
-                Recipients (comma-separated)
+        {scheduleError && !scheduleLoading && (
+          <div className="rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+            {scheduleError}
+          </div>
+        )}
+
+        {scheduleLoading ? (
+          <p className="text-sm text-[#9CA3AF]">Loading schedule settings…</p>
+        ) : schedule ? (
+          <div className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2">
+              <label className="flex items-center gap-2 text-sm text-[#374151]">
                 <input
-                  type="text"
-                  className="gov-field mt-1"
-                  value={recipientsDraft}
+                  type="checkbox"
+                  checked={schedule.enabled}
                   disabled={!canManageSchedule}
-                  onChange={(event) => setRecipientsDraft(event.target.value)}
-                  placeholder="partner@firm.com, ops@firm.com"
+                  onChange={(e) => setSchedule((prev) => (prev ? { ...prev, enabled: e.target.checked } : prev))}
+                  className="rounded border-[#DDD8D0]"
                 />
+                Enable scheduled report packs
               </label>
-
-              <p className="text-xs text-neutral-700">
-                Last sent: {schedule.last_sent_at || "Never"} | Next run: {schedule.next_send_at || "Not scheduled"}
-              </p>
-              {!canManageSchedule ? (
-                <p className="text-xs text-neutral-600">
-                  Settings are visible here for reference, but editing and scheduled delivery are available on Team and Firm.
-                </p>
-              ) : null}
-
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  className="gov-btn-primary"
-                  disabled={!canManageSchedule || isSavingSchedule}
-                  onClick={() => void handleSaveSchedule()}
+              <label className="flex items-center gap-2 text-sm text-[#374151]">
+                Cadence
+                <select
+                  className="settings-field max-w-[180px] px-3"
+                  value={schedule.cadence}
+                  disabled={!canManageSchedule}
+                  onChange={(e) =>
+                    setSchedule((prev) => (prev ? { ...prev, cadence: e.target.value === "monthly" ? "monthly" : "weekly" } : prev))
+                  }
                 >
-                  {isSavingSchedule ? "Saving..." : "Save schedule"}
-                </button>
-              </div>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </label>
             </div>
-          ) : null}
-        </GovSectionCard>
-      </section>
+
+            <label className="block text-sm text-[#374151]">
+              Recipients (comma-separated)
+              <input
+                type="text"
+                className="settings-field mt-1.5 px-3"
+                value={recipientsDraft}
+                disabled={!canManageSchedule}
+                onChange={(e) => setRecipientsDraft(e.target.value)}
+                placeholder="partner@firm.com, ops@firm.com"
+              />
+            </label>
+
+            <p className="text-xs text-[#9CA3AF]">
+              Last sent: {schedule.last_sent_at || "Never"} · Next run: {schedule.next_send_at || "Not scheduled"}
+            </p>
+
+            {!canManageSchedule && (
+              <p className="text-xs text-[#9CA3AF]">
+                Settings are visible for reference, but editing and scheduled delivery require Team or Firm.
+              </p>
+            )}
+
+            <div>
+              <button
+                type="button"
+                disabled={!canManageSchedule || isSavingSchedule}
+                onClick={() => void handleSaveSchedule()}
+                className="inline-flex items-center rounded-lg bg-[#0D1B2A] px-4 py-2 text-sm font-medium text-white hover:bg-[#152638] disabled:opacity-50"
+              >
+                {isSavingSchedule ? "Saving…" : "Save schedule"}
+              </button>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </PageWrapper>
   );
 };
 

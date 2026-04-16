@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Mail, MoreHorizontal, Plus, RefreshCw, UserMinus, UserX } from "lucide-react";
-import GovPageHeader from "@/components/governance/GovPageHeader";
-import GovSectionCard from "@/components/governance/GovSectionCard";
+import PageWrapper from "@/components/governance/PageWrapper";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   getTeamMembers,
@@ -19,15 +18,15 @@ const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
 const roleBadge = (role: TeamMemberRole) => {
   const base = "inline-flex items-center rounded border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.04em]";
-  if (role === "owner") return `${base} border-indigo-200 bg-indigo-50 text-indigo-700`;
-  if (role === "partner") return `${base} border-amber-200 bg-amber-50 text-amber-700`;
-  return `${base} border-slate-200 bg-slate-50 text-slate-600`;
+  if (role === "owner") return `${base} border-[#C4A96A]/40 bg-[#C4A96A]/10 text-[#8A6E30]`;
+  if (role === "partner") return `${base} border-[#4A7FAA]/30 bg-[#4A7FAA]/10 text-[#2D5A80]`;
+  return `${base} border-[#DDD8D0] bg-[#F5F3F0] text-[#6B7280]`;
 };
 
 const statusBadge = (status: string) => {
   const base = "inline-flex items-center rounded border px-2 py-0.5 text-[11px] font-medium";
   if (status === "active") return `${base} border-emerald-200 bg-emerald-50 text-emerald-700`;
-  if (status === "invited") return `${base} border-blue-200 bg-blue-50 text-blue-700`;
+  if (status === "invited") return `${base} border-[#4A7FAA]/30 bg-[#4A7FAA]/10 text-[#2D5A80]`;
   return `${base} border-rose-200 bg-rose-50 text-rose-700`;
 };
 
@@ -70,27 +69,23 @@ function InviteModal({ onClose, onSuccess }: InviteModalProps) {
       }
       return;
     }
-    // Dev mode: backend returns raw token so you can test without email delivery
     if (result.invite_token) setDevToken(result.invite_token);
     else onSuccess(trimmed);
   };
 
-  const inputClass = "w-full rounded border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-[#0EA5C2] focus:outline-none focus:ring-2 focus:ring-[#0EA5C2]/20";
-  const labelClass = "mb-1.5 block text-xs font-medium text-neutral-700";
-
   if (devToken) {
     const acceptUrl = `${window.location.origin}/invite/accept?token=${devToken}`;
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-        <div className="w-full max-w-md rounded-xl border border-neutral-200 bg-white p-6 shadow-xl">
-          <h2 className="mb-1 text-base font-semibold text-neutral-900">Dev Mode — Invite Token</h2>
-          <p className="mb-4 text-sm text-neutral-500">Email delivery is unavailable in dev mode. Use this link to test the accept flow:</p>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+        <div className="w-full max-w-md rounded-xl border border-[#DDD8D0] bg-white p-6 shadow-2xl">
+          <h2 className="mb-1 text-base font-semibold text-[#0D1B2A]">Dev Mode — Invite Token</h2>
+          <p className="mb-4 text-sm text-[#6B7280]">Email delivery is unavailable in dev mode. Use this link to test the accept flow:</p>
           <a href={acceptUrl} target="_blank" rel="noopener noreferrer"
-            className="block break-all rounded border border-blue-200 bg-blue-50 p-3 text-xs text-blue-700 hover:underline">
+            className="block break-all rounded border border-[#4A7FAA]/30 bg-[#4A7FAA]/8 p-3 text-xs text-[#2D5A80] hover:underline">
             {acceptUrl}
           </a>
           <button onClick={() => onSuccess(email.trim())}
-            className="mt-4 w-full rounded-lg bg-[#0F172A] px-4 py-2 text-sm font-medium text-white hover:bg-[#1E293B]">
+            className="mt-4 w-full rounded-lg bg-[#0D1B2A] px-4 py-2 text-sm font-medium text-white hover:bg-[#152638]">
             Done
           </button>
         </div>
@@ -99,26 +94,28 @@ function InviteModal({ onClose, onSuccess }: InviteModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-md rounded-xl border border-neutral-200 bg-white p-6 shadow-xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="w-full max-w-md rounded-xl border border-[#DDD8D0] bg-white p-6 shadow-2xl">
         <div className="mb-5 flex items-start justify-between">
           <div>
-            <h2 className="text-base font-semibold text-neutral-900">Invite Team Member</h2>
-            <p className="mt-0.5 text-sm text-neutral-500">They'll receive an email with a link to set their password and join.</p>
+            <h2 className="text-base font-semibold text-[#0D1B2A]">Invite Team Member</h2>
+            <p className="mt-0.5 text-sm text-[#6B7280]">They'll receive an email with a link to set their password and join.</p>
           </div>
-          <button onClick={onClose} className="ml-3 shrink-0 rounded p-1 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600">✕</button>
+          <button onClick={onClose}
+            className="ml-3 shrink-0 rounded p-1 text-[#9CA3AF] hover:bg-[#F5F3F0] hover:text-[#374151]">✕</button>
         </div>
 
         <div className="space-y-4">
           <div>
-            <label className={labelClass}>Email address</label>
+            <label className="mb-1.5 block text-xs font-semibold text-[#374151]">Email address</label>
             <input ref={emailRef} type="email" value={email} onChange={e => setEmail(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter") void handleSubmit(); }}
-              placeholder="partner@yourfirm.com" className={inputClass} />
+              placeholder="partner@yourfirm.com" className="settings-field px-3" />
           </div>
           <div>
-            <label className={labelClass}>Role</label>
-            <select value={role} onChange={e => setRole(e.target.value as "partner" | "member")} className={inputClass}>
+            <label className="mb-1.5 block text-xs font-semibold text-[#374151]">Role</label>
+            <select value={role} onChange={e => setRole(e.target.value as "partner" | "member")}
+              className="settings-field px-3">
               <option value="member">Member — can view and interact with firm data</option>
               <option value="partner">Partner — elevated visibility, same as member for now</option>
             </select>
@@ -127,9 +124,12 @@ function InviteModal({ onClose, onSuccess }: InviteModalProps) {
         </div>
 
         <div className="mt-6 flex justify-end gap-2">
-          <button onClick={onClose} className="rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50">Cancel</button>
+          <button onClick={onClose}
+            className="rounded-lg border border-[#DDD8D0] px-4 py-2 text-sm font-medium text-[#374151] hover:bg-[#F5F3F0]">
+            Cancel
+          </button>
           <button onClick={() => void handleSubmit()} disabled={loading}
-            className="inline-flex items-center gap-2 rounded-lg bg-[#0F172A] px-4 py-2 text-sm font-medium text-white hover:bg-[#1E293B] disabled:opacity-60">
+            className="inline-flex items-center gap-2 rounded-lg bg-[#0D1B2A] px-4 py-2 text-sm font-medium text-white hover:bg-[#152638] disabled:opacity-60">
             {loading ? <RefreshCw size={13} className="animate-spin" /> : <Mail size={13} />}
             {loading ? "Sending…" : "Send Invitation"}
           </button>
@@ -167,25 +167,25 @@ function MemberMenu({ member, currentUserId, isOwner, onRoleChange, onStatusChan
   return (
     <div ref={ref} className="relative">
       <button onClick={() => setOpen(v => !v)}
-        className="rounded p-1 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600"
+        className="rounded p-1 text-[#9CA3AF] hover:bg-[#F5F3F0] hover:text-[#374151]"
         title="Member actions">
         <MoreHorizontal size={15} />
       </button>
       {open && (
-        <div className="absolute right-0 top-full z-20 mt-1 w-48 rounded-lg border border-neutral-200 bg-white py-1 shadow-lg">
+        <div className="absolute right-0 top-full z-20 mt-1 w-48 rounded-lg border border-[#DDD8D0] bg-white py-1 shadow-lg">
           {member.role !== "partner" && (
             <button onClick={() => { onRoleChange(member.user_id, "partner"); setOpen(false); }}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-neutral-700 hover:bg-neutral-50">
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-[#374151] hover:bg-[#F5F3F0]">
               Promote to Partner
             </button>
           )}
           {member.role !== "member" && member.role !== "owner" && (
             <button onClick={() => { onRoleChange(member.user_id, "member"); setOpen(false); }}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-neutral-700 hover:bg-neutral-50">
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-[#374151] hover:bg-[#F5F3F0]">
               Demote to Member
             </button>
           )}
-          <div className="my-1 h-px bg-neutral-100" />
+          <div className="my-1 h-px bg-[#F5F3F0]" />
           {member.status === "active" ? (
             <button onClick={() => { onStatusChange(member.user_id, "suspended"); setOpen(false); }}
               className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-rose-600 hover:bg-rose-50">
@@ -253,48 +253,51 @@ export default function DashboardTeam() {
     <>
       {inviteOpen && <InviteModal onClose={() => setInviteOpen(false)} onSuccess={handleInviteSuccess} />}
 
-      <div className="mx-auto max-w-4xl px-6 py-8">
-        <GovPageHeader
-          title="Team"
-          subtitle="Manage firm members and invite new colleagues."
-          actions={
-            isOwner ? (
-              <button onClick={() => setInviteOpen(true)}
-                className="inline-flex items-center gap-2 rounded-lg bg-[#0F172A] px-4 py-2 text-sm font-medium text-white hover:bg-[#1E293B]">
-                <Plus size={14} /> Invite Member
-              </button>
-            ) : null
-          }
-        />
-
-        <GovSectionCard className="mt-6">
+      <PageWrapper
+        eyebrow="Workspace"
+        title="Team"
+        description="Manage firm members and invite new colleagues."
+        actions={
+          isOwner ? (
+            <button
+              onClick={() => setInviteOpen(true)}
+              className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15"
+            >
+              <Plus size={14} /> Invite Member
+            </button>
+          ) : null
+        }
+      >
+        <div className="settings-card">
           {/* Seat counter */}
-          <div className="mb-5 flex items-center justify-between border-b border-neutral-100 pb-4">
-            <div className="flex items-center gap-4 text-sm text-neutral-600">
-              <span><span className="font-semibold text-neutral-900">{active}</span> active</span>
-              {invited > 0 && <span><span className="font-semibold text-blue-700">{invited}</span> pending invite{invited !== 1 ? "s" : ""}</span>}
-              <span className="text-neutral-400">·</span>
+          <div className="mb-5 flex items-center justify-between border-b border-[#EAE7E2] pb-4">
+            <div className="flex items-center gap-4 text-sm text-[#6B7280]">
+              <span><span className="font-semibold text-[#0D1B2A]">{active}</span> active</span>
+              {invited > 0 && (
+                <span><span className="font-semibold text-[#2D5A80]">{invited}</span> pending invite{invited !== 1 ? "s" : ""}</span>
+              )}
+              <span className="text-[#C4B9AA]">·</span>
               <span>Unlimited seats</span>
             </div>
             <button onClick={() => void load()} title="Refresh"
-              className="rounded p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600">
+              className="rounded p-1.5 text-[#9CA3AF] hover:bg-[#F5F3F0] hover:text-[#374151]">
               <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
             </button>
           </div>
 
           {/* Member list */}
           {loading && members.length === 0 && (
-            <div className="py-10 text-center text-sm text-neutral-500">Loading members…</div>
+            <div className="py-10 text-center text-sm text-[#9CA3AF]">Loading members…</div>
           )}
           {!loading && error && (
             <div className="rounded border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</div>
           )}
           {!loading && !error && members.length === 0 && (
             <div className="py-10 text-center">
-              <p className="text-sm text-neutral-500">No team members yet.</p>
+              <p className="text-sm text-[#9CA3AF]">No team members yet.</p>
               {isOwner && (
                 <button onClick={() => setInviteOpen(true)}
-                  className="mt-3 inline-flex items-center gap-2 rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50">
+                  className="mt-3 inline-flex items-center gap-2 rounded-lg border border-[#DDD8D0] px-4 py-2 text-sm font-medium text-[#374151] hover:bg-[#F5F3F0]">
                   <Plus size={13} /> Invite your first member
                 </button>
               )}
@@ -304,21 +307,21 @@ export default function DashboardTeam() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-neutral-100">
-                    <th className="pb-2 text-left text-xs font-medium uppercase tracking-wide text-neutral-500">Member</th>
-                    <th className="pb-2 text-left text-xs font-medium uppercase tracking-wide text-neutral-500">Role</th>
-                    <th className="pb-2 text-left text-xs font-medium uppercase tracking-wide text-neutral-500">Status</th>
-                    <th className="pb-2 text-left text-xs font-medium uppercase tracking-wide text-neutral-500">Joined</th>
+                  <tr className="border-b border-[#EAE7E2]">
+                    <th className="pb-2 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF]">Member</th>
+                    <th className="pb-2 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF]">Role</th>
+                    <th className="pb-2 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF]">Status</th>
+                    <th className="pb-2 text-left text-[10px] font-semibold uppercase tracking-[0.08em] text-[#9CA3AF]">Joined</th>
                     {isOwner && <th className="pb-2" />}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-50">
+                <tbody className="divide-y divide-[#F5F3F0]">
                   {members.map(member => (
                     <tr key={member.user_id} className="group">
                       <td className="py-3 pr-4">
-                        <div className="font-medium text-neutral-900 leading-none">{member.email}</div>
+                        <div className="font-medium leading-none text-[#0D1B2A]">{member.email}</div>
                         {member.status === "invited" && (
-                          <div className="mt-0.5 text-[11px] text-neutral-400">Invited {fmtDate(member.invited_at)}</div>
+                          <div className="mt-0.5 text-[11px] text-[#9CA3AF]">Invited {fmtDate(member.invited_at)}</div>
                         )}
                       </td>
                       <td className="py-3 pr-4">
@@ -327,7 +330,7 @@ export default function DashboardTeam() {
                       <td className="py-3 pr-4">
                         <span className={statusBadge(member.status)}>{member.status}</span>
                       </td>
-                      <td className="py-3 pr-4 text-neutral-500">{fmtDate(member.joined_at)}</td>
+                      <td className="py-3 pr-4 text-[#9CA3AF]">{fmtDate(member.joined_at)}</td>
                       {isOwner && (
                         <td className="py-3 text-right">
                           <MemberMenu
@@ -345,12 +348,12 @@ export default function DashboardTeam() {
               </table>
             </div>
           )}
-        </GovSectionCard>
+        </div>
 
         {!isOwner && (
-          <p className="mt-4 text-xs text-neutral-400">Only firm owners can invite or manage team members.</p>
+          <p className="text-xs text-[#9CA3AF]">Only firm owners can invite or manage team members.</p>
         )}
-      </div>
+      </PageWrapper>
     </>
   );
 }
