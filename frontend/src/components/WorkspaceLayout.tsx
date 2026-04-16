@@ -288,10 +288,12 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
         <div className="workspace-shell-brand flex shrink-0 flex-col justify-center border-b border-white/8 border-t border-t-[#C4A96A]/20 px-5 py-5">
           <div className="flex items-center gap-2.5">
             {/* Mark — C arc with navy→gold gradient, bold terminal dot */}
-            <svg width="26" height="26" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <path d="M18.5 11A7.5 7.5 0 1 1 11 3.5" stroke="#4A6FA5" strokeWidth="2.6" strokeLinecap="round"/>
-              <path d="M11 3.5C13.2 3.5 15.2 4.4 16.6 5.9" stroke="url(#cg2)" strokeWidth="2.6" strokeLinecap="round"/>
-              <circle cx="16.6" cy="5.9" r="2" fill="#C4A96A"/>
+            <svg width="30" height="30" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path d="M18.5 11A7.5 7.5 0 1 1 11 3.5" stroke="#4A6FA5" strokeWidth="2.8" strokeLinecap="round"/>
+              <path d="M11 3.5C13.2 3.5 15.2 4.4 16.6 5.9" stroke="url(#cg2)" strokeWidth="2.8" strokeLinecap="round"/>
+              {/* Glow halo behind terminal dot */}
+              <circle cx="16.6" cy="5.9" r="4" fill="#C4A96A" fillOpacity="0.18"/>
+              <circle cx="16.6" cy="5.9" r="2.5" fill="#C4A96A"/>
               <defs>
                 <linearGradient id="cg2" x1="11" y1="3.5" x2="16.6" y2="5.9" gradientUnits="userSpaceOnUse">
                   <stop stopColor="#4A6FA5"/>
@@ -351,7 +353,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
 
       {/* ── Main content area ────────────────────────────────────────── */}
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <header className="workspace-shell-topbar flex shrink-0 items-center justify-between border-b border-[#E8ECF2] bg-white px-6 py-3">
+        <header className="workspace-shell-topbar relative flex shrink-0 items-center justify-between border-b border-[#E8ECF2] bg-white px-6 py-3 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-[#C4A96A]/40">
           <div className="min-w-0">
             <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#4A6FA5]">
               {currentPageLabel}

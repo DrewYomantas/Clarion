@@ -942,27 +942,31 @@ const Dashboard = () => {
               );
             })()}
 
+            {/* Slab footnote — inset system notices */}
+            {(showBaselineNotice || (historyTruncated && historyNotice)) && (
+              <div className="border-t border-white/[0.05] bg-[#070E1A] px-7 py-3">
+                {showBaselineNotice ? (
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-[10.5px] tracking-[0.02em] text-white/25">
+                      Baseline cycle — trend comparison becomes available after the next upload.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={dismissBaselineNotice}
+                      aria-label="Dismiss"
+                      className="text-[10.5px] text-white/20 transition-colors hover:text-white/40"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ) : null}
+                {historyTruncated && historyNotice ? (
+                  <p className="text-[10.5px] tracking-[0.02em] text-white/25">{historyNotice}</p>
+                ) : null}
+              </div>
+            )}
+
           </div>{/* end unified slab */}
-
-          {showBaselineNotice ? (
-            <div className="flex items-center justify-between gap-3 px-1">
-              <p className="text-[11px] text-[#9CA3AF]">
-                First cycle - trend comparison available after next upload.
-              </p>
-              <button
-                type="button"
-                onClick={dismissBaselineNotice}
-                aria-label="Dismiss"
-                className="text-[11px] text-[#9CA3AF] transition-colors hover:text-[#6B7280]"
-              >
-                x
-              </button>
-            </div>
-          ) : null}
-
-          {historyTruncated && historyNotice ? (
-            <p className="px-1 text-[11px] text-[#9CA3AF]">{historyNotice}</p>
-          ) : null}
         </section>
         ) : null}
       </div>
