@@ -377,46 +377,52 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
                 {initials}
               </button>
               {accountMenuOpen && (
-                <div className="absolute right-0 top-full z-50 mt-1.5 w-52 rounded-[10px] border border-[#E2E8F0] bg-white py-1 shadow-[0_4px_20px_-4px_rgba(13,27,42,0.14),0_1px_4px_rgba(13,27,42,0.06)]">
-                  <div className="border-b border-[#EEF2F7] px-3 py-2.5">
-                    <p className="truncate text-[11px] font-semibold text-[#0D1B2A]">{user?.firm_name || userName || "Account"}</p>
-                    <p className="truncate text-[10px] text-[#7A6E63]">{user?.email}</p>
+                <div className="absolute right-0 top-full z-50 mt-1.5 w-56 rounded-[10px] border border-[#DDD8D0] bg-white py-1 shadow-[0_8px_24px_-4px_rgba(13,27,42,0.14),0_2px_8px_rgba(13,27,42,0.06),0_0_0_1px_rgba(13,27,42,0.03)]">
+                  {/* Identity header */}
+                  <div className="border-b border-[#EEF2F7] px-3.5 py-3">
+                    <p className="truncate text-[12px] font-semibold text-[#0D1B2A]">{user?.firm_name || userName || "Account"}</p>
+                    <p className="truncate text-[11px] text-[#7A6E63]">{user?.email}</p>
                   </div>
+                  {/* Meetings — workspace record */}
                   <Link
                     to="/dashboard/meetings"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F1F5F9]"
+                    className="group flex items-center gap-2.5 px-3.5 py-2.5 text-[12.5px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F8F6F2]"
                   >
+                    <span className="h-1 w-1 rounded-full bg-[#CBD5E1] transition-colors group-hover:bg-[#C4A96A]" aria-hidden />
                     Meetings
                   </Link>
-                  <div className="my-1 h-px bg-[#EEF2F7]" />
+                  <div className="mx-3 my-1 h-px bg-[#EEF2F7]" />
                   <Link
                     to="/dashboard/account"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F1F5F9]"
+                    className="group flex items-center gap-2.5 px-3.5 py-2 text-[12.5px] font-medium text-[#374151] transition-colors hover:bg-[#F8F6F2] hover:text-[#0D1B2A]"
                   >
+                    <span className="h-1 w-1 rounded-full bg-[#E2E8F0] transition-colors group-hover:bg-[#CBD5E1]" aria-hidden />
                     Account
                   </Link>
                   <Link
                     to="/dashboard/team"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F1F5F9]"
+                    className="group flex items-center gap-2.5 px-3.5 py-2 text-[12.5px] font-medium text-[#374151] transition-colors hover:bg-[#F8F6F2] hover:text-[#0D1B2A]"
                   >
+                    <span className="h-1 w-1 rounded-full bg-[#E2E8F0] transition-colors group-hover:bg-[#CBD5E1]" aria-hidden />
                     Team
                   </Link>
                   <Link
                     to="/dashboard/billing"
                     onClick={() => setAccountMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F1F5F9]"
+                    className="group flex items-center gap-2.5 px-3.5 py-2 text-[12.5px] font-medium text-[#374151] transition-colors hover:bg-[#F8F6F2] hover:text-[#0D1B2A]"
                   >
+                    <span className="h-1 w-1 rounded-full bg-[#E2E8F0] transition-colors group-hover:bg-[#CBD5E1]" aria-hidden />
                     Billing
                   </Link>
-                  <div className="my-1 h-px bg-[#EEF2F7]" />
+                  <div className="mx-3 my-1 h-px bg-[#EEF2F7]" />
                   <button
                     type="button"
                     onClick={() => { setAccountMenuOpen(false); void handleLogOut(); }}
                     disabled={loggingOut}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-[12px] text-[#0D1B2A] hover:bg-[#F1F5F9] disabled:opacity-50"
+                    className="flex w-full items-center gap-2.5 px-3.5 py-2 text-[12px] text-[#6B7280] transition-colors hover:bg-[#F8F6F2] hover:text-[#0D1B2A] disabled:opacity-50"
                   >
                     {loggingOut ? "Signing out…" : "Sign out"}
                   </button>
