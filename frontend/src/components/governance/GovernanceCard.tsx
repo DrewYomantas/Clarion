@@ -79,7 +79,7 @@ export default function GovernanceCard({
   return (
     <article
       className={[
-        "gov-card-surface rounded-2xl border border-[#DDD8D0] bg-white px-5 py-[18px] shadow-[0_2px_8px_rgba(13,27,42,0.07),0_0_0_1px_rgba(13,27,42,0.03)]",
+        "gov-card-surface rounded-[12px] border border-[#DDD8D0] bg-white px-5 py-[18px] shadow-[0_1px_3px_rgba(13,27,42,0.06),0_0_0_1px_rgba(13,27,42,0.02)]",
         accentBorder[accent],
         className,
       ].join(" ")}

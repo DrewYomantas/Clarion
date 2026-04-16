@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Info, CheckSquare, Square, X, Layers, RadioTower } from "lucide-react";
+import { CheckSquare, Square, X, Layers, RadioTower } from "lucide-react";
 import { toast } from "sonner";
 import { PageTabs } from "@/components/governance/PageTabs";
 import GovernanceEmptyState from "@/components/governance/GovernanceEmptyState";
@@ -524,21 +524,21 @@ const SignalsPage = () => {
         }
       >
         {showBaselineNotice ? (
-          <section className="relative rounded-[8px] border border-[#BFDBFE] bg-[#EFF6FF] px-[18px] py-[14px]">
+          <section className="relative rounded-[10px] border border-[#1E3A5F]/20 bg-[#0D1B2A] px-5 py-4">
             <button
               type="button"
               onClick={dismissBaselineNotice}
               aria-label="Dismiss baseline notice"
-              className="absolute right-3 top-3 inline-flex h-6 w-6 items-center justify-center rounded text-slate-500 transition-colors hover:bg-slate-200/60 hover:text-slate-700"
+              className="absolute right-3 top-3 inline-flex h-6 w-6 items-center justify-center rounded text-white/30 transition-colors hover:bg-white/10 hover:text-white/60"
             >
-              <X size={14} />
+              <X size={13} />
             </button>
             <div className="pr-8">
               <div className="flex items-center gap-2">
-                <Info size={16} className="text-[#0EA5C2]" />
-                <h2 className="text-[14px] font-semibold text-[#1E40AF]">Baseline Analysis</h2>
+                <span className="h-[10px] w-[2px] rounded-full bg-[#0EA5C2]/70" aria-hidden />
+                <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#0EA5C2]">Baseline Analysis</h2>
               </div>
-              <p className="mt-1 text-[13px] leading-relaxed text-[#374151]">
+              <p className="mt-2 text-[13px] leading-relaxed text-[#8FA7BC]">
                 This is your first review cycle. Future uploads will allow the system to detect trends and changes
                 over time. Your client issues reflect patterns from this upload only.
               </p>
@@ -549,10 +549,17 @@ const SignalsPage = () => {
         {error ? <div className="rounded-xl border border-destructive/35 bg-destructive/10 p-6 text-sm text-destructive">{error}</div> : null}
 
         {isNewOnlyFilter ? (
-          <section className="rounded-xl border border-amber-200 bg-amber-50 p-4 shadow-sm">
+          <section className="rounded-[10px] border border-[#E5E2DC] bg-[#FAFBFC] px-4 py-3 shadow-[0_1px_2px_rgba(13,27,42,0.04)]">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="text-sm font-medium text-amber-900">Showing: New Client Issues Only</p>
-              <button type="button" className="gov-btn-secondary" onClick={clearUrlFilter}>
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
+                <p className="text-[13px] font-medium text-[#0D1B2A]">Filtered: New client issues only</p>
+              </div>
+              <button
+                type="button"
+                className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+                onClick={clearUrlFilter}
+              >
                 Clear filter
               </button>
             </div>
@@ -560,30 +567,57 @@ const SignalsPage = () => {
         ) : null}
 
         {!loading && !error && latestReport ? (
-          <section className="rounded-[12px] border border-[#E5E7EB] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
-            <div className="grid gap-5 xl:grid-cols-[1.1fr_0.9fr] xl:items-start">
-              <div>
-                <p className="gov-label">Current issue set</p>
-                <h2 className="gov-section-intro mt-2">
-                  Recurring client feedback patterns from {latestReportDateLabel || "the latest ready cycle"} — the evidence this governance cycle is built on.
-                </h2>
-                <p className="gov-body mt-3 max-w-2xl">
-                  Review the patterns that now deserve attention, then open a single issue for details or action creation. Use the filtered view only when you specifically need what is newly introduced.
-                </p>
+          <section className="overflow-hidden rounded-[16px] border border-white/[0.13] shadow-[0_16px_48px_rgba(0,0,0,0.22),0_0_0_1px_rgba(255,255,255,0.04)]">
+            {/* Dark header */}
+            <div
+              className="relative px-7 py-6"
+              style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
+            >
+              <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#1a3a6b] opacity-30 blur-3xl" aria-hidden />
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "20px 20px" }}
+                aria-hidden
+              />
+              <div className="relative flex flex-wrap items-start justify-between gap-5">
+                <div>
+                  <span className="inline-flex items-center gap-2">
+                    <span className="h-[12px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">Client Issue Evidence</span>
+                  </span>
+                  <h2
+                    className="mt-3 text-[26px] leading-[1.05] text-white sm:text-[30px]"
+                    style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
+                  >
+                    {latestReportDateLabel || "Current cycle"}
+                  </h2>
+                  <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#8FA7BC]">
+                    Recurring patterns from this review cycle — the evidence the governance brief is built on. Review the full set, then assign actions to what needs partner ownership.
+                  </p>
+                </div>
               </div>
-              <div className="workspace-inline-stats">
-                <div className="workspace-inline-stat">
-                  <p className="gov-label">Visible issues</p>
-                  <p className="mt-1 text-[20px] font-semibold text-slate-900">{filteredSignals.length}</p>
-                </div>
-                <div className="workspace-inline-stat">
-                  <p className="gov-label">New vs prior cycle</p>
-                  <p className="mt-1 text-[20px] font-semibold text-slate-900">{newSignalsCount}</p>
-                </div>
-                <div className="workspace-inline-stat">
-                  <p className="gov-label">Cycle date</p>
-                  <p className="mt-1 text-[16px] font-semibold text-slate-900">{latestReportDateLabel || "Not available"}</p>
-                </div>
+            </div>
+            {/* Instrument strip */}
+            <div
+              className="relative flex flex-wrap divide-x divide-white/[0.07]"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.07)", background: "#0D1B2A" }}
+            >
+              <div className="min-w-[88px] px-5 py-3.5">
+                <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{filteredSignals.length}</p>
+                <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Issues in view</p>
+              </div>
+              <div className="min-w-[88px] px-5 py-3.5">
+                <p
+                  className="text-[22px] font-semibold leading-none"
+                  style={{ fontVariantNumeric: "tabular-nums", color: newSignalsCount > 0 ? "#F59E0B" : "#ffffff" }}
+                >
+                  {newSignalsCount}
+                </p>
+                <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">New vs prior</p>
+              </div>
+              <div className="px-5 py-3.5">
+                <p className="text-[14px] font-semibold leading-snug text-white">{latestReportDateLabel || "—"}</p>
+                <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Cycle date</p>
               </div>
             </div>
           </section>

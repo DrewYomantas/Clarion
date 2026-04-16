@@ -9,7 +9,6 @@ import GovernanceBriefCard from "@/components/governance/GovernanceBriefCard";
 import GovernanceEmptyState from "@/components/governance/GovernanceEmptyState";
 import { BriefCardSkeleton } from "@/components/governance/skeletons";
 import { PageTabs } from "@/components/governance/PageTabs";
-import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { formatApiDate } from "@/lib/dateTime";
 import { resolvePlanLimits } from "@/config/planLimits";
@@ -190,41 +189,81 @@ const ReportsPage = () => {
         description="The firm's complete governance brief record. Each cycle produces a partner-ready artifact covering client signals reviewed, actions assigned, and decisions required."
         contentClassName="stage-sequence"
       >
-        <section className="rounded-[12px] border border-[#E5E7EB] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
-          <div className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
-            <div>
-              <p className="gov-label">About this library</p>
-              <h2 className="gov-section-intro mt-2">
-                The governance brief is the primary artifact of each review cycle.
-              </h2>
-              <p className="gov-body mt-3 max-w-2xl">
-                Open the current brief before every partner meeting. Prior cycles are reference — they document what the firm reviewed, decided, and assigned. The current cycle takes precedence.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <div className="workspace-inline-stats">
-                <div className="workspace-inline-stat">
-                  <p className="gov-label">Briefs</p>
-                  <p className="mt-1 text-[20px] font-semibold text-slate-900">{loading ? "..." : summary.totalBriefs}</p>
-                </div>
-                <div className="workspace-inline-stat">
-                  <p className="gov-label">Escalations</p>
-                  <p className="mt-1 text-[20px] font-semibold text-slate-900">{loading ? "..." : summary.escalationCount}</p>
-                </div>
-                <div className="workspace-inline-stat">
-                  <p className="gov-label">Latest</p>
-                  <p className="mt-1 text-[17px] font-semibold text-slate-900 leading-snug">{loading ? "..." : summary.latestDate}</p>
-                </div>
+        {/* Dark header slab — matches Home's governance brief card tone */}
+        <section className="overflow-hidden rounded-[16px] border border-white/[0.13] shadow-[0_16px_48px_rgba(0,0,0,0.22),0_0_0_1px_rgba(255,255,255,0.04)]">
+          <div
+            className="relative px-7 py-6"
+            style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
+          >
+            {/* Radial glow */}
+            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#1a3a6b] opacity-35 blur-3xl" aria-hidden />
+            {/* Dot-grid texture */}
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px)", backgroundSize: "20px 20px" }}
+              aria-hidden
+            />
+            <div className="relative flex flex-wrap items-start justify-between gap-5">
+              <div>
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-[12px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">Brief Library</span>
+                </span>
+                <h2
+                  className="mt-3 text-[28px] leading-[1.05] text-white sm:text-[32px]"
+                  style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
+                >
+                  {loading ? "Loading…" : summary.totalBriefs === 0 ? "No briefs yet" : `${summary.totalBriefs} governance ${summary.totalBriefs === 1 ? "brief" : "briefs"}`}
+                </h2>
+                <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#8FA7BC]">
+                  Open the current brief before every partner meeting. Prior cycles are reference — they document what the firm reviewed, decided, and assigned.
+                </p>
               </div>
               {latestRow ? (
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => navigate(`/dashboard/brief-customization?reportId=${latestRow.id}`)}
-                >
-                  Prepare partner meeting brief
-                </Button>
+                <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/dashboard/reports/${latestRow.id}`)}
+                    className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] shadow-[0_1px_3px_rgba(0,0,0,0.12)] transition-all hover:bg-[#EEF2F8] active:scale-[0.98]"
+                  >
+                    Open Current Brief
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/dashboard/brief-customization?reportId=${latestRow.id}`)}
+                    className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+                  >
+                    Prepare Meeting Brief
+                  </button>
+                </div>
               ) : null}
+            </div>
+          </div>
+          {/* Instrument strip */}
+          <div
+            className="relative flex flex-wrap divide-x divide-white/[0.07]"
+            style={{ borderTop: "1px solid rgba(255,255,255,0.07)", background: "#0D1B2A" }}
+          >
+            <div className="min-w-[88px] px-5 py-3.5">
+              <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
+                {loading ? "—" : summary.totalBriefs}
+              </p>
+              <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Total briefs</p>
+            </div>
+            <div className="min-w-[88px] px-5 py-3.5">
+              <p
+                className="text-[22px] font-semibold leading-none"
+                style={{ fontVariantNumeric: "tabular-nums", color: summary.escalationCount > 0 ? "#F59E0B" : "#ffffff" }}
+              >
+                {loading ? "—" : summary.escalationCount}
+              </p>
+              <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Escalations</p>
+            </div>
+            <div className="px-5 py-3.5">
+              <p className="text-[14px] font-semibold leading-snug text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
+                {loading ? "—" : summary.latestDate}
+              </p>
+              <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Latest brief</p>
             </div>
           </div>
         </section>
@@ -248,28 +287,32 @@ const ReportsPage = () => {
             ))}
           </section>
         ) : rows.length === 0 ? (
-          <section className="rounded-[10px] border border-[#E5E7EB] bg-white p-10 text-center shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-600">
-              <FileText size={20} />
+          <section className="rounded-[12px] border border-[#E5E2DC] bg-white px-8 py-10 text-center shadow-[0_1px_4px_rgba(13,27,42,0.06)]">
+            <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-[10px] border border-[#DDD8D0] bg-[#F8F6F2] text-slate-500">
+              <FileText size={18} />
             </div>
-            <h2 className="mt-4 text-lg font-semibold text-slate-900">No governance brief yet</h2>
-            <p className="mx-auto mt-1 max-w-md text-sm text-slate-600">
+            <h2 className="mt-4 text-[17px] font-semibold text-[#0D1B2A]">No governance brief yet</h2>
+            <p className="mx-auto mt-2 max-w-md text-[14px] leading-relaxed text-slate-500">
               The first cycle starts with a CSV upload. Review the resulting client issues, assign follow-through, and the governance brief will appear here once that cycle is ready.
             </p>
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-              <Button
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+              <button
                 type="button"
-                className="rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-sm font-medium text-white hover:bg-[#16263b]"
+                className="inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#16263b]"
                 onClick={() => navigate("/upload")}
               >
                 Upload feedback CSV
-              </Button>
-              <Button type="button" variant="secondary" onClick={() => navigate("/dashboard")}>
+              </button>
+              <button
+                type="button"
+                className="inline-flex items-center rounded-[8px] border border-[#D1D5DB] bg-white px-4 py-2 text-[13px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+                onClick={() => navigate("/dashboard")}
+              >
                 Return to overview
-              </Button>
+              </button>
             </div>
-            <div className="mt-3">
-              <Link to={defaultSampleBriefPath} className="text-sm text-slate-500 underline underline-offset-4 transition-colors hover:text-slate-700">
+            <div className="mt-4">
+              <Link to={defaultSampleBriefPath} className="text-[13px] text-slate-400 underline underline-offset-4 transition-colors hover:text-slate-600">
                 Review sample brief
               </Link>
             </div>
@@ -298,9 +341,19 @@ const ReportsPage = () => {
             {briefsTab === "upcoming" ? (
               latestRow ? (
                 <div>
-                  <p className="mb-3 gov-type-eyebrow">
-                    {latestRow.escalationRequired ? "Next meeting · escalation required" : "Active governance brief"}
-                  </p>
+                  <div className="mb-3 flex items-center gap-2">
+                    {latestRow.escalationRequired ? (
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+                        <p className="gov-type-eyebrow text-amber-700">Next meeting · escalation required</p>
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
+                        <p className="gov-type-eyebrow">Active governance brief</p>
+                      </span>
+                    )}
+                  </div>
                   <GovernanceBriefCard
                     title={latestRow.title}
                     meetingDate={latestRow.meetingDate}

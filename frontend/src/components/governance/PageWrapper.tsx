@@ -32,14 +32,14 @@ const PageWrapper = ({ title, description, eyebrow, actions, children, contentCl
       >
         {/* Page header */}
         <header
-          className="workspace-shell-header flex flex-wrap items-start justify-between"
-          style={{ gap: "var(--space-content)", marginBottom: "var(--space-section)" }}
+          className="workspace-shell-header flex flex-wrap items-start justify-between border-b border-[#E5E2DC]"
+          style={{ gap: "var(--space-content)", marginBottom: "var(--space-section)", paddingBottom: "var(--space-section)" }}
         >
           <div className="max-w-3xl">
             {eyebrow ? <p className="gov-type-eyebrow mb-2">{eyebrow}</p> : null}
             <h1 className="gov-type-h1">{title}</h1>
             {description ? (
-              <p className="gov-type-body mt-2">{description}</p>
+              <p className="gov-type-body mt-2 max-w-2xl">{description}</p>
             ) : null}
           </div>
           {actions ? (

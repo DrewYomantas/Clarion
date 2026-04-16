@@ -24,7 +24,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { DISPLAY_LABELS } from "@/constants/displayLabels";
 import { useAuth } from "@/contexts/AuthContext";
 
 type StatusFilter = "all" | "open" | "in_progress" | "blocked" | "done" | "overdue";
@@ -354,37 +353,52 @@ const ExecutionPage = () => {
     emptyTitle: string,
     emptyDescription: string,
     accent: "risk" | "warn" | "neutral" | "success" = "neutral",
-  ) => (
-    <div className="space-y-4 rounded-[12px] border border-[#E3E8EF] bg-white p-5 shadow-sm">
-      <div>
-        <p className="gov-label">{title}</p>
-        <p className="gov-body mt-2">{description}</p>
-      </div>
-      {actionsForGroup.length > 0 ? (
-        <div className="space-y-4">
-          {actionsForGroup.map((action) => (
-            <ActionCard key={`${title}-${action.id}`} action={action} onDelete={handleDeleteAction} />
-          ))}
+  ) => {
+    const borderAccent =
+      accent === "risk"
+        ? "border-l-[3px] border-l-[#EF4444]"
+        : accent === "warn"
+          ? "border-l-[3px] border-l-[#F59E0B]"
+          : accent === "success"
+            ? "border-l-[3px] border-l-[#10B981]"
+            : "border-l-[3px] border-l-[#CBD5E1]";
+
+    const emptyBg =
+      accent === "risk"
+        ? "rounded-[10px] border border-red-100 bg-red-50/40"
+        : accent === "warn"
+          ? "rounded-[10px] border border-amber-100 bg-amber-50/40"
+          : accent === "success"
+            ? "rounded-[10px] border border-emerald-100 bg-emerald-50/30"
+            : "rounded-[10px] border border-slate-200 bg-slate-50/60";
+
+    return (
+      <div className={[
+        "space-y-4 rounded-[12px] border border-[#DDD8D0] bg-white p-5 shadow-[0_1px_3px_rgba(13,27,42,0.06)]",
+        borderAccent,
+      ].join(" ")}>
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">{title}</p>
+          <p className="mt-1.5 text-[13px] leading-5 text-slate-500">{description}</p>
         </div>
-      ) : (
-        <GovernanceEmptyState
-          size="sm"
-          icon={<ClipboardList size={18} />}
-          title={emptyTitle}
-          description={emptyDescription}
-          className={
-            accent === "risk"
-              ? "rounded-[10px] border border-red-100 bg-red-50/50"
-              : accent === "warn"
-                ? "rounded-[10px] border border-amber-100 bg-amber-50/50"
-                : accent === "success"
-                  ? "rounded-[10px] border border-emerald-100 bg-emerald-50/40"
-                  : "rounded-[10px] border border-slate-200 bg-slate-50/70"
-          }
-        />
-      )}
-    </div>
-  );
+        {actionsForGroup.length > 0 ? (
+          <div className="space-y-4">
+            {actionsForGroup.map((action) => (
+              <ActionCard key={`${title}-${action.id}`} action={action} onDelete={handleDeleteAction} />
+            ))}
+          </div>
+        ) : (
+          <GovernanceEmptyState
+            size="sm"
+            icon={<ClipboardList size={18} />}
+            title={emptyTitle}
+            description={emptyDescription}
+            className={emptyBg}
+          />
+        )}
+      </div>
+    );
+  };
 
   return (
     <PageWrapper
@@ -433,136 +447,182 @@ const ExecutionPage = () => {
         </>
       }
     >
-      {!hasReadyCycle ? (
-        <section className="rounded-xl border border-blue-100 bg-blue-50/70 p-5 shadow-sm">
-          <p className="gov-label text-blue-700">Follow-through</p>
-          <h2 className="gov-section-intro mt-2">Follow-through opens after the first brief is ready</h2>
-          <p className="gov-body mt-2 max-w-3xl">
-            Clarion uses this workspace once the first governance cycle is ready: upload feedback, review recurring{" "}
-            {DISPLAY_LABELS.clientIssuePlural.toLowerCase()}, then assign owners and due dates here before the next
-            partner discussion.
-          </p>
-        </section>
-      ) : null}
-
-      <section className="rounded-[12px] border border-[#E3E8EF] bg-white px-6 py-5 shadow-sm">
-        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-          <div>
-            <p className="gov-label">Follow-through posture for this cycle</p>
-            <h2 className="gov-section-intro mt-2">What needs partner attention before the brief goes into a meeting.</h2>
-            <p className="gov-body mt-3 max-w-xl">
-              {accountabilityDirective}{" "}
-              {latestReadyReport
-                ? `Review and resolve these items in the current brief packet before the next partner discussion.`
-                : "Upload feedback and generate the first brief to begin tracking follow-through here."}
-            </p>
-            <div className="mt-4 workspace-inline-stats">
-              <div className="workspace-inline-stat">
-                <p className="gov-label">Overdue</p>
-                <p className="mt-1 text-[20px] font-semibold text-slate-900">{loading ? "..." : summary.overdue}</p>
-              </div>
-              <div className="workspace-inline-stat">
-                <p className="gov-label">Unowned</p>
-                <p className="mt-1 text-[20px] font-semibold text-slate-900">{loading ? "..." : summary.unowned}</p>
-              </div>
-              <div className="workspace-inline-stat">
-                <p className="gov-label">Blocked</p>
-                <p className="mt-1 text-[20px] font-semibold text-slate-900">{loading ? "..." : summary.blocked}</p>
-              </div>
-              <div className="workspace-inline-stat">
-                <p className="gov-label">Needs review</p>
-                <p className="mt-1 text-[20px] font-semibold text-slate-900">{loading ? "..." : summary.needsReview}</p>
-              </div>
+      {/* Dark header slab */}
+      <section className="overflow-hidden rounded-[16px] border border-white/[0.13] shadow-[0_16px_48px_rgba(0,0,0,0.22),0_0_0_1px_rgba(255,255,255,0.04)]">
+        {/* Top: identity + directive */}
+        <div
+          className="relative px-7 py-6"
+          style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
+        >
+          <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#1a3a6b] opacity-30 blur-3xl" aria-hidden />
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "20px 20px" }}
+            aria-hidden
+          />
+          <div className="relative flex flex-wrap items-start justify-between gap-5">
+            <div>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-[12px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
+                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">Follow-Through</span>
+              </span>
+              <h2
+                className="mt-3 text-[26px] leading-[1.05] text-white sm:text-[30px]"
+                style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
+              >
+                {hasReadyCycle ? "Cycle follow-through" : "Waiting for first brief"}
+              </h2>
+              <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#8FA7BC]">
+                {hasReadyCycle
+                  ? "Review ownership, due-state, and blockers before the next partner discussion."
+                  : "Follow-through opens after the first governance brief is ready. Upload feedback to begin."}
+              </p>
             </div>
             {latestReadyReport ? (
-              <div className="mt-4 rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] px-4 py-3">
-                <p className="gov-label">Current governance brief</p>
-                <p className="mt-2 text-sm font-semibold text-slate-900">
-                  {latestReadyReport.name || `Report #${latestReadyReport.id}`}
-                </p>
-                <p className="mt-1 text-xs leading-5 text-slate-600">
-                  Follow-through status here feeds directly into the brief. Confirm ownership and due-state before
-                  opening the brief for partner review.
-                </p>
-                <div className="mt-3">
-                  <Link
-                    to={`/dashboard/reports/${latestReadyReport.id}`}
-                    className="inline-flex items-center rounded-[8px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-xs font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
-                  >
-                    Open current brief
-                  </Link>
-                </div>
-              </div>
+              <Link
+                to={`/dashboard/reports/${latestReadyReport.id}`}
+                className="mt-0.5 inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+              >
+                Open current brief
+              </Link>
             ) : null}
           </div>
-          <div className="rounded-[10px] border border-[#E5E7EB] bg-[#FAFBFC] p-4">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div>
-                <p className="gov-label">Refine only when needed</p>
-                <p className="gov-body-sm mt-1">Use filters after you review the at-risk work first.</p>
-              </div>
-              {isOverdueOnlyFilter ? (
-                <button type="button" className="gov-btn-secondary" onClick={clearUrlFilter}>
-                  Clear overdue view
-                </button>
-              ) : null}
+        </div>
+
+        {/* Guidance directive band */}
+        <div
+          className="relative px-7 py-2.5"
+          style={{ background: "#0D1B2A", borderTop: "1px solid rgba(255,255,255,0.06)" }}
+        >
+          <div className={[
+            "absolute inset-y-0 left-0 w-[3px]",
+            summary.overdue > 0 ? "bg-[#F87171]" : summary.unowned > 0 ? "bg-[#F59E0B]" : "bg-[#0EA5C2]",
+          ].join(" ")} />
+          <p className="text-[12px] font-medium text-[#A0BDD4]">
+            <span className={[
+              "mr-1.5",
+              summary.overdue > 0 ? "text-[#F87171]" : summary.unowned > 0 ? "text-[#F59E0B]" : "text-[#0EA5C2]",
+            ].join(" ")}>{"→"}</span>
+            {accountabilityDirective}
+          </p>
+        </div>
+
+        {/* Instrument strip */}
+        <div
+          className="flex flex-wrap divide-x divide-white/[0.07]"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.07)", background: "#080F1C" }}
+        >
+          <div className="min-w-[88px] px-5 py-3.5">
+            <p
+              className="text-[22px] font-semibold leading-none"
+              style={{ fontVariantNumeric: "tabular-nums", color: summary.overdue > 0 ? "#F87171" : "#ffffff" }}
+            >
+              {loading ? "—" : summary.overdue}
+            </p>
+            <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Overdue</p>
+          </div>
+          <div className="min-w-[88px] px-5 py-3.5">
+            <p
+              className="text-[22px] font-semibold leading-none"
+              style={{ fontVariantNumeric: "tabular-nums", color: summary.unowned > 0 ? "#F59E0B" : "#ffffff" }}
+            >
+              {loading ? "—" : summary.unowned}
+            </p>
+            <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Unowned</p>
+          </div>
+          <div className="min-w-[88px] px-5 py-3.5">
+            <p
+              className="text-[22px] font-semibold leading-none"
+              style={{ fontVariantNumeric: "tabular-nums", color: summary.blocked > 0 ? "#F59E0B" : "#ffffff" }}
+            >
+              {loading ? "—" : summary.blocked}
+            </p>
+            <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Blocked</p>
+          </div>
+          <div className="min-w-[88px] px-5 py-3.5">
+            <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
+              {loading ? "—" : summary.needsReview}
+            </p>
+            <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Needs review</p>
+          </div>
+
+          {/* Governance Loop step */}
+          <div className="ml-auto flex items-center gap-0 divide-x divide-white/[0.07]">
+            <div className="flex flex-col px-5 py-3.5">
+              <span className="text-[9px] font-bold tracking-[0.14em] text-[#4A6882]">04</span>
+              <span className="mt-1 text-[12px] font-semibold text-white">Follow-Through</span>
+              <span className="mt-0.5 text-[11px] text-[#4A6882]">{summary.needsReview > 0 ? `${summary.needsReview} open` : "All clear"}</span>
             </div>
-            <div className="mt-4 grid gap-4 md:grid-cols-3">
-              <div>
-                <label className="gov-label mb-1 block">Status</label>
+          </div>
+        </div>
+
+        {/* Filter panel — inline below the dark slab */}
+        <div className="border-t border-[#E5E2DC] bg-[#FAFBFC] px-7 py-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8A8077]">Refine view</p>
+              <p className="mt-0.5 text-[12px] text-slate-500">Use filters after reviewing at-risk items first.</p>
+            </div>
+            {isOverdueOnlyFilter ? (
+              <button
+                type="button"
+                className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+                onClick={clearUrlFilter}
+              >
+                Clear overdue view
+              </button>
+            ) : null}
+          </div>
+          <div className="mt-3 grid gap-3 sm:grid-cols-3">
+            {[
+              {
+                label: "Status",
+                value: statusFilter,
+                onChange: (v: string) => setStatusFilter(v as StatusFilter),
+                options: [
+                  { value: "all", label: "All statuses" },
+                  { value: "open", label: "Open" },
+                  { value: "in_progress", label: "In progress" },
+                  { value: "blocked", label: "Blocked" },
+                  { value: "done", label: "Completed" },
+                  { value: "overdue", label: "Overdue" },
+                ],
+              },
+              {
+                label: "Owner",
+                value: ownerFilter,
+                onChange: (v: string) => setOwnerFilter(v),
+                options: [
+                  { value: "all", label: "All owners" },
+                  ...ownerOptions.map((o) => ({ value: o.value, label: o.label })),
+                ],
+              },
+              {
+                label: "Report",
+                value: reportFilter,
+                onChange: (v: string) => setReportFilter(v),
+                options: [
+                  { value: "all", label: "All reports" },
+                  ...reportOptions.map((r) => ({ value: String(r.id), label: r.name })),
+                ],
+              },
+            ].map(({ label, value, onChange, options }) => (
+              <div key={label}>
+                <label className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.06em] text-slate-400">{label}</label>
                 <div className="relative">
                   <select
-                    className="h-[40px] w-full appearance-none rounded-[8px] border border-[#D1D5DB] bg-white px-3 pr-8 text-[14px] text-[#0D1B2A] outline-none transition-colors focus:border-[#0EA5C2]"
-                    value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
+                    className="h-[36px] w-full appearance-none rounded-[8px] border border-[#D1D5DB] bg-white px-3 pr-8 text-[13px] text-[#0D1B2A] outline-none transition-colors focus:border-[#0EA5C2]"
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
                   >
-                    <option value="all">All statuses</option>
-                    <option value="open">Open</option>
-                    <option value="in_progress">In progress</option>
-                    <option value="blocked">Blocked</option>
-                    <option value="done">Completed</option>
-                    <option value="overdue">Overdue</option>
-                  </select>
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">v</span>
-                </div>
-              </div>
-              <div>
-                <label className="gov-label mb-1 block">Owner</label>
-                <div className="relative">
-                  <select
-                    className="h-[40px] w-full appearance-none rounded-[8px] border border-[#D1D5DB] bg-white px-3 pr-8 text-[14px] text-[#0D1B2A] outline-none transition-colors focus:border-[#0EA5C2]"
-                    value={ownerFilter}
-                    onChange={(e) => setOwnerFilter(e.target.value)}
-                  >
-                    <option value="all">All owners</option>
-                    {ownerOptions.map((owner) => (
-                      <option key={owner.value} value={owner.value}>
-                        {owner.label}
-                      </option>
+                    {options.map((o) => (
+                      <option key={o.value} value={o.value}>{o.label}</option>
                     ))}
                   </select>
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">v</span>
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-400">▾</span>
                 </div>
               </div>
-              <div>
-                <label className="gov-label mb-1 block">Report</label>
-                <div className="relative">
-                  <select
-                    className="h-[40px] w-full appearance-none rounded-[8px] border border-[#D1D5DB] bg-white px-3 pr-8 text-[14px] text-[#0D1B2A] outline-none transition-colors focus:border-[#0EA5C2]"
-                    value={reportFilter}
-                    onChange={(e) => setReportFilter(e.target.value)}
-                  >
-                    <option value="all">All reports</option>
-                    {reportOptions.map((report) => (
-                      <option key={report.id} value={String(report.id)}>
-                        {report.name}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">v</span>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -655,99 +715,66 @@ const ExecutionPage = () => {
           />
         </section>
       ) : (
-        <section className="space-y-6">
-          <div className="rounded-[12px] border border-[#E3E8EF] bg-white px-5 py-4 shadow-sm">
-            <p className="gov-type-eyebrow">
-              {actionsTab === "overdue"
-                ? "Overdue follow-through"
-                : actionsTab === "my-actions"
-                  ? "My follow-through"
-                  : "Firm-wide follow-through"}
-            </p>
-            <p className="mt-1 text-sm text-slate-700">
+        <section className="space-y-8">
+          {/* Section context band */}
+          <div className="rounded-[10px] border border-[#E5E2DC] bg-[#FAFBFC] px-5 py-3.5">
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#0EA5C2]" />
+              <p className="text-[13px] font-medium text-[#0D1B2A]">
+                {actionsTab === "overdue"
+                  ? "Overdue follow-through"
+                  : actionsTab === "my-actions"
+                    ? "My follow-through"
+                    : "Firm-wide follow-through record"}
+              </p>
+            </div>
+            <p className="mt-1.5 pl-[14px] text-[12px] leading-5 text-slate-500">
               {actionsTab === "overdue"
                 ? "These items have passed their due date and require immediate partner review."
                 : actionsTab === "my-actions"
                   ? "This view keeps your owned follow-through visible before the next leadership discussion."
-                  : "This is the complete follow-through record for the current brief. Review at-risk items first, then confirm what is moving cleanly."}
+                  : "Review at-risk items first, then confirm what is moving cleanly before the next partner discussion."}
             </p>
           </div>
 
-          <div className="space-y-5">
-            <div>
-              <p className="gov-type-eyebrow">At risk now</p>
-              <p className="mt-1 text-sm text-slate-700">
-                These items are the clearest threats to a credible partner-ready review cycle.
-              </p>
+          {/* At risk */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="h-px flex-1 bg-[#E5E2DC]" />
+              <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">At risk now</p>
+              <div className="h-px flex-1 bg-[#E5E2DC]" />
             </div>
-            <div className="grid gap-6 xl:grid-cols-3">
-              {renderActionGroup(
-                "Overdue",
-                "Due dates have passed and need immediate review.",
-                overdueNow,
-                "No overdue follow-through",
-                "Everything currently in view is still within due date.",
-                "risk",
-              )}
-              {renderActionGroup(
-                "Unowned",
-                "These items still need a named owner before the next discussion.",
-                unownedNow,
-                "No unowned follow-through",
-                "Visible items already have ownership assigned.",
-                "warn",
-              )}
-              {renderActionGroup(
-                "Blocked",
-                "These items are stalled and may keep the current cycle from closing cleanly.",
-                blockedNow,
-                "No blocked follow-through",
-                "Nothing in view is currently marked blocked.",
-                "warn",
-              )}
+            <p className="text-[12px] text-slate-400 -mt-1">
+              These items are the clearest threats to a credible partner-ready review cycle.
+            </p>
+            <div className="grid gap-5 xl:grid-cols-3">
+              {renderActionGroup("Overdue", "Due dates have passed. Needs immediate review.", overdueNow, "No overdue follow-through", "Everything in view is still within due date.", "risk")}
+              {renderActionGroup("Unowned", "Need a named owner before the next discussion.", unownedNow, "No unowned follow-through", "Visible items already have ownership assigned.", "warn")}
+              {renderActionGroup("Blocked", "Stalled items that may prevent cycle closure.", blockedNow, "No blocked follow-through", "Nothing in view is currently marked blocked.", "warn")}
             </div>
           </div>
 
-          <div className="space-y-5">
-            <div>
-              <p className="gov-type-eyebrow">Needs review before the next partner discussion</p>
-              <p className="mt-1 text-sm text-slate-700">
-                Confirm ownership, progress, and due dates before these items roll into the next brief.
-              </p>
+          {/* Needs review */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="h-px flex-1 bg-[#E5E2DC]" />
+              <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">Needs review before next discussion</p>
+              <div className="h-px flex-1 bg-[#E5E2DC]" />
             </div>
-            <div className="grid gap-6 xl:grid-cols-2">
-              {renderActionGroup(
-                "Ready to start",
-                "Owned items that still need visible movement.",
-                openReview,
-                "No ready-to-start follow-through",
-                "There are no owned open items in the current view.",
-              )}
-              {renderActionGroup(
-                "In progress",
-                "Work already underway that should stay visible until it closes.",
-                inProgressReview,
-                "No in-progress follow-through",
-                "There are no actively moving items in the current view.",
-              )}
+            <div className="grid gap-5 xl:grid-cols-2">
+              {renderActionGroup("Ready to start", "Owned items that need visible movement.", openReview, "No ready-to-start follow-through", "No owned open items in the current view.")}
+              {renderActionGroup("In progress", "Work underway — keep visible until closed.", inProgressReview, "No in-progress follow-through", "No actively moving items in the current view.")}
             </div>
           </div>
 
-          <div className="space-y-5">
-            <div>
-              <p className="gov-type-eyebrow">Progressing cleanly</p>
-              <p className="mt-1 text-sm text-slate-700">
-                Completed follow-through stays visible as cycle history without competing with active review.
-              </p>
+          {/* Progressing cleanly */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="h-px flex-1 bg-[#E5E2DC]" />
+              <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">Progressing cleanly</p>
+              <div className="h-px flex-1 bg-[#E5E2DC]" />
             </div>
-            {renderActionGroup(
-              "Completed",
-              "Closed items remain available as a record of follow-through.",
-              completedActions,
-              "No completed follow-through in view",
-              "Completed items will appear here as the cycle progresses.",
-              "success",
-            )}
+            {renderActionGroup("Completed", "Closed items remain visible as cycle history.", completedActions, "No completed follow-through in view", "Completed items will appear here as the cycle progresses.", "success")}
           </div>
         </section>
       )}
