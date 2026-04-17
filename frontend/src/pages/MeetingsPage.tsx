@@ -79,23 +79,23 @@ const MeetingsPage = () => {
       {error ? (
         <div className="rounded-[10px] border border-[#EF4444]/20 bg-[#FEF2F2] px-5 py-4 text-[13px] text-[#991B1B]">{error}</div>
       ) : loading ? (
-        <div className="space-y-3">
-          <div className="h-[180px] animate-pulse rounded-[12px] bg-[#E5E7EB]" />
-          <div className="h-[68px] animate-pulse rounded-[10px] bg-[#E5E7EB]" />
-          <div className="h-[68px] animate-pulse rounded-[10px] bg-[#E5E7EB]" />
+        <div className="space-y-2">
+          <div className="h-[110px] animate-pulse rounded-[12px] bg-[#E5E7EB]" />
+          <div className="h-[56px] animate-pulse rounded-[10px] bg-[#E5E7EB]" />
+          <div className="h-[56px] animate-pulse rounded-[10px] bg-[#E5E7EB]" />
         </div>
       ) : rows.length === 0 ? (
         /* ── Empty state ── */
         <div className="rounded-[14px] border border-[#DDD8D0] bg-white">
-          <div className="px-8 py-12 flex flex-col items-center text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-[12px] border border-[#DDD8D0] bg-[#F8F6F2] text-[#9CA3AF] mb-4">
-              <Calendar size={20} />
+          <div className="px-7 py-8 flex flex-col items-center text-center">
+            <div className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-[#DDD8D0] bg-[#F8F6F2] text-[#9CA3AF] mb-3">
+              <Calendar size={18} />
             </div>
-            <p className="text-[15px] font-semibold text-[#0D1B2A]">No meetings on record yet</p>
-            <p className="mt-1.5 max-w-sm text-[13px] leading-relaxed text-[#6B7280]">
-              Governance review meetings appear here once the first brief is ready. Upload feedback and generate a brief to start the record.
+            <p className="text-[14px] font-semibold text-[#0D1B2A]">No meetings on record yet</p>
+            <p className="mt-1.5 max-w-sm text-[12.5px] leading-relaxed text-[#6B7280]">
+              Governance review meetings appear here once the first brief is ready.
             </p>
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
               <a href="/upload" className="inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b]">
                 Upload feedback CSV
               </a>
@@ -104,66 +104,63 @@ const MeetingsPage = () => {
               </a>
             </div>
           </div>
-          {/* What happens here info strip */}
-          <div className="border-t border-[#E5E2DC] px-8 py-5 grid grid-cols-3 gap-6">
+          <div className="border-t border-[#E5E2DC] px-7 py-4 grid grid-cols-3 gap-6">
             {[
               { step: "01", label: "Upload feedback", body: "Import a CSV of partner or client feedback from the review period." },
               { step: "02", label: "Generate brief", body: "CLARION processes and produces a structured Governance Brief." },
               { step: "03", label: "Meet and record", body: "Conduct your review meeting — the brief is logged here automatically." },
             ].map(({ step, label, body }) => (
-              <div key={step} className="flex flex-col gap-1.5">
+              <div key={step} className="flex flex-col gap-1">
                 <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#C4A96A]">{step}</p>
-                <p className="text-[13px] font-semibold text-[#0D1B2A]">{label}</p>
+                <p className="text-[12.5px] font-semibold text-[#0D1B2A]">{label}</p>
                 <p className="text-[12px] leading-relaxed text-[#6B7280]">{body}</p>
               </div>
             ))}
           </div>
         </div>
       ) : (
-        <div className="space-y-4">
-          {/* ── Active brief — featured card ── */}
+        <div className="space-y-3">
+          {/* ── Active brief — single unified card ── */}
           {latestRow && (
             <div
-              className="relative overflow-hidden rounded-[14px] border border-[#DDD8D0] bg-white shadow-[0_2px_8px_rgba(13,27,42,0.07)]"
+              className="overflow-hidden rounded-[12px] border border-[#DDD8D0] bg-white shadow-[0_1px_4px_rgba(13,27,42,0.07)]"
               style={{ borderLeftWidth: "3px", borderLeftColor: "#C4A96A" }}
             >
-              {/* Header band */}
-              <div className="flex flex-wrap items-center justify-between gap-3 px-6 pt-5 pb-4 border-b border-[#F0EDE9]">
-                <div className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
-                  <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#10B981]">Active brief</p>
+              {/* Single content row: meta left, action right */}
+              <div className="flex flex-wrap items-start justify-between gap-4 px-5 py-4">
+                <div className="min-w-0">
+                  {/* Status + name on one visual unit */}
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
+                    <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#10B981]">Active brief</p>
+                  </div>
+                  <p className="text-[15px] font-semibold text-[#0D1B2A] leading-snug">{latestRow.name}</p>
+                  <p className="mt-0.5 text-[12px] text-[#6B7280]">{latestRow.period} · Generated {latestRow.created}</p>
                 </div>
                 <button
                   type="button"
                   onClick={() => navigate(`/dashboard/reports/${latestRow.id}`)}
-                  className="inline-flex items-center gap-1.5 rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b]"
+                  className="mt-0.5 inline-flex shrink-0 items-center gap-1.5 rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b]"
                 >
                   Open Governance Brief
-                  <ChevronRight size={13} />
+                  <ChevronRight size={12} />
                 </button>
               </div>
-
-              {/* Body */}
-              <div className="px-6 py-5">
-                <p className="text-[17px] font-semibold text-[#0D1B2A] leading-tight">{latestRow.name}</p>
-                <p className="mt-1 text-[13px] text-[#6B7280]">{latestRow.period} · Generated {latestRow.created}</p>
-              </div>
-
-              {/* Stats strip */}
-              <div className="grid grid-cols-3 border-t border-[#F0EDE9]">
-                <div className="px-6 py-4 border-r border-[#F0EDE9]">
+              {/* Compact stats footer — same card, no separate band */}
+              <div className="flex border-t border-[#F0EDE9]">
+                <div className="px-5 py-2.5 border-r border-[#F0EDE9]">
                   <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#9CA3AF]">Review period</p>
-                  <p className="mt-1 text-[13px] font-semibold text-[#0D1B2A]">{latestRow.period}</p>
+                  <p className="mt-0.5 text-[12.5px] font-semibold text-[#374151]">{latestRow.period}</p>
                 </div>
-                <div className="px-6 py-4 border-r border-[#F0EDE9]">
+                <div className="px-5 py-2.5 border-r border-[#F0EDE9]">
                   <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#9CA3AF]">Reviews processed</p>
-                  <p className="mt-1 text-[13px] font-semibold text-[#0D1B2A]">
+                  <p className="mt-0.5 text-[12.5px] font-semibold text-[#374151]">
                     {latestRow.totalReviews > 0 ? latestRow.totalReviews.toLocaleString() : "—"}
                   </p>
                 </div>
-                <div className="px-6 py-4">
+                <div className="px-5 py-2.5">
                   <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#9CA3AF]">Brief generated</p>
-                  <p className="mt-1 text-[13px] font-semibold text-[#0D1B2A]">{latestRow.created}</p>
+                  <p className="mt-0.5 text-[12.5px] font-semibold text-[#374151]">{latestRow.created}</p>
                 </div>
               </div>
             </div>
@@ -172,28 +169,28 @@ const MeetingsPage = () => {
           {/* ── Prior sessions ── */}
           {priorRows.length > 0 ? (
             <div>
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-3 mb-2">
                 <div className="h-px flex-1 bg-[#E5E2DC]" />
                 <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">Prior sessions</p>
                 <div className="h-px flex-1 bg-[#E5E2DC]" />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 {priorRows.map((row) => (
                   <article
                     key={row.id}
-                    className="flex flex-wrap items-center justify-between gap-3 rounded-[10px] border border-[#E5E2DC] bg-white px-5 py-3.5 shadow-[0_1px_2px_rgba(13,27,42,0.04)] transition-shadow hover:shadow-[0_2px_6px_rgba(13,27,42,0.08)]"
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-[10px] border border-[#E5E2DC] bg-white px-4 py-3 shadow-[0_1px_2px_rgba(13,27,42,0.04)] transition-shadow hover:shadow-[0_2px_6px_rgba(13,27,42,0.08)]"
                     style={{ borderLeftWidth: "3px", borderLeftColor: "#CBD5E1" }}
                   >
                     <div className="min-w-0 flex items-center gap-3">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] bg-[#F5F3F0] text-[#9CA3AF]">
-                        <FileText size={14} />
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-[#F5F3F0] text-[#9CA3AF]">
+                        <FileText size={13} />
                       </div>
                       <div>
                         <p className="text-[13px] font-semibold text-[#0D1B2A]">{row.name}</p>
                         <p className="mt-0.5 text-[11.5px] text-[#6B7280]">
                           {row.period}
-                          {row.totalReviews > 0 && <span className="ml-2 text-[#9CA3AF]">· {row.totalReviews} reviews</span>}
-                          <span className="ml-2 text-[#9CA3AF]">· {row.created}</span>
+                          {row.totalReviews > 0 && <span className="ml-1.5 text-[#9CA3AF]">· {row.totalReviews} reviews</span>}
+                          <span className="ml-1.5 text-[#9CA3AF]">· {row.created}</span>
                         </p>
                       </div>
                     </div>
@@ -202,44 +199,40 @@ const MeetingsPage = () => {
                       onClick={() => navigate(`/dashboard/reports/${row.id}`)}
                       className="inline-flex items-center gap-1 rounded-[6px] border border-[#DDD8D0] bg-[#F8F6F2] px-3 py-1.5 text-[11.5px] font-medium text-[#374151] transition-colors hover:bg-[#EDEBE7]"
                     >
-                      Open brief
-                      <ChevronRight size={11} />
+                      Open brief <ChevronRight size={11} />
                     </button>
                   </article>
                 ))}
               </div>
             </div>
           ) : (
-            /* ── When there's only 1 session — "what's next" panel ── */
-            <div className="rounded-[12px] border border-[#DDD8D0] bg-[#FAFAF9]">
-              <div className="px-6 py-4 border-b border-[#E5E2DC]">
-                <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">Building your meeting record</p>
-              </div>
-              <div className="grid grid-cols-2 divide-x divide-[#E5E2DC]">
-                <div className="px-6 py-5">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-[7px] bg-[#EBF5FB] text-[#0EA5C2]">
-                      <Clock size={13} />
-                    </div>
-                    <p className="text-[12px] font-semibold text-[#0D1B2A]">Session cadence</p>
-                  </div>
-                  <p className="text-[12px] leading-relaxed text-[#6B7280]">
-                    Most governance teams run quarterly review meetings. Each upload and brief generation creates a new session entry here, building a longitudinal record over time.
+            /* ── Single session: compact "what's next" strip ── */
+            <div
+              className="rounded-[10px] border border-[#DDD8D0] bg-[#FAFAF9] grid grid-cols-2 divide-x divide-[#E5E2DC]"
+            >
+              <div className="px-5 py-4 flex items-start gap-3">
+                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-[#EBF5FB] text-[#0EA5C2]">
+                  <Clock size={13} />
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold text-[#0D1B2A]">Session cadence</p>
+                  <p className="mt-0.5 text-[11.5px] leading-relaxed text-[#6B7280]">
+                    Most governance teams run quarterly. Each new upload and brief creates another entry here, building your longitudinal record.
                   </p>
                 </div>
-                <div className="px-6 py-5">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-[7px] bg-[#F0FDF4] text-[#10B981]">
-                      <Calendar size={13} />
-                    </div>
-                    <p className="text-[12px] font-semibold text-[#0D1B2A]">Your next session</p>
-                  </div>
-                  <p className="text-[12px] leading-relaxed text-[#6B7280]">
-                    When you're ready for the next review cycle, upload a new feedback CSV. CLARION will generate a new brief and it will appear here alongside this one.
+              </div>
+              <div className="px-5 py-4 flex items-start gap-3">
+                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-[#F0FDF4] text-[#10B981]">
+                  <Calendar size={13} />
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold text-[#0D1B2A]">Schedule your next session</p>
+                  <p className="mt-0.5 text-[11.5px] leading-relaxed text-[#6B7280]">
+                    When the next cycle is ready, upload a new feedback CSV and a new brief will appear here.
                   </p>
                   <a
                     href="/upload"
-                    className="mt-3 inline-flex items-center gap-1 text-[11.5px] font-semibold text-[#0D1B2A] underline-offset-2 hover:underline"
+                    className="mt-2 inline-flex items-center gap-1 text-[11.5px] font-semibold text-[#0D1B2A] underline-offset-2 hover:underline"
                   >
                     Upload feedback CSV <ChevronRight size={11} />
                   </a>
