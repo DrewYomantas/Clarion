@@ -109,7 +109,7 @@ export default function GovernanceCard({
         <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
           {metaItems.map((item, index) => (
             <span key={`${item}-${index}`} className="flex items-center gap-2">
-              {index > 0 ? <span className="text-[#D1D5DB]" aria-hidden>·</span> : null}
+              {index > 0 ? <span className="text-[#9CA3AF]" aria-hidden>·</span> : null}
               <span className="gov-type-meta">{item}</span>
             </span>
           ))}

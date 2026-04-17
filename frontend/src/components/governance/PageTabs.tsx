@@ -64,14 +64,14 @@ export function PageTabs({ value, onValueChange, tabs, className = "" }: PageTab
               "group relative flex items-center gap-2 px-4 pb-3 pt-1",
               // Typography
               "text-[13px] font-medium leading-none whitespace-nowrap",
-              // Default (inactive) state
-              "text-[#7A8694] transition-[color] duration-150 ease-out",
-              // Hover — readable without committing to active
-              "hover:text-[#1E2A38]",
+              // Default (inactive) state — raised contrast vs prior #7A8694
+              "text-[#5A6470] transition-[color] duration-150 ease-out",
+              // Hover
+              "hover:text-[#0D1B2A]",
               // Active state — navy, full weight
               "data-[state=active]:font-semibold data-[state=active]:text-[#0D1B2A]",
-              // Active bottom border
-              "after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-[2px] after:rounded-t-[1px] after:bg-[#C4A96A]",
+              // Active bottom border — gold, thicker for legibility
+              "after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-[2.5px] after:rounded-t-[1px] after:bg-[#C4A96A]",
               "after:origin-left after:transition-[transform,opacity] after:duration-150 after:ease-out",
               "after:scale-x-0 after:opacity-0",
               "data-[state=active]:after:scale-x-100 data-[state=active]:after:opacity-100",

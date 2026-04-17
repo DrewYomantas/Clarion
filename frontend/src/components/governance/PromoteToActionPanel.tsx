@@ -180,11 +180,11 @@ function FieldLabel({
 }) {
   return (
     <span className="flex flex-col gap-0.5">
-      <span className="text-[12px] font-semibold text-slate-700">
+      <span className="text-[12px] font-semibold text-[#374151]">
         {label}
         {required ? <span className="ml-0.5 text-[#DC2626]"> *</span> : null}
       </span>
-      {hint ? <span className="text-[11px] text-slate-400">{hint}</span> : null}
+      {hint ? <span className="text-[11px] text-[#5A6470]">{hint}</span> : null}
     </span>
   );
 }
@@ -348,10 +348,10 @@ export default function PromoteToActionPanel({
 
           {/* ── Zone 2: Editable action fields ───────────────────────── */}
           <section className="px-6 py-5">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63]">
+            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">
               Action details
             </p>
-            <p className="mt-1 text-[12px] text-[#5A6470]">
+            <p className="mt-1 text-[12px] leading-relaxed text-[#4A5568]">
               Fields are pre-populated from signal content. Review and adjust before creating.
             </p>
 
@@ -491,8 +491,8 @@ export default function PromoteToActionPanel({
               )}
             </button>
           </div>
-          <p className="mt-2.5 text-[11px] text-slate-400">
-            The action will appear in the Actions workspace and can be tracked through resolution.
+          <p className="mt-2.5 text-[11px] text-[#5A6470]">
+            The action will appear in the Follow-Through workspace and can be tracked through resolution.
           </p>
         </footer>
       </SheetContent>

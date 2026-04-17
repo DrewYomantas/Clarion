@@ -163,7 +163,7 @@ const DashboardBilling = () => {
         {!canManageSchedule && !scheduleLoading && (
           <div className="rounded border border-[#EAE7E2] bg-[#F9F8F6] p-4">
             <p className="text-xs font-semibold text-[#0D1B2A]">What this unlocks</p>
-            <ul className="mt-2 space-y-1 text-xs text-[#6B7280]">
+            <ul className="mt-2 space-y-1 text-xs text-[#4A5568]">
               <li>Save the partner or ops distribution list once instead of re-entering each cycle.</li>
               <li>Set a recurring weekly or monthly cadence for report-pack delivery.</li>
               <li>Keep leadership delivery settings attached to the workspace.</li>

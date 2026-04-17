@@ -702,10 +702,10 @@ const SignalsPage = () => {
             {/* ── Section label row + select-all ─────────────────────── */}
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="gov-type-eyebrow">
+                <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">
                   {signalsTab === "triage" ? "Needs partner attention now" : signalsTab === "in-briefs" ? "Recurring signals in briefs" : "Current cycle evidence"}
                 </p>
-                <p className="mt-1 text-sm text-slate-700">
+                <p className="mt-1 text-[13px] leading-5 text-[#374151]">
                   {selectionMode
                     ? "Click cards or checkboxes to select issues, then create a governance action for all of them at once."
                     : signalsTab === "triage"

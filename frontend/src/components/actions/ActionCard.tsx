@@ -138,7 +138,7 @@ const ActionCard = ({ action, onDelete }: ActionCardProps) => {
           <div>
             <button
               type="button"
-              className="text-[12px] text-[#9CA3AF] underline underline-offset-4 transition-colors hover:text-slate-700"
+              className="text-[12px] text-[#6B7280] underline underline-offset-4 transition-colors hover:text-slate-700"
               onClick={() => setShowActivity((prev) => !prev)}
             >
               {showActivity ? "Hide activity" : "Show activity"}
@@ -148,7 +148,7 @@ const ActionCard = ({ action, onDelete }: ActionCardProps) => {
                 {activity.map((entry, index) => (
                   <li
                     key={`${entry.date}-${entry.description}-${index}`}
-                    className="text-[12px] text-[#9CA3AF]"
+                    className="text-[12px] text-[#6B7280]"
                   >
                     {entry.date} - {entry.description}
                   </li>
@@ -161,7 +161,7 @@ const ActionCard = ({ action, onDelete }: ActionCardProps) => {
           <div className="flex items-center justify-between gap-2">
             {reportId ? (
               <Link
-                className="text-[12px] text-[#6B7280] underline underline-offset-4 transition-colors hover:text-slate-700"
+                className="text-[12px] text-[#4A5568] underline underline-offset-4 transition-colors hover:text-[#0D1B2A]"
                 to={`/dashboard/reports/${reportId}`}
               >
                 Open Governance Brief

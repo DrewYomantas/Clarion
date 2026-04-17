@@ -163,16 +163,23 @@ export default function ActionForm({
   if (!open) return null;
 
   return (
-    <div data-testid="action-modal" className="gov-level-2 mt-4 p-4">
-      <p className="gov-micro-label">{mode === "create" ? "Create Action" : "Edit Action"}</p>
+    <div
+      data-testid="action-modal"
+      className="mt-4 rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] p-5 shadow-[0_1px_3px_rgba(13,27,42,0.05)]"
+    >
+      <div className="mb-4 flex items-center gap-2 border-b border-[#EAE7E2] pb-3">
+        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">
+          {mode === "create" ? "Add follow-through" : "Edit follow-through"}
+        </p>
+      </div>
       {serverError && (
-        <div data-testid="action-error-banner" className="gov-alert mt-3 text-xs">
+        <div data-testid="action-error-banner" className="mb-3 rounded-[7px] border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-[12px] text-[#DC2626]">
           {serverError}
         </div>
       )}
-      <div className="mt-3 grid gap-3 md:grid-cols-2">
-        <label className="text-sm text-neutral-900">
-          <span className="mb-1 block">Title</span>
+      <div className="grid gap-3 md:grid-cols-2">
+        <label className="flex flex-col gap-1 text-[12px] font-semibold text-[#374151]">
+          <span>Title</span>
           <input
             data-testid="action-title"
             value={title}
@@ -185,8 +192,8 @@ export default function ActionForm({
           {fieldErrors.title && <p className="mt-1 text-xs text-red-700">{fieldErrors.title}</p>}
         </label>
 
-        <label className="text-sm text-neutral-900">
-          <span className="mb-1 block">Due date</span>
+        <label className="flex flex-col gap-1 text-[12px] font-semibold text-[#374151]">
+          <span>Due date</span>
           <input
             data-testid="action-due-date"
             type="date"
@@ -198,11 +205,11 @@ export default function ActionForm({
             }}
             className="gov-field"
           />
-          {fieldErrors.due_date && <p className="mt-1 text-xs text-red-700">{fieldErrors.due_date}</p>}
+          {fieldErrors.due_date && <p className="mt-1 text-[11px] text-[#DC2626]">{fieldErrors.due_date}</p>}
         </label>
 
-        <label className="text-sm text-neutral-900">
-          <span className="mb-1 block">Status</span>
+        <label className="flex flex-col gap-1 text-[12px] font-semibold text-[#374151]">
+          <span>Status</span>
           <select
             data-testid="action-status"
             value={status}
@@ -218,11 +225,11 @@ export default function ActionForm({
               </option>
             ))}
           </select>
-          {fieldErrors.status && <p className="mt-1 text-xs text-red-700">{fieldErrors.status}</p>}
+          {fieldErrors.status && <p className="mt-1 text-[11px] text-[#DC2626]">{fieldErrors.status}</p>}
         </label>
 
-        <label className="text-sm text-neutral-900">
-          <span className="mb-1 block">Timeframe</span>
+        <label className="flex flex-col gap-1 text-[12px] font-semibold text-[#374151]">
+          <span>Timeframe</span>
           <select
             data-testid="action-timeframe"
             value={timeframe}
@@ -238,11 +245,11 @@ export default function ActionForm({
               </option>
             ))}
           </select>
-          {fieldErrors.timeframe && <p className="mt-1 text-xs text-red-700">{fieldErrors.timeframe}</p>}
+          {fieldErrors.timeframe && <p className="mt-1 text-[11px] text-[#DC2626]">{fieldErrors.timeframe}</p>}
         </label>
 
-        <label className="md:col-span-2 text-sm text-neutral-900">
-          <span className="mb-1 block">Owner (optional)</span>
+        <label className="md:col-span-2 flex flex-col gap-1 text-[12px] font-semibold text-[#374151]">
+          <span>Owner <span className="font-normal text-[#7A8694]">(optional)</span></span>
           <input
             data-testid="action-owner"
             value={owner}
@@ -259,11 +266,11 @@ export default function ActionForm({
               <option key={ownerOption} value={ownerOption} />
             ))}
           </datalist>
-          {fieldErrors.owner && <p className="mt-1 text-xs text-red-700">{fieldErrors.owner}</p>}
+          {fieldErrors.owner && <p className="mt-1 text-[11px] text-[#DC2626]">{fieldErrors.owner}</p>}
         </label>
 
-        <label className="md:col-span-2 text-sm text-neutral-900">
-          <span className="mb-1 block">Success measure</span>
+        <label className="md:col-span-2 flex flex-col gap-1 text-[12px] font-semibold text-[#374151]">
+          <span>Success measure</span>
           <input
             data-testid="action-kpi"
             value={kpi}
@@ -272,12 +279,13 @@ export default function ActionForm({
               setFieldErrors((prev) => ({ ...prev, kpi: undefined }));
             }}
             className="gov-field"
+            placeholder="e.g. Owner confirmed; response plan shared within 14 days"
           />
-          {fieldErrors.kpi && <p className="mt-1 text-xs text-red-700">{fieldErrors.kpi}</p>}
+          {fieldErrors.kpi && <p className="mt-1 text-[11px] text-[#DC2626]">{fieldErrors.kpi}</p>}
         </label>
 
-        <label className="md:col-span-2 text-sm text-neutral-900">
-          <span className="mb-1 block">Notes (optional)</span>
+        <label className="md:col-span-2 flex flex-col gap-1 text-[12px] font-semibold text-[#374151]">
+          <span>Notes <span className="font-normal text-[#7A8694]">(optional)</span></span>
           <textarea
             data-testid="action-notes"
             value={notes}

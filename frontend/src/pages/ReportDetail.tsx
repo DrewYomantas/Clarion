@@ -211,15 +211,16 @@ function PacketSection({ eyebrow, title, presentMode, children, className = "" }
   return (
     <section
       className={[
-        "rounded-[12px] border border-[#DDD8D0] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]",
+        "rounded-[12px] border border-[#DDD8D0] bg-white px-6 py-5 shadow-[0_1px_4px_rgba(13,27,42,0.06),0_0_0_1px_rgba(13,27,42,0.02)]",
         className,
       ].join(" ")}
     >
-      <p className="gov-type-eyebrow">
-        {eyebrow}
-      </p>
-      <h2 className="mt-1 text-[17px] font-semibold text-[#0D1B2A]">{title}</h2>
-      <div className="mt-5">{children}</div>
+      <div className="flex items-center gap-2 border-b border-[#F0EDE8] pb-3">
+        <p className="gov-type-eyebrow">{eyebrow}</p>
+        <div className="h-[1px] flex-1 bg-[#F0EDE8]" aria-hidden />
+        <h2 className="text-[15px] font-semibold text-[#0D1B2A]">{title}</h2>
+      </div>
+      <div className="mt-4">{children}</div>
     </section>
   );
 }
@@ -1482,10 +1483,10 @@ const ReportDetail = () => {
                 : "rounded-[10px] border border-[#D9E7F5] bg-[#F5F9FC] px-5 py-4"
             }
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0D1B2A]">
+            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">
               Primary next step
             </p>
-            <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#0EA5C2]">
+            <p className="mt-2 text-[13px] font-semibold text-[#0D1B2A]">
               {firstDecision?.theme}
             </p>
             <p
@@ -1526,10 +1527,10 @@ const ReportDetail = () => {
                   : "rounded-[8px] border border-[#DDD8D0] bg-white px-5 py-4"
               }
             >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0EA5C2]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">
                 Supporting step
               </p>
-              <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+              <p className="mt-2 text-[13px] font-semibold text-[#0D1B2A]">
                 {step.theme}
               </p>
               <p
@@ -1621,174 +1622,192 @@ const ReportDetail = () => {
       <section className="px-8 py-8">
         <div className="mx-auto w-full max-w-[1100px] space-y-6">
 
-          {/* Page header */}
-          <header className="space-y-3">
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <p className="workspace-shell-eyebrow">Governance Brief</p>
-                <GovStatusChip
-                  label={
-                    report.status === "ready"
-                      ? (escalation.on ? "Ready to Send" : "Ready to Send")
-                      : "Draft"
-                  }
-                  variant={
-                    report.status === "ready"
-                      ? (escalation.on ? "warn" : "success")
-                      : "muted"
-                  }
-                  size="sm"
-                />
-              </div>
-              {renameMode === "editing" ||
-              renameMode === "saving" ||
-              renameMode === "error" ? (
-                <div className="mt-1 flex flex-wrap items-center gap-2">
-                  <input
-                    data-testid="report-rename-input"
-                    value={renameDraft}
-                    onChange={(e) => setRenameDraft(e.target.value)}
-                    className="gov-field h-10 min-w-[280px] text-base"
-                    disabled={renameMode === "saving"}
+          {/* Page header — dark slab matching other flagship pages */}
+          <header className="overflow-hidden rounded-[16px] border border-white/[0.13] shadow-[0_16px_48px_rgba(0,0,0,0.22),0_0_0_1px_rgba(255,255,255,0.04)]">
+            <div
+              className="relative px-7 py-6"
+              style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
+            >
+              <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#1a3a6b] opacity-30 blur-3xl" aria-hidden />
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "20px 20px" }}
+                aria-hidden
+              />
+              <div className="relative">
+                {/* Eyebrow + status */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-2">
+                    <span className="h-[12px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">Governance Brief</span>
+                  </span>
+                  <GovStatusChip
+                    label={
+                      report.status === "ready"
+                        ? (escalation.on ? "Ready to Send" : "Ready to Send")
+                        : "Draft"
+                    }
+                    variant={
+                      report.status === "ready"
+                        ? (escalation.on ? "warn" : "success")
+                        : "muted"
+                    }
+                    size="sm"
                   />
+                </div>
+
+                {/* Title row */}
+                {renameMode === "editing" ||
+                renameMode === "saving" ||
+                renameMode === "error" ? (
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <input
+                      data-testid="report-rename-input"
+                      value={renameDraft}
+                      onChange={(e) => setRenameDraft(e.target.value)}
+                      className="h-10 min-w-[280px] rounded-[6px] border border-white/20 bg-white/10 px-3 text-base text-white placeholder-white/40 focus:border-white/40 focus:outline-none"
+                      disabled={renameMode === "saving"}
+                    />
+                    <button
+                      data-testid="report-rename-save"
+                      type="button"
+                      className="inline-flex h-10 items-center rounded-[6px] border border-white/20 bg-white/10 px-3 text-[12px] font-semibold text-white transition-colors hover:bg-white/20"
+                      disabled={renameMode === "saving"}
+                      onClick={() => void handleRenameSave()}
+                    >
+                      {renameMode === "saving" ? (
+                        <span className="inline-flex items-center gap-1">
+                          <Loader2 size={14} className="animate-spin" /> Saving
+                        </span>
+                      ) : (
+                        "Save"
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex h-10 items-center rounded-[6px] border border-transparent px-2 text-white/50 transition-colors hover:bg-white/10 hover:text-white/80"
+                      disabled={renameMode === "saving"}
+                      onClick={() => {
+                        setRenameMode("idle");
+                        setRenameDraft(report.name || report.title || "");
+                        setRenameError("");
+                      }}
+                      aria-label="Cancel rename"
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <h1
+                      className="text-[26px] font-semibold leading-[1.1] text-white sm:text-[28px]"
+                      style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
+                      data-testid="report-title"
+                    >
+                      {report.name || report.title}
+                    </h1>
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-1 rounded-[5px] border border-white/15 bg-white/[0.07] px-2 py-1 text-[11px] font-medium text-white/60 transition-colors hover:bg-white/[0.12] hover:text-white/80"
+                      onClick={() => setRenameMode("editing")}
+                    >
+                      <PencilLine size={11} />
+                      Rename
+                    </button>
+                  </div>
+                )}
+
+                <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-[#8FA7BC]">
+                  The partner-ready record of what clients said, what the firm is doing about it, and what still needs a decision.
+                </p>
+
+                {renameMode === "saved" && (
+                  <p className="mt-1 text-[11px] text-emerald-400">Saved.</p>
+                )}
+                {renameMode === "error" && renameError && (
+                  <p className="mt-1 text-[11px] text-red-400">{renameError}</p>
+                )}
+
+                {/* Toolbar */}
+                <div className="mt-5 flex flex-wrap items-center gap-2">
                   <button
-                    data-testid="report-rename-save"
                     type="button"
-                    className="gov-btn-secondary h-10 px-3"
-                    disabled={renameMode === "saving"}
-                    onClick={() => void handleRenameSave()}
+                    onClick={enterPresent}
+                    className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] shadow-[0_1px_3px_rgba(0,0,0,0.12)] transition-all hover:bg-[#EEF2F8] active:scale-[0.98]"
+                    title="Open Meeting View (also via ?present=1)"
                   >
-                    {renameMode === "saving" ? (
-                      <span className="inline-flex items-center gap-1">
-                        <Loader2 size={14} className="animate-spin" /> Saving
-                      </span>
-                    ) : (
-                      "Save"
-                    )}
+                    <Maximize2 size={13} aria-hidden />
+                    Open Meeting View
+                  </button>
+                  {eagerDeliveryAvailable === true ? (
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+                      onClick={() => setEmailPreviewOpen(true)}
+                      disabled={isSendingBrief}
+                    >
+                      Send Brief
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/10 bg-white/[0.04] px-4 py-2 text-[13px] font-medium text-white/35 cursor-not-allowed"
+                      disabled
+                      title={eagerDeliveryAvailable === false ? "Delivery not configured — set up outbound email in account settings" : "Checking delivery…"}
+                    >
+                      Send Brief
+                      {eagerDeliveryAvailable === false && (
+                        <span className="ml-1 text-[11px] font-normal text-white/25">(not configured)</span>
+                      )}
+                    </button>
+                  )}
+                  <button
+                    data-testid="report-view-brief"
+                    type="button"
+                    className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+                    onClick={() => void openBrief()}
+                  >
+                    {report.plan_type === "free" ? "Preview PDF" : "Download PDF"}
                   </button>
                   <button
+                    data-testid="report-create-action"
                     type="button"
-                    className="gov-btn-ghost h-10 px-3"
-                    disabled={renameMode === "saving"}
+                    className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
                     onClick={() => {
-                      setRenameMode("idle");
-                      setRenameDraft(report.name || report.title || "");
-                      setRenameError("");
+                      openCreateAction();
+                      setTimeout(() => {
+                        document.querySelector('[data-testid="report-actions-list"]')
+                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }, 60);
                     }}
-                    aria-label="Cancel rename"
                   >
-                    <X size={14} />
+                    + Add follow-through
                   </button>
                 </div>
-              ) : (
-                <div className="mt-1 flex flex-wrap items-center gap-2">
-                  <h1
-                    className="text-[24px] font-semibold text-[#0D1B2A]"
-                    data-testid="report-title"
-                  >
-                    {report.name || report.title}
-                  </h1>
-                  <button
-                    type="button"
-                    className="gov-btn-ghost h-8 px-2"
-                    onClick={() => setRenameMode("editing")}
-                  >
-                    <PencilLine size={13} />
-                    <span className="ml-1 text-[11px]">Rename</span>
-                  </button>
-                </div>
-              )}
-              <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-slate-600">
-                The governance brief for this review cycle — the partner-ready record of what clients said, what the firm is doing about it, and what still needs a decision.
-              </p>
-              {renameMode === "saved" && (
-                <p className="mt-1 text-[11px] text-emerald-700">Saved.</p>
-              )}
-              {renameMode === "error" && renameError && (
-                <p className="mt-1 text-[11px] text-red-700">{renameError}</p>
-              )}
+              </div>
             </div>
 
-            {/* Toolbar — own row so title is never squeezed */}
-            <div className="flex flex-wrap items-center gap-2">
-              {/* Open Meeting View — present mode */}
-              <button
-                type="button"
-                onClick={enterPresent}
-                className="inline-flex items-center gap-1.5 rounded-[6px] bg-[#0D1B2A] px-3 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b]"
-                title="Open Meeting View (also via ?present=1)"
-              >
-                <Maximize2 size={13} aria-hidden />
-                Open Meeting View
-              </button>
-              {/* Send Brief — primary only when delivery is available */}
-              {eagerDeliveryAvailable === true ? (
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#0D1B2A] bg-white px-3 py-2 text-[12px] font-semibold text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
-                  onClick={() => setEmailPreviewOpen(true)}
-                  disabled={isSendingBrief}
-                >
-                  Send Brief
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2 text-[12px] font-medium text-slate-400 cursor-not-allowed"
-                  disabled
-                  title={eagerDeliveryAvailable === false ? "Delivery not configured — set up outbound email in account settings" : "Checking delivery…"}
-                >
-                  Send Brief
-                  {eagerDeliveryAvailable === false && (
-                    <span className="ml-1 text-[10px] font-normal text-slate-400">(not configured)</span>
-                  )}
-                </button>
-              )}
-              <button
-                data-testid="report-view-brief"
-                type="button"
-                className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
-                onClick={() => void openBrief()}
-              >
-                {report.plan_type === "free" ? "Preview PDF" : "Download PDF"}
-              </button>
-              <button
-                data-testid="report-create-action"
-                type="button"
-                className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
-                onClick={() => {
-                  openCreateAction();
-                  setTimeout(() => {
-                    document.querySelector('[data-testid="report-actions-list"]')
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }, 60);
-                }}
-              >
-                + Add follow-through
-              </button>
+            {/* Meeting context strip — dark instrument bar */}
+            <div
+              className="flex flex-wrap divide-x divide-white/[0.07]"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.07)", background: "#080F1C" }}
+            >
+              {report.review_date_label ? (
+                <div className="px-5 py-3.5">
+                  <p className="text-[12px] font-medium leading-snug text-white">{report.review_date_label}</p>
+                  <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Review period</p>
+                </div>
+              ) : null}
+              <div className="min-w-[80px] px-5 py-3.5">
+                <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{report.total_reviews}</p>
+                <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Reviews analyzed</p>
+              </div>
+              <div className="px-5 py-3.5">
+                <p className="text-[12px] font-medium leading-snug text-white">{formatDateTime(report.created_at)}</p>
+                <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Generated</p>
+              </div>
             </div>
           </header>
-
-          {/* Meeting Context — brief provenance */}
-          <div className="rounded-[8px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3">
-            <p className="gov-type-eyebrow mb-2">Meeting context</p>
-            <div className="flex flex-wrap gap-x-6 gap-y-1.5">
-              {report.review_date_label ? (
-                <span className="text-[12px] text-slate-600">
-                  <span className="font-medium text-[#0D1B2A]">Review period · </span>
-                  {report.review_date_label}
-                </span>
-              ) : null}
-              <span className="text-[12px] text-slate-600">
-                <span className="font-medium text-[#0D1B2A]">Reviews analyzed · </span>
-                {report.total_reviews}
-              </span>
-              <span className="text-[12px] text-slate-600">
-                <span className="font-medium text-[#0D1B2A]">Generated · </span>
-                {formatDateTime(report.created_at)}
-              </span>
-            </div>
-          </div>
 
           {/* Notices */}
           {isBusyRetrying && (

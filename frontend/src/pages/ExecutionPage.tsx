@@ -363,26 +363,35 @@ const ExecutionPage = () => {
             ? "border-l-[3px] border-l-[#10B981]"
             : "border-l-[3px] border-l-[#CBD5E1]";
 
+    const headerAccentColor =
+      accent === "risk"
+        ? "text-[#B91C1C]"
+        : accent === "warn"
+          ? "text-[#B45309]"
+          : accent === "success"
+            ? "text-[#166534]"
+            : "text-[#7A6E63]";
+
     const emptyBg =
       accent === "risk"
-        ? "rounded-[10px] border border-red-100 bg-red-50/40"
+        ? "rounded-[10px] border border-red-100/80 bg-red-50/30"
         : accent === "warn"
-          ? "rounded-[10px] border border-amber-100 bg-amber-50/40"
+          ? "rounded-[10px] border border-amber-100/80 bg-amber-50/30"
           : accent === "success"
-            ? "rounded-[10px] border border-emerald-100 bg-emerald-50/30"
-            : "rounded-[10px] border border-slate-200 bg-slate-50/60";
+            ? "rounded-[10px] border border-emerald-100/80 bg-emerald-50/20"
+            : "rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6]";
 
     return (
       <div className={[
-        "space-y-4 rounded-[12px] border border-[#DDD8D0] bg-white p-5 shadow-[0_1px_3px_rgba(13,27,42,0.06)]",
+        "space-y-3 rounded-[12px] border border-[#DDD8D0] bg-white p-5 shadow-[0_1px_4px_rgba(13,27,42,0.06),0_0_0_1px_rgba(13,27,42,0.02)]",
         borderAccent,
       ].join(" ")}>
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">{title}</p>
-          <p className="mt-1.5 text-[13px] leading-5 text-slate-500">{description}</p>
+        <div className="border-b border-[#F0EDE8] pb-3">
+          <p className={`text-[11px] font-bold uppercase tracking-[0.08em] ${headerAccentColor}`}>{title}</p>
+          <p className="mt-1 text-[12px] leading-5 text-[#5A6470]">{description}</p>
         </div>
         {actionsForGroup.length > 0 ? (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {actionsForGroup.map((action) => (
               <ActionCard key={`${title}-${action.id}`} action={action} onDelete={handleDeleteAction} />
             ))}
@@ -741,10 +750,10 @@ const ExecutionPage = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="h-px flex-1 bg-[#E5E2DC]" />
-              <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">At risk now</p>
+              <p className="shrink-0 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">At risk now</p>
               <div className="h-px flex-1 bg-[#E5E2DC]" />
             </div>
-            <p className="text-[12px] text-slate-400 -mt-1">
+            <p className="text-[12px] leading-5 text-[#5A6470] -mt-1">
               These items are the clearest threats to a credible partner-ready review cycle.
             </p>
             <div className="grid gap-5 xl:grid-cols-3">
@@ -758,7 +767,7 @@ const ExecutionPage = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="h-px flex-1 bg-[#E5E2DC]" />
-              <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">Needs review before next discussion</p>
+              <p className="shrink-0 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">Needs review before next discussion</p>
               <div className="h-px flex-1 bg-[#E5E2DC]" />
             </div>
             <div className="grid gap-5 xl:grid-cols-2">
@@ -771,7 +780,7 @@ const ExecutionPage = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="h-px flex-1 bg-[#E5E2DC]" />
-              <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">Progressing cleanly</p>
+              <p className="shrink-0 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">Progressing cleanly</p>
               <div className="h-px flex-1 bg-[#E5E2DC]" />
             </div>
             {renderActionGroup("Completed", "Closed items remain visible as cycle history.", completedActions, "No completed follow-through in view", "Completed items will appear here as the cycle progresses.", "success")}
