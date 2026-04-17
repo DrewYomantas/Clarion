@@ -211,7 +211,7 @@ function PacketSection({ eyebrow, title, presentMode, children, className = "" }
   return (
     <section
       className={[
-        "rounded-[12px] border border-[#E5E7EB] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]",
+        "rounded-[12px] border border-[#DDD8D0] bg-white px-6 py-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]",
         className,
       ].join(" ")}
     >
@@ -1152,7 +1152,7 @@ const ReportDetail = () => {
           {keySignals.map((sig) => (
             <div
               key={sig.label}
-              className="rounded-[8px] border border-[#E5E7EB] bg-[#F8FAFC] px-4 py-3"
+              className="rounded-[8px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3"
             >
               <p className="gov-type-eyebrow">
                 {sig.label}
@@ -1176,7 +1176,7 @@ const ReportDetail = () => {
             {report.themes.slice(0, 6).map((theme) => (
               <div
                 key={theme.name}
-                className="flex items-center justify-between rounded-[6px] border border-[#E5E7EB] bg-white px-4 py-2.5"
+                className="flex items-center justify-between rounded-[6px] border border-[#DDD8D0] bg-white px-4 py-2.5"
               >
                 <span className="text-[13px] font-medium text-[#0D1B2A]">{theme.name}</span>
                 <span className="flex items-center gap-1.5 text-[12px] text-slate-500">
@@ -1208,7 +1208,7 @@ const ReportDetail = () => {
               return (
                 <div
                   key={`trend-${row.theme}`}
-                  className="flex items-center justify-between rounded-[6px] border border-[#E5E7EB] bg-white px-4 py-2.5"
+                  className="flex items-center justify-between rounded-[6px] border border-[#DDD8D0] bg-white px-4 py-2.5"
                 >
                   <span className="text-[13px] text-[#0D1B2A]">{row.theme}</span>
                   <span className={`text-[12px] font-semibold ${tone}`}>
@@ -1234,7 +1234,7 @@ const ReportDetail = () => {
       title="Assigned Follow-Through"
       presentMode={presentMode}
     >
-      <div className="mb-4 rounded-[10px] border border-[#E5E7EB] bg-[#F8FAFC] px-4 py-3">
+      <div className="mb-4 rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3">
         <p className="gov-type-eyebrow">What came out of this review</p>
         <p className="mt-1 text-[13px] text-slate-700">
           Confirm ownership and due dates before this brief is shared with partners. Blocked items should be escalated before the next cycle.
@@ -1308,7 +1308,7 @@ const ReportDetail = () => {
       {/* Actions list */}
       <div data-testid="report-actions-list" className="space-y-3">
         {sortedActions.length === 0 ? (
-          <div className="rounded-[8px] border border-[#E5E7EB] bg-[#F8FAFC] px-5 py-5">
+          <div className="rounded-[8px] border border-[#DDD8D0] bg-[#F9F8F6] px-5 py-5">
             <p className="text-[13px] text-slate-600">
               No follow-through items recorded for this Governance Brief yet.
             </p>
@@ -1329,7 +1329,7 @@ const ReportDetail = () => {
               className={
                 presentMode
                   ? "brief-action-row"
-                  : "rounded-[8px] border border-[#E5E7EB] bg-white px-5 py-4"
+                  : "rounded-[8px] border border-[#DDD8D0] bg-white px-5 py-4"
               }
             >
               <div className="min-w-0 flex-1">
@@ -1421,7 +1421,7 @@ const ReportDetail = () => {
       presentMode={presentMode}
     >
       {report.top_complaints.length > 0 ? (
-        <div className="mb-4 rounded-[10px] border border-[#E5E7EB] bg-[#F8FAFC] px-4 py-3">
+        <div className="mb-4 rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3">
           <p className="gov-type-eyebrow">Representative client excerpts</p>
           <p className="mt-1 text-[13px] text-slate-700">
             Use these anonymized excerpts to ground the brief in source language before assigning response owners.
@@ -1523,7 +1523,7 @@ const ReportDetail = () => {
               className={
                 presentMode
                   ? "border-l-[3px] border-l-[#0EA5C2] pl-4 py-1"
-                  : "rounded-[8px] border border-[#E5E7EB] bg-white px-5 py-4"
+                  : "rounded-[8px] border border-[#DDD8D0] bg-white px-5 py-4"
               }
             >
               <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0EA5C2]">
@@ -1622,8 +1622,8 @@ const ReportDetail = () => {
         <div className="mx-auto w-full max-w-[1100px] space-y-6">
 
           {/* Page header */}
-          <header className="flex flex-wrap items-start justify-between gap-4">
-            <div className="min-w-0 flex-1">
+          <header className="space-y-3">
+            <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
                 <p className="workspace-shell-eyebrow">Governance Brief</p>
                 <GovStatusChip
@@ -1709,7 +1709,7 @@ const ReportDetail = () => {
               )}
             </div>
 
-            {/* Toolbar */}
+            {/* Toolbar — own row so title is never squeezed */}
             <div className="flex flex-wrap items-center gap-2">
               {/* Open Meeting View — present mode */}
               <button
@@ -1725,7 +1725,7 @@ const ReportDetail = () => {
               {eagerDeliveryAvailable === true ? (
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#0D1B2A] bg-white px-3 py-2 text-[12px] font-semibold text-[#0D1B2A] transition-colors hover:bg-slate-50"
+                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#0D1B2A] bg-white px-3 py-2 text-[12px] font-semibold text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
                   onClick={() => setEmailPreviewOpen(true)}
                   disabled={isSendingBrief}
                 >
@@ -1734,20 +1734,20 @@ const ReportDetail = () => {
               ) : (
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-2 text-[12px] font-medium text-slate-400 cursor-not-allowed"
+                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2 text-[12px] font-medium text-slate-400 cursor-not-allowed"
                   disabled
                   title={eagerDeliveryAvailable === false ? "Delivery not configured — set up outbound email in account settings" : "Checking delivery…"}
                 >
                   Send Brief
                   {eagerDeliveryAvailable === false && (
-                    <span className="ml-1 text-[10px] font-normal text-slate-400">(delivery not configured)</span>
+                    <span className="ml-1 text-[10px] font-normal text-slate-400">(not configured)</span>
                   )}
                 </button>
               )}
               <button
                 data-testid="report-view-brief"
                 type="button"
-                className="gov-btn-secondary"
+                className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
                 onClick={() => void openBrief()}
               >
                 {report.plan_type === "free" ? "Preview PDF" : "Download PDF"}
@@ -1755,8 +1755,14 @@ const ReportDetail = () => {
               <button
                 data-testid="report-create-action"
                 type="button"
-                className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-2 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
-                onClick={openCreateAction}
+                className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
+                onClick={() => {
+                  openCreateAction();
+                  setTimeout(() => {
+                    document.querySelector('[data-testid="report-actions-list"]')
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }, 60);
+                }}
               >
                 + Add follow-through
               </button>
@@ -1764,7 +1770,7 @@ const ReportDetail = () => {
           </header>
 
           {/* Meeting Context — brief provenance */}
-          <div className="rounded-[8px] border border-[#E5E7EB] bg-[#F8FAFC] px-4 py-3">
+          <div className="rounded-[8px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3">
             <p className="gov-type-eyebrow mb-2">Meeting context</p>
             <div className="flex flex-wrap gap-x-6 gap-y-1.5">
               {report.review_date_label ? (
@@ -1820,7 +1826,7 @@ const ReportDetail = () => {
           {exposureSection}
 
           {/* ── Evidence accordion (additional context, not in present mode) */}
-          <section className="rounded-[12px] border border-[#E5E7EB] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+          <section className="rounded-[12px] border border-[#DDD8D0] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
             <button
               type="button"
               className="flex w-full items-center justify-between px-6 py-5 text-left"
@@ -1845,7 +1851,7 @@ const ReportDetail = () => {
               )}
             </button>
             {evidenceOpen && (
-              <div className="border-t border-[#E5E7EB] px-6 pb-6 pt-5">
+              <div className="border-t border-[#DDD8D0] px-6 pb-6 pt-5">
                 <div className="space-y-4">
                   {(report.top_praise.length > 0
                     ? [
@@ -1905,7 +1911,7 @@ const ReportDetail = () => {
             </Link>
             <Link
               to={`/dashboard/brief-customization?reportId=${report.id}`}
-              className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-2 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+              className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
             >
               Prepare brief & PDF →
             </Link>
