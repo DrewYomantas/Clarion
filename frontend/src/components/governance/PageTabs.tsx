@@ -64,19 +64,19 @@ export function PageTabs({ value, onValueChange, tabs, className = "" }: PageTab
               "group relative flex items-center gap-2 px-4 pb-3 pt-1",
               // Typography
               "text-[13px] font-medium leading-none whitespace-nowrap",
-              // Default (inactive) state — smooth color + opacity transition
-              "text-[#9CA3AF] transition-[color,opacity] duration-150 ease-out",
-              // Hover — darkens text to near-active weight without committing to active
-              "hover:text-[#374151]",
-              // Active state — full ink weight
-              "data-[state=active]:text-[#0D1B2A]",
-              // Active bottom border — slide-in via scaleX so it feels intentional
-              "after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-[2px] after:rounded-t-[1px] after:bg-[#0EA5C2]",
+              // Default (inactive) state
+              "text-[#7A8694] transition-[color] duration-150 ease-out",
+              // Hover — readable without committing to active
+              "hover:text-[#1E2A38]",
+              // Active state — navy, full weight
+              "data-[state=active]:font-semibold data-[state=active]:text-[#0D1B2A]",
+              // Active bottom border
+              "after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-[2px] after:rounded-t-[1px] after:bg-[#C4A96A]",
               "after:origin-left after:transition-[transform,opacity] after:duration-150 after:ease-out",
               "after:scale-x-0 after:opacity-0",
               "data-[state=active]:after:scale-x-100 data-[state=active]:after:opacity-100",
-              // Focus ring — teal, only on keyboard nav
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0EA5C2] focus-visible:ring-offset-1 rounded-sm",
+              // Focus ring — only on keyboard nav
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D1B2A] focus-visible:ring-offset-1 rounded-sm",
               "outline-none",
             ].join(" ")}
           >

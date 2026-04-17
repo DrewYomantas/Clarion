@@ -410,7 +410,7 @@ const ExecutionPage = () => {
         <>
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-[8px] border border-[#D1D5DB] bg-transparent px-4 py-2 text-sm font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-400 disabled:hover:bg-transparent"
+            className="inline-flex items-center justify-center rounded-[8px] border border-[#DDD8D0] bg-transparent px-4 py-2 text-sm font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0] disabled:cursor-not-allowed disabled:text-[#9CA3AF] disabled:hover:bg-transparent"
             onClick={handleResetFilters}
             disabled={!hasActiveFilters}
           >
@@ -418,7 +418,7 @@ const ExecutionPage = () => {
           </button>
           {latestReadyReport ? (
             <Link
-              className="inline-flex items-center justify-center rounded-[8px] border border-[#D1D5DB] bg-white px-4 py-2 text-sm font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+              className="inline-flex items-center justify-center rounded-[8px] border border-[#DDD8D0] bg-white px-4 py-2 text-sm font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
               to={`/dashboard/reports/${latestReadyReport.id}`}
             >
               Open current brief
@@ -429,7 +429,7 @@ const ExecutionPage = () => {
               "inline-flex items-center justify-center rounded-[8px] px-4 py-2 text-sm font-semibold transition-colors",
               hasReadyCycle
                 ? "bg-[#0D1B2A] text-white hover:bg-[#16263b]"
-                : "cursor-not-allowed border border-[#D1D5DB] bg-white text-slate-400 hover:bg-white",
+                : "cursor-not-allowed border border-[#DDD8D0] bg-white text-[#9CA3AF] hover:bg-white",
             ].join(" ")}
             to={hasReadyCycle ? "#" : "/dashboard"}
             aria-disabled={!hasReadyCycle}
@@ -557,16 +557,16 @@ const ExecutionPage = () => {
         </div>
 
         {/* Filter panel — inline below the dark slab */}
-        <div className="border-t border-[#E5E2DC] bg-[#FAFBFC] px-7 py-4">
+        <div className="border-t border-[#EAE7E2] bg-[#F9F8F6] px-7 py-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8A8077]">Refine view</p>
-              <p className="mt-0.5 text-[12px] text-slate-500">Use filters after reviewing at-risk items first.</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">Refine view</p>
+              <p className="mt-0.5 text-[12px] text-[#5A6470]">Use filters after reviewing at-risk items first.</p>
             </div>
             {isOverdueOnlyFilter ? (
               <button
                 type="button"
-                className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+                className="inline-flex items-center rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
                 onClick={clearUrlFilter}
               >
                 Clear overdue view
@@ -608,10 +608,10 @@ const ExecutionPage = () => {
               },
             ].map(({ label, value, onChange, options }) => (
               <div key={label}>
-                <label className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.06em] text-slate-400">{label}</label>
+                <label className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.06em] text-[#7A6E63]">{label}</label>
                 <div className="relative">
                   <select
-                    className="h-[36px] w-full appearance-none rounded-[8px] border border-[#D1D5DB] bg-white px-3 pr-8 text-[13px] text-[#0D1B2A] outline-none transition-colors focus:border-[#0EA5C2]"
+                    className="h-[36px] w-full appearance-none rounded-[8px] border border-[#DDD8D0] bg-white px-3 pr-8 text-[13px] text-[#0D1B2A] outline-none transition-colors focus:border-[#0D1B2A]"
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                   >
@@ -619,7 +619,7 @@ const ExecutionPage = () => {
                       <option key={o.value} value={o.value}>{o.label}</option>
                     ))}
                   </select>
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-400">▾</span>
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[#7A6E63]">▾</span>
                 </div>
               </div>
             ))}
@@ -717,7 +717,7 @@ const ExecutionPage = () => {
       ) : (
         <section className="space-y-8">
           {/* Section context band */}
-          <div className="rounded-[10px] border border-[#E5E2DC] bg-[#FAFBFC] px-5 py-3.5">
+          <div className="rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] px-5 py-3.5">
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-[#0EA5C2]" />
               <p className="text-[13px] font-medium text-[#0D1B2A]">

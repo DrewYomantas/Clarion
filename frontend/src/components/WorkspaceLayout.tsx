@@ -4,23 +4,24 @@
  * Global shell for all authenticated workspace routes.
  *
  * Navigation Information Architecture
- * ── PRIMARY ──────────────────────────────────────────────────────────────────
+ * ── PRIMARY (left rail) ──────────────────────────────────────────────────────
  *   Home              /dashboard              Home
  *   Briefs            /dashboard/reports      FileText      — governance briefs
  *   Issues            /dashboard/signals      ScanLine      — client issues
  *   Follow-Through    /dashboard/actions      ClipboardList — execution
+ *   Meetings          /dashboard/meetings     Calendar      — review record
  * ── ACCOUNT MENU (topbar dropdown) ──────────────────────────────────────────
- *   Meetings          /dashboard/meetings
  *   Account           /dashboard/account
  *   Team              /dashboard/team
  *   Billing           /dashboard/billing
+ *   Sign out
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  ChevronRight,
+  Calendar,
   ClipboardList,
   FileText,
   Home,
@@ -62,6 +63,13 @@ const PRIMARY_NAV = [
     iconClass: "text-[#E2E8F0]",
     iconActiveClass: "text-white",
   },
+  {
+    to: "/dashboard/meetings",
+    label: "Meetings",
+    Icon: Calendar,
+    iconClass: "text-[#E2E8F0]",
+    iconActiveClass: "text-white",
+  },
 ] as const;
 
 // Approval Queue is founder/admin only — not part of the public PRIMARY_NAV array.
@@ -69,29 +77,6 @@ const PRIMARY_NAV = [
 
 // Union type for badge key across primary nav
 type BadgeKey = "briefs";
-
-// ── Expandable sub-nav children ───────────────────────────────────────────────
-// These are orientation labels for the stable tab sections within each page.
-// They link to the parent page (tabs are client-state, not URL-params).
-
-type SubNavItem = { label: string; to: string };
-
-const SUB_NAV: Record<string, SubNavItem[]> = {
-  "/dashboard/reports": [
-    { label: "Current Brief", to: "/dashboard/reports" },
-    { label: "Past Briefs",   to: "/dashboard/reports" },
-  ],
-  "/dashboard/signals": [
-    { label: "Needs Attention", to: "/dashboard/signals" },
-    { label: "Current Cycle",   to: "/dashboard/signals" },
-    { label: "In Briefs",       to: "/dashboard/signals" },
-  ],
-  "/dashboard/actions": [
-    { label: "Brief record",      to: "/dashboard/actions" },
-    { label: "My follow-through", to: "/dashboard/actions" },
-    { label: "Overdue now",       to: "/dashboard/actions" },
-  ],
-};
 
 
 // ── NavItem Component ─────────────────────────────────────────────────────────
@@ -220,11 +205,6 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
   const [loggingOut, setLoggingOut] = useState(false);
   const [briefsBadgeCount, setBriefsBadgeCount] = useState<number>(0);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  // Expandable sub-nav: track which section is open. Auto-open the active section.
-  const activeSection = Object.keys(SUB_NAV).find(
-    (key) => pathname === key || pathname.startsWith(`${key}/`),
-  ) ?? null;
-  const [expandedSection, setExpandedSection] = useState<string | null>(activeSection);
   const accountMenuRef = useRef<HTMLDivElement | null>(null);
   const mainRef = useRef<HTMLElement | null>(null);
 
@@ -284,11 +264,6 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
     if (!mainElement) return;
     mainElement.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [pathname]);
-
-  // Auto-expand the active section when the route changes
-  useEffect(() => {
-    if (activeSection) setExpandedSection(activeSection);
-  }, [activeSection]);
 
   // Close account menu on click outside
   useEffect(() => {
@@ -391,100 +366,23 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
             <p className="workspace-shell-nav-label px-3 pb-2 pt-1">Workspace</p>
             {PRIMARY_NAV.map((item) => {
               const active = isActive(item.to);
-              const children = SUB_NAV[item.to];
-              const expanded = !!children && expandedSection === item.to;
               const badgeCount =
                 "badgeKey" in item && item.badgeKey === "briefs" && briefsBadgeCount > 0
                   ? briefsBadgeCount
                   : undefined;
-
-              if (!children) {
-                // Home — no sub-nav
-                return (
-                  <NavItem
-                    key={item.to}
-                    to={item.to}
-                    label={item.label}
-                    Icon={item.Icon}
-                    isActive={active}
-                    iconClass={item.iconClass}
-                    iconActiveClass={item.iconActiveClass}
-                  />
-                );
-              }
-
-              // Expandable nav item (Briefs, Issues, Follow-Through)
               return (
-                <div key={item.to}>
-                  {/* Parent row — clicking navigates AND toggles sub-nav */}
-                  <div className="flex items-stretch">
-                    <Link
-                      to={item.to}
-                      aria-current={active ? "page" : undefined}
-                      className={[
-                        "group flex flex-1 items-center gap-2.5 rounded-l-xl px-3 py-2.5 text-sm font-medium transition-all duration-150",
-                        active
-                          ? "border-l-[3px] border-l-[#C4A96A] bg-white/[0.12] pl-[10px] text-white shadow-sm"
-                          : "border border-r-0 border-transparent text-slate-300/90 hover:bg-white/6 hover:text-white",
-                      ].join(" ")}
-                    >
-                      <item.Icon
-                        size={15}
-                        className={[
-                          "shrink-0 transition-colors duration-150",
-                          active ? "text-[#C4A96A]" : (item.iconClass || "text-slate-400"),
-                          !active ? "group-hover:text-slate-200" : "",
-                        ].join(" ")}
-                      />
-                      <span className="flex-1 text-[13.5px] leading-none tracking-[0.01em]">
-                        {item.label}
-                      </span>
-                      {typeof badgeCount === "number" && (
-                        <span className={[
-                          "inline-flex min-w-5 items-center justify-center rounded-md border px-1.5 py-0.5 text-[10px] font-bold tabular-nums",
-                          "border-[#C4A96A]/50 bg-[#C4A96A]/20 text-[#C4A96A]",
-                        ].join(" ")}>
-                          {badgeCount}
-                        </span>
-                      )}
-                    </Link>
-                    {/* Chevron toggle button */}
-                    <button
-                      type="button"
-                      aria-label={expanded ? `Collapse ${item.label}` : `Expand ${item.label}`}
-                      onClick={() => setExpandedSection(expanded ? null : item.to)}
-                      className={[
-                        "flex items-center justify-center rounded-r-xl px-1.5 transition-all duration-150",
-                        active
-                          ? "bg-white/[0.12] text-white/60 hover:text-white"
-                          : "text-slate-400/60 hover:bg-white/6 hover:text-slate-200",
-                      ].join(" ")}
-                    >
-                      <ChevronRight
-                        size={12}
-                        className={[
-                          "transition-transform duration-200",
-                          expanded ? "rotate-90" : "",
-                        ].join(" ")}
-                      />
-                    </button>
-                  </div>
-
-                  {/* Sub-nav children */}
-                  {expanded && (
-                    <div className="ml-[22px] mt-0.5 space-y-0.5 border-l border-white/[0.08] pl-3">
-                      {children.map((child) => (
-                        <Link
-                          key={child.label}
-                          to={child.to}
-                          className="flex items-center rounded-lg px-2 py-1.5 text-[12px] font-medium text-slate-400/80 transition-colors hover:bg-white/[0.06] hover:text-white"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <NavItem
+                  key={item.to}
+                  to={item.to}
+                  label={item.label}
+                  Icon={item.Icon}
+                  isActive={active}
+                  badgeCount={badgeCount}
+                  urgent={"badgeKey" in item && item.badgeKey === "briefs"}
+                  iconClass={item.iconClass}
+                  iconActiveClass={item.iconActiveClass}
+                  badgeLabel={"badgeLabel" in item ? item.badgeLabel : undefined}
+                />
               );
             })}
 
@@ -538,16 +436,6 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
                     <p className="truncate text-[12px] font-semibold text-[#0D1B2A]">{user?.firm_name || userName || "Account"}</p>
                     <p className="truncate text-[11px] text-[#7A6E63]">{user?.email}</p>
                   </div>
-                  {/* Meetings — workspace record */}
-                  <Link
-                    to="/dashboard/meetings"
-                    onClick={() => setAccountMenuOpen(false)}
-                    className="group flex items-center gap-2.5 px-3.5 py-2.5 text-[12.5px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F8F6F2]"
-                  >
-                    <span className="h-1 w-1 rounded-full bg-[#CBD5E1] transition-colors group-hover:bg-[#C4A96A]" aria-hidden />
-                    Meetings
-                  </Link>
-                  <div className="mx-3 my-1 h-px bg-[#EEF2F7]" />
                   <Link
                     to="/dashboard/account"
                     onClick={() => setAccountMenuOpen(false)}

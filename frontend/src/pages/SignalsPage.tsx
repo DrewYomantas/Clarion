@@ -500,7 +500,7 @@ const SignalsPage = () => {
                 <button
                   type="button"
                   onClick={exitSelectionMode}
-                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[13px] font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-1.5 text-[13px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
                 >
                   <X size={13} />
                   Exit selection
@@ -509,7 +509,7 @@ const SignalsPage = () => {
                 <button
                   type="button"
                   onClick={() => setSelectionMode(true)}
-                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[13px] font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                  className="inline-flex items-center gap-1.5 rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-1.5 text-[13px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
                 >
                   <Layers size={13} />
                   Select issues
@@ -549,7 +549,7 @@ const SignalsPage = () => {
         {error ? <div className="rounded-xl border border-destructive/35 bg-destructive/10 p-6 text-sm text-destructive">{error}</div> : null}
 
         {isNewOnlyFilter ? (
-          <section className="rounded-[10px] border border-[#E5E2DC] bg-[#FAFBFC] px-4 py-3 shadow-[0_1px_2px_rgba(13,27,42,0.04)]">
+          <section className="rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3 shadow-[0_1px_2px_rgba(13,27,42,0.04)]">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
@@ -557,7 +557,7 @@ const SignalsPage = () => {
               </div>
               <button
                 type="button"
-                className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+                className="inline-flex items-center rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
                 onClick={clearUrlFilter}
               >
                 Clear filter
@@ -735,8 +735,8 @@ const SignalsPage = () => {
                 className={[
                   "sticky top-[56px] z-20 rounded-[10px] border px-4 py-3 transition-all duration-200",
                   selectedIds.size > 0
-                    ? "border-[#0EA5C2] bg-[#F0FDFF] shadow-[0_2px_8px_rgba(14,165,194,0.12)]"
-                    : "border-[#E5E7EB] bg-white",
+                    ? "border-[#0D1B2A]/20 bg-[#F0F4F8] shadow-[0_2px_8px_rgba(13,27,42,0.08)]"
+                    : "border-[#DDD8D0] bg-white",
                 ].join(" ")}
               >
                 <div className="flex flex-wrap items-center justify-between gap-3">
@@ -745,8 +745,8 @@ const SignalsPage = () => {
                       className={[
                         "inline-flex h-6 min-w-[24px] items-center justify-center rounded-full px-2 text-[12px] font-semibold",
                         selectedIds.size > 0
-                          ? "bg-[#0EA5C2] text-white"
-                          : "bg-slate-200 text-slate-500",
+                          ? "bg-[#0D1B2A] text-white"
+                          : "bg-[#EAE7E2] text-[#7A6E63]",
                       ].join(" ")}
                     >
                       {selectedIds.size}

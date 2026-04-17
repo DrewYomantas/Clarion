@@ -268,28 +268,27 @@ export default function PromoteToActionPanel({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="flex w-full max-w-[480px] flex-col gap-0 overflow-hidden border-l border-[#E5E7EB] bg-white p-0 shadow-[-4px_0_24px_rgba(0,0,0,0.06)] focus:outline-none [&>button:last-of-type]:hidden"
+        className="flex w-full max-w-[480px] flex-col gap-0 overflow-hidden border-l border-[#DDD8D0] bg-white p-0 shadow-[-4px_0_24px_rgba(0,0,0,0.06)] focus:outline-none [&>button:last-of-type]:hidden"
       >
         {/* ── Panel header ─────────────────────────────────────────────── */}
-        <SheetHeader className="shrink-0 border-b border-[#E5E7EB] px-6 py-5">
+        <SheetHeader className="shrink-0 border-b border-[#EAE7E2] px-6 py-5">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63]">
                 Evidence → Action
               </p>
               <SheetTitle className="mt-1 text-[16px] font-semibold text-[#0D1B2A]">
-                Promote to Governance Action
+                Create Governance Action
               </SheetTitle>
-              <SheetDescription className="mt-1 text-[13px] text-slate-500">
-                Review the selected signals, refine the prefilled fields, and confirm to create a
-                trackable governance action.
+              <SheetDescription className="mt-1 text-[13px] text-[#4A5568]">
+                Review the selected evidence, adjust the prefilled fields, and confirm to create a trackable action.
               </SheetDescription>
             </div>
             <button
               type="button"
               onClick={() => onOpenChange(false)}
               aria-label="Close panel"
-              className="mt-0.5 shrink-0 rounded-[6px] p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+              className="mt-0.5 shrink-0 rounded-[6px] p-1.5 text-[#7A6E63] transition-colors hover:bg-[#F5F3F0] hover:text-[#0D1B2A]"
             >
               <X size={16} />
             </button>
@@ -299,9 +298,9 @@ export default function PromoteToActionPanel({
         {/* ── Scrollable body ───────────────────────────────────────────── */}
         <div className="min-h-0 flex-1 overflow-y-auto">
           {/* ── Zone 1: Evidence recap ────────────────────────────────── */}
-          <section className="border-b border-[#F1F3F5] bg-[#FAFBFC] px-6 py-4">
+          <section className="border-b border-[#EAE7E2] bg-[#F9F8F6] px-6 py-4">
             <div className="flex items-center justify-between">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63]">
                 Selected evidence ({selectedSignals.length})
               </p>
               <GovStatusChip
@@ -315,7 +314,7 @@ export default function PromoteToActionPanel({
               {sortedPreview.map((signal) => (
                 <li
                   key={signal.id}
-                  className="flex items-start gap-3 rounded-[8px] border border-[#E5E7EB] bg-white px-3 py-2.5"
+                  className="flex items-start gap-3 rounded-[8px] border border-[#DDD8D0] bg-white px-3 py-2.5"
                   style={{ borderLeftWidth: 3, borderLeftColor: signal.severity === "High" ? "#EF4444" : signal.severity === "Medium" ? "#F59E0B" : "#10B981" }}
                 >
                   <div className="min-w-0 flex-1">
@@ -349,10 +348,10 @@ export default function PromoteToActionPanel({
 
           {/* ── Zone 2: Editable action fields ───────────────────────── */}
           <section className="px-6 py-5">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63]">
               Action details
             </p>
-            <p className="mt-1 text-[12px] text-slate-400">
+            <p className="mt-1 text-[12px] text-[#5A6470]">
               Fields are pre-populated from signal content. Review and adjust before creating.
             </p>
 
@@ -463,13 +462,13 @@ export default function PromoteToActionPanel({
         </div>
 
         {/* ── Sticky panel footer ───────────────────────────────────────── */}
-        <footer className="shrink-0 border-t border-[#E5E7EB] bg-white px-6 py-4">
+        <footer className="shrink-0 border-t border-[#EAE7E2] bg-white px-6 py-4">
           <div className="flex items-center justify-between gap-3">
             <button
               type="button"
               onClick={() => onOpenChange(false)}
               disabled={submitting}
-              className="inline-flex items-center rounded-[7px] border border-[#D1D5DB] bg-white px-4 py-2 text-[13px] font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
+              className="inline-flex items-center rounded-[7px] border border-[#DDD8D0] bg-white px-4 py-2 text-[13px] font-medium text-[#374151] transition-colors hover:bg-[#F5F3F0] disabled:opacity-50"
             >
               Cancel
             </button>

@@ -136,12 +136,12 @@ const DashboardBilling = () => {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2 className="text-[13px] font-semibold text-[#0D1B2A]">Automation & Delivery</h2>
-            <p className="mt-1 text-xs text-[#6B7280]">
+            <p className="mt-1 text-xs text-[#5A6470]">
               Included in Team/Firm. Save recipient and cadence settings here. Delivery runs when outbound email is
               configured for this deployment.
             </p>
             {!canManageSchedule && (
-              <p className="mt-1.5 text-xs text-[#9CA3AF]">
+              <p className="mt-1.5 text-xs text-[#7A6E63]">
                 Team and Firm unlock saved recipient lists and recurring report-pack cadence for leadership review cycles.
               </p>
             )}
@@ -178,7 +178,7 @@ const DashboardBilling = () => {
         )}
 
         {scheduleLoading ? (
-          <p className="text-sm text-[#9CA3AF]">Loading schedule settings…</p>
+          <p className="text-sm text-[#7A6E63]">Loading schedule settings…</p>
         ) : schedule ? (
           <div className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
@@ -220,12 +220,12 @@ const DashboardBilling = () => {
               />
             </label>
 
-            <p className="text-xs text-[#9CA3AF]">
+            <p className="text-xs text-[#7A6E63]">
               Last sent: {schedule.last_sent_at || "Never"} · Next run: {schedule.next_send_at || "Not scheduled"}
             </p>
 
             {!canManageSchedule && (
-              <p className="text-xs text-[#9CA3AF]">
+              <p className="text-xs text-[#7A6E63]">
                 Settings are visible for reference, but editing and scheduled delivery require Team or Firm.
               </p>
             )}
