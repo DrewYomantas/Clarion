@@ -448,7 +448,7 @@ const Dashboard = () => {
     { label: "Follow-Through",    stat: openActions.length > 0 ? `${openActions.length} open` : "All clear",        to: "/dashboard/actions" },
   ];
 
-  // unused vars kept to avoid removing computed state that may be used later
+  // unused computed state — preserved for future use
   void stats;
   void issuePercentages;
   void previousIssuePercentages;
@@ -456,284 +456,140 @@ const Dashboard = () => {
   void newExposureCategories;
   void suggestedActions;
 
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, #060D1A 0%, #081120 100%)",
-        padding: "var(--space-page-y) var(--space-page-x)",
-      }}
-    >
-      <div style={{ maxWidth: "var(--content-max-w)", margin: "0 auto" }}>
+  // Merge-style warm/dark polarity: instrument strip uses warm cream, not another dark surface
+  const stripBg = "#F9F7F3";
+  const stripBorder = "rgba(13,27,42,0.08)";
 
-        {/* ── Zone 1: Cycle header ─────────────────────────────────────── */}
-        <header style={{ marginBottom: "2.5rem" }}>
-          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
-            <div>
-              <p style={{
-                margin: 0,
-                fontSize: "10px",
-                fontWeight: 700,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "#4A7A9B",
-              }}>
-                {user?.firm_name || "Governance Workspace"}
-              </p>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "6px", flexWrap: "wrap" }}>
-                <h1 style={{
-                  margin: 0,
-                  fontSize: "13px",
-                  fontWeight: 500,
-                  color: "rgba(255,255,255,0.35)",
-                  letterSpacing: "0.01em",
-                }}>
+  return (
+    <div className="home-root">
+      <div className="home-inner">
+
+        {/* ── Zone 1: Cycle header ──────────────────────────────────────────────
+            Norm.ai influence: firm identity + cycle context as pure typography,
+            no containing box. The page is the container.
+        ─────────────────────────────────────────────────────────────────────── */}
+        <header className="home-header">
+          <div className="home-header-row">
+            <div className="home-header-left">
+              <p className="home-eyebrow">{user?.firm_name || "Governance Workspace"}</p>
+              <div className="home-cycle-row">
+                <span className="home-cycle-label">
                   {latestProcessedReport
-                    ? <>Governance cycle <span style={{ color: "rgba(255,255,255,0.55)" }}>{reviewPeriodLabel}</span></>
-                    : "No active cycle"}
-                </h1>
+                    ? <><span className="home-cycle-muted">Governance cycle</span> <span className="home-cycle-period">{reviewPeriodLabel}</span></>
+                    : <span className="home-cycle-muted">No active cycle</span>}
+                </span>
                 {latestProcessedReport ? (
-                  <span style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    fontSize: "10px",
-                    fontWeight: 600,
-                    padding: "2px 7px",
-                    borderRadius: "4px",
-                    border: `1px solid ${chipColor.border}`,
-                    background: chipColor.bg,
-                    color: chipColor.text,
-                  }}>
+                  <span
+                    className="home-chip"
+                    style={{ borderColor: chipColor.border, background: chipColor.bg, color: chipColor.text }}
+                  >
                     {chipLabel}
                   </span>
                 ) : null}
                 {latestProcessedReport ? (
-                  <span style={{ fontSize: "11px", color: "#354F64" }}>
-                    Last processed {lastProcessedLabel}
-                  </span>
+                  <span className="home-cycle-date">Last processed {lastProcessedLabel}</span>
                 ) : null}
               </div>
             </div>
-            <Link
-              to="/upload?start=true"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                borderRadius: "8px",
-                border: "1px solid rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.03)",
-                padding: "7px 14px",
-                fontSize: "11.5px",
-                fontWeight: 500,
-                color: "rgba(255,255,255,0.4)",
-                textDecoration: "none",
-                transition: "all 0.15s",
-                flexShrink: 0,
-              }}
-            >
-              New Review
-            </Link>
+            <Link to="/upload?start=true" className="home-new-review-btn">New Review</Link>
           </div>
-          {/* Divider */}
-          <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", marginTop: "20px" }} />
+          <div className="home-header-rule" />
         </header>
 
         {/* Error state */}
         {loadError ? (
-          <div style={{
-            marginBottom: "1.5rem",
-            borderRadius: "12px",
-            border: "1px solid rgba(248,113,113,0.2)",
-            background: "rgba(239,68,68,0.08)",
-            padding: "12px 20px",
-          }}>
-            <p style={{ margin: 0, fontSize: "13px", color: "#FCA5A5" }}>{loadError}</p>
+          <div className="home-error-banner">
+            <p>{loadError}</p>
           </div>
         ) : null}
 
-        {/* ── First-run empty state ─────────────────────────────────────── */}
+        {/* ── First-run empty state ─────────────────────────────────────────── */}
         {isFirstRunWorkspace ? (
-          <section style={{
-            borderRadius: "20px",
-            border: "1px solid rgba(255,255,255,0.08)",
-            background: "#08111E",
-            overflow: "hidden",
-          }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1.3fr 0.7fr" }}>
-              <div style={{ padding: "40px 48px", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
-                <p style={{ margin: 0, fontSize: "10px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#6DBDCC" }}>
-                  First review cycle
-                </p>
-                <h2 style={{
-                  margin: "16px 0 0",
-                  fontSize: "clamp(1.8rem, 3vw, 2.5rem)",
-                  lineHeight: 1.02,
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  fontWeight: 500,
-                  color: "#F3F7FB",
-                  maxWidth: "12ch",
-                }}>
+          <section className="home-onboard">
+            <div className="home-onboard-grid">
+              <div className="home-onboard-main">
+                <p className="home-onboard-eyebrow">First review cycle</p>
+                <h2 className="home-onboard-headline">
                   The workspace stays quiet until the first cycle begins.
                 </h2>
-                <p style={{ margin: "16px 0 0", fontSize: "15px", lineHeight: "1.7", color: "#8FA7BC", maxWidth: "520px" }}>
-                  Bring in one CSV from the current review period. Clarion validates the file, generates the first governance brief,
-                  and opens the issue and follow-through workflow from there.
+                <p className="home-onboard-body">
+                  Bring in one CSV from the current review period. Clarion validates the file,
+                  generates the first governance brief, and opens the issue and follow-through
+                  workflow from there.
                 </p>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginTop: "32px" }}>
+                <div className="home-onboard-steps">
                   {[
                     ["01", "Upload feedback", "Use one current review-period CSV to establish the live cycle."],
                     ["02", "Review signals", "Clarion groups recurring client issues into a decision-ready surface."],
                     ["03", "Open follow-through", "Assign owners and move directly into the governance brief."],
                   ].map(([step, title, body]) => (
-                    <div key={step} style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "16px" }}>
-                      <p style={{ margin: 0, fontSize: "10px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#4E6A84" }}>{step}</p>
-                      <h3 style={{ margin: "8px 0 0", fontSize: "14px", fontWeight: 600, color: "#FFFFFF" }}>{title}</h3>
-                      <p style={{ margin: "6px 0 0", fontSize: "12.5px", lineHeight: "1.55", color: "#7F98AE" }}>{body}</p>
+                    <div key={step} className="home-onboard-step">
+                      <p className="home-onboard-step-num">{step}</p>
+                      <h3 className="home-onboard-step-title">{title}</h3>
+                      <p className="home-onboard-step-body">{body}</p>
                     </div>
                   ))}
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "32px", flexWrap: "wrap" }}>
-                  <Link
-                    to="/upload?start=true"
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      borderRadius: "100px",
-                      background: "#0EA5C2",
-                      padding: "10px 20px",
-                      fontSize: "13px",
-                      fontWeight: 600,
-                      color: "#FFFFFF",
-                      textDecoration: "none",
-                    }}
-                  >
-                    Upload feedback CSV
-                  </Link>
-                  <Link
-                    to="/demo"
-                    style={{ fontSize: "13px", fontWeight: 500, color: "#9CC0D3", textDecoration: "underline", textUnderlineOffset: "3px" }}
-                  >
-                    Review sample workspace
-                  </Link>
+                <div className="home-onboard-ctas">
+                  <Link to="/upload?start=true" className="home-onboard-primary-cta">Upload feedback CSV</Link>
+                  <Link to="/demo" className="home-onboard-ghost-cta">Review sample workspace</Link>
                 </div>
               </div>
-              <div style={{ padding: "40px 32px", background: "rgba(255,255,255,0.01)" }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                  {[
-                    ["What you need", "One CSV export from the current review period. Clarion checks structure first, then runs full upload validation."],
-                    ["What Clarion creates", "The first upload creates the governance brief, issue map, and action list the workspace orbits around."],
-                    ["Sample workspace", "The sample workspace uses example law-firm data. Your live workspace stays untouched until you upload your own file."],
-                  ].map(([title, body]) => (
-                    <div key={title} style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "16px" }}>
-                      <p style={{ margin: 0, fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#5A7D97" }}>{title}</p>
-                      <p style={{ margin: "8px 0 0", fontSize: "12.5px", lineHeight: "1.6", color: "#89A3B8" }}>{body}</p>
-                    </div>
-                  ))}
-                </div>
+              <div className="home-onboard-aside">
+                {[
+                  ["What you need", "One CSV export from the current review period. Clarion checks structure first, then runs full upload validation."],
+                  ["What Clarion creates", "The first upload creates the governance brief, issue map, and action list the workspace orbits around."],
+                  ["Sample workspace", "The sample workspace uses example law-firm data. Your live workspace stays untouched until you upload your own file."],
+                ].map(([title, body]) => (
+                  <div key={title} className="home-onboard-aside-item">
+                    <p className="home-onboard-aside-label">{title}</p>
+                    <p className="home-onboard-aside-body">{body}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
         ) : null}
 
-        {/* ── Zone 2: Primary decision surface (two-column) ─────────────── */}
+        {/* ── Zone 2: Primary decision surface ─────────────────────────────────
+            Merge.dev influence: warm/dark polarity — dark command card left,
+            instrument strip in warm cream, not another dark surface.
+            Vercel influence: one unmistakably primary CTA ("Open Meeting View"),
+            everything else recedes in weight.
+            Linear influence: multi-layer shadow depth on the brief card.
+        ─────────────────────────────────────────────────────────────────────── */}
         {!isFirstRunWorkspace ? (
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: attentionItems.length > 0 ? "1fr 300px" : "1fr",
-            gap: "20px",
-            alignItems: "start",
-          }}>
+          <div className={`home-stage${attentionItems.length > 0 ? " home-stage--split" : ""}`}>
 
             {/* LEFT: Brief command card */}
-            <div style={{
-              borderRadius: "18px",
-              border: "1px solid rgba(255,255,255,0.1)",
-              overflow: "hidden",
-              background: "linear-gradient(150deg, #0B1929 0%, #0D2040 55%, #0D1B2A 100%)",
-              position: "relative",
-            }}>
-              {/* Ambient glow */}
-              <div style={{
-                position: "absolute",
-                top: "-60px",
-                right: "-60px",
-                width: "280px",
-                height: "280px",
-                borderRadius: "50%",
-                background: "#1a3a6b",
-                opacity: 0.25,
-                filter: "blur(60px)",
-                pointerEvents: "none",
-              }} aria-hidden />
+            <div className="home-brief-card">
+              {/* Ambient radial glow — top-right depth layer */}
+              <div className="home-brief-glow" aria-hidden />
 
-              {/* Brief headline */}
-              <div style={{ padding: "32px 36px 28px", position: "relative" }}>
-                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
-                  <div style={{ flex: "1 1 0", minWidth: 0 }}>
-                    <p style={{
-                      margin: 0,
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: "#3D6B8A",
-                    }}>
-                      Current Governance Brief
-                    </p>
-                    <div style={{ display: "flex", alignItems: "flex-start", gap: "14px", marginTop: "14px" }}>
-                      <span style={{
-                        display: "block",
-                        width: "3px",
-                        height: "48px",
-                        borderRadius: "2px",
-                        background: "linear-gradient(180deg, #C4A96A 0%, rgba(196,169,106,0.3) 100%)",
-                        flexShrink: 0,
-                        marginTop: "4px",
-                      }} aria-hidden />
-                      <h2 style={{
-                        margin: 0,
-                        fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)",
-                        lineHeight: 1.0,
-                        letterSpacing: "-0.04em",
-                        fontFamily: "'Playfair Display', Georgia, serif",
-                        fontWeight: 500,
-                        color: "#FFFFFF",
-                      }}>
+              {/* Headline section */}
+              <div className="home-brief-head">
+                <div className="home-brief-head-inner">
+                  {/* Title block */}
+                  <div className="home-brief-title-col">
+                    <p className="home-brief-eyebrow">Current Governance Brief</p>
+                    <div className="home-brief-title-row">
+                      <span className="home-brief-gold-rail" aria-hidden />
+                      <h2 className="home-brief-title">
                         {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
                       </h2>
                     </div>
                     {latestProcessedReport ? (
-                      <p style={{ margin: "10px 0 0 17px", fontSize: "12px", color: "#2E5470" }}>
-                        {reviewsAnalyzed} reviews analyzed
-                      </p>
+                      <p className="home-brief-sub">{reviewsAnalyzed} reviews analyzed</p>
                     ) : null}
                   </div>
 
-                  {/* CTA stack */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px", alignItems: "flex-end", paddingTop: "4px" }}>
+                  {/* CTA stack — Vercel-style single dominant action */}
+                  <div className="home-brief-ctas">
                     {latestProcessedReport ? (
                       <button
                         type="button"
                         onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}?present=1`)}
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          borderRadius: "8px",
-                          background: "#FFFFFF",
-                          padding: "9px 18px",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          color: "#0D1B2A",
-                          border: "none",
-                          cursor: "pointer",
-                          boxShadow: "0 1px 4px rgba(0,0,0,0.15), 0 4px 16px rgba(255,255,255,0.08)",
-                          whiteSpace: "nowrap",
-                          transition: "all 0.15s",
-                        }}
+                        className="home-cta-primary"
                       >
                         Open Meeting View
                       </button>
@@ -742,21 +598,7 @@ const Dashboard = () => {
                       <button
                         type="button"
                         onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "5px",
-                          borderRadius: "8px",
-                          border: "1px solid rgba(255,255,255,0.15)",
-                          background: "rgba(255,255,255,0.06)",
-                          padding: "8px 16px",
-                          fontSize: "12px",
-                          fontWeight: 500,
-                          color: "rgba(255,255,255,0.65)",
-                          cursor: "pointer",
-                          whiteSpace: "nowrap",
-                          transition: "all 0.15s",
-                        }}
+                        className="home-cta-secondary"
                       >
                         Open Governance Brief <ChevronRight size={12} />
                       </button>
@@ -765,19 +607,7 @@ const Dashboard = () => {
                       <button
                         type="button"
                         onClick={() => void handleExportBrief()}
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "5px",
-                          padding: "6px 12px",
-                          fontSize: "11.5px",
-                          fontWeight: 500,
-                          color: "#3D6282",
-                          background: "transparent",
-                          border: "none",
-                          cursor: "pointer",
-                          whiteSpace: "nowrap",
-                        }}
+                        className="home-cta-ghost"
                       >
                         {loading ? <><Loader2 size={12} className="animate-spin" /> Loading</> : planUsage.pdfWatermark ? "Preview PDF" : "Download PDF"}
                       </button>
@@ -785,19 +615,7 @@ const Dashboard = () => {
                       <button
                         type="button"
                         onClick={() => navigate("/upload")}
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          borderRadius: "8px",
-                          background: "#FFFFFF",
-                          padding: "9px 18px",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          color: "#0D1B2A",
-                          border: "none",
-                          cursor: "pointer",
-                        }}
+                        className="home-cta-primary"
                       >
                         Start New Review <ChevronRight size={13} />
                       </button>
@@ -806,56 +624,38 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Instrument strip — cycle metrics */}
+              {/* Instrument strip — Merge.dev warm cream polarity */}
               {latestProcessedReport ? (
-                <div style={{
-                  display: "flex",
-                  borderTop: "1px solid rgba(255,255,255,0.07)",
-                  position: "relative",
-                }}>
-                  {[
-                    { value: latestSignals.length,    label: "Issues detected",   color: latestSignals.length > 0 ? "#FFFFFF" : "#FFFFFF" },
-                    { value: openActions.length,      label: "Open actions",      color: "#FFFFFF" },
-                    { value: overdueActions.length,   label: "Overdue",           color: overdueActions.length > 0 ? "#F87171" : "#FFFFFF" },
-                    { value: newSignalsCount,         label: "New this cycle",    color: newSignalsCount > 0 ? "#FCD34D" : "#FFFFFF" },
-                  ].map((metric) => (
-                    <div key={metric.label} style={{
-                      flex: "1 1 0",
-                      padding: "16px 20px",
-                      borderRight: "1px solid rgba(255,255,255,0.07)",
-                    }}>
-                      <p style={{
-                        margin: 0,
-                        fontSize: "22px",
-                        fontWeight: 600,
-                        lineHeight: 1,
-                        color: metric.color,
-                        fontVariantNumeric: "tabular-nums",
-                      }}>
-                        {metric.value}
-                      </p>
-                      <p style={{ margin: "5px 0 0", fontSize: "10.5px", fontWeight: 500, color: "#2E5470", letterSpacing: "0.03em" }}>
-                        {metric.label}
-                      </p>
+                <div
+                  className="home-strip"
+                  style={{ background: stripBg, borderTop: `1px solid ${stripBorder}` }}
+                >
+                  {([
+                    { value: latestSignals.length,  label: "Issues detected",  ink: "#1E293B",              sub: "#64748B" },
+                    { value: openActions.length,    label: "Open actions",     ink: "#1E293B",              sub: "#64748B" },
+                    { value: overdueActions.length, label: "Overdue",          ink: overdueActions.length > 0 ? "#B91C1C" : "#1E293B", sub: "#64748B" },
+                    { value: newSignalsCount,       label: "New this cycle",   ink: newSignalsCount > 0 ? "#92400E" : "#1E293B", sub: "#64748B" },
+                  ] as const).map((m, i, arr) => (
+                    <div
+                      key={m.label}
+                      className="home-strip-cell"
+                      style={{ borderRight: i < arr.length - 1 ? `1px solid ${stripBorder}` : "none" }}
+                    >
+                      <p className="home-strip-value" style={{ color: m.ink }}>{m.value}</p>
+                      <p className="home-strip-label" style={{ color: m.sub }}>{m.label}</p>
                     </div>
                   ))}
-                  {/* Remove the last border */}
-                  <style>{`.home-strip > div:last-child { border-right: none !important; }`}</style>
                 </div>
               ) : null}
 
-              {/* Cycle brief deltas — if we have signals from a previous cycle */}
+              {/* Cycle directive — quiet bottom context line */}
               {latestProcessedReport && (newSignalsCount > 0 || overdueActions.length > 0) ? (
-                <div style={{
-                  padding: "12px 20px",
-                  borderTop: "1px solid rgba(255,255,255,0.05)",
-                  background: "rgba(0,0,0,0.2)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}>
-                  <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "#0EA5C2", flexShrink: 0 }} aria-hidden />
-                  <p style={{ margin: 0, fontSize: "11.5px", color: "#5A8AAA", lineHeight: 1.4 }}>
+                <div
+                  className="home-directive"
+                  style={{ background: stripBg, borderTop: `1px solid ${stripBorder}` }}
+                >
+                  <span className="home-directive-dot" aria-hidden />
+                  <p className="home-directive-text">
                     {overdueActions.length > 0
                       ? `${overdueActions.length} overdue ${overdueActions.length === 1 ? "action requires" : "actions require"} partner review before this brief is meeting-ready.`
                       : `${newSignalsCount} new ${newSignalsCount === 1 ? DISPLAY_LABELS.clientIssueSingular.toLowerCase() : DISPLAY_LABELS.clientIssuePlural.toLowerCase()} detected since last review — assign partner review.`}
@@ -863,113 +663,49 @@ const Dashboard = () => {
                 </div>
               ) : null}
 
-              {/* Baseline / history notices */}
+              {/* System notices */}
               {(showBaselineNotice || (historyTruncated && historyNotice)) ? (
-                <div style={{
-                  borderTop: "1px solid rgba(255,255,255,0.04)",
-                  background: "rgba(0,0,0,0.25)",
-                  padding: "10px 20px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "8px",
-                }}>
-                  <p style={{ margin: 0, fontSize: "10.5px", color: "rgba(255,255,255,0.2)", letterSpacing: "0.02em" }}>
+                <div className="home-notice" style={{ background: stripBg, borderTop: `1px solid ${stripBorder}` }}>
+                  <p className="home-notice-text">
                     {showBaselineNotice
                       ? "Baseline cycle — trend comparison becomes available after the next upload."
                       : historyNotice}
                   </p>
                   {showBaselineNotice ? (
-                    <button
-                      type="button"
-                      onClick={dismissBaselineNotice}
-                      aria-label="Dismiss"
-                      style={{ fontSize: "10.5px", color: "rgba(255,255,255,0.18)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
-                    >
-                      ✕
-                    </button>
+                    <button type="button" onClick={dismissBaselineNotice} aria-label="Dismiss" className="home-notice-dismiss">✕</button>
                   ) : null}
                 </div>
               ) : null}
             </div>
 
-            {/* RIGHT: Attention column — only mounts when there's something */}
+            {/* RIGHT: Attention column — contextual, invisible when empty */}
             {attentionItems.length > 0 ? (
-              <div style={{
-                borderRadius: "14px",
-                border: "1px solid rgba(255,255,255,0.08)",
-                overflow: "hidden",
-                background: "#09121E",
-              }}>
-                <div style={{
-                  padding: "12px 16px",
-                  borderBottom: "1px solid rgba(255,255,255,0.06)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                }}>
-                  {/* Amber pulse dot */}
-                  <span style={{ position: "relative", display: "inline-flex", width: "8px", height: "8px", flexShrink: 0 }}>
-                    <span style={{
-                      position: "absolute",
-                      inset: 0,
-                      borderRadius: "50%",
-                      background: "#F59E0B",
-                      animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite",
-                      opacity: 0.4,
-                    }} />
-                    <span style={{ position: "relative", display: "inline-flex", width: "8px", height: "8px", borderRadius: "50%", background: "#F59E0B" }} />
+              <div className="home-attention">
+                <div className="home-attention-head">
+                  <span className="home-attention-pulse" aria-hidden>
+                    <span className="home-attention-pulse-ring" />
+                    <span className="home-attention-pulse-dot" />
                   </span>
-                  <p style={{ margin: 0, fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#5A7D97" }}>
-                    Needs attention
-                  </p>
+                  <p className="home-attention-label">Needs attention</p>
                 </div>
-                <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+                <ul className="home-attention-list">
                   {attentionItems.map((item) => (
-                    <li key={item.id} style={{
-                      borderBottom: "1px solid rgba(255,255,255,0.04)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: "12px",
-                      padding: "11px 16px",
-                    }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
-                        <span style={{
-                          width: "6px",
-                          height: "6px",
-                          borderRadius: "50%",
-                          background: item.severity === "high" ? "#F87171" : "#FCD34D",
-                          flexShrink: 0,
-                        }} />
-                        <span style={{ fontSize: "12.5px", color: "#A8C4D8", lineHeight: 1.3 }}>{item.label}</span>
+                    <li key={item.id} className="home-attention-item">
+                      <div className="home-attention-item-left">
+                        <span
+                          className="home-attention-dot"
+                          style={{ background: item.severity === "high" ? "#EF4444" : "#F59E0B" }}
+                        />
+                        <span className="home-attention-text">{item.label}</span>
                       </div>
-                      <Link
-                        to={item.to}
-                        style={{
-                          flexShrink: 0,
-                          display: "inline-flex",
-                          alignItems: "center",
-                          borderRadius: "5px",
-                          border: "1px solid rgba(255,255,255,0.12)",
-                          background: "rgba(255,255,255,0.04)",
-                          padding: "4px 10px",
-                          fontSize: "10.5px",
-                          fontWeight: 600,
-                          color: "rgba(255,255,255,0.55)",
-                          textDecoration: "none",
-                        }}
-                      >
-                        {item.action} →
-                      </Link>
+                      <Link to={item.to} className="home-attention-action">{item.action} →</Link>
                     </li>
                   ))}
                 </ul>
-                {/* Cycle summary below attention list */}
                 {latestProcessedReport && latestSignals.length > 0 ? (
-                  <div style={{ padding: "12px 16px", borderTop: "1px solid rgba(255,255,255,0.04)", background: "rgba(0,0,0,0.15)" }}>
-                    <p style={{ margin: 0, fontSize: "11px", color: "#2E4D63", lineHeight: 1.5 }}>
-                      {latestSignals.length} total {latestSignals.length === 1 ? "issue" : "issues"} across {signalCategoryCounts.length} {signalCategoryCounts.length === 1 ? "category" : "categories"} in this cycle.
+                  <div className="home-attention-footer">
+                    <p className="home-attention-footer-text">
+                      {latestSignals.length} total {latestSignals.length === 1 ? "issue" : "issues"} across {signalCategoryCounts.length} {signalCategoryCounts.length === 1 ? "category" : "categories"} this cycle.
                     </p>
                   </div>
                 ) : null}
@@ -979,75 +715,35 @@ const Dashboard = () => {
           </div>
         ) : null}
 
-        {/* ── Zone 3: Governance loop ───────────────────────────────────── */}
+        {/* ── Zone 3: Governance loop ───────────────────────────────────────────
+            Glean.com influence: clear type scale discipline between step number,
+            label, and stat. Linear influence: warm cream active step anchored
+            by gold rail, not just a background color change.
+        ─────────────────────────────────────────────────────────────────────── */}
         {!isFirstRunWorkspace ? (
-          <div style={{ marginTop: "20px" }}>
-            {/* Loop track */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              borderRadius: "12px",
-              border: "1px solid rgba(255,255,255,0.07)",
-              overflow: "hidden",
-            }}>
-              {loopSteps.map((step, index) => (
-                <Link
-                  key={step.label}
-                  to={step.to}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    padding: "14px 18px",
-                    background: index === loopActiveStep ? "#0A1724" : "#F8FAFC",
-                    borderTop: `2px solid ${index === loopActiveStep ? "#C4A96A" : "transparent"}`,
-                    borderRight: index < loopSteps.length - 1 ? `1px solid ${index === loopActiveStep ? "rgba(255,255,255,0.07)" : "#E2E8F0"}` : "none",
-                    textDecoration: "none",
-                    transition: "background 0.12s",
-                  }}
-                >
-                  <span style={{
-                    fontSize: "9px",
-                    fontWeight: 700,
-                    letterSpacing: "0.14em",
-                    color: index === loopActiveStep ? "#3D5E7A" : "#B8C4CE",
-                  }}>
-                    {String(index + 1).padStart(2, "0")}
+          <div className="home-loop">
+            {loopSteps.map((step, index) => (
+              <Link
+                key={step.label}
+                to={step.to}
+                className={`home-loop-step${index === loopActiveStep ? " home-loop-step--active" : ""}`}
+                style={{
+                  borderRight: index < loopSteps.length - 1
+                    ? `1px solid ${index === loopActiveStep ? "rgba(255,255,255,0.07)" : "#E8E4DF"}`
+                    : "none",
+                }}
+              >
+                <span className="home-loop-num">{String(index + 1).padStart(2, "0")}</span>
+                <span className="home-loop-label">{step.label}</span>
+                <span className="home-loop-stat">{step.stat}</span>
+                {index === loopActiveStep ? (
+                  <span className="home-loop-current">
+                    <span className="home-loop-current-dot" />
+                    Current
                   </span>
-                  <span style={{
-                    marginTop: "5px",
-                    fontSize: "12.5px",
-                    fontWeight: 600,
-                    lineHeight: 1.2,
-                    color: index === loopActiveStep ? "#FFFFFF" : "#1E293B",
-                  }}>
-                    {step.label}
-                  </span>
-                  <span style={{
-                    marginTop: "3px",
-                    fontSize: "10.5px",
-                    color: index === loopActiveStep ? "#2E5470" : "#94A3B8",
-                    lineHeight: 1.3,
-                  }}>
-                    {step.stat}
-                  </span>
-                  {index === loopActiveStep ? (
-                    <span style={{
-                      marginTop: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "5px",
-                      fontSize: "9.5px",
-                      fontWeight: 700,
-                      letterSpacing: "0.08em",
-                      color: "rgba(196,169,106,0.7)",
-                    }}>
-                      <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "rgba(196,169,106,0.6)" }} />
-                      Current
-                    </span>
-                  ) : null}
-                </Link>
-              ))}
-            </div>
+                ) : null}
+              </Link>
+            ))}
           </div>
         ) : null}
 
