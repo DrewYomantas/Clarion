@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronRight, Loader2, X } from "lucide-react";
+import { ChevronRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   emitPlanLimitError,
@@ -60,12 +60,12 @@ const formatReviewPeriod = (report: ReportListItem | null) => {
     const sameMonth = sameYear && start.getMonth() === end.getMonth();
     if (sameMonth) return start.toLocaleDateString([], { month: "long", year: "numeric" });
     if (sameYear) {
-      return `${start.toLocaleDateString([], { month: "long" })} - ${end.toLocaleDateString([], {
+      return `${start.toLocaleDateString([], { month: "long" })} – ${end.toLocaleDateString([], {
         month: "long",
         year: "numeric",
       })}`;
     }
-    return `${start.toLocaleDateString([], { month: "short", year: "numeric" })} - ${end.toLocaleDateString([], {
+    return `${start.toLocaleDateString([], { month: "short", year: "numeric" })} – ${end.toLocaleDateString([], {
       month: "short",
       year: "numeric",
     })}`;
@@ -153,7 +153,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { currentPlan, user } = useAuth();
 
-
   const [loading, setLoading] = useState(true);
   const [exposure, setExposure] = useState<ExposureSnapshot | null>(null);
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -231,13 +230,9 @@ const Dashboard = () => {
   }, [loadDashboard]);
 
   useEffect(() => {
-    const onUploaded = () => {
-      void loadDashboard();
-    };
+    const onUploaded = () => { void loadDashboard(); };
     window.addEventListener("reports:uploaded", onUploaded as EventListener);
-    return () => {
-      window.removeEventListener("reports:uploaded", onUploaded as EventListener);
-    };
+    return () => { window.removeEventListener("reports:uploaded", onUploaded as EventListener); };
   }, [loadDashboard]);
 
   useEffect(() => {
@@ -245,13 +240,8 @@ const Dashboard = () => {
     setBaselineDismissed(dismissed);
   }, [baselineDismissKey]);
 
-
   const latestReadyBrief = useMemo(
     () => reports.find((report) => report.status === "ready" && report.download_pdf_url) || null,
-    [reports],
-  );
-  const recentReadyBriefs = useMemo(
-    () => reports.filter((report) => report.status === "ready" && report.download_pdf_url).slice(0, 3),
     [reports],
   );
   const latestProcessedReport = useMemo(() => reports.find((report) => report.status === "ready") || null, [reports]);
@@ -264,7 +254,6 @@ const Dashboard = () => {
 
   const overdueActions = useMemo(() => actions.filter((action) => isOverdue(action)), [actions]);
   const openActions = useMemo(() => actions.filter((action) => action.status !== "done"), [actions]);
-  const inProgressActions = useMemo(() => actions.filter((action) => action.status === "in_progress"), [actions]);
   const unownedActionsCount = useMemo(
     () => openActions.filter((action) => !action.owner || String(action.owner).trim() === "").length,
     [openActions],
@@ -288,38 +277,6 @@ const Dashboard = () => {
     });
     return created;
   }, [latestSignals, previousSignals]);
-
-  const exposureLabel = (exposure?.exposure_label || "Baseline").toLowerCase();
-  const exposureRisk = exposureLabel.includes("high") || exposureLabel.includes("elevated")
-    ? "High"
-    : exposureLabel.includes("watch")
-      ? "Moderate"
-      : "Low";
-
-  const guidance = useMemo(() => {
-    if (overdueActions.length > 0) {
-      return {
-        directive: `${overdueActions.length} overdue action${overdueActions.length === 1 ? "" : "s"} require immediate partner review.`,
-        recommendation: "Assign partner review and confirm owner + due date updates today.",
-      };
-    }
-    if (newSignalsCount > 0) {
-      return {
-        directive: `${newSignalsCount} new ${newSignalsCount === 1 ? DISPLAY_LABELS.clientIssueSingular.toLowerCase() : DISPLAY_LABELS.clientIssuePlural.toLowerCase()} detected since last review.`,
-        recommendation: "Assign partner review.",
-      };
-    }
-    if (latestSignals.length > 0 && openActions.length === 0) {
-      return {
-        directive: "Client issues exist without corresponding open actions.",
-        recommendation: "Create action owners for each high-priority client issue.",
-      };
-    }
-    return {
-      directive: "Client issues and actions are currently aligned.",
-      recommendation: "Proceed to generate the next governance brief.",
-    };
-  }, [latestSignals.length, newSignalsCount, openActions.length, overdueActions.length]);
 
   const signalCategoryCounts = useMemo(() => {
     const counts = new Map<string, { label: string; count: number }>();
@@ -346,32 +303,6 @@ const Dashboard = () => {
   );
 
   const topIssue = signalCategoryCounts[0] || null;
-  const topIssueShare = topIssue && latestSignals.length > 0 ? Math.round((topIssue.count / latestSignals.length) * 100) : 0;
-
-  const briefDeltas = useMemo(() => {
-    const items: string[] = [];
-    items.push(newSignalsCount > 0 ? `${newSignalsCount} new client issues detected.` : "No net-new client issues detected in this cycle.");
-    if (newExposureCategories > 0) {
-      items.push(`${newExposureCategories} new exposure categories emerged.`);
-    }
-    items.push(
-      overdueActions.length > 0
-        ? `${overdueActions.length} overdue actions now require partner attention.`
-        : "No overdue actions at this time.",
-    );
-    return items;
-  }, [newExposureCategories, newSignalsCount, overdueActions.length]);
-
-  const briefFeedbackQuotes = useMemo(
-    () => latestSignals.map((signal) => signal.description?.trim()).filter((value): value is string => Boolean(value)).slice(0, 2),
-    [latestSignals],
-  );
-
-  const estimatedImpact = useMemo(() => {
-    if (!topIssue) return null;
-    const modeledReduction = Math.max(1, Math.round(topIssue.count * 0.1));
-    return `A 10% reduction in ${topIssue.label.toLowerCase()} themes would reduce approximately ${modeledReduction} flagged client issues in the next cycle.`;
-  }, [topIssue]);
 
   const suggestedActions = useMemo(() => {
     return latestSignals
@@ -392,22 +323,6 @@ const Dashboard = () => {
       })
       .filter((item) => !item.hasAssignedAction);
   }, [actions, latestSignals]);
-
-  const cycleAttentionSummary = useMemo(() => {
-    if (overdueActions.length > 0) {
-      return `${overdueActions.length} overdue follow-through item${overdueActions.length === 1 ? "" : "s"} need partner review before the current brief is meeting-ready.`;
-    }
-    if (unownedActionsCount > 0) {
-      return `${unownedActionsCount} open follow-through item${unownedActionsCount === 1 ? "" : "s"} still need clear ownership before the brief can carry clean follow-through into the room.`;
-    }
-    if (highSeveritySignalsCount > 0) {
-      return `${highSeveritySignalsCount} high-severity client issue${highSeveritySignalsCount === 1 ? "" : "s"} ${highSeveritySignalsCount === 1 ? "is" : "are"} active in the current cycle and should be reviewed in the brief first.`;
-    }
-    if (latestReadyBrief) {
-      return "The latest brief is ready to review and current follow-through is in a healthy state.";
-    }
-    return "This cycle is active, but the latest brief is still being prepared.";
-  }, [highSeveritySignalsCount, latestReadyBrief, overdueActions.length, unownedActionsCount]);
 
   const handleExportBrief = useCallback(async (targetBrief?: ReportListItem | null) => {
     const brief = targetBrief || latestReadyBrief;
@@ -459,140 +374,262 @@ const Dashboard = () => {
     return { pdfWatermark: Boolean(limits.pdfWatermark) };
   }, [currentPlan]);
 
-  const oversightMetrics = [
-    {
-      label: "High-risk signals",
-      value: highSeveritySignalsCount,
-      sub: `of ${latestSignals.length} total client issues`,
-      risk: true,
-      route: "/dashboard/signals",
-      routeQuery: "filter=high",
-    },
-    {
-      label: "Unowned actions",
-      value: unownedActionsCount,
-      sub: `${openActions.length} open actions total`,
-      warn: true,
-      route: "/dashboard/actions",
-    },
-    {
-      label: "Briefs ready",
-      value: readyReportCount,
-      sub: readyReportCount === 1 ? "1 completed review cycle" : `${readyReportCount} completed cycles`,
-      success: readyReportCount > 0,
-      route: "/dashboard/reports",
-    },
-    {
-      label: "Overdue actions",
-      value: overdueActions.length,
-      sub: overdueActions.length === 0 ? "No overdue items" : "Require immediate attention",
-      risk: true,
-      route: "/dashboard/actions",
-      routeQuery: "filter=overdue",
-    },
-  ];
-
   const dismissBaselineNotice = () => {
     window.localStorage.setItem(baselineDismissKey, "1");
     setBaselineDismissed(true);
   };
 
+  // Attention items — rendered in the right column
+  const attentionItems: Array<{ id: string; label: string; severity: "high" | "warn"; to: string; action: string }> = [];
+  if (overdueActions.length > 0) {
+    attentionItems.push({
+      id: "overdue",
+      label: `${overdueActions.length} overdue ${overdueActions.length === 1 ? "action" : "actions"}`,
+      severity: "high",
+      to: "/dashboard/actions?filter=overdue",
+      action: "Review",
+    });
+  }
+  if (exposure?.partner_escalation_required) {
+    attentionItems.push({
+      id: "escalation",
+      label: "Partner escalation required",
+      severity: "high",
+      to: latestProcessedReport ? `/dashboard/reports/${latestProcessedReport.id}` : "/dashboard/reports",
+      action: "Open brief",
+    });
+  }
+  if (highSeveritySignalsCount > 0) {
+    attentionItems.push({
+      id: "signals",
+      label: `${highSeveritySignalsCount} high-severity ${highSeveritySignalsCount === 1 ? "issue" : "issues"}`,
+      severity: "warn",
+      to: "/dashboard/signals?filter=high",
+      action: "View",
+    });
+  }
+  if (unownedActionsCount > 0) {
+    attentionItems.push({
+      id: "unowned",
+      label: `${unownedActionsCount} ${unownedActionsCount === 1 ? "action needs" : "actions need"} an owner`,
+      severity: "warn",
+      to: "/dashboard/actions",
+      action: "Assign",
+    });
+  }
+
+  // Brief status chip
+  const briefStatus = latestProcessedReport?.status;
+  const chipLabel = briefStatus === "sent" ? "Sent"
+    : briefStatus === "acknowledged" ? "Acknowledged"
+    : briefStatus === "ready" || briefStatus === "escalation" ? "Ready to Send"
+    : "Draft";
+  const chipColor = briefStatus === "acknowledged" || briefStatus === "ready"
+    ? { border: "rgba(52,211,153,0.3)", bg: "rgba(52,211,153,0.1)", text: "#6EE7B7" }
+    : briefStatus === "sent"
+      ? { border: "rgba(96,165,250,0.3)", bg: "rgba(96,165,250,0.1)", text: "#93C5FD" }
+      : briefStatus === "escalation"
+        ? { border: "rgba(251,191,36,0.3)", bg: "rgba(251,191,36,0.1)", text: "#FCD34D" }
+        : { border: "rgba(255,255,255,0.1)", bg: "rgba(255,255,255,0.05)", text: "rgba(255,255,255,0.4)" };
+
+  // Loop step state
+  const hasReport = Boolean(latestProcessedReport);
+  const reportReady = latestProcessedReport?.status === "ready";
+  const loopActiveStep =
+    !hasReport || !reportReady ? 0
+    : overdueActions.length > 0 ? 3
+    : openActions.length === 0 ? 1
+    : 2;
+  const briefId = latestProcessedReport?.id;
+  const loopSteps = [
+    { label: "New Review",        stat: readyReportCount > 0 ? `${readyReportCount} complete` : "Upload CSV",       to: "/upload" },
+    { label: "Governance Brief",  stat: hasReport ? reviewPeriodLabel : "Awaiting review",                          to: briefId ? `/dashboard/reports/${briefId}` : "/dashboard/reports" },
+    { label: "Meeting View",      stat: reportReady ? "Ready" : "Pending brief",                                    to: briefId ? `/dashboard/reports/${briefId}?present=1` : "/dashboard/reports" },
+    { label: "Follow-Through",    stat: openActions.length > 0 ? `${openActions.length} open` : "All clear",        to: "/dashboard/actions" },
+  ];
+
+  // unused vars kept to avoid removing computed state that may be used later
+  void stats;
+  void issuePercentages;
+  void previousIssuePercentages;
+  void topIssue;
+  void newExposureCategories;
+  void suggestedActions;
+
   return (
-    <section
-      className="gov-page-shell"
+    <div
       style={{
-        padding: "var(--space-page-y) var(--space-page-x)",
-        background: "linear-gradient(180deg, #060D1A 0%, #081120 100%)",
         minHeight: "100vh",
+        background: "linear-gradient(180deg, #060D1A 0%, #081120 100%)",
+        padding: "var(--space-page-y) var(--space-page-x)",
       }}
     >
-      <div
-        className="stage-sequence dash-override mx-auto w-full"
-        style={{ maxWidth: "var(--content-max-w)" }}
-      >
-        <div
-          className="mb-6 flex flex-wrap items-center justify-between gap-4"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", paddingBottom: "16px" }}
-        >
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2">
-              <span className="h-[14px] w-[2px] rounded-full bg-[#C4A96A]/60" aria-hidden />
-              <p className="m-0 text-[11px] font-bold uppercase tracking-[0.15em] text-[#8EB4D4]">
+      <div style={{ maxWidth: "var(--content-max-w)", margin: "0 auto" }}>
+
+        {/* ── Zone 1: Cycle header ─────────────────────────────────────── */}
+        <header style={{ marginBottom: "2.5rem" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1rem" }}>
+            <div>
+              <p style={{
+                margin: 0,
+                fontSize: "10px",
+                fontWeight: 700,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#4A7A9B",
+              }}>
                 {user?.firm_name || "Governance Workspace"}
               </p>
-            </span>
-            {latestProcessedReport ? (
-              <span className="text-[11px] text-[#4A6882]">
-                Last processed {lastProcessedLabel}
-              </span>
-            ) : null}
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "6px", flexWrap: "wrap" }}>
+                <h1 style={{
+                  margin: 0,
+                  fontSize: "13px",
+                  fontWeight: 500,
+                  color: "rgba(255,255,255,0.35)",
+                  letterSpacing: "0.01em",
+                }}>
+                  {latestProcessedReport
+                    ? <>Governance cycle <span style={{ color: "rgba(255,255,255,0.55)" }}>{reviewPeriodLabel}</span></>
+                    : "No active cycle"}
+                </h1>
+                {latestProcessedReport ? (
+                  <span style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "4px",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    padding: "2px 7px",
+                    borderRadius: "4px",
+                    border: `1px solid ${chipColor.border}`,
+                    background: chipColor.bg,
+                    color: chipColor.text,
+                  }}>
+                    {chipLabel}
+                  </span>
+                ) : null}
+                {latestProcessedReport ? (
+                  <span style={{ fontSize: "11px", color: "#354F64" }}>
+                    Last processed {lastProcessedLabel}
+                  </span>
+                ) : null}
+              </div>
+            </div>
+            <Link
+              to="/upload?start=true"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                borderRadius: "8px",
+                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.03)",
+                padding: "7px 14px",
+                fontSize: "11.5px",
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.4)",
+                textDecoration: "none",
+                transition: "all 0.15s",
+                flexShrink: 0,
+              }}
+            >
+              New Review
+            </Link>
           </div>
-          <Link
-            to="/upload?start=true"
-            className="inline-flex items-center gap-2 rounded-lg border border-white/[0.12] bg-white/[0.04] px-3.5 py-1.5 text-[11.5px] font-medium text-white/50 transition-all hover:bg-white/[0.08] hover:text-white/75"
-          >
-            New Review
-          </Link>
-        </div>
+          {/* Divider */}
+          <div style={{ height: "1px", background: "rgba(255,255,255,0.06)", marginTop: "20px" }} />
+        </header>
 
+        {/* Error state */}
+        {loadError ? (
+          <div style={{
+            marginBottom: "1.5rem",
+            borderRadius: "12px",
+            border: "1px solid rgba(248,113,113,0.2)",
+            background: "rgba(239,68,68,0.08)",
+            padding: "12px 20px",
+          }}>
+            <p style={{ margin: 0, fontSize: "13px", color: "#FCA5A5" }}>{loadError}</p>
+          </div>
+        ) : null}
+
+        {/* ── First-run empty state ─────────────────────────────────────── */}
         {isFirstRunWorkspace ? (
-          <section className="overflow-hidden rounded-[28px] border border-white/10 bg-[#09121E] shadow-[0_24px_80px_rgba(0,0,0,0.24)]">
-            <div className="grid gap-0 lg:grid-cols-[1.3fr_0.7fr]">
-              <div className="border-b border-white/8 px-6 py-8 sm:px-8 lg:border-b-0 lg:border-r lg:border-white/8">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#6DBDCC]">
+          <section style={{
+            borderRadius: "20px",
+            border: "1px solid rgba(255,255,255,0.08)",
+            background: "#08111E",
+            overflow: "hidden",
+          }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1.3fr 0.7fr" }}>
+              <div style={{ padding: "40px 48px", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
+                <p style={{ margin: 0, fontSize: "10px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#6DBDCC" }}>
                   First review cycle
                 </p>
-                <h2
-                  className="mt-4 max-w-[12ch] text-[2.1rem] leading-[1.02] text-[#F3F7FB] sm:text-[2.6rem]"
-                  style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
-                >
+                <h2 style={{
+                  margin: "16px 0 0",
+                  fontSize: "clamp(1.8rem, 3vw, 2.5rem)",
+                  lineHeight: 1.02,
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontWeight: 500,
+                  color: "#F3F7FB",
+                  maxWidth: "12ch",
+                }}>
                   The workspace stays quiet until the first cycle begins.
                 </h2>
-                <p className="mt-4 max-w-2xl text-[15px] leading-7 text-[#8FA7BC]">
+                <p style={{ margin: "16px 0 0", fontSize: "15px", lineHeight: "1.7", color: "#8FA7BC", maxWidth: "520px" }}>
                   Bring in one CSV from the current review period. Clarion validates the file, generates the first governance brief,
                   and opens the issue and follow-through workflow from there.
                 </p>
-
-                <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginTop: "32px" }}>
                   {[
                     ["01", "Upload feedback", "Use one current review-period CSV to establish the live cycle."],
                     ["02", "Review signals", "Clarion groups recurring client issues into a decision-ready surface."],
                     ["03", "Open follow-through", "Assign owners and move directly into the governance brief."],
                   ].map(([step, title, body]) => (
-                    <div key={step} className="border-t border-white/10 pt-4">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#4E6A84]">{step}</p>
-                      <h3 className="mt-2 text-[15px] font-semibold text-white">{title}</h3>
-                      <p className="mt-2 text-[13px] leading-6 text-[#7F98AE]">{body}</p>
+                    <div key={step} style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "16px" }}>
+                      <p style={{ margin: 0, fontSize: "10px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#4E6A84" }}>{step}</p>
+                      <h3 style={{ margin: "8px 0 0", fontSize: "14px", fontWeight: 600, color: "#FFFFFF" }}>{title}</h3>
+                      <p style={{ margin: "6px 0 0", fontSize: "12.5px", lineHeight: "1.55", color: "#7F98AE" }}>{body}</p>
                     </div>
                   ))}
                 </div>
-
-                <div className="mt-8 flex flex-wrap items-center gap-3">
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "32px", flexWrap: "wrap" }}>
                   <Link
                     to="/upload?start=true"
-                    className="inline-flex items-center gap-2 rounded-full bg-[#0EA5C2] px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-[#1494AD]"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      borderRadius: "100px",
+                      background: "#0EA5C2",
+                      padding: "10px 20px",
+                      fontSize: "13px",
+                      fontWeight: 600,
+                      color: "#FFFFFF",
+                      textDecoration: "none",
+                    }}
                   >
                     Upload feedback CSV
                   </Link>
                   <Link
                     to="/demo"
-                    className="text-[13px] font-medium text-[#9CC0D3] underline underline-offset-4 transition-colors hover:text-white"
+                    style={{ fontSize: "13px", fontWeight: 500, color: "#9CC0D3", textDecoration: "underline", textUnderlineOffset: "3px" }}
                   >
                     Review sample workspace
                   </Link>
                 </div>
               </div>
-
-              <div className="bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0))] px-6 py-8 sm:px-8">
-                <div className="space-y-5">
+              <div style={{ padding: "40px 32px", background: "rgba(255,255,255,0.01)" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                   {[
                     ["What you need", "One CSV export from the current review period. Clarion checks structure first, then runs full upload validation."],
                     ["What Clarion creates", "The first upload creates the governance brief, issue map, and action list the workspace orbits around."],
                     ["Sample workspace", "The sample workspace uses example law-firm data. Your live workspace stays untouched until you upload your own file."],
                   ].map(([title, body]) => (
-                    <div key={title} className="border-t border-white/8 pt-4">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#5A7D97]">{title}</p>
-                      <p className="mt-2 text-[13px] leading-6 text-[#89A3B8]">{body}</p>
+                    <div key={title} style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "16px" }}>
+                      <p style={{ margin: 0, fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#5A7D97" }}>{title}</p>
+                      <p style={{ margin: "8px 0 0", fontSize: "12.5px", lineHeight: "1.6", color: "#89A3B8" }}>{body}</p>
                     </div>
                   ))}
                 </div>
@@ -601,379 +638,422 @@ const Dashboard = () => {
           </section>
         ) : null}
 
-        {/* Anchored-to strip: suppressed from primary view; data is surfaced in the brief card itself */}
-
-        {loadError ? (
-          <div className="mb-5 rounded-2xl border border-red-400/20 bg-red-500/10 px-5 py-4">
-            <p className="m-0 text-[13px] text-red-200">{loadError}</p>
-          </div>
-        ) : null}
-
+        {/* ── Zone 2: Primary decision surface (two-column) ─────────────── */}
         {!isFirstRunWorkspace ? (
-        <section className="dash-tier">
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: attentionItems.length > 0 ? "1fr 300px" : "1fr",
+            gap: "20px",
+            alignItems: "start",
+          }}>
 
-          <div className="overflow-hidden rounded-[28px] border border-white/[0.13] shadow-[0_32px_100px_rgba(0,0,0,0.36),0_0_0_1px_rgba(255,255,255,0.04)]">
+            {/* LEFT: Brief command card */}
+            <div style={{
+              borderRadius: "18px",
+              border: "1px solid rgba(255,255,255,0.1)",
+              overflow: "hidden",
+              background: "linear-gradient(150deg, #0B1929 0%, #0D2040 55%, #0D1B2A 100%)",
+              position: "relative",
+            }}>
+              {/* Ambient glow */}
+              <div style={{
+                position: "absolute",
+                top: "-60px",
+                right: "-60px",
+                width: "280px",
+                height: "280px",
+                borderRadius: "50%",
+                background: "#1a3a6b",
+                opacity: 0.25,
+                filter: "blur(60px)",
+                pointerEvents: "none",
+              }} aria-hidden />
 
-            {/* -- 1. Current Governance Brief -- */}
-            {(() => {
-              const briefStatus = latestProcessedReport?.status;
-              const chipLabel = briefStatus === "sent" ? "Sent"
-                : briefStatus === "acknowledged" ? "Acknowledged"
-                : briefStatus === "ready" || briefStatus === "escalation" ? "Ready to Send"
-                : "Draft";
-              const chipVariant: "success" | "muted" | "info" | "warn" =
-                briefStatus === "acknowledged" ? "success"
-                : briefStatus === "sent" ? "info"
-                : briefStatus === "ready" ? "success"
-                : briefStatus === "escalation" ? "warn"
-                : "muted";
-              return (
-                <div
-                  className="relative overflow-hidden"
-                  style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
-                >
-                  {/* Radial glow - top right */}
-                  <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#1a3a6b] opacity-40 blur-3xl" aria-hidden />
-                  {/* Dot-grid texture */}
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)", backgroundSize: "20px 20px" }}
-                    aria-hidden
-                  />
-                  {/* Header content */}
-                  <div className="relative px-7 pt-6 pb-5">
-                    <div className="flex flex-wrap items-start justify-between gap-5">
-                      <div>
-                        <span className="inline-flex items-center gap-2">
-                          <span className="h-[12px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
-                          <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">
-                            Governance Brief
-                          </span>
-                        </span>
-                        <div className="mt-3 flex items-start gap-3">
-                          <span className="mt-1 h-[36px] w-[3px] shrink-0 rounded-full bg-[#C4A96A]/60" aria-hidden />
-                          <h2
-                            className="max-w-[12ch] text-[40px] leading-[0.98] tracking-[-0.05em] text-white"
-                            style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
-                          >
-                            {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
-                          </h2>
-                        </div>
-                        {latestProcessedReport ? (
-                          <div className="mt-3 flex items-center gap-2.5 pl-6">
-                            <span className="text-[12px] text-[#3D607C]">{reviewsAnalyzed} reviews analyzed</span>
-                            <span
-                              className={[
-                                "inline-flex items-center rounded-[5px] border px-2 py-0.5 text-[10px] font-semibold",
-                                chipVariant === "success"
-                                  ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-300"
-                                  : chipVariant === "info"
-                                    ? "border-blue-400/30 bg-blue-400/10 text-blue-300"
-                                    : chipVariant === "warn"
-                                      ? "border-amber-400/30 bg-amber-400/10 text-amber-300"
-                                      : "border-white/10 bg-white/5 text-white/50",
-                              ].join(" ")}
-                            >
-                              {chipLabel}
-                            </span>
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="flex flex-wrap items-center gap-2 pt-0.5">
-                        {/* Meeting View is the primary action — entering the room is the key workflow step */}
-                        {latestProcessedReport ? (
-                          <button
-                            type="button"
-                            onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}?present=1`)}
-                            disabled={readyReportCount === 0}
-                            className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] shadow-[0_1px_3px_rgba(0,0,0,0.12)] transition-all hover:bg-[#EEF2F8] hover:shadow-[0_4px_14px_rgba(255,255,255,0.12)] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
-                          >
-                            Open Meeting View
-                          </button>
-                        ) : null}
-                        {latestProcessedReport ? (
-                          <button
-                            type="button"
-                            onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
-                            className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
-                          >
-                            Open Governance Brief <ChevronRight size={13} />
-                          </button>
-                        ) : null}
-                        {latestReadyBrief ? (
-                          <button
-                            type="button"
-                            onClick={() => void handleExportBrief()}
-                            className="inline-flex items-center gap-1.5 rounded-[8px] px-4 py-2 text-[13px] font-medium text-[#4D6E8A] transition-all hover:bg-white/[0.08] hover:text-white active:scale-[0.98]"
-                          >
-                            {loading ? (
-                              <><Loader2 size={13} className="animate-spin" /> Loading</>
-                            ) : planUsage.pdfWatermark ? "Preview PDF" : "Download PDF"}
-                          </button>
-                        ) : latestProcessedReport ? null : (
-                          <button
-                            type="button"
-                            onClick={() => navigate("/upload")}
-                            className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] transition-all hover:bg-[#EEF2F8] active:scale-[0.98]"
-                          >
-                            Start New Review <ChevronRight size={13} />
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  {/* -- Instrument strip -- */}
-                  {latestProcessedReport ? (
-                    <div
-                      className="relative flex flex-wrap divide-x divide-white/[0.07]"
-                      style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
-                    >
-                      <div className="min-w-[88px] px-5 py-3.5">
-                        <p className="text-[24px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{latestSignals.length}</p>
-                        <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Issues detected</p>
-                      </div>
-                      <div className="min-w-[88px] px-5 py-3.5">
-                        <p className="text-[24px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{openActions.length}</p>
-                        <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Open actions</p>
-                      </div>
-                      <div className="min-w-[88px] px-5 py-3.5">
-                        <p
-                          className="text-[24px] font-semibold leading-none"
-                          style={{ fontVariantNumeric: "tabular-nums", color: overdueActions.length > 0 ? "#F87171" : "#ffffff" }}
-                        >
-                          {overdueActions.length}
-                        </p>
-                        <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Overdue</p>
-                      </div>
-                      <div className="min-w-[88px] px-5 py-3.5">
-                        <p className="text-[24px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{reviewsAnalyzed}</p>
-                        <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Reviews analyzed</p>
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              );
-            })()}
-
-            {/* -- 2. Guidance directive connector band -- */}
-            {guidance.directive ? (
-              <div
-                className="relative px-7 py-2.5"
-                style={{ background: "#0D1B2A", borderTop: "1px solid rgba(255,255,255,0.06)" }}
-              >
-                <div className="absolute inset-y-0 left-0 w-[3px] bg-[#0EA5C2]" />
-                <p className="text-[12px] font-medium text-[#A0BDD4]">
-                  <span className="mr-1.5 text-[#0EA5C2]">{"→"}</span>
-                  {guidance.directive}
-                </p>
-              </div>
-            ) : null}
-
-            {/* -- 3. Needs Attention -- */}
-            {(overdueActions.length > 0 || unownedActionsCount > 0 || highSeveritySignalsCount > 0 || exposure?.partner_escalation_required) ? (
-              <div
-                className="relative bg-[#0D1B2A]"
-                style={{ borderTop: "1px solid rgba(255,255,255,0.06)", borderLeft: "3px solid #F59E0B" }}
-              >
-                <div className="flex items-center gap-2.5 border-b border-white/[0.06] px-5 py-3">
-                  <span className="relative flex h-2 w-2 shrink-0">
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-400" />
-                  </span>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#6E8FAE]">Needs attention</p>
-                </div>
-                <ul className="divide-y divide-white/[0.04]">
-                  {overdueActions.length > 0 && (
-                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-white/[0.03]">
-                      <div className="flex items-center gap-3">
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#F87171]" />
-                        <span className="text-[13px] text-[#CBD5E0]">
-                          <span className="font-semibold text-[#F87171]">{overdueActions.length} overdue</span>{" "}
-                          {overdueActions.length === 1 ? "action" : "actions"}
-                        </span>
-                      </div>
-                      <Link
-                        to="/dashboard/actions?filter=overdue"
-                        className="shrink-0 inline-flex items-center rounded-[6px] border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-semibold text-white/70 transition-all hover:bg-white/10 hover:text-white"
-                      >
-                        Review →
-                      </Link>
-                    </li>
-                )}
-                  {exposure?.partner_escalation_required ? (
-                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-white/[0.03]">
-                      <div className="flex items-center gap-3">
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#F87171]" />
-                        <span className="text-[13px] text-[#CBD5E0]">
-                          <span className="font-semibold text-[#F87171]">Partner escalation</span> required
-                        </span>
-                      </div>
-                      {latestProcessedReport ? (
-                        <Link
-                          to={`/dashboard/reports/${latestProcessedReport.id}`}
-                          className="shrink-0 inline-flex items-center rounded-[6px] border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-semibold text-white/70 transition-all hover:bg-white/10 hover:text-white"
-                        >
-                          Open brief →
-                        </Link>
-                      ) : null}
-                    </li>
-                  ) : null}
-                  {highSeveritySignalsCount > 0 && (
-                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-white/[0.03]">
-                      <div className="flex items-center gap-3">
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
-                        <span className="text-[13px] text-[#CBD5E0]">
-                          <span className="font-semibold text-amber-400">{highSeveritySignalsCount} high-severity</span>{" "}
-                          {highSeveritySignalsCount === 1 ? "issue" : "issues"}
-                        </span>
-                      </div>
-                      <Link
-                        to="/dashboard/signals?filter=high"
-                        className="shrink-0 inline-flex items-center rounded-[6px] border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-semibold text-white/70 transition-all hover:bg-white/10 hover:text-white"
-                      >
-                        View →
-                      </Link>
-                    </li>
-                  )}
-                  {unownedActionsCount > 0 && (
-                    <li className="flex items-center justify-between gap-4 px-5 py-2.5 transition-colors hover:bg-white/[0.03]">
-                      <div className="flex items-center gap-3">
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
-                        <span className="text-[13px] text-[#CBD5E0]">
-                          <span className="font-semibold text-amber-400">{unownedActionsCount}</span>{" "}
-                          {unownedActionsCount === 1 ? "action needs" : "actions need"} an owner
-                        </span>
-                      </div>
-                      <Link
-                        to="/dashboard/actions"
-                        className="shrink-0 inline-flex items-center rounded-[6px] border border-white/15 bg-white/[0.06] px-2.5 py-1 text-[11px] font-semibold text-white/70 transition-all hover:bg-white/10 hover:text-white"
-                      >
-                        Assign →
-                      </Link>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            ) : null}
-
-            {/* -- 4. Governance Loop -- */}
-            {(() => {
-              const briefId = latestProcessedReport?.id;
-              const hasReport = Boolean(latestProcessedReport);
-              const reportReady = latestProcessedReport?.status === "ready";
-              const activeStep =
-                !hasReport || !reportReady ? 0
-                : overdueActions.length > 0 ? 3
-                : openActions.length === 0 ? 1
-                : 2;
-              type LoopStep = { label: string; stat: string; to: string };
-              const steps: LoopStep[] = [
-                {
-                  label: "New Review",
-                  stat: readyReportCount > 0 ? `${readyReportCount} complete` : "Upload CSV",
-                  to: "/upload",
-                },
-                {
-                  label: "Governance Brief",
-                  stat: hasReport ? reviewPeriodLabel : "Awaiting review",
-                  to: briefId ? `/dashboard/reports/${briefId}` : "/dashboard/reports",
-                },
-                {
-                  label: "Meeting View",
-                  stat: reportReady ? "Ready" : "Pending brief",
-                  to: briefId ? `/dashboard/reports/${briefId}?present=1` : "/dashboard/reports",
-                },
-                {
-                  label: "Follow-Through",
-                  stat: openActions.length > 0 ? `${openActions.length} open` : "All clear",
-                  to: "/dashboard/actions",
-                },
-              ];
-              return (
-                <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                  {/* Loop header - dark navy band */}
-                  <div
-                    className="flex items-center justify-between px-5 py-3"
-                    style={{ background: "#080F1C" }}
-                  >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/50">Governance Loop</p>
-                    <span className="text-[10px] font-semibold text-[#C4A96A]/70">Step {activeStep + 1} / {steps.length}</span>
-                  </div>
-                  {/* Step columns */}
-                  <div className="grid grid-cols-4 divide-x divide-white/[0.06]">
-                    {steps.map((step, index) => (
-                      <Link
-                        key={step.label}
-                        to={step.to}
-                        className={[
-                          "group flex flex-col px-5 py-4 transition-all duration-150",
-                          index === activeStep
-                            ? "bg-[#0B1829]"
-                            : "bg-[#F8FAFC] hover:bg-[#F1F5F9]",
-                        ].join(" ")}
-                        style={index === activeStep ? { borderTop: "2px solid #C4A96A" } : { borderTop: "2px solid transparent" }}
-                      >
-                        <span className={[
-                          "text-[9px] font-bold tracking-[0.14em]",
-                          index === activeStep ? "text-[#4A6882]" : "text-[#B8C4CE]",
-                        ].join(" ")}>
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className={[
-                          "mt-1.5 text-[13px] font-semibold leading-tight",
-                          index === activeStep ? "text-white" : "text-[#1E293B]",
-                        ].join(" ")}>
-                          {step.label}
-                        </span>
-                        <span className={[
-                          "mt-1 text-[11px] leading-tight",
-                          index === activeStep ? "text-[#4A6882]" : "text-[#94A3B8]",
-                        ].join(" ")}>
-                          {step.stat}
-                        </span>
-                        {index === activeStep && (
-                          <span className="mt-3 flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.08em] text-[#C4A96A]/80">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#C4A96A]/70" />
-                            Current
-                          </span>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              );
-            })()}
-
-            {/* Slab footnote — inset system notices */}
-            {(showBaselineNotice || (historyTruncated && historyNotice)) && (
-              <div className="border-t border-white/[0.05] bg-[#070E1A] px-7 py-3">
-                {showBaselineNotice ? (
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="text-[10.5px] tracking-[0.02em] text-white/25">
-                      Baseline cycle — trend comparison becomes available after the next upload.
+              {/* Brief headline */}
+              <div style={{ padding: "32px 36px 28px", position: "relative" }}>
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "16px", flexWrap: "wrap" }}>
+                  <div style={{ flex: "1 1 0", minWidth: 0 }}>
+                    <p style={{
+                      margin: 0,
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "#3D6B8A",
+                    }}>
+                      Current Governance Brief
                     </p>
+                    <div style={{ display: "flex", alignItems: "flex-start", gap: "14px", marginTop: "14px" }}>
+                      <span style={{
+                        display: "block",
+                        width: "3px",
+                        height: "48px",
+                        borderRadius: "2px",
+                        background: "linear-gradient(180deg, #C4A96A 0%, rgba(196,169,106,0.3) 100%)",
+                        flexShrink: 0,
+                        marginTop: "4px",
+                      }} aria-hidden />
+                      <h2 style={{
+                        margin: 0,
+                        fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)",
+                        lineHeight: 1.0,
+                        letterSpacing: "-0.04em",
+                        fontFamily: "'Playfair Display', Georgia, serif",
+                        fontWeight: 500,
+                        color: "#FFFFFF",
+                      }}>
+                        {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
+                      </h2>
+                    </div>
+                    {latestProcessedReport ? (
+                      <p style={{ margin: "10px 0 0 17px", fontSize: "12px", color: "#2E5470" }}>
+                        {reviewsAnalyzed} reviews analyzed
+                      </p>
+                    ) : null}
+                  </div>
+
+                  {/* CTA stack */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "8px", alignItems: "flex-end", paddingTop: "4px" }}>
+                    {latestProcessedReport ? (
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}?present=1`)}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          borderRadius: "8px",
+                          background: "#FFFFFF",
+                          padding: "9px 18px",
+                          fontSize: "13px",
+                          fontWeight: 600,
+                          color: "#0D1B2A",
+                          border: "none",
+                          cursor: "pointer",
+                          boxShadow: "0 1px 4px rgba(0,0,0,0.15), 0 4px 16px rgba(255,255,255,0.08)",
+                          whiteSpace: "nowrap",
+                          transition: "all 0.15s",
+                        }}
+                      >
+                        Open Meeting View
+                      </button>
+                    ) : null}
+                    {latestProcessedReport ? (
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          borderRadius: "8px",
+                          border: "1px solid rgba(255,255,255,0.15)",
+                          background: "rgba(255,255,255,0.06)",
+                          padding: "8px 16px",
+                          fontSize: "12px",
+                          fontWeight: 500,
+                          color: "rgba(255,255,255,0.65)",
+                          cursor: "pointer",
+                          whiteSpace: "nowrap",
+                          transition: "all 0.15s",
+                        }}
+                      >
+                        Open Governance Brief <ChevronRight size={12} />
+                      </button>
+                    ) : null}
+                    {latestReadyBrief ? (
+                      <button
+                        type="button"
+                        onClick={() => void handleExportBrief()}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          padding: "6px 12px",
+                          fontSize: "11.5px",
+                          fontWeight: 500,
+                          color: "#3D6282",
+                          background: "transparent",
+                          border: "none",
+                          cursor: "pointer",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {loading ? <><Loader2 size={12} className="animate-spin" /> Loading</> : planUsage.pdfWatermark ? "Preview PDF" : "Download PDF"}
+                      </button>
+                    ) : (!latestProcessedReport ? (
+                      <button
+                        type="button"
+                        onClick={() => navigate("/upload")}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          borderRadius: "8px",
+                          background: "#FFFFFF",
+                          padding: "9px 18px",
+                          fontSize: "13px",
+                          fontWeight: 600,
+                          color: "#0D1B2A",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Start New Review <ChevronRight size={13} />
+                      </button>
+                    ) : null)}
+                  </div>
+                </div>
+              </div>
+
+              {/* Instrument strip — cycle metrics */}
+              {latestProcessedReport ? (
+                <div style={{
+                  display: "flex",
+                  borderTop: "1px solid rgba(255,255,255,0.07)",
+                  position: "relative",
+                }}>
+                  {[
+                    { value: latestSignals.length,    label: "Issues detected",   color: latestSignals.length > 0 ? "#FFFFFF" : "#FFFFFF" },
+                    { value: openActions.length,      label: "Open actions",      color: "#FFFFFF" },
+                    { value: overdueActions.length,   label: "Overdue",           color: overdueActions.length > 0 ? "#F87171" : "#FFFFFF" },
+                    { value: newSignalsCount,         label: "New this cycle",    color: newSignalsCount > 0 ? "#FCD34D" : "#FFFFFF" },
+                  ].map((metric) => (
+                    <div key={metric.label} style={{
+                      flex: "1 1 0",
+                      padding: "16px 20px",
+                      borderRight: "1px solid rgba(255,255,255,0.07)",
+                    }}>
+                      <p style={{
+                        margin: 0,
+                        fontSize: "22px",
+                        fontWeight: 600,
+                        lineHeight: 1,
+                        color: metric.color,
+                        fontVariantNumeric: "tabular-nums",
+                      }}>
+                        {metric.value}
+                      </p>
+                      <p style={{ margin: "5px 0 0", fontSize: "10.5px", fontWeight: 500, color: "#2E5470", letterSpacing: "0.03em" }}>
+                        {metric.label}
+                      </p>
+                    </div>
+                  ))}
+                  {/* Remove the last border */}
+                  <style>{`.home-strip > div:last-child { border-right: none !important; }`}</style>
+                </div>
+              ) : null}
+
+              {/* Cycle brief deltas — if we have signals from a previous cycle */}
+              {latestProcessedReport && (newSignalsCount > 0 || overdueActions.length > 0) ? (
+                <div style={{
+                  padding: "12px 20px",
+                  borderTop: "1px solid rgba(255,255,255,0.05)",
+                  background: "rgba(0,0,0,0.2)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}>
+                  <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "#0EA5C2", flexShrink: 0 }} aria-hidden />
+                  <p style={{ margin: 0, fontSize: "11.5px", color: "#5A8AAA", lineHeight: 1.4 }}>
+                    {overdueActions.length > 0
+                      ? `${overdueActions.length} overdue ${overdueActions.length === 1 ? "action requires" : "actions require"} partner review before this brief is meeting-ready.`
+                      : `${newSignalsCount} new ${newSignalsCount === 1 ? DISPLAY_LABELS.clientIssueSingular.toLowerCase() : DISPLAY_LABELS.clientIssuePlural.toLowerCase()} detected since last review — assign partner review.`}
+                  </p>
+                </div>
+              ) : null}
+
+              {/* Baseline / history notices */}
+              {(showBaselineNotice || (historyTruncated && historyNotice)) ? (
+                <div style={{
+                  borderTop: "1px solid rgba(255,255,255,0.04)",
+                  background: "rgba(0,0,0,0.25)",
+                  padding: "10px 20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "8px",
+                }}>
+                  <p style={{ margin: 0, fontSize: "10.5px", color: "rgba(255,255,255,0.2)", letterSpacing: "0.02em" }}>
+                    {showBaselineNotice
+                      ? "Baseline cycle — trend comparison becomes available after the next upload."
+                      : historyNotice}
+                  </p>
+                  {showBaselineNotice ? (
                     <button
                       type="button"
                       onClick={dismissBaselineNotice}
                       aria-label="Dismiss"
-                      className="text-[10.5px] text-white/20 transition-colors hover:text-white/40"
+                      style={{ fontSize: "10.5px", color: "rgba(255,255,255,0.18)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
                     >
                       ✕
                     </button>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+
+            {/* RIGHT: Attention column — only mounts when there's something */}
+            {attentionItems.length > 0 ? (
+              <div style={{
+                borderRadius: "14px",
+                border: "1px solid rgba(255,255,255,0.08)",
+                overflow: "hidden",
+                background: "#09121E",
+              }}>
+                <div style={{
+                  padding: "12px 16px",
+                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}>
+                  {/* Amber pulse dot */}
+                  <span style={{ position: "relative", display: "inline-flex", width: "8px", height: "8px", flexShrink: 0 }}>
+                    <span style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: "50%",
+                      background: "#F59E0B",
+                      animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite",
+                      opacity: 0.4,
+                    }} />
+                    <span style={{ position: "relative", display: "inline-flex", width: "8px", height: "8px", borderRadius: "50%", background: "#F59E0B" }} />
+                  </span>
+                  <p style={{ margin: 0, fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#5A7D97" }}>
+                    Needs attention
+                  </p>
+                </div>
+                <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+                  {attentionItems.map((item) => (
+                    <li key={item.id} style={{
+                      borderBottom: "1px solid rgba(255,255,255,0.04)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "12px",
+                      padding: "11px 16px",
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
+                        <span style={{
+                          width: "6px",
+                          height: "6px",
+                          borderRadius: "50%",
+                          background: item.severity === "high" ? "#F87171" : "#FCD34D",
+                          flexShrink: 0,
+                        }} />
+                        <span style={{ fontSize: "12.5px", color: "#A8C4D8", lineHeight: 1.3 }}>{item.label}</span>
+                      </div>
+                      <Link
+                        to={item.to}
+                        style={{
+                          flexShrink: 0,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          borderRadius: "5px",
+                          border: "1px solid rgba(255,255,255,0.12)",
+                          background: "rgba(255,255,255,0.04)",
+                          padding: "4px 10px",
+                          fontSize: "10.5px",
+                          fontWeight: 600,
+                          color: "rgba(255,255,255,0.55)",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {item.action} →
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                {/* Cycle summary below attention list */}
+                {latestProcessedReport && latestSignals.length > 0 ? (
+                  <div style={{ padding: "12px 16px", borderTop: "1px solid rgba(255,255,255,0.04)", background: "rgba(0,0,0,0.15)" }}>
+                    <p style={{ margin: 0, fontSize: "11px", color: "#2E4D63", lineHeight: 1.5 }}>
+                      {latestSignals.length} total {latestSignals.length === 1 ? "issue" : "issues"} across {signalCategoryCounts.length} {signalCategoryCounts.length === 1 ? "category" : "categories"} in this cycle.
+                    </p>
                   </div>
                 ) : null}
-                {historyTruncated && historyNotice ? (
-                  <p className="text-[10.5px] tracking-[0.02em] text-white/25">{historyNotice}</p>
-                ) : null}
               </div>
-            )}
+            ) : null}
 
-          </div>{/* end unified slab */}
-        </section>
+          </div>
         ) : null}
+
+        {/* ── Zone 3: Governance loop ───────────────────────────────────── */}
+        {!isFirstRunWorkspace ? (
+          <div style={{ marginTop: "20px" }}>
+            {/* Loop track */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              borderRadius: "12px",
+              border: "1px solid rgba(255,255,255,0.07)",
+              overflow: "hidden",
+            }}>
+              {loopSteps.map((step, index) => (
+                <Link
+                  key={step.label}
+                  to={step.to}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    padding: "14px 18px",
+                    background: index === loopActiveStep ? "#0A1724" : "#F8FAFC",
+                    borderTop: `2px solid ${index === loopActiveStep ? "#C4A96A" : "transparent"}`,
+                    borderRight: index < loopSteps.length - 1 ? `1px solid ${index === loopActiveStep ? "rgba(255,255,255,0.07)" : "#E2E8F0"}` : "none",
+                    textDecoration: "none",
+                    transition: "background 0.12s",
+                  }}
+                >
+                  <span style={{
+                    fontSize: "9px",
+                    fontWeight: 700,
+                    letterSpacing: "0.14em",
+                    color: index === loopActiveStep ? "#3D5E7A" : "#B8C4CE",
+                  }}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span style={{
+                    marginTop: "5px",
+                    fontSize: "12.5px",
+                    fontWeight: 600,
+                    lineHeight: 1.2,
+                    color: index === loopActiveStep ? "#FFFFFF" : "#1E293B",
+                  }}>
+                    {step.label}
+                  </span>
+                  <span style={{
+                    marginTop: "3px",
+                    fontSize: "10.5px",
+                    color: index === loopActiveStep ? "#2E5470" : "#94A3B8",
+                    lineHeight: 1.3,
+                  }}>
+                    {step.stat}
+                  </span>
+                  {index === loopActiveStep ? (
+                    <span style={{
+                      marginTop: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                      fontSize: "9.5px",
+                      fontWeight: 700,
+                      letterSpacing: "0.08em",
+                      color: "rgba(196,169,106,0.7)",
+                    }}>
+                      <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "rgba(196,169,106,0.6)" }} />
+                      Current
+                    </span>
+                  ) : null}
+                </Link>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
       </div>
-    </section>
+    </div>
   );
 };
 
 export default Dashboard;
-
