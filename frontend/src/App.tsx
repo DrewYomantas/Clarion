@@ -58,7 +58,7 @@ import DashboardTeam from "./pages/DashboardTeam";
 import InviteAccept from "./pages/InviteAccept";
 import ActionDetail from "./pages/ActionDetail";
 import ApprovalQueuePage from "./pages/ApprovalQueuePage";
-import MeetingsPage from "./pages/MeetingsPage";
+import MeetingsRedirect from "./pages/MeetingsRedirect";
 
 const queryClient = new QueryClient();
 
@@ -104,7 +104,7 @@ const AppRoutes = ({ location }: { location: Location }) => (
         }
       />
       <Route path="/dashboard/reports" element={<ReportsPage />} />
-      <Route path="/dashboard/meetings" element={<MeetingsPage />} />
+      <Route path="/dashboard/meetings" element={<MeetingsRedirect />} />
       <Route path="/dashboard/signals" element={<SignalsPage />} />
       <Route path="/dashboard/reports/:id" element={<ReportDetail />} />
       <Route path="/dashboard/signals/:signalId" element={<SignalDetail />} />

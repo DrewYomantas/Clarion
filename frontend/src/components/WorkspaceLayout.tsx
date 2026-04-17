@@ -21,7 +21,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  Calendar,
   ClipboardList,
   FileText,
   Home,
@@ -60,13 +59,6 @@ const PRIMARY_NAV = [
     to: "/dashboard/actions",
     label: "Follow-Through",
     Icon: ClipboardList,
-    iconClass: "text-[#E2E8F0]",
-    iconActiveClass: "text-white",
-  },
-  {
-    to: "/dashboard/meetings",
-    label: "Meetings",
-    Icon: Calendar,
     iconClass: "text-[#E2E8F0]",
     iconActiveClass: "text-white",
   },
@@ -160,7 +152,6 @@ const resolvePageLabel = (pathname: string): string => {
   if (pathname === "/upload") return "New Review";
 
   // Account menu routes
-  if (pathname === "/dashboard/meetings") return "Meetings";
   if (pathname === "/dashboard/billing")  return "Billing";
   if (pathname === "/dashboard/account")  return "Account";
   if (pathname === "/dashboard/team")     return "Team";
@@ -184,9 +175,6 @@ const resolvePageNote = (pathname: string): string => {
   }
   if (pathname === "/dashboard/reports" || pathname.startsWith("/dashboard/reports/")) {
     return "Open the partner-ready Governance Brief and confirm follow-through and next decisions.";
-  }
-  if (pathname === "/dashboard/meetings") {
-    return "Chronological record of governance review meetings and their associated briefs.";
   }
   if (pathname === "/dashboard/billing") {
     return "Manage your plan and subscription details.";

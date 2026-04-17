@@ -223,10 +223,10 @@ const ReportsPage = () => {
                   </button>
                   <button
                     type="button"
-                    onClick={() => navigate(`/dashboard/brief-customization?reportId=${latestRow.id}`)}
+                    onClick={() => navigate(`/dashboard/reports/${latestRow.id}?present=1`)}
                     className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
                   >
-                    Prepare Meeting Brief
+                    Open Meeting View
                   </button>
                 </div>
               ) : null}
@@ -359,7 +359,7 @@ const ReportsPage = () => {
                     planType={latestRow.planType}
                     isPast={false}
                     onView={() => navigate(`/dashboard/reports/${latestRow.id}`)}
-                    onPrepare={() => navigate(`/dashboard/brief-customization?reportId=${latestRow.id}`)}
+                    onPrepare={() => navigate(`/dashboard/reports/${latestRow.id}?present=1`)}
                     onDownload={() => void handleDownload(latestRow)}
                   />
                 </div>
