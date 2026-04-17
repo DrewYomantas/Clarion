@@ -51,50 +51,25 @@ const MeetingsPage = () => {
   const latestRow = rows[0] ?? null;
   const priorRows = rows.slice(1);
 
+  const statsSlot = !loading && rows.length > 0 ? (
+    <div className="flex items-center gap-5">
+      <div className="text-right">
+        <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#4A6FA5]">Sessions</p>
+        <p className="mt-0.5 text-[13px] font-semibold text-[#CBD5E1]">{rows.length}</p>
+      </div>
+      <div className="text-right">
+        <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#4A6FA5]">Most recent</p>
+        <p className="mt-0.5 text-[13px] font-semibold text-[#CBD5E1]">{latestRow?.period || "—"}</p>
+      </div>
+    </div>
+  ) : null;
+
   return (
     <PageWrapper
       eyebrow="Review Meetings"
       title="Meetings"
-      description="Chronological record of governance review meetings linked to their Governance Briefs."
-      contentClassName="stage-sequence"
+      actions={statsSlot}
     >
-      {/* Dark header slab — compact, meets content quickly */}
-      <section className="overflow-hidden rounded-[14px] border border-white/[0.13] shadow-[0_8px_32px_rgba(0,0,0,0.18),0_0_0_1px_rgba(255,255,255,0.04)]">
-        <div
-          className="relative px-6 py-4"
-          style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
-        >
-          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#1a3a6b] opacity-25 blur-3xl" aria-hidden />
-          <div className="relative flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <p className="gov-type-eyebrow text-[#C4A96A]/90 mb-1.5">Meeting Record</p>
-              <h2
-                className="text-white"
-                style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "20px", fontWeight: 700, lineHeight: 1.25 }}
-              >
-                {loading
-                  ? "Loading record…"
-                  : rows.length === 0
-                    ? "No sessions on record yet"
-                    : rows.length === 1
-                      ? "1 governance session"
-                      : `${rows.length} governance sessions`}
-              </h2>
-            </div>
-            <div className="flex items-center gap-6 text-[12px]">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#4A6FA5]">Total sessions</p>
-                <p className="mt-0.5 font-semibold text-[#CBD5E1]">{loading ? "—" : String(rows.length)}</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#4A6FA5]">Most recent</p>
-                <p className="mt-0.5 font-semibold text-[#CBD5E1]">{loading ? "—" : latestRow?.period || "None"}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Content area */}
       {error ? (
         <div className="rounded-[10px] border border-[#EF4444]/20 bg-[#FEF2F2] px-5 py-4 text-[13px] text-[#991B1B]">{error}</div>
@@ -129,12 +104,14 @@ const MeetingsPage = () => {
           {/* Latest session — featured row */}
           {latestRow && (
             <div>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="h-px flex-1 bg-[#E5E2DC]" />
-                <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">Latest session</p>
-                <div className="h-px flex-1 bg-[#E5E2DC]" />
-              </div>
-              <article className="rounded-[12px] border border-[#DDD8D0] bg-white px-5 py-[18px] shadow-[0_1px_3px_rgba(13,27,42,0.06),0_0_0_1px_rgba(13,27,42,0.02)] border-l-[3px] border-l-[#C4A96A]">
+              {priorRows.length > 0 && (
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="h-px flex-1 bg-[#E5E2DC]" />
+                  <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">Latest session</p>
+                  <div className="h-px flex-1 bg-[#E5E2DC]" />
+                </div>
+              )}
+              <article className="rounded-[12px] border border-[#DDD8D0] bg-white px-5 py-3.5 shadow-[0_1px_3px_rgba(13,27,42,0.06),0_0_0_1px_rgba(13,27,42,0.02)] border-l-[3px] border-l-[#C4A96A]">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
