@@ -151,22 +151,23 @@ export default function GovernanceBriefCard({
       }
       actions={
         <>
-          {onView ? (
-            <button
-              type="button"
-              onClick={onView}
-              className="inline-flex items-center rounded-[6px] bg-[#0D1B2A] px-3 py-1.5 text-[12px] font-medium text-white transition-colors hover:bg-[#16263b]"
-            >
-              Open Governance Brief
-            </button>
-          ) : null}
+          {/* Meeting View is the primary action for current briefs */}
           {!isPast && onPrepare ? (
             <button
               type="button"
               onClick={onPrepare}
-              className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+              className="inline-flex items-center rounded-[6px] bg-[#0D1B2A] px-3 py-1.5 text-[12px] font-medium text-white transition-colors hover:bg-[#16263b]"
             >
               Open Meeting View
+            </button>
+          ) : null}
+          {onView ? (
+            <button
+              type="button"
+              onClick={onView}
+              className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
+            >
+              {isPast ? "Open Brief" : "Open Governance Brief"}
             </button>
           ) : null}
           {onDownload ? (

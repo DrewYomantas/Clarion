@@ -214,19 +214,20 @@ const ReportsPage = () => {
               </div>
               {latestRow ? (
                 <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => navigate(`/dashboard/reports/${latestRow.id}`)}
-                    className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] shadow-[0_1px_3px_rgba(0,0,0,0.12)] transition-all hover:bg-[#EEF2F8] active:scale-[0.98]"
-                  >
-                    Open Current Brief
-                  </button>
+                  {/* Meeting View is the primary action on the Briefs surface too */}
                   <button
                     type="button"
                     onClick={() => navigate(`/dashboard/reports/${latestRow.id}?present=1`)}
-                    className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+                    className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] shadow-[0_1px_3px_rgba(0,0,0,0.12)] transition-all hover:bg-[#EEF2F8] active:scale-[0.98]"
                   >
                     Open Meeting View
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/dashboard/reports/${latestRow.id}`)}
+                    className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+                  >
+                    Open Current Brief
                   </button>
                 </div>
               ) : null}

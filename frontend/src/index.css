@@ -2722,41 +2722,67 @@ body {
      * Click "Exit" in the top bar, or press Escape
    ----------------------------------------------------------------------- */
 
+/* ── Meeting Mode overlay — flagship live-review workspace ── */
 .brief-present-overlay {
   position: fixed;
   inset: 0;
   z-index: 9000;
   display: flex;
   flex-direction: column;
-  background: #F4F6F9;
-  animation: gov-fade-in 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Navy canvas — same product family as Home, not a print page */
+  background: linear-gradient(180deg, #060D1A 0%, #081120 100%);
+  animation: gov-fade-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Top exit bar */
+/* Command bar — matches the authority of the Home slab */
 .brief-present-bar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   padding: 0 28px;
-  height: 50px;
-  background: #0D1B2A;
-  color: #E2E8F0;
+  height: 56px;
+  background: #0B1929;
   flex-shrink: 0;
   border-bottom: 1px solid rgba(255,255,255,0.07);
   user-select: none;
+  position: relative;
+}
+
+/* Gold accent bar — same visual signal as the active nav item */
+.brief-present-bar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #C4A96A;
+  opacity: 0.7;
 }
 
 .brief-present-bar-label {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #94A3B8;
+  color: #C4A96A;
+  opacity: 0.9;
+}
+
+/* Bar context slot — brief title shown in bar */
+.brief-present-bar-context {
+  font-size: 13px;
+  font-weight: 500;
+  color: #8FA7BC;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 360px;
 }
 
 .brief-present-bar-hint {
   font-size: 11px;
-  color: #475569;
+  color: #2D4A62;
   margin-left: auto;
 }
 
@@ -2766,51 +2792,51 @@ body {
   gap: 6px;
   padding: 5px 12px;
   border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.06);
-  color: #CBD5E1;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: #8FA7BC;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 120ms ease, color 120ms ease;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
 }
 
 .brief-present-exit-btn:hover {
-  background: rgba(255,255,255,0.12);
-  color: #F1F5F9;
+  background: rgba(255,255,255,0.1);
+  color: #E2E8F0;
+  border-color: rgba(255,255,255,0.22);
 }
 
 .brief-present-exit-btn:focus-visible {
-  outline: 2px solid #0EA5C2;
+  outline: 2px solid #C4A96A;
   outline-offset: 2px;
 }
 
-/* Scrollable content area */
+/* Scrollable content area — navy background through scroll */
 .brief-present-scroll {
   flex: 1;
   overflow-y: auto;
-  padding: 52px 24px 96px;
-  /* Larger base font for on-screen legibility */
+  padding: 32px 20px 80px;
   font-size: 15px;
   line-height: 1.65;
   color: #1E293B;
 }
 
 .brief-present-content {
-  max-width: 880px;
+  max-width: 1060px;
   margin-inline: auto;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 14px;
 }
 
-/* Present mode section cards -- simplified, high-contrast, print-safe */
+/* Present mode section cards — parchment on navy, premium and calm */
 .brief-present-content .brief-section {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 10px;
-  padding: 28px 32px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  background: #FAFAF8;
+  border: 1px solid #DDD8D0;
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.03);
   page-break-inside: avoid;
   break-inside: avoid;
 }
@@ -2818,14 +2844,14 @@ body {
 .brief-present-content .brief-section-eyebrow {
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: #64748B;
-  margin: 0 0 6px;
+  color: #9CA3AF;
+  margin: 0 0 5px;
 }
 
 .brief-present-content .brief-section-title {
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 700;
   color: #0D1B2A;
   line-height: 1.2;
@@ -2839,8 +2865,8 @@ body {
 }
 
 .brief-present-content .brief-signal-row {
-  padding: 13px 0;
-  border-top: 1px solid #E5E7EB;
+  padding: 12px 0;
+  border-top: 1px solid #E5E2DC;
 }
 
 .brief-present-content .brief-signal-row:first-child {
@@ -2854,8 +2880,8 @@ body {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  padding: 13px 0;
-  border-top: 1px solid #E5E7EB;
+  padding: 12px 0;
+  border-top: 1px solid #E5E2DC;
 }
 
 .brief-present-content .brief-action-row:first-child {
@@ -2863,7 +2889,7 @@ body {
   padding-top: 0;
 }
 
-/* Print / PDF export overrides */
+/* Print / PDF export overrides — clean white for export */
 @media print {
   @page {
     margin: 22mm 18mm 20mm;
@@ -2888,6 +2914,7 @@ body {
     overflow: visible;
     padding: 0;
     font-size: 13px;
+    background: #FFFFFF;
   }
 
   .brief-present-content {
@@ -2896,6 +2923,7 @@ body {
   }
 
   .brief-present-content .brief-section {
+    background: #FFFFFF;
     border: 1px solid #CBD5E1;
     border-radius: 4px;
     padding: 16px 18px;

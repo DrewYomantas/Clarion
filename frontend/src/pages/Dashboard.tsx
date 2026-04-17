@@ -680,23 +680,24 @@ const Dashboard = () => {
                         ) : null}
                       </div>
                       <div className="flex flex-wrap items-center gap-2 pt-0.5">
-                        {latestProcessedReport ? (
-                          <button
-                            type="button"
-                            onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
-                            className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] shadow-[0_1px_3px_rgba(0,0,0,0.12)] transition-all hover:bg-[#EEF2F8] hover:shadow-[0_4px_14px_rgba(255,255,255,0.12)] active:scale-[0.98]"
-                          >
-                            Open Governance Brief <ChevronRight size={13} />
-                          </button>
-                        ) : null}
+                        {/* Meeting View is the primary action — entering the room is the key workflow step */}
                         {latestProcessedReport ? (
                           <button
                             type="button"
                             onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}?present=1`)}
                             disabled={readyReportCount === 0}
-                            className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
+                            className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] shadow-[0_1px_3px_rgba(0,0,0,0.12)] transition-all hover:bg-[#EEF2F8] hover:shadow-[0_4px_14px_rgba(255,255,255,0.12)] active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
                           >
                             Open Meeting View
+                          </button>
+                        ) : null}
+                        {latestProcessedReport ? (
+                          <button
+                            type="button"
+                            onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
+                            className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+                          >
+                            Open Governance Brief <ChevronRight size={13} />
                           </button>
                         ) : null}
                         {latestReadyBrief ? (

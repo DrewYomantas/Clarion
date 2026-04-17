@@ -1543,58 +1543,88 @@ const ReportDetail = () => {
   return (
     <>
       {/* ── Present mode overlay ──────────────────────────────────────────── */}
-      <BriefPresentMode active={presentMode} onExit={exitPresent}>
-        {/* Present mode header */}
-        <header className="brief-section" style={{ borderLeft: "4px solid #0D1B2A" }}>
-          <p className="brief-section-eyebrow">Governance Brief</p>
-          <h1
-            style={{
-              fontSize: "26px",
-              fontWeight: 700,
-              color: "#0D1B2A",
-              lineHeight: 1.2,
-              margin: 0,
-            }}
-          >
-            {report.name || report.title}
-          </h1>
-          <p
-            style={{
-              marginTop: "6px",
-              fontSize: "13px",
-              color: "#64748B",
-            }}
-          >
-            Generated {formatDateTime(report.created_at)}
-          </p>
-          <div
-            style={{
-              marginTop: "16px",
-              display: "flex",
-              gap: "12px",
-              flexWrap: "wrap" as const,
-            }}
-          >
+      <BriefPresentMode
+        active={presentMode}
+        onExit={exitPresent}
+        briefTitle={report.name || report.title}
+      >
+        {/* Present mode header — dark command card, not a document header */}
+        <header
+          className="brief-section"
+          style={{
+            background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)",
+            border: "1px solid rgba(255,255,255,0.10)",
+            borderLeft: "3px solid #C4A96A",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.04)",
+          }}
+        >
+          {/* Eyebrow + status */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="h-[10px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
+              <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#4D7FA8", margin: 0 }}>
+                Meeting Mode
+              </p>
+            </div>
+            {/* Print action — available but not the visual focus */}
             <button
               type="button"
               onClick={() => window.print()}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "6px",
-                padding: "6px 14px",
-                borderRadius: "6px",
-                border: "1px solid #CBD5E1",
-                background: "white",
-                fontSize: "12px",
+                gap: "5px",
+                padding: "4px 10px",
+                borderRadius: "5px",
+                border: "1px solid rgba(255,255,255,0.12)",
+                background: "rgba(255,255,255,0.05)",
+                fontSize: "11px",
                 fontWeight: 500,
-                color: "#0D1B2A",
+                color: "#8FA7BC",
                 cursor: "pointer",
               }}
             >
-              <Printer size={13} aria-hidden />
+              <Printer size={11} aria-hidden />
               Print / Export PDF
             </button>
+          </div>
+
+          {/* Title */}
+          <h1
+            style={{
+              marginTop: "12px",
+              fontSize: "28px",
+              fontWeight: 500,
+              fontFamily: "'Playfair Display', Georgia, serif",
+              color: "#FFFFFF",
+              lineHeight: 1.1,
+            }}
+          >
+            {report.name || report.title}
+          </h1>
+
+          {/* Context strip */}
+          <div style={{ marginTop: "12px", display: "flex", flexWrap: "wrap" as const, gap: "20px" }}>
+            {report.review_date_label ? (
+              <div>
+                <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#3D627F", margin: "0 0 2px" }}>Review period</p>
+                <p style={{ fontSize: "13px", fontWeight: 600, color: "#CBD5E1", margin: 0 }}>{report.review_date_label}</p>
+              </div>
+            ) : null}
+            <div>
+              <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#3D627F", margin: "0 0 2px" }}>Reviews analyzed</p>
+              <p style={{ fontSize: "13px", fontWeight: 600, color: "#CBD5E1", margin: 0 }}>{report.total_reviews}</p>
+            </div>
+            <div>
+              <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#3D627F", margin: "0 0 2px" }}>Generated</p>
+              <p style={{ fontSize: "13px", fontWeight: 600, color: "#CBD5E1", margin: 0 }}>{formatDateTime(report.created_at)}</p>
+            </div>
+            {escalation.on ? (
+              <div>
+                <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#3D627F", margin: "0 0 2px" }}>Status</p>
+                <p style={{ fontSize: "13px", fontWeight: 600, color: "#FBBF24", margin: 0 }}>Escalation required</p>
+              </div>
+            ) : null}
           </div>
         </header>
 

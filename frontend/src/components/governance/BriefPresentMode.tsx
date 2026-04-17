@@ -1,23 +1,13 @@
 /**
  * BriefPresentMode
  * ─────────────────────────────────────────────────────────────────────────────
- * Wraps ReportDetail content in a full-screen present mode overlay.
+ * Full-screen Meeting Mode overlay. Hides all workspace chrome and presents
+ * the governance brief as a focused live-review surface — the boardroom
+ * version of Home. Navy canvas, parchment section cards, gold command bar.
  *
- * Present mode intent:
- *   - Hides all nav/sidebar chrome (WorkspaceLayout stays mounted but invisible)
- *   - Expands content to comfortable reading width (max-w-4xl centred)
- *   - Slightly larger base font for on-screen legibility
- *   - Simplified, print-safe color palette (no background gradients)
- *   - Print CSS baked in via @media print rules in this component
- *
- * Activation:
- *   - Toggled via internal React state in ReportDetail; ?present=1 param also accepted
- *   - Exit via "Exit presentation" button or Escape key
- *
- * Usage:
- *   <BriefPresentMode active={presentMode} onExit={() => setPresentMode(false)}>
- *     {/* page sections *\/}
- *   </BriefPresentMode>
+ * Activation:  ?present=1 param or internal state in ReportDetail
+ * Exit:        "Exit" button in bar, or Escape key
+ * Print:       Print button inside the present-mode header section
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -27,10 +17,12 @@ import { X } from "lucide-react";
 type BriefPresentModeProps = {
   active: boolean;
   onExit: () => void;
+  /** Brief title shown in the command bar — keeps context visible while scrolling */
+  briefTitle?: string;
   children: ReactNode;
 };
 
-export default function BriefPresentMode({ active, onExit, children }: BriefPresentModeProps) {
+export default function BriefPresentMode({ active, onExit, briefTitle, children }: BriefPresentModeProps) {
   // Keyboard exit
   useEffect(() => {
     if (!active) return;
@@ -58,17 +50,20 @@ export default function BriefPresentMode({ active, onExit, children }: BriefPres
       aria-modal="true"
       className="brief-present-overlay"
     >
-      {/* Exit bar */}
-      <div className="brief-present-bar" aria-label="Presentation controls">
-        <span className="brief-present-bar-label">Meeting view</span>
-        <span className="brief-present-bar-hint">Press Esc to exit</span>
+      {/* Command bar */}
+      <div className="brief-present-bar" aria-label="Meeting Mode controls">
+        <span className="brief-present-bar-label">Meeting Mode</span>
+        {briefTitle ? (
+          <span className="brief-present-bar-context" aria-hidden>{briefTitle}</span>
+        ) : null}
+        <span className="brief-present-bar-hint">Esc to exit</span>
         <button
           type="button"
           onClick={onExit}
-          aria-label="Exit meeting view"
+          aria-label="Exit Meeting Mode"
           className="brief-present-exit-btn"
         >
-          <X size={14} aria-hidden />
+          <X size={13} aria-hidden />
           Exit
         </button>
       </div>
