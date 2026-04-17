@@ -17,6 +17,13 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   createReportAction,
   getPartnerBriefDeliveryStatus,
   getReportActions,
@@ -204,23 +211,23 @@ function PacketSection({ eyebrow, title, presentMode, children, className = "" }
       <section className={`brief-section ${className}`}>
         <p className="brief-section-eyebrow">{eyebrow}</p>
         <h2 className="brief-section-title">{title}</h2>
-        <div className="mt-5">{children}</div>
+        <div className="mt-4">{children}</div>
       </section>
     );
   }
   return (
     <section
       className={[
-        "rounded-[12px] border border-[#DDD8D0] bg-white px-6 py-5 shadow-[0_1px_4px_rgba(13,27,42,0.06),0_0_0_1px_rgba(13,27,42,0.02)]",
+        "rounded-[12px] border border-[#DDD8D0] bg-white px-5 py-4 shadow-[0_1px_4px_rgba(13,27,42,0.06),0_0_0_1px_rgba(13,27,42,0.02)]",
         className,
       ].join(" ")}
     >
-      <div className="flex items-center gap-2 border-b border-[#F0EDE8] pb-3">
+      <div className="flex items-center gap-2 border-b border-[#F0EDE8] pb-2.5 mb-3">
         <p className="gov-type-eyebrow">{eyebrow}</p>
         <div className="h-[1px] flex-1 bg-[#F0EDE8]" aria-hidden />
-        <h2 className="text-[15px] font-semibold text-[#0D1B2A]">{title}</h2>
+        <h2 className="text-[14px] font-semibold text-[#0D1B2A]">{title}</h2>
       </div>
-      <div className="mt-4">{children}</div>
+      <div>{children}</div>
     </section>
   );
 }
@@ -276,6 +283,7 @@ const ReportDetail = () => {
   const [renameError, setRenameError] = useState("");
 
   const [actionFormMode, setActionFormMode] = useState<"create" | "edit" | null>(null);
+  const [createModalOpen, setCreateModalOpen] = useState(false);
   const [actionFormSubmitting, setActionFormSubmitting] = useState(false);
   const [actionFormError, setActionFormError] = useState("");
   const [editingActionId, setEditingActionId] = useState<number | null>(null);
@@ -595,6 +603,13 @@ const ReportDetail = () => {
     setEditingActionId(null);
     setActionFormError("");
     setActionFormMode("create");
+    setCreateModalOpen(true);
+  };
+
+  const closeCreateModal = () => {
+    setCreateModalOpen(false);
+    setActionFormMode(null);
+    setActionFormError("");
   };
 
   const scrollToActionRecord = useCallback(() => {
@@ -608,6 +623,7 @@ const ReportDetail = () => {
       setEditingActionId(null);
       setActionFormError("");
       setActionFormMode("create");
+      setCreateModalOpen(true);
       setSearchParams((prev) => {
         const next = new URLSearchParams(prev);
         next.set("createAction", "1");
@@ -727,6 +743,7 @@ const ReportDetail = () => {
     setEditingActionId(null);
     setActionFormError("");
     setActionFormMode("create");
+    setCreateModalOpen(true);
   }, [searchParams]);
 
   const editFormInitialValues = useMemo<ActionFormValues>(() => {
@@ -788,6 +805,7 @@ const ReportDetail = () => {
           return [created, ...prev];
         });
         setActionFormMode(null);
+        setCreateModalOpen(false);
         toast.success("Action created.");
       } else {
         setActionFormError(result.error || "Unable to create action.");
@@ -1101,7 +1119,7 @@ const ReportDetail = () => {
         <div className="mt-5 rounded-[10px] border border-[#D9E7F5] bg-[#F5F9FC] px-5 py-4">
           <p className="gov-type-eyebrow">Decision to bring into the meeting</p>
           <p className="mt-2 text-[15px] font-semibold text-[#0D1B2A]">{firstDecision.theme}</p>
-          <p className="mt-1 text-[13px] leading-relaxed text-slate-700">
+          <p className="mt-1 text-[13px] leading-relaxed text-[#374151]">
             {firstDecision.recommendation}
           </p>
         </div>
@@ -1113,8 +1131,8 @@ const ReportDetail = () => {
           <ul className="space-y-1">
             {briefingBullets.map((item, index) => (
               <li key={`briefing-${index}`} className="flex items-start gap-2">
-                <CheckCircle2 size={13} className="mt-0.5 shrink-0 text-slate-400" aria-hidden />
-                <span className="text-[13px] leading-relaxed text-slate-700">{item}</span>
+                <CheckCircle2 size={13} className="mt-0.5 shrink-0 text-[#6B7280]" aria-hidden />
+                <span className="text-[13px] leading-relaxed text-[#374151]">{item}</span>
               </li>
             ))}
           </ul>
@@ -1160,7 +1178,7 @@ const ReportDetail = () => {
               </p>
               <p className="mt-1 text-[17px] font-semibold text-[#0D1B2A]">{sig.value}</p>
               {sig.note ? (
-                <p className="mt-1 text-[12px] leading-relaxed text-slate-600">{sig.note}</p>
+                <p className="mt-1 text-[12px] leading-relaxed text-[#4A5568]">{sig.note}</p>
               ) : null}
             </div>
           ))}
@@ -1180,8 +1198,8 @@ const ReportDetail = () => {
                 className="flex items-center justify-between rounded-[6px] border border-[#DDD8D0] bg-white px-4 py-2.5"
               >
                 <span className="text-[13px] font-medium text-[#0D1B2A]">{theme.name}</span>
-                <span className="flex items-center gap-1.5 text-[12px] text-slate-500">
-                  <Zap size={11} className="text-slate-400" aria-hidden />
+                <span className="flex items-center gap-1.5 text-[12px] text-[#5A6470]">
+                  <Zap size={11} className="text-[#6B7280]" aria-hidden />
                   {theme.mentions} mentions
                 </span>
               </div>
@@ -1205,7 +1223,7 @@ const ReportDetail = () => {
                   ? "text-red-600"
                   : row.change < 0
                   ? "text-emerald-600"
-                  : "text-slate-500";
+                  : "text-[#5A6470]";
               return (
                 <div
                   key={`trend-${row.theme}`}
@@ -1221,7 +1239,7 @@ const ReportDetail = () => {
           </div>
         </div>
       ) : (
-        <p className="mt-4 text-[13px] text-slate-500">
+        <p className="mt-4 text-[13px] text-[#5A6470]">
           No prior period available for trend comparison yet.
         </p>
       )}
@@ -1237,7 +1255,7 @@ const ReportDetail = () => {
     >
       <div className="mb-4 rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3">
         <p className="gov-type-eyebrow">What came out of this review</p>
-        <p className="mt-1 text-[13px] text-slate-700">
+        <p className="mt-1 text-[13px] text-[#374151]">
           Confirm ownership and due dates before this brief is shared with partners. Blocked items should be escalated before the next cycle.
         </p>
         {!presentMode ? (
@@ -1246,7 +1264,7 @@ const ReportDetail = () => {
               Add follow-through
             </button>
             {(unassignedCount > 0 || undatedCount > 0) && (
-              <span className="text-[12px] text-slate-600">
+              <span className="text-[12px] text-[#4A5568]">
                 Assign owners and due dates before sharing this brief.
               </span>
             )}
@@ -1280,37 +1298,16 @@ const ReportDetail = () => {
         </div>
       ) : null}
 
-      {/* Create action form trigger (hidden in present mode) */}
-      {!presentMode ? (
-        <>
-          <ActionForm
-            open={actionFormMode === "create"}
-            mode="create"
-            initialValues={
-              searchParams.get("createAction") === "1"
-                ? createActionPrefill
-                : createFormInitialValues
-            }
-            ownerOptions={ownerOptions}
-            submitting={actionFormSubmitting}
-            serverError={actionFormError}
-            onCancel={() => {
-              setActionFormMode(null);
-              setActionFormError("");
-            }}
-            onSubmit={handleActionFormSubmit}
-          />
-          {actionsError ? (
-            <p className="mb-3 text-[12px] text-red-700">{actionsError}</p>
-          ) : null}
-        </>
+      {/* Actions errors */}
+      {!presentMode && actionsError ? (
+        <p className="mb-3 text-[12px] text-red-700">{actionsError}</p>
       ) : null}
 
       {/* Actions list */}
       <div data-testid="report-actions-list" className="space-y-3">
         {sortedActions.length === 0 ? (
           <div className="rounded-[8px] border border-[#DDD8D0] bg-[#F9F8F6] px-5 py-5">
-            <p className="text-[13px] text-slate-600">
+            <p className="text-[13px] text-[#4A5568]">
               No follow-through items recorded for this Governance Brief yet.
             </p>
             {!presentMode ? (
@@ -1343,18 +1340,18 @@ const ReportDetail = () => {
                 >
                   {action.title}
                 </p>
-                <p className="mt-1 text-[12px] text-slate-500">
+                <p className="mt-1 text-[12px] text-[#5A6470]">
                   Owner: {(action.owner || "Unassigned").trim() || "Unassigned"} ·
                   Due: {formatDate(action.due_date)} ·
                   Timeframe: {action.timeframe || "—"}
                 </p>
                 {action.kpi ? (
-                  <p className="mt-1 text-[12px] text-slate-500">
+                  <p className="mt-1 text-[12px] text-[#5A6470]">
                     Success measure: {action.kpi}
                   </p>
                 ) : null}
                 {action.notes && !presentMode ? (
-                  <p className="mt-1 text-[12px] text-slate-500">
+                  <p className="mt-1 text-[12px] text-[#5A6470]">
                     Notes: {action.notes}
                   </p>
                 ) : null}
@@ -1421,18 +1418,10 @@ const ReportDetail = () => {
       title="Supporting Client Evidence"
       presentMode={presentMode}
     >
-      {report.top_complaints.length > 0 ? (
-        <div className="mb-4 rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3">
-          <p className="gov-type-eyebrow">Representative client excerpts</p>
-          <p className="mt-1 text-[13px] text-slate-700">
-            Use these anonymized excerpts to ground the brief in source language before assigning response owners.
-          </p>
-        </div>
-      ) : null}
       {report.top_complaints.length === 0 ? (
-        <p className="text-[13px] text-slate-500">No supporting client evidence for this period.</p>
+        <p className="text-[13px] text-[#5A6470]">No supporting client evidence for this period.</p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {report.top_complaints.slice(0, 4).map((quote, index) => (
             <ClientQuoteCard
               key={`complaint-${index}`}
@@ -1445,10 +1434,8 @@ const ReportDetail = () => {
         </div>
       )}
       {report.top_praise.length > 0 && !presentMode ? (
-        <div className="mt-5">
-          <p className="mb-3 gov-type-eyebrow">
-            Positive feedback
-          </p>
+        <div className="mt-4">
+          <p className="mb-2 gov-type-eyebrow">Positive feedback</p>
           <div className="space-y-3">
             {report.top_praise.slice(0, 2).map((quote, index) => (
               <ClientQuoteCard
@@ -1473,33 +1460,33 @@ const ReportDetail = () => {
       presentMode={presentMode}
     >
       {decisionItems.length === 0 ? (
-        <p className="text-[13px] text-slate-500">No decisions are ready for this period yet.</p>
+        <p className="text-[13px] text-[#5A6470]">No decisions are ready for this period yet.</p>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2">
           <div
             className={
               presentMode
                 ? "border-l-[4px] border-l-[#0D1B2A] pl-4 py-1"
-                : "rounded-[10px] border border-[#D9E7F5] bg-[#F5F9FC] px-5 py-4"
+                : "rounded-[8px] border border-[#D9E7F5] bg-[#F5F9FC] px-4 py-3"
             }
           >
-            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">
               Primary next step
             </p>
-            <p className="mt-2 text-[13px] font-semibold text-[#0D1B2A]">
+            <p className="mt-1.5 text-[13px] font-semibold text-[#0D1B2A]">
               {firstDecision?.theme}
             </p>
             <p
               className={
                 presentMode
                   ? "mt-1 text-[15px] leading-relaxed text-[#0D1B2A]"
-                  : "mt-1 text-[14px] leading-relaxed text-[#0D1B2A]"
+                  : "mt-1 text-[13px] leading-[1.55] text-[#374151]"
               }
             >
               {firstDecision?.recommendation}
             </p>
             {!presentMode ? (
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-2.5 flex flex-wrap gap-2">
                 <button
                   type="button"
                   className="gov-btn-secondary"
@@ -1524,20 +1511,20 @@ const ReportDetail = () => {
               className={
                 presentMode
                   ? "border-l-[3px] border-l-[#0EA5C2] pl-4 py-1"
-                  : "rounded-[8px] border border-[#DDD8D0] bg-white px-5 py-4"
+                  : "rounded-[8px] border border-[#DDD8D0] bg-white px-4 py-3"
               }
             >
-              <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">
+              <p className="text-[10.5px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">
                 Supporting step
               </p>
-              <p className="mt-2 text-[13px] font-semibold text-[#0D1B2A]">
+              <p className="mt-1.5 text-[13px] font-semibold text-[#0D1B2A]">
                 {step.theme}
               </p>
               <p
                 className={
                   presentMode
                     ? "mt-1 text-[15px] leading-relaxed text-[#0D1B2A]"
-                    : "mt-1 text-[13px] leading-relaxed text-[#0D1B2A]"
+                    : "mt-1 text-[13px] leading-[1.55] text-[#374151]"
                 }
               >
                 {step.recommendation}
@@ -1773,13 +1760,7 @@ const ReportDetail = () => {
                     data-testid="report-create-action"
                     type="button"
                     className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
-                    onClick={() => {
-                      openCreateAction();
-                      setTimeout(() => {
-                        document.querySelector('[data-testid="report-actions-list"]')
-                          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                      }, 60);
-                    }}
+                    onClick={openCreateAction}
                   >
                     + Add follow-through
                   </button>
@@ -1859,14 +1840,14 @@ const ReportDetail = () => {
                 <p className="mt-0.5 text-[15px] font-semibold text-[#0D1B2A]">
                   Supporting Evidence
                 </p>
-                <p className="mt-1 text-[12px] text-slate-500">
+                <p className="mt-1 text-[12px] text-[#5A6470]">
                   Full traceability context. Not shown in present mode.
                 </p>
               </div>
               {evidenceOpen ? (
-                <ChevronDown size={16} className="text-slate-500" />
+                <ChevronDown size={16} className="text-[#5A6470]" />
               ) : (
-                <ChevronRight size={16} className="text-slate-500" />
+                <ChevronRight size={16} className="text-[#5A6470]" />
               )}
             </button>
             {evidenceOpen && (
@@ -1909,7 +1890,7 @@ const ReportDetail = () => {
                         {report.recommended_changes.map((item, index) => (
                           <li
                             key={`rec-${index}`}
-                            className="text-[13px] leading-relaxed text-slate-700"
+                            className="text-[13px] leading-relaxed text-[#374151]"
                           >
                             <span className="font-medium text-[#0D1B2A]">{item.theme}:</span>{" "}
                             {item.recommendation}
@@ -1953,6 +1934,39 @@ const ReportDetail = () => {
         deliveryStatus={briefDeliveryStatus}
         deliveryStatusLoading={briefDeliveryStatusLoading}
       />
+
+      {/* Add follow-through modal — focused overlay instead of inline scroll */}
+      <Dialog
+        open={createModalOpen}
+        onOpenChange={(open) => {
+          if (!open) closeCreateModal();
+        }}
+      >
+        <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Add follow-through</DialogTitle>
+            <DialogDescription>
+              Assign a named owner, due date, and success measure before sharing this brief.
+            </DialogDescription>
+          </DialogHeader>
+          <ActionForm
+            open={createModalOpen}
+            mode="create"
+            initialValues={
+              searchParams.get("createAction") === "1"
+                ? createActionPrefill
+                : createFormInitialValues
+            }
+            ownerOptions={ownerOptions}
+            submitting={actionFormSubmitting}
+            submitLabel="Add follow-through"
+            submittingLabel="Adding…"
+            serverError={actionFormError}
+            onCancel={closeCreateModal}
+            onSubmit={handleActionFormSubmit}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

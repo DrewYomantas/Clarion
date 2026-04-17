@@ -55,30 +55,22 @@ const MeetingsPage = () => {
     <PageWrapper
       eyebrow="Review Meetings"
       title="Meetings"
-      description="Chronological record of governance review meetings. Each entry links to the associated Governance Brief prepared for that session."
+      description="Chronological record of governance review meetings linked to their Governance Briefs."
       contentClassName="stage-sequence"
     >
-      {/* Dark header slab */}
-      <section className="overflow-hidden rounded-[16px] border border-white/[0.13] shadow-[0_16px_48px_rgba(0,0,0,0.22),0_0_0_1px_rgba(255,255,255,0.04)]">
+      {/* Dark header slab — compact, meets content quickly */}
+      <section className="overflow-hidden rounded-[14px] border border-white/[0.13] shadow-[0_8px_32px_rgba(0,0,0,0.18),0_0_0_1px_rgba(255,255,255,0.04)]">
         <div
-          className="relative px-7 py-6"
+          className="relative px-6 py-4"
           style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
         >
-          {/* Radial glow */}
-          <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#1a3a6b] opacity-35 blur-3xl" aria-hidden />
-          {/* Dot-grid texture */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.028]"
-            style={{ backgroundImage: "radial-gradient(circle, #a0aec0 1px, transparent 1px)", backgroundSize: "18px 18px" }}
-            aria-hidden
-          />
-
-          <div className="relative flex flex-wrap items-start justify-between gap-4">
+          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#1a3a6b] opacity-25 blur-3xl" aria-hidden />
+          <div className="relative flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="gov-type-eyebrow text-[#C4A96A]/90 mb-2">Meeting Record</p>
+              <p className="gov-type-eyebrow text-[#C4A96A]/90 mb-1.5">Meeting Record</p>
               <h2
                 className="text-white"
-                style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "22px", fontWeight: 700, lineHeight: 1.25, letterSpacing: "-0.01em" }}
+                style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "20px", fontWeight: 700, lineHeight: 1.25 }}
               >
                 {loading
                   ? "Loading record…"
@@ -88,47 +80,18 @@ const MeetingsPage = () => {
                       ? "1 governance session"
                       : `${rows.length} governance sessions`}
               </h2>
-              <p className="mt-2 text-[13px] leading-relaxed text-[#8FA7BC]">
-                Each meeting entry is anchored to a governance brief prepared for that review cycle.
-              </p>
+            </div>
+            <div className="flex items-center gap-6 text-[12px]">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#4A6FA5]">Total sessions</p>
+                <p className="mt-0.5 font-semibold text-[#CBD5E1]">{loading ? "—" : String(rows.length)}</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#4A6FA5]">Most recent</p>
+                <p className="mt-0.5 font-semibold text-[#CBD5E1]">{loading ? "—" : latestRow?.period || "None"}</p>
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Instrument strip */}
-        <div
-          className="relative flex flex-wrap divide-x divide-white/[0.07]"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.07)", background: "#0D1B2A" }}
-        >
-          {[
-            {
-              label: "Total sessions",
-              value: loading ? "—" : String(rows.length),
-              accent: false,
-            },
-            {
-              label: "Most recent",
-              value: loading ? "—" : latestRow?.period || "None",
-              accent: false,
-            },
-            {
-              label: "Step in loop",
-              value: "05 — Record",
-              accent: false,
-            },
-          ].map(({ label, value, accent }) => (
-            <div key={label} className="flex flex-1 flex-col items-start px-6 py-3">
-              <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#4A6FA5]">{label}</p>
-              <p
-                className={[
-                  "mt-1 text-[13px] font-semibold tabular-nums",
-                  accent ? "text-[#F87171]" : "text-[#CBD5E1]",
-                ].join(" ")}
-              >
-                {value}
-              </p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -162,11 +125,11 @@ const MeetingsPage = () => {
           </div>
         </section>
       ) : (
-        <div className="space-y-5">
+        <div className="space-y-4">
           {/* Latest session — featured row */}
           {latestRow && (
             <div>
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-3 mb-2">
                 <div className="h-px flex-1 bg-[#E5E2DC]" />
                 <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-[#9CA3AF]">Latest session</p>
                 <div className="h-px flex-1 bg-[#E5E2DC]" />

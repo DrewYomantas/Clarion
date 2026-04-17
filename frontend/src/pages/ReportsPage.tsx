@@ -189,38 +189,31 @@ const ReportsPage = () => {
         description="The firm's complete governance brief record. Each cycle produces a partner-ready artifact covering client signals reviewed, actions assigned, and decisions required."
         contentClassName="stage-sequence"
       >
-        {/* Dark header slab — matches Home's governance brief card tone */}
-        <section className="overflow-hidden rounded-[16px] border border-white/[0.13] shadow-[0_16px_48px_rgba(0,0,0,0.22),0_0_0_1px_rgba(255,255,255,0.04)]">
+        {/* Dark header slab */}
+        <section className="overflow-hidden rounded-[14px] border border-white/[0.13] shadow-[0_8px_32px_rgba(0,0,0,0.18),0_0_0_1px_rgba(255,255,255,0.04)]">
           <div
-            className="relative px-7 py-6"
+            className="relative px-6 py-5"
             style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
           >
-            {/* Radial glow */}
-            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#1a3a6b] opacity-35 blur-3xl" aria-hidden />
-            {/* Dot-grid texture */}
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px)", backgroundSize: "20px 20px" }}
-              aria-hidden
-            />
-            <div className="relative flex flex-wrap items-start justify-between gap-5">
+            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#1a3a6b] opacity-25 blur-3xl" aria-hidden />
+            <div className="relative flex flex-wrap items-center justify-between gap-5">
               <div>
                 <span className="inline-flex items-center gap-2">
                   <span className="h-[12px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
                   <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">Brief Library</span>
                 </span>
                 <h2
-                  className="mt-3 text-[28px] leading-[1.05] text-white sm:text-[32px]"
+                  className="mt-2 text-[24px] leading-[1.1] text-white sm:text-[28px]"
                   style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
                 >
                   {loading ? "Loading…" : summary.totalBriefs === 0 ? "No briefs yet" : `${summary.totalBriefs} governance ${summary.totalBriefs === 1 ? "brief" : "briefs"}`}
                 </h2>
-                <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#8FA7BC]">
-                  Open the current brief before every partner meeting. Prior cycles are reference — they document what the firm reviewed, decided, and assigned.
+                <p className="mt-1.5 text-[13px] leading-5 text-[#8FA7BC]">
+                  Open the current brief before every partner meeting.
                 </p>
               </div>
               {latestRow ? (
-                <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                <div className="flex flex-wrap items-center gap-2">
                   <button
                     type="button"
                     onClick={() => navigate(`/dashboard/reports/${latestRow.id}`)}
@@ -239,31 +232,31 @@ const ReportsPage = () => {
               ) : null}
             </div>
           </div>
-          {/* Instrument strip */}
+          {/* Instrument strip — reduced height */}
           <div
-            className="relative flex flex-wrap divide-x divide-white/[0.07]"
+            className="flex flex-wrap divide-x divide-white/[0.07]"
             style={{ borderTop: "1px solid rgba(255,255,255,0.07)", background: "#0D1B2A" }}
           >
-            <div className="min-w-[88px] px-5 py-3.5">
-              <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
+            <div className="px-5 py-3">
+              <p className="text-[18px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
                 {loading ? "—" : summary.totalBriefs}
               </p>
-              <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Total briefs</p>
+              <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Total briefs</p>
             </div>
-            <div className="min-w-[88px] px-5 py-3.5">
+            <div className="px-5 py-3">
               <p
-                className="text-[22px] font-semibold leading-none"
+                className="text-[18px] font-semibold leading-none"
                 style={{ fontVariantNumeric: "tabular-nums", color: summary.escalationCount > 0 ? "#F59E0B" : "#ffffff" }}
               >
                 {loading ? "—" : summary.escalationCount}
               </p>
-              <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Escalations</p>
+              <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Escalations</p>
             </div>
-            <div className="px-5 py-3.5">
-              <p className="text-[14px] font-semibold leading-snug text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
+            <div className="px-5 py-3">
+              <p className="text-[13px] font-semibold leading-snug text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
                 {loading ? "—" : summary.latestDate}
               </p>
-              <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Latest brief</p>
+              <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Latest brief</p>
             </div>
           </div>
         </section>

@@ -50,9 +50,9 @@ type GovernanceEmptyStateProps = {
 };
 
 const paddingBySize = {
-  sm: "py-6 px-4",
-  md: "py-10 px-6",
-  lg: "py-16 px-8",
+  sm: "py-4 px-4",
+  md: "py-8 px-6",
+  lg: "py-14 px-8",
 } as const;
 
 function ActionButton({ action, primary }: { action: GovernanceEmptyAction; primary: boolean }) {

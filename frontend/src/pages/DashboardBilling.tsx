@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import {
   getCredits,
@@ -108,14 +107,6 @@ const DashboardBilling = () => {
       eyebrow="Workspace"
       title="Billing & Usage"
       description="Current plan allowances and automation settings."
-      actions={
-        <Link
-          to={focusedUpgradePath}
-          className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15"
-        >
-          {nextUpgradePlan ? `View ${nextUpgradeLabel} overview` : "View plan details"}
-        </Link>
-      }
     >
       {error && (
         <div className="rounded border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-800">{error}</div>
@@ -151,12 +142,9 @@ const DashboardBilling = () => {
               Included
             </span>
           ) : (
-            <Link
-              to="/pricing?intent=team"
-              className="inline-flex items-center rounded-lg border border-[#DDD8D0] bg-white px-3 py-1.5 text-xs font-medium text-[#374151] hover:bg-[#F5F3F0]"
-            >
-              Upgrade to Team
-            </Link>
+            <span className="inline-flex items-center rounded border border-[#DDD8D0] bg-[#F9F8F6] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#9CA3AF]">
+              Team / Firm
+            </span>
           )}
         </div>
 

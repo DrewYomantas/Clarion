@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import PlanBadge from "@/components/dashboard/PlanBadge";
 import { formatApiDate } from "@/lib/dateTime";
 import type { UiPlanLimits } from "@/config/planLimits";
@@ -38,6 +37,12 @@ const PlanCurrentBanner = ({
   const isFree = !isPaidSubscription && (firmPlan === "free" || firmPlan === "trial" || !firmPlan);
   const isTeam = firmPlan === "team" || firmPlan === "professional";
 
+  const handleUpgrade = (intent: string) => {
+    // Route authenticated users to /pricing with intent — stays in the auth shell via normal navigation.
+    // The pricing page detects auth state and adjusts the CTA accordingly.
+    window.location.href = `/pricing?intent=${intent}&from=billing`;
+  };
+
   if (isLoading) {
     return (
       <div className="settings-card animate-pulse">
@@ -49,8 +54,8 @@ const PlanCurrentBanner = ({
 
   return (
     <div className="settings-card">
-      {/* Header row: badge + title + CTA */}
-      <div className="flex flex-wrap items-start justify-between gap-4">
+      {/* Header row: badge + title + single upgrade CTA */}
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <PlanBadge plan={firmPlan} />
           <h2 className="text-[13px] font-semibold text-[#0D1B2A]">
@@ -59,19 +64,21 @@ const PlanCurrentBanner = ({
         </div>
 
         {!isTeam && isFree ? (
-          <Link
-            to="/pricing?intent=team"
-            className="inline-flex items-center rounded-lg bg-[#0D1B2A] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#152638]"
+          <button
+            type="button"
+            onClick={() => handleUpgrade("team")}
+            className="inline-flex items-center rounded-lg bg-[#0D1B2A] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#152638]"
           >
             Upgrade to Team →
-          </Link>
+          </button>
         ) : isTeam ? (
-          <Link
-            to="/pricing?intent=firm"
+          <button
+            type="button"
+            onClick={() => handleUpgrade("firm")}
             className="inline-flex items-center rounded-lg border border-[#DDD8D0] bg-white px-3 py-1.5 text-xs font-medium text-[#374151] hover:bg-[#F5F3F0]"
           >
             Upgrade to Firm →
-          </Link>
+          </button>
         ) : null}
       </div>
 
@@ -101,22 +108,14 @@ const PlanCurrentBanner = ({
         </div>
       </div>
 
-      {/* Free-plan callout */}
+      {/* Free-plan callout — single CTA, no duplicate */}
       {isFree && (
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3">
+        <div className="mt-4 rounded border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3">
           <p className="text-xs text-[#374151]">
-            <span className="font-semibold text-[#0D1B2A]">On Free</span> you get{" "}
-            {reportLimit !== null ? reportLimit : "1"} report/month, up to{" "}
-            {reviewLimit !== null ? reviewLimit : "50"} reviews/upload
-            {resetLabel ? `, resetting on ${resetLabel}` : ""}.{" "}
-            Upgrade to Team for 10 reports and 250 reviews/upload — no watermarks.
+            <span className="font-semibold text-[#0D1B2A]">Free plan</span> — {reportLimit ?? 1} report/month,{" "}
+            up to {reviewLimit ?? 50} reviews/upload{resetLabel ? `, resets ${resetLabel}` : ""}.
+            Team unlocks 10 reports and 250 reviews/upload with no watermarks.
           </p>
-          <Link
-            to={nextUpgradePath}
-            className="shrink-0 rounded border border-[#DDD8D0] bg-white px-3 py-1.5 text-xs font-semibold text-[#0D1B2A] hover:bg-[#F5F3F0]"
-          >
-            See Team plan →
-          </Link>
         </div>
       )}
     </div>

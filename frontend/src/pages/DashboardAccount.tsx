@@ -12,7 +12,7 @@ import {
   type SupportTicket,
 } from "@/api/authService";
 
-type AccountTab = "profile" | "billing" | "security";
+type AccountTab = "profile" | "security";
 
 const SUPPORT_CATEGORY_OPTIONS = [
   { value: "product_bug", label: "Product issue" },
@@ -27,7 +27,6 @@ const SUPPORT_CATEGORY_OPTIONS = [
 
 const TABS: Array<{ key: AccountTab; label: string }> = [
   { key: "profile", label: "Account" },
-  { key: "billing", label: "Billing" },
   { key: "security", label: "Security" },
 ];
 
@@ -146,7 +145,7 @@ const DashboardAccount = () => {
 
   const activeTab = useMemo<AccountTab>(() => {
     const raw = (searchParams.get("tab") || "profile").toLowerCase();
-    return raw === "billing" || raw === "security" || raw === "profile" ? (raw as AccountTab) : "profile";
+    return raw === "security" || raw === "profile" ? (raw as AccountTab) : "profile";
   }, [searchParams]);
 
   const setTab = (tab: AccountTab) => {
@@ -295,9 +294,6 @@ const DashboardAccount = () => {
               </div>
             </div>
             <div className="mt-4 flex flex-wrap gap-2 pt-4 border-t border-[#EEF2F7]">
-              <Link to="/dashboard/billing" className="inline-flex items-center rounded-[6px] border border-[#DDD8D0] bg-[#F8F6F2] px-3 py-1.5 text-[12px] font-medium text-[#374151] transition-colors hover:bg-[#EDEBE7]">
-                Billing & Credits
-              </Link>
               <Link to="/dashboard/team" className="inline-flex items-center rounded-[6px] border border-[#DDD8D0] bg-[#F8F6F2] px-3 py-1.5 text-[12px] font-medium text-[#374151] transition-colors hover:bg-[#EDEBE7]">
                 Team Members
               </Link>
@@ -355,25 +351,31 @@ const DashboardAccount = () => {
 
           {/* Support */}
           <div className="settings-card">
-            <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
               <div>
                 <p className="text-[10.5px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">Support</p>
-                <p className="mt-1 text-[13px] text-[#6B7280]">Submit tracked requests for product, billing, account, or security issues.</p>
+                <p className="mt-0.5 text-[12px] text-[#6B7280]">Submit tracked requests for product, billing, account, or security issues.</p>
               </div>
-              {supportSummary ? (
-                <div className="flex items-center gap-3 text-[12px] text-[#6B7280]">
-                  <span><span className="font-semibold text-[#0D1B2A]">{supportSummary.open_count}</span> open</span>
-                  {supportSummary.escalated_count > 0 && (
-                    <span><span className="font-semibold text-[#EF4444]">{supportSummary.escalated_count}</span> escalated</span>
-                  )}
+              <div className="flex items-center gap-4">
+                {supportSummary ? (
+                  <div className="flex items-center gap-3 text-[12px] text-[#6B7280]">
+                    <span><span className="font-semibold text-[#0D1B2A]">{supportSummary.open_count}</span> open</span>
+                    {supportSummary.escalated_count > 0 && (
+                      <span><span className="font-semibold text-[#EF4444]">{supportSummary.escalated_count}</span> escalated</span>
+                    )}
+                  </div>
+                ) : null}
+                <div className="flex gap-3 text-[12px]">
+                  <a href="mailto:support@clarionhq.co" className="text-[#4A7FAA] hover:text-[#0D1B2A] transition-colors">support@clarionhq.co</a>
+                  <span className="text-[#DDD8D0]">·</span>
+                  <a href="mailto:security@clarionhq.co" className="text-[#4A7FAA] hover:text-[#0D1B2A] transition-colors">security@clarionhq.co</a>
                 </div>
-              ) : null}
+              </div>
             </div>
 
-            <div className="grid gap-5 xl:grid-cols-[1.25fr_0.75fr]">
+            <div className="grid gap-4 xl:grid-cols-[1.4fr_0.6fr]">
               {/* Submit form */}
-              <div className="rounded-[8px] border border-[#EEF2F7] bg-[#FAFBFC] p-5">
-                <p className="text-[13px] font-semibold text-[#0D1B2A] mb-3">Open a support ticket</p>
+              <div className="rounded-[8px] border border-[#EEF2F7] bg-[#FAFBFC] px-4 py-4">
                 <form className="space-y-3" onSubmit={handleSupportSubmit}>
                   <div className="grid gap-3 md:grid-cols-2">
                     <div>
@@ -401,86 +403,58 @@ const DashboardAccount = () => {
                   <div>
                     <label className="block text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63] mb-1">Message</label>
                     <textarea value={supportMessage} onChange={(e) => setSupportMessage(e.target.value)}
-                      placeholder="Describe the issue, page, validation message, or steps to reproduce."
-                      className="min-h-[120px] w-full rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2 text-[13px] text-[#0D1B2A] placeholder:text-[#9CA3AF] focus:border-[#4A7FAA] focus:outline-none focus:ring-2 focus:ring-[#0EA5C2]/12" />
+                      placeholder="Describe the issue, page, or steps to reproduce."
+                      className="min-h-[90px] w-full rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2 text-[13px] text-[#0D1B2A] placeholder:text-[#9CA3AF] focus:border-[#4A7FAA] focus:outline-none focus:ring-2 focus:ring-[#0EA5C2]/12" />
                   </div>
-                  <button type="submit" disabled={supportSubmitting} className="inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b] disabled:opacity-50">
-                    {supportSubmitting ? "Submitting…" : "Submit request"}
-                  </button>
-                  {supportSubmissionState ? (
-                    <div className="rounded-[6px] border border-[#D1FAE5] bg-[#ECFDF5] px-3 py-3">
-                      <p className="text-[12px] font-semibold text-[#065F46]">Ticket created: {supportSubmissionState.ticketRef}</p>
-                      <p className="mt-1 text-[12px] text-[#047857]">
-                        {supportSubmissionState.autoResponseEmailSent ? "Acknowledgement email sent." : "Ticket stored. No auto-email on this deployment."}
-                      </p>
-                    </div>
-                  ) : null}
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <button type="submit" disabled={supportSubmitting} className="inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b] disabled:opacity-50">
+                      {supportSubmitting ? "Submitting…" : "Submit request"}
+                    </button>
+                    {supportSubmissionState ? (
+                      <p className="text-[12px] font-semibold text-[#065F46]">Ticket created: {supportSubmissionState.ticketRef}{supportSubmissionState.autoResponseEmailSent ? " · Acknowledgement sent." : ""}</p>
+                    ) : null}
+                  </div>
                 </form>
               </div>
 
-              {/* Right column: contact + history */}
-              <div className="space-y-4">
-                <div className="rounded-[8px] border border-[#EEF2F7] bg-[#FAFBFC] p-4">
-                  <p className="text-[12px] font-semibold text-[#0D1B2A] mb-3">Direct contact</p>
-                  <div className="space-y-2">
-                    <a href="mailto:support@clarionhq.co" className="flex items-center text-[12px] text-[#4A7FAA] hover:text-[#0D1B2A] transition-colors">
-                      support@clarionhq.co
-                    </a>
-                    <a href="mailto:security@clarionhq.co" className="flex items-center text-[12px] text-[#4A7FAA] hover:text-[#0D1B2A] transition-colors">
-                      security@clarionhq.co
-                    </a>
+              {/* Right column: recent tickets */}
+              <div className="rounded-[8px] border border-[#EEF2F7] bg-[#FAFBFC] px-4 py-4">
+                <p className="text-[12px] font-semibold text-[#0D1B2A] mb-2">{user?.is_admin ? "Recent tickets" : "Your recent tickets"}</p>
+                {supportError ? <p className="text-[12px] text-[#EF4444]">{supportError}</p> : null}
+                {supportLoading ? (
+                  <div className="space-y-2 mt-2">
+                    {[1,2].map(i => <div key={i} className="h-10 animate-pulse rounded-[6px] bg-[#E5E7EB]" />)}
                   </div>
-                </div>
-
-                <div className="rounded-[8px] border border-[#EEF2F7] bg-[#FAFBFC] p-4">
-                  <p className="text-[12px] font-semibold text-[#0D1B2A] mb-2">{user?.is_admin ? "Recent tickets" : "Your recent tickets"}</p>
-                  {supportError ? <p className="text-[12px] text-[#EF4444]">{supportError}</p> : null}
-                  {supportLoading ? (
-                    <div className="space-y-2 mt-2">
-                      {[1,2].map(i => <div key={i} className="h-10 animate-pulse rounded-[6px] bg-[#E5E7EB]" />)}
-                    </div>
-                  ) : supportTickets.length === 0 ? (
-                    <p className="text-[12px] text-[#9CA3AF]">No requests yet.</p>
-                  ) : (
-                    <ul className="space-y-2 mt-2">
-                      {supportTickets.slice(0, 5).map((ticket) => (
-                        <li key={ticket.id} className="rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2.5">
-                          <div className="flex flex-wrap items-start justify-between gap-2">
-                            <div>
-                              <p className="text-[11px] font-bold text-[#0D1B2A] uppercase tracking-[0.06em]">{ticket.ticket_ref}</p>
-                              <p className="mt-0.5 text-[12px] text-[#374151]">{ticket.subject}</p>
-                            </div>
-                            <div className="flex flex-wrap gap-1">
-                              <span className={`inline-flex rounded border px-1.5 py-0.5 text-[10px] font-semibold ${supportStatusClass(ticket.status)}`}>
-                                {ticket.status.replaceAll("_", " ")}
-                              </span>
-                              {ticket.escalation_level !== "none" ? (
-                                <span className={`inline-flex rounded border px-1.5 py-0.5 text-[10px] font-semibold ${supportEscalationClass(ticket.escalation_level)}`}>
-                                  Escalated
-                                </span>
-                              ) : null}
-                            </div>
+                ) : supportTickets.length === 0 ? (
+                  <p className="text-[12px] text-[#9CA3AF]">No requests yet.</p>
+                ) : (
+                  <ul className="space-y-2 mt-2">
+                    {supportTickets.slice(0, 5).map((ticket) => (
+                      <li key={ticket.id} className="rounded-[6px] border border-[#DDD8D0] bg-white px-3 py-2.5">
+                        <div className="flex flex-wrap items-start justify-between gap-2">
+                          <div>
+                            <p className="text-[11px] font-bold text-[#0D1B2A] uppercase tracking-[0.06em]">{ticket.ticket_ref}</p>
+                            <p className="mt-0.5 text-[12px] text-[#374151]">{ticket.subject}</p>
                           </div>
-                          <p className="mt-1.5 text-[11px] text-[#9CA3AF]">{supportCategoryLabel(ticket.category)} · {ticket.priority} priority</p>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
+                          <div className="flex flex-wrap gap-1">
+                            <span className={`inline-flex rounded border px-1.5 py-0.5 text-[10px] font-semibold ${supportStatusClass(ticket.status)}`}>
+                              {ticket.status.replaceAll("_", " ")}
+                            </span>
+                            {ticket.escalation_level !== "none" ? (
+                              <span className={`inline-flex rounded border px-1.5 py-0.5 text-[10px] font-semibold ${supportEscalationClass(ticket.escalation_level)}`}>
+                                Escalated
+                              </span>
+                            ) : null}
+                          </div>
+                        </div>
+                        <p className="mt-1.5 text-[11px] text-[#9CA3AF]">{supportCategoryLabel(ticket.category)} · {ticket.priority} priority</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Billing redirect tab */}
-      {activeTab === "billing" && (
-        <div className="settings-card max-w-lg">
-          <p className="text-[10.5px] font-bold uppercase tracking-[0.1em] text-[#7A6E63] mb-1">Billing & Credits</p>
-          <p className="mt-2 text-[13px] text-[#6B7280]">Plan, usage, and automation scheduling are managed in Billing.</p>
-          <Link to="/dashboard/billing" className="mt-4 inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[12px] font-semibold text-white transition-colors hover:bg-[#16263b]">
-            Open Billing & Credits
-          </Link>
         </div>
       )}
 

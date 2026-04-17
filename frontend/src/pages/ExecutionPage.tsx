@@ -383,12 +383,12 @@ const ExecutionPage = () => {
 
     return (
       <div className={[
-        "space-y-3 rounded-[12px] border border-[#DDD8D0] bg-white p-5 shadow-[0_1px_4px_rgba(13,27,42,0.06),0_0_0_1px_rgba(13,27,42,0.02)]",
+        "space-y-2 rounded-[10px] border border-[#DDD8D0] bg-white px-4 py-4 shadow-[0_1px_3px_rgba(13,27,42,0.05)]",
         borderAccent,
       ].join(" ")}>
-        <div className="border-b border-[#F0EDE8] pb-3">
+        <div className="border-b border-[#F0EDE8] pb-2.5">
           <p className={`text-[11px] font-bold uppercase tracking-[0.08em] ${headerAccentColor}`}>{title}</p>
-          <p className="mt-1 text-[12px] leading-5 text-[#5A6470]">{description}</p>
+          <p className="mt-0.5 text-[12px] leading-5 text-[#5A6470]">{description}</p>
         </div>
         {actionsForGroup.length > 0 ? (
           <div className="space-y-3">
@@ -698,7 +698,7 @@ const ExecutionPage = () => {
             footer={
               <Link
                 to="/demo"
-                className="text-sm text-slate-500 underline underline-offset-4 transition-colors hover:text-slate-700"
+                className="text-sm text-[#5A6470] underline underline-offset-4 transition-colors hover:text-[#0D1B2A]"
               >
                 Open sample workspace
               </Link>
@@ -737,7 +737,7 @@ const ExecutionPage = () => {
                     : "Firm-wide follow-through record"}
               </p>
             </div>
-            <p className="mt-1.5 pl-[14px] text-[12px] leading-5 text-slate-500">
+            <p className="mt-1.5 pl-[14px] text-[12px] leading-5 text-[#5A6470]">
               {actionsTab === "overdue"
                 ? "These items have passed their due date and require immediate partner review."
                 : actionsTab === "my-actions"
