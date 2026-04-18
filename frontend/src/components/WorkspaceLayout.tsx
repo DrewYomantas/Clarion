@@ -396,13 +396,13 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <header className="workspace-shell-topbar relative flex shrink-0 items-center justify-between border-b border-white/[0.07] bg-[#0B1929] px-6 py-3 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-[#C4A96A]/50">
           <div className="min-w-0">
-            <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#4A7FAA]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: "rgba(196,169,106,0.55)" }}>
               {currentPageLabel}
             </p>
-            <p className="mt-0.5 truncate text-[13px] leading-5 text-[#8FA7BC]">{currentPageNote}</p>
+            <p className="mt-0.5 truncate text-[12.5px] leading-5" style={{ color: "rgba(255,255,255,0.38)" }}>{currentPageNote}</p>
           </div>
           <div className="flex items-center gap-2.5">
-            <span className="inline-flex items-center rounded-lg border border-white/[0.1] bg-white/[0.05] px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.12em] text-[#8FA7BC]">
+            <span className="inline-flex items-center rounded-lg border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.30)" }}>
               {planLabel}
             </span>
             {/* Account menu */}
