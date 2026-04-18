@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FileText, BookOpen } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { BookOpen, FileText } from "lucide-react";
 import { toast } from "sonner";
 
 import { getLatestExposure, getReports, type ReportListItem } from "@/api/authService";
@@ -8,33 +8,21 @@ import PageWrapper from "@/components/governance/PageWrapper";
 import GovernanceBriefCard from "@/components/governance/GovernanceBriefCard";
 import GovernanceEmptyState from "@/components/governance/GovernanceEmptyState";
 import { BriefCardSkeleton } from "@/components/governance/skeletons";
-import { PageTabs } from "@/components/governance/PageTabs";
-import { useAuth } from "@/contexts/AuthContext";
 import { formatApiDate } from "@/lib/dateTime";
-import { resolvePlanLimits } from "@/config/planLimits";
-import { defaultSampleBriefPath } from "@/data/sampleFirmData";
 
 type BriefRow = {
   id: number;
   title: string;
-  /** Period label for the meeting this brief covers (e.g. "March 2025") */
   meetingDate: string;
-  /** Formatted full date for the generated/created date */
   dateLabel: string;
-  /** One-liner packet summary shown inside the card */
   description: string;
-  generatedBy: string;
   pdfUrl: string;
   planType: string;
   escalationRequired: boolean;
-  signalsCount?: number;
-  actionsCount?: number;
 };
 
 const ReportsPage = () => {
   const navigate = useNavigate();
-  const { currentPlan } = useAuth();
-  const maxReportsPerMonth = resolvePlanLimits(currentPlan).maxReportsPerMonth;
   const [reports, setReports] = useState<ReportListItem[]>([]);
   const [historyNotice, setHistoryNotice] = useState<string | null>(null);
   const [historyTruncated, setHistoryTruncated] = useState(false);
@@ -113,153 +101,74 @@ const ReportsPage = () => {
   const rows = useMemo<BriefRow[]>(() => {
     return reports.map((report) => {
       const monthYear = formatApiDate(report.created_at, { month: "long", year: "numeric" }, "Unknown date");
-      const reportWithCounts = report as ReportListItem & {
-        signals_count?: number;
-        signal_count?: number;
-        governance_signals_count?: number;
-        actions_count?: number;
-        governance_actions_count?: number;
-      };
-      const signalsCountCandidate =
-        reportWithCounts.signals_count ??
-        reportWithCounts.signal_count ??
-        reportWithCounts.governance_signals_count;
-      const actionsCountCandidate =
-        reportWithCounts.actions_count ??
-        reportWithCounts.governance_actions_count;
-
-      const signalsFinal = Number.isFinite(signalsCountCandidate) ? Number(signalsCountCandidate) : undefined;
-      const actionsFinal = Number.isFinite(actionsCountCandidate) ? Number(actionsCountCandidate) : undefined;
       const isEscalation = escalationReportId === report.id;
-
-      // Build a readable packet description from available counts + status
-      const descParts: string[] = [];
-      if (typeof signalsFinal === "number") {
-        descParts.push(`${signalsFinal} client ${signalsFinal === 1 ? "issue" : "issues"} reviewed`);
-      }
-      if (typeof actionsFinal === "number") {
-        descParts.push(`${actionsFinal} ${actionsFinal === 1 ? "action" : "actions"} tracked`);
-      }
-      if (isEscalation) descParts.push("escalation flagged for discussion");
 
       return {
         id: report.id,
         title: `${monthYear} Governance Brief`,
         meetingDate: monthYear,
         dateLabel: formatApiDate(report.created_at, { month: "long", day: "numeric", year: "numeric" }, "Unknown date"),
-        description: descParts.join(" · "),
-        generatedBy: "System",
+        description: isEscalation ? "Decision required before the next partner meeting." : "Brief prepared for partner review.",
         pdfUrl: report.download_pdf_url,
         planType: report.plan_type,
         escalationRequired: isEscalation,
-        signalsCount: signalsFinal,
-        actionsCount: actionsFinal,
       };
     });
   }, [escalationReportId, reports]);
 
-  const summary = useMemo(() => {
-    const totalBriefs = rows.length;
-    const escalationCount = rows.filter((row) => row.escalationRequired).length;
-    const latestDate = rows[0]?.dateLabel || "Not available";
-    const now = new Date();
-    const reportsThisMonth = reports.filter((report) => {
-      const parsed = new Date(report.created_at || "");
-      return (
-        Number.isFinite(parsed.getTime()) &&
-        parsed.getFullYear() === now.getFullYear() &&
-        parsed.getMonth() === now.getMonth()
-      );
-    }).length;
-    return { totalBriefs, escalationCount, latestDate, reportsThisMonth };
-  }, [reports, rows]);
-
   const latestRow = rows[0] || null;
   const archivedRows = rows.slice(1);
   const libraryStateCopy = loading
-    ? "Loading governance history."
+    ? "Loading the current brief."
     : latestRow?.escalationRequired
-      ? "Current brief has an escalation flagged for the next partner meeting."
+      ? "Current brief requires a decision before the next partner meeting."
       : latestRow
         ? "Current brief is prepared for partner review."
         : "No processed governance cycle is ready yet.";
 
-  // ── Workflow tab: "upcoming" | "past" ─────────────────────────────────────
-  // "Upcoming Meetings" → latest brief (the one being prepared for the next session)
-  // "Past Briefs"       → prior cycles (reference / comparison)
-  const [briefsTab, setBriefsTab] = useState<"upcoming" | "past">("upcoming");
-
   return (
-      <PageWrapper
-        eyebrow="Governance Brief Library"
-        title="Governance Briefs"
-        description="Open the current Governance Brief, confirm meeting state, and keep prior cycles available for reference."
-        contentClassName="stage-sequence"
-      >
-        {/* Brief library state */}
-        <section className="reports-library-frame">
-          <div className="reports-library-main">
-            <div className="relative flex flex-wrap items-center justify-between gap-5">
-              <div>
-                <span className="inline-flex items-center gap-2">
-                  <span className="h-[12px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">Brief Library</span>
-                </span>
-                <h2
-                  className="mt-2 text-[24px] leading-[1.1] text-white sm:text-[28px]"
-                  style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
-                >
-                  {loading ? "Loading…" : summary.totalBriefs === 0 ? "No briefs yet" : `${summary.totalBriefs} governance ${summary.totalBriefs === 1 ? "brief" : "briefs"}`}
-                </h2>
-                <p className="mt-1.5 text-[13px] leading-5 text-[#8FA7BC]">
-                  {libraryStateCopy}
-                </p>
-              </div>
-              {latestRow ? (
-                <div className="flex flex-wrap items-center gap-2">
-                  {/* Meeting room is the primary action on the Briefs surface too */}
-                  <button
-                    type="button"
-                    onClick={() => navigate(`/dashboard/reports/${latestRow.id}?present=1`)}
-                    className="report-room-primary-action"
-                  >
-                    Enter Meeting Room
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => navigate(`/dashboard/reports/${latestRow.id}`)}
-                    className="report-room-secondary-action"
-                  >
-                    Open Brief
-                  </button>
-                </div>
-              ) : null}
-            </div>
+    <PageWrapper
+      eyebrow="Governance Brief Library"
+      title="Governance Briefs"
+      description="Open the current brief first. Archive stays secondary for reference."
+      contentClassName="stage-sequence"
+    >
+      <div className="space-y-5">
+        <section className="space-y-3">
+          <div className="max-w-[760px]">
+            <p className="gov-type-eyebrow">Current brief</p>
+            <p className="mt-1 text-[14px] leading-6 text-[#8FA7BC]">{libraryStateCopy}</p>
           </div>
-          {/* Brief history context */}
-          <div className="reports-library-context">
-            <div className="px-5 py-3">
-              <p className="text-[18px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
-                {loading ? "—" : summary.totalBriefs}
-              </p>
-              <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Total briefs</p>
-            </div>
-            <div className="px-5 py-3">
-              <p
-                className="text-[18px] font-semibold leading-none"
-                style={{ fontVariantNumeric: "tabular-nums", color: summary.escalationCount > 0 ? "#F59E0B" : "#ffffff" }}
-              >
-                {loading ? "—" : summary.escalationCount}
-              </p>
-              <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Flagged escalations</p>
-            </div>
-            <div className="px-5 py-3">
-              <p className="text-[13px] font-semibold leading-snug text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
-                {loading ? "—" : summary.latestDate}
-              </p>
-              <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Latest brief</p>
-            </div>
-          </div>
+
+          {loading ? (
+            <section aria-label="Loading governance briefs" className="space-y-4">
+              <BriefCardSkeleton />
+            </section>
+          ) : latestRow ? (
+            <GovernanceBriefCard
+              title={latestRow.title}
+              meetingDate={latestRow.meetingDate}
+              dateLabel={latestRow.dateLabel}
+              description={latestRow.description || undefined}
+              status={latestRow.escalationRequired ? "escalation" : "ready"}
+              planType={latestRow.planType}
+              isPast={false}
+              onView={() => navigate(`/dashboard/reports/${latestRow.id}`)}
+              onPrepare={() => navigate(`/dashboard/reports/${latestRow.id}?present=1`)}
+              onDownload={() => void handleDownload(latestRow)}
+            />
+          ) : (
+            <section className="rounded-xl border border-[#E3E8EF] bg-white shadow-sm">
+              <GovernanceEmptyState
+                size="md"
+                icon={<FileText size={20} />}
+                title="No Governance Brief ready yet"
+                description="Start a new review to generate your first Governance Brief. Once a review cycle is processed, the brief will appear here ready to prepare and send."
+                primaryAction={{ label: "Start a new review", href: "/upload" }}
+                secondaryAction={{ label: "Review client issues", href: "/dashboard/signals" }}
+              />
+            </section>
+          )}
         </section>
 
         {historyTruncated && historyNotice ? (
@@ -274,148 +183,49 @@ const ReportsPage = () => {
           </div>
         ) : null}
 
-        {loading ? (
-          <section aria-label="Loading governance briefs" className="space-y-4">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <BriefCardSkeleton key={`brief-skeleton-${index}`} />
-            ))}
-          </section>
-        ) : rows.length === 0 ? (
-          <section className="rounded-[12px] border border-[#E5E2DC] bg-white px-8 py-10 text-center shadow-[0_1px_4px_rgba(13,27,42,0.06)]">
-            <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-[10px] border border-[#DDD8D0] bg-[#F8F6F2] text-slate-500">
-              <FileText size={18} />
+        <section className="space-y-3">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="gov-type-eyebrow">Archive</p>
+              <p className="mt-1 text-[14px] leading-6 text-[#8FA7BC]">Past briefs stay available for reference.</p>
             </div>
-            <h2 className="mt-4 text-[17px] font-semibold text-[#0D1B2A]">No governance brief yet</h2>
-            <p className="mx-auto mt-2 max-w-md text-[14px] leading-relaxed text-slate-500">
-              The first cycle starts with a CSV upload. Review the resulting client issues, assign follow-through, and the governance brief will appear here once that cycle is ready.
-            </p>
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-              <button
-                type="button"
-                className="inline-flex items-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#16263b]"
-                onClick={() => navigate("/upload")}
-              >
-                Upload feedback CSV
-              </button>
-              <button
-                type="button"
-                className="inline-flex items-center rounded-[8px] border border-[#D1D5DB] bg-white px-4 py-2 text-[13px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
-                onClick={() => navigate("/dashboard")}
-              >
-                Return to overview
-              </button>
-            </div>
-            <div className="mt-4">
-              <Link to={defaultSampleBriefPath} className="text-[13px] text-slate-400 underline underline-offset-4 transition-colors hover:text-slate-600">
-                Review sample brief
-              </Link>
-            </div>
-          </section>
-        ) : (
-          <div className="space-y-5">
-            {/* ── Workflow tabs ─────────────────────────────────────── */}
-            <PageTabs
-              value={briefsTab}
-              onValueChange={(v) => setBriefsTab(v as typeof briefsTab)}
-              tabs={[
-                {
-                  value: "upcoming",
-                  label: "Current Brief",
-                  badgeCount: latestRow?.escalationRequired ? 1 : undefined,
-                  badgeUrgent: latestRow?.escalationRequired,
-                },
-                {
-                  value: "past",
-                  label: "Past Briefs",
-                  badgeCount: archivedRows.length > 0 ? archivedRows.length : undefined,
-                },
-              ]}
-            />
-
-            {briefsTab === "upcoming" ? (
-              latestRow ? (
-                <div>
-                  <div className="mb-3 flex items-center gap-2">
-                    {latestRow.escalationRequired ? (
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-                        <p className="gov-type-eyebrow text-amber-700">Next meeting · escalation required</p>
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1.5">
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
-                        <p className="gov-type-eyebrow">Active governance brief</p>
-                      </span>
-                    )}
-                  </div>
-                  <GovernanceBriefCard
-                    title={latestRow.title}
-                    meetingDate={latestRow.meetingDate}
-                    dateLabel={latestRow.dateLabel}
-                    description={latestRow.description || undefined}
-                    status={latestRow.escalationRequired ? "escalation" : "ready"}
-                    signalsCount={latestRow.signalsCount}
-                    actionsCount={latestRow.actionsCount}
-                    generatedBy={latestRow.generatedBy}
-                    planType={latestRow.planType}
-                    isPast={false}
-                    onView={() => navigate(`/dashboard/reports/${latestRow.id}`)}
-                    onPrepare={() => navigate(`/dashboard/reports/${latestRow.id}?present=1`)}
-                    onDownload={() => void handleDownload(latestRow)}
-                  />
-                </div>
-              ) : (
-                <section className="rounded-xl border border-[#E3E8EF] bg-white shadow-sm">
-                  <GovernanceEmptyState
-                    size="md"
-                    icon={<FileText size={20} />}
-                    title="No Governance Brief ready yet"
-                    description="Start a new review to generate your first Governance Brief. Once a review cycle is processed, the brief will appear here ready to prepare and send."
-                    primaryAction={{ label: "Start a new review", href: "/upload" }}
-                    secondaryAction={{ label: "Review client issues", href: "/dashboard/signals" }}
-                  />
-                </section>
-              )
-            ) : (
-              archivedRows.length > 0 ? (
-                <div>
-                  <p className="mb-3 gov-type-eyebrow">
-                    Prior meeting cycles — reference only
-                  </p>
-                  <div className="space-y-3">
-                    {archivedRows.map((row) => (
-                      <GovernanceBriefCard
-                        key={row.id}
-                        title={row.title}
-                        meetingDate={row.meetingDate}
-                        dateLabel={row.dateLabel}
-                        description={row.description || undefined}
-                        status={row.escalationRequired ? "escalation" : "ready"}
-                        signalsCount={row.signalsCount}
-                        actionsCount={row.actionsCount}
-                        planType={row.planType}
-                        isPast={true}
-                        onView={() => navigate(`/dashboard/reports/${row.id}`)}
-                        onDownload={() => void handleDownload(row)}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <section className="rounded-xl border border-[#E3E8EF] bg-white shadow-sm">
-                  <GovernanceEmptyState
-                    size="md"
-                    icon={<BookOpen size={20} />}
-                    title="No past Governance Briefs yet"
-                    description="Completed brief cycles will appear here as a reference archive. Use them to track how client issues change across review periods."
-                    primaryAction={{ label: "View current brief", onClick: () => setBriefsTab("upcoming") }}
-                  />
-                </section>
-              )
-            )}
+            <span className="text-[12px] uppercase tracking-[0.12em] text-[#4D7FA8]">Secondary</span>
           </div>
-        )}
-      </PageWrapper>
+
+          {archivedRows.length > 0 ? (
+            <div className="space-y-3">
+              {archivedRows.map((row) => (
+                <GovernanceBriefCard
+                  key={row.id}
+                  title={row.title}
+                  meetingDate={row.meetingDate}
+                  dateLabel={row.dateLabel}
+                  description={row.description || undefined}
+                  status={row.escalationRequired ? "escalation" : "ready"}
+                  planType={row.planType}
+                  isPast={true}
+                  onView={() => navigate(`/dashboard/reports/${row.id}`)}
+                  onDownload={() => void handleDownload(row)}
+                />
+              ))}
+            </div>
+          ) : (
+            <section className="rounded-xl border border-[#E3E8EF] bg-white shadow-sm">
+              <GovernanceEmptyState
+                size="md"
+                icon={<BookOpen size={20} />}
+                title="No past Governance Briefs yet"
+                description="Completed brief cycles will appear here as a reference archive. Use them to track how client issues change across review periods."
+                primaryAction={{
+                  label: "View current brief",
+                  onClick: () => (latestRow ? navigate(`/dashboard/reports/${latestRow.id}`) : navigate("/dashboard")),
+                }}
+              />
+            </section>
+          )}
+        </section>
+      </div>
+    </PageWrapper>
   );
 };
 

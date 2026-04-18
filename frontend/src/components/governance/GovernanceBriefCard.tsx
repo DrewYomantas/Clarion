@@ -1,37 +1,3 @@
-/**
- * GovernanceBriefCard
- * ─────────────────────────────────────────────────────────────────────────────
- * Renders a single governance brief as a clearly-labeled meeting packet card.
- * Uses the shared GovernanceCard pattern.
- *
- * Used in:
- *   - ReportsPage (upcoming + past tabs)
- *   - RecentGovernanceBriefs (dashboard rail)
- *
- * Design intent:
- *   Each card should read like a meeting packet label — you immediately know
- *   which meeting it belongs to, how many issues were reviewed, and whether
- *   any escalation is flagged. The "Past Briefs" tab presents these as a
- *   reference stack, not an analytics table.
- *
- * Props map:
- *   title            → header title (e.g. "March 2025 Brief")
- *   meetingDate      → the meeting this brief was prepared for (display label)
- *   dateLabel        → generated/created date — shown in meta row
- *   description      → optional one-liner summary (e.g. "3 high-severity issues reviewed")
- *   status           → "ready" | "escalation" | "pending" → chip + accent
- *   signalsCount     → meta: "N signals" (optional)
- *   actionsCount     → meta: "N actions" (optional)
- *   generatedBy      → meta: attribution (optional)
- *   planType         → controls PDF download label (free = watermarked)
- *   isPast           → true for archived cards — suppresses "Prepare" action
- *   onView           → primary "View brief" action
- *   onDownload       → "Download PDF" action
- *   onPrepare        → "Prepare meeting brief" action (upcoming tab only)
- * ─────────────────────────────────────────────────────────────────────────────
- */
-
-import { Calendar, FileText, Zap } from "lucide-react";
 import GovernanceCard from "./GovernanceCard";
 import GovStatusChip from "./GovStatusChip";
 
@@ -39,18 +5,12 @@ export type BriefStatus = "ready" | "escalation" | "pending" | "sent" | "acknowl
 
 export type GovernanceBriefCardProps = {
   title: string;
-  /** Human-readable label for the meeting date period (e.g. "March 2025") */
   meetingDate?: string;
-  /** Created/generated date label — shown as a meta item */
   dateLabel: string;
-  /** One-liner description shown as the summary line */
   description?: string;
   status: BriefStatus;
-  signalsCount?: number;
-  actionsCount?: number;
   generatedBy?: string;
   planType?: string;
-  /** When true, hides the "Prepare meeting brief" action (past briefs) */
   isPast?: boolean;
   onView?: () => void;
   onDownload?: () => void;
@@ -58,34 +18,29 @@ export type GovernanceBriefCardProps = {
 };
 
 const statusChipMap: Record<BriefStatus, { label: string; variant: "risk" | "warn" | "success" | "muted" | "info" }> = {
-  escalation:   { label: "Decision required", variant: "warn" },
-  ready:        { label: "Brief prepared",    variant: "success" },
-  pending:      { label: "Draft",          variant: "muted" },
-  sent:         { label: "Sent",           variant: "info" },
-  acknowledged: { label: "Acknowledged",   variant: "success" },
+  escalation: { label: "Decision required", variant: "warn" },
+  ready: { label: "Brief prepared", variant: "success" },
+  pending: { label: "Draft", variant: "muted" },
+  sent: { label: "Sent", variant: "info" },
+  acknowledged: { label: "Acknowledged", variant: "success" },
 };
 
 const accentMap: Record<BriefStatus, "warn" | "success" | "neutral"> = {
-  escalation:   "warn",
-  ready:        "success",
-  pending:      "neutral",
-  sent:         "success",
+  escalation: "warn",
+  ready: "success",
+  pending: "neutral",
+  sent: "success",
   acknowledged: "success",
 };
 
-/** Build the packet-summary description when none is provided */
-function buildDescription(signalsCount?: number, actionsCount?: number, status?: BriefStatus): string | undefined {
-  const parts: string[] = [];
-  if (typeof signalsCount === "number") {
-    parts.push(`${signalsCount} client ${signalsCount === 1 ? "issue" : "issues"} reviewed`);
-  }
-  if (typeof actionsCount === "number") {
-    parts.push(`${actionsCount} ${actionsCount === 1 ? "action" : "actions"} tracked`);
-  }
+function buildDescription(status?: BriefStatus): string | undefined {
   if (status === "escalation") {
-    parts.push("escalation flagged for discussion");
+    return "Decision required before the next partner meeting.";
   }
-  return parts.length > 0 ? parts.join(" · ") : undefined;
+  if (status === "ready") {
+    return "Brief prepared for partner review.";
+  }
+  return undefined;
 }
 
 export default function GovernanceBriefCard({
@@ -94,8 +49,6 @@ export default function GovernanceBriefCard({
   dateLabel,
   description,
   status,
-  signalsCount,
-  actionsCount,
   generatedBy,
   planType,
   isPast = false,
@@ -104,16 +57,12 @@ export default function GovernanceBriefCard({
   onPrepare,
 }: GovernanceBriefCardProps) {
   const { label: chipLabel, variant: chipVariant } = statusChipMap[status] ?? statusChipMap.ready;
-
-  // Build meta row: meeting period → generated date → attribution
   const metaItems: string[] = [];
   if (meetingDate) metaItems.push(meetingDate);
   metaItems.push(`Generated ${dateLabel}`);
   if (generatedBy && generatedBy !== "System") metaItems.push(`by ${generatedBy}`);
 
-  // Summary line: prefer explicit description, fall back to computed packet summary
-  const summaryLine = description ?? buildDescription(signalsCount, actionsCount, status);
-
+  const summaryLine = description ?? buildDescription(status);
   const downloadLabel = planType === "free" ? "Preview PDF" : "Download PDF";
 
   return (
@@ -124,34 +73,8 @@ export default function GovernanceBriefCard({
       summary={summaryLine}
       meta={metaItems}
       className={isPast ? "reports-brief-card" : "reports-brief-card reports-brief-card--current"}
-      detail={
-        /* Compact stats row inside the card body — signals + actions at a glance */
-        (typeof signalsCount === "number" || typeof actionsCount === "number") ? (
-          <div className="flex flex-wrap items-center gap-4 pt-1">
-            {typeof signalsCount === "number" ? (
-              <span className="flex items-center gap-1.5 text-[12px] text-slate-500">
-                <Zap size={12} className="text-slate-400" aria-hidden />
-                <span>{signalsCount} {signalsCount === 1 ? "signal" : "signals"}</span>
-              </span>
-            ) : null}
-            {typeof actionsCount === "number" ? (
-              <span className="flex items-center gap-1.5 text-[12px] text-slate-500">
-                <FileText size={12} className="text-slate-400" aria-hidden />
-                <span>{actionsCount} {actionsCount === 1 ? "action" : "actions"}</span>
-              </span>
-            ) : null}
-            {meetingDate ? (
-              <span className="flex items-center gap-1.5 text-[12px] text-slate-500">
-                <Calendar size={12} className="text-slate-400" aria-hidden />
-                <span>{meetingDate}</span>
-              </span>
-            ) : null}
-          </div>
-        ) : null
-      }
       actions={
         <>
-          {/* Meeting room is the primary action for current briefs */}
           {!isPast && onPrepare ? (
             <button
               type="button"
