@@ -3663,14 +3663,14 @@ body {
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #2E5068;
+  color: rgba(196,169,106,0.52);
 }
 
 .home-room-meta-value {
   margin: 0;
   font-size: 13px;
   font-weight: 500;
-  color: rgba(255,255,255,0.52);
+  color: rgba(255,255,255,0.62);
   line-height: 1.4;
 }
 
@@ -3709,12 +3709,12 @@ body {
 
 .home-room-readiness-text {
   font-size: 12px;
-  color: rgba(255,255,255,0.40);
+  color: rgba(255,255,255,0.52);
   line-height: 1.4;
 }
 
 .home-room-readiness-item--open .home-room-readiness-text {
-  color: rgba(255,255,255,0.52);
+  color: rgba(255,255,255,0.65);
 }
 
 /* -- Agenda --
@@ -3783,14 +3783,14 @@ body {
 .home-agenda-matter {
   font-size: 14px;
   font-weight: 400;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.65);
   line-height: 1.6;
   text-decoration: none;
   flex: 1;
   transition: color 150ms;
 }
 
-.home-agenda-matter:hover { color: rgba(255,255,255,0.82); }
+.home-agenda-matter:hover { color: rgba(255,255,255,0.88); }
 
 /* -- Reduced motion -- */
 

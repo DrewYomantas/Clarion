@@ -399,7 +399,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
             <p className="text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: "rgba(196,169,106,0.55)" }}>
               {currentPageLabel}
             </p>
-            <p className="mt-0.5 truncate text-[12.5px] leading-5" style={{ color: "rgba(255,255,255,0.38)" }}>{currentPageNote}</p>
+            <p className="mt-0.5 truncate text-[12.5px] leading-5" style={{ color: "rgba(255,255,255,0.52)" }}>{currentPageNote}</p>
           </div>
           <div className="flex items-center gap-2.5">
             <span className="inline-flex items-center rounded-lg border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.30)" }}>
