@@ -38,7 +38,7 @@ const ReportsPage = () => {
         const payload = (await response.json()) as { error?: string; message?: string };
         if (payload.error === "Report outside plan history window") {
           toast.error(
-            "This report is outside your plan’s governance history window. Upgrade your plan to access older reports.",
+            "This report is outside your plan's governance history window. Upgrade your plan to access older reports.",
           );
           return;
         }
@@ -118,28 +118,16 @@ const ReportsPage = () => {
 
   const latestRow = rows[0] || null;
   const archivedRows = rows.slice(1);
-  const libraryStateCopy = loading
-    ? "Loading the current brief."
-    : latestRow?.escalationRequired
-      ? "Current brief requires a decision before the next partner meeting."
-      : latestRow
-        ? "Current brief is prepared for partner review."
-        : "No processed governance cycle is ready yet.";
 
   return (
     <PageWrapper
-      eyebrow="Governance Brief Library"
+      eyebrow="Governance Brief"
       title="Governance Briefs"
-      description="Open the current brief first. Archive stays secondary for reference."
+      description="Open the current brief. Archive stays secondary for reference."
       contentClassName="stage-sequence"
     >
       <div className="space-y-5">
         <section className="space-y-3">
-          <div className="max-w-[760px]">
-            <p className="gov-type-eyebrow">Current brief</p>
-            <p className="mt-1 text-[14px] leading-6 text-[#8FA7BC]">{libraryStateCopy}</p>
-          </div>
-
           {loading ? (
             <section aria-label="Loading governance briefs" className="space-y-4">
               <BriefCardSkeleton />
@@ -163,7 +151,7 @@ const ReportsPage = () => {
                 size="md"
                 icon={<FileText size={20} />}
                 title="No Governance Brief ready yet"
-                description="Start a new review to generate your first Governance Brief. Once a review cycle is processed, the brief will appear here ready to prepare and send."
+                description="Start a new review to generate your first Governance Brief. Once a review cycle is processed, the brief will appear here for review."
                 primaryAction={{ label: "Start a new review", href: "/upload" }}
                 secondaryAction={{ label: "Review client issues", href: "/dashboard/signals" }}
               />
@@ -183,17 +171,17 @@ const ReportsPage = () => {
           </div>
         ) : null}
 
-        <section className="space-y-3">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <p className="gov-type-eyebrow">Archive</p>
-              <p className="mt-1 text-[14px] leading-6 text-[#8FA7BC]">Past briefs stay available for reference.</p>
-            </div>
-            <span className="text-[12px] uppercase tracking-[0.12em] text-[#4D7FA8]">Secondary</span>
-          </div>
+        <details className="reports-archive">
+          <summary>
+            <span>
+              <span className="gov-type-eyebrow">Archive</span>
+              <span className="reports-archive-summary">Past briefs stay available for reference.</span>
+            </span>
+            <strong>{archivedRows.length}</strong>
+          </summary>
 
           {archivedRows.length > 0 ? (
-            <div className="space-y-3">
+            <div className="reports-archive-list">
               {archivedRows.map((row) => (
                 <GovernanceBriefCard
                   key={row.id}
@@ -210,7 +198,7 @@ const ReportsPage = () => {
               ))}
             </div>
           ) : (
-            <section className="rounded-xl border border-[#E3E8EF] bg-white shadow-sm">
+            <section className="reports-archive-empty">
               <GovernanceEmptyState
                 size="md"
                 icon={<BookOpen size={20} />}
@@ -223,7 +211,7 @@ const ReportsPage = () => {
               />
             </section>
           )}
-        </section>
+        </details>
       </div>
     </PageWrapper>
   );
