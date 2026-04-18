@@ -174,7 +174,7 @@ const resolvePageNote = (pathname: string): string => {
     return "Review overdue, unowned, and blocked follow-through before the next partner discussion.";
   }
   if (pathname === "/dashboard/reports" || pathname.startsWith("/dashboard/reports/")) {
-    return "Open the partner-ready Governance Brief and confirm follow-through and next decisions.";
+    return "Open the current Governance Brief and confirm follow-through and next decisions.";
   }
   if (pathname === "/dashboard/billing") {
     return "Manage your plan and subscription details.";

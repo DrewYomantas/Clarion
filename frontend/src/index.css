@@ -3680,8 +3680,9 @@ body {
 }
 
 .reports-archive {
-  border-top: 1px solid rgba(143,167,188,0.22);
-  padding-top: 18px;
+  border: 1px solid rgba(13,27,42,0.10);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.34);
 }
 
 .reports-archive > summary {
@@ -3692,7 +3693,7 @@ body {
   cursor: pointer;
   list-style: none;
   border-radius: 8px;
-  padding: 10px 0;
+  padding: 14px 16px;
 }
 
 .reports-archive > summary::-webkit-details-marker {
@@ -3714,7 +3715,7 @@ body {
 .reports-archive-summary {
   display: block;
   margin-top: 4px;
-  color: #8FA7BC;
+  color: #455A6E;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -3723,11 +3724,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding-top: 10px;
+  padding: 0 16px 16px;
 }
 
 .reports-archive-empty {
-  margin-top: 10px;
+  margin: 0 16px 16px;
   border: 1px solid #E3E8EF;
   border-radius: 12px;
   background: #FFFFFF;
