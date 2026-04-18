@@ -2987,13 +2987,13 @@ body {
 
 .brief-present-frame {
   display: grid;
-  grid-template-columns: minmax(150px, 220px) 1fr auto;
+  grid-template-columns: minmax(130px, 180px) 1fr auto;
   align-items: center;
-  gap: 18px;
-  min-height: 62px;
+  gap: 16px;
+  min-height: 50px;
   padding: 0 30px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  background: rgba(5,11,22,0.88);
+  border-bottom: 1px solid rgba(255,255,255,0.045);
+  background: rgba(5,11,22,0.72);
   user-select: none;
   flex-shrink: 0;
 }
@@ -3007,16 +3007,11 @@ body {
 .brief-present-bar-context {
   max-width: none;
   justify-self: center;
-  color: rgba(255,255,255,0.62);
-}
-
-.brief-present-bar-hint {
-  margin-left: 0;
-  color: rgba(255,255,255,0.34);
+  color: rgba(255,255,255,0.48);
 }
 
 .brief-present-scroll {
-  padding: 34px 28px 72px;
+  padding: 28px 28px 72px;
   color: #EAF0F6;
 }
 
@@ -3370,6 +3365,7 @@ body {
 
   .brief-present-bar-context {
     justify-self: start;
+    display: none;
   }
 
   .meeting-room-footer {

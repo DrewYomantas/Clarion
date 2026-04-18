@@ -38,8 +38,7 @@ export default function BriefPresentMode({ active, onExit, briefTitle, children 
     >
       <div className="brief-present-frame" aria-label="Meeting room frame">
         <div className="brief-present-room-mark">
-          <span className="brief-present-bar-label">Meeting Mode</span>
-          <span className="brief-present-bar-hint">Esc to exit</span>
+          <span className="brief-present-bar-label">Clarion room</span>
         </div>
         {briefTitle ? (
           <span className="brief-present-bar-context" aria-hidden>{briefTitle}</span>
@@ -48,6 +47,7 @@ export default function BriefPresentMode({ active, onExit, briefTitle, children 
           type="button"
           onClick={onExit}
           aria-label="Exit Meeting Mode"
+          title="Exit Meeting Mode. Esc also exits."
           className="brief-present-exit-btn"
         >
           <X size={13} aria-hidden />

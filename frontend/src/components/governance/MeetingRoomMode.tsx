@@ -75,6 +75,10 @@ export default function MeetingRoomMode({
   const meetingDecisionBody =
     firstDecision?.recommendation ||
     "Review the current client issues, confirm ownership, and decide what moves into follow-through.";
+  const meetingRoomTitle = report.review_date_label
+    ? `${report.review_date_label} partner review`
+    : "Partner review room";
+  const meetingRoomIntro = `${report.total_reviews} review${report.total_reviews === 1 ? "" : "s"} in the room. Start with the decision on the table, then confirm evidence and follow-through.`;
   const meetingStatus = escalation.on
     ? "Decision required"
     : activeActionCount > 0
@@ -86,12 +90,6 @@ export default function MeetingRoomMode({
       ? `${activeActionCount} open action${activeActionCount === 1 ? "" : "s"} remain active.`
       : "No open follow-through remains for this cycle.";
   const meetingAgendaItems = [
-    {
-      label: "Primary decision",
-      title: meetingDecisionTitle,
-      body: meetingDecisionBody,
-      urgent: escalation.on,
-    },
     ...decisionItems.slice(1, 4).map((item) => ({
       label: "Supporting decision",
       title: item.theme,
@@ -106,6 +104,14 @@ export default function MeetingRoomMode({
       title: "Follow-through readiness",
       body: `${overdueCount} overdue, ${unassignedCount} unassigned, ${undatedCount} missing due date.`,
       urgent: true,
+    });
+  }
+  if (meetingAgendaItems.length === 0) {
+    meetingAgendaItems.push({
+      label: "Room sequence",
+      title: "Confirm evidence and handoff",
+      body: "Review the supporting themes, confirm the action record, and decide what carries out of the room.",
+      urgent: false,
     });
   }
 
@@ -123,9 +129,9 @@ export default function MeetingRoomMode({
     <>
       <header className="meeting-room-hero">
         <div className="meeting-room-hero-main">
-          <p className="meeting-room-eyebrow">Current cycle</p>
-          <h1>{report.name || report.title}</h1>
-          <p>{meetingDecisionBody}</p>
+          <p className="meeting-room-eyebrow">Chaired review</p>
+          <h1>{meetingRoomTitle}</h1>
+          <p>{meetingRoomIntro}</p>
         </div>
         <div className="meeting-room-hero-context" aria-label="Cycle context">
           {report.review_date_label ? (
@@ -151,8 +157,8 @@ export default function MeetingRoomMode({
 
       <div className="meeting-room-layout">
         <main className="meeting-room-main">
-          <section className="meeting-current-discussion" aria-label="Current discussion">
-            <p className="meeting-room-eyebrow">Current discussion</p>
+          <section className="meeting-current-discussion" aria-label="Decision on the table">
+            <p className="meeting-room-eyebrow">Decision on the table</p>
             <h2>{meetingDecisionTitle}</h2>
             <p>{meetingDecisionBody}</p>
             <div className="meeting-current-state">
@@ -164,7 +170,7 @@ export default function MeetingRoomMode({
             </div>
           </section>
 
-          <MeetingRoomSection eyebrow="Decision agenda" title="Sequence for the room">
+          <MeetingRoomSection eyebrow="Next in the room" title="Move through in order">
             <ol className="meeting-agenda-list">
               {meetingAgendaItems.map((item, index) => (
                 <li key={`${item.label}-${index}`} className={item.urgent ? "meeting-agenda-item meeting-agenda-item--urgent" : "meeting-agenda-item"}>
