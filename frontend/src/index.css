@@ -3155,14 +3155,15 @@ body {
     transition: none;
   }
 }
-
 /* ============================================================
-   HOME PAGE — Clarion governance command surface (v3)
-   Pass intent: dashboard -> decision room.
-   - No card borders. The dark page IS the room.
-   - KPI strip removed. Evidence is prose woven into the headline.
-   - Alert widget removed. Attention items are a printed agenda.
-   - 4-column stepper removed. Cycle sequence is a single line.
+   HOME PAGE — Clarion governance command surface (v4)
+   Pass intent: compositional tightening.
+   - Architecture preserved: decision room, not dashboard.
+   - Dead air filled: right side of room surface now carries
+     integrated cycle context (readiness + metadata).
+   - Faint text strengthened throughout.
+   - Agenda elevated: larger type, stronger contrast, cleaner scan.
+   - Operational context footer removed (not earning its place).
    ============================================================ */
 
 /* -- Shell -- */
@@ -3206,7 +3207,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #2C4E66;
+  color: #3D6180;
 }
 
 .home-frame-meta {
@@ -3219,13 +3220,13 @@ body {
 .home-frame-cycle {
   font-size: 14px;
   font-weight: 500;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.60);
   letter-spacing: 0.01em;
 }
 
 .home-frame-sep {
   font-size: 11px;
-  color: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.18);
 }
 
 .home-frame-chip {
@@ -3241,7 +3242,7 @@ body {
 
 .home-frame-nocycle {
   font-size: 13px;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.25);
 }
 
 .home-frame-action {
@@ -3249,20 +3250,20 @@ body {
   align-items: center;
   gap: 6px;
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
   padding: 7px 14px;
   font-size: 11.5px;
   font-weight: 500;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.38);
   text-decoration: none;
   flex-shrink: 0;
   transition: color 150ms, border-color 150ms;
 }
 
 .home-frame-action:hover {
-  color: rgba(255,255,255,0.55);
-  border-color: rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.65);
+  border-color: rgba(255,255,255,0.20);
 }
 
 .home-frame-rule {
@@ -3439,27 +3440,47 @@ body {
 
 /* -- Decision room surface --
    The room has no card border. It is a region of the dark page.
-   The headline IS the gravity. The CTA IS the door.
+   Two-column inner: left carries the headline + evidence + CTAs;
+   right carries integrated cycle context — no border, same background.
 */
 
 .home-room {
   position: relative;
-  padding: 48px 0 40px;
+  padding: 48px 0 44px;
   border-top: 1px solid rgba(255,255,255,0.06);
-  margin-bottom: 40px;
+  margin-bottom: 44px;
   overflow: hidden;
 }
 
 .home-room-glow {
   position: absolute;
-  top: -100px;
-  right: -120px;
-  width: 480px;
-  height: 480px;
+  top: -80px;
+  right: -80px;
+  width: 520px;
+  height: 520px;
   border-radius: 50%;
-  background: radial-gradient(circle, #1A3C70 0%, transparent 70%);
-  opacity: 0.18;
+  background: radial-gradient(circle, #1A3C70 0%, transparent 68%);
+  opacity: 0.22;
   pointer-events: none;
+}
+
+/* Two-column inner — left dominates, right is contextual */
+.home-room-inner {
+  display: grid;
+  grid-template-columns: 1fr minmax(200px, 260px);
+  gap: 0 48px;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .home-room-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.home-room-left {
+  min-width: 0;
 }
 
 .home-room-eyebrow {
@@ -3468,7 +3489,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #244158;
+  color: #3D6180;
 }
 
 .home-room-headline-row {
@@ -3483,7 +3504,7 @@ body {
   min-height: 56px;
   align-self: stretch;
   border-radius: 2px;
-  background: linear-gradient(180deg, #C4A96A 0%, rgba(196,169,106,0.12) 100%);
+  background: linear-gradient(180deg, #C4A96A 0%, rgba(196,169,106,0.10) 100%);
   flex-shrink: 0;
   margin-top: 4px;
 }
@@ -3505,9 +3526,9 @@ body {
 
 .home-room-summary {
   margin: 14px 0 0;
-  font-size: 13px;
-  color: #2A5068;
-  line-height: 1.5;
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.44);
+  line-height: 1.55;
   letter-spacing: 0.01em;
 }
 
@@ -3569,21 +3590,23 @@ body {
 }
 
 .home-room-brief-link {
-  color: rgba(255,255,255,0.35);
-  border-color: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.42);
+  border-color: rgba(255,255,255,0.10);
 }
 
 .home-room-brief-link:hover {
-  color: rgba(255,255,255,0.62);
-  border-color: rgba(255,255,255,0.17);
+  color: rgba(255,255,255,0.72);
+  border-color: rgba(255,255,255,0.20);
   background: rgba(255,255,255,0.04);
 }
 
 .home-room-pdf-link {
-  color: #1C4560;
+  color: rgba(255,255,255,0.28);
 }
 
-.home-room-pdf-link:hover { color: #3A7898; }
+.home-room-pdf-link:hover {
+  color: rgba(255,255,255,0.50);
+}
 
 .home-room-notice {
   margin-top: 24px;
@@ -3596,14 +3619,14 @@ body {
 .home-room-notice-text {
   margin: 0;
   font-size: 10.5px;
-  color: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.20);
   letter-spacing: 0.02em;
   line-height: 1.5;
 }
 
 .home-room-notice-dismiss {
   font-size: 10px;
-  color: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.16);
   background: none;
   border: none;
   cursor: pointer;
@@ -3612,26 +3635,105 @@ body {
   transition: color 150ms;
 }
 
-.home-room-notice-dismiss:hover { color: rgba(255,255,255,0.35); }
+.home-room-notice-dismiss:hover { color: rgba(255,255,255,0.38); }
+
+/* Right column: integrated cycle context
+   No border. No background. Part of the same dark surface.
+   Typography only — labels + values, readiness list.
+*/
+
+.home-room-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-top: 2px;
+}
+
+.home-room-meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.home-room-meta-label {
+  margin: 0;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #2E5068;
+}
+
+.home-room-meta-value {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.52);
+  line-height: 1.4;
+}
+
+/* Readiness list — dot per item, green or muted */
+
+.home-room-readiness-list {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.home-room-readiness-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-room-readiness-dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.home-room-readiness-item--ok .home-room-readiness-dot {
+  background: rgba(52,211,153,0.70);
+}
+
+.home-room-readiness-item--open .home-room-readiness-dot {
+  background: rgba(248,113,113,0.55);
+}
+
+.home-room-readiness-text {
+  font-size: 12px;
+  color: rgba(255,255,255,0.40);
+  line-height: 1.4;
+}
+
+.home-room-readiness-item--open .home-room-readiness-text {
+  color: rgba(255,255,255,0.52);
+}
 
 /* -- Agenda --
-   A printed governance agenda. Each item is a full sentence.
+   A live meeting agenda. Each item is a full sentence.
+   Stronger typographic structure than v3: larger type, better contrast.
    No per-row action buttons. The line itself is the link.
 */
 
 .home-agenda {
-  margin-bottom: 40px;
+  margin-bottom: 44px;
   padding-left: 19px;
-  border-left: 1px solid rgba(255,255,255,0.055);
+  border-left: 2px solid rgba(196,169,106,0.15);
 }
 
 .home-agenda-heading {
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #2C4E66;
+  color: #3D6180;
 }
 
 .home-agenda-list {
@@ -3645,104 +3747,48 @@ body {
 .home-agenda-item {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  padding: 11px 0;
-  border-top: 1px solid rgba(255,255,255,0.04);
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
 }
 
 .home-agenda-item:last-child {
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .home-agenda-num {
-  font-size: 9.5px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  color: #1A3A52;
+  letter-spacing: 0.10em;
+  color: #2E4E66;
   flex-shrink: 0;
   font-variant-numeric: tabular-nums;
-  width: 20px;
+  width: 22px;
 }
 
 .home-agenda-priority {
   display: block;
-  width: 2px;
-  height: 14px;
-  border-radius: 1px;
+  width: 3px;
+  height: 16px;
+  border-radius: 2px;
   flex-shrink: 0;
   align-self: center;
 }
 
-.home-agenda-priority--high     { background: #EF4444; opacity: 0.7; }
-.home-agenda-priority--moderate { background: #F59E0B; opacity: 0.6; }
+.home-agenda-priority--high     { background: rgba(239,68,68,0.75); }
+.home-agenda-priority--moderate { background: rgba(245,158,11,0.65); }
 
 .home-agenda-matter {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
-  color: #4E8AAA;
-  line-height: 1.55;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
   text-decoration: none;
   flex: 1;
   transition: color 150ms;
 }
 
-.home-agenda-matter:hover { color: #7BBAD4; }
-
-/* -- Operational context --
-   Cycle sequence as a single quiet horizontal line.
-   Active step in gold. No grid, no boxes, no widget.
-*/
-
-.home-context {
-  border-top: 1px solid rgba(255,255,255,0.04);
-  padding-top: 18px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.home-context-sequence {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.home-context-step-group {
-  display: inline-flex;
-  align-items: center;
-}
-
-.home-context-arrow {
-  font-size: 9px;
-  color: rgba(255,255,255,0.10);
-  padding: 0 8px;
-}
-
-.home-context-step {
-  font-size: 11px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.18);
-  text-decoration: none;
-  transition: color 150ms;
-}
-
-.home-context-step:hover { color: rgba(255,255,255,0.4); }
-
-.home-context-step--active {
-  color: rgba(196,169,106,0.72);
-  font-weight: 600;
-}
-
-.home-context-step--active:hover { color: rgba(196,169,106,1); }
-
-.home-context-status {
-  margin: 0;
-  font-size: 11px;
-  color: rgba(255,255,255,0.14);
-  text-align: right;
-}
+.home-agenda-matter:hover { color: rgba(255,255,255,0.82); }
 
 /* -- Reduced motion -- */
 
@@ -3752,7 +3798,6 @@ body {
   .home-room-brief-link,
   .home-room-pdf-link,
   .home-agenda-matter,
-  .home-context-step,
   .home-onboard-primary-cta { transition: none; }
   .home-room-enter:active { transform: none; }
 }

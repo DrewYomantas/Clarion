@@ -455,6 +455,8 @@ const Dashboard = () => {
   void topIssue;
   void newExposureCategories;
   void suggestedActions;
+  void loopSteps;
+  void loopActiveStep;
 
   // Inline sentence summarising cycle evidence — woven into the headline body, not a strip
   const cycleSummaryParts: string[] = [];
@@ -491,8 +493,19 @@ const Dashboard = () => {
     to: "/dashboard/actions",
   });
 
-  // Cycle sequence — rendered as a single prose line, not a widget
-  const cycleSequenceStep = loopSteps[loopActiveStep]?.label ?? "New Review";
+  // Room context — integrated right column of the decision surface
+  const lastUploadDate = latestProcessedReport
+    ? formatDateOnly(latestProcessedReport.created_at)
+    : null;
+  const meetingReadiness: { label: string; ok: boolean }[] = [];
+  if (latestProcessedReport) {
+    meetingReadiness.push({ label: "Governance brief", ok: true });
+    meetingReadiness.push({ label: "Overdue items cleared", ok: overdueActions.length === 0 });
+    meetingReadiness.push({ label: "Actions owned", ok: unownedActionsCount === 0 });
+    if (exposure?.partner_escalation_required) {
+      meetingReadiness.push({ label: "Escalation resolved", ok: false });
+    }
+  }
 
   return (
     <div className="home-root">
@@ -583,88 +596,121 @@ const Dashboard = () => {
         ) : null}
 
         {/* ── Decision room surface ───────────────────────────────────────────
-            The page IS the room. No card border. Dark canvas section
-            that occupies the full content width. The headline IS the
-            center of gravity — not a card header, not a hero block.
+            The page IS the room. No card border. Dark canvas section.
+            Two-column inner: left = headline + evidence + CTAs,
+            right = integrated cycle context (no border, same surface).
         ──────────────────────────────────────────────────────────────────── */}
         {!isFirstRunWorkspace ? (
           <section className="home-room" aria-label="Current governance brief">
-            {/* Ambient glow — depth, not decoration */}
             <div className="home-room-glow" aria-hidden />
 
-            {/* Cycle identification */}
-            <p className="home-room-eyebrow">Current governance brief</p>
+            <div className="home-room-inner">
+              {/* Left: the dominant surface */}
+              <div className="home-room-left">
+                <p className="home-room-eyebrow">Current governance brief</p>
 
-            <div className="home-room-headline-row">
-              <span className="home-room-gold-rail" aria-hidden />
-              <div className="home-room-headline-body">
-                <h2 className="home-room-headline">
-                  {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
-                </h2>
-                {/* Evidence woven in as prose, not a metric strip */}
-                {cycleSummary ? (
-                  <p className="home-room-summary">{cycleSummary}</p>
+                <div className="home-room-headline-row">
+                  <span className="home-room-gold-rail" aria-hidden />
+                  <div className="home-room-headline-body">
+                    <h2 className="home-room-headline">
+                      {latestProcessedReport ? reviewPeriodLabel : "No brief ready yet"}
+                    </h2>
+                    {cycleSummary ? (
+                      <p className="home-room-summary">{cycleSummary}</p>
+                    ) : null}
+                  </div>
+                </div>
+
+                <div className="home-room-actions">
+                  {latestProcessedReport ? (
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}?present=1`)}
+                      className="home-room-enter"
+                    >
+                      Open Meeting View
+                    </button>
+                  ) : null}
+                  <div className="home-room-secondary-actions">
+                    {latestProcessedReport ? (
+                      <button
+                        type="button"
+                        onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
+                        className="home-room-brief-link"
+                      >
+                        Open Governance Brief
+                      </button>
+                    ) : null}
+                    {latestReadyBrief ? (
+                      <button
+                        type="button"
+                        onClick={() => void handleExportBrief()}
+                        className="home-room-pdf-link"
+                      >
+                        {loading
+                          ? <><Loader2 size={11} className="animate-spin" /> Loading</>
+                          : planUsage.pdfWatermark ? "Preview PDF" : "Download PDF"}
+                      </button>
+                    ) : null}
+                    {!latestProcessedReport ? (
+                      <button
+                        type="button"
+                        onClick={() => navigate("/upload")}
+                        className="home-room-enter"
+                      >
+                        Start New Review <ChevronRight size={13} />
+                      </button>
+                    ) : null}
+                  </div>
+                </div>
+
+                {(showBaselineNotice || (historyTruncated && historyNotice)) ? (
+                  <div className="home-room-notice">
+                    <p className="home-room-notice-text">
+                      {showBaselineNotice
+                        ? "Baseline cycle — trend comparison becomes available after the next upload."
+                        : historyNotice}
+                    </p>
+                    {showBaselineNotice ? (
+                      <button type="button" onClick={dismissBaselineNotice} aria-label="Dismiss" className="home-room-notice-dismiss">✕</button>
+                    ) : null}
+                  </div>
                 ) : null}
               </div>
-            </div>
 
-            {/* Actions — single dominant entry, others recede */}
-            <div className="home-room-actions">
+              {/* Right: integrated cycle context — no border, no card, same dark surface */}
               {latestProcessedReport ? (
-                <button
-                  type="button"
-                  onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}?present=1`)}
-                  className="home-room-enter"
-                >
-                  Open Meeting View
-                </button>
+                <div className="home-room-meta" aria-label="Cycle context">
+                  <div className="home-room-meta-block">
+                    <p className="home-room-meta-label">Meeting readiness</p>
+                    <ul className="home-room-readiness-list" aria-label="Readiness checklist">
+                      {meetingReadiness.map((item) => (
+                        <li key={item.label} className={`home-room-readiness-item${item.ok ? " home-room-readiness-item--ok" : " home-room-readiness-item--open"}`}>
+                          <span className="home-room-readiness-dot" aria-hidden />
+                          <span className="home-room-readiness-text">{item.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="home-room-meta-block">
+                    <p className="home-room-meta-label">Cycle</p>
+                    <p className="home-room-meta-value">{reviewPeriodLabel}</p>
+                  </div>
+                  {lastUploadDate ? (
+                    <div className="home-room-meta-block">
+                      <p className="home-room-meta-label">Last processed</p>
+                      <p className="home-room-meta-value">{lastUploadDate}</p>
+                    </div>
+                  ) : null}
+                  {latestSignals.length > 0 ? (
+                    <div className="home-room-meta-block">
+                      <p className="home-room-meta-label">Issues on record</p>
+                      <p className="home-room-meta-value">{latestSignals.length}</p>
+                    </div>
+                  ) : null}
+                </div>
               ) : null}
-              <div className="home-room-secondary-actions">
-                {latestProcessedReport ? (
-                  <button
-                    type="button"
-                    onClick={() => navigate(`/dashboard/reports/${latestProcessedReport.id}`)}
-                    className="home-room-brief-link"
-                  >
-                    Open Governance Brief
-                  </button>
-                ) : null}
-                {latestReadyBrief ? (
-                  <button
-                    type="button"
-                    onClick={() => void handleExportBrief()}
-                    className="home-room-pdf-link"
-                  >
-                    {loading
-                      ? <><Loader2 size={11} className="animate-spin" /> Loading</>
-                      : planUsage.pdfWatermark ? "Preview PDF" : "Download PDF"}
-                  </button>
-                ) : null}
-                {!latestProcessedReport ? (
-                  <button
-                    type="button"
-                    onClick={() => navigate("/upload")}
-                    className="home-room-enter"
-                  >
-                    Start New Review <ChevronRight size={13} />
-                  </button>
-                ) : null}
-              </div>
             </div>
-
-            {/* System notices — minimal, inline */}
-            {(showBaselineNotice || (historyTruncated && historyNotice)) ? (
-              <div className="home-room-notice">
-                <p className="home-room-notice-text">
-                  {showBaselineNotice
-                    ? "Baseline cycle — trend comparison becomes available after the next upload."
-                    : historyNotice}
-                </p>
-                {showBaselineNotice ? (
-                  <button type="button" onClick={dismissBaselineNotice} aria-label="Dismiss" className="home-room-notice-dismiss">✕</button>
-                ) : null}
-              </div>
-            ) : null}
           </section>
         ) : null}
 
@@ -687,35 +733,6 @@ const Dashboard = () => {
               ))}
             </ol>
           </section>
-        ) : null}
-
-        {/* ── Operational context ─────────────────────────────────────────────
-            Cycle sequence as a single quiet line — not a grid, not a stepper.
-            Tells you where you are in the loop without becoming a widget.
-        ──────────────────────────────────────────────────────────────────── */}
-        {!isFirstRunWorkspace ? (
-          <footer className="home-context">
-            <div className="home-context-sequence">
-              {loopSteps.map((step, index) => (
-                <span key={step.label} className="home-context-step-group">
-                  {index > 0 && <span className="home-context-arrow" aria-hidden>→</span>}
-                  <Link
-                    to={step.to}
-                    className={`home-context-step${index === loopActiveStep ? " home-context-step--active" : ""}`}
-                    aria-current={index === loopActiveStep ? "step" : undefined}
-                  >
-                    {step.label}
-                  </Link>
-                </span>
-              ))}
-            </div>
-            <p className="home-context-status">
-              {loopActiveStep === 0 && "Upload a review to begin this cycle."}
-              {loopActiveStep === 1 && `Brief ready · ${reviewPeriodLabel}`}
-              {loopActiveStep === 2 && "Meeting View ready to open"}
-              {loopActiveStep === 3 && `${openActions.length} open follow-through ${openActions.length === 1 ? "item" : "items"}`}
-            </p>
-          </footer>
         ) : null}
 
       </div>
