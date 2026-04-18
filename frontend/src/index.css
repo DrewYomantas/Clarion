@@ -3157,14 +3157,15 @@ body {
 }
 
 /* ============================================================
-   HOME PAGE — Clarion governance command surface
-   Reference influence:
-     norm.ai      → eyebrow + cycle context as pure typography, no wrapper box
-     merge.dev    → warm/dark polarity: brief card dark, strip in warm cream
-     linear.app   → multi-layer shadow depth on the brief card
-     vercel.com   → single dominant CTA, all others recede in weight
-     glean.com    → clear size jumps between type hierarchy levels
+   HOME PAGE — Clarion governance command surface (v3)
+   Pass intent: dashboard -> decision room.
+   - No card borders. The dark page IS the room.
+   - KPI strip removed. Evidence is prose woven into the headline.
+   - Alert widget removed. Attention items are a printed agenda.
+   - 4-column stepper removed. Cycle sequence is a single line.
    ============================================================ */
+
+/* -- Shell -- */
 
 .home-root {
   min-height: 100vh;
@@ -3177,60 +3178,57 @@ body {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
 }
 
-/* ── Zone 1: Cycle header ── */
+/* -- Page frame -- */
 
-.home-header {
-  margin-bottom: 8px;
+.home-frame {
+  margin-bottom: 40px;
 }
 
-.home-header-row {
+.home-frame-row {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
 }
 
-.home-header-left {
+.home-frame-left {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
-/* norm.ai: firm name as faint all-caps attribution, not a heading */
-.home-eyebrow {
+.home-firm-name {
   margin: 0;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #3D6282;
+  color: #2C4E66;
 }
 
-.home-cycle-row {
+.home-frame-meta {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   flex-wrap: wrap;
 }
 
-.home-cycle-muted {
-  font-size: 13px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.28);
-  letter-spacing: 0.01em;
-}
-
-.home-cycle-period {
-  font-size: 13px;
+.home-frame-cycle {
+  font-size: 14px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255,255,255,0.5);
   letter-spacing: 0.01em;
 }
 
-.home-chip {
+.home-frame-sep {
+  font-size: 11px;
+  color: rgba(255,255,255,0.15);
+}
+
+.home-frame-chip {
   display: inline-flex;
   align-items: center;
   font-size: 10px;
@@ -3241,58 +3239,59 @@ body {
   line-height: 1.5;
 }
 
-.home-cycle-date {
-  font-size: 11px;
-  color: #2C4A5E;
+.home-frame-nocycle {
+  font-size: 13px;
+  color: rgba(255,255,255,0.2);
 }
 
-.home-new-review-btn {
+.home-frame-action {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
   padding: 7px 14px;
   font-size: 11.5px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255,255,255,0.3);
   text-decoration: none;
   flex-shrink: 0;
-  transition: color 150ms, border-color 150ms, background 150ms;
+  transition: color 150ms, border-color 150ms;
 }
 
-.home-new-review-btn:hover {
-  color: rgba(255, 255, 255, 0.6);
-  border-color: rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.05);
+.home-frame-action:hover {
+  color: rgba(255,255,255,0.55);
+  border-color: rgba(255,255,255,0.16);
 }
 
-/* Norm.ai-style rule: a single fine line below the header, not a box */
-.home-header-rule {
+.home-frame-rule {
   height: 1px;
-  background: rgba(255, 255, 255, 0.055);
+  background: rgba(255,255,255,0.05);
   margin-top: 18px;
 }
 
-/* ── Error banner ── */
-.home-error-banner {
+/* -- Error -- */
+
+.home-error {
+  margin-bottom: 20px;
   border-radius: 10px;
-  border: 1px solid rgba(248, 113, 113, 0.2);
-  background: rgba(239, 68, 68, 0.07);
+  border: 1px solid rgba(248,113,113,0.2);
+  background: rgba(239,68,68,0.07);
   padding: 11px 18px;
 }
 
-.home-error-banner p {
+.home-error p {
   margin: 0;
   font-size: 13px;
   color: #FCA5A5;
 }
 
-/* ── Onboarding / first-run ── */
+/* -- First-run onboarding -- */
+
 .home-onboard {
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255,255,255,0.07);
   background: #07101C;
   overflow: hidden;
 }
@@ -3308,7 +3307,7 @@ body {
 
 .home-onboard-main {
   padding: 40px 44px;
-  border-right: 1px solid rgba(255, 255, 255, 0.055);
+  border-right: 1px solid rgba(255,255,255,0.055);
 }
 
 .home-onboard-eyebrow {
@@ -3320,7 +3319,6 @@ body {
   color: #5EAFC0;
 }
 
-/* Playfair Display — Clarion's editorial display face (maps to Merge's FH Oscar Pro) */
 .home-onboard-headline {
   margin: 14px 0 0;
   font-family: 'Playfair Display', Georgia, serif;
@@ -3351,7 +3349,7 @@ body {
 }
 
 .home-onboard-step {
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid rgba(255,255,255,0.07);
   padding-top: 14px;
 }
 
@@ -3412,14 +3410,14 @@ body {
 
 .home-onboard-aside {
   padding: 40px 28px;
-  background: rgba(255, 255, 255, 0.008);
+  background: rgba(255,255,255,0.008);
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
 .home-onboard-aside-item {
-  border-top: 1px solid rgba(255, 255, 255, 0.055);
+  border-top: 1px solid rgba(255,255,255,0.055);
   padding-top: 14px;
 }
 
@@ -3439,499 +3437,322 @@ body {
   color: #7593A9;
 }
 
-/* ── Zone 2: Primary decision surface ── */
+/* -- Decision room surface --
+   The room has no card border. It is a region of the dark page.
+   The headline IS the gravity. The CTA IS the door.
+*/
 
-/* Two-column when attention items exist; single column otherwise */
-.home-stage {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  align-items: start;
-}
-
-.home-stage--split {
-  grid-template-columns: 1fr minmax(260px, 310px);
-}
-
-@media (max-width: 900px) {
-  .home-stage--split { grid-template-columns: 1fr; }
-}
-
-/* Brief command card — Linear-style shadow depth, dark canvas */
-.home-brief-card {
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  overflow: hidden;
-  background: linear-gradient(145deg, #0B1829 0%, #0D2040 60%, #0C1B2E 100%);
+.home-room {
   position: relative;
-  /* Linear-inspired layered shadow */
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.3),
-    0 8px 24px rgba(0, 0, 0, 0.28),
-    0 24px 60px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  padding: 48px 0 40px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 40px;
+  overflow: hidden;
 }
 
-/* Ambient glow — depth layer, top right */
-.home-brief-glow {
+.home-room-glow {
   position: absolute;
-  top: -80px;
-  right: -80px;
-  width: 300px;
-  height: 300px;
+  top: -100px;
+  right: -120px;
+  width: 480px;
+  height: 480px;
   border-radius: 50%;
-  background: #163260;
-  opacity: 0.22;
-  filter: blur(70px);
+  background: radial-gradient(circle, #1A3C70 0%, transparent 70%);
+  opacity: 0.18;
   pointer-events: none;
 }
 
-/* Headline section */
-.home-brief-head {
-  padding: 28px 32px 24px;
-  position: relative;
+.home-room-eyebrow {
+  margin: 0 0 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #244158;
 }
 
-.home-brief-head-inner {
+.home-room-headline-row {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 16px;
 }
 
-.home-brief-title-col {
-  flex: 1 1 0;
+.home-room-gold-rail {
+  display: block;
+  width: 3px;
+  min-height: 56px;
+  align-self: stretch;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #C4A96A 0%, rgba(196,169,106,0.12) 100%);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.home-room-headline-body {
+  flex: 1;
   min-width: 0;
 }
 
-.home-brief-eyebrow {
-  margin: 0;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #2E5C7A;
-}
-
-.home-brief-title-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-top: 12px;
-}
-
-/* Gold accent rail — Clarion identity anchor */
-.home-brief-gold-rail {
-  display: block;
-  width: 3px;
-  min-height: 44px;
-  border-radius: 2px;
-  background: linear-gradient(180deg, #C4A96A 0%, rgba(196, 169, 106, 0.2) 100%);
-  flex-shrink: 0;
-  margin-top: 3px;
-  align-self: stretch;
-}
-
-/* Playfair at commanding scale — norm.ai editorial weight principle */
-.home-brief-title {
+.home-room-headline {
   margin: 0;
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.7rem, 2.6vw, 2.25rem);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
   font-weight: 500;
-  line-height: 1.0;
-  letter-spacing: -0.035em;
+  line-height: 0.97;
+  letter-spacing: -0.04em;
   color: #FFFFFF;
 }
 
-.home-brief-sub {
-  margin: 8px 0 0 15px;
-  font-size: 11.5px;
-  color: #1E4A65;
+.home-room-summary {
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: #2A5068;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
 }
 
-/* CTA stack — Vercel-style: one white primary, everything else recedes */
-.home-brief-ctas {
+.home-room-actions {
+  margin-top: 28px;
+  margin-left: 19px;
   display: flex;
-  flex-direction: column;
-  gap: 7px;
-  align-items: flex-end;
-  padding-top: 2px;
-  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-/* The single dominant action */
-.home-cta-primary {
+.home-room-enter {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   border-radius: 8px;
   background: #FFFFFF;
-  padding: 9px 18px;
+  padding: 10px 20px;
   font-size: 13px;
   font-weight: 600;
   color: #0D1B2A;
   border: none;
   cursor: pointer;
-  white-space: nowrap;
-  /* Vercel: crisp shadow to lift it off the dark canvas */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(255, 255, 255, 0.07);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.22), 0 4px 14px rgba(255,255,255,0.08), 0 0 0 1px rgba(255,255,255,0.12);
   transition: background 150ms, box-shadow 150ms, transform 100ms;
-}
-
-.home-cta-primary:hover {
-  background: #EEF2F8;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22), 0 8px 20px rgba(255, 255, 255, 0.09);
-}
-
-.home-cta-primary:active { transform: scale(0.98); }
-
-/* Secondary — recedes into the dark */
-.home-cta-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  background: rgba(255, 255, 255, 0.05);
-  padding: 7px 14px;
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.55);
-  cursor: pointer;
   white-space: nowrap;
-  transition: border-color 150ms, background 150ms, color 150ms;
 }
 
-.home-cta-secondary:hover {
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.75);
+.home-room-enter:hover {
+  background: #F0F4FA;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.28), 0 8px 22px rgba(255,255,255,0.10), 0 0 0 1px rgba(255,255,255,0.18);
 }
 
-/* Ghost — barely visible, minimal ink */
-.home-cta-ghost {
+.home-room-enter:active { transform: scale(0.98); }
+
+.home-room-secondary-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.home-room-brief-link,
+.home-room-pdf-link {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 5px 10px;
-  font-size: 11px;
+  padding: 8px 14px;
+  font-size: 12px;
   font-weight: 500;
-  color: #2C5470;
+  border-radius: 7px;
+  border: 1px solid transparent;
   background: transparent;
-  border: none;
   cursor: pointer;
+  text-decoration: none;
   white-space: nowrap;
-  transition: color 150ms;
+  transition: color 150ms, border-color 150ms, background 150ms;
 }
 
-.home-cta-ghost:hover { color: #5A8AAA; }
-
-/* Instrument strip — Merge.dev polarity: warm cream on dark card */
-.home-strip {
-  display: flex;
+.home-room-brief-link {
+  color: rgba(255,255,255,0.35);
+  border-color: rgba(255,255,255,0.08);
 }
 
-.home-strip-cell {
-  flex: 1 1 0;
-  padding: 14px 20px;
+.home-room-brief-link:hover {
+  color: rgba(255,255,255,0.62);
+  border-color: rgba(255,255,255,0.17);
+  background: rgba(255,255,255,0.04);
 }
 
-.home-strip-value {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
+.home-room-pdf-link {
+  color: #1C4560;
 }
 
-.home-strip-label {
-  margin: 4px 0 0;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-}
+.home-room-pdf-link:hover { color: #3A7898; }
 
-/* Cycle directive — context line below strip */
-.home-directive {
+.home-room-notice {
+  margin-top: 24px;
+  margin-left: 19px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-}
-
-.home-directive-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #0EA5C2;
-  flex-shrink: 0;
-}
-
-.home-directive-text {
-  margin: 0;
-  font-size: 11.5px;
-  color: #4A7A96;
-  line-height: 1.45;
-}
-
-/* System notice */
-.home-notice {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 10px;
-  padding: 9px 20px;
 }
 
-.home-notice-text {
+.home-room-notice-text {
   margin: 0;
   font-size: 10.5px;
-  color: rgba(0, 0, 0, 0.35);
+  color: rgba(255,255,255,0.14);
   letter-spacing: 0.02em;
+  line-height: 1.5;
 }
 
-.home-notice-dismiss {
+.home-room-notice-dismiss {
   font-size: 10px;
-  color: rgba(0, 0, 0, 0.25);
+  color: rgba(255,255,255,0.12);
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  flex-shrink: 0;
   transition: color 150ms;
 }
 
-.home-notice-dismiss:hover { color: rgba(0, 0, 0, 0.5); }
+.home-room-notice-dismiss:hover { color: rgba(255,255,255,0.35); }
 
-/* ── Attention column ── */
-.home-attention {
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  overflow: hidden;
-  background: #08111D;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 8px 28px rgba(0, 0, 0, 0.16);
+/* -- Agenda --
+   A printed governance agenda. Each item is a full sentence.
+   No per-row action buttons. The line itself is the link.
+*/
+
+.home-agenda {
+  margin-bottom: 40px;
+  padding-left: 19px;
+  border-left: 1px solid rgba(255,255,255,0.055);
 }
 
-.home-attention-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
-}
-
-/* Pulsing amber dot — Glean badge pattern for active states */
-.home-attention-pulse {
-  position: relative;
-  display: inline-flex;
-  width: 8px;
-  height: 8px;
-  flex-shrink: 0;
-}
-
-.home-attention-pulse-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: #F59E0B;
-  opacity: 0.35;
-  animation: attention-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-.home-attention-pulse-dot {
-  position: relative;
-  display: inline-flex;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #F59E0B;
-}
-
-@keyframes attention-ping {
-  0%   { transform: scale(1);   opacity: 0.35; }
-  75%  { transform: scale(2.2); opacity: 0;    }
-  100% { transform: scale(2.2); opacity: 0;    }
-}
-
-.home-attention-label {
-  margin: 0;
+.home-agenda-heading {
+  margin: 0 0 18px;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #436079;
+  color: #2C4E66;
 }
 
-.home-attention-list {
+.home-agenda-list {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.home-attention-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 10px 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.035);
-  transition: background 120ms;
-}
-
-.home-attention-item:hover { background: rgba(255, 255, 255, 0.02); }
-
-.home-attention-item:last-child { border-bottom: none; }
-
-.home-attention-item-left {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  min-width: 0;
-}
-
-.home-attention-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.home-attention-text {
-  font-size: 12px;
-  color: #8BAFC8;
-  line-height: 1.3;
-}
-
-.home-attention-action {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(255, 255, 255, 0.03);
-  padding: 3px 9px;
-  font-size: 10.5px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.42);
-  text-decoration: none;
-  transition: color 120ms, border-color 120ms, background 120ms;
-}
-
-.home-attention-action:hover {
-  color: rgba(255, 255, 255, 0.7);
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.home-attention-footer {
-  padding: 10px 15px;
-  border-top: 1px solid rgba(255, 255, 255, 0.035);
-  background: rgba(0, 0, 0, 0.12);
-}
-
-.home-attention-footer-text {
-  margin: 0;
-  font-size: 10.5px;
-  color: #1E3D52;
-  line-height: 1.5;
-}
-
-/* ── Zone 3: Governance loop ── */
-
-/* Glean-style: clean horizontal rail, clear type scale per step */
-.home-loop {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-radius: 11px;
-  border: 1px solid rgba(255, 255, 255, 0.065);
-  overflow: hidden;
-}
-
-@media (max-width: 640px) {
-  .home-loop { grid-template-columns: repeat(2, 1fr); }
-}
-
-.home-loop-step {
   display: flex;
   flex-direction: column;
-  padding: 13px 17px;
-  text-decoration: none;
-  /* Inactive: warm cream surface — Merge.dev polarity */
-  background: #F9F7F3;
-  border-top: 2px solid transparent;
-  transition: background 120ms;
 }
 
-.home-loop-step:hover:not(.home-loop-step--active) {
-  background: #F3F1EC;
+.home-agenda-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 11px 0;
+  border-top: 1px solid rgba(255,255,255,0.04);
 }
 
-/* Active step stays on the dark canvas */
-.home-loop-step--active {
-  background: #091522;
-  border-top-color: #C4A96A;
+.home-agenda-item:last-child {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 
-.home-loop-num {
-  font-size: 8.5px;
+.home-agenda-num {
+  font-size: 9.5px;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  color: #B8C4CE;
+  letter-spacing: 0.1em;
+  color: #1A3A52;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  width: 20px;
 }
 
-.home-loop-step--active .home-loop-num {
-  color: #2E5470;
+.home-agenda-priority {
+  display: block;
+  width: 2px;
+  height: 14px;
+  border-radius: 1px;
+  flex-shrink: 0;
+  align-self: center;
 }
 
-.home-loop-label {
-  margin-top: 5px;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.2;
-  color: #1E293B;
+.home-agenda-priority--high     { background: #EF4444; opacity: 0.7; }
+.home-agenda-priority--moderate { background: #F59E0B; opacity: 0.6; }
+
+.home-agenda-matter {
+  font-size: 13px;
+  font-weight: 400;
+  color: #4E8AAA;
+  line-height: 1.55;
+  text-decoration: none;
+  flex: 1;
+  transition: color 150ms;
 }
 
-.home-loop-step--active .home-loop-label {
-  color: #FFFFFF;
+.home-agenda-matter:hover { color: #7BBAD4; }
+
+/* -- Operational context --
+   Cycle sequence as a single quiet horizontal line.
+   Active step in gold. No grid, no boxes, no widget.
+*/
+
+.home-context {
+  border-top: 1px solid rgba(255,255,255,0.04);
+  padding-top: 18px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.home-loop-stat {
-  margin-top: 3px;
-  font-size: 10.5px;
-  color: #94A3B8;
-  line-height: 1.3;
-}
-
-.home-loop-step--active .home-loop-stat {
-  color: #1E4560;
-}
-
-.home-loop-current {
-  margin-top: 9px;
+.home-context-sequence {
   display: flex;
   align-items: center;
-  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.home-context-step-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.home-context-arrow {
   font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: rgba(196, 169, 106, 0.65);
+  color: rgba(255,255,255,0.10);
+  padding: 0 8px;
 }
 
-.home-loop-current-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(196, 169, 106, 0.55);
-  flex-shrink: 0;
+.home-context-step {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.18);
+  text-decoration: none;
+  transition: color 150ms;
 }
 
-/* Reduced motion */
+.home-context-step:hover { color: rgba(255,255,255,0.4); }
+
+.home-context-step--active {
+  color: rgba(196,169,106,0.72);
+  font-weight: 600;
+}
+
+.home-context-step--active:hover { color: rgba(196,169,106,1); }
+
+.home-context-status {
+  margin: 0;
+  font-size: 11px;
+  color: rgba(255,255,255,0.14);
+  text-align: right;
+}
+
+/* -- Reduced motion -- */
+
 @media (prefers-reduced-motion: reduce) {
-  .home-attention-pulse-ring { animation: none; }
-  .home-cta-primary,
-  .home-cta-secondary,
-  .home-cta-ghost,
-  .home-loop-step,
-  .home-attention-item,
-  .home-attention-action { transition: none; }
+  .home-frame-action,
+  .home-room-enter,
+  .home-room-brief-link,
+  .home-room-pdf-link,
+  .home-agenda-matter,
+  .home-context-step,
+  .home-onboard-primary-cta { transition: none; }
+  .home-room-enter:active { transform: none; }
 }
