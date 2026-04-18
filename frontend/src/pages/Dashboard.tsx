@@ -425,12 +425,12 @@ const Dashboard = () => {
     : briefStatus === "ready" || briefStatus === "escalation" ? "Ready to Send"
     : "Draft";
   const chipColor = briefStatus === "acknowledged" || briefStatus === "ready"
-    ? { border: "rgba(52,211,153,0.3)", bg: "rgba(52,211,153,0.1)", text: "#6EE7B7" }
+    ? { border: "rgba(196,169,106,0.35)", bg: "rgba(196,169,106,0.10)", text: "rgba(196,169,106,0.90)" }
     : briefStatus === "sent"
-      ? { border: "rgba(96,165,250,0.3)", bg: "rgba(96,165,250,0.1)", text: "#93C5FD" }
+      ? { border: "rgba(196,169,106,0.25)", bg: "rgba(196,169,106,0.07)", text: "rgba(196,169,106,0.70)" }
       : briefStatus === "escalation"
-        ? { border: "rgba(251,191,36,0.3)", bg: "rgba(251,191,36,0.1)", text: "#FCD34D" }
-        : { border: "rgba(255,255,255,0.1)", bg: "rgba(255,255,255,0.05)", text: "rgba(255,255,255,0.4)" };
+        ? { border: "rgba(251,191,36,0.30)", bg: "rgba(251,191,36,0.08)", text: "#FCD34D" }
+        : { border: "rgba(255,255,255,0.10)", bg: "rgba(255,255,255,0.04)", text: "rgba(255,255,255,0.38)" };
 
   // Loop step state
   const hasReport = Boolean(latestProcessedReport);
