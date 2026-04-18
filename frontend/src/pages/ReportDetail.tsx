@@ -232,6 +232,7 @@ function PacketSection({
       id={id}
       className={[
         "report-brief-section",
+        "scroll-mt-24",
         className,
       ].join(" ")}
     >
@@ -547,7 +548,7 @@ const ReportDetail = () => {
   const briefingBullets = useMemo(() => {
     if (!report) return [] as string[];
     if (report.executive_summary.length > 0) {
-      return report.executive_summary.slice(0, 4);
+      return report.executive_summary.slice(0, 3);
     }
     const bullets = [
       escalation.on
@@ -556,10 +557,10 @@ const ReportDetail = () => {
       `Top focus area: ${report.themes[0]?.name || "No dominant theme yet"}.`,
       `${report.total_reviews || 0} reviews analyzed with an average rating of ${report.avg_rating.toFixed(2)}.`,
     ];
-    if (firstDecision?.recommendation) {
+    if (firstDecision?.recommendation && bullets.length < 3) {
       bullets.push(firstDecision.recommendation);
     }
-    return bullets;
+    return bullets.slice(0, 3);
   }, [escalation.on, firstDecision?.recommendation, report]);
 
   const emailSummaryFields = useMemo(() => {
@@ -1136,8 +1137,8 @@ const ReportDetail = () => {
       title="Leadership Briefing"
       summary={
         firstDecision
-          ? `${firstDecision.theme} is the decision to bring forward. ${firstDecision.recommendation}`
-          : "Review the cycle status, top signal, and follow-through posture before sharing this brief."
+          ? "Confirm the decision posture and follow-through risk before opening the next section."
+          : "Review the decision posture and follow-through status before opening the next section."
       }
       facts={[
         {
@@ -1146,19 +1147,11 @@ const ReportDetail = () => {
           tone: firstDecision ? "warn" : "normal",
         },
         {
-          label: "Top signal",
-          value: report.themes[0]
-            ? `${report.themes[0].name} (${report.themes[0].mentions})`
-            : "No dominant theme",
-          tone: report.themes[0] ? "warn" : "normal",
-        },
-        {
           label: "Follow-through risk",
           value: escalation.on ? escalation.reason : "No escalation trigger",
           tone: escalation.on ? "risk" : "normal",
         },
       ]}
-      defaultOpen
       detailLabel="Review leadership notes"
       presentMode={presentMode}
     >
@@ -1213,7 +1206,7 @@ const ReportDetail = () => {
       title="Signals That Matter Most"
       summary={
         report.themes[0]
-          ? `${report.themes[0].name} is the primary risk theme this cycle, with ${report.themes[0].mentions} mention${report.themes[0].mentions === 1 ? "" : "s"}.`
+          ? "Review the concentration of issues and the current trend signal before opening the full breakdown."
           : "No dominant issue theme is available yet."
       }
       facts={keySignals.map((sig) => ({
@@ -1221,7 +1214,7 @@ const ReportDetail = () => {
         value: sig.value,
         tone: sig.label === "Primary risk theme" ? "warn" : "normal",
       }))}
-      detailLabel="Open signal breakdown"
+      detailLabel="Open signal detail"
       presentMode={presentMode}
     >
       {/* Theme breakdown */}
@@ -1304,7 +1297,7 @@ const ReportDetail = () => {
         { label: "Unassigned", value: `${unassignedCount}`, tone: unassignedCount > 0 ? "warn" : "normal" },
         { label: "Completed", value: `${completedCount}` },
       ]}
-      detailLabel="Review action record"
+      detailLabel="Open follow-through detail"
       presentMode={presentMode}
     >
       <div className="mb-4 rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3">
@@ -1545,7 +1538,7 @@ const ReportDetail = () => {
       title="Decisions & Next Steps"
       summary={
         firstDecision
-          ? `Next step: ${firstDecision.recommendation}`
+          ? "Confirm the next step and supporting work before the brief closes."
           : "No decision-ready next step is available for this period yet."
       }
       facts={[
@@ -1658,6 +1651,13 @@ const ReportDetail = () => {
         : briefHasOpenFollowThrough
           ? "warn"
           : "success";
+  const sectionJumpLinks = [
+    { href: "#briefing", label: "Briefing" },
+    { href: "#signals", label: "Signals" },
+    { href: "#follow-through", label: "Follow-through" },
+    { href: "#decisions", label: "Decisions" },
+    { href: "#evidence", label: "Evidence" },
+  ];
   const briefIntroCopy = escalation.on
     ? "Review the decision point, supporting evidence, and open follow-through before sharing this brief."
     : briefHasOpenFollowThrough
@@ -1887,12 +1887,20 @@ const ReportDetail = () => {
             </div>
           ) : null}
 
-          <nav className="report-section-rail" aria-label="Governance brief sections">
-            <a href="#briefing">Briefing</a>
-            <a href="#signals">Signals</a>
-            <a href="#follow-through">Follow-through</a>
-            <a href="#decisions">Decisions</a>
-            <a href="#evidence">Evidence</a>
+          <nav
+            className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-[#D9E7F5] pt-4 text-[12px] font-medium uppercase tracking-[0.08em] text-[#7A6E63]"
+            aria-label="Governance brief sections"
+          >
+            <span className="text-[#9A8D7E]">Jump to</span>
+            {sectionJumpLinks.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="rounded-[999px] border border-[#DDD8D0] bg-white px-2.5 py-1 text-[#0D1B2A] transition-colors hover:bg-[#F5F3F0]"
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
 
           {leadershipSection}
