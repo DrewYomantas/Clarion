@@ -218,14 +218,13 @@ function PacketSection({ eyebrow, title, presentMode, children, className = "" }
   return (
     <section
       className={[
-        "rounded-[12px] border border-[#DDD8D0] bg-white px-5 py-4 shadow-[0_1px_4px_rgba(13,27,42,0.06),0_0_0_1px_rgba(13,27,42,0.02)]",
+        "report-brief-section",
         className,
       ].join(" ")}
     >
-      <div className="flex items-center gap-2 border-b border-[#F0EDE8] pb-2.5 mb-3">
+      <div className="report-brief-section-head">
         <p className="gov-type-eyebrow">{eyebrow}</p>
-        <div className="h-[1px] flex-1 bg-[#F0EDE8]" aria-hidden />
-        <h2 className="text-[14px] font-semibold text-[#0D1B2A]">{title}</h2>
+        <h2>{title}</h2>
       </div>
       <div>{children}</div>
     </section>
@@ -1540,6 +1539,30 @@ const ReportDetail = () => {
   // Render
   // ─────────────────────────────────────────────────────────────────────────
 
+  const briefHasOpenFollowThrough =
+    activeActionCount > 0 || overdueCount > 0 || unassignedCount > 0 || undatedCount > 0;
+  const briefStatusLabel =
+    report.status !== "ready"
+      ? "Draft"
+      : escalation.on
+        ? "Decision required"
+        : briefHasOpenFollowThrough
+          ? "Follow-through open"
+          : "Brief prepared";
+  const briefStatusVariant =
+    report.status !== "ready"
+      ? "muted"
+      : escalation.on || overdueCount > 0
+        ? "warn"
+        : briefHasOpenFollowThrough
+          ? "warn"
+          : "success";
+  const briefIntroCopy = escalation.on
+    ? "Review the decision point, supporting evidence, and open follow-through before sharing this brief."
+    : briefHasOpenFollowThrough
+      ? "Review the evidence and resolve open follow-through before this cycle is treated as closed."
+      : "Review the evidence record before sharing the brief with partners.";
+
   return (
     <>
       {/* ── Present mode overlay ──────────────────────────────────────────── */}
@@ -1569,21 +1592,14 @@ const ReportDetail = () => {
       </BriefPresentMode>
 
       {/* ── Normal page view ──────────────────────────────────────────────── */}
-      <section className="px-8 py-8">
-        <div className="mx-auto w-full max-w-[1100px] space-y-6">
+      <section className="report-room-page">
+        <div className="report-room-shell">
 
-          {/* Page header — dark slab matching other flagship pages */}
-          <header className="overflow-hidden rounded-[16px] border border-white/[0.13] shadow-[0_16px_48px_rgba(0,0,0,0.22),0_0_0_1px_rgba(255,255,255,0.04)]">
+          {/* Page header — review-room frame that carries the current brief state */}
+          <header className="report-room-hero">
             <div
-              className="relative px-7 py-6"
-              style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
+              className="report-room-hero-main"
             >
-              <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#1a3a6b] opacity-30 blur-3xl" aria-hidden />
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "20px 20px" }}
-                aria-hidden
-              />
               <div className="relative">
                 {/* Eyebrow + status */}
                 <div className="flex flex-wrap items-center gap-2">
@@ -1592,16 +1608,8 @@ const ReportDetail = () => {
                     <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">Governance Brief</span>
                   </span>
                   <GovStatusChip
-                    label={
-                      report.status === "ready"
-                        ? (escalation.on ? "Ready to Send" : "Ready to Send")
-                        : "Draft"
-                    }
-                    variant={
-                      report.status === "ready"
-                        ? (escalation.on ? "warn" : "success")
-                        : "muted"
-                    }
+                    label={briefStatusLabel}
+                    variant={briefStatusVariant}
                     size="sm"
                   />
                 </div>
@@ -1667,8 +1675,8 @@ const ReportDetail = () => {
                   </div>
                 )}
 
-                <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-[#8FA7BC]">
-                  The partner-ready record of what clients said, what the firm is doing about it, and what still needs a decision.
+                <p className="report-room-intro">
+                  {briefIntroCopy}
                 </p>
 
                 {renameMode === "saved" && (
@@ -1678,21 +1686,21 @@ const ReportDetail = () => {
                   <p className="mt-1 text-[11px] text-red-400">{renameError}</p>
                 )}
 
-                {/* Toolbar */}
-                <div className="mt-5 flex flex-wrap items-center gap-2">
+                {/* Primary brief actions */}
+                <div className="report-room-actions">
                   <button
                     type="button"
                     onClick={enterPresent}
-                    className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] shadow-[0_1px_3px_rgba(0,0,0,0.12)] transition-all hover:bg-[#EEF2F8] active:scale-[0.98]"
+                    className="report-room-primary-action"
                     title="Open Meeting View (also via ?present=1)"
                   >
                     <Maximize2 size={13} aria-hidden />
-                    Open Meeting View
+                    Enter Meeting Room
                   </button>
                   {eagerDeliveryAvailable === true ? (
                     <button
                       type="button"
-                      className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+                      className="report-room-secondary-action"
                       onClick={() => setEmailPreviewOpen(true)}
                       disabled={isSendingBrief}
                     >
@@ -1701,7 +1709,7 @@ const ReportDetail = () => {
                   ) : (
                     <button
                       type="button"
-                      className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/10 bg-white/[0.04] px-4 py-2 text-[13px] font-medium text-white/35 cursor-not-allowed"
+                      className="report-room-secondary-action report-room-secondary-action--disabled"
                       disabled
                       title={eagerDeliveryAvailable === false ? "Delivery not configured — set up outbound email in account settings" : "Checking delivery…"}
                     >
@@ -1714,7 +1722,7 @@ const ReportDetail = () => {
                   <button
                     data-testid="report-view-brief"
                     type="button"
-                    className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+                    className="report-room-secondary-action"
                     onClick={() => void openBrief()}
                   >
                     {report.plan_type === "free" ? "Preview PDF" : "Download PDF"}
@@ -1722,7 +1730,7 @@ const ReportDetail = () => {
                   <button
                     data-testid="report-create-action"
                     type="button"
-                    className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+                    className="report-room-secondary-action"
                     onClick={openCreateAction}
                   >
                     + Add follow-through
@@ -1731,24 +1739,21 @@ const ReportDetail = () => {
               </div>
             </div>
 
-            {/* Meeting context strip — dark instrument bar */}
-            <div
-              className="flex flex-wrap divide-x divide-white/[0.07]"
-              style={{ borderTop: "1px solid rgba(255,255,255,0.07)", background: "#080F1C" }}
-            >
+            {/* Meeting context strip — cycle state, not dashboard stats */}
+            <div className="report-room-context-strip">
               {report.review_date_label ? (
-                <div className="px-5 py-3.5">
-                  <p className="text-[12px] font-medium leading-snug text-white">{report.review_date_label}</p>
-                  <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Review period</p>
+                <div>
+                  <p>{report.review_date_label}</p>
+                  <span>Review period</span>
                 </div>
               ) : null}
-              <div className="min-w-[80px] px-5 py-3.5">
-                <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{report.total_reviews}</p>
-                <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Reviews analyzed</p>
+              <div>
+                <p style={{ fontVariantNumeric: "tabular-nums" }}>{report.total_reviews}</p>
+                <span>Reviews analyzed</span>
               </div>
-              <div className="px-5 py-3.5">
-                <p className="text-[12px] font-medium leading-snug text-white">{formatDateTime(report.created_at)}</p>
-                <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Generated</p>
+              <div>
+                <p>{formatDateTime(report.created_at)}</p>
+                <span>Generated</span>
               </div>
             </div>
           </header>
