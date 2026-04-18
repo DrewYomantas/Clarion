@@ -3,15 +3,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
   ChevronDown,
-  ChevronRight,
   Loader2,
   Maximize2,
   PencilLine,
   X,
   AlertTriangle,
   CheckCircle2,
-  ClipboardList,
-  Lightbulb,
   Zap,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -42,7 +39,6 @@ import MeetingRoomMode from "@/components/governance/MeetingRoomMode";
 import GovStatusChip, {
   resolveChipVariantForActionStatus,
 } from "@/components/governance/GovStatusChip";
-import GovernanceCard from "@/components/governance/GovernanceCard";
 import { formatApiDate, formatApiDateTime } from "@/lib/dateTime";
 import { DISPLAY_LABELS } from "@/constants/displayLabels";
 
@@ -198,14 +194,30 @@ const isRateLimitMessage = (message: string | undefined): boolean => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 type PacketSectionProps = {
+  id?: string;
   eyebrow: string;
   title: string;
+  summary?: string;
+  facts?: Array<{ label: string; value: string; tone?: "normal" | "warn" | "risk" }>;
+  defaultOpen?: boolean;
+  detailLabel?: string;
   presentMode?: boolean;
   children: React.ReactNode;
   className?: string;
 };
 
-function PacketSection({ eyebrow, title, presentMode, children, className = "" }: PacketSectionProps) {
+function PacketSection({
+  id,
+  eyebrow,
+  title,
+  summary,
+  facts = [],
+  defaultOpen = false,
+  detailLabel = "Review full detail",
+  presentMode,
+  children,
+  className = "",
+}: PacketSectionProps) {
   if (presentMode) {
     return (
       <section className={`brief-section ${className}`}>
@@ -217,6 +229,7 @@ function PacketSection({ eyebrow, title, presentMode, children, className = "" }
   }
   return (
     <section
+      id={id}
       className={[
         "report-brief-section",
         className,
@@ -226,7 +239,24 @@ function PacketSection({ eyebrow, title, presentMode, children, className = "" }
         <p className="gov-type-eyebrow">{eyebrow}</p>
         <h2>{title}</h2>
       </div>
-      <div>{children}</div>
+      {summary ? <p className="report-brief-section-summary">{summary}</p> : null}
+      {facts.length > 0 ? (
+        <div className="report-brief-facts">
+          {facts.slice(0, 4).map((fact) => (
+            <div key={`${title}-${fact.label}`} className={`report-brief-fact report-brief-fact--${fact.tone || "normal"}`}>
+              <span>{fact.label}</span>
+              <strong>{fact.value}</strong>
+            </div>
+          ))}
+        </div>
+      ) : null}
+      <details className="report-brief-disclosure" open={defaultOpen}>
+        <summary>
+          <span>{detailLabel}</span>
+          <ChevronDown size={14} aria-hidden />
+        </summary>
+        <div className="report-brief-detail">{children}</div>
+      </details>
     </section>
   );
 }
@@ -294,7 +324,6 @@ const ReportDetail = () => {
   // Eager delivery status — loaded on mount so the toolbar button reflects gating state
   const [eagerDeliveryAvailable, setEagerDeliveryAvailable] = useState<boolean | null>(null);
 
-  const [evidenceOpen, setEvidenceOpen] = useState(false);
 
   // ── Data load ──────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -521,7 +550,9 @@ const ReportDetail = () => {
       return report.executive_summary.slice(0, 4);
     }
     const bullets = [
-      `${report.name || report.title} is ready for partner review.`,
+      escalation.on
+        ? `${report.name || report.title} has a decision or follow-through issue to review.`
+        : `${report.name || report.title} is prepared for partner review.`,
       `Top focus area: ${report.themes[0]?.name || "No dominant theme yet"}.`,
       `${report.total_reviews || 0} reviews analyzed with an average rating of ${report.avg_rating.toFixed(2)}.`,
     ];
@@ -529,7 +560,7 @@ const ReportDetail = () => {
       bullets.push(firstDecision.recommendation);
     }
     return bullets;
-  }, [firstDecision?.recommendation, report]);
+  }, [escalation.on, firstDecision?.recommendation, report]);
 
   const emailSummaryFields = useMemo(() => {
     const averageRating = `${report?.avg_rating?.toFixed(2) || "0.00"} / 5`;
@@ -545,6 +576,41 @@ const ReportDetail = () => {
       "Review current client issues and confirm assigned action ownership.";
     return { averageRating, topIssue, exampleQuote, recommendedDiscussion };
   }, [firstDecision?.recommendation, report]);
+
+  const evidenceGroups = useMemo(() => {
+    if (!report) {
+      return [] as Array<{ theme: string; mentions?: number; quotes: string[] }>;
+    }
+
+    const complaints = report.top_complaints.slice(0, 8);
+    const assigned = new Set<number>();
+    const groups = report.themes.slice(0, 4).map((theme) => {
+      const terms = theme.name
+        .toLowerCase()
+        .split(/[^a-z0-9]+/)
+        .filter((term) => term.length > 3);
+      const quotes = complaints.filter((quote, index) => {
+        const normalized = quote.toLowerCase();
+        const matched =
+          normalized.includes(theme.name.toLowerCase()) ||
+          terms.some((term) => normalized.includes(term));
+        if (matched) assigned.add(index);
+        return matched;
+      });
+      return { theme: theme.name, mentions: theme.mentions, quotes };
+    });
+
+    const unmatched = complaints.filter((_, index) => !assigned.has(index));
+    if (unmatched.length > 0) {
+      groups.push({ theme: "Other client concerns", quotes: unmatched });
+    }
+
+    if (groups.length === 0 && complaints.length > 0) {
+      groups.push({ theme: "Client concerns", quotes: complaints });
+    }
+
+    return groups;
+  }, [report]);
 
   const emailHtmlSummary = useMemo(() => {
     if (!report) return "";
@@ -1065,57 +1131,39 @@ const ReportDetail = () => {
   /** Section 1: Leadership briefing */
   const leadershipSection = (
     <PacketSection
+      id="briefing"
       eyebrow="Section 1"
       title="Leadership Briefing"
+      summary={
+        firstDecision
+          ? `${firstDecision.theme} is the decision to bring forward. ${firstDecision.recommendation}`
+          : "Review the cycle status, top signal, and follow-through posture before sharing this brief."
+      }
+      facts={[
+        {
+          label: "Current decision",
+          value: firstDecision?.theme || "No decision identified",
+          tone: firstDecision ? "warn" : "normal",
+        },
+        {
+          label: "Top signal",
+          value: report.themes[0]
+            ? `${report.themes[0].name} (${report.themes[0].mentions})`
+            : "No dominant theme",
+          tone: report.themes[0] ? "warn" : "normal",
+        },
+        {
+          label: "Follow-through risk",
+          value: escalation.on ? escalation.reason : "No escalation trigger",
+          tone: escalation.on ? "risk" : "normal",
+        },
+      ]}
+      defaultOpen
+      detailLabel="Review leadership notes"
       presentMode={presentMode}
     >
-      <div className="grid gap-3 lg:grid-cols-3">
-        <GovernanceCard
-          title="Current cycle"
-          accent={escalation.on ? "warn" : "success"}
-          chip={
-            <GovStatusChip
-              label={escalation.on ? "Needs review" : "Ready for review"}
-              variant={escalation.on ? "warn" : "success"}
-              size="sm"
-            />
-          }
-          summary={`Generated ${formatDateTime(report.created_at)} and ready for partner review.`}
-        />
-        <GovernanceCard
-          title="Top signal"
-          accent={report.themes.length > 0 ? "warn" : "neutral"}
-          chip={
-            report.themes.length > 0 ? (
-              <GovStatusChip
-                label={`${report.themes[0].mentions} mention${report.themes[0].mentions === 1 ? "" : "s"}`}
-                variant="warn"
-                size="sm"
-              />
-            ) : undefined
-          }
-          summary={
-            report.themes[0]
-              ? `${report.themes[0].name} is the strongest issue theme this cycle.`
-              : report.top_complaints[0] || "No dominant signal is available yet."
-          }
-        />
-        <GovernanceCard
-          title="Follow-through"
-          accent={escalation.on ? "risk" : activeActionCount > 0 ? "warn" : "success"}
-          chip={
-            <GovStatusChip
-              label={escalation.on ? "Escalate" : activeActionCount > 0 ? "In motion" : "Clear"}
-              variant={escalation.on ? "risk" : activeActionCount > 0 ? "warn" : "success"}
-              size="sm"
-            />
-          }
-          summary={`${activeActionCount} active, ${overdueCount} overdue, ${unassignedCount} unassigned, ${completedCount} completed.`}
-        />
-      </div>
-
       {firstDecision ? (
-        <div className="mt-5 rounded-[10px] border border-[#D9E7F5] bg-[#F5F9FC] px-5 py-4">
+        <div className="rounded-[10px] border border-[#D9E7F5] bg-[#F5F9FC] px-5 py-4">
           <p className="gov-type-eyebrow">Decision to bring into the meeting</p>
           <p className="mt-2 text-[15px] font-semibold text-[#0D1B2A]">{firstDecision.theme}</p>
           <p className="mt-1 text-[13px] leading-relaxed text-[#374151]">
@@ -1160,33 +1208,25 @@ const ReportDetail = () => {
   /** Section 2: Key Signals this period */
   const signalsSection = (
     <PacketSection
+      id="signals"
       eyebrow="Section 2"
       title="Signals That Matter Most"
+      summary={
+        report.themes[0]
+          ? `${report.themes[0].name} is the primary risk theme this cycle, with ${report.themes[0].mentions} mention${report.themes[0].mentions === 1 ? "" : "s"}.`
+          : "No dominant issue theme is available yet."
+      }
+      facts={keySignals.map((sig) => ({
+        label: sig.label,
+        value: sig.value,
+        tone: sig.label === "Primary risk theme" ? "warn" : "normal",
+      }))}
+      detailLabel="Open signal breakdown"
       presentMode={presentMode}
     >
-      {/* Metric tiles */}
-      {keySignals.length > 0 ? (
-        <div className="grid gap-3 sm:grid-cols-3">
-          {keySignals.map((sig) => (
-            <div
-              key={sig.label}
-              className="rounded-[8px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3"
-            >
-              <p className="gov-type-eyebrow">
-                {sig.label}
-              </p>
-              <p className="mt-1 text-[17px] font-semibold text-[#0D1B2A]">{sig.value}</p>
-              {sig.note ? (
-                <p className="mt-1 text-[12px] leading-relaxed text-[#4A5568]">{sig.note}</p>
-              ) : null}
-            </div>
-          ))}
-        </div>
-      ) : null}
-
       {/* Theme breakdown */}
       {report.themes.length > 0 ? (
-        <div className="mt-5">
+        <div>
           <p className="mb-3 gov-type-eyebrow">
             Issue themes
           </p>
@@ -1248,8 +1288,23 @@ const ReportDetail = () => {
   /** Section 3: Actions & owners */
   const actionsSection = (
     <PacketSection
+      id="follow-through"
       eyebrow="Section 3"
       title="Assigned Follow-Through"
+      summary={
+        escalation.on
+          ? `${escalation.reason} Review the action record before the cycle closes.`
+          : activeActionCount > 0
+            ? `${activeActionCount} open follow-through item${activeActionCount === 1 ? "" : "s"} still in motion.`
+            : "No open follow-through items remain in this brief."
+      }
+      facts={[
+        { label: "Open", value: `${activeActionCount}`, tone: activeActionCount > 0 ? "warn" : "normal" },
+        { label: "Overdue", value: `${overdueCount}`, tone: overdueCount > 0 ? "risk" : "normal" },
+        { label: "Unassigned", value: `${unassignedCount}`, tone: unassignedCount > 0 ? "warn" : "normal" },
+        { label: "Completed", value: `${completedCount}` },
+      ]}
+      detailLabel="Review action record"
       presentMode={presentMode}
     >
       <div className="mb-4 rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3">
@@ -1413,22 +1468,53 @@ const ReportDetail = () => {
   /** Section 5: Supporting client evidence */
   const exposureSection = (
     <PacketSection
+      id="evidence"
       eyebrow="Section 5"
       title="Supporting Client Evidence"
+      summary={
+        evidenceGroups.length > 0
+          ? "Client evidence is grouped by issue theme so the supporting detail can be reviewed only where needed."
+          : "No supporting client evidence is available for this period."
+      }
+      facts={[
+        { label: "Issue themes", value: `${report.themes.length}` },
+        { label: "Concern excerpts", value: `${report.top_complaints.length}`, tone: report.top_complaints.length > 0 ? "warn" : "normal" },
+        { label: "Praise excerpts", value: `${report.top_praise.length}` },
+      ]}
+      detailLabel="Open evidence by theme"
       presentMode={presentMode}
     >
-      {report.top_complaints.length === 0 ? (
+      {evidenceGroups.length === 0 ? (
         <p className="text-[13px] text-[#5A6470]">No supporting client evidence for this period.</p>
       ) : (
         <div className="space-y-3">
-          {report.top_complaints.slice(0, 4).map((quote, index) => (
-            <ClientQuoteCard
-              key={`complaint-${index}`}
-              quote={quote}
-              issue="Client Concern"
-              sentiment="complaint"
-              meta="Anonymized excerpt from this review period"
-            />
+          {evidenceGroups.map((group) => (
+            <details key={group.theme} className="report-evidence-group">
+              <summary>
+                <span>
+                  {group.theme}
+                  {typeof group.mentions === "number" ? ` (${group.mentions})` : ""}
+                </span>
+                <strong>{group.quotes.length} excerpt{group.quotes.length === 1 ? "" : "s"}</strong>
+              </summary>
+              <div className="report-evidence-quotes">
+                {group.quotes.length > 0 ? (
+                  group.quotes.map((quote, index) => (
+                    <ClientQuoteCard
+                      key={`${group.theme}-${index}`}
+                      quote={quote}
+                      issue={group.theme}
+                      sentiment="complaint"
+                      meta="Anonymized excerpt from this review period"
+                    />
+                  ))
+                ) : (
+                  <p className="text-[13px] text-[#5A6470]">
+                    No quote excerpt in this brief directly names this theme.
+                  </p>
+                )}
+              </div>
+            </details>
           ))}
         </div>
       )}
@@ -1454,8 +1540,23 @@ const ReportDetail = () => {
   /** Section 4: Decisions made / Next steps */
   const decisionsSection = (
     <PacketSection
+      id="decisions"
       eyebrow="Section 4"
       title="Decisions & Next Steps"
+      summary={
+        firstDecision
+          ? `Next step: ${firstDecision.recommendation}`
+          : "No decision-ready next step is available for this period yet."
+      }
+      facts={[
+        { label: "Primary next step", value: firstDecision?.theme || "None" },
+        {
+          label: "Supporting steps",
+          value: `${Math.max(decisionItems.length - 1, 0)}`,
+        },
+      ]}
+      defaultOpen
+      detailLabel="Review decision steps"
       presentMode={presentMode}
     >
       {decisionItems.length === 0 ? (
@@ -1786,91 +1887,19 @@ const ReportDetail = () => {
             </div>
           ) : null}
 
-          {/* ── Four packet sections ─────────────────────────────────────── */}
+          <nav className="report-section-rail" aria-label="Governance brief sections">
+            <a href="#briefing">Briefing</a>
+            <a href="#signals">Signals</a>
+            <a href="#follow-through">Follow-through</a>
+            <a href="#decisions">Decisions</a>
+            <a href="#evidence">Evidence</a>
+          </nav>
+
           {leadershipSection}
           {signalsSection}
           {actionsSection}
           {decisionsSection}
           {exposureSection}
-
-          {/* ── Evidence accordion (additional context, not in present mode) */}
-          <section className="rounded-[12px] border border-[#DDD8D0] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
-            <button
-              type="button"
-              className="flex w-full items-center justify-between px-6 py-5 text-left"
-              onClick={() => setEvidenceOpen((prev) => !prev)}
-              aria-expanded={evidenceOpen}
-            >
-              <div>
-                <p className="gov-type-eyebrow">
-                  Supplementary
-                </p>
-                <p className="mt-0.5 text-[15px] font-semibold text-[#0D1B2A]">
-                  Supporting Evidence
-                </p>
-                <p className="mt-1 text-[12px] text-[#5A6470]">
-                  Full traceability context. Not shown in present mode.
-                </p>
-              </div>
-              {evidenceOpen ? (
-                <ChevronDown size={16} className="text-[#5A6470]" />
-              ) : (
-                <ChevronRight size={16} className="text-[#5A6470]" />
-              )}
-            </button>
-            {evidenceOpen && (
-              <div className="border-t border-[#DDD8D0] px-6 pb-6 pt-5">
-                <div className="space-y-4">
-                  {(report.top_praise.length > 0
-                    ? [
-                        {
-                          title: "Top Praise",
-                          items: report.top_praise,
-                          display: "quotes" as const,
-                          sentiment: "praise" as const,
-                        },
-                      ]
-                    : []
-                  ).map((section) => (
-                    <article key={section.title}>
-                      <p className="mb-3 gov-type-eyebrow">
-                        {section.title}
-                      </p>
-                      <div className="space-y-3">
-                        {section.items.map((item, index) => (
-                          <ClientQuoteCard
-                            key={`${section.title}-${index}`}
-                            quote={item}
-                            issue="Client Experience Strength"
-                            sentiment={section.sentiment}
-                            meta="Anonymized client feedback excerpt"
-                          />
-                        ))}
-                      </div>
-                    </article>
-                  ))}
-                  {report.recommended_changes.length > 0 ? (
-                    <article>
-                      <p className="mb-3 gov-type-eyebrow">
-                        All recommended changes
-                      </p>
-                      <ul className="space-y-2">
-                        {report.recommended_changes.map((item, index) => (
-                          <li
-                            key={`rec-${index}`}
-                            className="text-[13px] leading-relaxed text-[#374151]"
-                          >
-                            <span className="font-medium text-[#0D1B2A]">{item.theme}:</span>{" "}
-                            {item.recommendation}
-                          </li>
-                        ))}
-                      </ul>
-                    </article>
-                  ) : null}
-                </div>
-              </div>
-            )}
-          </section>
 
           {/* Footer nav */}
           <div className="flex items-center justify-between pt-1">
