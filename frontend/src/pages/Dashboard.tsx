@@ -420,11 +420,15 @@ const Dashboard = () => {
 
   // Brief status chip
   const briefStatus = latestProcessedReport?.status;
-  const chipLabel = briefStatus === "sent" ? "Sent"
+  const hasPartnerEscalation = Boolean(exposure?.partner_escalation_required);
+  const chipLabel = hasPartnerEscalation ? "Escalation Flagged"
+    : briefStatus === "sent" ? "Sent"
     : briefStatus === "acknowledged" ? "Acknowledged"
     : briefStatus === "ready" || briefStatus === "escalation" ? "Ready to Send"
     : "Draft";
-  const chipColor = briefStatus === "acknowledged" || briefStatus === "ready"
+  const chipColor = hasPartnerEscalation
+    ? { border: "rgba(251,191,36,0.34)", bg: "rgba(251,191,36,0.10)", text: "#FCD34D" }
+    : briefStatus === "acknowledged" || briefStatus === "ready"
     ? { border: "rgba(196,169,106,0.35)", bg: "rgba(196,169,106,0.10)", text: "rgba(196,169,106,0.90)" }
     : briefStatus === "sent"
       ? { border: "rgba(196,169,106,0.25)", bg: "rgba(196,169,106,0.07)", text: "rgba(196,169,106,0.70)" }
@@ -471,10 +475,10 @@ const Dashboard = () => {
   if (overdueActions.length > 0) agendaItems.push({
     id: "overdue",
     priority: "high",
-    matter: `${overdueActions.length} overdue follow-through ${overdueActions.length === 1 ? "item requires" : "items require"} partner assignment before this brief is meeting-ready`,
+    matter: `${overdueActions.length} overdue follow-through ${overdueActions.length === 1 ? "item requires" : "items require"} partner review before the meeting can close cleanly`,
     to: "/dashboard/actions?filter=overdue",
   });
-  if (exposure?.partner_escalation_required) agendaItems.push({
+  if (hasPartnerEscalation) agendaItems.push({
     id: "escalation",
     priority: "high",
     matter: "Partner escalation is flagged in the current brief and requires a decision in the room",
@@ -499,12 +503,33 @@ const Dashboard = () => {
     : null;
   const meetingReadiness: { label: string; ok: boolean }[] = [];
   if (latestProcessedReport) {
-    meetingReadiness.push({ label: "Governance brief", ok: true });
-    meetingReadiness.push({ label: "Overdue items cleared", ok: overdueActions.length === 0 });
-    meetingReadiness.push({ label: "Actions owned", ok: unownedActionsCount === 0 });
-    if (exposure?.partner_escalation_required) {
-      meetingReadiness.push({ label: "Escalation resolved", ok: false });
+    meetingReadiness.push({ label: "Brief prepared", ok: true });
+    meetingReadiness.push({
+      label: overdueActions.length > 0
+        ? `${overdueActions.length} overdue ${overdueActions.length === 1 ? "item" : "items"} outstanding`
+        : "No overdue follow-through",
+      ok: overdueActions.length === 0,
+    });
+    meetingReadiness.push({
+      label: openActions.length > 0
+        ? `${openActions.length} open ${openActions.length === 1 ? "action" : "actions"} still active`
+        : "No open actions",
+      ok: openActions.length === 0,
+    });
+    if (unownedActionsCount > 0) {
+      meetingReadiness.push({
+        label: `${unownedActionsCount} open ${unownedActionsCount === 1 ? "action needs" : "actions need"} owner`,
+        ok: false,
+      });
+    } else if (openActions.length > 0) {
+      meetingReadiness.push({ label: "Open actions have owners", ok: true });
     }
+    meetingReadiness.push({
+      label: hasPartnerEscalation
+        ? "Partner escalation flagged"
+        : "No partner escalation flagged",
+      ok: !hasPartnerEscalation,
+    });
   }
 
   return (
@@ -682,8 +707,8 @@ const Dashboard = () => {
               {latestProcessedReport ? (
                 <div className="home-room-meta" aria-label="Cycle context">
                   <div className="home-room-meta-block">
-                    <p className="home-room-meta-label">Meeting readiness</p>
-                    <ul className="home-room-readiness-list" aria-label="Readiness checklist">
+                    <p className="home-room-meta-label">Governance state</p>
+                    <ul className="home-room-readiness-list" aria-label="Governance state">
                       {meetingReadiness.map((item) => (
                         <li key={item.label} className={`home-room-readiness-item${item.ok ? " home-room-readiness-item--ok" : " home-room-readiness-item--open"}`}>
                           <span className="home-room-readiness-dot" aria-hidden />
