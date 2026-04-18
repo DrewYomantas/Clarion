@@ -1546,7 +1546,6 @@ const ReportDetail = () => {
       <BriefPresentMode
         active={presentMode}
         onExit={exitPresent}
-        briefTitle={report.review_date_label ? `${report.review_date_label} partner review` : "Partner review room"}
       >
         <MeetingRoomMode
           report={report}

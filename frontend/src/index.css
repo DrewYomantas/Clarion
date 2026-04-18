@@ -2987,7 +2987,7 @@ body {
 
 .brief-present-frame {
   display: grid;
-  grid-template-columns: minmax(130px, 180px) 1fr auto;
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 16px;
   min-height: 50px;
@@ -3002,12 +3002,6 @@ body {
   display: flex;
   align-items: baseline;
   gap: 10px;
-}
-
-.brief-present-bar-context {
-  max-width: none;
-  justify-self: center;
-  color: rgba(255,255,255,0.48);
 }
 
 .brief-present-scroll {
@@ -3361,11 +3355,6 @@ body {
   .meeting-room-layout,
   .meeting-evidence-grid {
     grid-template-columns: 1fr;
-  }
-
-  .brief-present-bar-context {
-    justify-self: start;
-    display: none;
   }
 
   .meeting-room-footer {

@@ -4,11 +4,10 @@ import { X } from "lucide-react";
 type BriefPresentModeProps = {
   active: boolean;
   onExit: () => void;
-  briefTitle?: string;
   children: ReactNode;
 };
 
-export default function BriefPresentMode({ active, onExit, briefTitle, children }: BriefPresentModeProps) {
+export default function BriefPresentMode({ active, onExit, children }: BriefPresentModeProps) {
   useEffect(() => {
     if (!active) return;
     const handler = (event: KeyboardEvent) => {
@@ -40,9 +39,6 @@ export default function BriefPresentMode({ active, onExit, briefTitle, children 
         <div className="brief-present-room-mark">
           <span className="brief-present-bar-label">Clarion room</span>
         </div>
-        {briefTitle ? (
-          <span className="brief-present-bar-context" aria-hidden>{briefTitle}</span>
-        ) : null}
         <button
           type="button"
           onClick={onExit}

@@ -28,6 +28,13 @@ type MeetingRoomModeProps = {
   onSendBrief: () => void;
 };
 
+const formatMeetingMonth = (value: string | null | undefined) => {
+  if (!value) return "";
+  const date = new Date(value);
+  if (!Number.isFinite(date.getTime())) return "";
+  return date.toLocaleDateString([], { month: "long", year: "numeric" });
+};
+
 function MeetingRoomSection({
   eyebrow,
   title,
@@ -75,10 +82,11 @@ export default function MeetingRoomMode({
   const meetingDecisionBody =
     firstDecision?.recommendation ||
     "Review the current client issues, confirm ownership, and decide what moves into follow-through.";
-  const meetingRoomTitle = report.review_date_label
-    ? `${report.review_date_label} partner review`
+  const meetingPeriod = report.review_date_label || formatMeetingMonth(report.created_at);
+  const meetingRoomTitle = meetingPeriod
+    ? `${meetingPeriod} partner review`
     : "Partner review room";
-  const meetingRoomIntro = `${report.total_reviews} review${report.total_reviews === 1 ? "" : "s"} in the room. Start with the decision on the table, then confirm evidence and follow-through.`;
+  const meetingRoomIntro = `${report.total_reviews} review${report.total_reviews === 1 ? "" : "s"} analyzed. Begin with the decision, then confirm evidence and handoff.`;
   const meetingStatus = escalation.on
     ? "Decision required"
     : activeActionCount > 0
