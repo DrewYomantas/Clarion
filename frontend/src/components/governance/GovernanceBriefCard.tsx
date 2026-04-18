@@ -58,8 +58,8 @@ export type GovernanceBriefCardProps = {
 };
 
 const statusChipMap: Record<BriefStatus, { label: string; variant: "risk" | "warn" | "success" | "muted" | "info" }> = {
-  escalation:   { label: "Ready to Send",  variant: "warn" },
-  ready:        { label: "Ready to Send",  variant: "success" },
+  escalation:   { label: "Decision required", variant: "warn" },
+  ready:        { label: "Brief prepared",    variant: "success" },
   pending:      { label: "Draft",          variant: "muted" },
   sent:         { label: "Sent",           variant: "info" },
   acknowledged: { label: "Acknowledged",   variant: "success" },
@@ -83,7 +83,7 @@ function buildDescription(signalsCount?: number, actionsCount?: number, status?:
     parts.push(`${actionsCount} ${actionsCount === 1 ? "action" : "actions"} tracked`);
   }
   if (status === "escalation") {
-    parts.push("partner escalation flagged");
+    parts.push("escalation flagged for discussion");
   }
   return parts.length > 0 ? parts.join(" · ") : undefined;
 }
@@ -123,7 +123,7 @@ export default function GovernanceBriefCard({
       chip={<GovStatusChip label={chipLabel} variant={chipVariant} />}
       summary={summaryLine}
       meta={metaItems}
-      className={isPast ? "" : "border-t-2 border-t-[#0EA5C2]"}
+      className={isPast ? "reports-brief-card" : "reports-brief-card reports-brief-card--current"}
       detail={
         /* Compact stats row inside the card body — signals + actions at a glance */
         (typeof signalsCount === "number" || typeof actionsCount === "number") ? (
@@ -151,14 +151,14 @@ export default function GovernanceBriefCard({
       }
       actions={
         <>
-          {/* Meeting View is the primary action for current briefs */}
+          {/* Meeting room is the primary action for current briefs */}
           {!isPast && onPrepare ? (
             <button
               type="button"
               onClick={onPrepare}
               className="inline-flex items-center rounded-[6px] bg-[#0D1B2A] px-3 py-1.5 text-[12px] font-medium text-white transition-colors hover:bg-[#16263b]"
             >
-              Open Meeting View
+              Enter Meeting Room
             </button>
           ) : null}
           {onView ? (
@@ -167,7 +167,7 @@ export default function GovernanceBriefCard({
               onClick={onView}
               className="inline-flex items-center rounded-[6px] border border-[#D1D5DB] bg-white px-3 py-1.5 text-[12px] font-medium text-[#0D1B2A] transition-colors hover:bg-slate-50"
             >
-              {isPast ? "Open Brief" : "Open Governance Brief"}
+              Open Brief
             </button>
           ) : null}
           {onDownload ? (

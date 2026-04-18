@@ -140,7 +140,7 @@ const ReportsPage = () => {
       if (typeof actionsFinal === "number") {
         descParts.push(`${actionsFinal} ${actionsFinal === 1 ? "action" : "actions"} tracked`);
       }
-      if (isEscalation) descParts.push("partner escalation flagged");
+      if (isEscalation) descParts.push("escalation flagged for discussion");
 
       return {
         id: report.id,
@@ -176,6 +176,13 @@ const ReportsPage = () => {
 
   const latestRow = rows[0] || null;
   const archivedRows = rows.slice(1);
+  const libraryStateCopy = loading
+    ? "Loading governance history."
+    : latestRow?.escalationRequired
+      ? "Current brief has an escalation flagged for the next partner meeting."
+      : latestRow
+        ? "Current brief is prepared for partner review."
+        : "No processed governance cycle is ready yet.";
 
   // ── Workflow tab: "upcoming" | "past" ─────────────────────────────────────
   // "Upcoming Meetings" → latest brief (the one being prepared for the next session)
@@ -186,16 +193,12 @@ const ReportsPage = () => {
       <PageWrapper
         eyebrow="Governance Brief Library"
         title="Governance Briefs"
-        description="The firm's complete governance brief record. Each cycle produces a partner-ready artifact covering client signals reviewed, actions assigned, and decisions required."
+        description="Open the current Governance Brief, confirm meeting state, and keep prior cycles available for reference."
         contentClassName="stage-sequence"
       >
-        {/* Dark header slab */}
-        <section className="overflow-hidden rounded-[14px] border border-white/[0.13] shadow-[0_8px_32px_rgba(0,0,0,0.18),0_0_0_1px_rgba(255,255,255,0.04)]">
-          <div
-            className="relative px-6 py-5"
-            style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
-          >
-            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#1a3a6b] opacity-25 blur-3xl" aria-hidden />
+        {/* Brief library state */}
+        <section className="reports-library-frame">
+          <div className="reports-library-main">
             <div className="relative flex flex-wrap items-center justify-between gap-5">
               <div>
                 <span className="inline-flex items-center gap-2">
@@ -209,35 +212,32 @@ const ReportsPage = () => {
                   {loading ? "Loading…" : summary.totalBriefs === 0 ? "No briefs yet" : `${summary.totalBriefs} governance ${summary.totalBriefs === 1 ? "brief" : "briefs"}`}
                 </h2>
                 <p className="mt-1.5 text-[13px] leading-5 text-[#8FA7BC]">
-                  Open the current brief before every partner meeting.
+                  {libraryStateCopy}
                 </p>
               </div>
               {latestRow ? (
                 <div className="flex flex-wrap items-center gap-2">
-                  {/* Meeting View is the primary action on the Briefs surface too */}
+                  {/* Meeting room is the primary action on the Briefs surface too */}
                   <button
                     type="button"
                     onClick={() => navigate(`/dashboard/reports/${latestRow.id}?present=1`)}
-                    className="inline-flex items-center gap-1.5 rounded-[8px] bg-white px-4 py-2 text-[13px] font-semibold text-[#0D1B2A] shadow-[0_1px_3px_rgba(0,0,0,0.12)] transition-all hover:bg-[#EEF2F8] active:scale-[0.98]"
+                    className="report-room-primary-action"
                   >
-                    Open Meeting View
+                    Enter Meeting Room
                   </button>
                   <button
                     type="button"
                     onClick={() => navigate(`/dashboard/reports/${latestRow.id}`)}
-                    className="inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
+                    className="report-room-secondary-action"
                   >
-                    Open Current Brief
+                    Open Brief
                   </button>
                 </div>
               ) : null}
             </div>
           </div>
-          {/* Instrument strip — reduced height */}
-          <div
-            className="flex flex-wrap divide-x divide-white/[0.07]"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.07)", background: "#0D1B2A" }}
-          >
+          {/* Brief history context */}
+          <div className="reports-library-context">
             <div className="px-5 py-3">
               <p className="text-[18px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
                 {loading ? "—" : summary.totalBriefs}
@@ -251,7 +251,7 @@ const ReportsPage = () => {
               >
                 {loading ? "—" : summary.escalationCount}
               </p>
-              <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Escalations</p>
+              <p className="mt-1 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Flagged escalations</p>
             </div>
             <div className="px-5 py-3">
               <p className="text-[13px] font-semibold leading-snug text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
