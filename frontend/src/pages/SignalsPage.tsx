@@ -524,7 +524,7 @@ const SignalsPage = () => {
         }
       >
         {showBaselineNotice ? (
-          <section className="relative rounded-[10px] border border-[#1E3A5F]/20 bg-[#0D1B2A] px-5 py-4">
+          <section className="relative rounded-lg border border-[#1E3A5F]/20 bg-[#0D1B2A] px-5 py-4">
             <button
               type="button"
               onClick={dismissBaselineNotice}
@@ -549,7 +549,7 @@ const SignalsPage = () => {
         {error ? <div className="rounded-xl border border-destructive/35 bg-destructive/10 p-6 text-sm text-destructive">{error}</div> : null}
 
         {isNewOnlyFilter ? (
-          <section className="rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3 shadow-[0_1px_2px_rgba(13,27,42,0.04)]">
+          <section className="rounded-lg border border-[#DDD8D0] bg-[#F9F8F6] px-4 py-3 shadow-[0_1px_2px_rgba(13,27,42,0.04)]">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
@@ -695,7 +695,7 @@ const SignalsPage = () => {
         ) : (
           <section className="space-y-4">
             {/* ── Section label row + select-all ─────────────────────── */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#DDD8D0] bg-white/95 px-5 py-3.5 shadow-[0_1px_4px_rgba(13,27,42,0.06)]">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">
                   {signalsTab === "triage" ? "Requires attention now" : signalsTab === "in-briefs" ? "Recurring signals in briefs" : "Current cycle evidence"}
@@ -728,7 +728,7 @@ const SignalsPage = () => {
             {selectionMode ? (
               <div
                 className={[
-                  "rounded-[10px] border px-4 py-3 transition-all duration-200",
+                  "rounded-lg border px-4 py-3 transition-all duration-200",
                   selectedIds.size > 0
                     ? "border-[#0D1B2A]/20 bg-[#F0F4F8] shadow-[0_2px_8px_rgba(13,27,42,0.08)]"
                     : "border-[#DDD8D0] bg-white",

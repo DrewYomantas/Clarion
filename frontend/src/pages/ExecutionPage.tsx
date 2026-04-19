@@ -238,7 +238,7 @@ const ExecutionPage = () => {
       return `${summary.overdue} overdue follow-through item${summary.overdue === 1 ? "" : "s"} need review now.`;
     }
     if (summary.unowned > 0) {
-      return `${summary.unowned} follow-through item${summary.unowned === 1 ? "" : "s"} still need a named owner before the next discussion.`;
+      return `${summary.unowned} follow-through item${summary.unowned === 1 ? "" : "s"} still need a named owner before the next meeting.`;
     }
     if (summary.blocked > 0) {
       return `${summary.blocked} blocked item${summary.blocked === 1 ? "" : "s"} may stall the current governance cycle.`;
@@ -374,16 +374,16 @@ const ExecutionPage = () => {
 
     const emptyBg =
       accent === "risk"
-        ? "rounded-[10px] border border-red-100/80 bg-red-50/30"
+        ? "rounded-lg border border-red-100/80 bg-red-50/30"
         : accent === "warn"
-          ? "rounded-[10px] border border-amber-100/80 bg-amber-50/30"
+          ? "rounded-lg border border-amber-100/80 bg-amber-50/30"
           : accent === "success"
-            ? "rounded-[10px] border border-emerald-100/80 bg-emerald-50/20"
-            : "rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6]";
+            ? "rounded-lg border border-emerald-100/80 bg-emerald-50/20"
+            : "rounded-lg border border-[#DDD8D0] bg-[#F9F8F6]";
 
     return (
       <div className={[
-        "space-y-2 rounded-[10px] border border-[#DDD8D0] bg-white px-4 py-4 shadow-[0_1px_3px_rgba(13,27,42,0.05)]",
+        "space-y-2 rounded-lg border border-[#DDD8D0] bg-white px-4 py-4 shadow-[0_1px_3px_rgba(13,27,42,0.05)]",
         borderAccent,
       ].join(" ")}>
         <div className="border-b border-[#F0EDE8] pb-2.5">
@@ -703,7 +703,7 @@ const ExecutionPage = () => {
       ) : (
         <section className="space-y-8">
           {/* Section context band */}
-          <div className="rounded-[10px] border border-[#DDD8D0] bg-[#F9F8F6] px-5 py-3.5">
+          <div className="rounded-lg border border-[#DDD8D0] bg-[#F9F8F6] px-5 py-3.5">
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-[#0EA5C2]" />
               <p className="text-[13px] font-medium text-[#0D1B2A]">
@@ -718,47 +718,41 @@ const ExecutionPage = () => {
               {actionsTab === "overdue"
                 ? "These items have passed their due date and require immediate review."
                 : actionsTab === "my-actions"
-                  ? "This view keeps your owned follow-through visible before the next leadership discussion."
+                  ? "This view keeps your owned follow-through visible before the next meeting."
                   : "Review at-risk items first, then confirm what is moving cleanly before the next meeting."}
             </p>
           </div>
 
           {/* At risk */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-[#E5E2DC]" />
-              <p className="shrink-0 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">At risk now</p>
-              <div className="h-px flex-1 bg-[#E5E2DC]" />
+            <div className="rounded-lg border border-[#DDD8D0] bg-white/95 px-5 py-3.5 shadow-[0_1px_4px_rgba(13,27,42,0.06)]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">At risk now</p>
+              <p className="mt-1 text-[12px] leading-5 text-[#4B5563]">
+                These items are the clearest threats to a credible current review cycle.
+              </p>
             </div>
-            <p className="text-[12px] leading-5 text-[#5A6470] -mt-1">
-              These items are the clearest threats to a credible current review cycle.
-            </p>
             <div className="grid gap-5 xl:grid-cols-3">
               {renderActionGroup("Overdue", "Due dates have passed. Needs immediate review.", overdueNow, "No overdue follow-through", "Everything in view is still within due date.", "risk")}
-              {renderActionGroup("Unowned", "Need a named owner before the next discussion.", unownedNow, "No unowned follow-through", "Visible items already have ownership assigned.", "warn")}
+              {renderActionGroup("Unowned", "Need a named owner before the next meeting.", unownedNow, "No unowned follow-through", "Visible items already have ownership assigned.", "warn")}
               {renderActionGroup("Blocked", "Stalled items that may prevent cycle closure.", blockedNow, "No blocked follow-through", "Nothing in view is currently marked blocked.", "warn")}
             </div>
           </div>
 
           {/* Needs review */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-[#E5E2DC]" />
-              <p className="shrink-0 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">Needs review before next discussion</p>
-              <div className="h-px flex-1 bg-[#E5E2DC]" />
+            <div className="rounded-lg border border-[#DDD8D0] bg-white/95 px-5 py-3.5 shadow-[0_1px_4px_rgba(13,27,42,0.06)]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">Needs review before next meeting</p>
             </div>
             <div className="grid gap-5 xl:grid-cols-2">
               {renderActionGroup("Ready to start", "Owned items that need visible movement.", openReview, "No ready-to-start follow-through", "No owned open items in the current view.")}
-              {renderActionGroup("In progress", "Work underway — keep visible until closed.", inProgressReview, "No in-progress follow-through", "No actively moving items in the current view.")}
+              {renderActionGroup("In progress", "Work underway - keep visible until closed.", inProgressReview, "No in-progress follow-through", "No actively moving items in the current view.")}
             </div>
           </div>
 
           {/* Progressing cleanly */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-[#E5E2DC]" />
-              <p className="shrink-0 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">Progressing cleanly</p>
-              <div className="h-px flex-1 bg-[#E5E2DC]" />
+            <div className="rounded-lg border border-[#DDD8D0] bg-white/95 px-5 py-3.5 shadow-[0_1px_4px_rgba(13,27,42,0.06)]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">Progressing cleanly</p>
             </div>
             {renderActionGroup("Completed", "Closed items remain visible as cycle history.", completedActions, "No completed follow-through in view", "Completed items will appear here as the cycle progresses.", "success")}
           </div>
