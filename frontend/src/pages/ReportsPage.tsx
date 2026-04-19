@@ -108,7 +108,7 @@ const ReportsPage = () => {
         title: `${monthYear} Governance Brief`,
         meetingDate: monthYear,
         dateLabel: formatApiDate(report.created_at, { month: "long", day: "numeric", year: "numeric" }, "Unknown date"),
-        description: isEscalation ? "Decision required before the next partner meeting." : "Brief prepared for partner review.",
+        description: isEscalation ? "Decision required before the next meeting." : "Brief prepared for current-cycle review.",
         pdfUrl: report.download_pdf_url,
         planType: report.plan_type,
         escalationRequired: isEscalation,
@@ -121,9 +121,9 @@ const ReportsPage = () => {
 
   return (
     <PageWrapper
-      eyebrow="Governance Brief"
-      title="Governance Briefs"
-      description="Open the current Governance Brief and confirm follow-through before the next decision."
+      eyebrow="Reference"
+      title="Brief Archive"
+      description="Use this for Governance Brief history and reference. The active brief starts from Home."
       contentClassName="stage-sequence"
     >
       <section className="space-y-3">

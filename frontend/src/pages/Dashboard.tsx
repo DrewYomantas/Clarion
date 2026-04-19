@@ -424,7 +424,7 @@ const Dashboard = () => {
   const chipLabel = hasPartnerEscalation ? "Escalation Flagged"
     : briefStatus === "sent" ? "Sent"
     : briefStatus === "acknowledged" ? "Acknowledged"
-    : briefStatus === "ready" || briefStatus === "escalation" ? "Ready to Send"
+    : briefStatus === "ready" || briefStatus === "escalation" ? "Brief prepared"
     : "Draft";
   const chipColor = hasPartnerEscalation
     ? { border: "rgba(251,191,36,0.34)", bg: "rgba(251,191,36,0.10)", text: "#FCD34D" }
@@ -475,7 +475,7 @@ const Dashboard = () => {
   if (overdueActions.length > 0) agendaItems.push({
     id: "overdue",
     priority: "high",
-    matter: `${overdueActions.length} overdue follow-through ${overdueActions.length === 1 ? "item requires" : "items require"} partner review before the meeting can close cleanly`,
+    matter: `${overdueActions.length} overdue follow-through ${overdueActions.length === 1 ? "item requires" : "items require"} review before the meeting can close cleanly`,
     to: "/dashboard/actions?filter=overdue",
   });
   if (hasPartnerEscalation) agendaItems.push({

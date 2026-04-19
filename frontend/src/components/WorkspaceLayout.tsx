@@ -4,12 +4,12 @@
  * Global shell for all authenticated workspace routes.
  *
  * Navigation Information Architecture
- * ── PRIMARY (left rail) ──────────────────────────────────────────────────────
- *   Home              /dashboard              Home
- *   Briefs            /dashboard/reports      FileText      — governance briefs
- *   Issues            /dashboard/signals      ScanLine      — client issues
- *   Follow-Through    /dashboard/actions      ClipboardList — execution
- *   Meetings          /dashboard/meetings     Calendar      — review record
+ * ── PRIMARY LOOP (left rail) ─────────────────────────────────────────────────
+ *   Home              /dashboard              Home          — current brief
+ *   Issues            /dashboard/signals      ScanLine      — evidence feeding brief
+ *   Follow-Through    /dashboard/actions      ClipboardList — accountability from brief
+ * ── REFERENCE (left rail) ────────────────────────────────────────────────────
+ *   Brief Archive     /dashboard/reports      FileText      — history/reference
  * ── ACCOUNT MENU (topbar dropdown) ──────────────────────────────────────────
  *   Account           /dashboard/account
  *   Team              /dashboard/team
@@ -35,16 +35,9 @@ const PRIMARY_NAV = [
   {
     to: "/dashboard",
     label: "Home",
-    Icon: Home,
-    iconClass: "text-[#E2E8F0]",
-    iconActiveClass: "text-white",
-  },
-  {
-    to: "/dashboard/reports",
-    label: "Briefs",
-    Icon: FileText,
     badgeKey: "briefs" as const,
-    badgeLabel: "Escalation-required briefs",
+    badgeLabel: "Current brief needs a decision",
+    Icon: Home,
     iconClass: "text-[#E2E8F0]",
     iconActiveClass: "text-white",
   },
@@ -60,6 +53,16 @@ const PRIMARY_NAV = [
     label: "Follow-Through",
     Icon: ClipboardList,
     iconClass: "text-[#E2E8F0]",
+    iconActiveClass: "text-white",
+  },
+] as const;
+
+const REFERENCE_NAV = [
+  {
+    to: "/dashboard/reports",
+    label: "Brief Archive",
+    Icon: FileText,
+    iconClass: "text-[#B9C6D3]",
     iconActiveClass: "text-white",
   },
 ] as const;
@@ -83,6 +86,7 @@ function NavItem({
   iconClass,
   iconActiveClass,
   badgeLabel,
+  secondary = false,
 }: {
   to: string;
   label: string;
@@ -93,16 +97,22 @@ function NavItem({
   iconClass?: string;
   iconActiveClass?: string;
   badgeLabel?: string;
+  secondary?: boolean;
 }) {
   return (
     <Link
       to={to}
       aria-current={isActive ? "page" : undefined}
       className={[
-        "group flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150",
+        "group flex items-center gap-2.5 rounded-xl font-medium transition-all duration-150",
+        secondary ? "px-3 py-2 text-[12.5px]" : "px-3 py-2.5 text-sm",
         isActive
-          ? "border-l-[3px] border-l-[#C4A96A] bg-white/[0.12] pl-[10px] text-white shadow-sm"
-          : "border border-transparent text-slate-300/90 hover:bg-white/6 hover:text-white",
+          ? secondary
+            ? "border-l-[3px] border-l-[#C4A96A]/80 bg-white/[0.08] pl-[10px] text-white"
+            : "border-l-[3px] border-l-[#C4A96A] bg-white/[0.12] pl-[10px] text-white shadow-sm"
+          : secondary
+            ? "border border-transparent text-slate-400/90 hover:bg-white/5 hover:text-slate-100"
+            : "border border-transparent text-slate-300/90 hover:bg-white/6 hover:text-white",
       ].join(" ")}
     >
       <Icon
@@ -142,6 +152,7 @@ const resolvePageLabel = (pathname: string): string => {
   if (pathname.startsWith("/dashboard/approval-queue"))     return "Approval Queue";
   if (pathname.startsWith("/dashboard/signals/"))             return "Issue Detail";
   if (pathname.startsWith("/dashboard/reports/"))             return "Governance Brief";
+  if (pathname === "/dashboard/reports")                      return "Brief Archive";
 
   // Primary nav exact / prefix matches
   for (const item of PRIMARY_NAV) {
@@ -174,7 +185,10 @@ const resolvePageNote = (pathname: string): string => {
     return "Review overdue, unowned, and blocked follow-through before the next meeting.";
   }
   if (pathname === "/dashboard/reports" || pathname.startsWith("/dashboard/reports/")) {
-    return "Open the current Governance Brief and confirm follow-through and next decisions.";
+    if (pathname === "/dashboard/reports") {
+      return "Use previous Governance Briefs for reference. The active brief starts from Home.";
+    }
+    return "Review the Governance Brief, supporting evidence, and follow-through before the meeting.";
   }
   if (pathname === "/dashboard/billing") {
     return "Manage your plan and subscription details.";
@@ -202,7 +216,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
-  // Load nav badge: escalation indicator on Governance Briefs
+  // Load nav badge: escalation indicator on the current brief.
   useEffect(() => {
     let active = true;
     const controller = new AbortController();
@@ -351,7 +365,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
         {/* Primary nav */}
         <nav className="flex-1 px-3 py-5" aria-label="Governance workspace">
           <div className="space-y-0.5">
-            <p className="workspace-shell-nav-label px-3 pb-2 pt-1">Workspace</p>
+            <p className="workspace-shell-nav-label px-3 pb-2 pt-1">Governance Loop</p>
             {PRIMARY_NAV.map((item) => {
               const active = isActive(item.to);
               const badgeCount =
@@ -375,6 +389,25 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
             })}
 
             {/* Approval Queue is internal-only; not surfaced in the law-firm workspace nav. */}
+          </div>
+
+          <div className="mt-6 space-y-0.5">
+            <p className="workspace-shell-nav-label px-3 pb-2 pt-1">Reference</p>
+            {REFERENCE_NAV.map((item) => {
+              const active = isActive(item.to);
+              return (
+                <NavItem
+                  key={item.to}
+                  to={item.to}
+                  label={item.label}
+                  Icon={item.Icon}
+                  isActive={active}
+                  iconClass={item.iconClass}
+                  iconActiveClass={item.iconActiveClass}
+                  secondary
+                />
+              );
+            })}
           </div>
         </nav>
 

@@ -584,11 +584,11 @@ const ExecutionPage = () => {
                 ],
               },
               {
-                label: "Report",
+                label: "Brief",
                 value: reportFilter,
                 onChange: (v: string) => setReportFilter(v),
                 options: [
-                  { value: "all", label: "All reports" },
+                  { value: "all", label: "All briefs" },
                   ...reportOptions.map((r) => ({ value: String(r.id), label: r.name })),
                 ],
               },

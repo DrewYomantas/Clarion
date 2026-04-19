@@ -520,7 +520,7 @@ const ReportDetail = () => {
     if (report.themes[0]) {
       fallback.push({
         theme: report.themes[0].name,
-        recommendation: `Confirm the response to ${report.themes[0].name.toLowerCase()} before the next partner review and decide whether leadership intervention is needed.`,
+        recommendation: `Confirm the response to ${report.themes[0].name.toLowerCase()} before the next meeting and decide whether leadership intervention is needed.`,
       });
     }
 
@@ -553,7 +553,7 @@ const ReportDetail = () => {
     const bullets = [
       escalation.on
         ? `${report.name || report.title} has a decision or follow-through issue to review.`
-        : `${report.name || report.title} is prepared for partner review.`,
+        : `${report.name || report.title} is prepared for current-cycle review.`,
       `Top focus area: ${report.themes[0]?.name || "No dominant theme yet"}.`,
       `${report.total_reviews || 0} reviews analyzed with an average rating of ${report.avg_rating.toFixed(2)}.`,
     ];
@@ -1063,7 +1063,7 @@ const ReportDetail = () => {
               className="gov-btn-secondary"
               onClick={() => navigate("/dashboard/reports")}
             >
-              Back to Briefs
+              Back to Brief Archive
             </button>
           </div>
         </div>
@@ -1096,7 +1096,7 @@ const ReportDetail = () => {
             className="gov-btn-secondary mt-4"
             onClick={() => navigate("/dashboard/reports")}
           >
-            Back to Briefs
+            Back to Brief Archive
           </button>
           {showRateLimitRetryPrompt && (
             <button
@@ -1183,7 +1183,7 @@ const ReportDetail = () => {
         <div className="mt-5 rounded-[10px] border border-amber-200 bg-amber-50 px-5 py-4">
           <p className="gov-type-eyebrow text-amber-800">Before you close this brief</p>
           <p className="mt-2 text-[13px] leading-relaxed text-amber-900">
-            This cycle still has follow-through gaps that will weaken the next partner review if they stay unresolved.
+            This cycle still has follow-through gaps that will weaken the next meeting if they stay unresolved.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             {unassignedCount > 0 ? (
@@ -1912,7 +1912,7 @@ const ReportDetail = () => {
           {/* Footer nav */}
           <div className="flex items-center justify-between pt-1">
             <Link to="/dashboard/reports" className="gov-btn-secondary">
-              ← Back to Briefs
+              ← Back to Brief Archive
             </Link>
             <Link
               to={`/dashboard/brief-customization?reportId=${report.id}`}
