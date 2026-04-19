@@ -19,7 +19,7 @@ export function PageTabs({ value, onValueChange, tabs, className = "" }: PageTab
     <TabsPrimitive.Root value={value} onValueChange={onValueChange}>
       <TabsPrimitive.List
         className={[
-          "inline-flex max-w-full items-end gap-0 overflow-x-auto rounded-lg border border-[#DDD8D0] bg-white/95 px-2 pt-1 shadow-[0_1px_4px_rgba(13,27,42,0.06)]",
+          "flex w-fit max-w-full flex-wrap items-end gap-0 rounded-lg border border-[#DDD8D0] bg-white/95 px-2 pt-1 shadow-[0_1px_4px_rgba(13,27,42,0.06)]",
           className,
         ].join(" ")}
         aria-label="Page workflow tabs"
