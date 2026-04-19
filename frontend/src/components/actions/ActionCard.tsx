@@ -78,7 +78,7 @@ const buildActivityLog = (action: ReportActionItem) => {
     if (owner && owner.toLowerCase() !== "unassigned") {
       entries.push({
         date: monthDay(action.updated_at || action.created_at),
-        description: `Assigned to Partner ${owner}`,
+        description: `Assigned to ${owner}`,
       });
     }
     if (action.status && action.status !== "open") {
@@ -110,7 +110,7 @@ const ActionCard = ({ action, onDelete }: ActionCardProps) => {
     : "";
 
   const metaItems: string[] = [
-    owner ? `Partner: ${owner}` : "Unassigned",
+    owner ? `Owner: ${owner}` : "Unassigned",
     action.due_date ? (isOverdue(action) ? `Due ${dueDate} - overdue` : `Due ${dueDate}`) : "No due date set",
     briefName ? `Brief: ${briefName}${briefDate ? ` · ${briefDate}` : ""}` : "",
   ].filter(Boolean);
@@ -164,7 +164,7 @@ const ActionCard = ({ action, onDelete }: ActionCardProps) => {
                 className="text-[12px] text-[#4A5568] underline underline-offset-4 transition-colors hover:text-[#0D1B2A]"
                 to={`/dashboard/reports/${reportId}`}
               >
-                Open Governance Brief
+                Open Brief
               </Link>
             ) : (
               <span />

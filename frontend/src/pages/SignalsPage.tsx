@@ -397,7 +397,7 @@ const SignalsPage = () => {
       return;
     }
 
-    toast.success("Governance action created.");
+    toast.success("Follow-through item created.");
     closeActionForm();
   };
 
@@ -476,13 +476,13 @@ const SignalsPage = () => {
     });
     setBulkSubmitting(false);
     if (!result.success) {
-      setBulkError(result.error || "Unable to create governance action.");
+      setBulkError(result.error || "Unable to create follow-through.");
       return;
     }
     toast.success(
       selectedSignals.length === 1
-        ? "Governance action created."
-        : `Governance action created from ${selectedSignals.length} signals.`,
+        ? "Follow-through item created."
+        : `Follow-through item created from ${selectedSignals.length} issues.`,
     );
     exitSelectionMode();
   };
@@ -491,7 +491,7 @@ const SignalsPage = () => {
       <PageWrapper
         eyebrow="Client Feedback Evidence"
         title={DISPLAY_LABELS.clientIssuePlural}
-        description="The evidence layer behind each governance brief. These recurring patterns from client feedback are what the brief distills into partner-ready decisions and actions."
+        description="The evidence record behind the current Governance Brief. Review the issues that need ownership before the next meeting."
         contentClassName="stage-sequence"
         actions={
           <div className="flex items-center gap-2">
@@ -573,12 +573,6 @@ const SignalsPage = () => {
               className="relative px-7 py-6"
               style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
             >
-              <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#1a3a6b] opacity-30 blur-3xl" aria-hidden />
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "20px 20px" }}
-                aria-hidden
-              />
               <div className="relative flex flex-wrap items-start justify-between gap-5">
                 <div>
                   <span className="inline-flex items-center gap-2">
@@ -589,15 +583,16 @@ const SignalsPage = () => {
                     className="mt-3 text-[26px] leading-[1.05] text-white sm:text-[30px]"
                     style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 500 }}
                   >
-                    {latestReportDateLabel || "Current cycle"}
+                    Current issue record
                   </h2>
                   <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#8FA7BC]">
-                    Recurring patterns from this review cycle — the evidence the governance brief is built on. Review the full set, then assign actions to what needs partner ownership.
+                    {latestReportDateLabel
+                      ? `Evidence from the ${latestReportDateLabel} cycle.`
+                      : "Evidence from the current review cycle."} Review the full set, then assign follow-through where ownership is needed.
                   </p>
                 </div>
               </div>
             </div>
-            {/* Instrument strip */}
             <div
               className="relative flex flex-wrap divide-x divide-white/[0.07]"
               style={{ borderTop: "1px solid rgba(255,255,255,0.07)", background: "#0D1B2A" }}
@@ -616,7 +611,7 @@ const SignalsPage = () => {
                 <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">New vs prior</p>
               </div>
               <div className="px-5 py-3.5">
-                <p className="text-[14px] font-semibold leading-snug text-white">{latestReportDateLabel || "—"}</p>
+                <p className="text-[14px] font-semibold leading-snug text-white">{latestReportDateLabel || "-"}</p>
                 <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Cycle date</p>
               </div>
             </div>
@@ -635,11 +630,11 @@ const SignalsPage = () => {
             tabs={[
               {
                 value: "triage",
-                label: "Needs Partner Attention",
+                label: "Requires Attention",
                 badgeCount: triageCount,
                 badgeUrgent: triageCount > 0,
               },
-              { value: "all", label: "Current Cycle" },
+              { value: "all", label: "Current Issues" },
               {
                 value: "in-briefs",
                 label: "In Briefs",
@@ -669,7 +664,7 @@ const SignalsPage = () => {
               primaryAction={!isNewOnlyFilter ? { label: "Start a new review", href: "/upload" } : undefined}
               secondaryAction={{ label: "Return to dashboard", href: "/dashboard" }}
               footer={
-                <Link to="/demo" className="text-sm text-slate-500 underline underline-offset-4 transition-colors hover:text-slate-700">
+                <Link to="/demo" className="text-sm text-[#5A6470] underline underline-offset-4 transition-colors hover:text-[#0D1B2A]">
                   Open read-only example cycle
                 </Link>
               }
@@ -707,12 +702,12 @@ const SignalsPage = () => {
                 </p>
                 <p className="mt-1 text-[13px] leading-5 text-[#374151]">
                   {selectionMode
-                    ? "Click cards or checkboxes to select issues, then create a governance action for all of them at once."
+                      ? "Click cards or checkboxes to select issues, then create one follow-through item for the selected set."
                     : signalsTab === "triage"
                       ? "High-severity patterns from this cycle. These should be the first to receive an owner and a response plan before the governance brief is finalized."
                       : signalsTab === "in-briefs"
                         ? "Signals that appeared in the previous cycle and are now captured in governance briefs."
-                        : "These are the patterns the governance brief is built on. Assign actions to the issues that require a partner decision or firm-wide response."}
+                        : "These are the patterns the Governance Brief is built on. Assign follow-through to issues that require ownership or a firm-wide response."}
                 </p>
               </div>
               {selectionMode ? (
@@ -733,7 +728,7 @@ const SignalsPage = () => {
             {selectionMode ? (
               <div
                 className={[
-                  "sticky top-[56px] z-20 rounded-[10px] border px-4 py-3 transition-all duration-200",
+                  "rounded-[10px] border px-4 py-3 transition-all duration-200",
                   selectedIds.size > 0
                     ? "border-[#0D1B2A]/20 bg-[#F0F4F8] shadow-[0_2px_8px_rgba(13,27,42,0.08)]"
                     : "border-[#DDD8D0] bg-white",
@@ -751,7 +746,7 @@ const SignalsPage = () => {
                     >
                       {selectedIds.size}
                     </span>
-                    <span className="text-[13px] text-slate-700">
+                    <span className="text-[13px] text-[#374151]">
                       {selectedIds.size === 0
                         ? "No issues selected — click cards to select"
                         : selectedIds.size === 1
@@ -765,7 +760,7 @@ const SignalsPage = () => {
                         <button
                           type="button"
                           onClick={() => setSelectedIds(new Set())}
-                          className="text-[12px] text-slate-500 hover:text-slate-700 transition-colors"
+                          className="text-[12px] text-[#5A6470] hover:text-[#0D1B2A] transition-colors"
                         >
                           Clear
                         </button>
@@ -775,7 +770,7 @@ const SignalsPage = () => {
                           className="inline-flex items-center gap-1.5 rounded-[7px] bg-[#0D1B2A] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#16263b]"
                         >
                           <Layers size={13} />
-                          Create Governance Action{selectedIds.size > 1 ? ` (${selectedIds.size} issues)` : ""}
+                          Create follow-through{selectedIds.size > 1 ? ` (${selectedIds.size} issues)` : ""}
                         </button>
                       </>
                     ) : null}
@@ -828,7 +823,7 @@ const SignalsPage = () => {
         >
           <DialogContent className="max-h-[85vh] max-w-2xl overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Create Governance Action</DialogTitle>
+              <DialogTitle>Create follow-through</DialogTitle>
               <DialogDescription>
                 From client issue: {selectedSignal?.category || "Selected client issue"}
               </DialogDescription>
@@ -839,7 +834,7 @@ const SignalsPage = () => {
               initialValues={actionFormInitialValues}
               ownerOptions={[]}
               submitting={submittingAction}
-              submitLabel="Create Action"
+              submitLabel="Create follow-through"
               submittingLabel="Creating..."
               serverError={actionError}
               onCancel={closeActionForm}
@@ -862,8 +857,8 @@ const SignalsPage = () => {
         />
 
         {latestReport ? (
-          <p className="text-xs text-neutral-400 italic">
-            Evidence sourced from {latestReport.name} · cycle dated {latestReportDateLabel || "Not available"}
+          <p className="text-xs text-[#6B7280] italic">
+            Evidence sourced from {latestReport.name} - cycle dated {latestReportDateLabel || "-"}
           </p>
         ) : null}
       </PageWrapper>

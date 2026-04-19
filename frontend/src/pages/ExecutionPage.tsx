@@ -413,7 +413,7 @@ const ExecutionPage = () => {
     <PageWrapper
       eyebrow="Assigned Follow-Through"
       title="Follow-through for the current brief"
-      description="The assigned follow-through record for the current governance brief. Review ownership, due-state, and blockers before the next partner discussion."
+      description="The assigned follow-through record for the current Governance Brief. Review ownership, due-state, and blockers before the next meeting."
       contentClassName="stage-sequence"
       actions={
         <>
@@ -463,12 +463,6 @@ const ExecutionPage = () => {
           className="relative px-7 py-6"
           style={{ background: "linear-gradient(150deg, #0B1929 0%, #0e2139 55%, #0D1B2A 100%)" }}
         >
-          <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#1a3a6b] opacity-30 blur-3xl" aria-hidden />
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{ backgroundImage: "radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "20px 20px" }}
-            aria-hidden
-          />
           <div className="relative flex flex-wrap items-start justify-between gap-5">
             <div>
               <span className="inline-flex items-center gap-2">
@@ -483,18 +477,10 @@ const ExecutionPage = () => {
               </h2>
               <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#8FA7BC]">
                 {hasReadyCycle
-                  ? "Review ownership, due-state, and blockers before the next partner discussion."
+                  ? "Review ownership, due-state, and blockers before the next meeting."
                   : "Follow-through opens after the first governance brief is ready. Upload feedback to begin."}
               </p>
             </div>
-            {latestReadyReport ? (
-              <Link
-                to={`/dashboard/reports/${latestReadyReport.id}`}
-                className="mt-0.5 inline-flex items-center gap-1.5 rounded-[8px] border border-white/20 bg-white/[0.08] px-4 py-2 text-[13px] font-medium text-white/80 transition-all hover:border-white/30 hover:bg-white/[0.12] hover:text-white active:scale-[0.98]"
-              >
-                Open current brief
-              </Link>
-            ) : null}
           </div>
         </div>
 
@@ -511,12 +497,11 @@ const ExecutionPage = () => {
             <span className={[
               "mr-1.5",
               summary.overdue > 0 ? "text-[#F87171]" : summary.unowned > 0 ? "text-[#F59E0B]" : "text-[#0EA5C2]",
-            ].join(" ")}>{"→"}</span>
+            ].join(" ")}>{"->"}</span>
             {accountabilityDirective}
           </p>
         </div>
 
-        {/* Instrument strip */}
         <div
           className="flex flex-wrap divide-x divide-white/[0.07]"
           style={{ borderTop: "1px solid rgba(255,255,255,0.07)", background: "#080F1C" }}
@@ -526,7 +511,7 @@ const ExecutionPage = () => {
               className="text-[22px] font-semibold leading-none"
               style={{ fontVariantNumeric: "tabular-nums", color: summary.overdue > 0 ? "#F87171" : "#ffffff" }}
             >
-              {loading ? "—" : summary.overdue}
+              {loading ? "-" : summary.overdue}
             </p>
             <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Overdue</p>
           </div>
@@ -535,7 +520,7 @@ const ExecutionPage = () => {
               className="text-[22px] font-semibold leading-none"
               style={{ fontVariantNumeric: "tabular-nums", color: summary.unowned > 0 ? "#F59E0B" : "#ffffff" }}
             >
-              {loading ? "—" : summary.unowned}
+              {loading ? "-" : summary.unowned}
             </p>
             <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Unowned</p>
           </div>
@@ -544,25 +529,17 @@ const ExecutionPage = () => {
               className="text-[22px] font-semibold leading-none"
               style={{ fontVariantNumeric: "tabular-nums", color: summary.blocked > 0 ? "#F59E0B" : "#ffffff" }}
             >
-              {loading ? "—" : summary.blocked}
+              {loading ? "-" : summary.blocked}
             </p>
             <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Blocked</p>
           </div>
           <div className="min-w-[88px] px-5 py-3.5">
             <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
-              {loading ? "—" : summary.needsReview}
+              {loading ? "-" : summary.needsReview}
             </p>
             <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Needs review</p>
           </div>
 
-          {/* Governance Loop step */}
-          <div className="ml-auto flex items-center gap-0 divide-x divide-white/[0.07]">
-            <div className="flex flex-col px-5 py-3.5">
-              <span className="text-[9px] font-bold tracking-[0.14em] text-[#4A6882]">04</span>
-              <span className="mt-1 text-[12px] font-semibold text-white">Follow-Through</span>
-              <span className="mt-0.5 text-[11px] text-[#4A6882]">{summary.needsReview > 0 ? `${summary.needsReview} open` : "All clear"}</span>
-            </div>
-          </div>
         </div>
 
         {/* Filter panel — inline below the dark slab */}
@@ -665,7 +642,7 @@ const ExecutionPage = () => {
       ) : null}
 
       {loading ? (
-        <section aria-label="Loading governance actions" className="grid gap-6 lg:grid-cols-4">
+        <section aria-label="Loading follow-through" className="grid gap-6 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, col) => (
             <ActionColumnSkeleton key={`exec-skeleton-${col}`} />
           ))}
@@ -718,7 +695,7 @@ const ExecutionPage = () => {
             description={
               actionsTab === "my-actions"
                 ? "Open the Governance Brief to see where ownership is missing and assign yourself to items that need a named lead."
-                : "All current follow-through is within due dates. Review the firm-wide view to stay ahead of the next partner discussion."
+                : "All current follow-through is within due dates. Review the firm-wide view to stay ahead of the next meeting."
             }
             primaryAction={{ label: "View all follow-through", onClick: () => setActionsTab("firm-wide") }}
           />
@@ -742,7 +719,7 @@ const ExecutionPage = () => {
                 ? "These items have passed their due date and require immediate partner review."
                 : actionsTab === "my-actions"
                   ? "This view keeps your owned follow-through visible before the next leadership discussion."
-                  : "Review at-risk items first, then confirm what is moving cleanly before the next partner discussion."}
+                  : "Review at-risk items first, then confirm what is moving cleanly before the next meeting."}
             </p>
           </div>
 
@@ -754,7 +731,7 @@ const ExecutionPage = () => {
               <div className="h-px flex-1 bg-[#E5E2DC]" />
             </div>
             <p className="text-[12px] leading-5 text-[#5A6470] -mt-1">
-              These items are the clearest threats to a credible partner-ready review cycle.
+              These items are the clearest threats to a credible current review cycle.
             </p>
             <div className="grid gap-5 xl:grid-cols-3">
               {renderActionGroup("Overdue", "Due dates have passed. Needs immediate review.", overdueNow, "No overdue follow-through", "Everything in view is still within due date.", "risk")}

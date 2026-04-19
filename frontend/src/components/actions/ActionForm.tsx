@@ -259,7 +259,7 @@ export default function ActionForm({
               setFieldErrors((prev) => ({ ...prev, owner: undefined }));
             }}
             className="gov-field"
-            placeholder="Partner name"
+            placeholder="Owner name"
           />
           <datalist id="action-owner-suggestions">
             {ownerOptions.map((ownerOption) => (
@@ -320,4 +320,3 @@ export default function ActionForm({
     </div>
   );
 }
-
