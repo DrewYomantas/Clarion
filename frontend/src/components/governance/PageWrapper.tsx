@@ -1,14 +1,5 @@
 import type { ReactNode } from "react";
 
-/**
- * PageWrapper
- * Standard page shell for all app-level governance pages.
- *
- * Typography:
- *   eyebrow     → workspace-shell-eyebrow  (11px / 700 / uppercase — legacy class, same as gov-type-eyebrow)
- *   title (h1)  → gov-type-h1              (24px / 700 / #0D1B2A)
- *   description → gov-type-body            (14px / 400 / #334155)
- */
 type PageWrapperProps = {
   title: string;
   description?: string;
@@ -20,17 +11,8 @@ type PageWrapperProps = {
 
 const PageWrapper = ({ title, description, eyebrow, actions, children, contentClassName = "" }: PageWrapperProps) => {
   return (
-    <section
-      className="gov-page-shell"
-      style={{
-        padding: "var(--space-page-y) var(--space-page-x)",
-      }}
-    >
-      <div
-        className="mx-auto w-full"
-        style={{ maxWidth: "var(--content-max-w)" }}
-      >
-        {/* Page header — renders against dark gradient band; all text is light */}
+    <section className="gov-page-shell">
+      <div className="gov-page-frame">
         <header
           className="workspace-shell-header flex flex-wrap items-start justify-between border-b border-white/[0.09]"
           style={{ gap: "var(--space-content)", marginBottom: "20px", paddingBottom: "20px" }}
@@ -51,7 +33,7 @@ const PageWrapper = ({ title, description, eyebrow, actions, children, contentCl
               {title}
             </h1>
             {description ? (
-              <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-[#8FA7BC]">{description}</p>
+              <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-[#B9CCDA]">{description}</p>
             ) : null}
           </div>
           {actions ? (
@@ -59,7 +41,6 @@ const PageWrapper = ({ title, description, eyebrow, actions, children, contentCl
           ) : null}
         </header>
 
-        {/* Page content */}
         <div
           className={contentClassName}
           style={{ display: "flex", flexDirection: "column", gap: "var(--space-section)" }}

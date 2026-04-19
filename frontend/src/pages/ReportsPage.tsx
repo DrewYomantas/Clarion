@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import { toast } from "sonner";
 
 import { getLatestExposure, getReports, type ReportListItem } from "@/api/authService";
@@ -123,54 +123,54 @@ const ReportsPage = () => {
     <PageWrapper
       eyebrow="Governance Brief"
       title="Governance Briefs"
-      description="Open the current brief. Archive stays secondary for reference."
+      description="Open the current Governance Brief and confirm follow-through before the next decision."
       contentClassName="stage-sequence"
     >
-      <div className="space-y-5">
-        <section className="space-y-3">
-          {loading ? (
-            <section aria-label="Loading governance briefs" className="space-y-4">
-              <BriefCardSkeleton />
-            </section>
-          ) : latestRow ? (
-            <GovernanceBriefCard
-              title={latestRow.title}
-              meetingDate={latestRow.meetingDate}
-              dateLabel={latestRow.dateLabel}
-              description={latestRow.description || undefined}
-              status={latestRow.escalationRequired ? "escalation" : "ready"}
-              planType={latestRow.planType}
-              isPast={false}
-              onView={() => navigate(`/dashboard/reports/${latestRow.id}`)}
-              onPrepare={() => navigate(`/dashboard/reports/${latestRow.id}?present=1`)}
-              onDownload={() => void handleDownload(latestRow)}
-            />
-          ) : (
-            <section className="rounded-xl border border-[#E3E8EF] bg-white shadow-sm">
-              <GovernanceEmptyState
-                size="md"
-                icon={<FileText size={20} />}
-                title="No Governance Brief ready yet"
-                description="Start a new review to generate your first Governance Brief. Once a review cycle is processed, the brief will appear here for review."
-                primaryAction={{ label: "Start a new review", href: "/upload" }}
-                secondaryAction={{ label: "Review client issues", href: "/dashboard/signals" }}
-              />
-            </section>
-          )}
-        </section>
-
-        {historyTruncated && historyNotice ? (
-          <section className="rounded-[10px] border border-[#BFDBFE] bg-[#EFF6FF] px-4 py-3 text-sm text-[#1E3A8A]">
-            {historyNotice}
+      <section className="space-y-3">
+        {loading ? (
+          <section aria-label="Loading governance briefs" className="space-y-4">
+            <BriefCardSkeleton />
           </section>
-        ) : null}
+        ) : latestRow ? (
+          <GovernanceBriefCard
+            title={latestRow.title}
+            meetingDate={latestRow.meetingDate}
+            dateLabel={latestRow.dateLabel}
+            description={latestRow.description || undefined}
+            status={latestRow.escalationRequired ? "escalation" : "ready"}
+            planType={latestRow.planType}
+            isPast={false}
+            onView={() => navigate(`/dashboard/reports/${latestRow.id}`)}
+            onPrepare={() => navigate(`/dashboard/reports/${latestRow.id}?present=1`)}
+            onDownload={() => void handleDownload(latestRow)}
+          />
+        ) : (
+          <section className="rounded-xl border border-[#E3E8EF] bg-white shadow-sm">
+            <GovernanceEmptyState
+              size="md"
+              icon={<FileText size={20} />}
+              title="No Governance Brief ready yet"
+              description="Start a new review to generate your first Governance Brief. Once a review cycle is processed, the brief will appear here for review."
+              primaryAction={{ label: "Start a new review", href: "/upload" }}
+              secondaryAction={{ label: "Review client issues", href: "/dashboard/signals" }}
+            />
+          </section>
+        )}
+      </section>
 
-        {error ? (
-          <div className="rounded-xl border border-destructive/35 bg-destructive/10 p-6 text-sm text-destructive">
-            {error}
-          </div>
-        ) : null}
+      {historyTruncated && historyNotice ? (
+        <section className="rounded-[10px] border border-[#BFDBFE] bg-[#EFF6FF] px-4 py-3 text-sm text-[#1E3A8A]">
+          {historyNotice}
+        </section>
+      ) : null}
 
+      {error ? (
+        <div className="rounded-xl border border-destructive/35 bg-destructive/10 p-6 text-sm text-destructive">
+          {error}
+        </div>
+      ) : null}
+
+      {archivedRows.length > 0 ? (
         <details className="reports-archive">
           <summary>
             <span>
@@ -179,40 +179,24 @@ const ReportsPage = () => {
             </span>
             <strong>{archivedRows.length}</strong>
           </summary>
-
-          {archivedRows.length > 0 ? (
-            <div className="reports-archive-list">
-              {archivedRows.map((row) => (
-                <GovernanceBriefCard
-                  key={row.id}
-                  title={row.title}
-                  meetingDate={row.meetingDate}
-                  dateLabel={row.dateLabel}
-                  description={row.description || undefined}
-                  status={row.escalationRequired ? "escalation" : "ready"}
-                  planType={row.planType}
-                  isPast={true}
-                  onView={() => navigate(`/dashboard/reports/${row.id}`)}
-                  onDownload={() => void handleDownload(row)}
-                />
-              ))}
-            </div>
-          ) : (
-            <section className="reports-archive-empty">
-              <GovernanceEmptyState
-                size="md"
-                icon={<BookOpen size={20} />}
-                title="No past Governance Briefs yet"
-                description="Completed brief cycles will appear here as a reference archive. Use them to track how client issues change across review periods."
-                primaryAction={{
-                  label: "View current brief",
-                  onClick: () => (latestRow ? navigate(`/dashboard/reports/${latestRow.id}`) : navigate("/dashboard")),
-                }}
+          <div className="reports-archive-list">
+            {archivedRows.map((row) => (
+              <GovernanceBriefCard
+                key={row.id}
+                title={row.title}
+                meetingDate={row.meetingDate}
+                dateLabel={row.dateLabel}
+                description={row.description || undefined}
+                status={row.escalationRequired ? "escalation" : "ready"}
+                planType={row.planType}
+                isPast={true}
+                onView={() => navigate(`/dashboard/reports/${row.id}`)}
+                onDownload={() => void handleDownload(row)}
               />
-            </section>
-          )}
+            ))}
+          </div>
         </details>
-      </div>
+      ) : null}
     </PageWrapper>
   );
 };
