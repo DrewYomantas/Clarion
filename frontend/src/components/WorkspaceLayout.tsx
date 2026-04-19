@@ -162,7 +162,7 @@ const resolvePageLabel = (pathname: string): string => {
 
 const resolvePageNote = (pathname: string): string => {
   if (pathname === "/dashboard") {
-    return "Open the current Governance Brief, confirm what changed, and review follow-through before the next partner meeting.";
+    return "Open the current Governance Brief, confirm what changed, and review follow-through before the next meeting.";
   }
   if (pathname === "/upload") {
     return "Start a new review cycle from one law-firm feedback export.";
@@ -171,7 +171,7 @@ const resolvePageNote = (pathname: string): string => {
     return "Review the client-feedback issues that feed the current Governance Brief.";
   }
   if (pathname === "/dashboard/actions" || pathname.startsWith("/dashboard/actions/")) {
-    return "Review overdue, unowned, and blocked follow-through before the next partner discussion.";
+    return "Review overdue, unowned, and blocked follow-through before the next meeting.";
   }
   if (pathname === "/dashboard/reports" || pathname.startsWith("/dashboard/reports/")) {
     return "Open the current Governance Brief and confirm follow-through and next decisions.";
@@ -396,13 +396,13 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <header className="workspace-shell-topbar relative flex shrink-0 items-center justify-between border-b border-white/[0.07] bg-[#0B1929] px-6 py-3 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:bg-[#C4A96A]/50">
           <div className="min-w-0">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: "rgba(196,169,106,0.55)" }}>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: "rgba(196,169,106,0.78)" }}>
               {currentPageLabel}
             </p>
-            <p className="mt-0.5 truncate text-[12.5px] leading-5" style={{ color: "rgba(255,255,255,0.52)" }}>{currentPageNote}</p>
+            <p className="mt-0.5 truncate text-[12.5px] font-medium leading-5" style={{ color: "rgba(255,255,255,0.72)" }}>{currentPageNote}</p>
           </div>
           <div className="flex items-center gap-2.5">
-            <span className="inline-flex items-center rounded-lg border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.30)" }}>
+            <span className="inline-flex items-center rounded-lg border border-white/[0.12] bg-white/[0.06] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.50)" }}>
               {planLabel}
             </span>
             {/* Account menu */}

@@ -235,7 +235,7 @@ const ExecutionPage = () => {
 
   const accountabilityDirective = useMemo(() => {
     if (summary.overdue > 0) {
-      return `${summary.overdue} overdue follow-through item${summary.overdue === 1 ? "" : "s"} need partner review now.`;
+      return `${summary.overdue} overdue follow-through item${summary.overdue === 1 ? "" : "s"} need review now.`;
     }
     if (summary.unowned > 0) {
       return `${summary.unowned} follow-through item${summary.unowned === 1 ? "" : "s"} still need a named owner before the next discussion.`;
@@ -467,7 +467,7 @@ const ExecutionPage = () => {
             <div>
               <span className="inline-flex items-center gap-2">
                 <span className="h-[12px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
-                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">Follow-Through</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#8AB4D1]">Follow-Through</span>
               </span>
               <h2
                 className="mt-3 text-[26px] leading-[1.05] text-white sm:text-[30px]"
@@ -475,7 +475,7 @@ const ExecutionPage = () => {
               >
                 {hasReadyCycle ? "Cycle follow-through" : "Waiting for first brief"}
               </h2>
-              <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#8FA7BC]">
+              <p className="mt-2 max-w-xl text-[14px] font-medium leading-6 text-[#B8CAD9]">
                 {hasReadyCycle
                   ? "Review ownership, due-state, and blockers before the next meeting."
                   : "Follow-through opens after the first governance brief is ready. Upload feedback to begin."}
@@ -493,7 +493,7 @@ const ExecutionPage = () => {
             "absolute inset-y-0 left-0 w-[3px]",
             summary.overdue > 0 ? "bg-[#F87171]" : summary.unowned > 0 ? "bg-[#F59E0B]" : "bg-[#0EA5C2]",
           ].join(" ")} />
-          <p className="text-[12px] font-medium text-[#A0BDD4]">
+          <p className="text-[12px] font-semibold text-[#BDD2E1]">
             <span className={[
               "mr-1.5",
               summary.overdue > 0 ? "text-[#F87171]" : summary.unowned > 0 ? "text-[#F59E0B]" : "text-[#0EA5C2]",
@@ -513,7 +513,7 @@ const ExecutionPage = () => {
             >
               {loading ? "-" : summary.overdue}
             </p>
-            <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Overdue</p>
+            <p className="mt-1.5 text-[10.5px] font-semibold tracking-[0.04em] text-[#86A9C4]">Overdue</p>
           </div>
           <div className="min-w-[88px] px-5 py-3.5">
             <p
@@ -522,7 +522,7 @@ const ExecutionPage = () => {
             >
               {loading ? "-" : summary.unowned}
             </p>
-            <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Unowned</p>
+            <p className="mt-1.5 text-[10.5px] font-semibold tracking-[0.04em] text-[#86A9C4]">Unowned</p>
           </div>
           <div className="min-w-[88px] px-5 py-3.5">
             <p
@@ -531,13 +531,13 @@ const ExecutionPage = () => {
             >
               {loading ? "-" : summary.blocked}
             </p>
-            <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Blocked</p>
+            <p className="mt-1.5 text-[10.5px] font-semibold tracking-[0.04em] text-[#86A9C4]">Blocked</p>
           </div>
           <div className="min-w-[88px] px-5 py-3.5">
             <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>
               {loading ? "-" : summary.needsReview}
             </p>
-            <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Needs review</p>
+            <p className="mt-1.5 text-[10.5px] font-semibold tracking-[0.04em] text-[#86A9C4]">Needs review</p>
           </div>
 
         </div>
@@ -658,7 +658,7 @@ const ExecutionPage = () => {
                 ? "Start a new review to generate your first Governance Brief. Once the brief is ready, open issues and assign follow-through here."
                 : !hasReadyCycle
                   ? "Your first Governance Brief is still being prepared. Follow-through becomes available once the brief is ready for review."
-                  : "Follow-through is assigned after reviewing client issues in a Governance Brief. Confirm what needs ownership, then set due dates and partners."
+                  : "Follow-through is assigned after reviewing client issues in a Governance Brief. Confirm what needs ownership, then set due dates and owners."
             }
             primaryAction={
               !hasAnyCycle
@@ -716,7 +716,7 @@ const ExecutionPage = () => {
             </div>
             <p className="mt-1.5 pl-[14px] text-[12px] leading-5 text-[#5A6470]">
               {actionsTab === "overdue"
-                ? "These items have passed their due date and require immediate partner review."
+                ? "These items have passed their due date and require immediate review."
                 : actionsTab === "my-actions"
                   ? "This view keeps your owned follow-through visible before the next leadership discussion."
                   : "Review at-risk items first, then confirm what is moving cleanly before the next meeting."}

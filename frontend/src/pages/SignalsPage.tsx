@@ -538,7 +538,7 @@ const SignalsPage = () => {
                 <span className="h-[10px] w-[2px] rounded-full bg-[#0EA5C2]/70" aria-hidden />
                 <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#0EA5C2]">Baseline Analysis</h2>
               </div>
-              <p className="mt-2 text-[13px] leading-relaxed text-[#8FA7BC]">
+              <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#B8CAD9]">
                 This is your first review cycle. Future uploads will allow the system to detect trends and changes
                 over time. Your client issues reflect patterns from this upload only.
               </p>
@@ -577,7 +577,7 @@ const SignalsPage = () => {
                 <div>
                   <span className="inline-flex items-center gap-2">
                     <span className="h-[12px] w-[2px] rounded-full bg-[#C4A96A]/50" aria-hidden />
-                    <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#4D7FA8]">Client Issue Evidence</span>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#8AB4D1]">Client Issue Evidence</span>
                   </span>
                   <h2
                     className="mt-3 text-[26px] leading-[1.05] text-white sm:text-[30px]"
@@ -585,7 +585,7 @@ const SignalsPage = () => {
                   >
                     Current issue record
                   </h2>
-                  <p className="mt-2 max-w-xl text-[14px] leading-6 text-[#8FA7BC]">
+                  <p className="mt-2 max-w-xl text-[14px] font-medium leading-6 text-[#B8CAD9]">
                     {latestReportDateLabel
                       ? `Evidence from the ${latestReportDateLabel} cycle.`
                       : "Evidence from the current review cycle."} Review the full set, then assign follow-through where ownership is needed.
@@ -599,7 +599,7 @@ const SignalsPage = () => {
             >
               <div className="min-w-[88px] px-5 py-3.5">
                 <p className="text-[22px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{filteredSignals.length}</p>
-                <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Issues in view</p>
+                <p className="mt-1.5 text-[10.5px] font-semibold tracking-[0.04em] text-[#86A9C4]">Issues in view</p>
               </div>
               <div className="min-w-[88px] px-5 py-3.5">
                 <p
@@ -608,11 +608,11 @@ const SignalsPage = () => {
                 >
                   {newSignalsCount}
                 </p>
-                <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">New vs prior</p>
+                <p className="mt-1.5 text-[10.5px] font-semibold tracking-[0.04em] text-[#86A9C4]">New vs prior</p>
               </div>
               <div className="px-5 py-3.5">
                 <p className="text-[14px] font-semibold leading-snug text-white">{latestReportDateLabel || "-"}</p>
-                <p className="mt-1.5 text-[10.5px] font-medium tracking-[0.04em] text-[#3D627F]">Cycle date</p>
+                <p className="mt-1.5 text-[10.5px] font-semibold tracking-[0.04em] text-[#86A9C4]">Cycle date</p>
               </div>
             </div>
           </section>
@@ -677,7 +677,7 @@ const SignalsPage = () => {
               icon={<RadioTower size={20} />}
               title={
                 signalsTab === "triage"
-                  ? "No signals need partner attention right now"
+                  ? "No issues require attention right now"
                   : signalsTab === "in-briefs"
                     ? "No issues included in a Governance Brief yet"
                     : "No signals match the current filter"
@@ -698,7 +698,7 @@ const SignalsPage = () => {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#7A6E63]">
-                  {signalsTab === "triage" ? "Needs partner attention now" : signalsTab === "in-briefs" ? "Recurring signals in briefs" : "Current cycle evidence"}
+                  {signalsTab === "triage" ? "Requires attention now" : signalsTab === "in-briefs" ? "Recurring signals in briefs" : "Current cycle evidence"}
                 </p>
                 <p className="mt-1 text-[13px] leading-5 text-[#374151]">
                   {selectionMode
@@ -724,7 +724,7 @@ const SignalsPage = () => {
               ) : null}
             </div>
 
-            {/* ── Sticky selection bar ────────────────────────────────── */}
+            {/* Selection summary */}
             {selectionMode ? (
               <div
                 className={[
