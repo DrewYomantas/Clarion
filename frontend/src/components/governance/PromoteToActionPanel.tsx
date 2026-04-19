@@ -124,7 +124,7 @@ function deriveActionTitle(signals: PromoteSignalItem[]): string {
     if (sevDiff !== 0) return sevDiff;
     return b.frequencyCount - a.frequencyCount;
   });
-  return `Governance review — ${sorted[0].title} and ${signals.length - 1} other${signals.length > 2 ? "s" : ""}`;
+  return `Governance review - ${sorted[0].title} and ${signals.length - 1} other${signals.length > 2 ? "s" : ""}`;
 }
 
 function deriveDescription(signals: PromoteSignalItem[]): string {
@@ -275,13 +275,13 @@ export default function PromoteToActionPanel({
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7A6E63]">
-                Evidence → Action
+                Evidence to follow-through
               </p>
               <SheetTitle className="mt-1 text-[16px] font-semibold text-[#0D1B2A]">
-                Create Governance Action
+                Create follow-through
               </SheetTitle>
               <SheetDescription className="mt-1 text-[13px] text-[#4A5568]">
-                Review the selected evidence, adjust the prefilled fields, and confirm to create a trackable action.
+                Review the selected evidence, adjust the prefilled fields, and confirm the follow-through record.
               </SheetDescription>
             </div>
             <button
@@ -321,7 +321,7 @@ export default function PromoteToActionPanel({
                     <p className="text-[13px] font-semibold leading-snug text-[#0D1B2A]">
                       {signal.title}
                     </p>
-                    <p className="mt-0.5 text-[12px] leading-relaxed text-slate-500 line-clamp-2">
+                    <p className="mt-0.5 text-[12px] leading-relaxed text-[#5A6470] line-clamp-2">
                       {signal.description}
                     </p>
                   </div>
@@ -337,19 +337,19 @@ export default function PromoteToActionPanel({
             </ul>
 
             {/* Flow indicator */}
-            <div className="mt-3 flex items-center gap-2 text-[11px] text-slate-400">
-              <span className="font-medium text-slate-500">
+            <div className="mt-3 flex items-center gap-2 text-[11px] text-[#6B7280]">
+              <span className="font-medium text-[#5A6470]">
                 {selectedSignals.length} signal{selectedSignals.length > 1 ? "s" : ""}
               </span>
               <ArrowRight size={11} className="shrink-0" />
-              <span>1 consolidated governance action</span>
+              <span>1 consolidated follow-through record</span>
             </div>
           </section>
 
           {/* ── Zone 2: Editable action fields ───────────────────────── */}
           <section className="px-6 py-5">
             <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#7A6E63]">
-              Action details
+              Follow-through details
             </p>
             <p className="mt-1 text-[12px] leading-relaxed text-[#4A5568]">
               Fields are pre-populated from signal content. Review and adjust before creating.
@@ -358,7 +358,7 @@ export default function PromoteToActionPanel({
             <div className="mt-4 space-y-4">
               {/* Title */}
               <label className="flex flex-col gap-1.5">
-                <FieldLabel label="Action title" required />
+                <FieldLabel label="Follow-through title" required />
                 <input
                   value={form.actionTitle}
                   onChange={(e) => set("actionTitle", e.target.value)}
@@ -404,7 +404,7 @@ export default function PromoteToActionPanel({
 
               {/* Owner */}
               <label className="flex flex-col gap-1.5">
-                <FieldLabel label="Owner" hint="Optional — assign now or later" />
+                <FieldLabel label="Owner" hint="Optional - assign now or later" />
                 <input
                   value={form.owner}
                   onChange={(e) => set("owner", e.target.value)}
@@ -441,7 +441,7 @@ export default function PromoteToActionPanel({
 
               {/* Additional notes */}
               <label className="flex flex-col gap-1.5">
-                <FieldLabel label="Additional notes" hint="Optional — governance context, decisions, dependencies" />
+                <FieldLabel label="Additional notes" hint="Optional - governance context, decisions, dependencies" />
                 <textarea
                   value={form.notes}
                   onChange={(e) => set("notes", e.target.value)}
@@ -486,7 +486,7 @@ export default function PromoteToActionPanel({
               ) : (
                 <>
                   <CheckCircle2 size={13} />
-                  Create Governance Action
+                  Create follow-through
                 </>
               )}
             </button>

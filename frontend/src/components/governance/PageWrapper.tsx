@@ -33,7 +33,7 @@ const PageWrapper = ({ title, description, eyebrow, actions, children, contentCl
         {/* Page header — renders against dark gradient band; all text is light */}
         <header
           className="workspace-shell-header flex flex-wrap items-start justify-between border-b border-white/[0.09]"
-          style={{ gap: "var(--space-content)", marginBottom: "var(--space-section)", paddingBottom: "var(--space-section)" }}
+          style={{ gap: "var(--space-content)", marginBottom: "20px", paddingBottom: "20px" }}
         >
           <div className="max-w-3xl">
             {eyebrow ? (
