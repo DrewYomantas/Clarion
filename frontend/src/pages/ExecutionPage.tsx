@@ -588,7 +588,7 @@ const ExecutionPage = () => {
                 value: reportFilter,
                 onChange: (v: string) => setReportFilter(v),
                 options: [
-                  { value: "all", label: "All briefs" },
+                  { value: "all", label: "All cycles" },
                   ...reportOptions.map((r) => ({ value: String(r.id), label: r.name })),
                 ],
               },

@@ -126,37 +126,43 @@ const ReportsPage = () => {
       description="Use this for Governance Brief history and reference. The active brief starts from Home."
       contentClassName="stage-sequence"
     >
-      <section className="space-y-3">
-        {loading ? (
-          <section aria-label="Loading governance briefs" className="space-y-4">
-            <BriefCardSkeleton />
-          </section>
-        ) : latestRow ? (
-          <GovernanceBriefCard
-            title={latestRow.title}
-            meetingDate={latestRow.meetingDate}
-            dateLabel={latestRow.dateLabel}
-            description={latestRow.description || undefined}
-            status={latestRow.escalationRequired ? "escalation" : "ready"}
-            planType={latestRow.planType}
-            isPast={false}
-            onView={() => navigate(`/dashboard/reports/${latestRow.id}`)}
-            onPrepare={() => navigate(`/dashboard/reports/${latestRow.id}?present=1`)}
-            onDownload={() => void handleDownload(latestRow)}
-          />
-        ) : (
-          <section className="rounded-xl border border-[#E3E8EF] bg-white shadow-sm">
-            <GovernanceEmptyState
-              size="md"
-              icon={<FileText size={20} />}
-              title="No Governance Brief ready yet"
-              description="Start a new review to generate your first Governance Brief. Once a review cycle is processed, the brief will appear here for review."
-              primaryAction={{ label: "Start a new review", href: "/upload" }}
-              secondaryAction={{ label: "Review client issues", href: "/dashboard/signals" }}
-            />
-          </section>
-        )}
-      </section>
+      {loading ? (
+        <section aria-label="Loading governance brief archive" className="space-y-4">
+          <BriefCardSkeleton />
+        </section>
+      ) : (
+        <section className="rounded-[10px] border border-[#D7DEE8] bg-white/75 px-5 py-4 shadow-[0_1px_4px_rgba(13,27,42,0.06)]">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p className="gov-type-eyebrow">Active cycle</p>
+              <h2 className="mt-2 text-[17px] font-semibold text-[#0D1B2A]">Current brief starts from Home</h2>
+              <p className="mt-1 max-w-2xl text-[13px] leading-6 text-[#455A6E]">
+                {latestRow
+                  ? `${latestRow.title} remains the active cycle. Use Home to open the meeting view, review state, and move follow-through.`
+                  : "No active Governance Brief is ready yet. Start a new review from Home when the next cycle begins."}
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                className="inline-flex items-center justify-center rounded-[8px] bg-[#0D1B2A] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#16263b]"
+                onClick={() => navigate("/dashboard")}
+              >
+                Return Home
+              </button>
+              {latestRow ? (
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-[8px] border border-[#D1D5DB] bg-white px-4 py-2 text-sm font-semibold text-[#0D1B2A] transition-colors hover:bg-[#F5F7FA]"
+                  onClick={() => navigate(`/dashboard/reports/${latestRow.id}`)}
+                >
+                  Open active brief
+                </button>
+              ) : null}
+            </div>
+          </div>
+        </section>
+      )}
 
       {historyTruncated && historyNotice ? (
         <section className="rounded-[10px] border border-[#BFDBFE] bg-[#EFF6FF] px-4 py-3 text-sm text-[#1E3A8A]">
@@ -170,32 +176,50 @@ const ReportsPage = () => {
         </div>
       ) : null}
 
-      {archivedRows.length > 0 ? (
-        <details className="reports-archive">
-          <summary>
-            <span>
-              <span className="gov-type-eyebrow">Archive</span>
-              <span className="reports-archive-summary">Past briefs stay available for reference.</span>
-            </span>
-            <strong>{archivedRows.length}</strong>
-          </summary>
-          <div className="reports-archive-list">
-            {archivedRows.map((row) => (
-              <GovernanceBriefCard
-                key={row.id}
-                title={row.title}
-                meetingDate={row.meetingDate}
-                dateLabel={row.dateLabel}
-                description={row.description || undefined}
-                status={row.escalationRequired ? "escalation" : "ready"}
-                planType={row.planType}
-                isPast={true}
-                onView={() => navigate(`/dashboard/reports/${row.id}`)}
-                onDownload={() => void handleDownload(row)}
-              />
-            ))}
+      {!loading ? (
+        <section className="rounded-[10px] border border-[#D7DEE8] bg-white/70 shadow-[0_1px_4px_rgba(13,27,42,0.06)]">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E5E0D8] px-5 py-4">
+            <div>
+              <p className="gov-type-eyebrow">Past briefs</p>
+              <p className="mt-1 text-[14px] leading-6 text-[#455A6E]">
+                Completed Governance Briefs stay here for reference after a newer cycle becomes active.
+              </p>
+            </div>
+            <strong className="inline-flex min-w-7 justify-center rounded-full border border-[#C4A96A]/35 px-2 py-0.5 text-[12px] font-semibold text-[#9A742F]">
+              {archivedRows.length}
+            </strong>
           </div>
-        </details>
+
+          {archivedRows.length > 0 ? (
+            <div className="space-y-3 p-4">
+              {archivedRows.map((row) => (
+                <GovernanceBriefCard
+                  key={row.id}
+                  title={row.title}
+                  meetingDate={row.meetingDate}
+                  dateLabel={row.dateLabel}
+                  description={row.description || undefined}
+                  status={row.escalationRequired ? "escalation" : "ready"}
+                  planType={row.planType}
+                  isPast={true}
+                  onView={() => navigate(`/dashboard/reports/${row.id}`)}
+                  onDownload={() => void handleDownload(row)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="px-5 py-5">
+              <GovernanceEmptyState
+                size="sm"
+                icon={<FileText size={18} />}
+                title="No past briefs yet"
+                description="This workspace has one active cycle. Past briefs will appear here after another Governance Brief is generated."
+                secondaryAction={{ label: "Return Home", href: "/dashboard" }}
+                className="rounded-[8px] border border-[#DDD8D0] bg-[#F9F8F6]"
+              />
+            </div>
+          )}
+        </section>
       ) : null}
     </PageWrapper>
   );
