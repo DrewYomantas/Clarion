@@ -307,7 +307,7 @@ const ActionDetail = () => {
                     label={statusLabel}
                     variant={resolveChipVariantForActionStatus(action.status, overdueFlag)}
                   />
-                  <span className="gov-type-eyebrow">Accountability record</span>
+                  <span className="gov-type-eyebrow">Follow-through record</span>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   {primaryAction.type === "link" ? (

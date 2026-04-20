@@ -1,0 +1,114 @@
+{
+  "audit_date": "2026-04-20",
+  "auditor": "claude-sonnet-4-6",
+  "scope": "authenticated-dashboard-ia-post-correction-pass",
+  "apify": {
+    "actor": "apify/playwright-scraper",
+    "run_id": "lkvGAV6vo1WcfO0wP",
+    "run_status": "SUCCEEDED",
+    "dataset_id": "7559fsUWrPm0Dh2G8",
+    "dataset_items": 0,
+    "kv_store_name": "clarion-dashboard-qa-artifacts",
+    "task_created": false,
+    "failure_reason": "Actor.setValue not available in playwright-scraper pageFunction context — API mismatch. No structured output produced.",
+    "run_duration_ms": 17666,
+    "live_url": "https://law-firm-feedback-saas.onrender.com"
+  },
+  "authentication_coverage": {
+    "live_render": false,
+    "local_server": false,
+    "reason": "No credentials available for cloud actor or local playwright without secrets folder access",
+    "local_public_routes_screenshotted": ["/", "/login", "/demo", "/demo/reports/1"],
+    "dashboard_routes_covered": "code-only"
+  },
+  "routes": [
+    { "path": "/dashboard", "method": "code-inspection", "covered": true },
+    { "path": "/dashboard/signals", "method": "code-inspection", "covered": true },
+    { "path": "/dashboard/actions", "method": "code-inspection", "covered": true },
+    { "path": "/dashboard/actions/:id", "method": "code-inspection", "covered": true },
+    { "path": "/dashboard/reports", "method": "code-inspection", "covered": true },
+    { "path": "/dashboard/reports/:id", "method": "code-inspection", "covered": true },
+    { "path": "/dashboard/reports/:id?present=1", "method": "code-inspection", "covered": true }
+  ],
+  "lens_verdicts": {
+    "managing_partner": "pass-with-flag",
+    "meeting_operator": "pass",
+    "accountability_reviewer": "pass",
+    "visual_polish": "mostly-pass-unconfirmed",
+    "language_trust": "pass"
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "Medium",
+      "lens": "visual-hygiene",
+      "title": "8 voided memoized state shapes in Dashboard.tsx — dead code",
+      "description": "loopSteps, loopActiveStep, stats, issuePercentages, previousIssuePercentages, topIssue, newExposureCategories, suggestedActions are computed but void'd and never rendered. Dead code from a removed loop tracker.",
+      "location": "frontend/src/pages/Dashboard.tsx:456-463",
+      "action_required": "Remove all 8 void'd state computations in a cleanup pass."
+    },
+    {
+      "id": "F2",
+      "severity": "Medium",
+      "lens": "meeting-operator",
+      "title": "No direct return-to-cycle from Report Detail / Meeting Room",
+      "description": "When in the Governance Brief or Meeting Room view, returning to the cycle overview requires the sidebar or browser back. No explicit 'Return to Home' CTA surfaced in ReportDetail.",
+      "location": "frontend/src/pages/ReportDetail.tsx",
+      "action_required": "Add a 'Back to Home' or 'Back to cycle overview' link at the top of ReportDetail."
+    },
+    {
+      "id": "F3",
+      "severity": "Low",
+      "lens": "language-trust",
+      "title": "'In Briefs' tab label is ambiguous on Issues page",
+      "description": "Tab means 'signals that appeared in a prior cycle.' Could be read as 'signals in the current brief' (all of them). 'Recurring' or 'Prior Cycle' would be unambiguous.",
+      "location": "frontend/src/pages/SignalsPage.tsx:644",
+      "action_required": "Rename tab value label from 'In Briefs' to 'Recurring'."
+    },
+    {
+      "id": "F4",
+      "severity": "Low",
+      "lens": "visual-polish",
+      "title": "Baseline notice uses two different UI patterns",
+      "description": "First-cycle baseline notice appears as a navy card on Issues page (bg-[#0D1B2A]) and a different class (home-room-notice) on Home. Same functional message, different visual treatment.",
+      "location": "frontend/src/pages/SignalsPage.tsx:527-547 + frontend/src/pages/Dashboard.tsx:693-703",
+      "action_required": "Align baseline notice style across both surfaces to share one design pattern."
+    },
+    {
+      "id": "F5",
+      "severity": "Nit",
+      "lens": "language-trust",
+      "title": "'Accountability record' eyebrow competes with 'Follow-through record' page title",
+      "description": "ActionDetail uses 'Follow-through record' as the PageWrapper title and 'Accountability record' as the eyebrow inside the main card. Two names for the same concept on the same page.",
+      "location": "frontend/src/pages/ActionDetail.tsx:310",
+      "action_required": "Change eyebrow to 'Follow-through record' to match the page title, or reverse the page title to 'Accountability record' for consistency."
+    }
+  ],
+  "ia_checks": {
+    "home_owns_active_cycle": true,
+    "brief_archive_is_secondary": true,
+    "issues_feeds_brief": true,
+    "follow_through_is_downstream": true,
+    "loop_is_legible": true,
+    "meeting_room_is_flagship_surface": true,
+    "no_generic_admin_feel": true,
+    "no_major_ia_contradictions": true
+  },
+  "verdict": "needs-narrow-fix-pass",
+  "acceptance_threshold_met": false,
+  "acceptance_threshold_gaps": [
+    "Cannot confirm visual polish without authenticated live screenshots",
+    "Dead code cleanup needed before external reviewer sees codebase",
+    "In Briefs tab label should be renamed"
+  ],
+  "recommended_next_step": "One narrow fix pass: remove voided state in Dashboard.tsx, rename 'In Briefs' tab to 'Recurring'. Then seed demo data and run a live 10-minute walkthrough of the authenticated loop to confirm visual sign-off.",
+  "screenshots": {
+    "landing": "screenshot-landing.png",
+    "login": "screenshot-login.png",
+    "demo": "screenshot-demo.png",
+    "demo_report_no_data": "screenshot-demo-report.png"
+  },
+  "apify_run_ids": ["lkvGAV6vo1WcfO0wP"],
+  "apify_dataset_ids": ["7559fsUWrPm0Dh2G8"],
+  "apify_kv_store_ids": []
+}

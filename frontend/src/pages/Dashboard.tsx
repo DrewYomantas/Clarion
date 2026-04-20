@@ -4,12 +4,10 @@ import { ChevronRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   emitPlanLimitError,
-  getDashboardStats,
   getFirmActions,
   getLatestExposure,
   getReportGovernanceSignals,
   getReports,
-  type DashboardStats,
   type ExposureSnapshot,
   type GovernanceSignal,
   type ReportActionItem,
@@ -18,7 +16,6 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { resolvePlanLimits } from "@/config/planLimits";
 import { DISPLAY_LABELS } from "@/constants/displayLabels";
-import type { ReputationIssuePercentages } from "@/utils/reputationScore";
 
 const toTimestamp = (value: string | null | undefined) => {
   if (!value) return 0;
@@ -82,72 +79,6 @@ const isOverdue = (action: ReportActionItem) => {
   return due < Date.now();
 };
 
-const signalCategory = (signal: GovernanceSignal) => {
-  const title = (signal.title || "").trim();
-  if (!title) return "uncategorized";
-  return title.split(":")[0].trim().toLowerCase();
-};
-
-const signalLabel = (signal: GovernanceSignal) => {
-  const title = (signal.title || "").trim();
-  if (!title) return "service quality";
-  return title.split(":")[0].trim();
-};
-
-const recommendationForSignal = (label: string) => {
-  const lower = label.toLowerCase();
-  if (lower.includes("communication")) return "Review firm communication response standards.";
-  if (lower.includes("billing")) return "Review billing explanation standards and escalation script.";
-  if (lower.includes("intake")) return "Review intake callback standards and ownership.";
-  if (lower.includes("timeline") || lower.includes("delay")) return "Review case timeline update protocol.";
-  return `Review ${label.toLowerCase()} response standards.`;
-};
-
-const buildIssuePercentagesFromSignals = (
-  signals: GovernanceSignal[],
-): ReputationIssuePercentages => {
-  if (signals.length === 0) return {};
-
-  const counts = new Map<string, number>();
-  signals.forEach((signal) => {
-    const label = signalLabel(signal).toLowerCase();
-    counts.set(label, (counts.get(label) || 0) + 1);
-  });
-
-  const countFor = (matcher: (category: string) => boolean) => {
-    let total = 0;
-    counts.forEach((count, category) => {
-      if (matcher(category)) total += count;
-    });
-    return total;
-  };
-
-  const toPercent = (count: number) => Math.round((count / signals.length) * 100);
-
-  const communication = countFor((category) => category.includes("communication"));
-  const professionalism = countFor((category) => category.includes("professionalism"));
-  const caseOutcome = countFor(
-    (category) =>
-      category.includes("case outcome") ||
-      category.includes("outcome") ||
-      category.includes("result") ||
-      category.includes("timeline") ||
-      category.includes("delay"),
-  );
-  const staffSupport = countFor(
-    (category) =>
-      category.includes("staff support") ||
-      category.includes("support staff") ||
-      category.includes("staff"),
-  );
-
-  const percentages: ReputationIssuePercentages = {};
-  if (communication > 0) percentages.communication = toPercent(communication);
-  if (professionalism > 0) percentages.professionalism = toPercent(professionalism);
-  if (caseOutcome > 0) percentages.caseOutcome = toPercent(caseOutcome);
-  if (staffSupport > 0) percentages.staffSupport = toPercent(staffSupport);
-  return percentages;
-};
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -155,7 +86,6 @@ const Dashboard = () => {
 
   const [loading, setLoading] = useState(true);
   const [exposure, setExposure] = useState<ExposureSnapshot | null>(null);
-  const [stats, setStats] = useState<DashboardStats | null>(null);
   const [reports, setReports] = useState<ReportListItem[]>([]);
   const [historyNotice, setHistoryNotice] = useState<string | null>(null);
   const [historyTruncated, setHistoryTruncated] = useState(false);
@@ -174,15 +104,13 @@ const Dashboard = () => {
     setLoading(true);
     setLoadError("");
     try {
-      const [exposureResult, statsResult, reportsResult, actionsResult] = await Promise.all([
+      const [exposureResult, reportsResult, actionsResult] = await Promise.all([
         getLatestExposure(),
-        getDashboardStats(),
         getReports(100),
         getFirmActions(),
       ]);
 
       setExposure(exposureResult.success && exposureResult.exposure ? exposureResult.exposure : null);
-      setStats(statsResult.success && statsResult.stats ? statsResult.stats : null);
 
       const sortedReports = reportsResult.success && reportsResult.reports
         ? [...reportsResult.reports].sort((a, b) => toTimestamp(b.created_at) - toTimestamp(a.created_at))
@@ -213,7 +141,6 @@ const Dashboard = () => {
     } catch {
       setLoadError("Unable to load executive overview right now.");
       setExposure(null);
-      setStats(null);
       setReports([]);
       setHistoryNotice(null);
       setHistoryTruncated(false);
@@ -267,62 +194,6 @@ const Dashboard = () => {
     if (previousSignals.length === 0) return latestSignals.length;
     return Math.max(0, latestSignals.length - previousSignals.length);
   }, [latestSignals.length, previousSignals.length]);
-
-  const newExposureCategories = useMemo(() => {
-    const previousCategories = new Set(previousSignals.map(signalCategory));
-    const latestCategories = new Set(latestSignals.map(signalCategory));
-    let created = 0;
-    latestCategories.forEach((category) => {
-      if (!previousCategories.has(category)) created += 1;
-    });
-    return created;
-  }, [latestSignals, previousSignals]);
-
-  const signalCategoryCounts = useMemo(() => {
-    const counts = new Map<string, { label: string; count: number }>();
-    latestSignals.forEach((signal) => {
-      const key = signalCategory(signal);
-      const label = signalLabel(signal);
-      const existing = counts.get(key);
-      if (existing) {
-        existing.count += 1;
-      } else {
-        counts.set(key, { label, count: 1 });
-      }
-    });
-    return Array.from(counts.values()).sort((a, b) => b.count - a.count);
-  }, [latestSignals]);
-
-  const issuePercentages = useMemo<ReputationIssuePercentages>(
-    () => buildIssuePercentagesFromSignals(latestSignals),
-    [latestSignals],
-  );
-  const previousIssuePercentages = useMemo<ReputationIssuePercentages>(
-    () => buildIssuePercentagesFromSignals(previousSignals),
-    [previousSignals],
-  );
-
-  const topIssue = signalCategoryCounts[0] || null;
-
-  const suggestedActions = useMemo(() => {
-    return latestSignals
-      .filter((signal) => String(signal.severity || "").toLowerCase() === "high")
-      .map((signal) => {
-        const label = signalLabel(signal);
-        const categoryKey = signalCategory(signal);
-        const hasAssignedAction = actions.some((action) => {
-          const haystack = `${action.title} ${action.notes || ""} ${action.kpi || ""}`.toLowerCase();
-          return haystack.includes(categoryKey);
-        });
-        return {
-          id: signal.id,
-          hasAssignedAction,
-          context: `High-severity ${label.toLowerCase()} client issue detected in this cycle.`,
-          recommendation: recommendationForSignal(label),
-        };
-      })
-      .filter((item) => !item.hasAssignedAction);
-  }, [actions, latestSignals]);
 
   const handleExportBrief = useCallback(async (targetBrief?: ReportListItem | null) => {
     const brief = targetBrief || latestReadyBrief;
@@ -435,32 +306,6 @@ const Dashboard = () => {
       : briefStatus === "escalation"
         ? { border: "rgba(251,191,36,0.30)", bg: "rgba(251,191,36,0.08)", text: "#FCD34D" }
         : { border: "rgba(255,255,255,0.10)", bg: "rgba(255,255,255,0.04)", text: "rgba(255,255,255,0.38)" };
-
-  // Loop step state
-  const hasReport = Boolean(latestProcessedReport);
-  const reportReady = latestProcessedReport?.status === "ready";
-  const loopActiveStep =
-    !hasReport || !reportReady ? 0
-    : overdueActions.length > 0 ? 3
-    : openActions.length === 0 ? 1
-    : 2;
-  const briefId = latestProcessedReport?.id;
-  const loopSteps = [
-    { label: "New Review",        stat: readyReportCount > 0 ? `${readyReportCount} complete` : "Upload CSV",       to: "/upload" },
-    { label: "Governance Brief",  stat: hasReport ? reviewPeriodLabel : "Awaiting review",                          to: briefId ? `/dashboard/reports/${briefId}` : "/dashboard/reports" },
-    { label: "Meeting View",      stat: reportReady ? "Ready" : "Pending brief",                                    to: briefId ? `/dashboard/reports/${briefId}?present=1` : "/dashboard/reports" },
-    { label: "Follow-Through",    stat: openActions.length > 0 ? `${openActions.length} open` : "All clear",        to: "/dashboard/actions" },
-  ];
-
-  // unused computed state — preserved for future use
-  void stats;
-  void issuePercentages;
-  void previousIssuePercentages;
-  void topIssue;
-  void newExposureCategories;
-  void suggestedActions;
-  void loopSteps;
-  void loopActiveStep;
 
   // Inline sentence summarising cycle evidence — woven into the headline body, not a strip
   const cycleSummaryParts: string[] = [];

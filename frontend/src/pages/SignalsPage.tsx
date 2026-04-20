@@ -524,21 +524,21 @@ const SignalsPage = () => {
         }
       >
         {showBaselineNotice ? (
-          <section className="relative rounded-lg border border-[#1E3A5F]/20 bg-[#0D1B2A] px-5 py-4">
+          <section className="relative rounded-[10px] border border-[#D7DEE8] bg-white/75 px-5 py-4 shadow-[0_1px_4px_rgba(13,27,42,0.06)]">
             <button
               type="button"
               onClick={dismissBaselineNotice}
               aria-label="Dismiss baseline notice"
-              className="absolute right-3 top-3 inline-flex h-6 w-6 items-center justify-center rounded text-white/30 transition-colors hover:bg-white/10 hover:text-white/60"
+              className="absolute right-3 top-3 inline-flex h-6 w-6 items-center justify-center rounded text-[#6B7E91] transition-colors hover:bg-[#F0F3F7] hover:text-[#455A6E]"
             >
               <X size={13} />
             </button>
             <div className="pr-8">
               <div className="flex items-center gap-2">
-                <span className="h-[10px] w-[2px] rounded-full bg-[#0EA5C2]/70" aria-hidden />
-                <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#0EA5C2]">Baseline Analysis</h2>
+                <span className="h-[10px] w-[2px] rounded-full bg-[#C4A96A]/70" aria-hidden />
+                <h2 className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#C4A96A]">Baseline Analysis</h2>
               </div>
-              <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#B8CAD9]">
+              <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#455A6E]">
                 This is your first review cycle. Future uploads will allow the system to detect trends and changes
                 over time. Your client issues reflect patterns from this upload only.
               </p>
@@ -637,7 +637,7 @@ const SignalsPage = () => {
               { value: "all", label: "Current Issues" },
               {
                 value: "in-briefs",
-                label: "In Briefs",
+                label: "Recurring",
                 badgeCount: inBriefsCount > 0 ? inBriefsCount : undefined,
               },
             ]}

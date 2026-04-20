@@ -1696,6 +1696,13 @@ const ReportDetail = () => {
       <section className="report-room-page">
         <div className="report-room-shell">
 
+          <Link
+            to="/dashboard"
+            className="mb-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#BDD2E1] hover:text-white"
+          >
+            ← Return to Home
+          </Link>
+
           {/* Page header — review-room frame that carries the current brief state */}
           <header className="report-room-hero">
             <div
