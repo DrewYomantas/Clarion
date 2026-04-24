@@ -90,13 +90,13 @@ const Contact = () => {
 
   return (
     <PageLayout>
-    <section className="marketing-hero">
+    <section className="public-page-hero">
       <div className="section-container max-w-4xl space-y-5">
-          <p className="landing-kicker">Support</p>
+          <p className="landing-kicker !text-[#CBB27B]">Support</p>
           <h1 className="marketing-hero-title">Support that stays structured when something needs attention.</h1>
           <p className="max-w-3xl marketing-hero-body">
             Use the support form to open a tracked request, keep the details attached to one record, and route billing,
-            privacy, upload, or brief-delivery issues into the right review path.
+            privacy, upload, or Governance Brief delivery issues into the right review path.
           </p>
           <MarketingProofBar
             items={[
@@ -105,20 +105,20 @@ const Contact = () => {
               "Sensitive categories routed appropriately",
             ]}
           />
-          <div className="public-route-card max-w-3xl">
-            <p className="landing-kicker !text-[#5F6470]">Preferred support path</p>
+          <div className="public-dark-panel max-w-3xl p-5">
+            <p className="public-eyebrow text-[#CBB27B]">Preferred support path</p>
             <div className="mt-3 grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-start">
               <div>
-                <p className="text-sm font-medium text-slate-900">Use the form for product support</p>
-                <p className="mt-1 text-sm leading-7 text-slate-700">
-                  Product issues, uploads, billing, account access, privacy requests, and partner-brief delivery all
+                <p className="text-sm font-medium text-white">Use the form for product support</p>
+                <p className="mt-1 text-sm leading-7 text-[#CBD2E0]">
+                  Product issues, uploads, billing, account access, privacy requests, and Governance Brief delivery all
                   create a tracked ticket here.
                 </p>
               </div>
-              <div className="hidden self-center text-[#8B6F3D] md:block">/</div>
+              <div className="hidden self-center text-[#CBB27B] md:block">/</div>
               <div>
-                <p className="text-sm font-medium text-slate-900">Use direct email only when needed</p>
-                <p className="mt-1 text-sm leading-7 text-slate-700">
+                <p className="text-sm font-medium text-white">Use direct email only when needed</p>
+                <p className="mt-1 text-sm leading-7 text-[#CBD2E0]">
                   Security reports and urgent follow-up can still go by email, but the form remains the primary intake
                   path for support work.
                 </p>
@@ -128,12 +128,12 @@ const Contact = () => {
         </div>
       </section>
 
-      <section className="supporting-section border-y border-slate-200 bg-slate-50">
+      <section className="public-reference-shell border-y border-[#D9CDBB] bg-[rgba(255,252,247,0.92)]">
         <div className="section-container max-w-5xl grid gap-5 lg:grid-cols-[1.3fr_0.9fr]">
-          <article className="supporting-lead">
+          <article className="public-reference-panel">
             <div className="grid gap-5 border-b border-slate-200 pb-5 lg:grid-cols-[1fr_auto] lg:items-end">
               <div>
-                <p className="landing-kicker !text-[#5F6470]">Primary intake</p>
+                <p className="public-eyebrow">Primary intake</p>
                 <h2 className="mt-2 text-2xl font-semibold text-slate-900">Open a support ticket</h2>
                 <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-600">
                   Submit the issue once and Clarion creates the tracked ticket reference shown on this page. Sensitive
@@ -141,7 +141,7 @@ const Contact = () => {
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 lg:max-w-[220px]">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Before you submit</p>
+                <p className="public-eyebrow">Before you submit</p>
                 <p className="mt-2 text-sm text-slate-700">
                   Include the workflow, the validation message, and how to reproduce the issue if applicable.
                 </p>
@@ -275,8 +275,8 @@ const Contact = () => {
           </article>
 
           <div className="space-y-5">
-            <article className="supporting-subtle">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Direct contact</p>
+            <article className="public-reference-panel">
+              <p className="public-eyebrow">Direct contact</p>
               <h2 className="mt-2 text-lg font-semibold text-slate-900">Support addresses</h2>
               <div className="mt-4 space-y-3 text-sm text-slate-700">
                 <p>
@@ -298,8 +298,8 @@ const Contact = () => {
               </div>
             </article>
 
-            <article className="supporting-subtle">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Triage model</p>
+            <article className="public-reference-panel">
+              <p className="public-eyebrow">Triage model</p>
               <h2 className="mt-2 text-lg font-semibold text-slate-900">How requests are handled</h2>
               <div className="supporting-divider-list mt-4">
                 <div className="py-3 first:pt-0">
@@ -309,7 +309,7 @@ const Contact = () => {
                 </div>
                 <div className="py-3">
                   <p className="text-sm text-slate-700">
-                    Common product, upload, and partner-brief issues can receive automated guidance immediately.
+                    Common product, upload, and Governance Brief issues can receive automated guidance immediately.
                   </p>
                 </div>
                 <div className="py-3">

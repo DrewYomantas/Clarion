@@ -162,9 +162,9 @@ const Pricing = () => {
 
   return (
     <PageLayout>
-      <section className="marketing-hero">
+      <section className="public-page-hero">
         <div className="section-container space-y-5">
-          <p className="landing-kicker">Pricing</p>
+          <p className="landing-kicker !text-[#CBB27B]">Pricing</p>
           <h1 className="marketing-hero-title">Choose the review cadence that fits the firm.</h1>
           <p className="max-w-3xl marketing-hero-body">
             Start with a free first cycle. Move to Team when governance becomes a recurring monthly discipline. Choose
@@ -181,12 +181,12 @@ const Pricing = () => {
           />
 
           <div className="pt-2">
-            <div className="inline-flex items-center rounded-full border border-[#D7D0C3] bg-[#FFFDF9] p-1 text-sm shadow-sm">
+            <div className="inline-flex items-center rounded-full border border-[rgba(203,178,123,0.24)] bg-[rgba(255,255,255,0.06)] p-1 text-sm shadow-sm">
               <button
                 type="button"
                 onClick={() => setBillingCycle("monthly")}
                 className={`rounded-full px-4 py-1.5 font-medium transition ${
-                  billingCycle === "monthly" ? "bg-[#111827] text-white shadow-sm" : "text-slate-600 hover:text-slate-900"
+                  billingCycle === "monthly" ? "bg-[#F4EFE5] text-[#08101F] shadow-sm" : "text-[#C6CDDC] hover:text-white"
                 }`}
               >
                 Monthly
@@ -195,7 +195,7 @@ const Pricing = () => {
                 type="button"
                 onClick={() => setBillingCycle("annual")}
                 className={`rounded-full px-4 py-1.5 font-medium transition ${
-                  billingCycle === "annual" ? "bg-[#111827] text-white shadow-sm" : "text-slate-600 hover:text-slate-900"
+                  billingCycle === "annual" ? "bg-[#F4EFE5] text-[#08101F] shadow-sm" : "text-[#C6CDDC] hover:text-white"
                 }`}
               >
                 Annual
@@ -393,10 +393,10 @@ const Pricing = () => {
       )}
 
       <section className="section-container pb-2 pt-6">
-        <div className="supporting-cta-strip">
+        <div className="public-reference-panel flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl">
-            <p className="landing-kicker !text-[#5F6470]">Choose by cadence</p>
-            <p className="mt-2 text-sm leading-7 text-slate-700">
+            <p className="public-eyebrow">Choose by cadence</p>
+            <p className="mt-2 text-sm leading-7 text-[#445067]">
               Free validates a first cycle. Team supports a recurring monthly operating rhythm. Firm is for broader,
               ongoing coverage across practice groups and partner review.
             </p>
@@ -415,7 +415,7 @@ const Pricing = () => {
         </div>
       </section>
 
-      <section className="border-y border-slate-200 bg-slate-50">
+      <section className="border-y border-[#D9CDBB] bg-[rgba(255,252,247,0.92)]">
         <PricingSection
           sectionId="pricing-page-plans"
           showIntro={false}

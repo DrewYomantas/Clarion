@@ -27,7 +27,7 @@ const pillars = [
   {
     icon: ShieldCheck,
     title: "Responsible use",
-    sentence: "Firm data is used only to deliver your reporting workflow.",
+    sentence: "Firm data is used only to deliver your governance workflow.",
     bullets: [
       "No sale of customer data for advertising.",
       "Report deletion is available in-product and privacy requests are handled through support.",
@@ -38,9 +38,9 @@ const pillars = [
 const Security = () => {
   return (
     <PageLayout>
-      <section className="marketing-hero">
+      <section className="public-page-hero">
         <div className="section-container max-w-4xl space-y-5">
-          <p className="landing-kicker">Security</p>
+          <p className="landing-kicker !text-[#CBB27B]">Security</p>
           <h1 className="marketing-hero-title">Security notes for the current Clarion workflow.</h1>
           <p className="max-w-3xl marketing-hero-body">
             {coreNarrative} This page is a practical reference for current safeguards, access boundaries, and product
@@ -50,12 +50,12 @@ const Security = () => {
             items={[
               "Authentication required for workspace access",
               "Session protections in place",
-              "Customer data is used only for the reporting workflow",
+              "Customer data is used only for the governance workflow",
             ]}
           />
-          <div className="public-route-card max-w-3xl">
-            <p className="landing-kicker !text-[#5F6470]">What this page covers</p>
-            <p className="mt-3 text-sm leading-7 text-slate-700">
+          <div className="public-dark-panel max-w-3xl p-5">
+            <p className="public-eyebrow text-[#CBB27B]">What this page covers</p>
+            <p className="mt-3 text-sm leading-7 text-[#CBD2E0]">
               Implemented safeguards, authentication boundaries, and current product notes. This is a live-product
               reference page for firms evaluating Clarion's operating model.
             </p>
@@ -63,15 +63,15 @@ const Security = () => {
         </div>
       </section>
 
-      <section className="supporting-section">
+      <section className="public-reference-shell">
         <div className="section-container">
           <div className="mb-6 max-w-2xl">
-            <p className="landing-kicker">Core controls</p>
-            <h2 className="mt-4 landing-section-title text-[#111827]">Three practical security pillars.</h2>
+            <p className="public-eyebrow">Core controls</p>
+            <h2 className="mt-4 font-['Newsreader',Georgia,serif] text-[2.2rem] leading-[0.98] tracking-[-0.03em] text-[#0A1324]">Three practical security pillars.</h2>
           </div>
           <div className="grid gap-5 lg:grid-cols-3">
             {pillars.map((pillar) => (
-              <article key={pillar.title} className="public-route-card">
+              <article key={pillar.title} className="public-reference-panel">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#D7D0C3] bg-[#FFF9EE] text-slate-800">
                   <pillar.icon size={18} />
                 </div>
@@ -91,7 +91,7 @@ const Security = () => {
         </div>
       </section>
 
-      <section className="supporting-section border-y border-[#D7D0C3] bg-[rgba(255,250,244,0.72)]">
+      <section className="public-reference-shell border-y border-[#D7D0C3] bg-[rgba(255,250,244,0.72)]">
         <div className="section-container trust-stack">
           <article className="trust-intro">
             <p className="landing-kicker !text-[#5F6470]">Reference notes</p>
@@ -106,7 +106,7 @@ const Security = () => {
               summary="Traffic is expected to run behind HTTPS-enabled infrastructure, and production security headers are applied."
             >
               Session handling uses secure cookie defaults outside local development, with HttpOnly and SameSite protections
-              in place. Uploaded CSV content is validated before processing and used to generate report outputs for the
+              in place. Uploaded CSV content is validated before processing and used to generate Governance Brief and workspace outputs for the
               authenticated workspace.
             </ShowDetails>
             <ShowDetails

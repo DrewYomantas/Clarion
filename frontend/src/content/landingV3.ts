@@ -53,7 +53,7 @@ export const landingTrustCallouts = [
 export const landingOutputs = [
   {
     title: "Governance brief",
-    body: "A partner-ready brief showing what clients are telling the firm, what changed, and what leadership needs to decide next.",
+    body: "A Governance Brief showing what clients are telling the firm, what changed, and what leadership needs to decide next.",
   },
   {
     title: "Workspace record",

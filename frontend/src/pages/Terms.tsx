@@ -3,9 +3,9 @@ import MarketingProofBar from "@/components/MarketingProofBar";
 
 const Terms = () => (
   <PageLayout>
-    <section className="marketing-hero">
+    <section className="public-page-hero">
       <div className="section-container max-w-4xl space-y-5">
-        <p className="landing-kicker">Terms</p>
+        <p className="landing-kicker !text-[#CBB27B]">Terms</p>
         <h1 className="marketing-hero-title">Terms of Service</h1>
         <p className="max-w-3xl marketing-hero-body">
           This page explains the service scope, customer responsibilities, and the current billing, retention, and
@@ -19,9 +19,9 @@ const Terms = () => (
             "Analysis and report boundaries stated plainly",
           ]}
         />
-        <div className="public-route-card max-w-3xl">
-          <p className="landing-kicker !text-[#5F6470]">What this page is for</p>
-          <p className="mt-3 text-sm leading-7 text-slate-700">
+        <div className="public-dark-panel max-w-3xl p-5">
+          <p className="public-eyebrow text-[#CBB27B]">What this page is for</p>
+          <p className="mt-3 text-sm leading-7 text-[#CBD2E0]">
             A current-product terms reference. It is meant to clarify how Clarion is provided and where responsibility
             remains with the customer.
           </p>
@@ -29,7 +29,7 @@ const Terms = () => (
       </div>
     </section>
 
-    <section className="supporting-section border-y border-slate-200 bg-slate-50">
+    <section className="public-reference-shell border-y border-[#D9CDBB] bg-[rgba(255,252,247,0.92)]">
       <div className="section-container trust-stack">
         <article className="trust-intro">
           <p className="landing-kicker !text-[#5F6470]">Quick map</p>
@@ -51,12 +51,12 @@ const Terms = () => (
           <div className="trust-section-body">
             <p>
               Effective date: March 6, 2026. Last updated: March 27, 2026. Clarion is a software product for uploading CSV-based client feedback,
-              generating governance reports, reviewing the resulting governance record in the workspace, assigning
-              follow-up actions, and exporting report PDFs based on the features available on your plan.
+              generating Governance Briefs, reviewing the resulting governance record in the workspace, assigning
+              follow-up actions, and exporting brief PDFs based on the features available on your plan.
             </p>
             <ul className="list-disc space-y-2 pl-6">
               <li>Free, Team, and Firm plans have different limits for reviews per upload, reports per month, seats, PDF output, report history access, and deleted-report restore.</li>
-              <li>Partner-brief email delivery is available only when Clarion email delivery is configured in the deployment environment.</li>
+              <li>Governance Brief email delivery is available only when Clarion email delivery is configured in the deployment environment.</li>
               <li>Clarion supports client-feedback governance and follow-through. It does not provide legal advice.</li>
             </ul>
           </div>
@@ -74,7 +74,7 @@ const Terms = () => (
             </p>
             <p>
               You remain solely responsible for your legal work, client relationships, regulatory duties, and decisions
-              made from any report output, issue summary, or recommended action.
+              made from any brief output, issue summary, or recommended action.
             </p>
           </div>
         </article>

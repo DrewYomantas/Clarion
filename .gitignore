@@ -29,6 +29,8 @@ frontend/build/
 *.db
 *.sqlite
 *.sqlite3
+*.db-shm
+*.db-wal
 
 # ── Logs ─────────────────────────────────────────────────────────────────────
 logs/
@@ -77,3 +79,10 @@ Clarion-Agency/reports/
 Clarion-Agency/_test_parse.py
 Clarion-Agency/run_daily.bat
 Clarion-Agency/run_clarion_agent_office.bat
+
+# ── Playwright CLI artifacts ──────────────────────────────────────────────────
+.playwright-cli/
+
+# ── Audit / diagnostic JSON dumps ────────────────────────────────────────────
+docs/*_AUDIT_*.json
+docs/*_AUDIT_*.md

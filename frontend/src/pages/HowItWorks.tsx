@@ -25,9 +25,9 @@ const HowItWorks = () => {
 
   return (
     <PageLayout>
-      <section className="marketing-hero">
+      <section className="public-page-hero">
         <div className="section-container space-y-5">
-          <p className="landing-kicker">How It Works</p>
+          <p className="landing-kicker !text-[#CBB27B]">How It Works</p>
           <h1 className="marketing-hero-title">From one feedback export to a meeting-ready governance review.</h1>
           <p className="max-w-3xl marketing-hero-body">
             Clarion follows a simple operating loop: upload feedback, structure the recurring service issues, assign
@@ -44,11 +44,11 @@ const HowItWorks = () => {
         </div>
       </section>
 
-      <section className="supporting-section">
+      <section className="public-reference-shell">
         <div className="section-container grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <article className="supporting-lead">
-            <p className="landing-kicker">Workflow</p>
-            <h2 className="landing-section-title mt-4 text-[#111827]">Five steps, one operating record.</h2>
+          <article className="public-reference-panel">
+            <p className="public-eyebrow">Workflow</p>
+            <h2 className="mt-4 font-['Newsreader',Georgia,serif] text-[2.2rem] leading-[0.98] tracking-[-0.03em] text-[#0A1324]">Five steps, one operating record.</h2>
             <div className="landing-rail mt-8">
               {landingWorkflowSteps.map((step) => (
                 <div key={step.step} className="landing-rail-step">
@@ -66,7 +66,7 @@ const HowItWorks = () => {
 
           <div className="lg:sticky lg:top-24">
             <LandingOperatingPreview mode="outputs" />
-            <p className="mt-3 text-sm leading-7 text-slate-600">
+            <p className="mt-3 text-sm leading-7 text-[#445067]">
               Clarion is designed to make the output visible before the meeting starts: what clients are telling the
               firm, what is assigned, and what is still lagging.
             </p>
@@ -74,24 +74,24 @@ const HowItWorks = () => {
         </div>
       </section>
 
-      <section className="supporting-section border-y border-[#D7D0C3] bg-[rgba(255,250,244,0.72)]">
+      <section className="public-dark-section">
         <div className="section-container grid gap-5 lg:grid-cols-3">
           {postUploadRows.map((row) => (
-            <article key={row.title} className="public-route-card">
-              <p className="landing-kicker !text-[#5F6470]">After upload</p>
-              <h2 className="mt-3 text-xl font-semibold text-slate-900">{row.title}</h2>
-              <p className="mt-3 text-sm leading-7 text-slate-700">{row.body}</p>
+            <article key={row.title} className="my-14 rounded-[24px] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.04)] p-5">
+              <p className="public-eyebrow text-[#CBB27B]">After upload</p>
+              <h2 className="mt-3 text-xl font-semibold text-white">{row.title}</h2>
+              <p className="mt-3 text-sm leading-7 text-[#D1D7E4]">{row.body}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="supporting-section">
+      <section className="public-reference-shell">
         <div className="section-container">
-          <div className="supporting-cta-strip">
+          <div className="public-reference-panel flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="landing-kicker !text-[#5F6470]">Run the cycle</p>
-              <p className="mt-2 text-sm leading-7 text-slate-700">
+              <p className="public-eyebrow">Run the cycle</p>
+              <p className="mt-2 text-sm leading-7 text-[#445067]">
                 Start with the sample brief if you want the finished artifact first. Move to the sample workspace only
                 if you want to inspect how the cycle is assembled step by step.
               </p>

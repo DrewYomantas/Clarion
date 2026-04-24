@@ -4,9 +4,9 @@ import MarketingProofBar from "@/components/MarketingProofBar";
 
 const Docs = () => (
   <PageLayout>
-    <section className="marketing-hero">
+    <section className="public-page-hero">
       <div className="section-container space-y-4">
-        <p className="landing-kicker">Documentation</p>
+        <p className="landing-kicker !text-[#CBB27B]">Documentation</p>
         <h1 className="marketing-hero-title">What Clarion does today</h1>
         <p className="max-w-3xl marketing-hero-body">
           Clarion is a client-feedback governance workflow for law firms: upload feedback, review recurring client
@@ -35,11 +35,11 @@ const Docs = () => (
       </div>
     </section>
 
-    <section className="supporting-section border-y border-slate-200 bg-slate-50">
+    <section className="public-reference-shell border-y border-[#D9CDBB] bg-[rgba(255,252,247,0.92)]">
       <div className="section-container space-y-5">
         <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-          <article className="supporting-lead">
-            <p className="landing-kicker !text-[#5F6470]">Current state</p>
+          <article className="public-reference-panel">
+            <p className="public-eyebrow">Current state</p>
             <h2 className="mt-2 text-2xl font-semibold text-slate-900">The product boundary is simple: what is available now, what depends on setup, and what stays sample-only.</h2>
             <div className="supporting-divider-list mt-5">
               <div className="py-4 first:pt-0">
@@ -67,7 +67,7 @@ const Docs = () => (
             </div>
           </article>
 
-          <aside className="supporting-subtle">
+          <aside className="public-reference-panel">
             <h2 className="text-lg font-semibold text-slate-900">Current live references</h2>
             <p className="mt-2 text-sm text-slate-600">
               Use these pages when you want a specific answer instead of another high-level summary.
@@ -80,8 +80,8 @@ const Docs = () => (
                 Review security notes
               </Link>
             </div>
-            <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Next action</p>
+            <div className="mt-4 rounded-xl border border-[#DED1BE] bg-[#FBF6ED] px-4 py-3">
+              <p className="public-eyebrow">Next action</p>
               <p className="mt-2 text-sm text-slate-700">
                 If the current product boundary fits your workflow, inspect the sample workspace once and then choose the plan that
                 matches your review cadence.

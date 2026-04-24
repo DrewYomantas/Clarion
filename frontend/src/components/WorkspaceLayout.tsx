@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { getLatestExposure } from "@/api/authService";
 import { useAuth } from "@/contexts/AuthContext";
+import PublicBrand from "@/components/PublicBrand";
 
 // ── Navigation Items ──────────────────────────────────────────────────────────
 
@@ -297,69 +298,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
       >
         {/* Official Clarion brand block */}
         <div className="workspace-shell-brand flex shrink-0 flex-col justify-center border-b border-white/[0.07] px-5 py-5">
-          <div className="flex items-center gap-3">
-            {/* Official mark — deep-blue C-arc with concentric inner arc, gold terminal needle + glow */}
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-              <defs>
-                <linearGradient id="cl-outer" x1="18" y1="3" x2="28" y2="9" gradientUnits="userSpaceOnUse">
-                  <stop offset="0" stopColor="#2A4F8A"/>
-                  <stop offset="0.55" stopColor="#3B6CB5"/>
-                  <stop offset="1" stopColor="#C4A96A"/>
-                </linearGradient>
-                <linearGradient id="cl-inner" x1="18" y1="8" x2="25" y2="12" gradientUnits="userSpaceOnUse">
-                  <stop offset="0" stopColor="#1E3D70" stopOpacity="0.7"/>
-                  <stop offset="1" stopColor="#C4A96A" stopOpacity="0.5"/>
-                </linearGradient>
-                <radialGradient id="cl-glow" cx="76%" cy="26%" r="30%">
-                  <stop offset="0" stopColor="#C4A96A" stopOpacity="0.55"/>
-                  <stop offset="1" stopColor="#C4A96A" stopOpacity="0"/>
-                </radialGradient>
-              </defs>
-              {/* Glow halo behind terminal point */}
-              <circle cx="27.2" cy="9.4" r="6.5" fill="url(#cl-glow)"/>
-              {/* Outer C-arc — main stroke */}
-              <path
-                d="M30.5 18A12.5 12.5 0 1 1 18 5.5"
-                stroke="url(#cl-outer)"
-                strokeWidth="3.2"
-                strokeLinecap="round"
-                fill="none"
-              />
-              {/* Outer arc upper arm to terminal */}
-              <path
-                d="M18 5.5 C21.4 5.5 24.5 6.9 26.7 9.2"
-                stroke="url(#cl-outer)"
-                strokeWidth="3.2"
-                strokeLinecap="round"
-                fill="none"
-              />
-              {/* Inner concentric arc — subtle depth layer */}
-              <path
-                d="M26.2 18A8.2 8.2 0 1 1 18 9.8"
-                stroke="url(#cl-inner)"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-                fill="none"
-                opacity="0.7"
-              />
-              {/* Gold needle line pointing to terminal */}
-              <line x1="20" y1="16" x2="27.2" y2="9.4" stroke="#C4A96A" strokeWidth="1.1" strokeLinecap="round" opacity="0.85"/>
-              {/* Terminal point — gold dot with bright center */}
-              <circle cx="27.2" cy="9.4" r="3" fill="#B8953C"/>
-              <circle cx="27.2" cy="9.4" r="1.5" fill="#E8C97A"/>
-            </svg>
-            <div>
-              <p
-                className="text-[17px] font-bold text-white"
-                style={{ fontFamily: "'Manrope', sans-serif", letterSpacing: "0.18em", lineHeight: 1 }}
-              >
-                CLARION
-              </p>
-              <p className="mt-0.5 text-[8.5px] font-bold uppercase tracking-[0.22em] text-[#C4A96A]/70">
-                Client Intelligence
-              </p>
-            </div>
-          </div>
+          <PublicBrand variant="sidebar" />
         </div>
 
         {/* Primary nav */}

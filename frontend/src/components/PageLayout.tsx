@@ -23,7 +23,7 @@ const PAGE_TITLES: Record<string, string> = {
 };
 
 const PAGE_DESCRIPTIONS: Record<string, string> = {
-  "/": "Clarion turns law-firm client feedback into partner-ready governance briefs, assigned actions, and visible follow-through — built for the partner meeting cycle.",
+  "/": "Clarion turns law-firm client feedback into Governance Briefs, visible client issues, and follow-through built for the meeting cycle.",
   "/features": "See how Clarion structures client feedback into governance signals, briefs, and follow-through records designed for partner review.",
   "/how-it-works": "Clarion takes one CSV upload and produces a structured governance brief, prioritized signals, and assigned follow-through — ready in minutes.",
   "/pricing": "Simple plans for law firms ready to govern client feedback at the partner level. Start free, upgrade when the cycle demands it.",
@@ -70,7 +70,7 @@ function setRobotsTag(noindex: boolean) {
 }
 
 const PageLayout = ({ children }: PropsWithChildren) => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const isAuthRoute =
     pathname === "/login" ||
     pathname === "/signup" ||
@@ -98,7 +98,7 @@ const PageLayout = ({ children }: PropsWithChildren) => {
 
     // Per-route meta description
     const demoReportDesc =
-      "View a sample Clarion governance brief — the partner-ready artifact produced from structured client feedback analysis.";
+      "View a sample Clarion Governance Brief — the meeting artifact produced from structured client feedback analysis.";
     const description =
       pathname.startsWith("/demo/reports/")
         ? demoReportDesc
@@ -115,11 +115,16 @@ const PageLayout = ({ children }: PropsWithChildren) => {
     setRobotsTag(isAuthRoute);
   }, [pathname, isAuthRoute]);
 
+  useEffect(() => {
+    if (isWorkspaceRoute) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname, search, isWorkspaceRoute]);
+
   return (
     <div
       className={[
         "min-h-screen",
-        isPublicRoute ? "marketing-shell landing-v3-shell bg-[#F6F0E4] text-[#111827]" : "bg-background",
+        isPublicRoute ? "clarion-public-shell text-[#F4EFE5]" : "bg-background",
       ].join(" ")}
     >
       <SkipToMainContent />
@@ -128,7 +133,7 @@ const PageLayout = ({ children }: PropsWithChildren) => {
         id="main-content"
         className={[
           "pt-16",
-          isWorkspaceRoute ? "pb-10" : "pb-12",
+          isWorkspaceRoute ? "pb-10" : "clarion-public-main pb-16",
           isAuthRoute ? "route-shell-auth" : "",
         ].join(" ")}
       >

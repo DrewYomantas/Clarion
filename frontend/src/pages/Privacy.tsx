@@ -3,9 +3,9 @@ import MarketingProofBar from "@/components/MarketingProofBar";
 
 const Privacy = () => (
   <PageLayout>
-    <section className="marketing-hero">
+    <section className="public-page-hero">
       <div className="section-container max-w-4xl space-y-5">
-        <p className="landing-kicker">Privacy</p>
+        <p className="landing-kicker !text-[#CBB27B]">Privacy</p>
         <h1 className="marketing-hero-title">Privacy Policy</h1>
         <p className="max-w-3xl marketing-hero-body">
           This page explains what Clarion collects, how that data is used, and how retention, deletion, and privacy
@@ -19,9 +19,9 @@ const Privacy = () => (
             "Retention and deletion behavior included",
           ]}
         />
-        <div className="public-route-card max-w-3xl">
-          <p className="landing-kicker !text-[#5F6470]">What this page is for</p>
-          <p className="mt-3 text-sm leading-7 text-slate-700">
+        <div className="public-dark-panel max-w-3xl p-5">
+          <p className="public-eyebrow text-[#CBB27B]">What this page is for</p>
+          <p className="mt-3 text-sm leading-7 text-[#CBD2E0]">
             A plainspoken reference for current data handling. It is meant to answer practical questions about product
             data flow without turning privacy language into marketing copy.
           </p>
@@ -29,7 +29,7 @@ const Privacy = () => (
       </div>
     </section>
 
-    <section className="supporting-section border-y border-slate-200 bg-slate-50">
+    <section className="public-reference-shell border-y border-[#D9CDBB] bg-[rgba(255,252,247,0.92)]">
       <div className="section-container trust-stack">
         <article className="trust-intro">
           <p className="landing-kicker !text-[#5F6470]">Quick map</p>
@@ -72,7 +72,7 @@ const Privacy = () => (
             </p>
             <p>
               Clarion currently uses deterministic analysis and workflow logic to structure feedback into governance
-              outputs. Billing is processed by Stripe. Partner-brief delivery and transactional email depend on
+              outputs. Billing is processed by Stripe. Governance Brief delivery and transactional email depend on
               configured email providers in the deployment environment, and we do not sell customer data.
             </p>
           </div>

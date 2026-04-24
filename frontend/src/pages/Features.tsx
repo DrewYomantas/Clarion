@@ -58,10 +58,10 @@ const Features = () => {
 
   return (
     <PageLayout>
-      <section className="marketing-hero">
+      <section className="public-page-hero">
         <div className="section-container space-y-5">
-          <p className="landing-kicker">Features</p>
-          <h1 className="marketing-hero-title">Built for the people who have to run the review cycle, not admire it.</h1>
+          <p className="landing-kicker !text-[#CBB27B]">Features</p>
+          <h1 className="marketing-hero-title">One governance system for evidence, brief, follow-through, and meeting use.</h1>
           <p className="max-w-3xl marketing-hero-body">
             Clarion gives law firms one operating record for client feedback: what clients are saying, what needs
             partner attention, who owns the response, and what still needs to move before the next meeting.
@@ -83,41 +83,41 @@ const Features = () => {
         </div>
       </section>
 
-      <section className="supporting-section">
+      <section className="public-reference-shell">
         <div className="section-container grid gap-5 lg:grid-cols-3">
           {roleBands.map((band) => (
-            <article key={band.id} className="public-route-card">
+            <article key={band.id} className="public-reference-panel">
               <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#D7D0C3] bg-[#FFF9EE] text-slate-800">
                 <band.icon size={20} />
               </div>
-              <p className="landing-kicker !text-[#5F6470]">{band.title}</p>
-              <p className="mt-3 text-base leading-7 text-slate-700">{band.body}</p>
+              <p className="public-eyebrow">{band.title}</p>
+              <p className="mt-3 text-base leading-7 text-[#445067]">{band.body}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="supporting-section border-y border-[#D7D0C3] bg-[rgba(255,250,244,0.72)]">
+      <section className="public-dark-section">
         <div className="section-container grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
-          <article className="supporting-lead">
-            <p className="landing-kicker">What stays consistent</p>
-            <h2 className="landing-section-title mt-4 text-[#111827]">
+          <article className="py-14 lg:py-18">
+            <p className="public-eyebrow text-[#CBB27B]">What stays consistent</p>
+            <h2 className="mt-4 font-['Newsreader',Georgia,serif] text-[2.35rem] leading-[0.98] tracking-[-0.03em] text-white">
               Every role works from the same governance record.
             </h2>
-            <p className="mt-4 max-w-xl text-base leading-8 text-slate-700">
+            <p className="mt-4 max-w-xl text-base leading-8 text-[#CBD2E0]">
               Clarion does not ask leadership, operations, and client-service owners to work from separate stories.
               The same cycle produces the brief, the action rows, and the workspace record used to check whether the
               firm is improving.
             </p>
             <div className="mt-8 space-y-4">
               {featureGroups.map((group) => (
-                <article key={group.title} className="rounded-2xl border border-[#DED7CA] bg-white/80 p-5">
-                  <h3 className="text-lg font-semibold text-slate-900">{group.title}</h3>
-                  <p className="mt-2 text-sm leading-7 text-slate-600">{group.body}</p>
-                  <ul className="mt-4 space-y-2 text-sm leading-7 text-slate-700">
+                <article key={group.title} className="rounded-[24px] border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.04)] p-5">
+                  <h3 className="text-lg font-semibold text-white">{group.title}</h3>
+                  <p className="mt-2 text-sm leading-7 text-[#C8CFDD]">{group.body}</p>
+                  <ul className="mt-4 space-y-2 text-sm leading-7 text-[#D4DAE6]">
                     {group.bullets.map((bullet) => (
                       <li key={bullet} className="flex items-start gap-2">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#8B6F3D]" />
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#CBB27B]" />
                         <span>{bullet}</span>
                       </li>
                     ))}
@@ -127,9 +127,9 @@ const Features = () => {
             </div>
           </article>
 
-          <div className="lg:sticky lg:top-24">
+          <div className="py-14 lg:sticky lg:top-24 lg:py-18">
             <LandingOperatingPreview mode="outputs" />
-            <p className="mt-3 text-sm leading-7 text-slate-600">
+            <p className="mt-3 text-sm leading-7 text-[#C8CFDD]">
               The live product is strongest when the brief, action ownership, and meeting agenda are all visible in one
               place instead of scattered across separate tools.
             </p>
@@ -137,12 +137,12 @@ const Features = () => {
         </div>
       </section>
 
-      <section className="supporting-section">
+      <section className="public-reference-shell">
         <div className="section-container">
-          <div className="supporting-cta-strip">
+          <div className="public-reference-panel flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="landing-kicker !text-[#5F6470]">Next step</p>
-              <p className="mt-2 text-sm leading-7 text-slate-700">
+              <p className="public-eyebrow">Next step</p>
+              <p className="mt-2 text-sm leading-7 text-[#445067]">
                 Review the sample brief first if you want the finished artifact. Move to the sample workspace only if
                 you want to inspect the mechanics behind that same story.
               </p>

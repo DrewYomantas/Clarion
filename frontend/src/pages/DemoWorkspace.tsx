@@ -362,9 +362,9 @@ const DemoWorkspace = () => {
 
   return (
     <PageLayout>
-      <section className="marketing-hero">
+      <section className="public-page-hero">
         <div className="section-container space-y-4">
-          <p className="landing-kicker">Sample Workspace</p>
+          <p className="landing-kicker !text-[#CBB27B]">Sample Workspace</p>
           <h1 className="marketing-hero-title">Inspect the sample workspace after you review the brief.</h1>
           <p className="max-w-3xl marketing-hero-body">
             The sample brief is the clearest public proof of Clarion. This workspace stays available as a secondary

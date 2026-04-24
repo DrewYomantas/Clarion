@@ -1,3 +1,0 @@
-The browser 'mo_access37' is not open, please run open first
-
-  playwright-cli -s=mo_access37 open [params]
