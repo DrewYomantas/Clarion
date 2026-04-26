@@ -1,10 +1,11 @@
 # Clarion Project State
 
-_This file tracks current repo truth. Historical pass detail lives in `CHANGELOG_AI.md`. Product identity lives in `NORTH_STAR.md`. Working rules and protected-system handling live in `AI_WORKING_RULES.md`._
+This file tracks current repo truth. Historical pass detail lives in `CHANGELOG_AI.md`. Product identity lives in `NORTH_STAR.md`. Working rules and protected-system handling live in `AI_WORKING_RULES.md`.
 
 ---
 
-## Startup Reads (Every Session)
+## Startup Reads
+
 1. `NORTH_STAR.md`
 2. `PROJECT_STATE.md`
 3. `AI_WORKING_RULES.md`
@@ -16,491 +17,89 @@ _This file tracks current repo truth. Historical pass detail lives in `CHANGELOG
 
 - GitHub: https://github.com/DrewYomantas/Clarion
 - Live site: https://law-firm-feedback-saas.onrender.com
-- Local git remote: confirmed pointed at `DrewYomantas/Clarion`
+- Local git remote: `https://github.com/DrewYomantas/Clarion.git`
+- Working branch: `main`
 
 ### Render Truth
-- Render may still be on a stale deploy.
-- Repo auth/session fixes for the Postgres row bug and single-worker guard exist in repo truth.
-- Benchmark credibility is still the higher-priority product blocker, and the active repo lane is now a focused miss-cluster / calibration-design audit on the staged Wave80 pressure rows, not another collection pass.
 
----
-
-## Repository Structure
-
-- `backend/` - Flask monolith, APIs, services, templates, PDF generation
-- `frontend/src/` - React/TypeScript/Vite app
-- `Clarion-Agency/` - internal agent office runtime
-- `automation/calibration/` - calibration scripts and benchmark workflow
-- `data/calibration/` - canonical benchmark, expansion corpus, run artifacts
-- `docs/` - current-state and pass-history docs
+- Public Render routes are reachable as of the v1.0 readiness check: `/`, `/demo`, and `/demo/reports/sample` returned HTTP 200.
+- Deeper authenticated production smoke still requires known credentials and environment verification.
+- Required production env truth still needs a final dashboard check before launch claims: `DATABASE_URL`, `SECRET_KEY`, `ADMIN_PASSWORD`, `INTERNAL_BENCHMARK_SECRET`, and worker/concurrency settings.
 
 ---
 
 ## Current Phase
 
-**Pass 80 completed a targeted `fee_value` engine pass plus a canonical truth correction. Added `fee seemed` to `fee_value` negative. Added `left with $100 less` to `fee_value` negative. Fixed the escalator guard for row 112 (case-refused scenario). Corrected `legacy_106` canonical expected_label from `expectation_setting` → `communication_clarity` — this was a Pass 78 regression where removing the `wasn't fully explained → expectation_setting` reroute guard caused the engine to correctly fire `communication_clarity`, but the canonical truth still expected `expectation_setting`. `38 passed` tests. Canonical gate held at `24/24`, `0` disagrees. Broad improved to `99/143`, `69.23%`, `60` disagreements. `fee_value` bucket dropped `4 → 1`. Updated bucket map: `professionalism_trust 11, empathy_support 9, expectation_setting 8, outcome_satisfaction 8, timeliness_progress 6, communication_clarity 6, communication_responsiveness 5, office_staff_experience 4, billing_transparency 2`.**
+Clarion is a **v1.0 candidate with known caveats**.
 
-**Pass 78 completed the narrow `communication_clarity` engine pass. Added "won't explain why" to `communication_clarity` negative (row 110: firm refused to explain case decline; truth has both CR and clarity). Removed the reroute guard that was diverting "wasn't fully explained" to `expectation_setting` when billing/plea-deal language co-occurred (row 105: guidance was unexplained regardless of downstream cost; clarity is the correct theme). Row 105 now clean on clarity; row 110 clean on both themes. Canonical gate held at `24/24`, `0` disagrees. Broad `communication_clarity` bucket dropped `8 → 6` (-2); total disagrees dropped `68 → 65` (-3); agreement improved `65.03% → 65.73%`. All 6 remaining clarity disagrees are pre-classified from the Pass 77 prep artifact — no new unknowns. Run artifact: `data/calibration/runs/20260412_comm_clarity_narrow_pass78_broad_rerun/`.**
+What is true now:
 
-**Pass 77 completed a fresh remaining-lane selection audit and truth-shaping prep for `communication_clarity`. A full row-by-row audit of all 8 post-Pass-76 clarity disagreement rows confirmed 2 real missing_theme driver candidates (row 105: "wasn't fully explained", row 110: "won't explain why") and classified 4 extra-fire rows as suppression candidates. Guard check on both phrase seeds confirmed they are unique in the 143-real set — no guard needed for either. Prep artifact written to `data/calibration/canonical/communication_clarity_driver_prep_20260412.json`. No engine edits in this pass.**
+- The public product surfaces are reachable.
+- The repository has been cleaned for senior technical review.
+- The canonical benchmark gate is clean.
+- The broader benchmark still has known disagreement limits.
+- The product should not be described as fully launch-proven until authenticated production smoke, Render env verification, and deployment hook verification are complete.
 
-The lane selection audit preceding Pass 77 confirmed: `professionalism_trust` (12) is driver-exhausted (confirmed Pass 70 + Pass 73, still no fresh shortlist). `empathy_support` (9) is also driver-exhausted — Pass 67 prep artifact already classified all rows; primary shortlist used in Pass 68; row 127 ("dead to them") was explicitly rejected as trust/abandonment boundary; row 133 ("grace and patience") remains conditional/weak; all other rows confirmed non-drivers. `outcome_satisfaction` (9) is driver-exhausted after Pass 72. `expectation_setting` (9) has one thin driver (row 82) — still below threshold. `timeliness_progress` (6) rows are mostly bad truth labels, wrong-lane, or boundary cases. `communication_clarity` (8) is the only lane with unclassified driver candidates, and the first truth-shaping prep artifact for this lane has now been written. Applied guard reroute for row 88 (“lack of communication” routes to CR instead of `continue`), added `communicate well` to CR positive, added `run around` to CR negative, and placed `only heard from them 2 or 3 times` in CR negative (canonical ground truth overrides broad AI severity call). All three gates clean: `38/38` test suite, `24/24` canonical (`0` disagrees), broad CR `8 → 5`. Overall broad: `65.03%`, `75/143` clean, `68` total disagrees.**
-
-Recent passes established a real-only canonical benchmark, improved recall on the five target governance themes, cleaned up the stale benchmark route story, ran a disciplined generalization pass, completed a benchmark truth-correction pass to remove disputed gate pressure from the main canonical set, shipped two narrow broad-safe low-star boundary passes, completed a short remaining-cluster audit, finished a benchmark-design review of the remaining sparse disagreement clusters, laid out a concrete real-world review acquisition plan, completed the full Phase 1 acquisition batch, triaged the Phase 1 corpus into protected subsets, ran a narrow human-truth review on the candidate subset to shrink it to a more trustworthy benchmark-prep core, started Wave80 live with the first captured Google Maps block, completed Wave80 Collection Pass 2 with a targeted Avvo gap-fill to cover missing `2-star` and mixed `4-star` slices, completed Wave80 Collection Pass 3 with a Google Maps-first rebalance that doubled Google Maps share in the live Wave80 batch, recovered momentum after the stalled Google Maps mixed `4-star` hunt by adding controlled full-text Avvo mixed `4-star` gap-fill rows, completed a broader Wave80 growth pass that added six new Google Maps rows while widening into Minnesota and Colorado, completed a milestone-scale Google Maps-first growth pass that took the live Wave80 batch to `40` rows while widening into `AZ`, `NV`, `OH`, `VA`, `FL`, and `PA`, completed Pass 35 on `2026-04-04` with an honest Google Maps-first fallback block that pushed Wave80 to `48` rows while documenting that live `2-star` capture still did not honestly surface, completed Pass 36 on `2026-04-04` by proving the Google Maps `2-star` surfacing bottleneck with six documented dead lanes and adding four controlled fallback `2-star` rows across immigration, disability, estate planning, and criminal defense, completed Pass 37 on `2026-04-04` by re-earning that fallback rule inside the pass, adding three more controlled `2-star` rows, and honestly stopping short of the target band when no new Google Maps `2-star` body surfaced before the fallback cap was exhausted, completed Pass 38 on `2026-04-04` by converting those repeated lane results into a persistent registry-backed qualification and harvest model, completed Pass 39 on `2026-04-04` by using that harvest model to land the first materially larger `12`-row Google Maps-heavy block, completed Pass 40 on `2026-04-05` by closing the `mixed_4_star` gap at `15/15` via controlled Avvo fallback after four confirmed dead Google Maps mixed-4-star lanes, completed Pass 41 on `2026-04-05` by closing the `2-star` gap at `20/20` with two Google Maps rows from Denver CO SSD firms and one controlled Avvo fallback row from Kansas City MO immigration Ã¢â‚¬â€ all primary Wave80 count targets are now met Ã¢â‚¬â€ completed Pass 42 on `2026-04-05` by opening Wave80 triage with `15` `benchmark_candidate`, `10` `holdout`, `6` `audit_only`, and `41` `corpus_only` rows assigned from the `72`-row Wave80 corpus, completed Pass 43 on `2026-04-08` by human-reviewing those `15` Wave80 candidates, keeping `12` as reviewed `benchmark_candidate`, downgrading `2` to `audit_only`, and downgrading `1` to `corpus_only`, completed Pass 44 on `2026-04-08` by promoting `7` reviewed Wave80 rows into canonical truth and rerunning both the canonical five-theme gate and the frozen broad `143-real` comparator without changing the engine, completed Pass 45 on `2026-04-08` by restoring the clean active canonical gate, preserving those `7` rows as staged pressure evidence, and auditing the exposed miss clusters without changing the engine, completed Pass 46 on `2026-04-08` by classifying those staged misses into real rule candidates versus staged-only boundary cases and narrowing the next engine pass to the safest positive phrase cluster plus two trust guards, completed Pass 47 on `2026-04-08` by implementing that narrow positive-cluster recovery pass, adding only the scoped trust guards, and preserving the active canonical gate at `22/22` clean with `0` disagreements, completed Pass 48 on `2026-04-08` by replaying the staged `7`-row Wave80 pressure set against the updated live engine, confirming partial relief in the positive clusters, and deciding to keep the set staged because `expectation_setting` still dominates the remaining pressure, completed Pass 49 on `2026-04-08` by auditing the existing real corpus for repeated expectation-setting evidence, confirming that promise-reversal intake language is still sparse while filing-delay language recurs mostly as a benchmark-design boundary with `timeliness_progress`, completed Pass 50 on `2026-04-08` by reviewing those filing-delay rows row by row, shifting two staged Wave80 rows out of `expectation_setting`, and confirming that this lane should stop driving expectation-setting work, completed Pass 51 on `2026-04-08` by replaying the staged `7` rows again after that truth narrowing and confirming that the remaining pressure is now fragmented across smaller residual clusters rather than one clean repeated lane, completed Pass 52 on `2026-04-08` by re-triaging that staged set into a narrower `3`-row promotion shortlist, `1` remaining staged seed, and `3` downgraded fragmented rows, completed Pass 53 on `2026-04-08` by truth-reviewing the `3`-row shortlist and confirming that `ryangarry_noellevitzthum` and `fulton_kellieprenslow` are ready for a very selective promotion retry while `newfrontier_vlopez` remains shortlisted but not yet trust-stable enough, completed Pass 54 on `2026-04-08` by promoting only that ready subset into active canonical truth and rerunning the canonical five-theme gate without touching the engine, completed Pass 55 on `2026-04-08` by rerunning the frozen broad `143-real` sanity comparator against the post-promotion live engine state and confirming the broad result held exactly flat, completed Pass 56 on `2026-04-08` by auditing the four stubborn broad disagreement clusters as a system and selecting `outcome_satisfaction` as the next best benchmark-design lane, and completed Pass 57 on `2026-04-08` by reviewing the full broad `outcome_satisfaction` disagreement set and confirming that the lane still needs one truth-shaping pass before any wider engine work.
-
-**Current benchmark truth as of 2026-04-12 (Pass 80)**
-- Canonical benchmark: `100.00%` agreement, `24/24` clean reviews, `0` total disagreements.
-- Broad 143-real sanity benchmark: `69.23%` agreement, `99/143` clean reviews, `60` total disagreements, `0` AI errors.
-- Broad disagreement buckets: `professionalism_trust 11`, `empathy_support 9`, `expectation_setting 8`, `outcome_satisfaction 8`, `timeliness_progress 6`, `communication_clarity 6`, `communication_responsiveness 5`, `office_staff_experience 4`, `billing_transparency 2`, `fee_value 1`.
-- `communication_clarity` lane now stable at 6 disagrees: 4 extra-fires (rows 20, 33, 96, 118 — all pre-classified, row 33 viable suppression deferred), 2 missing_theme non-drivers (rows 69, 125 — confirmed do-not-chase).
-- `communication_responsiveness` stable at 5 (no change from Pass 76).
-- Next lane decision required: no lane currently has a clean unclassified driver shortlist except possibly row 33 billing suppression (clarity, low-priority) or a fresh audit of `expectation_setting` (8) or `timeliness_progress` (6).
-- `python -m pytest backend/tests/test_benchmark_engine.py`: `38 passed`.
-- The `7` attempted Wave80 promotion rows are preserved outside the active gate in `data/calibration/canonical/wave80_staged_pressure_20260408.json`.
-- The narrow positive-cluster recovery pass is now in the live engine, and the active canonical gate stayed clean at `100.00%`, `22/22`, `0` disagreements.
-- The staged replay after that engine pass showed partial relief only: `communication_clarity` `1 -> 0`, `communication_responsiveness` `4 -> 2`, `professionalism_trust` `3 -> 2`, `outcome_satisfaction` `3 -> 2`, while `expectation_setting` stayed flat at `5`.
-- The corpus audit after that replay found no clean repeated intake-promise lane for `expectation_setting`; the only promising seed remains `morgan_elishaurgent`, while filing-delay rows recur mainly as expectation-vs-`timeliness_progress` boundary cases.
-- The filing-delay boundary truth review then narrowed two staged rows Ã¢â‚¬â€ `edgardgarcia_anonymous` and `newfrontier_vlopez` Ã¢â‚¬â€ from `expectation_setting` to `timeliness_progress`, while leaving active canonical truth unchanged because the directly affected canonical row `legacy_106` still carries a real expectation-setting complaint separate from its delay language.
-- The fresh staged replay after that narrowing now leaves only `3` staged `expectation_setting` misses, `2` `professionalism_trust` misses, `2` `outcome_satisfaction` misses, and `1` `communication_responsiveness` miss; `ryangarry_noellevitzthum` and `fulton_kellieprenslow` are now clean against staged truth, and `newfrontier_vlopez` is down to one remaining trust miss.
-- The staged re-triage after that replay now keeps only `4` rows in the active staged set shape: `3` promotion-shortlist rows (`ryangarry_noellevitzthum`, `fulton_kellieprenslow`, `newfrontier_vlopez`) plus `1` remaining staged expectation-setting seed (`morgan_elishaurgent`), while `kowalski_bradcanard`, `matthewlind_wayne`, and `edgardgarcia_anonymous` were downgraded out of staged pressure.
-- The shortlist truth review after that re-triage now marks `ryangarry_noellevitzthum` and `fulton_kellieprenslow` as ready for a very selective promotion retry, while `newfrontier_vlopez` stays on the shortlist but not ready because the remaining `professionalism_trust` pressure is still boundary-sensitive.
-- The selective promotion retry then promoted exactly those two ready rows into active canonical truth, and the canonical five-theme gate stayed perfect at `24/24` clean with `0` disagreements.
-- The post-promotion broad sanity checkpoint then reran the frozen `143-real` comparator and held exactly flat at `55.94%`, `80/143` clean reviews, and `92` disagreements, so the selective two-row promotion did not create a broad regression.
-- The broad disagreement-cluster audit then showed the next best lane is not another micro phrase pass: `outcome_satisfaction` is the clearest large mixed bucket, while `professionalism_trust` is the runner-up and `empathy_support` / `timeliness_progress` look more like later engine phrase lanes than the immediate design pass.
-- The broad `outcome_satisfaction` benchmark-design review then showed the lane is real but still mixed: explicit result rows exist, but the current disagreement set also includes recommendation, gratitude, hypothetical-result, and service-only rows that should not drive phrase work yet.
-- The truth-shaping follow-up then wrote `data/calibration/canonical/outcome_satisfaction_driver_prep_20260408.json`, preserving a clean four-row future driver shortlist and an explicit rejected-row list so the next pass can be a real wider engine pass without drifting back into praise-like or service-only rows.
-- The committed engine baseline now matches the benchmark state the repo docs have been using: a reconciliation pass brought committed `backend/services/benchmark_engine.py` up to the live dirty-worktree baseline and verified both the canonical `24/24` gate and the broad `55.94% / 80 / 92` sanity state from committed code.
-- The first wider `outcome_satisfaction` family pass is now complete: committed engine truth still holds the canonical gate at `24/24` with `0` disagreements, while the broad rerun improved to `57.34%`, `82/143` clean reviews, and `86` disagreements, cutting the broad `outcome_satisfaction` bucket from `15` to `9`.
-- Pass 61 then re-audited the updated post-Pass-60 broad disagreement map and confirmed that the next lane should not be picked by count alone: `professionalism_trust` is still the largest bucket at `15`, but it remains more mixed and inference-heavy than the current `timeliness_progress` lane.
-- The updated broad top buckets now sit at `professionalism_trust 15`, `empathy_support 14`, `timeliness_progress 12`, `expectation_setting 9`, `communication_responsiveness 9`, and `outcome_satisfaction 9`.
-- The Pass 61 row audit selected `timeliness_progress` as the next benchmark-facing lane because it now contains the cleanest repeated timing/progress pressure after Pass 60, with explicit rows around `without achieving any meaningful progress`, `ready on time`, `a day before the hearing`, and `very timely manner`.
-- Pass 61 also wrote `data/calibration/canonical/timeliness_progress_driver_prep_20260409.json` so the next engine pass can stay narrow and avoid drifting into responsiveness, nonperformance, or outcome-context boundary rows.
-- Pass 62 then executed that narrow `timeliness_progress` engine pass using only the prepared shortlist, preserved the active canonical gate at `24/24` clean with `0` disagreements, and improved the broad sanity rerun to `60.14%`, `86/143` clean reviews, and `80` disagreements.
-- The broad `timeliness_progress` bucket dropped from `12` to `6` after Pass 62, while the other broad disagreement buckets held flat by count.
-- The prep-artifact driver rows all recovered cleanly, and the boundary rows around `communication delays`, `responses to questions are extremely slow`, `doing all the work`, `stopped working when they got paid`, `It took 12 months to get it done`, and `although it took a while` stayed out of the lane.
-- Pass 63 then re-audited the updated post-Pass-62 broad disagreement map and confirmed that the next lane should not be assumed from stale pre-Pass-62 docs: `professionalism_trust` still leads at `15` and remains the next benchmark-facing lane, while `empathy_support` stays second at `14`.
-- The Pass 63 row audit also confirmed that `professionalism_trust` is not yet a clean phrase pass. It contains real repeated trust / competence pressure, but the lane is still mixed with recommendation, generic praise, and service-overlap rows.
-- The honest next move after Pass 63 is therefore docs-only plus a future row-by-row `professionalism_trust` truth-shaping review, not immediate engine edits.
-- Pass 64 then completed that row-by-row `professionalism_trust` truth-shaping review and wrote `data/calibration/canonical/professionalism_trust_driver_prep_20260409.json`.
-- The trust lane now trims into five buckets: `3` clean negative future drivers, `3` already-recovered trust rows that should not drive new engine work, `5` recommendation / generic praise non-drivers, `2` service or expectation overlap rows, and `2` rows that are too subjective or too weak to drive.
-- The resulting future trust lane is narrow and negative-only: `our case was forgotten about`, `being mocked by someone in the background of a call`, and `turned down based on a fraction of the total information`.
-- `professionalism_trust` remains stronger than `empathy_support` because the trust lane now has a compact row-backed future shortlist, while the empathy lane still leans more heavily on emotional-overlap and comfort-language subjectivity.
-- Pass 65 then executed that narrow negative `professionalism_trust` engine pass using only the prepared shortlist, preserved the active canonical gate at `24/24` clean with `0` disagreements, and improved the broad sanity rerun to `61.54%`, `88/143` clean reviews, and `77` disagreements.
-- The broad `professionalism_trust` bucket dropped from `15` to `12` after Pass 65, while the other broad disagreement buckets held flat by count.
-- The three prep-artifact trust rows all recovered cleanly, and the non-driver rows around recommendation, subjective professionalism comparisons, and broad service dissatisfaction stayed out of the lane.
-- Pass 66 then re-audited the updated post-Pass-65 broad disagreement map and confirmed that `empathy_support` is now the next benchmark-facing lane after the narrow trust pass, with updated top buckets at `empathy_support 14`, `professionalism_trust 12`, `expectation_setting 9`, `communication_responsiveness 9`, `outcome_satisfaction 9`, `communication_clarity 8`, and `timeliness_progress 6`.
-- Pass 66 also confirmed that the empathy lane is real but should still be prepared narrowly before engine work: the clean pressure sits in reassurance, comfort/support, and dehumanized-treatment rows, while several other rows are still service-overlap, trust-overlap, or generic praise.
-- Pass 67 then completed that row-by-row `empathy_support` truth-shaping review and wrote `data/calibration/canonical/empathy_support_driver_prep_20260409.json`.
-- The empathy lane now trims into `3` clean future drivers, `1` conditional softer driver, `5` professionalism/service/trust-overlap boundary rows, `3` generic emotional-framing praise rows, and `2` too-weak niceness rows.
-- The resulting future empathy lane is narrow: `reassured me when it came to anxiety`, `make me feel comfortable`, and `treated as another number`.
-- Pass 68 then executed that narrow `empathy_support` engine pass using only the prepared shortlist, preserved the active canonical gate at `24/24` clean with `0` disagreements, and improved the broad sanity rerun to `63.64%`, `91/143` clean reviews, and `72` disagreements.
-- The broad `empathy_support` bucket dropped from `14` to `9` after Pass 68, while the other broad disagreement buckets held flat by count.
-- The clean empathy driver rows around `not only did he reassure me`, `make me feel comfortable`, `showed their support even to the end`, and `treated as another number` recovered, while the generic caring and broad emotional-framing rows stayed fenced off.
-- Pass 69 then re-audited the updated post-Pass-68 broad disagreement map and confirmed that `professionalism_trust` is back on top at `12`, ahead of the next tier at `9` (`empathy_support`, `expectation_setting`, `communication_responsiveness`, and `outcome_satisfaction`).
-- The Pass 69 row audit also confirmed that the trust lane still wins over the runner-ups, but not because it is clean enough for an automatic engine pass: it remains a benchmark-design / truth-boundary lane with repeated pressure around professionalism failure, firm-level bad experience, and misled / competence narratives.
-- `outcome_satisfaction` is now the strongest runner-up because it still has a visible result/failure spine, but it remains more contaminated by gratitude, recommendation, and praise-like rows than the remaining trust lane.
-- `expectation_setting` lost ground in the audit because the remaining rows still read more like process dissatisfaction, explanation failures, or service boundary cases than one tight reusable expectation family.
-- Pass 70 then refreshed the full post-Pass-68 `professionalism_trust` row review from current raw broad truth instead of relying on the old pre-Pass-65 shortlist shape.
-- The refreshed trust review shows the lane is cleaner only because the best negative trust rows already landed in Pass 65: the remaining `12` rows now break into `3` already-recovered rows, `5` recommendation / generic praise non-drivers, `2` service-or-outcome-or-expectation overlap rows, and `2` too-subjective or too-weak rows.
-- The refreshed `data/calibration/canonical/professionalism_trust_driver_prep_20260409.json` now records that there is no fresh unrecovered trust shortlist worth a new narrow engine pass.
-- `professionalism_trust` still beats `outcome_satisfaction` narrowly because the remaining trust pressure is slightly more coherent, but the honest next move is another lane-selection decision point rather than automatic trust engine work.
-- Pass 71 then compared the remaining mixed lanes side by side from the current post-Pass-68 broad rerun: `professionalism_trust 12`, `outcome_satisfaction 9`, `expectation_setting 9`, `communication_responsiveness 9`, `communication_clarity 8`.
-- That audit confirmed `professionalism_trust` still leads by count but no longer has a fresh unrecovered shortlist, so count alone should no longer drive the next pass decision.
-- `outcome_satisfaction` won as the next benchmark-facing lane in Pass 71 because it had the strongest row-backed result/failure spine: `got the job done and won so to speak`, `my settlement amount suffered`, `failed me during my appeal`, and `got me all the help to recover from my accident`.
-- Pass 72 then completed the refreshed row-by-row `outcome_satisfaction` truth-shaping review against the post-Pass-68 broad rerun and found the lane is driver-exhausted after Pass 60.
-- The 3 rows called out as the result/failure spine (raw indices 49, 65, 115) are all `extra_theme` disagreements: the engine already fires correctly on them and the disagreements are AI false-negatives, not engine gaps.
-- The remaining 6 `missing_theme` rows are all non-drivers: probate-avoidance language (index 6), recommendation (index 13), gratitude (index 43), trust/nonperformance boundary (index 57), speculative future language (index 100), and empathy/assistance overlap (index 133).
-- `outcome_satisfaction` is no longer the next benchmark-facing lane. A fresh remaining-lane selection audit across `professionalism_trust`, `expectation_setting`, `communication_responsiveness`, and `communication_clarity` is the right next move.
-- Honest readiness: `improved but not demo-safe`.
-
-**Why readiness is still not demo-safe**
-- The active canonical gate is clean again, but the broader `143-real` set is still weak.
-- Broad `1-star` performance is still weak.
-- `expectation_setting`, `outcome_satisfaction`, and `professionalism_trust` still bleed into each other in low-rating narratives on the broader set.
+The active lane is v1.0 readiness and launch packaging, not open-ended calibration phrase chasing.
 
 ---
 
-## Canonical Benchmark Truth
+## Repository Structure
 
-### Authoritative Route / Engine Story
+- `backend/` - Flask monolith, APIs, services, templates, PDF generation, backend tests
+- `frontend/src/` - React/TypeScript/Vite app
+- `Clarion-Agency/` - internal agent-office experiment and operating docs
+- `automation/calibration/` - calibration scripts and benchmark workflow
+- `data/calibration/` - canonical benchmark, expansion corpus, calibration metadata
+- `docs/` - current-state and pass-history docs
+- `tools/` - local smoke-test and seeded-workspace helpers
+
+---
+
+## Benchmark Truth
+
+Current accepted benchmark state:
+
+- Canonical benchmark: `100.00%` agreement, `24/24` clean reviews, `0` disagreements.
+- Broad 143-real sanity benchmark: `69.23%` agreement, `99/143` clean reviews, `60` disagreements, `0` AI errors.
+- Broad disagreement buckets: `professionalism_trust 11`, `empathy_support 9`, `expectation_setting 8`, `outcome_satisfaction 8`, `timeliness_progress 6`, `communication_clarity 6`, `communication_responsiveness 5`, `office_staff_experience 4`, `billing_transparency 2`, `fee_value 1`.
+
+Known benchmark caveats:
+
+- The canonical gate is clean, but the broader `143-real` set still has disagreement limits.
+- Broad low-rating narratives still blur `expectation_setting`, `outcome_satisfaction`, and `professionalism_trust` in some cases.
+- Remaining broad disagreements should be handled as bounded benchmark-design work, not automatic phrase additions.
+
+Authoritative route / engine story:
+
 - `/internal/benchmark` is the authoritative calibration route.
 - `backend/services/benchmark_engine.py` is the live deterministic calibration engine.
 - `backend/services/bench/deterministic_tagger.py` is legacy and only reachable through the frozen `/internal/bench` compatibility path when `BENCH_ENABLED=1`.
-- `/internal/bench` is not a second live benchmark story. It is a frozen compatibility surface and should not be used for current benchmark claims.
+- `/internal/bench` is not a second live benchmark story.
 
-### Canonical Dataset Truth
+Canonical dataset truth:
+
 - Canonical set: `data/calibration/canonical/benchmark_canonical_v1.json`
 - Canonical benchmark is real-only and human-audited.
 - Expansion corpus stays separate unless records are explicitly promoted.
 - Star rating is part of benchmark context and is preserved in analysis.
 
-### Latest Accepted Benchmark Artifacts
-- Canonical rerun: `data/calibration/runs/20260409_empathy_support_narrow_canonical_rerun/`
-- Broad 143-real comparator: `data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/`
-
 ---
 
-## Current Benchmark Findings
+## v1.0 Readiness Checklist
 
-### What Improved
-- The active canonical gate is clean at `24/24` with `0` disagreements.
-- The benchmark file still separates stable gate rows from disputed audit rows instead of forcing the engine to satisfy contradictory labels.
-- The failed Wave80 promotion experiment is preserved as explicit staged pressure instead of being discarded.
-- Broad 143-real agreement improved to `61.54%`, with `88/143` clean reviews.
-- Broad target-theme disagreement counts on the accepted broad comparator now sit at:
-  - `communication_responsiveness` held at `9`
-  - `communication_clarity` held at `8`
-  - `expectation_setting` `11 -> 9`
-  - `office_staff_experience` `6 -> 4`
-  - `professionalism_trust` `15 -> 12`
-  - `outcome_satisfaction` `15 -> 9`
-  - `timeliness_progress` `12 -> 6`
-- Broad total disagreements dropped from `92` to `77`.
+Done:
 
-### What Still Fails
-- Broad `1-star` review disagreement is still the biggest risk slice.
-- Broad `professionalism_trust` improved to `12` disagreements after the narrow Pass 65 recovery.
-- Broad `empathy_support` improved to `9` disagreements after the narrow Pass 68 recovery.
-- Broad `professionalism_trust` is now back on top at `12` disagreements, but the refreshed Pass 70 truth-shaping review confirms it no longer has a clean unrecovered shortlist.
-- Broad `timeliness_progress` improved to `6` disagreements after the narrow Pass 62 recovery.
-- The post-Pass-68 re-audit, refreshed trust review, and remaining mixed-lane selection audit are now complete.
-- The next safe move is still not another automatic engine pass.
-- The `outcome_satisfaction` lane improved materially and now becomes the next benchmark-facing lane again, but only for refreshed truth-shaping first.
-- The staged Wave80 pressure rows no longer justify treating filing-delay as active `expectation_setting` pressure; the remaining expectation lane is narrower and cleaner than the original staged replay count suggested.
-- The negative `expectation_setting` slice is still not one clean rule family; promise-reversal intake language is sparse, while filing-delay language now sits explicitly under `timeliness_progress` or boundary truth instead of expectation pressure.
-- The two staged trust false positives from bare positive `reliable` and bare positive `professional` now have narrow live guards.
-- The remaining ambiguity is no longer in the active canonical gate; it now lives in preserved disputed rows like `legacy_130` and `exp_turnbull_2`, plus the newly staged Wave80 pressure rows.
-- The remaining broad misses are now mostly sparse, inference-heavy, or one-off boundary cases rather than a clean repeated cluster.
-- The current blocker is no longer whether the ready Wave80 positives can enter active truth; it is choosing the next lane honestly now that the remaining trust lane is still leading by count but no longer has a clean fresh driver shortlist.
+- Public, demo, and sample report routes return HTTP 200.
+- Frontend production build passes.
+- Frontend lint has no blocking errors.
+- Focused benchmark engine tests pass.
+- Repo-facing README and setup docs are current enough for senior technical review.
+- Old one-shot script quarantine under `Clarion-Agency/_review_moved_files/` has been removed.
 
-### Current Boundary Problem
-- low-star phone/intake edge cases that still split across responsiveness, office staff, clarity, and expectation
-- the hardest remaining misses now look more bespoke than repeated
-- `expectation_setting` vs `outcome_satisfaction`
-- `professionalism_trust` vs `outcome_satisfaction` in low-star narratives
-- broader low-star narrative interpretation in the frozen `143-real` sanity set
-- recommendation / praise inference in positive `professionalism_trust` and `outcome_satisfaction`
-- `timeliness_progress` vs `communication_responsiveness` in delay-language rows
-- `timeliness_progress` vs nonperformance in rows about doing all the work or the firm stopping after payment
+Still required before stronger launch claims:
 
----
-
-## Active / Next Passes
-
-### Closed Milestones
-1. Canonical benchmark unification - complete.
-2. Recall recovery on the five target governance themes - complete.
-3. Canonical generalization pass - complete.
-4. Engine boundary cleanup + docs truth sync - complete.
-
-### Current Next Pass
-5. **Render deploy verification (active as of 2026-04-12)**
-   - repo is clean at `0798b4a` (Pass 80 engine + canonical + docs all committed and pushed)
-   - deploy of `0798b4a` triggered on push to `main`; build status must be confirmed in Render dashboard
-   - **required env var checklist (must be set in Render environment):**
-     - `DATABASE_URL` — if missing, app silently falls back to ephemeral SQLite and loses all data on restart
-     - `SECRET_KEY` — if missing or weak, app hard-crashes at startup (enforced in `config.py`)
-     - `ADMIN_PASSWORD` — if missing or weak, app hard-crashes at startup (enforced in `config.py`)
-     - `INTERNAL_BENCHMARK_SECRET` — must be set to access `/internal/benchmark` API via Bearer token
-     - `WEB_CONCURRENCY` — should be `1` or unset; Render starter tier default is safe but confirm
-     - `RENDER=true` — set automatically by Render; enables `SESSION_COOKIE_SECURE` flag
-   - **post-deploy smoke checklist:**
-     - `/` public landing loads without error
-     - `/login` → submit credentials → session cookie set with `Secure; HttpOnly; SameSite=Lax`
-     - authenticated dashboard loads and `current_user` is not anonymous (confirms `CompatRow` fix working)
-     - `GET /internal/benchmark/` with `Authorization: Bearer <INTERNAL_BENCHMARK_SECRET>` returns results
-     - benchmark result shows canonical `24/24` clean, broad `~99/143`
-   - **known risks if env vars missing:**
-     - no `DATABASE_URL` → SQLite fallback → data loss on every Render restart; auth still works but no persistence
-     - no `SECRET_KEY` → startup crash, site is down
-     - `SESSION_COOKIE_SECURE` missing (only if `RENDER` env var not injected) → login succeeds but cookie silently dropped by browser on HTTPS → every page load is unauthenticated
-   - after deploy confirmed healthy: evaluate whether Pass 81 calibration is warranted
-     - top 3 broad buckets (`professionalism_trust 11`, `empathy_support 9`, `expectation_setting 8`) are all driver-exhausted
-     - honest next calibration move requires a full row-by-row audit pass just to confirm no new shortlist exists
-     - diminishing returns — shift focus to frontend polish, domain cutover, or Stripe wiring instead
-   - keep collection closed; the active canonical gate restoration is complete
-   - treat Phase 1 as complete and protected, not as the live active batch
-   - use [REVIEW_ACQUISITION_WAVE80.md](C:/Users/beyon/OneDrive/Desktop/CLARION/law-firm-insights-main/docs/REVIEW_ACQUISITION_WAVE80.md) plus `data/calibration/canonical/wave80_staged_pressure_20260408.json` as the source of truth for the staged Wave80 pressure set
-   - use [REVIEW_ACQUISITION_SYSTEM.md](C:/Users/beyon/OneDrive/Desktop/CLARION/law-firm-insights-main/docs/REVIEW_ACQUISITION_SYSTEM.md) for the scalable queueing, batch, and status model
-   - use an agent-driven model where agents own capture + triage prep and human review stays narrow
-   - protect the completed Phase 1 subsets:
-     - `8` reviewed `benchmark_candidate`
-     - `4` `holdout`
-     - `5` `audit_only`
-     - `7` `corpus_only`
-   - do not let disputed audit rows like `legacy_130` or `exp_turnbull_2` drive phrase work without more evidence
-   - treat `data/calibration/canonical/professionalism_trust_driver_prep_20260409.json` as a refreshed stop artifact, not as approval for another automatic trust pass
-   - `outcome_satisfaction` is now confirmed driver-exhausted after Pass 72: all viable drivers recovered in Pass 60, remaining 9 disagreements are non-drivers or AI false-negatives
-   - a fresh remaining-lane selection audit across `professionalism_trust`, `expectation_setting`, `communication_responsiveness`, and `communication_clarity` is the right next move
-   - current live acquisition status:
-     - Phase 1 is complete at `24/24`
-     - Wave80 is live with `72` captured rows in `data/calibration/expansion/batches/20260328_wave80_real_review_batch.csv`
-     - Wave80 source mix is now `google_maps 48`, `avvo 13`, `lawyers_com 6`
-     - Wave80 lane registry now records the recent operating truth in `data/calibration/expansion/scouting/20260328_wave80_lane_registry.csv`
-     - Wave80 harvest-ready queue now lives in `data/calibration/expansion/queues/20260328_wave80_harvest_ready_queue.csv`
-     - Wave80 live role split is `12 benchmark_candidate`, `10 holdout`, `8 audit_only`, `42 corpus_only`
-     - combined totals are `20 benchmark_candidate`, `14 holdout`, `13 audit_only`, `49 corpus_only`
-     - the failed `7`-row Wave80 promotion experiment is preserved outside the active gate in `data/calibration/canonical/wave80_staged_pressure_20260408.json`
-     - `5` reviewed Wave80 rows remain unpromoted
-   - the staged-only replay is complete and the filing-delay truth review is complete
-   - a fresh replay after that narrowing is also complete, and the staged set is now re-triaged into:
-     - `3` promotion-shortlist rows
-     - `1` keep-staged-pressure row
-     - `3` downgraded-out rows
-   - the shortlist truth review is complete and the selective promotion retry is complete:
-     - promoted into active canonical truth: `ryangarry_noellevitzthum`, `fulton_kellieprenslow`
-     - keep on shortlist but not ready: `newfrontier_vlopez`
-   - the broad `143-real` sanity checkpoint is complete and held flat
-   - the broad disagreement-cluster audit is also complete:
-     - `outcome_satisfaction` is the next best benchmark-design lane
-     - `professionalism_trust` is the runner-up
-     - `empathy_support` and `timeliness_progress` are better treated as later engine-phrase lanes
-   - the broad `outcome_satisfaction` benchmark-design review is also complete:
-     - explicit result rows exist and are usable future engine pressure
-     - recommendation, gratitude, hypothetical-result, and service-only rows still contaminate the lane
-   - the truth-shaping follow-up is also complete:
-     - clean future drivers now live in `data/calibration/canonical/outcome_satisfaction_driver_prep_20260408.json`
-     - recommendation, gratitude, hypothetical-result, and service-only rows are explicitly preserved there as non-drivers
-   - committed repo truth now matches the documented live benchmark baseline again
-   - the first wider `outcome_satisfaction` engine pass is complete and improved the broad rerun without canonical regression
-   - the narrow `timeliness_progress` engine pass is now complete and improved the broad rerun without canonical regression
-   - fresh rerun artifacts now live in:
-     - `data/calibration/runs/20260409_timeliness_progress_narrow_canonical_rerun/`
-     - `data/calibration/runs/20260409_timeliness_progress_narrow_broad_rerun/`
-   - the fresh post-Pass-62 broad disagreement-cluster re-audit is now complete
-   - the row-by-row `professionalism_trust` truth-shaping review is complete
-   - the narrow negative `professionalism_trust` engine pass is also complete and improved the broad rerun without canonical regression
-   - fresh rerun artifacts now live in:
-     - `data/calibration/runs/20260409_professionalism_trust_narrow_canonical_rerun/`
-     - `data/calibration/runs/20260409_professionalism_trust_narrow_broad_rerun/`
-   - the row-by-row `empathy_support` truth-shaping review is complete and the narrow `empathy_support` engine pass is also complete
-   - fresh rerun artifacts now live in:
-     - `data/calibration/runs/20260409_empathy_support_narrow_canonical_rerun/`
-     - `data/calibration/runs/20260409_empathy_support_narrow_broad_rerun/`
-   - the broad `empathy_support` bucket improved from `14` to `9` without a canonical regression
-   - the fresh post-Pass-68 broad disagreement-cluster re-audit is now complete:
-     - updated broad top buckets are `professionalism_trust 12`, `empathy_support 9`, `expectation_setting 9`, `communication_responsiveness 9`, `outcome_satisfaction 9`, `communication_clarity 8`, `timeliness_progress 6`
-     - `professionalism_trust` now wins again as the next benchmark-facing lane
-     - `outcome_satisfaction` is the strongest runner-up
-     - `expectation_setting` remains too boundary-heavy to win the next pass
-   - the remaining mixed-lane selection audit is now complete:
-     - `outcome_satisfaction` is the next benchmark-facing lane
-     - `professionalism_trust` still leads by count but is no longer actionable as a fresh narrow engine pass
-     - `expectation_setting`, `communication_responsiveness`, and `communication_clarity` remain weaker because they are more boundary-heavy or sparse
-   - the remaining-lane selection audit (Pass 73) is now complete: full row-by-row classification of all four candidate lanes is in `data/calibration/canonical/lane_selection_audit_pass73_20260411.json`
-   - `communication_responsiveness` is the next benchmark-facing lane: row 107 (`my attorney would always say they were waiting`) is the primary anchor; row 88 (`lack of communication`) is the secondary candidate needing a guard
-   - `professionalism_trust` is confirmed driver-exhausted a second time -- do not reopen without new evidence
-   - `expectation_setting` has one seed (row 82) -- too thin for a pass; revisit later
-   - `communication_clarity` is too thin and overlapping -- revisit after `communication_responsiveness` is complete
-   - the `communication_responsiveness` truth-shaping review (Pass 74) is now complete
-   - driver shortlist confirmed at 2 rows: row 107 (`my attorney would always say they were waiting`) as primary anchor; row 88 (`lack of communication`) as secondary with guard required
-   - 7 excluded rows: rows 2, 101, 104 (generic positive / already-covered), rows 25, 122 (wrong-lane trust/office-staff), rows 110, 111 (intake boundary / severity variant)
-   - prep artifact written to `data/calibration/canonical/communication_responsiveness_driver_prep_20260411.json`
-   - Pass 75 (narrow `communication_responsiveness` engine pass) is now complete:
-     - added `would always say they were waiting` to `communication_responsiveness` negative bucket
-     - canonical gate held at `24/24` clean, `0` disagreements
-     - broad improved to `65.03%`, `93/143`, `69` disagreements; `communication_responsiveness` bucket `9 -> 8`
-     - row 88 (`lack of communication`) remains unrecovered -- guard-reroute fix deferred to Pass 76
-   - fresh rerun artifacts written to `data/calibration/runs/20260411_comm_responsiveness_narrow_canonical_rerun/` and `data/calibration/runs/20260411_comm_responsiveness_narrow_broad_rerun/`
-   - Pass 76–80 complete: CR guard reroute, clarity narrow pass, fee_value narrow pass, canonical corrections — see CHANGELOG_AI.md
-   - calibration is paused at Pass 80; top remaining broad buckets are all driver-exhausted; do not reopen without new evidence or a new review corpus wave
-
-### Later
-6. Pass 81 calibration (only if deploy is healthy and a new driver shortlist emerges — not warranted at current broad bucket state)
-7. Frontend polish and bundle/code-splitting work.
-8. Domain cutover to `clarion.co`.
-9. Stripe webhook URL update + end-to-end subscription smoke test.
-10. Agent Office audit.
-
----
-
-## Locked Architecture Truths
-
-- Live deterministic calibration engine: `backend/services/benchmark_engine.py`
-- Frozen legacy compatibility path: `backend/routes/bench_routes.py`
-- Authoritative benchmark route: `/internal/benchmark`
-- Canonical benchmark file: `data/calibration/canonical/benchmark_canonical_v1.json`
-- Broad sanity set: `data/calibration/inputs/real_reviews.csv`
-- Stack: Flask monolith backend + React/TypeScript/Vite frontend
-- Data layer: SQLite locally with Postgres compatibility scaffolding for production
-
----
-
-## Operator Smoke State
-
-- Local seeded product smoke remains historically confirmed.
-- Current product blocker is not basic workspace flow comprehension.
-- Current blocker is **Render deploy verification and live env var audit** — repo is clean at Pass 80, auth/session/Postgres fixes are committed, but live deploy state has not been confirmed post-push. Calibration is no longer the gating concern.
-
----
-
-## Public Surface State
-
-- `/` - public landing
-- `/demo/reports/:id` - sample governance brief proof
-- `/demo` - secondary mechanics proof
-- `/features`, `/how-it-works`, `/pricing`, `/security`, `/privacy`, `/terms` - React-owned public routes
-
----
-
-## Domain Cutover Checklist
-
-- [ ] Render custom domain configuration
-- [ ] Stripe webhook URL update
-- [ ] Resend domain verification
-- [ ] Frontend `VITE_API_BASE_URL` update
-- [ ] CORS allowed origins update in `backend/app.py`
-
----
-
-## Last Completed Passes
-
-### 2026-03-28 - Wave80 Preparation Milestone
-- Audited the acquisition-lane docs, manifests, queues, and notes for Phase 1 truth drift.
-- Marked Phase 1 as closed instead of still-active.
-- Synced the repo docs to the actual protected subset counts:
-  - `8` reviewed `benchmark_candidate`
-  - `4` `holdout`
-  - `5` `audit_only`
-  - `7` `corpus_only`
-- Added a dedicated Wave80 execution doc and fresh Wave80 starter artifacts so the next collection pass starts from new Wave80 files instead of extending the closed Phase 1 batch.
-- Corrected the stale Phase 1 batch manifest and notes so they no longer claim triage has not started.
-- Verification:
-  - label-queue role counts still match acquisition status
-  - Phase 1 files remain unchanged as evidence and are now treated as closed-stage artifacts
-  - benchmark engine and benchmark truth remained unchanged
-
-### 2026-03-28 - Review Acquisition Candidate Human-Truth Review
-- Reviewed the `9` Phase 1 benchmark candidates only.
-- Kept `8` as reviewed benchmark candidates and downgraded `1` thin row to `corpus_only`.
-- Added expected labels, polarity / severity, evidence spans, and short truth notes into the label queue for the kept set.
-- Updated the live batch row roles plus:
-  - `data/calibration/expansion/queues/20260328_phase1_label_queue.csv`
-  - `data/calibration/expansion/queues/20260328_phase1_holdout_queue.csv`
-- Kept ambiguous or weak evidence out of rule-driving pressure by downgrading instead of forcing a truth decision.
-- Verification:
-  - acquisition status snapshot rewritten to `data/calibration/expansion/manifests/20260328_acquisition_status.json`
-  - Phase 1 still meets both the intake target and the initial holdout / benchmark-candidate prep target
-  - benchmark engine and benchmark truth remained unchanged
-
-### 2026-03-28 - Review Acquisition Capture Start
-- Started live row capture from the ranked source queue instead of stopping at scaffolding.
-- Seeded `data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv` with `11` real Trustpilot rows across:
-  - disability / SSI
-  - estate planning / probate
-  - immigration
-  - debt defense
-- Preserved raw review text, star ratings, source URLs, collection metadata, provenance notes, and weak-slice tags.
-- Synced capture progress into:
-  - `data/calibration/expansion/queues/20260328_phase1_label_queue.csv`
-  - `data/calibration/expansion/scouting/20260328_source_scout_queue.csv`
-  - `data/calibration/expansion/queues/20260328_source_priority_queue.csv`
-  - `data/calibration/expansion/manifests/20260328_batch_manifest.csv`
-  - `data/calibration/expansion/batches/20260328_phase1_collection_notes.md`
-- Verification:
-  - normalization and dedupe completed cleanly with `0` exact duplicate groups and `0` likely duplicate pairs
-  - acquisition status snapshot written to `data/calibration/expansion/manifests/20260328_acquisition_status.json`
-  - benchmark engine and benchmark truth remained unchanged
-
-### 2026-03-28 - Review Acquisition Execution Pass
-- Turned the acquisition plan into execution-ready repo scaffolding.
-- Added:
-  - `docs/REVIEW_ACQUISITION_PHASE1.md`
-  - `data/calibration/expansion/templates/review_intake_template.csv`
-  - `data/calibration/expansion/templates/label_queue_template.csv`
-  - `data/calibration/expansion/templates/holdout_queue_template.csv`
-  - `data/calibration/expansion/templates/collection_notes_template.md`
-  - `data/calibration/expansion/batches/`
-  - `data/calibration/expansion/queues/`
-- Created dated Phase 1 starter files:
-  - `data/calibration/expansion/batches/20260328_phase1_real_review_batch.csv`
-  - `data/calibration/expansion/batches/20260328_phase1_collection_notes.md`
-  - `data/calibration/expansion/queues/20260328_phase1_label_queue.csv`
-  - `data/calibration/expansion/queues/20260328_phase1_holdout_queue.csv`
-- Locked the first live collection batch to a Phase 1 target of `24` real reviews with explicit low-star, mixed `4-star`, positive outcome, and positive trust quotas.
-- Corrected the workflow so Drew is not the firm-discovery bottleneck:
-  - agents own discovery, queue building, first-pass capture, normalization, and triage
-  - human review is now limited to guardrails, spot-checks, duplicate resolution, and final promotion decisions
-- Expanded the scaffolding beyond Phase 1:
-  - added automation for source-priority queue generation, batch normalization / dedupe, and acquisition status tracking
-  - added coverage matrix, scouting, queue, manifest, and stage-target artifacts
-  - added a scalable system doc covering `24 -> 80 -> 160+`
-- Verification:
-  - no engine edits in this pass
-  - no benchmark-truth edits in this pass
-  - collection scaffolding now exists on disk and matches `docs/REVIEW_ACQUISITION_PLAN.md`
-
-### 2026-03-28 - Real-World Review Acquisition Planning Pass
-- Designed the next evidence-building lane so future benchmark work is driven by more real law-firm reviews instead of squeezing sparse ambiguity rows harder.
-- Added a durable working plan in `docs/REVIEW_ACQUISITION_PLAN.md`.
-- Locked the recommended acquisition model to:
-  - manual-first source selection and benchmark promotion by Drew
-  - agent-assisted normalization, weak-slice triage, and dedupe support
-  - limited semi-automation only on stable public review pages
-- Set the next reopening checkpoint at `80` new real reviews with explicit low-star, mixed `4-star`, positive outcome, and positive trust quotas before another benchmark-design or calibration wave.
-- Verification:
-  - no engine edits in this pass
-  - no benchmark-truth edits in this pass
-  - current accepted truth remains `100.00%` canonical and `55.94%` broad on the frozen comparator
-
-### 2026-03-28 - Human-Truth / Benchmark-Design Review Pass
-- Audited the remaining sparse disagreement clusters after Pass 18 without attempting another engine edit.
-- Reviewed four remaining cluster types:
-  - sparse low-star ambiguity rows
-  - positive `professionalism_trust` praise / recommendation inference
-  - positive `outcome_satisfaction` praise / recommendation inference
-  - low-star trust/outcome severity ambiguity
-- Conclusion:
-  - no additional clean repeated pattern remains for the current calibration wave
-  - the main blocker is now benchmark design and human-truth ambiguity, not an obvious deterministic rule gap
-  - the wave should stop here unless new benchmark evidence is added or benchmark expectations are revised deliberately
-- Verification:
-  - no engine edits in this pass
-  - accepted benchmark truth remains `100.00%` canonical and `55.94%` broad on the frozen comparator
-
-### 2026-03-28 - Remaining-Cluster Audit Pass
-- Audited the unresolved low-star ambiguity rows and the flat `professionalism_trust` / `outcome_satisfaction` buckets before attempting another engine pass.
-- Found no additional broad-safe repeated pattern strong enough to justify another rule in the current wave.
-- Confirmed the remaining misses are mostly:
-  - single-row low-star boundary complaints like the 45-minute intake screening row and the `rudely accused ... over the phone` row
-  - recommendation / praise inference in positive `professionalism_trust` and `outcome_satisfaction`
-  - sparse severity or boundary ambiguity in low-star narratives
-- Verification:
-  - no engine edits in this pass
-  - current accepted benchmark truth remains `100.00%` canonical and `55.94%` broad on the frozen comparator
-
-### 2026-03-28 - Broad-Safe Low-Star Boundary Cleanup Pass
-- Kept the canonical gate clean while improving the frozen broad comparator again.
-- Re-routed `always got told that our message was left for our lawyer` away from `office_staff_experience` and into responsiveness behavior.
-- Suppressed the neutral `paralegal is assigned to your case` office-staff false positive.
-- Suppressed legwork-based `expectation_setting` hits only when stronger nonresponse or nonperformance cues were already present.
-- Verification:
-  - canonical rerun: `100.00%`, `22/22` clean, `0` disagreements
-  - broad rerun: `55.94%`, `80/143` clean, `92` disagreements
-  - broad `1-star` disagreement rate held at `0.514`
-
-### 2026-03-28 - Broad-Safe Low-Star Phone/Intake Responsiveness Pass
-- Kept the canonical gate clean while improving the frozen broad `143-real` comparator.
-- Added one narrow responsiveness miss for prolonged intake hold time.
-- Re-routed two explicit phone-intake complaints from `communication_responsiveness` to `office_staff_experience` when the wording clearly targeted intake staff behavior.
-- Verification:
-  - canonical rerun: `100.00%`, `22/22` clean, `0` disagreements
-  - broad rerun: `55.24%`, `79/143` clean, `96` disagreements
-  - broad `1-star` disagreement rate: `0.600 -> 0.514`
-
-### 2026-03-28 - Canonical Benchmark Truth-Correction Pass
-- Corrected canonical truth for `legacy_057` and `legacy_115`.
-- Marked `legacy_130` and `exp_turnbull_2` as `disputed_excluded` so they remain visible for audit but no longer drive the main benchmark gate.
-- Verification:
-  - canonical rerun: `100.00%`, `22/22` clean, `0` disagreements
-  - no engine edits in this pass
-
-### 2026-03-28 - Canonical Generalization Pass
-- Improved canonical benchmark to `79.17%`.
-- Improved broad 143-real sanity benchmark to `49.65%`.
-- Established positive-only canonical slice recovery without broad headline regression.
-
-### 2026-03-28 - Canonical v1 Gap-Closure + Benchmark Story Cleanup
-- Improved canonical benchmark to `54.17%`.
-- Hard-froze `/internal/bench` as a legacy compatibility path.
-- Clarified `/internal/benchmark` as the live authoritative route.
+- Authenticated production smoke with a known test account.
+- Render environment-variable verification.
+- Stripe path verification if billing is part of the v1.0 launch promise.
+- Final deployment hook/domain cutover check if moving from the Render URL to a branded domain.

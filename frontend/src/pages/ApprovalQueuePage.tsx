@@ -356,7 +356,7 @@ function ApprovalQueueContent() {
   }, [selected, fetchAll]);
 
   const toggleSelect = (id: string, checked: boolean) =>
-    setSelected(s => { const n = new Set(s); checked ? n.add(id) : n.delete(id); return n; });
+    setSelected(s => { const n = new Set(s); if (checked) n.add(id); else n.delete(id); return n; });
 
   const filtered = items.filter(i => {
     if (tab !== "all" && i.type !== tab) return false;

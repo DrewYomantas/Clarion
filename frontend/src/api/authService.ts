@@ -1504,10 +1504,6 @@ export async function login(credentials: LoginCredentials): Promise<AuthResponse
 
   const url = `${API_BASE}/auth/login`;
 
-  console.log("[authService] Login attempt:", { url, email: credentials.email });
-
-
-
   try {
 
     const response = await fetch(url, {
@@ -1712,10 +1708,6 @@ export function disableTwoFactor(password: string): Promise<TwoFactorToggleRespo
 
 export async function register(data: RegisterData): Promise<AuthResponse> {
   const url = `${API_BASE}/auth/register`;
-
-  console.log("[authService] Register attempt:", { url, email: data.email, firm_name: data.firm_name });
-
-
 
   try {
 
