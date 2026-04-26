@@ -1,142 +1,112 @@
-# Clarion — Client Feedback Governance for Law Firms
+# Clarion
 
-> **Live demo:** [law-firm-feedback-saas.onrender.com](https://law-firm-feedback-saas.onrender.com)
-> · Built by [Andrew Yomantas](https://linkedin.com/in/andrew-yomantas-94a7383b0)
+Client-feedback governance software for law firms.
 
----
+Clarion turns uploaded client reviews into structured governance signals, assigned follow-through, and a partner-ready brief that can be reviewed on screen, exported to PDF, or sent by email.
 
-## What It Is
+The core product is the governance brief. The dashboard, signal views, action records, billing, and calibration tools exist to support that repeatable review cycle.
 
-Law firm managing partners have no structured way to turn client feedback into governance decisions. Reviews come in across email, surveys, and post-matter feedback — patterns go unnoticed, complaints don't loop back into operations, and partners walk into meetings without a clear record of what clients are actually saying.
-
-Clarion closes that loop.
-
-**The workflow:**
-1. Upload a CSV export of client reviews
-2. Clarion classifies each review into governance themes — deterministically, no LLM dependency
-3. Recurring signals and recommended actions surface automatically
-4. Partners assign owners and due dates to each action
-5. A governance brief is generated — readable on-screen, exportable as PDF, deliverable by email
-6. Repeat each cycle to track what changed, what stalled, and what needs escalation
-
-The output is a partner-ready governance brief with a canonical 5-section spine: Leadership Briefing → Signals That Matter Most → Assigned Follow-Through → Decisions & Next Steps → Supporting Evidence.
-
----
-
-## Live Product
+## Live Surfaces
 
 | Surface | URL |
-|---|---|
-| Landing page | [law-firm-feedback-saas.onrender.com](https://law-firm-feedback-saas.onrender.com) |
-| Sample governance brief | [/demo/reports/sample](https://law-firm-feedback-saas.onrender.com/demo/reports/sample) |
-| Sample workspace | [/demo](https://law-firm-feedback-saas.onrender.com/demo) |
-
----
+| --- | --- |
+| Public site | https://law-firm-feedback-saas.onrender.com |
+| Sample governance brief | https://law-firm-feedback-saas.onrender.com/demo/reports/sample |
+| Sample workspace | https://law-firm-feedback-saas.onrender.com/demo |
 
 ## Tech Stack
 
 | Layer | Technology |
-|---|---|
+| --- | --- |
 | Frontend | React 18, TypeScript, Vite, Tailwind CSS |
-| Backend | Python 3.14, Flask |
-| Database | SQLite (dev) / PostgreSQL (production) |
+| Backend | Python, Flask |
+| Database | SQLite for local development, PostgreSQL for production |
 | Hosting | Render |
-| Billing | Stripe (Free / Team / Firm tiers) |
-| Email | Resend |
-| PDF Generation | ReportLab |
+| Billing | Stripe |
+| Email | Resend / SMTP-compatible mail configuration |
+| PDF | ReportLab |
 | Monitoring | Sentry |
-
-
----
 
 ## Repository Structure
 
-```
-clarion/
-├── backend/                    # Flask API — auth, billing, governance engine
-│   ├── app.py                  # Main application: routes, session, rate limiting, security
-│   ├── pdf_generator.py        # ReportLab-based governance brief PDF generation
-│   └── services/
-│       ├── governance_insights.py   # Signal extraction, severity scoring, action generation
-│       ├── benchmark_engine.py      # Deterministic classification engine (10 themes)
-│       └── email_service.py         # Resend-based partner brief email delivery
-│
-├── frontend/                   # React SPA — marketing site + authenticated workspace
-│   └── src/
-│       ├── pages/              # Route-level components (Dashboard, Signals, Reports, etc.)
-│       └── components/
-│           ├── landing/        # Public marketing components
-│           ├── governance/     # Shared design system components (cards, chips, wrappers)
-│           └── dashboard/      # Dashboard-specific modules
-│
-├── Clarion-Agency/             # Internal AI agent office — Clarion's own operations
-│   ├── agents/                 # Per-division agent definitions and prompts
-│   ├── execution/              # Bounded execution layer (L1/L2/L3 authority model)
-│   └── memory/                 # Standing orders, approved actions, agent memory
-│
-├── automation/calibration/     # Benchmark calibration pipeline scripts
-├── data/calibration/           # Calibration inputs and synthetic review data
-├── docs/                       # Architecture docs, working rules, project state
-└── tools/                      # Smoke test helpers and seeded workspace tooling
+```text
+backend/              Flask app, services, PDF generation, tests
+frontend/             React/Vite app, Playwright and Vitest tests
+docs/                 Product state, engineering rules, launch notes
+automation/           Calibration and benchmark workflow scripts
+data/calibration/     Canonical benchmark inputs and calibration metadata
+Clarion-Agency/       Internal agent-office experiment and operating docs
+tools/                Local smoke-test and seeded-workspace helpers
 ```
 
----
+## Local Setup
 
-## Architecture Notes
+Requirements:
 
-**Classification engine** (`backend/services/benchmark_engine.py`)
-- Fully deterministic — no LLM in the scoring path
-- 10 governance themes with negation/contrast guards and severity escalation
-- Outputs are reproducible and auditable across runs
-- Benchmarked against AI-generated labels via a separate calibration harness
+- Python 3.11+
+- Node.js 18+
+- npm
 
-**Governance brief output**
-- 5-section canonical spine, locked across all output surfaces
-- On-screen brief, ReportLab PDF, and Resend email delivery from the same data source
-- Present mode for displaying the brief on a screen in partner meetings
-
-**Billing and plan enforcement**
-- Stripe integration with Free, Team ($179/mo), and Firm ($449/mo) tiers
-- Plan-scoped feature gating throughout: report limits, PDF watermarks, seat caps
-
-**Security posture**
-- Session-based auth with Flask-Login
-- CSRF protection, rate limiting, security headers
-- Workspace-scoped data isolation — each firm's data is structurally separated at the query level
-
----
-
-## Project Status
-
-Release-candidate ready. Operator smoke-tested end-to-end:
-login → CSV upload → report generation → signals view → action creation → PDF export → partner brief email delivery
-
-Active development: dashboard visual hierarchy pass, design system refinement, domain cutover to `clarion.co`.
-
----
-
-## Running Locally
-
-**Requirements:** Python 3.11+, Node 18+
+Backend:
 
 ```bash
-# Backend
 cd backend
-pip install -r requirements.txt
-cp .env.example .env   # fill in RESEND_API_KEY, SECRET_KEY, STRIPE_* keys
-python app.py
+python -m venv venv312
+venv312\Scripts\pip install -r requirements.txt
+copy config.example.py .env
+venv312\Scripts\python.exe app.py
+```
 
-# Frontend (separate terminal)
+Frontend:
+
+```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-The frontend dev server proxies `/api/*` requests to the Flask backend automatically.
+The frontend dev server proxies `/api/*` requests to the Flask backend.
 
----
+## Useful Commands
 
-## Contact
+```bash
+# Frontend
+cd frontend
+npm run build
+npm run lint
+npm run test
 
-**Andrew Yomantas** — AI Product & Operations Builder, Loves Park IL
-[LinkedIn](https://linkedin.com/in/andrew-yomantas-94a7383b0) · drewyomantas@gmail.com · [GitHub](https://github.com/DrewYomantas)
+# Backend focused tests
+cd backend
+venv312\Scripts\pytest tests/
+
+# Benchmark engine tests from repo root
+python -m pytest backend/tests/test_benchmark_engine.py
+```
+
+## Current State
+
+Clarion is an active solo-dev product, not a polished open-source package. The main app is usable and deployed, but the codebase still carries deliberate early-stage tradeoffs:
+
+- `backend/app.py` is a large Flask monolith.
+- Calibration data and benchmark artifacts are still evolving.
+- Production deployment runs on Render and may require manual redeploy checks.
+- The authenticated product has been through several visual and workflow passes, but broader cleanup remains planned.
+
+For current product truth, read:
+
+1. `docs/NORTH_STAR.md`
+2. `docs/PROJECT_STATE.md`
+3. `docs/AI_WORKING_RULES.md`
+4. `docs/ENGINEERING_PRACTICES.md`
+
+## Security Notes
+
+- Do not commit `.env`, database files, logs, generated PDFs, or local run artifacts.
+- Real credentials belong outside the repo.
+- `backend/config.py` reads secrets from environment variables and rejects weak production secrets.
+- Local SQLite files are intentionally ignored.
+
+## License
+
+MIT. See `backend/LICENSE.txt`.

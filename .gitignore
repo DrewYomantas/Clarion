@@ -1,4 +1,4 @@
-# ── Secrets & environment ────────────────────────────────────────────────────
+# Secrets and environment
 .env
 .env.*
 .env.local
@@ -6,7 +6,7 @@
 *.pem
 secrets/
 
-# ── Python ───────────────────────────────────────────────────────────────────
+# Python
 __pycache__/
 *.py[cod]
 *.pyo
@@ -18,26 +18,27 @@ backend/venv312/
 dist/
 .pytest_cache/
 
-# ── Node / Frontend ──────────────────────────────────────────────────────────
+# Node / frontend
 node_modules/
+frontend/node_modules/
 frontend/dist/
 frontend/build/
 .vite/
 *.tsbuildinfo
 
-# ── Databases ────────────────────────────────────────────────────────────────
+# Databases
 *.db
 *.sqlite
 *.sqlite3
 *.db-shm
 *.db-wal
 
-# ── Logs ─────────────────────────────────────────────────────────────────────
+# Logs
 logs/
 *.log
 tmp/
 
-# ── OS / Editor ──────────────────────────────────────────────────────────────
+# OS / editor
 .DS_Store
 Thumbs.db
 .vscode/
@@ -45,7 +46,7 @@ Thumbs.db
 *.swp
 *.swo
 
-# ── Calibration run artifacts ─────────────────────────────────────────────────
+# Calibration run artifacts
 # These are generated outputs, not source code.
 # Keep the folder structure and README; ignore the data files.
 data/calibration/runs/*/chunks/
@@ -58,7 +59,7 @@ data/calibration/runs/*/gap_report.txt
 data/calibration/runs/*/phrase_candidates.json
 data/calibration/runs/*/disagreement_report.md
 
-# ── Temporary / operational scripts (local use only) ─────────────────────────
+# Temporary / operational scripts
 diag_*.py
 tmp_*.py
 kill_server.ps1
@@ -66,13 +67,13 @@ commit_*.bat
 RUN_CALIBRATION.bat
 START_CLARION.bat
 
-# ── Generated PDF temps ──────────────────────────────────────────────────────
+# Generated PDF temps
 backend/tmp_pdf_checks/
 
-# ── Archive (legacy reference only, not for public review) ───────────────────
+# Archive
 archive/
 
-# ── Agent office runtime artifacts ───────────────────────────────────────────
+# Agent office runtime artifacts
 Clarion-Agency/__pycache__/
 Clarion-Agency/data/
 Clarion-Agency/reports/
@@ -80,9 +81,9 @@ Clarion-Agency/_test_parse.py
 Clarion-Agency/run_daily.bat
 Clarion-Agency/run_clarion_agent_office.bat
 
-# ── Playwright CLI artifacts ──────────────────────────────────────────────────
+# Playwright CLI artifacts
 .playwright-cli/
 
-# ── Audit / diagnostic JSON dumps ────────────────────────────────────────────
+# Audit / diagnostic JSON dumps
 docs/*_AUDIT_*.json
 docs/*_AUDIT_*.md
