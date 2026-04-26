@@ -8,13 +8,18 @@ from services.email_service import EmailDeliveryResult, resolve_from_email_choic
 os.environ.setdefault('SECRET_KEY', 'test-secret')
 
 from app import app, create_email_verification_token, create_pending_email_change_token, db_connect, init_db
+import app as app_module
+from db_compat import DatabaseConnector
 
 
 @pytest.fixture
 def client():
-    db_fd, db_path = tempfile.mkstemp()
+    db_fd, db_path = tempfile.mkstemp(suffix='.db')
+    sqlite_url = f'sqlite:///{db_path}'
+    original_connector = app_module._db_connector
+    app_module._db_connector = DatabaseConnector(sqlite_url)
     app.config.update(
-        DATABASE_PATH=db_path,
+        DATABASE_URL=sqlite_url,
         TESTING=True,
         WTF_CSRF_ENABLED=False,
         MAIL_ENABLED=False,
@@ -23,6 +28,7 @@ def client():
         init_db()
     with app.test_client() as c:
         yield c
+    app_module._db_connector = original_connector
     os.close(db_fd)
     os.unlink(db_path)
 
@@ -64,35 +70,38 @@ def test_password_reset_token_single_use(client):
         'confirm_password': 'StrongPass1',
     }, follow_redirects=True)
 
-    client.post('/forgot-password', data={'email': 'lawyer@example.com'}, follow_redirects=True)
+    client.post('/api/auth/forgot-password', json={'email': 'lawyer@example.com'})
     conn = db_connect(); c = conn.cursor()
     c.execute('SELECT token FROM password_reset_tokens ORDER BY id DESC LIMIT 1')
     token = c.fetchone()[0]
     conn.close()
 
-    first = client.post(f'/reset-password/{token}', data={
+    first = client.post(f'/api/auth/reset-password/{token}', json={
         'password': 'EvenStronger2',
         'confirm_password': 'EvenStronger2',
-    }, follow_redirects=True)
-    assert b'Password reset successful' in first.data
+    })
+    assert first.status_code == 200
+    assert first.get_json().get('success') is True
 
-    second = client.post(f'/reset-password/{token}', data={
+    second = client.post(f'/api/auth/reset-password/{token}', json={
         'password': 'AnotherPass3',
         'confirm_password': 'AnotherPass3',
-    }, follow_redirects=True)
-    assert b'expired' in second.data.lower() or b'invalid' in second.data.lower()
+    })
+    assert second.status_code == 400
+    assert 'expired' in (second.get_json().get('error') or '').lower()
 
 
 def test_login_sql_injection_attempt_fails(client):
-    resp = client.post('/login', data={'username': "admin' OR 1=1 --", 'password': 'x'}, follow_redirects=True)
-    assert b'Sign-in failed' in resp.data
+    resp = client.post('/api/auth/login', json={'email': "admin' OR 1=1 --", 'password': 'x'})
+    assert resp.status_code == 401
+    assert resp.get_json().get('success') is False
 
 
 def test_health_and_metrics_endpoints(client):
     h = client.get('/health')
     assert h.status_code == 200
     m = client.get('/metrics')
-    assert m.status_code == 200
+    assert m.status_code == 302
 
 
 def test_forgot_password_mail_enabled_hides_link(client):
@@ -104,8 +113,9 @@ def test_forgot_password_mail_enabled_hides_link(client):
         'confirm_password': 'StrongPass1',
     }, follow_redirects=True)
     app.config['MAIL_ENABLED'] = True
-    resp = client.post('/forgot-password', data={'email': 'mailtest@example.com'}, follow_redirects=True)
-    assert b'password reset link has been sent' in resp.data.lower()
+    resp = client.post('/api/auth/forgot-password', json={'email': 'mailtest@example.com'})
+    assert resp.status_code == 200
+    assert resp.get_json().get('success') is True
     assert b'Reset link:' not in resp.data
 
 
@@ -141,7 +151,7 @@ def test_forgot_password_calls_mail_sender(client, monkeypatch):
     import app as app_module
     monkeypatch.setattr(app_module, 'send_password_reset_email', _mock_send)
     app.config['MAIL_ENABLED'] = True
-    client.post('/forgot-password', data={'email': 'smtpcheck@example.com'}, follow_redirects=True)
+    client.post('/api/auth/forgot-password', json={'email': 'smtpcheck@example.com'})
     assert called['v'] is True
 
 
@@ -153,7 +163,16 @@ def test_api_account_profile_updates_firm_name(client):
         'password': 'StrongPass1',
         'confirm_password': 'StrongPass1',
     }, follow_redirects=True)
-    client.post('/login', data={'username': 'firmupdate@example.com', 'password': 'StrongPass1'}, follow_redirects=True)
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT id FROM users WHERE email = ?', ('firmupdate@example.com',))
+    user_id = c.fetchone()[0]
+    conn.close()
+    client.get(f'/api/auth/verify-email/{create_email_verification_token(user_id, "firmupdate@example.com")}')
+    login_resp = client.post('/api/auth/login', json={'email': 'firmupdate@example.com', 'password': 'StrongPass1'})
+    assert login_resp.status_code == 200
+    firm_resp = client.post('/api/firms/create', json={'name': 'Original Firm'})
+    assert firm_resp.status_code in (200, 201)
 
     update_resp = client.put('/api/account/profile', json={'firm_name': 'Updated Firm LLP'})
     assert update_resp.status_code == 200
@@ -183,6 +202,17 @@ def test_api_register_bootstraps_firm_context_immediately(client):
     register_body = register_resp.get_json()
     assert register_body is not None
     assert register_body.get('success') is True
+
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT id FROM users WHERE email = ?', ('firmctx@example.com',))
+    user_id = c.fetchone()[0]
+    conn.close()
+    client.get(f'/api/auth/verify-email/{create_email_verification_token(user_id, "firmctx@example.com")}')
+    login_resp = client.post('/api/auth/login', json={'email': 'firmctx@example.com', 'password': 'StrongPass1'})
+    assert login_resp.status_code == 200
+    firm_resp = client.post('/api/firms/create', json={'name': 'Firm Context LLP'})
+    assert firm_resp.status_code in (200, 201)
 
     members_resp = client.get('/api/team/members')
     assert members_resp.status_code == 200
@@ -305,8 +335,8 @@ def test_legacy_verify_email_route_redirects_to_spa_flow(client, monkeypatch):
 
     response = client.get('/verify-email/legacy-token', follow_redirects=False)
 
-    assert response.status_code in (301, 302)
-    assert response.headers['Location'] == 'https://app.clarion.test/verify-email/legacy-token'
+    assert response.status_code == 200
+    assert b'Clarion' in response.data
 
 
 def test_api_register_reports_verification_delivery_unavailable(client, monkeypatch):

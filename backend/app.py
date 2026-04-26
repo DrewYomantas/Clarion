@@ -5960,6 +5960,18 @@ def _parse_csv_upload_rows(upload_file, access_type):
     )
 
 
+def _validate_csv_file(file):
+    if not file:
+        return 'No file provided.'
+    if file.filename == '':
+        return 'No file selected.'
+    if not file.filename.lower().endswith('.csv'):
+        return 'Unsupported file type. Please upload a .csv file.'
+    if (file.mimetype or '').lower() not in ALLOWED_CSV_MIME_TYPES:
+        return 'Invalid file type. Please upload a CSV file.'
+    return None
+
+
 def _insert_user_reviews(user_id, valid_rows):
 
     conn = db_connect()
@@ -7448,7 +7460,7 @@ def register():
 
         )
         verify_token = create_email_verification_token(user_id, email)
-        verification_link = url_for('verify_email', token=verify_token, _external=True)
+        verification_link = _public_verify_email_link(verify_token)
         if _allow_dev_auth_shortcuts_for_email(email):
             login_user(user)
             flash('Internal tester account created. Verification was skipped for this admin-only dev shortcut.', 'success')

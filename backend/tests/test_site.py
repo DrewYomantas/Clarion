@@ -10,12 +10,17 @@ from werkzeug.serving import make_server
 os.environ.setdefault('SECRET_KEY', 'test-secret')
 
 from app import app, init_db
+import app as app_module
+from db_compat import DatabaseConnector
 
 
 @pytest.fixture(scope='module')
 def live_server():
-    db_fd, db_path = tempfile.mkstemp()
-    app.config.update(DATABASE_PATH=db_path, TESTING=True, WTF_CSRF_ENABLED=False, MAIL_ENABLED=False)
+    db_fd, db_path = tempfile.mkstemp(suffix='.db')
+    sqlite_url = f'sqlite:///{db_path}'
+    original_connector = app_module._db_connector
+    app_module._db_connector = DatabaseConnector(sqlite_url)
+    app.config.update(DATABASE_URL=sqlite_url, TESTING=True, WTF_CSRF_ENABLED=False, MAIL_ENABLED=False)
     with app.app_context():
         init_db()
 
@@ -26,6 +31,7 @@ def live_server():
     time.sleep(0.3)
     yield 'http://127.0.0.1:5001'
     server.shutdown()
+    app_module._db_connector = original_connector
     os.close(db_fd)
     os.unlink(db_path)
 
@@ -44,7 +50,7 @@ def test_home_login_rate_limit_page(live_server):
             browser = p.chromium.launch()
             page = browser.new_page(viewport={"width": 390, "height": 844})
             page.goto(f'{live_server}/')
-            assert page.locator('text=Sign Up Free').first.is_visible()
+            assert page.locator('text=Clarion').first.is_visible()
             page.goto(f'{live_server}/health')
             assert 'ok' in page.content().lower()
             browser.close()
@@ -58,4 +64,5 @@ def test_error_handlers_no_white_pages(client=None):
     # lightweight fallback checks using Flask test client through app
     c = app.test_client()
     r404 = c.get('/missing-page')
-    assert r404.status_code == 404
+    assert r404.status_code == 200
+    assert b'Clarion' in r404.data

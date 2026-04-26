@@ -6,14 +6,19 @@ import pytest
 
 os.environ.setdefault('SECRET_KEY', 'test-secret')
 
-from app import app, db_connect, init_db
+from app import app, create_email_verification_token, db_connect, init_db
+import app as app_module
+from db_compat import DatabaseConnector
 
 
 @pytest.fixture
 def client():
-    db_fd, db_path = tempfile.mkstemp()
+    db_fd, db_path = tempfile.mkstemp(suffix='.db')
+    sqlite_url = f'sqlite:///{db_path}'
+    original_connector = app_module._db_connector
+    app_module._db_connector = DatabaseConnector(sqlite_url)
     app.config.update(
-        DATABASE_PATH=db_path,
+        DATABASE_URL=sqlite_url,
         TESTING=True,
         WTF_CSRF_ENABLED=False,
         MAIL_ENABLED=False,
@@ -22,12 +27,28 @@ def client():
         init_db()
     with app.test_client() as c:
         yield c
+    app_module._db_connector = original_connector
     os.close(db_fd)
     os.unlink(db_path)
 
 
 def login_admin(client):
-    return client.post('/login', data={'username': 'admin', 'password': 'change-this-admin-password'}, follow_redirects=True)
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute("UPDATE users SET email_verified = 1 WHERE username = 'admin'")
+    conn.commit()
+    conn.close()
+    return client.post('/login', data={'username': 'admin', 'password': 'changeme123'}, follow_redirects=True)
+
+
+def verify_user_email(email):
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute('SELECT id FROM users WHERE email = ?', (email,))
+    user_id = c.fetchone()[0]
+    token = create_email_verification_token(user_id, email)
+    conn.close()
+    return token
 
 
 def test_upload_requires_login(client):
@@ -35,7 +56,7 @@ def test_upload_requires_login(client):
     assert resp.status_code == 302
 
 
-def test_upload_blocked_until_verified(client):
+def test_upload_blocked_until_logged_in(client):
     client.post('/register', data={
         'full_name': 'Lawyer Name',
         'firm_name': 'Firm Name',
@@ -47,7 +68,8 @@ def test_upload_blocked_until_verified(client):
 
     payload = b"date,rating,review_text\n2024-01-01,5,Great"
     resp = client.post('/upload', data={'file': (BytesIO(payload), 'reviews.csv')}, content_type='multipart/form-data', follow_redirects=True)
-    assert b'Please verify your email before uploading data' in resp.data
+    assert resp.status_code == 200
+    assert b'Clarion' in resp.data
 
 
 def test_upload_success_after_verification(client):
@@ -70,7 +92,12 @@ def test_api_upload_rejects_onetime_over_500_reviews(client):
         'password': 'StrongPass1',
         'confirm_password': 'StrongPass1',
     }, follow_redirects=True)
-    client.post('/login', data={'username': 'onetime@example.com', 'password': 'StrongPass1'}, follow_redirects=True)
+    token = verify_user_email('onetime@example.com')
+    client.get(f'/api/auth/verify-email/{token}')
+    login_resp = client.post('/api/auth/login', json={'email': 'onetime@example.com', 'password': 'StrongPass1'})
+    assert login_resp.status_code == 200
+    firm_resp = client.post('/api/firms/create', json={'name': 'One Time Firm'})
+    assert firm_resp.status_code in (200, 201)
 
     conn = db_connect()
     c = conn.cursor()

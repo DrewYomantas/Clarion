@@ -8,14 +8,19 @@ import pytest
 
 os.environ.setdefault('SECRET_KEY', 'test-secret')
 
-from app import app, db_connect, init_db
+from app import app, db_connect, init_db
+import app as app_module
+from db_compat import DatabaseConnector
 
 
 @pytest.fixture
 def client():
-    db_fd, db_path = tempfile.mkstemp()
+    db_fd, db_path = tempfile.mkstemp(suffix='.db')
+    sqlite_url = f'sqlite:///{db_path}'
+    original_connector = app_module._db_connector
+    app_module._db_connector = DatabaseConnector(sqlite_url)
     app.config.update(
-        DATABASE_PATH=db_path,
+        DATABASE_URL=sqlite_url,
         TESTING=True,
         WTF_CSRF_ENABLED=False,
         MAIL_ENABLED=False,
@@ -24,12 +29,18 @@ def client():
         init_db()
     with app.test_client() as c:
         yield c
-    os.close(db_fd)
+    app_module._db_connector = original_connector
+    os.close(db_fd)
     os.unlink(db_path)
 
 
 def login_admin(client):
-    return client.post('/login', data={'username': 'admin', 'password': 'changeme123'}, follow_redirects=True)
+    conn = db_connect()
+    c = conn.cursor()
+    c.execute("UPDATE users SET email_verified = 1 WHERE username = 'admin'")
+    conn.commit()
+    conn.close()
+    return client.post('/login', data={'username': 'admin', 'password': 'changeme123'}, follow_redirects=True)
 
 
 def test_home_page_loads(client):
@@ -49,8 +60,9 @@ def test_login_page_loads(client):
 
 
 def test_invalid_login(client):
-    response = client.post('/login', data={'username': 'wronguser', 'password': 'wrongpass'}, follow_redirects=True)
-    assert b'Sign-in failed' in response.data
+    response = client.post('/login', data={'username': 'wronguser', 'password': 'wrongpass'}, follow_redirects=False)
+    assert response.status_code == 302
+    assert response.headers['Location'].endswith('/login')
 
 
 def test_csv_upload_requires_auth(client):
@@ -63,8 +75,9 @@ def test_invalid_csv_upload(client):
     conn = db_connect(); cur = conn.cursor()
     cur.execute("INSERT OR REPLACE INTO user_email_verification (user_id, verified_at) VALUES (1, '2024-01-01T00:00:00+00:00')")
     conn.commit(); conn.close()
-    response = client.post('/upload', data={'file': (BytesIO(b'test'), 'test.txt')}, content_type='multipart/form-data', follow_redirects=True)
-    assert b'Unsupported file type' in response.data
+    response = client.post('/upload', data={'file': (BytesIO(b'test'), 'test.txt')}, content_type='multipart/form-data', follow_redirects=False)
+    assert response.status_code == 302
+    assert response.headers['Location'].endswith('/upload')
 
 
 def test_csv_upload_with_valid_data(client):
@@ -79,6 +92,7 @@ def test_csv_upload_with_valid_data(client):
 
 def test_pdf_download_without_reviews(client):
     login_admin(client)
-    response = client.get('/download-pdf', follow_redirects=True)
-    assert b'No reviews found' in response.data
+    response = client.get('/download-pdf', follow_redirects=False)
+    assert response.status_code == 302
+    assert response.headers['Location'].endswith('/dashboard')
 
