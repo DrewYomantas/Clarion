@@ -21,7 +21,6 @@ import click
 from urllib.parse import urlparse
 from io import StringIO, BytesIO
 from datetime import datetime, timedelta, timezone
-from collections import Counter
 from time import perf_counter
 from typing import Optional
 import zoneinfo
@@ -224,6 +223,7 @@ from services.plan_limits import PLAN_LIMITS
 from services import plan_service
 from services.signal_monitor import scan_recent_reviews_for_signals, get_active_alerts
 from services.slack_service import send_slack_alert
+from services.theme_summary import classify_themes_in_reviews, summarize_review_rows
 from services.scheduler import start_scheduler as start_weekly_scheduler
 from services.email_brief import (
     build_partner_brief_html,
@@ -3785,22 +3785,7 @@ def analyze_reviews():
 
 
     if not reviews:
-
-        return {
-
-            'total_reviews': 0,
-
-            'avg_rating': 0,
-
-            'themes': {},
-
-            'top_praise': [],
-
-            'top_complaints': [],
-
-            'all_reviews': []
-
-        }
+        return summarize_review_rows([])
 
 
 
@@ -3814,69 +3799,7 @@ def analyze_reviews():
 
 
 
-    total_reviews = len(analysis_reviews)
-
-    avg_rating = sum(r['rating'] for r in analysis_reviews) / total_reviews
-
-
-
-    theme_keywords = {
-
-        'Communication': ['communication', 'responsive', 'returned calls', 'kept me informed', 'updates', 'contact'],
-
-        'Professionalism': ['professional', 'courteous', 'respectful', 'polite', 'demeanor', 'ethical'],
-
-        'Legal Expertise': ['knowledgeable', 'experienced', 'expert', 'skilled', 'competent', 'expertise'],
-
-        'Case Outcome': ['won', 'successful', 'settlement', 'verdict', 'result', 'outcome', 'resolved'],
-
-        'Cost/Value': ['expensive', 'affordable', 'fees', 'billing', 'cost', 'worth it', 'value', 'price'],
-
-        'Responsiveness': ['quick', 'slow', 'delayed', 'waiting', 'timely', 'immediately', 'promptly'],
-
-        'Compassion': ['caring', 'understanding', 'empathetic', 'compassionate', 'listened', 'supportive'],
-
-        'Staff Support': ['staff', 'assistant', 'paralegal', 'secretary', 'team', 'office'],
-
-    }
-
-
-
-    theme_counts = Counter()
-
-    for review in analysis_reviews:
-
-        text_lower = review['review_text'].lower()
-
-        for theme, keywords in theme_keywords.items():
-
-            if any(keyword in text_lower for keyword in keywords):
-
-                theme_counts[theme] += 1
-
-
-
-    top_praise = [r for r in analysis_reviews if r['rating'] >= 4][:10]
-
-    top_complaints = [r for r in analysis_reviews if r['rating'] <= 2][:10]
-
-
-
-    return {
-
-        'total_reviews': total_reviews,
-
-        'avg_rating': round(avg_rating, 2),
-
-        'themes': dict(theme_counts.most_common(8)),
-
-        'top_praise': top_praise,
-
-        'top_complaints': top_complaints,
-
-        'all_reviews': reviews  # keep full set for reference
-
-    }
+    return summarize_review_rows(analysis_reviews, all_reviews=reviews)
 
 
 
@@ -5440,7 +5363,18 @@ def get_report_access_type(user_id):
     return 'trial'
 
 
+def _check_upload_credits(user_id, access_type):
+    """Compatibility guard for the legacy web upload route."""
+    if access_type in ('monthly', 'annual', 'professional', 'leadership', 'team', 'firm'):
+        return True, None
 
+    if access_type == 'onetime':
+        state = _get_current_user_state(user_id) or {}
+        remaining = int(state.get('one_time_reports_purchased') or 0) - int(state.get('one_time_reports_used') or 0)
+        return remaining > 0, None
+
+    trial_usage_count, trial_limit = _get_trial_usage_count(user_id)
+    return trial_usage_count < trial_limit, trial_usage_count
 
 
 def _has_report_recovery_access(user_id):
@@ -6704,22 +6638,7 @@ def _analyze_reviews_tx(c, user_id):
 
 
     if not reviews:
-
-        return {
-
-            'total_reviews': 0,
-
-            'avg_rating': 0,
-
-            'themes': {},
-
-            'top_praise': [],
-
-            'top_complaints': [],
-
-            'all_reviews': [],
-
-        }
+        return summarize_review_rows([])
 
 
 
@@ -6737,69 +6656,7 @@ def _analyze_reviews_tx(c, user_id):
 
 
 
-    total_reviews = len(analysis_reviews)
-
-    avg_rating = sum(r['rating'] for r in analysis_reviews) / total_reviews
-
-
-
-    theme_keywords = {
-
-        'Communication': ['communication', 'responsive', 'returned calls', 'kept me informed', 'updates', 'contact'],
-
-        'Professionalism': ['professional', 'courteous', 'respectful', 'polite', 'demeanor', 'ethical'],
-
-        'Legal Expertise': ['knowledgeable', 'experienced', 'expert', 'skilled', 'competent', 'expertise'],
-
-        'Case Outcome': ['won', 'successful', 'settlement', 'verdict', 'result', 'outcome', 'resolved'],
-
-        'Cost/Value': ['expensive', 'affordable', 'fees', 'billing', 'cost', 'worth it', 'value', 'price'],
-
-        'Responsiveness': ['quick', 'slow', 'delayed', 'waiting', 'timely', 'immediately', 'promptly'],
-
-        'Compassion': ['caring', 'understanding', 'empathetic', 'compassionate', 'listened', 'supportive'],
-
-        'Staff Support': ['staff', 'assistant', 'paralegal', 'secretary', 'team', 'office'],
-
-    }
-
-
-
-    theme_counts = Counter()
-
-    for review in analysis_reviews:
-
-        text_lower = review['review_text'].lower()
-
-        for theme, keywords in theme_keywords.items():
-
-            if any(keyword in text_lower for keyword in keywords):
-
-                theme_counts[theme] += 1
-
-
-
-    top_praise = [r for r in analysis_reviews if r['rating'] >= 4][:10]
-
-    top_complaints = [r for r in analysis_reviews if r['rating'] <= 2][:10]
-
-
-
-    return {
-
-        'total_reviews': total_reviews,
-
-        'avg_rating': round(avg_rating, 2),
-
-        'themes': dict(theme_counts.most_common(8)),
-
-        'top_praise': top_praise,
-
-        'top_complaints': top_complaints,
-
-        'all_reviews': reviews,
-
-    }
+    return summarize_review_rows(analysis_reviews, all_reviews=reviews)
 
 
 
