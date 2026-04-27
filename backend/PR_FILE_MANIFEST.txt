@@ -1,2 +1,0 @@
-This PR intentionally excludes binary database artifacts (e.g., feedback.db).
-Only source-oriented files should be included in commits for this branch.

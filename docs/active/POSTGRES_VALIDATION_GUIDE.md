@@ -1,8 +1,22 @@
-# Clarion — PostgreSQL Pre-Launch Validation Guide
+# Clarion - PostgreSQL Pre-Launch Validation Guide
 
 **Purpose:** Catch production-only bugs before they happen.  
 **Scope:** `db_compat.py`, `app.py` schema + queries.  
 **Goal:** Confirm all critical user flows work identically on PostgreSQL as on SQLite.
+
+---
+
+## Current status
+
+This guide started as a code-audit bug list. Most of the concrete SQLite-only issues called out below have already been fixed in the current codebase:
+
+- PDF artifact persistence no longer depends on `sqlite3.Binary()`.
+- The shared DB operational-error tuple exists for SQLite and Postgres paths.
+- `CURRENT_TIMESTAMP` is used for the launch-critical defaults that previously depended on SQLite-only `datetime('now')`.
+- `db_compat.py` already special-cases `datetime('now')` before the generic `datetime(...)` rewrite.
+- The `sqlite_master` inspection in the firms migration path is already guarded away from PostgreSQL.
+
+What remains before launch is not another paper audit. It is live verification against a real PostgreSQL database for the critical flows listed later in this guide.
 
 ---
 

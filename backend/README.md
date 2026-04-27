@@ -2,6 +2,8 @@
 
 Flask backend for Clarion's authentication, workspace data, review upload, governance signal generation, billing hooks, PDF generation, and email delivery.
 
+The primary production surface is the SPA-backed `/api/*` contract. Legacy Flask-rendered pages remain in place as compatibility paths for older flows and operational convenience.
+
 ## Setup
 
 ```bash
@@ -52,6 +54,7 @@ python -m pytest backend/tests/test_benchmark_engine.py
 | --- | --- |
 | `app.py` | Main Flask monolith and route surface |
 | `config.py` | Environment-backed runtime configuration |
+| `routes/` | Extracted API route lanes for auth, account, team, firms, billing, and support |
 | `services/benchmark_engine.py` | Deterministic governance theme classifier |
 | `services/governance_insights.py` | Signal and action generation |
 | `pdf_generator.py` | ReportLab governance brief PDF generation |
@@ -63,3 +66,4 @@ python -m pytest backend/tests/test_benchmark_engine.py
 - `config.py` rejects missing or weak production secrets.
 - Local SQLite is for development only; production should use `DATABASE_URL`.
 - Redis-backed rate limiting should be configured in production with `REDIS_URL`.
+- Focused PostgreSQL smoke verification is still a release gate even though the SQLite regression suite is green.

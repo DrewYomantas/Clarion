@@ -36,6 +36,7 @@ What is true now:
 
 - The public product surfaces are reachable.
 - The repository has been cleaned for senior technical review.
+- The first backend monolith-reduction pass is live: auth, account, team, firms, billing, and support API lanes now live under `backend/routes/` with the existing Flask app/session model preserved.
 - The canonical benchmark gate is clean.
 - The broader benchmark still has known disagreement limits.
 - The product should not be described as fully launch-proven until authenticated production smoke, Render env verification, and deployment hook verification are complete.
@@ -47,6 +48,7 @@ The active lane is v1.0 readiness and launch packaging, not open-ended calibrati
 ## Repository Structure
 
 - `backend/` - Flask monolith, APIs, services, templates, PDF generation, backend tests
+- `backend/routes/` - extracted API route lanes for auth, account, team, firms, billing, and support
 - `frontend/src/` - React/TypeScript/Vite app
 - `Clarion-Agency/` - internal agent-office experiment and operating docs
 - `automation/calibration/` - calibration scripts and benchmark workflow
@@ -102,4 +104,5 @@ Still required before stronger launch claims:
 - Authenticated production smoke with a known test account.
 - Render environment-variable verification.
 - Stripe path verification if billing is part of the v1.0 launch promise.
+- Focused PostgreSQL smoke verification of init, auth, firm creation, upload, report retrieval, and PDF artifact flows.
 - Final deployment hook/domain cutover check if moving from the Render URL to a branded domain.

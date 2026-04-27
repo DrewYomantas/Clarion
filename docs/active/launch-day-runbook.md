@@ -40,6 +40,7 @@ Use `start.bat` or always invoke `venv312\Scripts\python.exe` explicitly.
 
 ## 3) Functional smoke test
 
+- [ ] Confirm the SPA shell loads and `/api/auth/me` responds as expected after login.
 - [ ] Submit one feedback entry through `/feedback`.
 - [ ] Log in to `/login` and confirm dashboard updates.
 - [ ] Upload a small valid CSV and verify records import.
@@ -69,4 +70,4 @@ Use `start.bat` or always invoke `venv312\Scripts\python.exe` explicitly.
 
 ## Suggested go/no-go gate
 
-Proceed when all sections 0-4 are complete and section 5 has backup + restore validated.
+Proceed when all sections 0-4 are complete, section 5 has backup + restore validated, and the Postgres-specific smoke path has been exercised for auth, firm creation, upload, report retrieval, and PDF artifact storage.

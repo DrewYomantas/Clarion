@@ -54,19 +54,15 @@ async function parsePdfText(bytes: Buffer): Promise<string> {
 }
 
 async function fetchExportPdfBytes(page: Page, reportId: number): Promise<Buffer> {
-  // eslint-disable-next-line no-console
   console.log(`[export] ${new Date().toISOString()} api-fetch:start report_id=${reportId}`);
   const pdfResp = await page.request.get(`/api/reports/${reportId}/pdf?export=1`, {
     headers: E2E_HEADER,
     timeout: 60_000,
   });
-  // eslint-disable-next-line no-console
   console.log(`[export] ${new Date().toISOString()} api-fetch:done report_id=${reportId} status=${pdfResp.status()}`);
   if (!pdfResp.ok()) {
     const bodyText = await pdfResp.text().catch(() => "");
-    // eslint-disable-next-line no-console
     console.log("[export] non-200 status:", pdfResp.status());
-    // eslint-disable-next-line no-console
     console.log("[export] body:", bodyText.slice(0, 500));
   }
   expect(pdfResp.ok()).toBeTruthy();
@@ -74,14 +70,12 @@ async function fetchExportPdfBytes(page: Page, reportId: number): Promise<Buffer
 }
 
 async function exerciseExportButton(page: Page): Promise<void> {
-  // eslint-disable-next-line no-console
   console.log(`[export] ${new Date().toISOString()} ui-click:start`);
   const exportButton = page.getByTestId("export-brief").first();
   await expect(exportButton).toBeVisible();
   await expect(exportButton).toBeEnabled();
   await exportButton.click();
   await page.waitForTimeout(500);
-  // eslint-disable-next-line no-console
   console.log(`[export] ${new Date().toISOString()} ui-click:done`);
 }
 
@@ -232,10 +226,8 @@ test("client governance smoke", async ({ page }) => {
 
   page.on("response", async (resp) => {
     if (resp.url().includes("/api/upload")) {
-      // eslint-disable-next-line no-console
       console.log("[upload] status:", resp.status());
       try {
-        // eslint-disable-next-line no-console
         console.log("[upload] body:", await resp.text());
       } catch {
         // ignore logging parse failures
@@ -244,7 +236,6 @@ test("client governance smoke", async ({ page }) => {
   });
 
   page.on("console", (msg) => {
-    // eslint-disable-next-line no-console
     console.log("[browser console]", msg.type(), msg.text());
   });
 
@@ -291,7 +282,6 @@ test("client governance smoke", async ({ page }) => {
   });
   if (!createActionResponse.ok()) {
     const bodyText = await createActionResponse.text().catch(() => "");
-    // eslint-disable-next-line no-console
     console.log("[actions:create] status/body:", createActionResponse.status(), bodyText.slice(0, 500));
   }
   expect(createActionResponse.ok()).toBeTruthy();
@@ -330,13 +320,11 @@ test("client governance smoke", async ({ page }) => {
   const secondPdfExposure = extractExposureFromPdfText(secondPdfText);
   expect(secondPdfExposure).toBeTruthy();
   if (secondPdfExposure !== exposureAfter) {
-    // eslint-disable-next-line no-console
     console.log(
       `[parity:after] mismatch canonical=${exposureAfter} pdf=${secondPdfExposure} report_id=${secondExportReportId}`,
     );
   }
   // Console-friendly release summary.
-  // eslint-disable-next-line no-console
   console.log(
     [
       "[SMOKE]",

@@ -39,6 +39,8 @@ Clarion-Agency/       Internal agent-office experiment and operating docs
 tools/                Local smoke-test and seeded-workspace helpers
 ```
 
+The SPA plus `/api/*` backend is the primary product path. Legacy Flask-rendered pages still exist for compatibility and local operational flows, but they are no longer the architectural center of the product.
+
 ## Local Setup
 
 Requirements:
@@ -89,9 +91,11 @@ python -m pytest backend/tests/test_benchmark_engine.py
 Clarion is an active solo-dev product, not a polished open-source package. The main app is usable and deployed, but the codebase still carries deliberate early-stage tradeoffs:
 
 - `backend/app.py` is a large Flask monolith.
+- Auth, account, team, billing, support, and firm-creation API lanes are now split into `backend/routes/` modules while the main app keeps the existing app/session model.
 - Calibration data and benchmark artifacts are still evolving.
 - Production deployment runs on Render and may require manual redeploy checks.
 - The authenticated product has been through several visual and workflow passes, but broader cleanup remains planned.
+- PostgreSQL is the production target, but launch claims still depend on focused Postgres smoke verification for critical flows.
 
 For current product truth, read:
 
