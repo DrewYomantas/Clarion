@@ -7076,110 +7076,52 @@ def _verify_two_factor_challenge_code(challenge_id, code, expected_user_id=None)
 
 
 def _serve_public_react_route_or_template(template_name, **context):
-    """Prefer the React public surface when built; otherwise use the legacy template."""
-    if _react_dist_exists:
-        return send_from_directory(_REACT_DIST, 'index.html')
-    return render_template(template_name, **context)
+    return public_web_routes.serve_public_react_route_or_template(template_name, **context)
 
 
 @app.route("/")
 def marketing_home():
-    """Serve the canonical public landing surface."""
-    return _serve_public_react_route_or_template("marketing_home.html")
-
-
-
-
-
-
+    return public_web_routes.marketing_home()
 
 
 @app.route("/how-it-works")
-
 def how_it_works():
-
-    return _serve_public_react_route_or_template("how_it_works.html")
-
+    return public_web_routes.how_it_works()
 
 
 @app.route("/features")
-
 def features():
-
-    return _serve_public_react_route_or_template("features.html")
-
+    return public_web_routes.features()
 
 
 @app.route("/case-studies")
-
 def case_studies():
-
-    # Legacy Flask surface — redirect to the canonical React features page.
-    return redirect("/features", 301)
-
+    return public_web_routes.case_studies()
 
 
 @app.route("/pricing")
-
 def pricing():
-
-    if _react_dist_exists:
-        return send_from_directory(_REACT_DIST, 'index.html')
-
-    return render_template(
-
-        "pricing.html",
-
-        trial_limit=FREE_PLAN_REPORT_LIMIT,
-
-        onetime_price=app.config['ONETIME_REPORT_PRICE'],
-
-        monthly_price=app.config['MONTHLY_SUBSCRIPTION_PRICE'],
-
-        annual_price=app.config['ANNUAL_SUBSCRIPTION_PRICE'],
-
-    )
-
+    return public_web_routes.pricing()
 
 
 @app.route("/privacy")
-
 def privacy():
-
-    """Privacy policy page"""
-
-    return _serve_public_react_route_or_template("privacy.html")
-
+    return public_web_routes.privacy()
 
 
 @app.route("/terms")
-
 def terms():
-
-    """Terms of service page"""
-
-    return _serve_public_react_route_or_template("terms.html")
-
+    return public_web_routes.terms()
 
 
 @app.route("/security")
-
 def security():
-
-    """Security page"""
-
-    return _serve_public_react_route_or_template("security.html")
-
+    return public_web_routes.security()
 
 
 @app.route("/app")
-
 def index():
-
-    """Legacy app landing page — redirect to login."""
-
-    return redirect("/login", 301)
-
+    return public_web_routes.index()
 
 
 # ===== CLIENT FEEDBACK ROUTES =====
@@ -7187,113 +7129,15 @@ def index():
 
 
 @app.route('/feedback', methods=['GET', 'POST'])
-
 @limiter.limit('10 per minute')
-
 @limiter.limit('20 per hour')
-
 def feedback_form():
-
-    """
-
-    Public client feedback submission form.
-
-    F15/PR6: submissions write to `public_feedback`, never to `reviews` or
-
-    `review_ownership`. This prevents any public user from poisoning a firm's
-
-    dataset regardless of authentication status.
-
-    PR6b: rate-limited to 10/min + 20/hr per IP; review_text hard-capped at MAX_REVIEW_TEXT_LENGTH.
-
-    """
-
-    if request.method == 'POST':
-
-        date = request.form.get('date') or datetime.now().strftime('%Y-%m-%d')
-
-        rating = request.form.get('rating')
-
-        review_text = request.form.get('review_text') or ''
-
-
-
-        if not rating or not review_text:
-
-            flash('Please provide a rating and review text.', 'danger')
-
-            return redirect(url_for('feedback_form'))
-
-
-
-        try:
-
-            rating = int(rating)
-
-            if rating < 1 or rating > 5:
-
-                raise ValueError
-
-        except ValueError:
-
-            flash('Rating must be between 1 and 5.', 'danger')
-
-            return redirect(url_for('feedback_form'))
-
-
-
-        # PR6b: hard cap � do NOT silently truncate; reject oversized input.
-
-        if len(review_text) > MAX_REVIEW_TEXT_LENGTH:
-
-            flash(f'Review text is too long. Please keep it under {MAX_REVIEW_TEXT_LENGTH} characters.', 'danger')
-
-            return redirect(url_for('feedback_form'))
-
-
-
-        sanitized_review_text = bleach.clean(review_text, strip=True)
-
-
-
-        # F15/PR6: write ONLY to public_feedback � never touches reviews or review_ownership.
-
-        conn = db_connect()
-
-        c = conn.cursor()
-
-        c.execute(
-
-            'INSERT INTO public_feedback (date, rating, review_text) VALUES (?, ?, ?)',
-
-            (date, rating, sanitized_review_text),
-
-        )
-
-        conn.commit()
-
-        conn.close()
-
-
-
-        flash('Thank you for your feedback!', 'success')
-
-        return redirect(url_for('thank_you'))
-
-
-
-    return render_template('feedback_form.html')
-
+    return public_web_routes.feedback_form()
 
 
 @app.route('/thank-you')
-
 def thank_you():
-
-    """Thank you page after feedback submission"""
-
-    return render_template('thank_you.html')
-
+    return public_web_routes.thank_you()
 
 
 # ===== ADMIN AUTH ROUTES =====
@@ -7752,10 +7596,7 @@ def login_two_factor():
 @app.route('/forgot-password', methods=['GET'])
 @limiter.limit('20 per hour')
 def forgot_password():
-    """Legacy GET: redirect to SPA /forgot-password."""
-    if _react_dist_exists:
-        return send_from_directory(_REACT_DIST, 'index.html')
-    return redirect(f'{_resolve_public_app_base_url()}/forgot-password', code=302)
+    return public_web_routes.forgot_password()
 
 
 # --- JSON API for SPA password reset ---
@@ -7921,10 +7762,7 @@ def forgot_password_form():
 @app.route('/reset-password/<token>', methods=['GET'])
 @limiter.limit('20 per hour')
 def reset_password_legacy_get(token):
-    """Hand off legacy reset link to SPA /reset-password/:token."""
-    if _react_dist_exists:
-        return send_from_directory(_REACT_DIST, 'index.html')
-    return redirect(f'{_resolve_public_app_base_url()}/reset-password/{token}', code=302)
+    return public_web_routes.reset_password_legacy_get(token)
 
 
 @app.route('/reset-password-form/<token>', methods=['GET', 'POST'])
@@ -9429,6 +9267,7 @@ from routes import account as account_routes
 from routes import auth as auth_routes
 from routes import billing as billing_routes
 from routes import firms as firms_routes
+from routes import public_web as public_web_routes
 from routes import support as support_routes
 from routes import team as team_routes
 

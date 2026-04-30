@@ -88,12 +88,13 @@ def _login_api(client, email="smoke@example.com", password="SmokePass1!"):
 
 
 def test_extracted_api_route_lanes_register_cleanly():
-    from routes import account, auth, billing, firms, support, team
+    from routes import account, auth, billing, firms, public_web, support, team
 
     assert account.account_bp.name == "account_routes"
     assert auth.auth_bp.name == "auth_routes"
     assert billing.billing_bp.name == "billing_routes"
     assert firms.firms_bp.name == "firms_routes"
+    assert callable(public_web.marketing_home)
     assert support.support_bp.name == "support_routes"
     assert team.team_bp.name == "team_routes"
 
@@ -105,6 +106,17 @@ def test_extracted_api_route_lanes_register_cleanly():
         "/api/team/invite",
         "/api/billing/checkout",
         "/api/support/tickets",
+    ):
+        assert route in rules
+
+    for route in (
+        "/",
+        "/features",
+        "/pricing",
+        "/feedback",
+        "/thank-you",
+        "/forgot-password",
+        "/reset-password/<token>",
     ):
         assert route in rules
 

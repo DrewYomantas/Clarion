@@ -36,7 +36,7 @@ What is true now:
 
 - The public product surfaces are reachable.
 - The repository has been cleaned for senior technical review.
-- The first backend monolith-reduction pass is live: auth, account, team, firms, billing, and support API lanes now live under `backend/routes/` with the existing Flask app/session model preserved.
+- The backend monolith-reduction pass is live: auth, account, team, firms, billing, support API lanes, and public compatibility web handlers now live under `backend/routes/` with the existing Flask app/session model preserved.
 - Focused PostgreSQL smoke passed locally against PostgreSQL 18 on port 5433: `tests/test_postgres_smoke.py` covered init, auth, firm creation, upload, report retrieval, PDF generation, and PDF artifact storage.
 - Security/ops sweep tightened production-facing diagnostics: connection-string credentials are redacted from DB/Redis startup logs, 2FA codes are only logged in dev/test fallback mode, and legacy web verification-link fallback copy no longer exposes links in production.
 - The canonical benchmark gate is clean.
@@ -50,7 +50,7 @@ The active lane is v1.0 readiness and launch packaging, not open-ended calibrati
 ## Repository Structure
 
 - `backend/` - Flask monolith, APIs, services, templates, PDF generation, backend tests
-- `backend/routes/` - extracted API route lanes for auth, account, team, firms, billing, and support
+- `backend/routes/` - extracted route lanes for auth, account, team, firms, billing, support, and public compatibility web handlers
 - `frontend/src/` - React/TypeScript/Vite app
 - `Clarion-Agency/` - internal agent-office experiment and operating docs
 - `automation/calibration/` - calibration scripts and benchmark workflow

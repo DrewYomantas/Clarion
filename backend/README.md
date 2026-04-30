@@ -61,9 +61,9 @@ If Postgres returns `password authentication failed`, update the URL to match th
 
 | Path | Purpose |
 | --- | --- |
-| `app.py` | Main Flask monolith and route surface |
+| `app.py` | Main Flask app, legacy session model, and remaining report/upload route surface |
 | `config.py` | Environment-backed runtime configuration |
-| `routes/` | Extracted API route lanes for auth, account, team, firms, billing, and support |
+| `routes/` | Extracted route lanes for auth, account, team, firms, billing, support, and public compatibility web handlers |
 | `services/benchmark_engine.py` | Deterministic governance theme classifier |
 | `services/governance_insights.py` | Signal and action generation |
 | `pdf_generator.py` | ReportLab governance brief PDF generation |
