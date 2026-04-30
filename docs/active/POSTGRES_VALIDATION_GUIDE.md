@@ -20,13 +20,13 @@ What remains before launch is not another paper audit. It is live verification a
 
 The repo now includes an opt-in smoke test for that path:
 
-```bash
+```powershell
 cd backend
-set CLARION_POSTGRES_TEST_DATABASE_URL=postgresql://clarion:clarion_dev@localhost:5432/clarion_test
-venv312\Scripts\pytest tests/test_postgres_smoke.py
+$env:CLARION_POSTGRES_TEST_DATABASE_URL = "postgresql://clarion:clarion_dev@localhost:5432/clarion_test"
+.\venv312\Scripts\pytest tests/test_postgres_smoke.py
 ```
 
-The smoke test is intentionally skipped unless `CLARION_POSTGRES_TEST_DATABASE_URL` is set, and it resets the target database's `public` schema before running. Use a disposable local test database, not production.
+The smoke test is intentionally skipped unless `CLARION_POSTGRES_TEST_DATABASE_URL` is set, and it resets the target database's `public` schema before running. Use a disposable local test database, not production. If Postgres returns `password authentication failed`, the test is reaching Postgres correctly but the URL does not match your local test credentials.
 
 ---
 
