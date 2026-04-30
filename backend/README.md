@@ -48,6 +48,13 @@ From the repository root, the focused benchmark test can also be run with:
 python -m pytest backend/tests/test_benchmark_engine.py
 ```
 
+The focused PostgreSQL smoke suite is opt-in because it resets the target database schema:
+
+```bash
+set CLARION_POSTGRES_TEST_DATABASE_URL=postgresql://clarion:clarion_dev@localhost:5432/clarion_test
+venv312\Scripts\pytest tests/test_postgres_smoke.py
+```
+
 ## Important Files
 
 | Path | Purpose |

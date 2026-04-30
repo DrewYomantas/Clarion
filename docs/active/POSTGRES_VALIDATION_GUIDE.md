@@ -18,6 +18,16 @@ This guide started as a code-audit bug list. Most of the concrete SQLite-only is
 
 What remains before launch is not another paper audit. It is live verification against a real PostgreSQL database for the critical flows listed later in this guide.
 
+The repo now includes an opt-in smoke test for that path:
+
+```bash
+cd backend
+set CLARION_POSTGRES_TEST_DATABASE_URL=postgresql://clarion:clarion_dev@localhost:5432/clarion_test
+venv312\Scripts\pytest tests/test_postgres_smoke.py
+```
+
+The smoke test is intentionally skipped unless `CLARION_POSTGRES_TEST_DATABASE_URL` is set, and it resets the target database's `public` schema before running. Use a disposable local test database, not production.
+
 ---
 
 ## Part 1 — Known Compatibility Issues Found by Code Audit

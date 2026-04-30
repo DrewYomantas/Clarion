@@ -104,5 +104,5 @@ Still required before stronger launch claims:
 - Authenticated production smoke with a known test account.
 - Render environment-variable verification.
 - Stripe path verification if billing is part of the v1.0 launch promise.
-- Focused PostgreSQL smoke verification of init, auth, firm creation, upload, report retrieval, and PDF artifact flows.
+- Focused PostgreSQL smoke verification of init, auth, firm creation, upload, report retrieval, and PDF artifact flows. The opt-in test exists at `backend/tests/test_postgres_smoke.py`, but it still needs to be run against a disposable Postgres database.
 - Final deployment hook/domain cutover check if moving from the Render URL to a branded domain.
