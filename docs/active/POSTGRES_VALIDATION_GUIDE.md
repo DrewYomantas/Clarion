@@ -18,6 +18,8 @@ This guide started as a code-audit bug list. Most of the concrete SQLite-only is
 
 What remains before launch is not another paper audit. It is live verification against a real PostgreSQL database for the critical flows listed later in this guide.
 
+Local verification status: `tests/test_postgres_smoke.py` passed against PostgreSQL 18 on port 5433. That smoke covers schema initialization, API registration, email verification, login, firm creation, CSV upload, report detail retrieval, PDF generation, and PDF artifact persistence.
+
 The repo now includes an opt-in smoke test for that path:
 
 ```powershell

@@ -37,6 +37,7 @@ What is true now:
 - The public product surfaces are reachable.
 - The repository has been cleaned for senior technical review.
 - The first backend monolith-reduction pass is live: auth, account, team, firms, billing, and support API lanes now live under `backend/routes/` with the existing Flask app/session model preserved.
+- Focused PostgreSQL smoke passed locally against PostgreSQL 18 on port 5433: `tests/test_postgres_smoke.py` covered init, auth, firm creation, upload, report retrieval, PDF generation, and PDF artifact storage.
 - The canonical benchmark gate is clean.
 - The broader benchmark still has known disagreement limits.
 - The product should not be described as fully launch-proven until authenticated production smoke, Render env verification, and deployment hook verification are complete.
@@ -104,5 +105,4 @@ Still required before stronger launch claims:
 - Authenticated production smoke with a known test account.
 - Render environment-variable verification.
 - Stripe path verification if billing is part of the v1.0 launch promise.
-- Focused PostgreSQL smoke verification of init, auth, firm creation, upload, report retrieval, and PDF artifact flows. The opt-in test exists at `backend/tests/test_postgres_smoke.py`, but it still needs to be run against a disposable Postgres database.
 - Final deployment hook/domain cutover check if moving from the Render URL to a branded domain.
