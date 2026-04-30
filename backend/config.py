@@ -11,11 +11,29 @@ import os
 
 import sys
 
+from urllib.parse import urlsplit, urlunsplit
+
 from dotenv import load_dotenv
 
 
 
 load_dotenv()
+
+
+def _redact_url_credentials(raw_url: str) -> str:
+    value = (raw_url or '').strip()
+    if not value:
+        return ''
+    try:
+        parsed = urlsplit(value)
+        if not parsed.netloc or '@' not in parsed.netloc:
+            return value
+        host_part = parsed.hostname or ''
+        if parsed.port:
+            host_part = f'{host_part}:{parsed.port}'
+        return urlunsplit((parsed.scheme, f'***:***@{host_part}', parsed.path, parsed.query, parsed.fragment))
+    except Exception:
+        return '<redacted-url>'
 
 
 
@@ -108,7 +126,7 @@ class Config:
     if _database_url_env:
         DATABASE_URL = _database_url_env
         DATABASE_PATH = ''
-        print(f'[DB] Using DATABASE_URL: {DATABASE_URL}', file=sys.stderr, flush=True)
+        print(f'[DB] Using DATABASE_URL: {_redact_url_credentials(DATABASE_URL)}', file=sys.stderr, flush=True)
     else:
         _db_env = (os.environ.get('DATABASE_PATH') or '').strip()
         if _db_env:
@@ -278,7 +296,6 @@ class Config:
     LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
 
     LOG_DIR = os.environ.get('LOG_DIR', 'logs')
-
 
 
 

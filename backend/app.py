@@ -441,7 +441,7 @@ try:
 
             _redis_client.ping()
 
-            app.logger.info('PR4: Redis connected at %s', _redis_url)
+            app.logger.info('PR4: Redis connected at %s', _redact_url_credentials(_redis_url))
 
         except Exception as _e:
 
@@ -453,7 +453,7 @@ try:
 
                 raise RuntimeError(
 
-                    f'PR4: Redis required in production but unreachable ({_redis_url}): {_e}'
+                    f'PR4: Redis required in production but unreachable ({_redact_url_credentials(_redis_url)}): {_e}'
 
                 ) from _e
 
@@ -675,6 +675,22 @@ TWO_FACTOR_MAX_ATTEMPTS = 5
 def _is_dev_environment():
 
     return bool(app.config.get('DEBUG') or app.config.get('TESTING'))
+
+
+def _redact_url_credentials(raw_url):
+    value = (raw_url or '').strip()
+    if not value:
+        return ''
+    try:
+        parsed = urlparse(value)
+        if not parsed.netloc or '@' not in parsed.netloc:
+            return value
+        host_part = parsed.hostname or ''
+        if parsed.port:
+            host_part = f'{host_part}:{parsed.port}'
+        return parsed._replace(netloc=f'***:***@{host_part}').geturl()
+    except Exception:
+        return '<redacted-url>'
 
 
 
@@ -6922,7 +6938,10 @@ def _create_two_factor_challenge(user):
 
     else:
 
-        app.logger.info('2FA OTP generated for user_id=%s code=%s (mail disabled)', user.id, code)
+        if _is_dev_environment():
+            app.logger.info('DEV 2FA OTP generated for user_id=%s code=%s (mail disabled)', user.id, code)
+        else:
+            raise RuntimeError('Two-factor authentication requires MAIL_ENABLED in production.')
 
 
 
@@ -7469,7 +7488,10 @@ def register():
         if send_email_verification_link(email, verification_link, sanitized_firm_name):
             flash('Verification email sent. Check your inbox to activate your account.', 'info')
         else:
-            flash(f'We could not send the verification email automatically. Use this verification link: {verification_link}', 'warning')
+            if _is_dev_environment():
+                flash(f'We could not send the verification email automatically. Use this verification link: {verification_link}', 'warning')
+            else:
+                flash('We could not send the verification email automatically. Contact support to finish account setup.', 'warning')
         return redirect(url_for('login'))
 
 

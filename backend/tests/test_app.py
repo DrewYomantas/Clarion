@@ -10,6 +10,7 @@ os.environ.setdefault('SECRET_KEY', 'test-secret')
 
 from app import app, db_connect, init_db
 import app as app_module
+from config import _redact_url_credentials as redact_config_url_credentials
 from db_compat import DatabaseConnector
 
 
@@ -34,13 +35,36 @@ def client():
     os.unlink(db_path)
 
 
-def login_admin(client):
+def login_admin(client):
     conn = db_connect()
     c = conn.cursor()
     c.execute("UPDATE users SET email_verified = 1 WHERE username = 'admin'")
     conn.commit()
     conn.close()
     return client.post('/login', data={'username': 'admin', 'password': 'changeme123'}, follow_redirects=True)
+
+
+def test_connection_url_redaction_helpers_hide_credentials():
+    raw = 'postgresql://clarion:secret-pass@localhost:5433/clarion_test'
+    expected = 'postgresql://***:***@localhost:5433/clarion_test'
+    assert app_module._redact_url_credentials(raw) == expected
+    assert redact_config_url_credentials(raw) == expected
+    assert 'secret-pass' not in app_module._redact_url_credentials(raw)
+
+
+def test_two_factor_mail_disabled_only_logs_codes_in_dev_or_test(client):
+    user = app_module.load_user(1)
+    assert user is not None
+
+    original_testing = app.config.get('TESTING')
+    original_debug = app.config.get('DEBUG')
+    original_mail_enabled = app.config.get('MAIL_ENABLED')
+    try:
+        app.config.update(TESTING=False, DEBUG=False, MAIL_ENABLED=False)
+        with pytest.raises(RuntimeError, match='MAIL_ENABLED'):
+            app_module._create_two_factor_challenge(user)
+    finally:
+        app.config.update(TESTING=original_testing, DEBUG=original_debug, MAIL_ENABLED=original_mail_enabled)
 
 
 def test_home_page_loads(client):

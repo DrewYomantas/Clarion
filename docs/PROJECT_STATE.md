@@ -38,6 +38,7 @@ What is true now:
 - The repository has been cleaned for senior technical review.
 - The first backend monolith-reduction pass is live: auth, account, team, firms, billing, and support API lanes now live under `backend/routes/` with the existing Flask app/session model preserved.
 - Focused PostgreSQL smoke passed locally against PostgreSQL 18 on port 5433: `tests/test_postgres_smoke.py` covered init, auth, firm creation, upload, report retrieval, PDF generation, and PDF artifact storage.
+- Security/ops sweep tightened production-facing diagnostics: connection-string credentials are redacted from DB/Redis startup logs, 2FA codes are only logged in dev/test fallback mode, and legacy web verification-link fallback copy no longer exposes links in production.
 - The canonical benchmark gate is clean.
 - The broader benchmark still has known disagreement limits.
 - The product should not be described as fully launch-proven until authenticated production smoke, Render env verification, and deployment hook verification are complete.
