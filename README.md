@@ -46,7 +46,7 @@ The SPA plus `/api/*` backend is the primary product path. Legacy Flask-rendered
 Requirements:
 
 - Python 3.11+
-- Node.js 18+
+- Node.js 20.19+
 - npm
 
 Backend:

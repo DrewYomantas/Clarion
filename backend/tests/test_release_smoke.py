@@ -121,6 +121,22 @@ def test_extracted_api_route_lanes_register_cleanly():
         assert route in rules
 
 
+def test_security_headers_are_enabled_by_config_even_in_test_mode(client):
+    original = app.config.get("ENABLE_SECURITY_HEADERS")
+    app.config["ENABLE_SECURITY_HEADERS"] = True
+    try:
+        resp = client.get("/api/csrf-token", headers={"X-Forwarded-Proto": "https"})
+    finally:
+        app.config["ENABLE_SECURITY_HEADERS"] = original
+
+    assert resp.status_code == 200
+    assert resp.headers["X-Content-Type-Options"] == "nosniff"
+    assert resp.headers["X-Frame-Options"] == "SAMEORIGIN"
+    assert resp.headers["Referrer-Policy"] == "strict-origin-when-cross-origin"
+    assert "default-src 'self'" in resp.headers["Content-Security-Policy"]
+    assert resp.headers["Strict-Transport-Security"] == "max-age=31536000; includeSubDomains"
+
+
 # -------------------------------------------------------------------------
 # A. Signup + verification lifecycle
 # -------------------------------------------------------------------------

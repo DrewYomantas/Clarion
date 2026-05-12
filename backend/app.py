@@ -722,7 +722,7 @@ def _request_is_secure():
 
 def _security_headers_enabled():
 
-    return app.config.get('ENABLE_SECURITY_HEADERS', True) and not _is_dev_environment()
+    return app.config.get('ENABLE_SECURITY_HEADERS', True)
 
 
 
