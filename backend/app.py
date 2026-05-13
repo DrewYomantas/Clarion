@@ -340,10 +340,10 @@ csrf = CSRFProtect(app)
 
 # Initialize basic rate limiting
 _limiter_storage_uri = app.config.get('RATELIMIT_STORAGE_URI', 'memory://')
-_is_prod = not app.config.get('DEBUG') and not app.config.get('TESTING')
+_is_prod = app.config.get('APP_ENV') == 'production'
 if _is_prod and isinstance(_limiter_storage_uri, str) and _limiter_storage_uri.startswith('memory://'):
     raise RuntimeError('Rate limiter storage is memory:// in production. Set REDIS_URL/RATELIMIT_STORAGE_URI to redis://...')
-if (not app.config.get('DEBUG')) and (not app.config.get('TESTING')) and isinstance(_limiter_storage_uri, str) and _limiter_storage_uri.startswith('memory://'):
+if _is_prod and isinstance(_limiter_storage_uri, str) and _limiter_storage_uri.startswith('memory://'):
     app.logger.warning('SECURITY WARNING: rate limiter storage is memory:// outside dev/test; abuse controls are process-local only.')
 if isinstance(_limiter_storage_uri, str) and _limiter_storage_uri.startswith('redis://') and not _is_prod:
     try:
@@ -447,7 +447,7 @@ try:
 
             _redis_client = None
 
-            _is_prod = not app.config.get('DEBUG') and not app.config.get('TESTING')
+            _is_prod = app.config.get('APP_ENV') == 'production'
 
             if _is_prod:
 
@@ -469,7 +469,7 @@ try:
 
         _redis_client = None
 
-        _is_prod = not app.config.get('DEBUG') and not app.config.get('TESTING')
+        _is_prod = app.config.get('APP_ENV') == 'production'
 
         if _is_prod:
 
