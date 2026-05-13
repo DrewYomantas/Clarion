@@ -72,6 +72,7 @@ backend/tmp_pdf_checks/
 
 # Archive
 archive/
+WebsitePrototype/
 
 # Agent office runtime artifacts
 Clarion-Agency/__pycache__/
