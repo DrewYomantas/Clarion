@@ -91,6 +91,8 @@ from flask import (
 
     session,
 
+    has_request_context,
+
 )
 
 from flask_login import (
@@ -9168,23 +9170,24 @@ def api_csrf_token():
 def _resolve_frontend_origin():
     """Infer the SPA origin for Stripe return URLs."""
 
-    origin = request.headers.get('Origin')
+    if has_request_context():
+        origin = request.headers.get('Origin')
 
-    if origin:
+        if origin:
 
-        return origin.rstrip('/')
+            return origin.rstrip('/')
 
 
 
-    referer = request.headers.get('Referer')
+        referer = request.headers.get('Referer')
 
-    if referer:
+        if referer:
 
-        parsed = urlparse(referer)
+            parsed = urlparse(referer)
 
-        if parsed.scheme and parsed.netloc:
+            if parsed.scheme and parsed.netloc:
 
-            return f'{parsed.scheme}://{parsed.netloc}'
+                return f'{parsed.scheme}://{parsed.netloc}'
 
 
 
